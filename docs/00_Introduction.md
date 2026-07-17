@@ -1,0 +1,657 @@
+# Arduino Power Electronics and Control Theory Lab
+
+## Author
+
+Jaime Triviño
+
+---
+
+# Purpose
+
+This repository documents a structured learning journey through:
+
+- Electronics
+- Embedded Systems
+- Arduino Programming
+- Oscilloscope Measurements
+- Power Electronics
+- Control Theory
+- MATLAB Modelling
+- Practical Engineering
+
+The goal is to combine:
+
+```text
+Theory
++
+Simulation
++
+Practical Experiments
+```
+
+to build a solid foundation in modern electrical and electronic engineering.
+
+---
+
+# Available Equipment
+
+## Hardware
+
+### Arduino
+
+- Arduino Uno
+
+### SparkFun Inventor's Kit
+
+- Breadboard
+- LEDs
+- Resistors
+- Capacitors
+- Transistors
+- Potentiometers
+- Sensors
+- Push Buttons
+
+### Robotics
+
+- Parallax BOE-Bot
+
+### Test Equipment
+
+- DSO Nano Portable Oscilloscope
+
+### Software
+
+- Arduino IDE
+- MATLAB
+- Simulink
+
+---
+
+# Course Philosophy
+
+The best way to learn engineering is by combining:
+
+1. Theory
+2. Calculations
+3. Simulation
+4. Measurements
+5. Reflection
+
+Every project in this repository follows the same structure:
+
+```text
+Objective
+
+Theory
+
+Calculations
+
+Components
+
+Wiring
+
+Implementation
+
+Measurements
+
+MATLAB Exercises
+
+Questions
+
+Summary
+```
+
+The purpose is not simply to build projects.
+
+The purpose is to understand:
+
+```text
+Why things work
+```
+
+and
+
+```text
+How to predict their behaviour
+```
+
+before building them.
+
+---
+
+# Learning Roadmap
+
+The projects are organised so that each project builds naturally upon the previous one.
+
+---
+
+# Phase 1 - Signals and Fundamental Electronics
+
+The first phase introduces:
+
+- Signals
+- Frequency
+- PWM
+- Capacitors
+- Inductors
+- Dynamic Systems
+
+---
+
+## Project 1
+
+### PWM Fundamentals and Oscilloscope Measurements
+
+Concepts:
+
+- Frequency
+- Period
+- Duty Cycle
+- PWM
+- DSO Nano Measurements
+
+File:
+
+```text
+01_PWM_Fundamentals.md
+```
+
+---
+
+## Project 2
+
+### RC Circuits and Time Constants
+
+Concepts:
+
+- Capacitor Charging
+- Capacitor Discharging
+- Exponential Response
+- Time Constants
+- First-Order Systems
+
+File:
+
+```text
+02_RC_Circuits.md
+```
+
+---
+
+## Project 3
+
+### RLC Circuits and Resonance
+
+Concepts:
+
+- Inductors
+- Resonance
+- Ringing
+- Natural Frequency
+- Damping
+- Second-Order Systems
+
+File:
+
+```text
+03_RLC_Circuits.md
+```
+
+---
+
+# Phase 2 - Power Electronics Fundamentals
+
+The second phase introduces the foundation of modern power electronics.
+
+---
+
+## Project 4
+
+### MOSFET Fundamentals and Electronic Switching
+
+Concepts:
+
+- MOSFETs
+- Gate Control
+- Electronic Switching
+- PWM Power Control
+
+File:
+
+```text
+04_MOSFET_Fundamentals.md
+```
+
+---
+
+## Project 5
+
+### PWM Motor Control
+
+Concepts:
+
+- DC Motors
+- First-Order Systems
+- Motor Time Constants
+- Open Loop Speed Control
+
+File:
+
+```text
+05_PWM_Motor_Control.md
+```
+
+---
+
+# Phase 3 - Control Systems
+
+The third phase introduces feedback control.
+
+---
+
+## Project 6
+
+### P Controller
+
+Concepts:
+
+- Error
+- Feedback
+- Gain
+
+---
+
+## Project 7
+
+### PI Controller
+
+Concepts:
+
+- Integral Action
+- Steady-State Error
+
+---
+
+## Project 8
+
+### PID Controller
+
+Concepts:
+
+- Derivative Action
+- Stability
+- Tuning
+
+---
+
+# Phase 4 - Power Electronics
+
+The fourth phase combines everything learned so far.
+
+---
+
+## Project 9
+
+### Buck Converter
+
+Concepts:
+
+- Energy Transfer
+- Switching Power Supplies
+- Output Ripple
+
+---
+
+## Project 10
+
+### Closed-Loop Buck Converter
+
+Concepts:
+
+- Voltage Regulation
+- PI Control
+- Feedback Systems
+
+---
+
+## Project 11
+
+### Boost Converter
+
+Concepts:
+
+- Voltage Step-Up
+- Energy Storage
+- Converter Efficiency
+
+---
+
+# Phase 5 - MATLAB and System Analysis
+
+The final phase focuses on modelling and design.
+
+---
+
+## Project 12
+
+### System Identification
+
+Concepts:
+
+- Experimental Modelling
+- Parameter Estimation
+- Transfer Functions
+
+---
+
+## Project 13
+
+### Controller Design
+
+Concepts:
+
+- P Controllers
+- PI Controllers
+- PID Controllers
+- Closed-Loop Analysis
+
+---
+
+# Mathematical Toolbox
+
+The following equations will appear repeatedly throughout this repository.
+
+---
+
+## Ohm's Law
+
+$$
+V = I \cdot R
+$$
+
+Where:
+
+- $V$ = Voltage (V)
+- $I$ = Current (A)
+- $R$ = Resistance (Ω)
+
+---
+
+## Electrical Power
+
+$$
+P = V \cdot I
+$$
+
+Where:
+
+- $P$ = Power (W)
+- $V$ = Voltage (V)
+- $I$ = Current (A)
+
+---
+
+## Frequency
+
+$$
+f = \frac{1}{T}
+$$
+
+Where:
+
+- $f$ = Frequency (Hz)
+- $T$ = Period (s)
+
+---
+
+## Duty Cycle
+
+$$
+D = \frac{T_{ON}}{T}
+$$
+
+Where:
+
+- $D$ = Duty Cycle
+- $T_{ON}$ = Time signal is HIGH
+- $T$ = Total period
+
+---
+
+## PWM Average Voltage
+
+$$
+V_{AVG} = D \cdot V_S
+$$
+
+Where:
+
+- $V_{AVG}$ = Average Voltage
+- $D$ = Duty Cycle
+- $V_S$ = Supply Voltage
+
+---
+
+## Capacitor Energy
+
+$$
+E = \frac{1}{2}CV^2
+$$
+
+Where:
+
+- $E$ = Energy (J)
+- $C$ = Capacitance (F)
+- $V$ = Voltage (V)
+
+---
+
+## Inductor Energy
+
+$$
+E = \frac{1}{2}LI^2
+$$
+
+Where:
+
+- $E$ = Energy (J)
+- $L$ = Inductance (H)
+- $I$ = Current (A)
+
+---
+
+## RC Time Constant
+
+$$
+\tau = RC
+$$
+
+Where:
+
+- $\tau$ = Time Constant (s)
+- $R$ = Resistance (Ω)
+- $C$ = Capacitance (F)
+
+---
+
+## RL Time Constant
+
+$$
+\tau = \frac{L}{R}
+$$
+
+Where:
+
+- $\tau$ = Time Constant (s)
+- $L$ = Inductance (H)
+- $R$ = Resistance (Ω)
+
+---
+
+## Natural Frequency
+
+$$
+\omega_n = \frac{1}{\sqrt{LC}}
+$$
+
+Where:
+
+- $\omega_n$ = Natural Frequency (rad/s)
+- $L$ = Inductance (H)
+- $C$ = Capacitance (F)
+
+---
+
+## Damping Ratio
+
+$$
+\zeta = \frac{R}{2}\sqrt{\frac{C}{L}}
+$$
+
+Where:
+
+- $\zeta$ = Damping Ratio
+
+---
+
+## PID Controller
+
+$$
+u(t)=K_Pe(t)+K_I\int e(t)\,dt+K_D\frac{de(t)}{dt}
+$$
+
+Where:
+
+- $K_P$ = Proportional Gain
+- $K_I$ = Integral Gain
+- $K_D$ = Derivative Gain
+- $e(t)$ = Error Signal
+
+---
+
+# Using the DSO Nano
+
+The DSO Nano will be used throughout this repository to measure:
+
+- PWM signals
+- RC charging curves
+- RC discharging curves
+- Oscillations
+- Resonance
+- Ringing
+- MOSFET gate signals
+- Motor drive signals
+- Converter ripple
+- Closed-loop responses
+
+The oscilloscope is one of the most important learning tools in this course.
+
+Theory should always be compared with:
+
+```text
+Measured Reality
+```
+
+---
+
+# Recommended Workflow
+
+For every project:
+
+1. Read the theory.
+2. Complete the calculations.
+3. Predict the outcome.
+4. Build the circuit.
+5. Measure the response.
+6. Compare measurements with theory.
+7. Simulate in MATLAB.
+8. Explain any differences.
+
+This workflow mirrors how real engineering projects are carried out.
+
+---
+
+# Final Learning Objectives
+
+After completing all projects you should be capable of:
+
+✅ Using an oscilloscope confidently
+
+✅ Understanding first-order systems
+
+✅ Understanding second-order systems
+
+✅ Measuring time constants
+
+✅ Measuring natural frequencies
+
+✅ Understanding resonance
+
+✅ Understanding damping
+
+✅ Using MOSFETs correctly
+
+✅ Designing PWM systems
+
+✅ Implementing control systems
+
+✅ Building Buck converters
+
+✅ Building Boost converters
+
+✅ Performing MATLAB analysis
+
+✅ Designing simple closed-loop controllers
+
+✅ Understanding the fundamentals of power electronics
+
+---
+
+# Repository Structure
+
+```text
+00_Introduction.md
+
+00A_DSO_Nano_Familiarisation.md
+
+01_PWM_Fundamentals.md
+
+02_RC_Circuits.md
+
+03_RLC_Circuits.md
+
+04_MOSFET_Fundamentals.md
+
+05_PWM_Motor_Control.md
+
+06_P_Controller.md
+
+07_PI_Controller.md
+
+08_PID_Controller.md
+
+09_Buck_Converter.md
+
+10_Closed_Loop_Buck.md
+
+11_Boost_Converter.md
+
+12_System_Identification.md
+
+13_Controller_Design.md
+```
+
+---
+
+# Let's Begin
+
+The first project introduces the fundamental concept behind most modern power electronic systems:
+
+**Pulse Width Modulation (PWM)**
+
+Proceed to:
+
+```text
+01_PWM_Fundamentals.md
+```

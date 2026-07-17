@@ -1,0 +1,920 @@
+# Project 9 - Buck Converter Fundamentals
+
+## Prerequisites
+
+Complete:
+
+- 00_Introduction.md
+- 00A_DSO_Nano_Familiarisation.md
+- 01_PWM_Fundamentals.md
+- 02_RC_Circuits.md
+- 03_RLC_Circuits.md
+- 04_MOSFET_Fundamentals.md
+- 05_PWM_Motor_Control.md
+- 06_P_Controller.md
+- 07_PI_Controller.md
+- 08_PID_Controller.md
+
+---
+
+# Objective
+
+In this project you will learn:
+
+- What a Buck Converter is
+- How a Buck Converter reduces voltage
+- How PWM controls output voltage
+- The role of the MOSFET
+- The role of the inductor
+- The role of the capacitor
+- The role of the freewheel diode
+- How energy is transferred in switched-mode power supplies
+- How to measure converter waveforms using the DSO Nano
+
+This project combines concepts from:
+
+- PWM
+- RC Circuits
+- RLC Circuits
+- MOSFET Switching
+- Control Theory
+
+and forms the foundation of modern power electronics.
+
+---
+
+# Learning Outcomes
+
+At the end of this project you should be able to:
+
+✅ Explain Buck Converter operation
+
+✅ Explain inductor energy storage
+
+✅ Explain capacitor filtering
+
+✅ Calculate ideal output voltage
+
+✅ Measure PWM switching signals
+
+✅ Measure output ripple
+
+✅ Understand duty-cycle control
+
+✅ Relate converter operation to previous projects
+
+---
+
+# Introduction
+
+A Buck Converter is a:
+
+```text
+DC-to-DC Converter
+```
+
+that reduces voltage.
+
+Examples:
+
+```text
+12 V → 5 V
+
+24 V → 12 V
+
+48 V → 24 V
+```
+
+Unlike resistor-based voltage reduction, a Buck Converter can operate with very high efficiency.
+
+---
+
+# Why Not Use a Resistor?
+
+Suppose we want:
+
+```text
+12 V → 5 V
+```
+
+A resistor can reduce voltage, but energy is dissipated as heat.
+
+Power loss is:
+
+$$
+P = V \cdot I
+$$
+
+As current increases, the power loss also increases.
+
+---
+
+# Why Buck Converters Are Efficient
+
+Buck Converters use:
+
+```text
+Fast Switching
+```
+
+instead of:
+
+```text
+Continuous Dissipation
+```
+
+The MOSFET is usually either:
+
+```text
+Fully ON
+```
+
+or
+
+```text
+Fully OFF
+```
+
+which minimizes power loss.
+
+---
+
+# Basic Buck Converter
+
+```mermaid
+graph LR
+
+VIN[Input Voltage]
+--> SW[MOSFET]
+
+SW --> L[Inductor]
+
+L --> VOUT[Output Voltage]
+
+VOUT --> C[Capacitor]
+
+C --> GND[Ground]
+```
+
+---
+
+# Main Components
+
+A basic Buck Converter contains:
+
+1. MOSFET
+2. Diode
+3. Inductor
+4. Capacitor
+5. Load
+
+---
+
+# Role of the MOSFET
+
+The MOSFET acts as a high-speed electronic switch.
+
+Arduino generates PWM.
+
+PWM controls:
+
+```text
+Average Energy Transfer
+```
+
+from input to output.
+
+---
+
+# Role of the Inductor
+
+The inductor stores energy in a magnetic field.
+
+Stored energy:
+
+$$
+E = \frac{1}{2}LI^2
+$$
+
+When the MOSFET switches OFF, the inductor attempts to keep current flowing.
+
+This is one of the key principles behind Buck Converter operation.
+
+---
+
+# Role of the Capacitor
+
+The capacitor smooths the output voltage.
+
+Stored energy:
+
+$$
+E = \frac{1}{2}CV^2
+$$
+
+The capacitor helps reduce output voltage ripple.
+
+---
+
+# Role of the Diode
+
+When the MOSFET turns OFF:
+
+```text
+Inductor Current Must Continue Flowing
+```
+
+The diode provides an alternative path for current.
+
+This path is called the:
+
+```text
+Freewheel Path
+```
+
+---
+
+# Ideal Buck Converter Equation
+
+The ideal Buck Converter voltage relationship is:
+
+$$
+V_{OUT}=D \cdot V_{IN}
+$$
+
+Where:
+
+- $V_{OUT}$ = Output Voltage
+- $V_{IN}$ = Input Voltage
+- $D$ = Duty Cycle
+
+---
+
+# Example 1
+
+Given:
+
+$$
+V_{IN}=12V
+$$
+
+and:
+
+$$
+D=0.5
+$$
+
+Then:
+
+$$
+V_{OUT}=0.5 \cdot 12
+$$
+
+$$
+V_{OUT}=6V
+$$
+
+---
+
+# Example 2
+
+Given:
+
+$$
+V_{IN}=12V
+$$
+
+and:
+
+$$
+D=0.25
+$$
+
+Then:
+
+$$
+V_{OUT}=0.25 \cdot 12
+$$
+
+$$
+V_{OUT}=3V
+$$
+
+---
+
+# Components Required
+
+## Additional Components
+
+Recommended:
+
+- 100 µH Inductor
+- 1N5819 Schottky Diode
+- 100 µF Electrolytic Capacitor
+- IRLZ44N MOSFET
+
+---
+
+## Existing Equipment
+
+- Arduino Uno
+- Breadboard
+- Jumper Wires
+- DSO Nano Oscilloscope
+
+---
+
+# Safety Notice
+
+For this introductory project use:
+
+```text
+5 V Arduino Supply
+```
+
+rather than:
+
+```text
+12 V Supply
+```
+
+This reduces the risk of component damage while learning.
+
+---
+
+# Experimental Buck Converter
+
+```mermaid
+graph LR
+
+VIN[5 V]
+
+VIN --> M[MOSFET]
+
+M --> L[Inductor 100 µH]
+
+L --> VOUT[Vout]
+
+VOUT --> C[Capacitor 100 µF]
+
+C --> GND[Ground]
+
+L --> D[Diode 1N5819]
+
+D --> GND
+```
+
+---
+
+# Operating Principle
+
+## MOSFET ON
+
+Current path:
+
+```text
+Input
+  ↓
+MOSFET
+  ↓
+Inductor
+  ↓
+Output
+```
+
+The inductor stores energy.
+
+---
+
+## MOSFET OFF
+
+Current path:
+
+```text
+Inductor
+   ↓
+ Diode
+   ↓
+ Output
+```
+
+Stored magnetic energy continues supplying current.
+
+---
+
+# Experiment 1 - Generate the Switching Signal
+
+## Objective
+
+Observe the PWM waveform driving the converter.
+
+---
+
+# Arduino Code
+
+```cpp
+void setup()
+{
+    pinMode(9, OUTPUT);
+}
+
+void loop()
+{
+    analogWrite(9,128);
+}
+```
+
+---
+
+# Oscilloscope Measurement
+
+Probe Tip:
+
+```text
+MOSFET Gate
+```
+
+Probe Ground:
+
+```text
+Ground
+```
+
+---
+
+# DSO Nano Settings
+
+Vertical:
+
+```text
+2 V/div
+```
+
+Horizontal:
+
+```text
+500 µs/div
+```
+
+Trigger:
+
+```text
+Rising Edge
+```
+
+---
+
+# Expected Waveform
+
+```text
+5V ─────      ─────
+         │      │
+         │      │
+0V ______│______│______
+```
+
+---
+
+# Measurements
+
+| Parameter | Expected | Measured |
+|------------|-----------|-----------|
+| Frequency | ~490 Hz | |
+| Duty Cycle | ~50% | |
+| Gate Voltage | ~5 V | |
+
+---
+
+# Experiment 2 - Duty Cycle Versus Output Voltage
+
+## Objective
+
+Observe how duty cycle changes output voltage.
+
+---
+
+# Test A
+
+Upload:
+
+```cpp
+analogWrite(9,64);
+```
+
+Expected Duty Cycle:
+
+```text
+25%
+```
+
+Measure:
+
+```text
+Output Voltage = __________
+```
+
+---
+
+# Test B
+
+Upload:
+
+```cpp
+analogWrite(9,128);
+```
+
+Expected Duty Cycle:
+
+```text
+50%
+```
+
+Measure:
+
+```text
+Output Voltage = __________
+```
+
+---
+
+# Test C
+
+Upload:
+
+```cpp
+analogWrite(9,192);
+```
+
+Expected Duty Cycle:
+
+```text
+75%
+```
+
+Measure:
+
+```text
+Output Voltage = __________
+```
+
+---
+
+# Results Table
+
+| PWM Value | Duty Cycle | Output Voltage |
+|------------|------------|---------------|
+| 64 | 25% | |
+| 128 | 50% | |
+| 192 | 75% | |
+
+---
+
+# Experiment 3 - Observe Output Ripple
+
+## Objective
+
+Measure output voltage ripple.
+
+---
+
+# Probe Location
+
+Probe Tip:
+
+```text
+Vout
+```
+
+Probe Ground:
+
+```text
+Ground
+```
+
+---
+
+# DSO Nano Settings
+
+Vertical:
+
+```text
+200 mV/div
+```
+
+Horizontal:
+
+```text
+500 µs/div
+```
+
+Trigger:
+
+```text
+Rising Edge
+```
+
+---
+
+# Expected Observation
+
+The output should not be perfectly DC.
+
+Instead you should observe:
+
+```text
+DC Output
+~~~~~~~~~
+Small Ripple
+~~~~~~~~~
+```
+
+The ripple should be relatively small compared to the average output voltage.
+
+---
+
+# Why Does Ripple Occur?
+
+The capacitor is repeatedly:
+
+```text
+Charging
+```
+
+and
+
+```text
+Discharging
+```
+
+between switching cycles.
+
+As a result:
+
+```text
+Small Voltage Variations
+```
+
+appear at the output.
+
+---
+
+# How Can Ripple Be Reduced?
+
+Ripple can generally be reduced by:
+
+- Increasing capacitance
+- Increasing inductance
+- Increasing switching frequency
+- Reducing load current variations
+
+---
+
+# Relationship to Previous Projects
+
+## Project 1
+
+PWM controls duty cycle.
+
+---
+
+## Project 2
+
+Capacitors store energy and smooth voltage.
+
+---
+
+## Project 3
+
+Inductors store energy and resist sudden current changes.
+
+---
+
+## Project 4
+
+MOSFETs switch efficiently.
+
+---
+
+## Projects 6 to 8
+
+Controllers can later regulate the output automatically.
+
+---
+
+# MATLAB Exercise
+
+Plot ideal Buck Converter output voltage.
+
+```matlab
+D = 0:0.01:1;
+
+Vin = 12;
+
+Vout = D .* Vin;
+
+plot(D,Vout,'LineWidth',2)
+
+grid on
+
+xlabel('Duty Cycle')
+ylabel('Output Voltage (V)')
+
+title('Ideal Buck Converter')
+```
+
+---
+
+# Expected Result
+
+The graph should be a straight line because:
+
+$$
+V_{OUT}=D \cdot V_{IN}
+$$
+
+---
+
+# Engineering Applications
+
+Buck Converters are found in:
+
+## Laptop Power Systems
+
+Voltage regulation.
+
+---
+
+## Mobile Devices
+
+Internal power conversion.
+
+---
+
+## Automotive Electronics
+
+Battery voltage conversion.
+
+---
+
+## Robotics
+
+Efficient motor and logic power supplies.
+
+---
+
+## Industrial Equipment
+
+DC power regulation.
+
+---
+
+# Knowledge Check
+
+## Question 1
+
+Write the ideal Buck Converter equation.
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
+## Question 2
+
+What is the role of the inductor?
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
+## Question 3
+
+What is the role of the capacitor?
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
+## Question 4
+
+Why are Buck Converters efficient?
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
+## Question 5
+
+What causes output ripple?
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
+# Common Mistakes
+
+## No Output Voltage
+
+Check:
+
+- MOSFET wiring
+- Diode polarity
+- Inductor connections
+- Ground connections
+
+---
+
+## Excessive Ripple
+
+Check:
+
+- Capacitor value
+- Capacitor polarity
+- Load conditions
+
+---
+
+## No PWM Signal
+
+Check:
+
+- Arduino sketch
+- Pin selection
+- Oscilloscope trigger
+- Probe connection
+
+---
+
+# Troubleshooting Checklist
+
+✅ PWM present at MOSFET gate
+
+✅ Diode polarity verified
+
+✅ Inductor connected correctly
+
+✅ Capacitor polarity verified
+
+✅ Output voltage measured
+
+✅ Output ripple visible
+
+✅ Duty cycle affects output voltage
+
+---
+
+# Project Summary
+
+In this project you learned:
+
+✅ Buck Converter fundamentals
+
+✅ PWM voltage control
+
+✅ MOSFET switching
+
+✅ Inductor energy storage
+
+✅ Capacitor filtering
+
+✅ Output ripple
+
+✅ Converter efficiency
+
+✅ Practical switched-mode power electronics
+
+This project combines many concepts introduced throughout the earlier projects and serves as the foundation for regulated power supplies.
+
+---
+
+# Next Project
+
+**10_Closed_Loop_Buck.md**
+
+Topics:
+
+- Voltage Feedback
+- PI Regulation
+- Closed-Loop Control
+- Converter Dynamics
+- Stability
+- Disturbance Rejection
