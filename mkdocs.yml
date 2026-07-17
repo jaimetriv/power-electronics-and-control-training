@@ -1,0 +1,41 @@
+site_name: Power Electronics and Control Training
+site_description: Electronics, Control Systems and Power Electronics
+site_author: Jaime Trivino
+
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+
+  - Getting Started:
+      - Introduction: 00_Introduction.md
+      - Arduino Uno Familiarisation: 00A_Arduino_Uno_Familiarisation.md
+      - DSO Nano V3 Familiarisation: 00B_DSO_Nano_V3_Familiarisation.md
+      - ESP32 DevKit Familiarisation: 00C_ESP32_DevKit_Familiarisation.md
+
+  - Electronics:
+      - PWM Fundamentals: 01_PWM_Fundamentals.md
+      - RC Circuits: 02_RC_Circuits.md
+      - RLC Circuits: 03_RLC_Circuits.md
+      - MOSFET Fundamentals: 04_MOSFET_Fundamentals.md
+
+  - Control Systems:
+      - PWM Motor Control: 05_PWM_Motor_Control.md
+      - P Controller: 06_P_Controller.md
+      - PI Controller: 07_PI_Controller.md
+      - PID Controller: 08_PID_Controller.md
+
+  - Power Electronics:
+      - Buck Converter: 09_Buck_Converter.md
+      - Closed Loop Buck: 10_Closed_Loop_Buck.md
+      - Boost Converter: 11_Boost_Converter.md
+      - DC Chopper Converters: 11B_DC_Chopper_Converters.md
+      - AC-DC Rectifiers: 12_AC_DC_Rectifiers.md
+      - DC-AC Inverters: 13_DC_AC_Inverters.md
+
+  - Advanced Topics:
+      - System Identification: 14_System_Identification.md
+      - Controller Design: 15_Controller_Design.md
+      - Grid Following VSC: 16_Grid_Following_VSC.md
+      - Grid Forming VSC: 17_Grid_Forming_VSC.md
