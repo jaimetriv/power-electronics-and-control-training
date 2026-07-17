@@ -1,11 +1,65 @@
 site_name: Power Electronics and Control Training
-site_description: Electronics, Control Systems and Power Electronics
+site_description: Practical Electronics, Control Systems and Power Electronics Training
 site_author: Jaime Trivino
+
+repo_url: https://github.com/jaimetriv/power-electronics-and-control-training
+repo_name: jaimetriv/power-electronics-and-control-training
 
 theme:
   name: material
 
+  palette:
+
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.share
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+
+
+  - pymdownx.highlight:
+      anchor_linenums: true
+
+  - toc:
+      permalink: true
+
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - https://unpkg.com/mermaid@11/dist/mermaid.min
+
 nav:
+
   - Home: index.md
 
   - Getting Started:
