@@ -703,83 +703,112 @@ Optimization
 
 ---
 
-# MATLAB Exercise - First-Order Closed Loop
+# MATLAB Simulation
+
+Before building, use the motor model identified in Project 14 to predict how P, PI, and PID controllers will perform.
+
+Run this script and observe the step responses and pole-zero map before touching the hardware.
 
 ```matlab
+% Motor model from Project 14 (replace with your identified values)
+K  = 1.0;    % DC gain
+tau = 0.5;   % time constant (s)
+
 s = tf('s');
+G = K / (tau*s + 1);
 
-G = 1/(s+1);
+% --- Controller gains ---
+Kp = 3;   Ki = 4;   Kd = 0.05;
 
-Kp = 2;
+Cp  = Kp;
+Cpi = Kp + Ki/s;
+Cpid = Kp + Ki/s + Kd*s;
 
-T = feedback(Kp*G,1);
+Tp   = feedback(Cp*G,   1);
+Tpi  = feedback(Cpi*G,  1);
+Tpid = feedback(Cpid*G, 1);
 
-step(T)
+t = 0:0.01:3;
 
-grid on
+% --- Subplot 1: step responses ---
+figure;
+subplot(2,1,1);
+[yp,  ~] = step(Tp,   t);
+[ypi, ~] = step(Tpi,  t);
+[ypid,~] = step(Tpid, t);
+plot(t, yp, 'b', t, ypi, 'r', t, ypid, 'g', 'LineWidth', 1.5);
+yline(1, 'k--');
+legend('P','PI','PID'); grid on;
+xlabel('Time (s)'); ylabel('Output');
+title(sprintf('Closed-Loop Step Response  K=%.2f  \tau=%.2fs', K, tau));
 
-title('Closed-Loop Response')
+% --- Subplot 2: pole-zero map ---
+subplot(2,1,2);
+pzmap(Tp, Tpi, Tpid); grid on;
+legend('P','PI','PID');
+title('Pole-Zero Map');
+
+% --- Print stepinfo metrics ---
+fprintf('\n--- P Controller ---\n');   disp(stepinfo(Tp));
+fprintf('--- PI Controller ---\n');  disp(stepinfo(Tpi));
+fprintf('--- PID Controller ---\n'); disp(stepinfo(Tpid));
 ```
+
+Record the predicted rise time, overshoot, and settling time for each controller before proceeding to the experiments.
 
 ---
 
-# MATLAB Exercise - PI Controller
+# MATLAB Comparison
+
+Enter your identified motor model and the gains you settled on during the experiments. Overlay the simulated step response against your measured Serial data to quantify how well the model predicted real behaviour.
 
 ```matlab
+% --- Enter your identified values from Project 14 ---
+K   = 1.0;    % replace with your fitted K
+tau = 0.5;    % replace with your fitted tau (s)
+
+% --- Enter gains that worked best in Experiment 1 ---
+Kp = 3;  Ki = 4;  Kd = 0.05;
+
+% --- Enter measured step response (time in s, output 0-1 normalised) ---
+t_meas = [0, 0.1, 0.2, 0.3, 0.5, 0.8, 1.0, 1.5, 2.0];  % replace
+y_meas = [0, 0.2, 0.5, 0.8, 1.05, 1.02, 1.0, 1.0, 1.0]; % replace
+
 s = tf('s');
+G    = K / (tau*s + 1);
+Cpid = Kp + Ki/s + Kd*s;
+T    = feedback(Cpid*G, 1);
 
-G = 1/(s+1);
+t = 0:0.01:3;
+[y_sim, ~] = step(T, t);
 
-Kp = 2;
-Ki = 1;
+figure;
+plot(t, y_sim, 'b-', 'LineWidth', 1.5); hold on;
+plot(t_meas, y_meas, 'ro--', 'MarkerSize', 6);
+yline(1, 'k--');
+legend('Simulated PID','Measured'); grid on;
+xlabel('Time (s)'); ylabel('Normalised Output');
+title(sprintf('PID Controller: Simulated vs Measured  Kp=%.1f Ki=%.1f Kd=%.2f', Kp, Ki, Kd));
 
-C = Kp + Ki/s;
+% --- Metrics ---
+si = stepinfo(T);
+fprintf('Simulated rise time:    %.3f s\n', si.RiseTime);
+fprintf('Simulated overshoot:    %.1f %%\n', si.Overshoot);
+fprintf('Simulated settling time:%.3f s\n', si.SettlingTime);
 
-T = feedback(C*G,1);
-
-step(T)
-
-grid on
-
-title('PI Controlled System')
+% Estimate measured settling time (first index within 2% of final value)
+final = y_meas(end);
+within2 = find(abs(y_meas - final) <= 0.02*final, 1);
+if ~isempty(within2)
+    fprintf('Measured settling time: %.3f s\n', t_meas(within2));
+end
 ```
 
----
+Reflection questions:
 
-# MATLAB Exercise - PID Controller
-
-```matlab
-s = tf('s');
-
-G = 1/(s+1);
-
-Kp = 2;
-Ki = 1;
-Kd = 0.5;
-
-C = Kp + Ki/s + Kd*s;
-
-T = feedback(C*G,1);
-
-step(T)
-
-grid on
-
-title('PID Controlled System')
-```
-
----
-
-# Expected Observations
-
-Compare:
-
-- Rise time
-- Overshoot
-- Settling time
-- Steady-state error
-
-for each controller type.
+1. Does the simulated overshoot match the measured overshoot? If not, what physical effects are missing from the model?
+2. Did the gains designed from the model work well on the hardware, or did you need to retune? Why?
+3. How would a second-order motor model (with inductance) change the predicted response?
 
 ---
 
@@ -890,6 +919,18 @@ ____________________
 ## Question 5
 
 What is the purpose of controller tuning?
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
+## Question 6
+
+Your MATLAB simulation predicted zero steady-state error and 8% overshoot with a PI controller, but the physical motor showed 20% overshoot and a small residual error. List two physical effects that could explain each discrepancy, and describe how you would update the model to reduce the gap.
 
 Answer:
 

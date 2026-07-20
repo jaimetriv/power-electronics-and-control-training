@@ -239,6 +239,67 @@ This is why switching devices are efficient.
 
 ---
 
+# MATLAB Simulation
+
+Before building the circuit, simulate the gate waveform and average voltage to predict what you will observe.
+
+## Simulate Gate PWM Waveforms
+
+```matlab
+f  = 490;                    % Arduino PWM frequency (Hz)
+Ts = 1 / f;
+duty_cycles = [0.25, 0.50, 0.75, 1.00];
+Vs = 5;
+
+t = 0:1e-6:4*Ts;
+
+figure;
+for i = 1:4
+    D = duty_cycles(i);
+    pwm = Vs * double(mod(t, Ts) < D * Ts);
+    subplot(4,1,i);
+    plot(t * 1e3, pwm, 'b', 'LineWidth', 1.5);
+    yline(Vs * D, 'r--', sprintf('V_{AVG}=%.2fV', Vs*D));
+    ylim([-0.5 6]); grid on;
+    ylabel('V (V)');
+    title(sprintf('D = %d%%', D*100));
+end
+xlabel('Time (ms)');
+sgtitle('MOSFET Gate PWM — 490 Hz');
+```
+
+## Average Voltage vs Duty Cycle
+
+```matlab
+D    = 0:0.01:1;
+Vavg = 5 .* D;
+
+D_points    = [0.25, 0.50, 0.75, 1.00];
+Vavg_points = 5 .* D_points;
+
+figure;
+plot(D, Vavg, 'b', 'LineWidth', 2); hold on;
+scatter(D_points, Vavg_points, 80, 'r', 'filled', ...
+    'DisplayName', 'Experiment points');
+grid on;
+xlabel('Duty Cycle'); ylabel('Average Voltage (V)');
+title('MOSFET PWM — V_{AVG} vs Duty Cycle');
+legend('Theory', 'Experiment points', 'Location', 'northwest');
+```
+
+## Prediction Table
+
+Record your predicted average voltages before measuring:
+
+| PWM Value | Duty Cycle | Predicted V\_{AVG} |
+|-----------|------------|--------------------|
+| 64 | 25% | |
+| 128 | 50% | |
+| 192 | 75% | |
+| 255 | 100% | |
+
+---
+
 # Components Required
 
 ## Purchase
@@ -771,34 +832,54 @@ motor via MOSFET.
 
 ---
 
-# MATLAB Exercise
+# MATLAB Comparison
 
-Plot average voltage versus duty cycle.
+Now compare your measured gate waveform against the ideal simulation.
+
+## Enter Your Measured Values
+
+From Experiment 2, record the frequency and duty cycle you measured on the DSO Nano:
 
 ```matlab
-D = 0:0.01:1;
+Vs = 5;
+f_theory  = 490;             % ideal Arduino PWM frequency (Hz)
+f_measured = 490;            % replace with your measured frequency (Hz)
+D_measured = 0.50;           % replace with your measured duty cycle (0-1)
 
-Vavg = 5 .* D;
+Ts_t = 1 / f_theory;
+Ts_m = 1 / f_measured;
+t    = 0:1e-6:4*max(Ts_t, Ts_m);
 
-plot(D,Vavg,'LineWidth',2)
+pwm_theory  = Vs * double(mod(t, Ts_t) < 0.50 * Ts_t);
+pwm_measured = Vs * double(mod(t, Ts_m) < D_measured * Ts_m);
 
-grid on
+figure;
+subplot(2,1,1);
+plot(t*1e3, pwm_theory,   'b--', 'LineWidth', 2, 'DisplayName', ...
+    sprintf('Theory  f=%.0fHz D=50%%', f_theory));
+hold on;
+plot(t*1e3, pwm_measured, 'r',   'LineWidth', 2, 'DisplayName', ...
+    sprintf('Measured f=%.0fHz D=%.0f%%', f_measured, D_measured*100));
+grid on; legend; ylabel('Gate Voltage (V)');
+title('Gate Waveform — Theory vs Measurement');
 
-xlabel('Duty Cycle')
-ylabel('Average Voltage (V)')
-
-title('MOSFET PWM Control')
+subplot(2,1,2);
+D_vals = [0.25, 0.50, 0.75, 1.00];
+Vavg_theory   = Vs .* D_vals;
+Vavg_measured = Vs .* D_measured;   % single measured point
+bar(D_vals*100, Vavg_theory, 0.4, 'b', 'DisplayName', 'Theory'); hold on;
+scatter(D_measured*100, Vavg_measured, 100, 'r', 'filled', ...
+    'DisplayName', 'Measured');
+grid on; xlabel('Duty Cycle (%)'); ylabel('V_{AVG} (V)');
+title('Average Voltage — Theory vs Measurement');
+legend('Location','northwest');
 ```
 
----
+## Reflection
 
-# Expected Result
-
-The graph should be linear because:
-
-$$
-V_{AVG}=D \cdot V_S
-$$
+- Does your measured frequency match 490 Hz?
+- Does your measured VAVG match the theoretical value D × 5V?
+- Why might the measured average voltage differ slightly from theory? (gate resistor drop, MOSFET on-state voltage, probe loading)
 
 ---
 
@@ -895,6 +976,18 @@ ____________________
 ## Question 5
 
 Why can't Arduino drive large motors directly?
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
+## Question 6
+
+Your simulation predicted VAVG = 2.5V at 50% duty cycle but you measured 2.3V. Give two physical reasons that could explain this.
 
 Answer:
 

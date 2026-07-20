@@ -308,16 +308,107 @@ Y --> E
 
 ---
 
+# MATLAB Simulation
+
+Before building the circuit, simulate the closed-loop PI response on the first-order motor model to predict how integral action eliminates steady-state error.
+
+## PI Closed-Loop Transfer Function
+
+The PI controller in the s-domain is:
+
+$$
+C(s) = K_P + \frac{K_I}{s}
+$$
+
+Applied to the first-order motor plant:
+
+$$
+G(s) = \frac{K}{\tau s + 1}
+$$
+
+## Effect of Ki — Fixed Kp
+
+```matlab
+K   = 1;
+tau = 0.5;        % your measured tau from Project 5
+Kp  = 0.5;        % fixed from Project 6
+
+G = tf(K, [tau, 1]);
+
+Ki_values = [0, 0.5, 1.0, 2.0, 5.0];
+labels    = {'Ki=0 (P only)','Ki=0.5','Ki=1.0','Ki=2.0','Ki=5.0'};
+
+t = 0:0.01:8;
+
+figure; hold on;
+for i = 1:5
+    C = tf([Kp, Ki_values(i)], [1, 0]);   % Kp + Ki/s
+    T = feedback(C * G, 1);
+    [y, ~] = step(T, t);
+    plot(t, y, 'LineWidth', 2, 'DisplayName', labels{i});
+end
+yline(1.0, 'k--', 'Reference');
+grid on;
+xlabel('Time (s)'); ylabel('Normalised Output');
+title('PI Controller \mdash Effect of K_I (Motor Plant)');
+legend('Location', 'southeast');
+```
+
+## P vs PI Comparison
+
+```matlab
+K   = 1;
+tau = 0.5;
+Kp  = 0.5;
+Ki  = 1.0;
+
+G    = tf(K, [tau, 1]);
+C_P  = tf(Kp, 1);
+C_PI = tf([Kp, Ki], [1, 0]);
+
+T_P  = feedback(C_P  * G, 1);
+T_PI = feedback(C_PI * G, 1);
+
+t = 0:0.01:8;
+[y_P,  ~] = step(T_P,  t);
+[y_PI, ~] = step(T_PI, t);
+
+figure; hold on;
+plot(t, y_P,  'b--', 'LineWidth', 2, 'DisplayName', ...
+    sprintf('P only  e_{ss}=%.1f%%', 100/(1+Kp*K)));
+plot(t, y_PI, 'r',   'LineWidth', 2, 'DisplayName', 'PI  e_{ss}=0%');
+yline(1.0, 'k--', 'Reference');
+grid on;
+xlabel('Time (s)'); ylabel('Normalised Output');
+title('P vs PI \mdash Steady-State Error Elimination');
+legend('Location', 'southeast');
+```
+
+## Prediction Table
+
+| Kp | Ki | Predicted e\_{ss} | Expected overshoot? |
+|----|----|------------------|---------------------|
+| 0.5 | 0 | | |
+| 0.5 | 0.5 | | |
+| 0.5 | 1.0 | | |
+| 0.5 | 2.0 | | |
+| 0.5 | 5.0 | | |
+
+---
+
 # Components Required
 
-From the SparkFun Inventor Kit:
+Same circuit as Project 6:
 
 - Arduino Uno
 - Breadboard
-- Potentiometer
-- LED
-- 220 Ω resistor
+- Potentiometer (setpoint)
+- IRLZ44N MOSFET
+- DC Motor
+- Flyback diode (1N4001–1N4007)
+- 220 Ω resistor (gate resistor)
 - Jumper wires
+- External battery pack
 
 Equipment:
 
@@ -325,41 +416,32 @@ Equipment:
 
 ---
 
-# Experiment 1 - Build a PI Controller
+# Experiment 1 - Build a PI Motor Controller
 
 ## Objective
 
-Implement a simple PI controller in Arduino.
+Implement a PI controller driving the motor via MOSFET.
+The potentiometer sets the speed reference.
 
 ---
 
-# Wiring
+# Circuit
 
-Potentiometer:
+Same as Project 6:
 
-```mermaid
-graph LR
+```text
+Battery +
+    |
+  Motor
+    |--- Flyback diode (cathode to Battery+)
+  Drain
+  MOSFET (IRLZ44N)
+  Source
+    |
+   GND
 
-A[5V]
---> B[Potentiometer]
-
-B --> C[A0]
-
-D[GND]
---> B
-```
-
-LED:
-
-```mermaid
-graph LR
-
-A[Pin 9]
---> B[220 Ohm]
-
-B --> C[LED]
-
-C --> D[GND]
+Arduino Pin 9 --- 220Ω --- Gate
+Potentiometer centre pin --- A0
 ```
 
 ---
@@ -367,33 +449,36 @@ C --> D[GND]
 # Arduino Code
 
 ```cpp
-float Kp = 0.2;
-float Ki = 0.02;
+float Kp = 0.5;
+float Ki = 1.0;
 
-float integral = 0;
+float integral    = 0;
+float integral_max = 200;    // anti-windup limit
 
 void setup()
 {
     pinMode(9, OUTPUT);
+    Serial.begin(9600);
 }
 
 void loop()
 {
-    int reference = analogRead(A0);
-
-    int feedback = 0;
+    int reference = analogRead(A0);      // desired speed (0-1023)
+    int feedback  = 0;                   // no sensor yet: open-loop PI
 
     float error = reference - feedback;
 
-    integral = integral + error;
+    integral = integral + error * 0.01;  // 0.01s sample time
+    integral = constrain(integral, -integral_max, integral_max);
 
-    float output =
-        Kp * error
-      + Ki * integral;
+    float output = Kp * error + Ki * integral;
+    output = constrain(output, 0, 255);
 
-    output = constrain(output,0,255);
+    analogWrite(9, (int)output);
 
-    analogWrite(9,(int)output);
+    Serial.print("Ref: "); Serial.print(reference);
+    Serial.print("  Int: "); Serial.print(integral);
+    Serial.print("  PWM: "); Serial.println((int)output);
 
     delay(10);
 }
@@ -700,41 +785,51 @@ __________________________________
 
 ---
 
-# MATLAB Exercise
+# MATLAB Comparison
 
-Create a simple PI control law.
+Now simulate the closed-loop PI response using your actual Kp and Ki values from Experiments 2 and 3, and compare P vs PI directly.
+
+## Enter Your Parameters
 
 ```matlab
-e = 1;
+K   = 1;
+tau = 0.5;       % your measured tau from Project 5
+Kp  = 0.5;       % your Experiment 3 value
+Ki  = 1.0;       % your Experiment 2 value
 
-Kp = 2;
-Ki = 1;
+G    = tf(K, [tau, 1]);
+C_P  = tf(Kp, 1);
+C_PI = tf([Kp, Ki], [1, 0]);
 
-t = 0:0.1:10;
+T_P  = feedback(C_P  * G, 1);
+T_PI = feedback(C_PI * G, 1);
 
-u = Kp*e + Ki*t;
+t = 0:0.01:8;
+[y_P,  ~] = step(T_P,  t);
+[y_PI, ~] = step(T_PI, t);
 
-plot(t,u,'LineWidth',2)
+figure; hold on;
+plot(t, y_P,  'b--', 'LineWidth', 2, 'DisplayName', ...
+    sprintf('P  Kp=%.2f  e_{ss}=%.1f%%', Kp, 100/(1+Kp*K)));
+plot(t, y_PI, 'r',   'LineWidth', 2, 'DisplayName', ...
+    sprintf('PI Kp=%.2f Ki=%.2f  e_{ss}=0%%', Kp, Ki));
+yline(1.0, 'k--', 'Reference');
+grid on;
+xlabel('Time (s)'); ylabel('Normalised Output');
+title('P vs PI \mdash Motor Plant Comparison');
+legend('Location', 'southeast');
 
-grid on
-
-xlabel('Time (s)')
-ylabel('Controller Output')
-
-title('PI Controller Integral Action')
+% Print settling time and overshoot
+info_PI = stepinfo(T_PI);
+fprintf('PI Settling time: %.2fs\n', info_PI.SettlingTime);
+fprintf('PI Overshoot:     %.1f%%\n', info_PI.Overshoot);
 ```
 
----
+## Reflection
 
-# Expected Result
-
-The controller output increases with time because:
-
-$$
-\int e(t)\,dt
-$$
-
-grows continuously.
+- Does the PI simulation confirm zero steady-state error compared to P only?
+- At what Ki did overshoot first appear in your experiments?
+- How does the simulated settling time compare to what you observed on the motor?
 
 ---
 
@@ -834,14 +929,38 @@ ____________________
 
 ---
 
+## Question 6
+
+Your PI simulation shows overshoot at Ki = 5.0 but not at Ki = 1.0. Explain why increasing Ki too much causes overshoot, and how anti-windup helps.
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
 # Common Mistakes
 
-## Output Saturates
+## Motor Doesn't Respond
 
 Check:
 
-- Gain values
-- Integral growth
+- MOSFET wiring
+- Battery connected
+- Shared ground
+- Flyback diode installed
+
+---
+
+## Output Saturates Immediately
+
+Check:
+
+- Kp and Ki values (reduce both)
+- Anti-windup limit
+- Potentiometer reading in Serial Monitor
 
 ---
 
@@ -861,28 +980,28 @@ Kp
 
 ---
 
-## LED Always Fully ON
+## Integral Grows Without Bound
 
 Check:
 
-- Output limiting
-- Integral windup
+- Anti-windup constrain() is present in code
+- Sample time (delay) is consistent
 
 ---
 
 # Troubleshooting Checklist
 
-✅ Potentiometer operating correctly
+✅ Motor circuit wired correctly (same as Project 6)
 
-✅ PWM output present
+✅ Shared ground between Arduino and battery
 
-✅ DSO Nano measuring output
+✅ Potentiometer reading visible in Serial Monitor
 
-✅ Integral term limited
+✅ PWM duty cycle visible on DSO Nano
 
-✅ Controller gains reasonable
+✅ Anti-windup limit in code
 
-✅ PWM changes with reference
+✅ Motor speed changes with potentiometer
 
 ---
 

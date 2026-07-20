@@ -302,6 +302,72 @@ $$
 
 ---
 
+# MATLAB Simulation
+
+Before building the circuit, simulate the ideal Buck Converter behaviour to predict what you will measure.
+
+## Vout vs Duty Cycle — 5V Supply
+
+```matlab
+Vin = 5;                          % Arduino 5V supply
+D   = 0:0.01:1;
+Vout_ideal = D .* Vin;
+
+D_exp    = [0.25, 0.50, 0.75];
+Vout_exp = D_exp .* Vin;
+
+figure;
+plot(D, Vout_ideal, 'b', 'LineWidth', 2); hold on;
+scatter(D_exp, Vout_exp, 80, 'r', 'filled', 'DisplayName', 'Experiment points');
+grid on;
+xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
+title('Ideal Buck Converter \mdash V_{IN} = 5V');
+legend('Ideal V_{OUT} = D \cdot V_{IN}', 'Experiment points', 'Location', 'northwest');
+```
+
+## Simulate Inductor Current Waveform
+
+The inductor current ramps up during MOSFET ON and ramps down during MOSFET OFF:
+
+```matlab
+Vin  = 5;
+D    = 0.5;
+Vout = D * Vin;          % ideal
+L    = 100e-6;           % 100 uH
+fsw  = 490;              % Arduino PWM frequency (Hz)
+Ts   = 1 / fsw;
+Iavg = 0.05;             % assumed average load current (A)
+
+% Current ripple
+delta_iL = (Vin - Vout) * D * Ts / L;
+
+t_on  = linspace(0,      D*Ts,    100);
+t_off = linspace(D*Ts,   Ts,      100);
+
+iL_on  = (Iavg - delta_iL/2) + (Vin - Vout)/L .* t_on;
+iL_off = (Iavg + delta_iL/2) - Vout/L .* (t_off - D*Ts);
+
+figure;
+plot([t_on, t_off]*1e3, [iL_on, iL_off]*1e3, 'b', 'LineWidth', 2);
+grid on;
+xlabel('Time (ms)'); ylabel('Inductor Current (mA)');
+title(sprintf('Inductor Current Ripple \mdash D=%.0f%%, L=%d\muH, f_{sw}=%dHz', ...
+    D*100, L*1e6, fsw));
+yline(Iavg*1e3, 'r--', sprintf('I_{avg} = %.0f mA', Iavg*1e3));
+```
+
+## Prediction Table
+
+Record your predicted output voltages before measuring:
+
+| PWM Value | Duty Cycle | Predicted V\_{OUT} (V) |
+|-----------|------------|------------------------|
+| 64 | 25% | |
+| 128 | 50% | |
+| 192 | 75% | |
+
+---
+
 # Components Required
 
 ## Additional Components
@@ -701,36 +767,43 @@ Controllers can later regulate the output automatically.
 
 ---
 
-# MATLAB Exercise
+# MATLAB Comparison
 
-Plot ideal Buck Converter output voltage.
+Now overlay your measured output voltages against the ideal theory line to quantify converter losses.
+
+## Enter Your Measured Values
 
 ```matlab
-D = 0:0.01:1;
+Vin = 5;
 
-Vin = 12;
+D_measured    = [0.25,  0.50,  0.75];   % duty cycles tested
+Vout_measured = [0.00,  0.00,  0.00];   % replace with your measured voltages (V)
 
-Vout = D .* Vin;
+D_ideal  = 0:0.01:1;
+Vout_ideal = D_ideal .* Vin;
 
-plot(D,Vout,'LineWidth',2)
+figure; hold on;
+plot(D_ideal, Vout_ideal, 'b--', 'LineWidth', 2, 'DisplayName', 'Ideal: V_{OUT} = D \cdot V_{IN}');
+scatter(D_measured, Vout_measured, 80, 'r', 'filled', 'DisplayName', 'Measured');
+grid on;
+xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
+title('Buck Converter \mdash Ideal vs Measured');
+legend('Location', 'northwest');
 
-grid on
-
-xlabel('Duty Cycle')
-ylabel('Output Voltage (V)')
-
-title('Ideal Buck Converter')
+% Calculate and print voltage drop at each operating point
+fprintf('%-8s %-12s %-12s %-12s\n', 'D', 'V_ideal(V)', 'V_meas(V)', 'Drop(V)');
+for i = 1:3
+    V_ideal = D_measured(i) * Vin;
+    drop    = V_ideal - Vout_measured(i);
+    fprintf('%-8.2f %-12.3f %-12.3f %-12.3f\n', D_measured(i), V_ideal, Vout_measured(i), drop);
+end
 ```
 
----
+## Reflection
 
-# Expected Result
-
-The graph should be a straight line because:
-
-$$
-V_{OUT}=D \cdot V_{IN}
-$$
+- Is the measured Vout lower than the ideal prediction? Why? (MOSFET Vds(on), diode forward voltage drop, inductor DCR)
+- Is the voltage drop consistent across all three duty cycles, or does it change?
+- How would using a Schottky diode (lower forward voltage) improve the result compared to a standard 1N4007?
 
 ---
 
@@ -821,6 +894,18 @@ ____________________
 ## Question 5
 
 What causes output ripple?
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
+## Question 6
+
+Your simulation predicted Vout = 2.5V at 50% duty cycle but you measured 2.1V. The MOSFET has Vds(on) = 0.1V and the 1N5819 has a forward voltage of 0.3V. Show how these account for the 0.4V discrepancy.
 
 Answer:
 

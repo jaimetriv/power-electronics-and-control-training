@@ -391,6 +391,68 @@ Characteristics:
 
 ---
 
+# MATLAB Simulation
+
+Before building the circuit, simulate the step response for each resistor value to predict what you will observe on the oscilloscope.
+
+## Calculate Damping Ratios
+
+```matlab
+L = 0.1;
+C = 100e-9;
+wn = 1 / sqrt(L * C);
+fn = wn / (2 * pi);
+
+R_values = [47, 100, 470];
+
+fprintf('Natural frequency: %.1f Hz\n', fn);
+fprintf('%-8s %-12s %s\n', 'R (Ohm)', 'zeta', 'Response type');
+for i = 1:3
+    zeta = (R_values(i) / 2) * sqrt(C / L);
+    if zeta < 1,     rtype = 'Underdamped';
+    elseif zeta == 1, rtype = 'Critically damped';
+    else,             rtype = 'Overdamped'; end
+    fprintf('%-8d %-12.4f %s\n', R_values(i), zeta, rtype);
+end
+```
+
+## Simulate Step Responses
+
+```matlab
+L = 0.1;
+C = 100e-9;
+R_values = [47, 100, 470];
+labels   = {'R=47\Omega', 'R=100\Omega', 'R=470\Omega'};
+
+t = 0:1e-6:3e-3;
+
+figure; hold on;
+for i = 1:3
+    R = R_values(i);
+    num = [1/C];
+    den = [L, R, 1/C];
+    G = tf(num, den);
+    [y, ~] = step(G, t);
+    plot(t * 1e3, y, 'LineWidth', 2, 'DisplayName', labels{i});
+end
+grid on;
+xlabel('Time (ms)'); ylabel('Capacitor Voltage (V)');
+title('RLC Step Response \mdash Damping Comparison');
+legend('Location', 'northeast');
+```
+
+## Prediction Table
+
+Record your predictions before measuring:
+
+| R | Predicted ζ | Expected behaviour |
+|-------|------------|--------------------|
+| 47 Ω | | |
+| 100 Ω | | |
+| 470 Ω | | |
+
+---
+
 # Components Required
 
 Additional components:
@@ -780,59 +842,70 @@ Overshoot is extremely important in:
 
 ---
 
-# MATLAB Exercise - Simulate an RLC Circuit
+# MATLAB Comparison
 
-Run:
+Now overlay your measured resonant frequency against the theoretical simulation.
 
-```matlab
-R = 100;
-L = 0.1;
-C = 100e-9;
+## Enter Your Measured Period
 
-num = [1];
-
-den = [L R 1/C];
-
-G = tf(num,den);
-
-step(G)
-
-grid on
-```
-
----
-
-# Expected Result
-
-The step response should show:
-
-- Overshoot
-- Oscillation
-- Settling
-
-similar to the oscilloscope measurement.
-
----
-
-# MATLAB Exercise - Pole Locations
-
-Run:
+From Experiment 2, record the oscillation period you measured on the DSO Nano:
 
 ```matlab
-R = 100;
 L = 0.1;
 C = 100e-9;
+R = 100;
 
-roots([L R 1/C])
+T_measured = 630e-6;         % replace with your measured period (s)
+f_measured  = 1 / T_measured;
+f_theory    = 1 / (2 * pi * sqrt(L * C));
+
+fprintf('Theory  fn = %.1f Hz\n', f_theory);
+fprintf('Measured fn = %.1f Hz\n', f_measured);
+fprintf('Error = %.2f%%\n', 100 * abs(f_measured - f_theory) / f_theory);
+
+% Overlay simulated vs measured-frequency waveforms
+t = 0:1e-6:3e-3;
+
+num_t = [1/C]; den_t = [L, R, 1/C];
+G_theory = tf(num_t, den_t);
+[y_theory, ~] = step(G_theory, t);
+
+% Reconstruct waveform at measured frequency using same zeta
+wn_m = 2 * pi * f_measured;
+zeta = (R / 2) * sqrt(C / L);
+den_m = [1, 2*zeta*wn_m, wn_m^2];
+G_meas = tf([wn_m^2], den_m);
+[y_meas, ~] = step(G_meas, t);
+
+figure; hold on;
+plot(t * 1e3, y_theory, 'b--', 'LineWidth', 2, 'DisplayName', ...
+    sprintf('Theory  fn=%.0fHz', f_theory));
+plot(t * 1e3, y_meas,   'r',   'LineWidth', 2, 'DisplayName', ...
+    sprintf('Measured fn=%.0fHz', f_measured));
+grid on;
+xlabel('Time (ms)'); ylabel('Voltage (V)');
+title('RLC Step Response \mdash Theory vs Measurement');
+legend('Location', 'northeast');
 ```
 
-Observe the poles.
+## Pole Locations
 
-These poles determine:
+Inspect the poles to understand stability and oscillation:
 
-- Stability
-- Oscillation
-- Damping
+```matlab
+R = 100; L = 0.1; C = 100e-9;
+p = roots([L, R, 1/C]);
+fprintf('Poles: %.1f %+.1fi  and  %.1f %+.1fi\n', ...
+    real(p(1)), imag(p(1)), real(p(2)), imag(p(2)));
+pzmap(tf([1/C], [L, R, 1/C])); grid on;
+title('Pole-Zero Map');
+```
+
+## Reflection
+
+- How close is your measured fn to the theoretical value?
+- Are the poles real or complex? What does that tell you about the response?
+- What would happen to the poles if you increased R to 470Ω?
 
 ---
 
@@ -929,6 +1002,18 @@ __________________________
 ## Question 5
 
 Why is an RLC circuit a second-order system?
+
+Answer:
+
+```text
+__________________________
+```
+
+---
+
+## Question 6
+
+Your MATLAB simulation predicted fn = 1591 Hz but you measured fn = 1520 Hz. Name two physical reasons that could explain this discrepancy.
 
 Answer:
 

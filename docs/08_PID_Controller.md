@@ -296,16 +296,105 @@ Reduces overshoot.
 
 ---
 
+# MATLAB Simulation
+
+Before building the circuit, simulate the closed-loop PID response on the motor plant to predict how derivative action reduces overshoot.
+
+## PID Transfer Function
+
+The PID controller in the s-domain is:
+
+$$
+C(s) = K_P + \frac{K_I}{s} + K_D s
+$$
+
+## Effect of Kd — Fixed Kp and Ki
+
+```matlab
+K   = 1;
+tau = 0.5;        % your measured tau from Project 5
+Kp  = 0.5;
+Ki  = 1.0;
+
+G = tf(K, [tau, 1]);
+
+Kd_values = [0, 0.05, 0.10, 0.20, 0.50];
+labels    = {'Kd=0 (PI)','Kd=0.05','Kd=0.10','Kd=0.20','Kd=0.50'};
+
+t = 0:0.01:8;
+
+figure; hold on;
+for i = 1:5
+    C = tf([Kd_values(i), Kp, Ki], [1, 0]);
+    T = feedback(C * G, 1);
+    [y, ~] = step(T, t);
+    plot(t, y, 'LineWidth', 2, 'DisplayName', labels{i});
+end
+yline(1.0, 'k--', 'Reference');
+grid on;
+xlabel('Time (s)'); ylabel('Normalised Output');
+title('PID Controller \mdash Effect of K_D (Motor Plant)');
+legend('Location', 'northeast');
+```
+
+## Simulate Experiment 3 Cases
+
+```matlab
+K   = 1;
+tau = 0.5;
+G   = tf(K, [tau, 1]);
+
+cases = [
+    2.0, 0.0, 0.0;   % Case 1: large Kp only
+    0.5, 0.5, 0.0;   % Case 2: PI
+    0.5, 0.5, 0.2;   % Case 3: PID
+];
+labels = {'Case 1: Kp=2 (P only)', ...
+          'Case 2: Kp=0.5 Ki=0.5 (PI)', ...
+          'Case 3: Kp=0.5 Ki=0.5 Kd=0.2 (PID)'};
+
+t = 0:0.01:8;
+
+figure; hold on;
+for i = 1:3
+    Kp = cases(i,1); Ki = cases(i,2); Kd = cases(i,3);
+    C  = tf([Kd, Kp, Ki], [1, 0]);
+    T  = feedback(C * G, 1);
+    [y, ~] = step(T, t);
+    info = stepinfo(T);
+    plot(t, y, 'LineWidth', 2, 'DisplayName', ...
+        sprintf('%s | OS=%.1f%% Ts=%.2fs', labels{i}, info.Overshoot, info.SettlingTime));
+end
+yline(1.0, 'k--', 'Reference');
+grid on;
+xlabel('Time (s)'); ylabel('Normalised Output');
+title('PID \mdash Experiment 3 Cases');
+legend('Location', 'northeast');
+```
+
+## Prediction Table
+
+| Case | Kp | Ki | Kd | Predicted overshoot | Predicted settling time |
+|------|----|----|----|--------------------|-----------------------|
+| 1 | 2.0 | 0 | 0 | | |
+| 2 | 0.5 | 0.5 | 0 | | |
+| 3 | 0.5 | 0.5 | 0.2 | | |
+
+---
+
 # Components Required
 
-From the SparkFun Inventor Kit:
+Same circuit as Projects 6 and 7:
 
 - Arduino Uno
-- Potentiometer
 - Breadboard
-- LED
-- 220 Ω resistor
+- Potentiometer (setpoint)
+- IRLZ44N MOSFET
+- DC Motor
+- Flyback diode (1N4001–1N4007)
+- 220 Ω resistor (gate resistor)
 - Jumper wires
+- External battery pack
 
 Equipment:
 
@@ -313,41 +402,32 @@ Equipment:
 
 ---
 
-# Experiment 1 - Implement a PID Controller
+# Experiment 1 - Implement a PID Motor Controller
 
 ## Objective
 
-Create a simple PID controller in Arduino.
+Implement a full PID controller driving the motor via MOSFET.
+The potentiometer sets the speed reference.
 
 ---
 
-# Wiring
+# Circuit
 
-Potentiometer:
+Same as Projects 6 and 7:
 
-```mermaid
-graph LR
+```text
+Battery +
+    |
+  Motor
+    |--- Flyback diode (cathode to Battery+)
+  Drain
+  MOSFET (IRLZ44N)
+  Source
+    |
+   GND
 
-A[5V]
---> B[Potentiometer]
-
-B --> C[A0]
-
-D[GND]
---> B
-```
-
-LED:
-
-```mermaid
-graph LR
-
-A[Pin 9]
---> B[220 Ohm]
-
-B --> C[LED]
-
-C --> D[GND]
+Arduino Pin 9 --- 220Ω --- Gate
+Potentiometer centre pin --- A0
 ```
 
 ---
@@ -355,44 +435,43 @@ C --> D[GND]
 # Arduino Code
 
 ```cpp
-float Kp = 0.2;
-float Ki = 0.02;
-float Kd = 0.05;
+float Kp = 0.5;
+float Ki = 1.0;
+float Kd = 0.1;
 
-float integral = 0;
+const float dt           = 0.01;    // sample time (s) matches delay(10)
+const float integral_max = 200.0;
+
+float integral     = 0;
 float previousError = 0;
 
 void setup()
 {
     pinMode(9, OUTPUT);
+    Serial.begin(9600);
 }
 
 void loop()
 {
-    int reference = analogRead(A0);
+    int reference = analogRead(A0);           // desired speed (0-1023)
+    int feedback  = 0;                        // no sensor yet
 
-    int feedback = 0;
+    float error      = reference - feedback;
+    integral         = integral + error * dt;
+    integral         = constrain(integral, -integral_max, integral_max);
+    float derivative = (error - previousError) / dt;
 
-    float error = reference - feedback;
+    float output = Kp * error + Ki * integral + Kd * derivative;
+    output = constrain(output, 0, 255);
 
-    integral = integral + error;
+    analogWrite(9, (int)output);
 
-    integral = constrain(integral,-1000,1000);
-
-    float derivative =
-        error - previousError;
-
-    float output =
-          Kp * error
-        + Ki * integral
-        + Kd * derivative;
-
-    output = constrain(output,0,255);
-
-    analogWrite(9,(int)output);
+    Serial.print("Ref: ");  Serial.print(reference);
+    Serial.print("  Int: "); Serial.print(integral, 2);
+    Serial.print("  Der: "); Serial.print(derivative, 2);
+    Serial.print("  PWM: "); Serial.println((int)output);
 
     previousError = error;
-
     delay(10);
 }
 ```
@@ -764,50 +843,59 @@ Characteristics:
 
 ---
 
-# MATLAB Exercise
+# MATLAB Comparison
 
-Create example controller responses.
+Now simulate the closed-loop PID response using your actual gains from Experiments 2 and 3, and compare P, PI and PID directly.
+
+## Enter Your Parameters
 
 ```matlab
-t = 0:0.01:10;
+K   = 1;
+tau = 0.5;       % your measured tau from Project 5
+Kp  = 0.5;       % your tuned value
+Ki  = 1.0;       % your tuned value
+Kd  = 0.1;       % your tuned value
 
-y1 = 1-exp(-t);
+G    = tf(K, [tau, 1]);
+C_P  = tf(Kp, 1);
+C_PI = tf([Kp, Ki], [1, 0]);
+C_PID = tf([Kd, Kp, Ki], [1, 0]);
 
-y2 = 1-exp(-t).*cos(5*t);
+T_P   = feedback(C_P   * G, 1);
+T_PI  = feedback(C_PI  * G, 1);
+T_PID = feedback(C_PID * G, 1);
 
-plot(t,y1,'LineWidth',2)
+t = 0:0.01:8;
+[y_P,   ~] = step(T_P,   t);
+[y_PI,  ~] = step(T_PI,  t);
+[y_PID, ~] = step(T_PID, t);
 
-hold on
+figure; hold on;
+plot(t, y_P,   'b:',  'LineWidth', 2, 'DisplayName', 'P');
+plot(t, y_PI,  'r--', 'LineWidth', 2, 'DisplayName', 'PI');
+plot(t, y_PID, 'g',   'LineWidth', 2, 'DisplayName', 'PID');
+yline(1.0, 'k--', 'Reference');
+grid on;
+xlabel('Time (s)'); ylabel('Normalised Output');
+title('P vs PI vs PID \mdash Motor Plant');
+legend('Location', 'northeast');
 
-plot(t,y2,'LineWidth',2)
-
-grid on
-
-legend('Well Damped','Oscillatory')
-
-xlabel('Time (s)')
-ylabel('Response')
-
-title('Closed Loop Response Comparison')
+% Print performance metrics
+controllers = {T_P, T_PI, T_PID};
+names       = {'P', 'PI', 'PID'};
+fprintf('%-6s %-12s %-12s %-12s\n', 'Type', 'RiseTime(s)', 'Overshoot(%)', 'SettlingTime(s)');
+for i = 1:3
+    info = stepinfo(controllers{i});
+    fprintf('%-6s %-12.3f %-12.1f %-12.3f\n', ...
+        names{i}, info.RiseTime, info.Overshoot, info.SettlingTime);
+end
 ```
 
----
+## Reflection
 
-# Expected Result
-
-Compare:
-
-```text
-Well Damped Response
-```
-
-with:
-
-```text
-Oscillatory Response
-```
-
-The goal of derivative action is to make the response more damped.
+- Does adding Kd reduce overshoot compared to PI alone?
+- Is there a Kd value beyond which the response gets worse? Why?
+- How do the printed metrics compare to what you observed on the motor?
 
 ---
 
@@ -907,6 +995,18 @@ ____________________
 
 ---
 
+## Question 6
+
+Your MATLAB comparison shows PID settling time is shorter than PI but overshoot is also lower. Explain in terms of the derivative term why this is possible — how can the controller be both faster and less oscillatory?
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
 # Common Mistakes
 
 ## Excessive Oscillation
@@ -924,11 +1024,18 @@ or increase:
 
 ## Very Slow Response
 
-Increase:
+Increase Kp carefully.
 
-- Kp
+---
 
-carefully.
+## Motor Doesn't Respond
+
+Check:
+
+- MOSFET wiring
+- Battery connected
+- Shared ground
+- Flyback diode installed
 
 ---
 
@@ -936,36 +1043,34 @@ carefully.
 
 Check:
 
-- Output limits
-- Integral windup
+- Output constrain() limits
+- Anti-windup limit
+- Kp/Ki values
 
 ---
 
-## No Visible PWM Changes
+## Derivative Spike on Setpoint Change
 
-Check:
-
-- Probe connections
-- Gain values
-- Arduino code
+This is normal — the derivative term reacts to the sudden change in error.
+Reduce Kd or apply derivative on measurement only (advanced topic).
 
 ---
 
 # Troubleshooting Checklist
 
-✅ PWM output present
+✅ Motor circuit wired correctly (same as Projects 6 and 7)
 
-✅ DSO Nano connected
+✅ Shared ground between Arduino and battery
 
-✅ Kp set correctly
+✅ Serial Monitor shows reference, integral, derivative and PWM
 
-✅ Ki set correctly
+✅ PWM duty cycle visible on DSO Nano
 
-✅ Kd set correctly
+✅ Anti-windup limit in code
 
-✅ Integral windup limited
+✅ dt constant matches delay() value
 
-✅ PWM changes when gains change
+✅ Motor speed changes with potentiometer
 
 ---
 

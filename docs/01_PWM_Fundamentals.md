@@ -282,6 +282,99 @@ Pin 9
 
 ---
 
+# MATLAB Simulation
+
+Before building the circuit, simulate a PWM waveform in MATLAB to predict what you will observe on the oscilloscope.
+
+## Simulate a PWM Waveform
+
+```matlab
+fs = 490;
+D = 0.5;
+
+T = 1/fs;
+ts = T/1000;
+t = 0:ts:4*T;
+
+pwm = double(mod(t,T) < D*T);
+
+plot(t*1000, pwm*5, 'LineWidth', 2)
+
+grid on
+ylim([-0.5 6])
+
+xlabel('Time (ms)')
+ylabel('Voltage (V)')
+title('Simulated PWM Waveform - 490 Hz, 50% Duty Cycle')
+```
+
+## Expected Result
+
+You should see a square wave switching between:
+
+```text
+0 V
+```
+
+and
+
+```text
+5 V
+```
+
+with equal ON and OFF times.
+
+## Predict
+
+Before measuring, record your predictions:
+
+| Parameter | Predicted Value |
+|-----------|----------------|
+| Frequency | |
+| Period | |
+| Duty Cycle | |
+| Peak Voltage | |
+
+---
+
+## Simulate Multiple Duty Cycles
+
+Repeat the simulation for 25%, 50% and 75% duty cycles:
+
+```matlab
+fs = 490;
+T = 1/fs;
+ts = T/1000;
+t = 0:ts:4*T;
+
+D_values = [0.25, 0.5, 0.75];
+labels = {'25%', '50%', '75%'};
+
+figure
+
+for k = 1:3
+    D = D_values(k);
+    pwm = double(mod(t,T) < D*T);
+
+    subplot(3,1,k)
+    plot(t*1000, pwm*5, 'LineWidth', 2)
+    grid on
+    ylim([-0.5 6])
+    ylabel('Voltage (V)')
+    title(['Duty Cycle = ' labels{k}])
+end
+
+xlabel('Time (ms)')
+```
+
+## Expected Result
+
+Observe how the ON time increases as duty cycle increases while the period remains constant.
+
+This is exactly what you will measure on the oscilloscope in the experiments below.
+
+---
+
 # Required Components
 
 ## SparkFun Inventor Kit
@@ -634,36 +727,75 @@ A higher duty cycle means:
 
 ---
 
-# MATLAB Exercise
+# MATLAB Comparison
 
-Plot average voltage versus duty cycle.
+Now compare your measured results against the theoretical prediction.
+
+## Step 1 - Plot the Theoretical Line
 
 ```matlab
 D = 0:0.01:1;
 
-Vavg = 5 .* D;
+Vavg_theory = 5 .* D;
 
-plot(D,Vavg,'LineWidth',2)
+plot(D, Vavg_theory, 'b-', 'LineWidth', 2)
 
 grid on
+hold on
 
 xlabel('Duty Cycle')
 ylabel('Average Voltage (V)')
-
-title('PWM Average Voltage')
+title('PWM Average Voltage - Theory vs Measurement')
 ```
 
----
+## Step 2 - Overlay Your Measurements
 
-# Expected Result
+Enter the duty cycle values you measured from the oscilloscope and the corresponding average voltages you calculated:
 
-According to:
+```matlab
+% Enter your measured duty cycles here
+D_measured = [0.25, 0.50, 0.75, 1.00];
 
-$$
-V_{AVG} = D \cdot V_S
-$$
+% Calculate expected average voltages from your measurements
+Vavg_measured = 5 .* D_measured;
 
-the graph of average voltage versus duty cycle should be a straight line.
+plot(D_measured, Vavg_measured, 'ro', ...
+    'MarkerSize', 10, ...
+    'MarkerFaceColor', 'r')
+
+legend('Theory', 'Measured', 'Location', 'northwest')
+```
+
+## Step 3 - Simulate the Measured Waveforms
+
+Using your measured frequency, simulate the waveform and compare against the theoretical 490 Hz:
+
+```matlab
+% Replace with your measured frequency
+f_measured = 490;
+
+T_measured = 1/f_measured;
+ts = T_measured/1000;
+t = 0:ts:4*T_measured;
+
+pwm = double(mod(t, T_measured) < 0.5*T_measured);
+
+figure
+plot(t*1000, pwm*5, 'LineWidth', 2)
+grid on
+ylim([-0.5 6])
+xlabel('Time (ms)')
+ylabel('Voltage (V)')
+title(['Simulated PWM at Measured Frequency: ' num2str(f_measured) ' Hz'])
+```
+
+## Reflection
+
+Answer the following:
+
+- Do your measured points fall on the theoretical line?
+- Does the simulated waveform match what you observed on the oscilloscope?
+- If there are differences, what might explain them?
 
 ---
 
@@ -738,6 +870,18 @@ ____________________
 ## Question 4
 
 Why does PWM control LED brightness?
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
+## Question 5
+
+Your MATLAB simulation predicted a frequency of 490 Hz but you measured 492 Hz on the oscilloscope. What could explain this difference?
 
 Answer:
 

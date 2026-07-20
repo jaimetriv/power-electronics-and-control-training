@@ -399,16 +399,96 @@ Reduced Error
 
 ---
 
+# MATLAB Simulation
+
+Before building the circuit, simulate the closed-loop P controller applied to the first-order motor model from Project 5.
+
+## Closed-Loop Step Response — Effect of Kp
+
+The closed-loop transfer function for a P controller with a first-order plant is:
+
+$$
+T(s) = \frac{K_P G(s)}{1 + K_P G(s)}
+$$
+
+where:
+
+$$
+G(s) = \frac{K}{\tau s + 1}
+$$
+
+```matlab
+% Use the motor model identified in Project 5
+K   = 1;
+tau = 0.5;          % replace with your measured tau from Project 5
+
+G = tf(K, [tau, 1]);
+
+Kp_values = [0.5, 1.0, 2.0, 5.0, 10.0];
+labels    = {'Kp=0.5','Kp=1','Kp=2','Kp=5','Kp=10'};
+
+t = 0:0.01:5;
+
+figure; hold on;
+for i = 1:5
+    T = feedback(Kp_values(i) * G, 1);
+    [y, ~] = step(T, t);
+    plot(t, y, 'LineWidth', 2, 'DisplayName', labels{i});
+end
+yline(1.0, 'k--', 'Reference');
+grid on;
+xlabel('Time (s)'); ylabel('Normalised Output');
+title('P Controller \mdash Closed-Loop Step Response');
+legend('Location', 'southeast');
+```
+
+## Steady-State Error vs Kp
+
+For a first-order plant with unity feedback, the steady-state error is:
+
+$$
+e_{ss} = \frac{1}{1 + K_P K}
+$$
+
+```matlab
+Kp_range = 0.1:0.1:20;
+K = 1;
+ess = 1 ./ (1 + Kp_range .* K);
+
+figure;
+plot(Kp_range, ess * 100, 'b', 'LineWidth', 2);
+grid on;
+xlabel('Kp'); ylabel('Steady-State Error (%)');
+title('P Controller \mdash Steady-State Error vs Gain');
+```
+
+## Prediction Table
+
+Record your predicted steady-state error before experimenting:
+
+| Kp | Predicted e\_{ss} (%) | Expected behaviour |
+|----|----------------------|--------------------|
+| 0.5 | | |
+| 1.0 | | |
+| 2.0 | | |
+| 5.0 | | |
+| 10.0 | | |
+
+---
+
 # Components Required
 
-From the SparkFun Inventor Kit:
+From your existing kit:
 
 - Arduino Uno
 - Breadboard
-- Potentiometer
-- LED
-- 220 Ω resistor
+- Potentiometer (feedback sensor)
+- IRLZ44N MOSFET
+- DC Motor
+- Flyback diode (1N4001–1N4007)
+- 220 Ω resistor (gate resistor)
 - Jumper wires
+- External battery pack
 
 Equipment:
 
@@ -420,7 +500,7 @@ Equipment:
 
 ## Objective
 
-Generate a user-adjustable reference input.
+Generate a user-adjustable reference input using the potentiometer.
 
 ---
 
@@ -468,27 +548,38 @@ Rotating the potentiometer changes the measured value between approximately:
 0 and 1023
 ```
 
+This value represents the desired motor speed setpoint.
+
 ---
 
-# Experiment 2 - Simple Proportional Controller
+# Experiment 2 - Proportional Motor Speed Controller
 
 ## Objective
 
-Control LED brightness using proportional gain.
+Control motor speed using a P controller.
+
+The potentiometer acts as the speed setpoint.
+The motor PWM is the controller output.
+
+> Note: Without a speed sensor, this experiment demonstrates open-loop P control — the controller output is proportional to the setpoint. True closed-loop control (with feedback) is introduced conceptually here and implemented fully when a sensor is available.
 
 ---
 
-# Wiring
+# Circuit
 
-```mermaid
-graph TD
+```text
+Battery +
+    |
+  Motor
+    |--- Flyback diode (cathode to Battery+)
+  Drain
+  MOSFET (IRLZ44N)
+  Source
+    |
+   GND
 
-A[Pin 9]
---> B[220 Ohm]
-
-B --> C[LED]
-
-C --> D[GND]
+Arduino Pin 9 --- 220Ω --- Gate
+Potentiometer centre pin --- A0
 ```
 
 ---
@@ -501,17 +592,21 @@ float Kp = 0.25;
 void setup()
 {
     pinMode(9, OUTPUT);
+    Serial.begin(9600);
 }
 
 void loop()
 {
-    int reference = analogRead(A0);
-
-    int output = (int)(Kp * reference);
-
-    output = constrain(output,0,255);
+    int reference = analogRead(A0);          // desired speed (0-1023)
+    int output    = (int)(Kp * reference);   // P controller: u = Kp * r
+    output        = constrain(output, 0, 255);
 
     analogWrite(9, output);
+
+    Serial.print("Ref: "); Serial.print(reference);
+    Serial.print("  PWM: "); Serial.println(output);
+
+    delay(50);
 }
 ```
 
@@ -519,23 +614,21 @@ void loop()
 
 # What Is Happening?
 
-The potentiometer generates:
+The potentiometer generates the reference:
 
 $$
 r
 $$
 
-The controller computes:
+The P controller computes:
 
 $$
-u=K_Pr
+u = K_P \cdot r
 $$
 
-The LED brightness represents:
+The PWM duty cycle drives the motor via the MOSFET.
 
-```text
-Controller Output
-```
+Rotating the pot increases the reference → increases PWM → increases motor speed.
 
 ---
 
@@ -543,7 +636,7 @@ Controller Output
 
 ## Objective
 
-Observe how gain changes controller behaviour.
+Observe how Kp changes the relationship between setpoint and motor speed.
 
 ---
 
@@ -605,68 +698,48 @@ ______________________
 
 # Results Table
 
-| Kp | Behaviour |
-|----|----------|
-| 0.1 | |
-| 0.25 | |
-| 0.5 | |
-| 1.0 | |
+| Kp | Motor behaviour | PWM saturates? |
+|----|----------------|----------------|
+| 0.1 | | |
+| 0.25 | | |
+| 0.5 | | |
+| 1.0 | | |
 
 ---
 
 # Experiment 4 - Error Calculation
 
-Suppose:
-
-Reference:
+Suppose the desired speed corresponds to:
 
 $$
-r=200
+r = 200
 $$
 
-Measured Output:
+and the measured output is:
 
 $$
-y=150
+y = 150
 $$
 
 Calculate error:
 
 $$
-e=r-y
+e = r - y = 200 - 150 = 50
 $$
-
-$$
-e=200-150
-$$
-
-$$
-e=50
-$$
-
----
 
 If:
 
 $$
-K_P=2
+K_P = 2
 $$
 
 Then:
 
 $$
-u=K_Pe
+u = K_P e = 2 \times 50 = 100
 $$
 
-$$
-u=2 \cdot 50
-$$
-
-$$
-u=100
-$$
-
-The controller increases its output to reduce the error.
+The controller increases PWM to reduce the error.
 
 ---
 
@@ -675,16 +748,16 @@ The controller increases its output to reduce the error.
 ```mermaid
 graph LR
 
-R[Reference]
+R[Reference\nPotentiometer]
 --> E[Error]
 
 E --> C[P Controller]
 
-C --> P[Plant]
+C --> P[MOSFET + Motor]
 
-P --> Y[Output]
+P --> Y[Motor Speed]
 
-Y --> F[Feedback]
+Y --> F[Speed Sensor\nfuture]
 
 F --> E
 ```
@@ -693,7 +766,7 @@ F --> E
 
 # DSO Nano Exercise
 
-Observe the PWM signal generated by the controller.
+Observe how the PWM duty cycle changes as you rotate the potentiometer.
 
 ---
 
@@ -702,7 +775,7 @@ Observe the PWM signal generated by the controller.
 Probe Tip:
 
 ```text
-Pin 9
+MOSFET Gate (Pin 9)
 ```
 
 Probe Ground:
@@ -737,9 +810,13 @@ Rising Edge
 
 # Observation
 
-Rotate the potentiometer.
+Rotate the potentiometer slowly from minimum to maximum.
 
-Observe how the PWM duty cycle changes.
+Observe:
+
+- PWM duty cycle increases
+- Motor speed increases
+- At high Kp, PWM saturates at 100% before pot reaches maximum
 
 Record:
 
@@ -817,36 +894,43 @@ Stability
 
 ---
 
-# MATLAB Exercise
+# MATLAB Comparison
 
-Plot controller output versus error.
+Now simulate the closed-loop response using your actual Kp values from Experiment 3 and the motor model from Project 5.
+
+## Enter Your Parameters
 
 ```matlab
-e = 0:100;
+K   = 1;
+tau = 0.5;       % your measured tau from Project 5 (s)
 
-Kp = 0.5;
+G = tf(K, [tau, 1]);
 
-u = Kp .* e;
+Kp_tested = [0.1, 0.25, 0.5, 1.0];   % your Experiment 3 values
+labels    = {'Kp=0.1','Kp=0.25','Kp=0.5','Kp=1.0'};
 
-plot(e,u,'LineWidth',2)
+t = 0:0.01:5;
 
-grid on
-
-xlabel('Error')
-ylabel('Controller Output')
-
-title('Proportional Controller')
+figure; hold on;
+for i = 1:4
+    T = feedback(Kp_tested(i) * G, 1);
+    [y, ~] = step(T, t);
+    ess = 1 / (1 + Kp_tested(i) * K);
+    plot(t, y, 'LineWidth', 2, 'DisplayName', ...
+        sprintf('%s  e_{ss}=%.1f%%', labels{i}, ess*100));
+end
+yline(1.0, 'k--', 'Reference');
+grid on;
+xlabel('Time (s)'); ylabel('Normalised Output');
+title('P Controller \mdash Closed-Loop Response (Motor Plant)');
+legend('Location', 'southeast');
 ```
 
----
+## Reflection
 
-# Expected Result
-
-The graph should be a straight line because:
-
-$$
-u=K_Pe
-$$
+- Which Kp gave the fastest response without saturation?
+- Does the simulated steady-state error match the formula $e_{ss} = 1/(1 + K_P K)$?
+- What would happen to the response if τ were larger (heavier motor load)?
 
 ---
 
@@ -946,15 +1030,37 @@ ____________________
 
 ---
 
+## Question 6
+
+Your simulation shows e_ss = 16.7% at Kp = 5. What would Kp need to be to reduce e_ss below 5%? Show your working using the formula $e_{ss} = 1/(1 + K_P K)$.
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
 # Common Mistakes
 
-## LED Always Fully ON
+## Motor Doesn't Respond to Pot
 
 Check:
 
-- Gain value
-- PWM saturation
-- Potentiometer wiring
+- MOSFET wiring
+- Battery connected
+- Shared ground between Arduino and motor supply
+- Flyback diode installed
+
+---
+
+## PWM Saturates Immediately
+
+Check:
+
+- Kp value (reduce it)
+- Potentiometer reading in Serial Monitor
 
 ---
 
@@ -963,34 +1069,33 @@ Check:
 Check:
 
 - Centre pin connected to A0
-- 5V connected
-- GND connected
+- 5V and GND connected to outer pins
 
 ---
 
-## No PWM Visible
+## No PWM Visible on DSO Nano
 
 Check:
 
-- Probe location
+- Probe on MOSFET gate
 - Trigger setting
-- Arduino code
+- Arduino code uploaded
 
 ---
 
 # Troubleshooting Checklist
 
-✅ Potentiometer reading changes
+✅ Motor circuit wired correctly (MOSFET + flyback diode)
 
-✅ PWM output present
+✅ Shared ground between Arduino and battery
 
-✅ LED brightness changes
+✅ Potentiometer reading changes in Serial Monitor
 
-✅ DSO Nano connected correctly
+✅ PWM duty cycle visible on DSO Nano
 
-✅ Gain value correct
+✅ Motor speed changes with potentiometer
 
-✅ PWM duty cycle responds to potentiometer movement
+✅ Kp value produces unsaturated PWM range
 
 ---
 

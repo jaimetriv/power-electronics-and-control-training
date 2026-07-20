@@ -365,6 +365,97 @@ $$
 
 ---
 
+# MATLAB Simulation
+
+Before building the circuit, simulate the closed-loop PI voltage regulator applied to the Buck Converter plant.
+
+## Buck Converter Plant Model
+
+The LC output filter of a Buck Converter is a second-order plant:
+
+$$
+G(s) = \frac{1}{LCs^2 + \frac{L}{R}s + 1}
+$$
+
+For a resistive load R and the voltage divider scaling the feedback by 0.5:
+
+```matlab
+L   = 100e-6;      % 100 uH
+C   = 100e-6;      % 100 uF
+R   = 100;         % assumed load resistance (Ohm)
+Vin = 5;           % supply voltage
+
+% Open-loop plant (LC filter)
+G = tf(1, [L*C, L/R, 1]);
+
+% Voltage divider scales feedback by 0.5
+H = 0.5;
+
+t = 0:0.0001:0.5;
+
+figure;
+[y_ol, ~] = step(Vin * G, t);
+plot(t*1e3, y_ol, 'k--', 'LineWidth', 2, 'DisplayName', 'Open-loop');
+hold on;
+```
+
+## Closed-Loop PI Response — Three Gain Sets
+
+```matlab
+gain_sets = [2, 0.2; 10, 1.0; 50, 5.0];
+labels    = {'Kp=2  Ki=0.2', 'Kp=10 Ki=1', 'Kp=50 Ki=5'};
+
+for i = 1:3
+    Kp = gain_sets(i,1);
+    Ki = gain_sets(i,2);
+    C_pi = tf([Kp, Ki], [1, 0]);
+    T    = feedback(C_pi * G * Vin, H);
+    [y, ~] = step(T, t);
+    plot(t*1e3, y, 'LineWidth', 2, 'DisplayName', labels{i});
+end
+
+yline(2.5, 'r:', 'Reference 2.5V');
+grid on;
+xlabel('Time (ms)'); ylabel('Output Voltage (V)');
+title('Closed-Loop Buck Converter \mdash PI Gain Comparison');
+legend('Location', 'southeast');
+```
+
+## Simulate Disturbance Rejection
+
+```matlab
+Kp = 10; Ki = 1;
+C_pi  = tf([Kp, Ki], [1, 0]);
+T_cl  = feedback(C_pi * G * Vin, H);
+T_ol  = G * Vin * 0.5;              % open-loop at D=0.5
+
+% Disturbance: step load change modelled as output disturbance
+T_dist_cl = feedback(G * Vin, H * C_pi);   % disturbance to output
+T_dist_ol = G * Vin;                        % no correction
+
+t = 0:0.0001:0.5;
+[y_cl, ~] = step(T_dist_cl * 0.1, t);      % 0.1V disturbance step
+[y_ol_d, ~] = step(T_dist_ol * 0.1, t);
+
+figure; hold on;
+plot(t*1e3, y_ol_d, 'b--', 'LineWidth', 2, 'DisplayName', 'Open-loop');
+plot(t*1e3, y_cl,   'r',   'LineWidth', 2, 'DisplayName', 'Closed-loop PI');
+grid on;
+xlabel('Time (ms)'); ylabel('Voltage Deviation (V)');
+title('Disturbance Rejection \mdash Open vs Closed Loop');
+legend('Location', 'northeast');
+```
+
+## Prediction Table
+
+| Kp | Ki | Predicted behaviour | Predicted ess |
+|----|----|--------------------|--------------|
+| 2 | 0.2 | | |
+| 10 | 1 | | |
+| 50 | 5 | | |
+
+---
+
 # Components Required
 
 - Arduino Uno
@@ -450,42 +541,38 @@ Automatically regulate output voltage.
 # Arduino Code
 
 ```cpp
+const float dt        = 0.01;     // sample time (s) — matches delay(10)
+const float Vref      = 2.5;      // target output voltage at A0 (V)
+const float int_max   = 50.0;
+
 float Kp = 10.0;
 float Ki = 1.0;
-
 float integral = 0;
-
-float reference = 2.5;
 
 void setup()
 {
     pinMode(9, OUTPUT);
+    Serial.begin(9600);
 }
 
 void loop()
 {
-    int adc = analogRead(A0);
+    int   adc      = analogRead(A0);
+    float Vfb      = (adc / 1023.0) * 5.0;   // voltage at divider midpoint
+    float Vout_est = Vfb * 2.0;               // actual Vout (divider x2)
+    float error    = Vref - Vfb;              // error in divider-scaled units
 
-    float feedback =
-        (adc / 1023.0) * 5.0;
+    integral = integral + error * dt;
+    integral = constrain(integral, -int_max, int_max);
 
-    float error =
-        reference - feedback;
+    float control = Kp * error + Ki * integral;
+    control = constrain(control, 0, 255);
 
-    integral =
-        integral + error;
+    analogWrite(9, (int)control);
 
-    integral =
-        constrain(integral,-100,100);
-
-    float control =
-          Kp * error
-        + Ki * integral;
-
-    control =
-        constrain(control,0,255);
-
-    analogWrite(9,(int)control);
+    Serial.print("Vout: ");  Serial.print(Vout_est, 3);
+    Serial.print("V  PWM: "); Serial.print((int)control);
+    Serial.print("  Int: ");  Serial.println(integral, 3);
 
     delay(10);
 }
@@ -779,38 +866,59 @@ Characteristics:
 
 ---
 
-# MATLAB Exercise
+# MATLAB Comparison
 
-Simulate a typical closed-loop response.
+Now compare your measured steady-state output voltages against the simulated closed-loop responses.
+
+## Enter Your Measured Values
 
 ```matlab
-t = 0:0.01:5;
+L = 100e-6; C = 100e-6; R = 100; Vin = 5; H = 0.5;
+G = tf(1, [L*C, L/R, 1]);
 
-tau = 0.3;
+gain_sets = [2, 0.2; 10, 1.0; 50, 5.0];
+labels    = {'Kp=2 Ki=0.2', 'Kp=10 Ki=1', 'Kp=50 Ki=5'};
 
-y = 5*(1-exp(-t/tau));
+% Replace with your measured steady-state Vout for each gain set
+Vout_measured = [0.0, 0.0, 0.0];   % (V)
 
-plot(t,y,'LineWidth',2)
+t = 0:0.0001:0.5;
 
-grid on
+figure; hold on;
+for i = 1:3
+    Kp = gain_sets(i,1); Ki = gain_sets(i,2);
+    C_pi = tf([Kp, Ki], [1, 0]);
+    T    = feedback(C_pi * G * Vin, H);
+    [y, ~] = step(T, t);
+    info = stepinfo(T);
+    plot(t*1e3, y, 'LineWidth', 2, 'DisplayName', ...
+        sprintf('%s | OS=%.1f%% Ts=%.1fms', labels{i}, ...
+        info.Overshoot, info.SettlingTime*1e3));
+end
+yline(2.5, 'k--', 'Reference 2.5V');
+scatter([50, 50, 50], Vout_measured, 80, 'r', 'filled', ...
+    'DisplayName', 'Measured Vout');
+grid on;
+xlabel('Time (ms)'); ylabel('Output Voltage (V)');
+title('Closed-Loop Buck \mdash Simulation vs Measurement');
+legend('Location', 'southeast');
 
-xlabel('Time (s)')
-ylabel('Output Voltage (V)')
-
-title('Closed Loop Voltage Response')
+% Print steady-state error for each case
+fprintf('%-14s %-14s %-14s\n', 'Gains', 'Sim Vout(V)', 'Meas Vout(V)');
+for i = 1:3
+    Kp = gain_sets(i,1); Ki = gain_sets(i,2);
+    C_pi = tf([Kp, Ki], [1, 0]);
+    T    = feedback(C_pi * G * Vin, H);
+    y_ss = dcgain(T);
+    fprintf('%-14s %-14.3f %-14.3f\n', labels{i}, y_ss, Vout_measured(i));
+end
 ```
 
----
+## Reflection
 
-# Expected Result
-
-The voltage should smoothly reach:
-
-$$
-5V
-$$
-
-with minimal error.
+- Does the PI controller eliminate steady-state error in both simulation and measurement?
+- Which gain set gave the best balance of speed and stability on the real converter?
+- Why might the real converter oscillate at lower gains than the simulation predicts? (parasitic inductance, ADC noise, sample time effects)
 
 ---
 
@@ -901,6 +1009,18 @@ ____________________
 ## Question 5
 
 What happens if the gains are too large?
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
+## Question 6
+
+The voltage divider scales Vout by 0.5 before the ADC. The reference in the code is set to 2.5V. What actual output voltage is the controller regulating to, and what would you change in the code to regulate to 3.0V instead?
 
 Answer:
 

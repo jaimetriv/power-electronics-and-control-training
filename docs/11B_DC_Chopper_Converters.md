@@ -366,6 +366,66 @@ Motor speed is approximately proportional to average voltage.
 
 ---
 
+# MATLAB Simulation
+
+Before building the circuit, simulate the chopper waveforms and unified converter comparison to consolidate what you have learned in Projects 9, 10 and 11.
+
+## Unified Chopper Comparison
+
+```matlab
+Vin = 5;
+D   = 0:0.001:0.95;
+
+Vout_typeA = Vin .* D;              % Type A: step-down (Buck)
+Vout_typeB = Vin ./ (1 - D);        % Type B: step-up (Boost)
+Vavg_motor = Vin .* D;              % Chopper motor drive (same as Type A)
+
+figure; hold on;
+plot(D, Vout_typeA, 'b',  'LineWidth', 2, 'DisplayName', 'Type A (Buck)  V_{OUT}=D\cdotV_{IN}');
+plot(D, Vout_typeB, 'r',  'LineWidth', 2, 'DisplayName', 'Type B (Boost) V_{OUT}=V_{IN}/(1-D)');
+plot(D, Vavg_motor, 'g--','LineWidth', 1.5,'DisplayName', 'Motor Drive    V_{AVG}=D\cdotV_S');
+yline(Vin, 'k:', sprintf('V_{IN} = %.0fV', Vin));
+grid on;
+xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
+title('DC Chopper Converters \mdash Unified Comparison (V_{IN}=5V)');
+legend('Location', 'northwest');
+ylim([0 20]);
+```
+
+## Simulate Chopper Waveform at Each Duty Cycle
+
+```matlab
+Vin = 5;
+fsw = 490;
+Ts  = 1 / fsw;
+duty_cycles = [0.25, 0.50, 0.75];
+t = 0:1e-6:4*Ts;
+
+figure;
+for i = 1:3
+    D   = duty_cycles(i);
+    pwm = Vin * double(mod(t, Ts) < D * Ts);
+    subplot(3,1,i);
+    plot(t*1e3, pwm, 'b', 'LineWidth', 1.5); hold on;
+    yline(Vin*D, 'r--', sprintf('V_{AVG}=%.2fV', Vin*D));
+    ylim([-0.5, 6]); grid on;
+    ylabel('V (V)');
+    title(sprintf('D = %d%%  \\rightarrow  V_{AVG} = %.2fV', D*100, Vin*D));
+end
+xlabel('Time (ms)');
+sgtitle('Chopper Waveforms \mdash 490 Hz, V_{IN}=5V');
+```
+
+## Prediction Table
+
+| PWM Value | Duty Cycle | Predicted V\_{AVG} (V) | Motor speed |
+|-----------|------------|------------------------|-------------|
+| 64 | 25% | | |
+| 128 | 50% | | |
+| 192 | 75% | | |
+
+---
+
 # Experiment 1 - PWM Chopper Waveform
 
 ## Objective
@@ -561,36 +621,65 @@ Solar power conversion.
 
 ---
 
-# MATLAB Exercise
+# MATLAB Comparison
 
-Plot output voltage versus duty cycle.
+Now overlay your measured duty cycles and average voltages against the ideal chopper theory, and consolidate all three converter types on one plot.
+
+## Enter Your Measured Values
 
 ```matlab
-D = 0:0.01:1;
+Vin = 5;
 
-Vin = 12;
+D_measured    = [0.25,  0.50,  0.75];   % measured duty cycles
+Vavg_measured = [0.00,  0.00,  0.00];   % replace with measured average voltages (V)
 
-Vout = D .* Vin;
+D_ideal  = 0:0.01:1;
+Vavg_ideal = Vin .* D_ideal;
 
-plot(D,Vout,'LineWidth',2)
+figure; hold on;
+plot(D_ideal, Vavg_ideal, 'b--', 'LineWidth', 2, ...
+    'DisplayName', 'Ideal: V_{AVG} = D \cdot V_{IN}');
+scatter(D_measured, Vavg_measured, 80, 'r', 'filled', ...
+    'DisplayName', 'Measured');
+grid on;
+xlabel('Duty Cycle'); ylabel('Average Voltage (V)');
+title('DC Chopper \mdash Ideal vs Measured');
+legend('Location', 'northwest');
 
-grid on
-
-xlabel('Duty Cycle')
-ylabel('Output Voltage (V)')
-
-title('DC Chopper Output Voltage')
+% Print efficiency at each operating point
+fprintf('%-8s %-12s %-12s %-12s\n', 'D', 'V_ideal(V)', 'V_meas(V)', 'Error(%)');
+for i = 1:3
+    V_ideal = Vin * D_measured(i);
+    err     = 100 * abs(V_ideal - Vavg_measured(i)) / V_ideal;
+    fprintf('%-8.2f %-12.3f %-12.3f %-12.1f\n', ...
+        D_measured(i), V_ideal, Vavg_measured(i), err);
+end
 ```
 
----
+## Consolidation Plot — All Three Topologies
 
-# Expected Result
+```matlab
+Vin = 5;
+D   = 0:0.001:0.95;
 
-The graph should be linear according to:
+figure; hold on;
+plot(D, Vin.*D,          'b',  'LineWidth', 2, 'DisplayName', 'Type A Buck');
+plot(D, Vin./(1-D),      'r',  'LineWidth', 2, 'DisplayName', 'Type B Boost');
+scatter(D_measured, Vavg_measured, 80, 'gs', 'filled', ...
+    'DisplayName', 'Measured (Chopper)');
+yline(Vin, 'k:', 'V_{IN}');
+grid on;
+xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
+title('Buck / Boost / Chopper \mdash Unified View');
+legend('Location', 'northwest');
+ylim([0 20]);
+```
 
-$$
-V_{OUT}=D \cdot V_{IN}
-$$
+## Reflection
+
+- Do your measured average voltages fall on the ideal line?
+- The Type A (Buck) and motor chopper curves are identical. What does this tell you about the relationship between a Buck Converter and a DC motor drive?
+- Why does the Type B (Boost) curve diverge rapidly from the Type A curve as D increases?
 
 ---
 
@@ -647,6 +736,18 @@ ____________________
 ## Question 5
 
 Why are chopper converters efficient?
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
+## Question 6
+
+A DC motor drive and a Buck Converter both use the equation VAVG = D × VS. Explain one key circuit difference between them that makes the Buck Converter suitable for powering sensitive electronics while the basic motor chopper is not.
 
 Answer:
 

@@ -819,38 +819,126 @@ Regulate injected current.
 
 ---
 
-# MATLAB Exercise
+# MATLAB Simulation
 
-Generate a synchronized current reference.
+Before building, simulate three key subsystems: PLL angle tracking, SPWM generation, and the PI current controller on an L-filter plant.
 
 ```matlab
-t = 0:0.0001:0.1;
+f_grid = 50;          % Hz
+Vm     = 5;           % V peak (signal generator level)
+L      = 1e-3;        % filter inductance (H)
+R      = 1;           % winding resistance (Ohm)
+I_ref  = 0.5;         % current reference (A)
+Kp_cc  = 2;           % current controller Kp
+Ki_cc  = 50;          % current controller Ki
+f_pwm  = 10000;       % PWM carrier frequency (Hz)
 
-theta = 2*pi*50*t;
+t = 0:1e-5:0.1;
+theta = 2*pi*f_grid*t;
+v_grid = Vm * sin(theta);
 
-i_ref = sin(theta);
+% --- Subplot 1: PLL angle tracking ---
+figure;
+subplot(3,1,1);
+plot(t, theta - 2*pi*floor(theta/(2*pi)), 'b', 'LineWidth', 1.5);
+xlabel('Time (s)'); ylabel('\theta (rad)');
+title(sprintf('PLL Angle Tracking  f_{grid}=%d Hz', f_grid));
+grid on;
 
-plot(t,i_ref,'LineWidth',2)
+% --- Subplot 2: SPWM carrier vs modulating signal ---
+subplot(3,1,2);
+carrier = sawtooth(2*pi*f_pwm*t, 0.5);   % triangle carrier
+mod_sig = sin(theta);                      % modulating sine
+plot(t(1:500), carrier(1:500), 'k', t(1:500), mod_sig(1:500), 'r', 'LineWidth', 1);
+legend('Carrier','Modulating'); grid on;
+xlabel('Time (s)'); ylabel('Amplitude');
+title(sprintf('SPWM  f_{pwm}=%d Hz', f_pwm));
 
-grid on
+% --- Subplot 3: PI current controller closed-loop step response ---
+subplot(3,1,3);
+s   = tf('s');
+G_L = 1 / (L*s + R);          % L-filter plant
+C   = Kp_cc + Ki_cc/s;        % PI current controller
+T   = feedback(C*G_L, 1);
+[y, t2] = step(I_ref * T, 0:1e-5:0.05);
+plot(t2, y, 'b', 'LineWidth', 1.5); hold on;
+yline(I_ref, 'k--');
+xlabel('Time (s)'); ylabel('Current (A)');
+title(sprintf('PI Current Controller  Kp=%.1f Ki=%.0f  L=%.0fmH', Kp_cc, Ki_cc, L*1e3));
+grid on;
 
-xlabel('Time (s)')
-ylabel('Current Reference')
-
-title('Grid Synchronized Current')
+si = stepinfo(T);
+fprintf('Rise time:     %.4f s\n', si.RiseTime);
+fprintf('Overshoot:     %.1f %%\n', si.Overshoot);
+fprintf('Settling time: %.4f s\n', si.SettlingTime);
 ```
+
+Record the predicted current controller rise time and overshoot before running Experiment 4.
 
 ---
 
-# Expected Result
+# MATLAB Comparison
 
-Current reference should match:
+After completing the experiments, enter your measured current tracking data and compare against the simulated PI response.
 
-```text
-50 Hz
+```matlab
+% --- Enter your system parameters ---
+L      = 1e-3;    % your filter inductance (H)
+R      = 1;       % estimated winding resistance (Ohm)
+Kp_cc  = 2;       % gains used in Experiment 4
+Ki_cc  = 50;
+I_ref  = 0.5;     % A
+f_grid = 50;      % Hz — from your signal generator
+
+% --- Enter measured current step response (time in s, current in A) ---
+t_meas = [0, 0.002, 0.005, 0.010, 0.015, 0.020, 0.030, 0.040, 0.050]; % replace
+i_meas = [0, 0.15,  0.38,  0.52,  0.50,  0.50,  0.50,  0.50,  0.50];  % replace
+
+% --- Enter measured grid frequency from oscilloscope ---
+f_meas = 50.2;    % Hz — replace with your reading
+
+s   = tf('s');
+G_L = 1 / (L*s + R);
+C   = Kp_cc + Ki_cc/s;
+T   = feedback(C*G_L, 1);
+[y_sim, t_sim] = step(I_ref * T, 0:1e-5:0.05);
+
+figure;
+subplot(2,1,1);
+plot(t_sim, y_sim, 'b-', 'LineWidth', 1.5); hold on;
+plot(t_meas, i_meas, 'ro--', 'MarkerSize', 6);
+yline(I_ref, 'k--');
+legend('Simulated','Measured'); grid on;
+xlabel('Time (s)'); ylabel('Current (A)');
+title(sprintf('PI Current Controller: Simulated vs Measured  Kp=%.1f Ki=%.0f', Kp_cc, Ki_cc));
+
+subplot(2,1,2);
+bar([f_grid, f_meas]);
+set(gca,'XTickLabel',{'Setpoint','Measured'});
+ylabel('Frequency (Hz)'); grid on;
+title(sprintf('Grid Frequency Error: %.2f Hz  (%.3f %%)', ...
+    abs(f_meas-f_grid), abs(f_meas-f_grid)/f_grid*100));
+
+% --- Metrics ---
+si = stepinfo(T);
+fprintf('Simulated rise time:    %.4f s\n', si.RiseTime);
+fprintf('Simulated overshoot:    %.1f %%\n', si.Overshoot);
+fprintf('Simulated settling time:%.4f s\n', si.SettlingTime);
+fprintf('Grid frequency error:   %.3f %%\n', abs(f_meas-f_grid)/f_grid*100);
+
+% Estimated measured settling time
+final = i_meas(end);
+within2 = find(abs(i_meas - final) <= 0.02*final, 1);
+if ~isempty(within2)
+    fprintf('Measured settling time:  %.4f s\n', t_meas(within2));
+end
 ```
 
-grid frequency.
+Reflection questions:
+
+1. Does the simulated current rise time match the measured result? What physical effects (e.g. MOSFET dead-time, sensor delay) could explain any difference?
+2. How does the grid frequency error affect the PLL angle estimate over time?
+3. What would happen to current injection if the PLL lost lock mid-cycle?
 
 ---
 
@@ -941,6 +1029,18 @@ ____________________
 ## Question 5
 
 Why is dq control useful?
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
+## Question 6
+
+During Experiment 4 your measured current settling time was longer than the MATLAB simulation predicted. List two physical causes and explain how you would update the plant model `G(s) = 1/(Ls + R)` to account for them.
 
 Answer:
 

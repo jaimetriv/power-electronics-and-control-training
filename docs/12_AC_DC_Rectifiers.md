@@ -489,24 +489,97 @@ Ripple decreases when:
 
 ---
 
-# Components Required
+# MATLAB Simulation
 
-## Additional Components
+Before building the circuit, simulate all four rectifier configurations to predict the waveforms you will observe on the DSO Nano.
 
-- 4 × 1N4001 to 1N4007 Diodes
-- 100 µF Capacitor
-- 470 µF Capacitor
-- Low-Voltage AC Source or Function Generator
-- Load Resistor
+## Simulate All Four Configurations
+
+```matlab
+Vpeak = 10;          % set to match your signal generator output (V)
+f     = 50;          % frequency (Hz)
+R     = 1000;        % load resistance (Ohm)
+t     = 0:0.0001:0.1;
+
+v_ac       = Vpeak * sin(2*pi*f*t);
+v_hw       = max(v_ac, 0);           % half-wave
+v_fw       = abs(v_ac);              % full-wave
+
+% RC smoothing: simulate capacitor discharge between peaks
+function v_smooth = smooth_rc(v_rect, t, R, C)
+    v_smooth = zeros(size(v_rect));
+    v_smooth(1) = v_rect(1);
+    dt = t(2) - t(1);
+    for i = 2:length(t)
+        v_discharge = v_smooth(i-1) * exp(-dt / (R*C));
+        v_smooth(i) = max(v_rect(i), v_discharge);
+    end
+end
+
+v_fw_100  = smooth_rc(v_fw, t, R, 100e-6);
+v_fw_470  = smooth_rc(v_fw, t, R, 470e-6);
+
+configs = {v_hw, v_fw, v_fw_100, v_fw_470};
+titles  = {'Half-Wave', 'Full-Wave (no cap)', ...
+           'Full-Wave + 100\muF', 'Full-Wave + 470\muF'};
+
+figure;
+for i = 1:4
+    subplot(4,1,i);
+    plot(t*1e3, configs{i}, 'b', 'LineWidth', 1.5); hold on;
+    yline(mean(configs{i}), 'r--', sprintf('V_{avg}=%.2fV', mean(configs{i})));
+    ripple = max(configs{i}) - min(configs{i});
+    grid on; ylim([-1, Vpeak+2]);
+    ylabel('V (V)');
+    title(sprintf('%s  |  Ripple=%.2fV', titles{i}, ripple));
+end
+xlabel('Time (ms)');
+sgtitle(sprintf('Rectifier Configurations \mdash V_{peak}=%.0fV, f=%dHz', Vpeak, f));
+```
+
+## Calculate Theoretical Values
+
+```matlab
+Vpeak = 10;
+Vf    = 0.7;          % diode forward voltage drop
+
+V_hw_avg  = (Vpeak - Vf) / pi;
+V_fw_avg  = 2*(Vpeak - 2*Vf) / pi;   % bridge: two diodes in series
+V_rms_ac  = Vpeak / sqrt(2);
+
+fprintf('AC RMS voltage:          %.2f V\n', V_rms_ac);
+fprintf('Half-wave average Vdc:   %.2f V\n', V_hw_avg);
+fprintf('Full-wave average Vdc:   %.2f V\n', V_fw_avg);
+```
+
+## Prediction Table
+
+Set your signal generator to: **10 Vpeak, 50 Hz, sine wave**
+
+| Configuration | Predicted V\_{avg} (V) | Predicted ripple |
+|---------------|----------------------|------------------|
+| Half-wave | | |
+| Full-wave | | |
+| Full-wave + 100 µF | | |
+| Full-wave + 470 µF | | |
 
 ---
 
-## Equipment
+# Components Required
 
+## Components to Purchase
+
+- 4 × 1N4001–1N4007 diodes
+- 100 µF electrolytic capacitor
+- 470 µF electrolytic capacitor
+- 1 kΩ load resistor
+
+## Equipment You Already Have
+
+- Signal generator (AC source — set to 10 Vpeak, 50 Hz, sine)
 - DSO Nano Oscilloscope
 - Multimeter
-- Breadboard
-- Jumper Wires
+- Breadboard and jumper wires
 
 ---
 
@@ -800,38 +873,55 @@ Energy transfer using inductors.
 
 ---
 
-# MATLAB Exercise
+# MATLAB Comparison
 
-Generate a full-wave rectified waveform.
+Now overlay your measured waveform parameters against the simulated predictions.
+
+## Enter Your Measured Values
 
 ```matlab
+Vpeak = 10; f = 50; R = 1000;
 t = 0:0.0001:0.1;
+v_ac = Vpeak * sin(2*pi*f*t);
+v_fw = abs(v_ac);
 
-v = 10*sin(2*pi*50*t);
+% Simulated configurations
+v_fw_100 = smooth_rc(v_fw, t, R, 100e-6);
+v_fw_470 = smooth_rc(v_fw, t, R, 470e-6);
 
-v_rect = abs(v);
+% Your measured values — replace zeros
+Vavg_measured  = [0.0, 0.0, 0.0, 0.0];   % (V) half-wave, FW, FW+100uF, FW+470uF
+ripple_measured = [0.0, 0.0, 0.0, 0.0];  % (V) peak-to-peak ripple
 
-plot(t,v,'LineWidth',1)
+configs   = {max(v_ac,0), v_fw, v_fw_100, v_fw_470};
+labels    = {'Half-Wave','Full-Wave','FW+100\muF','FW+470\muF'};
 
-hold on
+% Bar chart: simulated vs measured average voltage
+Vavg_sim = cellfun(@mean, configs);
 
-plot(t,v_rect,'LineWidth',2)
+figure;
+subplot(2,1,1);
+x = 1:4;
+bar(x, [Vavg_sim; Vavg_measured]', 0.6);
+set(gca,'XTickLabel', labels);
+legend('Simulated','Measured','Location','northwest');
+ylabel('Average Voltage (V)'); grid on;
+title('Average DC Voltage \mdash Simulation vs Measurement');
 
-grid on
-
-xlabel('Time (s)')
-ylabel('Voltage (V)')
-
-legend('AC Input','Full-Wave Rectified')
-
-title('Full-Wave Rectification')
+ripple_sim = cellfun(@(v) max(v)-min(v), configs);
+subplot(2,1,2);
+bar(x, [ripple_sim; ripple_measured]', 0.6);
+set(gca,'XTickLabel', labels);
+legend('Simulated','Measured','Location','northeast');
+ylabel('Ripple Voltage (V)'); grid on;
+title('Ripple Voltage \mdash Simulation vs Measurement');
 ```
 
----
+## Reflection
 
-# Expected Result
-
-The negative half cycles are reflected above the horizontal axis.
+- Does increasing capacitance from 100µF to 470µF reduce ripple by the ratio you expected (470/100 ≈ 4.7×)?
+- The bridge rectifier uses two diodes in series per half-cycle. How does this affect the measured average voltage compared to the simulation which assumed ideal diodes?
+- How does the ripple frequency of the full-wave rectifier compare to the input frequency, and why?
 
 ---
 
@@ -922,6 +1012,18 @@ ____________________
 ## Question 5
 
 Why is a smoothing capacitor used?
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
+## Question 6
+
+A full-wave rectifier with a 100µF capacitor produces 2V of ripple at 50Hz with a 1kΩ load. Estimate the ripple if the capacitor is replaced with 470µF, using the approximation V_ripple ≈ I_load / (f_ripple × C). Show your working.
 
 Answer:
 

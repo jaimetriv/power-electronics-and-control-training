@@ -233,6 +233,62 @@ which minimises power loss.
 
 ---
 
+# MATLAB Simulation
+
+Before building the circuit, simulate the motor's first-order step response and PWM voltage to predict what you will observe.
+
+## First-Order Step Response — Effect of Time Constant
+
+```matlab
+K      = 1;
+tau_values = [0.2, 0.5, 1.0, 2.0];   % range of plausible motor time constants
+labels = {'\tau=0.2s','\tau=0.5s','\tau=1.0s','\tau=2.0s'};
+
+t = 0:0.01:10;
+
+figure; hold on;
+for i = 1:4
+    G = tf(K, [tau_values(i), 1]);
+    [y, ~] = step(G, t);
+    plot(t, y, 'LineWidth', 2, 'DisplayName', labels{i});
+end
+yline(0.632, 'k--', '63.2%');
+grid on;
+xlabel('Time (s)'); ylabel('Normalised Speed');
+title('First-Order Motor Model \mdash Step Response');
+legend('Location', 'southeast');
+```
+
+## PWM Average Voltage — Operating Points
+
+```matlab
+D    = 0:0.01:1;
+Vavg = 5 .* D;
+
+D_exp    = [0.25, 0.50, 0.75, 1.00];
+Vavg_exp = 5 .* D_exp;
+
+figure;
+plot(D, Vavg, 'b', 'LineWidth', 2); hold on;
+scatter(D_exp, Vavg_exp, 80, 'r', 'filled', 'DisplayName', 'Experiment points');
+grid on;
+xlabel('Duty Cycle'); ylabel('Average Motor Voltage (V)');
+title('Motor Voltage vs Duty Cycle');
+legend('Theory', 'Experiment points', 'Location', 'northwest');
+```
+
+## Prediction Table
+
+Before running Experiment 4, estimate the motor time constant by looking at the simulation:
+
+| Parameter | Predicted value |
+|-----------|----------------|
+| Motor time constant τ (s) | |
+| Speed at 1τ (% of max) | 63.2% |
+| Approximate settling time (5τ) | |
+
+---
+
 # Required Components
 
 ## Hardware
@@ -702,66 +758,60 @@ determined by:
 
 ---
 
-# MATLAB Exercise
+# MATLAB Comparison
 
-Model a first-order motor.
+Now fit your measured step response to the first-order model using the time constant you estimated in Experiment 4.
 
-```matlab
-K = 1;
-
-tau = 0.5;
-
-G = tf(K,[tau 1]);
-
-step(G)
-
-grid on
-
-title('First Order Motor Model')
-```
-
----
-
-# Expected Result
-
-The response should resemble:
-
-```text
-Speed
-
-1.0 |           _______
-    |         /
-    |       /
-    |     /
-    |   /
-0.0 +-------------------
-          Time
-```
-
-Compare:
-
-- MATLAB response
-- RC charging curve
-- Actual motor response
-
----
-
-# MATLAB Exercise - Duty Cycle and Voltage
+## Enter Your Measured Time Constant
 
 ```matlab
-D = 0:0.01:1;
+K            = 1;
+tau_measured = 0.5;      % replace with your estimated tau from Experiment 4 (s)
 
-Vavg = 5 .* D;
+t = 0:0.01:5 * tau_measured * 3;
 
-plot(D,Vavg,'LineWidth',2)
+% Sweep nearby tau values to bracket your measurement
+tau_theory_low  = tau_measured * 0.7;
+tau_theory_high = tau_measured * 1.3;
 
-grid on
+G_low  = tf(K, [tau_theory_low,  1]);
+G_mid  = tf(K, [tau_measured,    1]);
+G_high = tf(K, [tau_theory_high, 1]);
 
-xlabel('Duty Cycle')
-ylabel('Motor Average Voltage (V)')
+[y_low,  ~] = step(G_low,  t);
+[y_mid,  ~] = step(G_mid,  t);
+[y_high, ~] = step(G_high, t);
 
-title('Motor Voltage versus Duty Cycle')
+figure; hold on;
+plot(t, y_low,  'b--', 'LineWidth', 1.5, 'DisplayName', ...
+    sprintf('\\tau = %.2fs (low)', tau_theory_low));
+plot(t, y_mid,  'r',   'LineWidth', 2.5, 'DisplayName', ...
+    sprintf('\\tau = %.2fs (measured)', tau_measured));
+plot(t, y_high, 'b--', 'LineWidth', 1.5, 'DisplayName', ...
+    sprintf('\\tau = %.2fs (high)', tau_theory_high));
+yline(0.632, 'k:', '63.2% threshold');
+xline(tau_measured, 'r:', sprintf('\\tau = %.2fs', tau_measured));
+grid on;
+xlabel('Time (s)'); ylabel('Normalised Speed');
+title('First-Order Motor Model \mdash Measured \tau Fit');
+legend('Location', 'southeast');
 ```
+
+## Record Your Model Parameters
+
+| Parameter | Value |
+|-----------|-------|
+| Estimated τ (s) | |
+| Gain K | 1 (normalised) |
+| Transfer function G(s) | K / (τs + 1) |
+
+> Keep this table. Projects 6, 7 and 8 will use this motor model as the plant for P, PI and PID controller design.
+
+## Reflection
+
+- Does the simulated curve match the shape you observed on the motor?
+- What physical factors determine the motor time constant?
+- How would a heavier load (more inertia) change τ?
 
 ---
 
@@ -852,6 +902,18 @@ ________________________
 ## Question 5
 
 Why can a motor often be modelled as a first-order system?
+
+Answer:
+
+```text
+________________________
+```
+
+---
+
+## Question 6
+
+You estimated τ = 0.5s from the step response. How would you verify this estimate, and why does an accurate τ matter for designing the controller in Project 6?
 
 Answer:
 

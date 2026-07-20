@@ -1178,45 +1178,140 @@ for different gain settings.
 
 ---
 
-# MATLAB Exercise
+# MATLAB Simulation
+
+Before building, simulate the LC filter response, the PI voltage controller, and the droop characteristic to predict hardware behaviour.
 
 ```matlab
-t = 0:0.0001:0.1;
+% System parameters
+Vm     = 5;       % desired peak output voltage (V)
+f_grid = 50;      % Hz
+L      = 1e-3;    % filter inductance (H)
+C      = 1e-6;    % filter capacitance (F)
+R_load = 220;     % load resistance (Ohm)
+Kp_v   = 3;       % voltage controller Kp
+Ki_v   = 100;     % voltage controller Ki
 
-v = 5*sin(2*pi*50*t);
+s = tf('s');
 
-plot(t,v,'LineWidth',2)
+% LC filter plant (voltage across C with load)
+G_lc = R_load / (L*C*R_load*s^2 + L*s + R_load);
 
-grid on
+% PI voltage controller
+C_pi = Kp_v + Ki_v/s;
+T_v  = feedback(C_pi * G_lc, 1);
 
-xlabel('Time (s)')
-ylabel('Voltage (V)')
+t = 0:1e-5:0.05;
 
-title('Grid-Forming Voltage Reference')
+figure;
+
+% --- Subplot 1: LC filter Bode plot ---
+subplot(3,1,1);
+bode(G_lc); grid on;
+title(sprintf('LC Filter Bode  L=%.0fmH  C=%.0f\muF  R_{load}=%.0f\Omega', ...
+    L*1e3, C*1e6, R_load));
+
+% --- Subplot 2: PI voltage controller step response ---
+subplot(3,1,2);
+[y, ~] = step(Vm * T_v, t);
+plot(t, y, 'b', 'LineWidth', 1.5); hold on;
+yline(Vm, 'k--');
+xlabel('Time (s)'); ylabel('Voltage (V)');
+title(sprintf('PI Voltage Controller  Kp=%.0f Ki=%.0f', Kp_v, Ki_v));
+grid on;
+
+si = stepinfo(T_v);
+fprintf('Rise time:     %.4f s\n', si.RiseTime);
+fprintf('Overshoot:     %.1f %%\n', si.Overshoot);
+fprintf('Settling time: %.4f s\n', si.SettlingTime);
+
+% --- Subplot 3: frequency droop for two inverters ---
+subplot(3,1,3);
+P = 0:0.1:10;
+f0 = 50;  Kd1 = 0.1;  Kd2 = 0.2;
+plot(P, f0 - Kd1*P, 'b', P, f0 - Kd2*P, 'r--', 'LineWidth', 1.5);
+legend(sprintf('Inverter 1  K_d=%.1f', Kd1), sprintf('Inverter 2  K_d=%.1f', Kd2));
+xlabel('Active Power (W)'); ylabel('Frequency (Hz)');
+title('Frequency Droop Characteristic'); grid on;
+
+% Natural frequency and damping of LC filter
+wn = 1/sqrt(L*C);
+zeta = 1/(2*R_load) * sqrt(L/C);
+fprintf('\nLC filter natural frequency: %.1f Hz\n', wn/(2*pi));
+fprintf('LC filter damping ratio:     %.3f\n', zeta);
 ```
+
+Record the predicted rise time, overshoot, and LC natural frequency before proceeding to the experiments.
 
 ---
 
-# MATLAB Exercise - Droop Characteristic
+# MATLAB Comparison
+
+After completing the experiments, enter your measured load regulation data and PI step response to compare against simulation.
 
 ```matlab
-P = 0:0.1:10;
+% --- Enter your system parameters ---
+Vm     = 5;       % target peak voltage (V)
+L      = 1e-3;    % H
+C      = 1e-6;    % F
+Kp_v   = 3;
+Ki_v   = 100;
 
-f0 = 50;
+% --- Enter measured Vout for each load (Experiment 2) ---
+R_loads  = [100, 220, 470];          % Ohm
+V_meas   = [4.6, 4.85, 4.95];       % V peak — replace with your readings
 
-Kp = 0.1;
+% Simulate Vout vs load
+s = tf('s');
+V_sim = zeros(1, numel(R_loads));
+for k = 1:numel(R_loads)
+    R = R_loads(k);
+    G_lc = R / (L*C*R*s^2 + L*s + R);
+    C_pi = Kp_v + Ki_v/s;
+    T_v  = feedback(C_pi * G_lc, 1);
+    V_sim(k) = Vm * dcgain(T_v);
+end
 
-f = f0 - Kp*P;
+figure;
+subplot(2,1,1);
+plot(R_loads, V_sim, 'b-o', R_loads, V_meas, 'r-s', 'LineWidth', 1.5);
+legend('Simulated','Measured'); grid on;
+xlabel('Load Resistance (\Omega)'); ylabel('Output Voltage (V)');
+title('Load Regulation: Simulated vs Measured');
+yline(Vm, 'k--');
 
-plot(P,f,'LineWidth',2)
+% --- Enter measured PI step response (Experiment 3) ---
+t_meas = [0, 0.002, 0.005, 0.010, 0.015, 0.020, 0.030];  % s — replace
+v_meas = [0, 1.5,   4.2,   5.3,   5.1,   5.0,   5.0];    % V — replace
 
-grid on
+R_nom = 220;
+G_lc  = R_nom / (L*C*R_nom*s^2 + L*s + R_nom);
+C_pi  = Kp_v + Ki_v/s;
+T_v   = feedback(C_pi * G_lc, 1);
+[y_sim, t_sim] = step(Vm * T_v, 0:1e-5:0.05);
 
-xlabel('Power')
-ylabel('Frequency (Hz)')
+subplot(2,1,2);
+plot(t_sim, y_sim, 'b-', 'LineWidth', 1.5); hold on;
+plot(t_meas, v_meas, 'ro--', 'MarkerSize', 6);
+yline(Vm, 'k--');
+legend('Simulated','Measured'); grid on;
+xlabel('Time (s)'); ylabel('Voltage (V)');
+title(sprintf('PI Voltage Step Response  Kp=%.0f Ki=%.0f', Kp_v, Ki_v));
 
-title('Frequency Droop')
+% --- Metrics ---
+reg_pct = abs(V_meas - Vm) ./ Vm * 100;
+fprintf('\nVoltage regulation error:\n');
+for k = 1:numel(R_loads)
+    fprintf('  R=%3d Ohm: sim=%.3fV  meas=%.3fV  error=%.1f%%\n', ...
+        R_loads(k), V_sim(k), V_meas(k), reg_pct(k));
+end
 ```
+
+Reflection questions:
+
+1. Does voltage regulation worsen at lower load resistance (higher current)? What physical effect causes this?
+2. How does the LC filter natural frequency relate to the PI controller bandwidth? What happens if the controller bandwidth exceeds the filter resonance?
+3. How would adding a second inverter with a different droop coefficient change the load-sharing behaviour?
 
 ---
 
@@ -1249,6 +1344,18 @@ What is droop control?
 ## Question 5
 
 What is a Virtual Synchronous Machine?
+
+---
+
+## Question 6
+
+Your MATLAB simulation predicted less than 1% voltage regulation error across all three loads, but the physical inverter showed 8% error at the 100 Ω load. Identify two physical causes and explain what change to the controller or hardware would reduce the error.
+
+Answer:
+
+```text
+____________________
+```
 
 ---
 

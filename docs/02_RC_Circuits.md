@@ -234,6 +234,84 @@ the capacitor is considered fully charged.
 
 ---
 
+# MATLAB Simulation
+
+Before building the circuit, simulate the charging and discharging curves to predict what you will observe on the oscilloscope.
+
+## Simulate Charging and Discharging
+
+```matlab
+R = 10000;
+C = 100e-6;
+tau = R * C;
+
+t = 0:0.001:5;
+
+% Charging: 0 to 5V
+Vc_charge = 5 * (1 - exp(-t / tau));
+
+% Discharging: 5V to 0V
+Vc_discharge = 5 * exp(-t / tau);
+
+figure;
+subplot(2,1,1);
+plot(t, Vc_charge, 'b', 'LineWidth', 2);
+yline(3.16, 'r--', '63.2% = 3.16V');
+xline(tau, 'k--', sprintf('\\tau = %.1fs', tau));
+grid on;
+xlabel('Time (s)'); ylabel('Voltage (V)');
+title('RC Charging — R=10k\Omega, C=100\muF');
+ylim([0 5.5]);
+
+subplot(2,1,2);
+plot(t, Vc_discharge, 'r', 'LineWidth', 2);
+yline(5*0.368, 'b--', '36.8% = 1.84V');
+xline(tau, 'k--', sprintf('\\tau = %.1fs', tau));
+grid on;
+xlabel('Time (s)'); ylabel('Voltage (V)');
+title('RC Discharging — R=10k\Omega, C=100\muF');
+ylim([0 5.5]);
+```
+
+## Simulate All Component Combinations
+
+Compare how changing R and C affects the time constant:
+
+```matlab
+t = 0:0.001:2;
+
+combinations = [
+    10000, 100e-6;   % Experiment 1: baseline
+    10000,  10e-6;   % Experiment 3: smaller C
+     1000, 100e-6;   % Experiment 4: smaller R
+];
+labels = {'R=10k, C=100\muF (\tau=1.0s)', ...
+          'R=10k, C=10\muF (\tau=0.1s)', ...
+          'R=1k,  C=100\muF (\tau=0.1s)'};
+
+figure; hold on;
+for i = 1:3
+    tau_i = combinations(i,1) * combinations(i,2);
+    plot(t, 5*(1-exp(-t/tau_i)), 'LineWidth', 2, 'DisplayName', labels{i});
+end
+grid on;
+xlabel('Time (s)'); ylabel('Capacitor Voltage (V)');
+title('RC Charging — Component Comparison');
+legend('Location','southeast');
+```
+
+## Prediction Table
+
+Record your predicted time constants before measuring:
+
+| R | C | Predicted τ |
+|--------|--------|-------------|
+| 10 kΩ | 100 µF | |
+| 10 kΩ | 10 µF | |
+| 1 kΩ | 100 µF | |
+
+---
+
 # Components Required
 
 From the SparkFun Inventor Kit:
@@ -743,44 +821,42 @@ We will revisit this equation many times throughout the course.
 
 ---
 
-# MATLAB Exercise
+# MATLAB Comparison
 
-Model the charging curve.
+Now overlay your measured time constant against the theoretical curve.
+
+## Enter Your Measured Time Constant
+
+From Experiment 2, record the time at which Vc reached 3.16V:
 
 ```matlab
 R = 10000;
-
 C = 100e-6;
+tau_theory = R * C;          % theoretical: 1.0s
+tau_measured = 1.0;          % replace with your measured value (s)
 
-tau = R*C;
+t = 0:0.001:5;
 
-t = 0:0.01:5;
+Vc_theory   = 5 * (1 - exp(-t / tau_theory));
+Vc_measured = 5 * (1 - exp(-t / tau_measured));
 
-Vc = 5*(1-exp(-t/tau));
-
-plot(t,Vc,'LineWidth',2)
-
-grid on
-
-xlabel('Time (s)')
-ylabel('Capacitor Voltage (V)')
-
-title('RC Charging Curve')
+figure; hold on;
+plot(t, Vc_theory,   'b--', 'LineWidth', 2, 'DisplayName', ...
+    sprintf('Theory  \\tau = %.3fs', tau_theory));
+plot(t, Vc_measured, 'r',   'LineWidth', 2, 'DisplayName', ...
+    sprintf('Measured \\tau = %.3fs', tau_measured));
+yline(3.16, 'k:', '63.2% threshold');
+grid on;
+xlabel('Time (s)'); ylabel('Capacitor Voltage (V)');
+title('RC Charging — Theory vs Measurement');
+legend('Location','southeast');
 ```
 
----
+## Reflection
 
-# Expected Result
-
-You should obtain the same exponential curve observed on the DSO Nano.
-
-Compare:
-
-- Theory
-- MATLAB
-- Oscilloscope
-
-All three should be similar.
+- Does your measured τ match the theoretical value?
+- If not, what could explain the difference? (component tolerances, contact resistance, oscilloscope probe loading)
+- How close is close enough for an engineering application?
 
 ---
 
@@ -871,6 +947,18 @@ ______________________
 ## Question 5
 
 Why is an RC circuit considered a first-order system?
+
+Answer:
+
+```text
+______________________
+```
+
+---
+
+## Question 6
+
+Your MATLAB simulation predicted τ = 1.0s but you measured τ = 1.15s. Name two physical reasons that could explain this discrepancy.
 
 Answer:
 

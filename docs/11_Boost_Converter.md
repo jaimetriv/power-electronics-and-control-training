@@ -378,6 +378,75 @@ Actual output voltage is lower because of:
 
 ---
 
+# MATLAB Simulation
+
+Before building the circuit, simulate the ideal Boost Converter characteristics to predict what you will measure.
+
+## Vout vs Duty Cycle — Nonlinear Gain
+
+```matlab
+Vin = 5;
+D   = 0:0.001:0.95;          % avoid D=1 (infinite gain)
+Vout_ideal = Vin ./ (1 - D);
+
+D_exp    = [0.25, 0.50, 0.75];
+Vout_exp = Vin ./ (1 - D_exp);
+
+figure;
+plot(D, Vout_ideal, 'b', 'LineWidth', 2); hold on;
+scatter(D_exp, Vout_exp, 80, 'r', 'filled', 'DisplayName', 'Experiment points');
+xline(0.75, 'r--', 'Max safe D for 5V in / 20V out');
+yline(20, 'k:', '20V practical limit');
+grid on;
+xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
+title('Ideal Boost Converter \mdash V_{IN} = 5V');
+legend('Ideal V_{OUT}', 'Experiment points', 'Location', 'northwest');
+ylim([0 30]);
+```
+
+## Simulate Inductor Current Waveform
+
+In a Boost Converter the inductor current ramps up during MOSFET ON (energy storage) and ramps down during MOSFET OFF (energy transfer to output):
+
+```matlab
+Vin  = 5;
+D    = 0.5;
+Vout = Vin / (1 - D);    % ideal
+L    = 100e-6;
+fsw  = 490;
+Ts   = 1 / fsw;
+Iavg = 0.05;             % assumed average inductor current (A)
+
+delta_iL = Vin * D * Ts / L;
+
+t_on  = linspace(0,    D*Ts, 100);
+t_off = linspace(D*Ts, Ts,   100);
+
+iL_on  = (Iavg - delta_iL/2) + Vin/L .* t_on;
+iL_off = (Iavg + delta_iL/2) - (Vout - Vin)/L .* (t_off - D*Ts);
+
+figure;
+plot([t_on, t_off]*1e3, [iL_on, iL_off]*1e3, 'b', 'LineWidth', 2);
+grid on;
+xlabel('Time (ms)'); ylabel('Inductor Current (mA)');
+title(sprintf('Boost Inductor Current \mdash D=%.0f%%, L=%d\muH', D*100, L*1e6));
+yline(Iavg*1e3, 'r--', sprintf('I_{avg} = %.0f mA', Iavg*1e3));
+```
+
+## Prediction Table
+
+Record your predicted output voltages before measuring:
+
+| PWM Value | Duty Cycle | Predicted V\_{OUT} (V) |
+|-----------|------------|------------------------|
+| 64 | 25% | |
+| 128 | 50% | |
+| 192 | 75% | |
+
+> Note: At D = 75% the ideal equation predicts 20V from a 5V supply. Real output will be lower due to losses, but take care with your multimeter range.
+
+---
+
 # Components Required
 
 Additional Components:
@@ -728,44 +797,69 @@ Closed-loop control automatically regulates voltage.
 
 ---
 
-# MATLAB Exercise
+# MATLAB Comparison
 
-Plot ideal Boost Converter output voltage.
+Now overlay your measured output voltages against the ideal Boost Converter curve and compare with the Buck Converter results from Project 9.
+
+## Enter Your Measured Values
 
 ```matlab
-D = 0:0.01:0.9;
-
 Vin = 5;
 
-Vout = Vin ./ (1 - D);
+D_measured    = [0.25,  0.50,  0.75];   % duty cycles tested
+Vout_measured = [0.00,  0.00,  0.00];   % replace with your measured voltages (V)
 
-plot(D,Vout,'LineWidth',2)
+D_ideal  = 0:0.001:0.95;
+Vout_ideal = Vin ./ (1 - D_ideal);
 
-grid on
+figure; hold on;
+plot(D_ideal, Vout_ideal, 'b--', 'LineWidth', 2, ...
+    'DisplayName', 'Ideal: V_{OUT} = V_{IN}/(1-D)');
+scatter(D_measured, Vout_measured, 80, 'r', 'filled', ...
+    'DisplayName', 'Measured');
+grid on;
+xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
+title('Boost Converter \mdash Ideal vs Measured');
+legend('Location', 'northwest');
+ylim([0 25]);
 
-xlabel('Duty Cycle')
-ylabel('Output Voltage (V)')
-
-title('Ideal Boost Converter')
+% Calculate conversion ratio error at each point
+fprintf('%-8s %-12s %-12s %-14s %-12s\n', ...
+    'D', 'V_ideal(V)', 'V_meas(V)', 'Ratio_ideal', 'Ratio_meas');
+for i = 1:3
+    V_ideal  = Vin / (1 - D_measured(i));
+    M_ideal  = V_ideal / Vin;
+    M_meas   = Vout_measured(i) / Vin;
+    fprintf('%-8.2f %-12.2f %-12.2f %-14.2f %-12.2f\n', ...
+        D_measured(i), V_ideal, Vout_measured(i), M_ideal, M_meas);
+end
 ```
 
----
+## Buck vs Boost Comparison
 
-# Expected Result
+```matlab
+Vin = 5;
+D   = 0:0.001:0.95;
 
-As duty cycle increases:
+Vout_buck  = Vin .* D;
+Vout_boost = Vin ./ (1 - D);
 
-```text
-Output Voltage Increases
+figure; hold on;
+plot(D, Vout_buck,  'b', 'LineWidth', 2, 'DisplayName', 'Buck: D \cdot V_{IN}');
+plot(D, Vout_boost, 'r', 'LineWidth', 2, 'DisplayName', 'Boost: V_{IN}/(1-D)');
+yline(Vin, 'k--', sprintf('V_{IN} = %.0fV', Vin));
+grid on;
+xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
+title('Buck vs Boost \mdash Voltage Conversion');
+legend('Location', 'north');
+ylim([0 20]);
 ```
 
-according to:
+## Reflection
 
-$$
-V_{OUT}
-=
-\frac{V_{IN}}{1-D}
-$$
+- Is the measured Vout lower than ideal at all three duty cycles? Which duty cycle shows the largest absolute error?
+- The Boost conversion ratio M = Vout/Vin becomes very sensitive to D near D = 1. Why is this a practical problem for control?
+- How does the inductor current waveform shape differ between the Buck (Project 9) and Boost converters?
 
 ---
 
@@ -856,6 +950,18 @@ ____________________
 ## Question 5
 
 What happens when duty cycle increases?
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
+## Question 6
+
+The ideal Boost equation predicts Vout = 20V at D = 0.75 with Vin = 5V. Your measured value was lower. Apart from component losses, explain why the nonlinear gain curve makes the Boost Converter harder to control at high duty cycles than the Buck Converter.
 
 Answer:
 

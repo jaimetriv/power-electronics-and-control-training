@@ -415,15 +415,109 @@ Final difference between reference and output.
 
 ---
 
+# MATLAB Simulation
+
+Before measuring, simulate first-order and second-order step responses across parameter ranges to build intuition for what you will observe.
+
+## First-Order: Effect of Time Constant
+
+```matlab
+tau_values = [0.2, 0.5, 1.0, 2.0];
+K = 1;
+t = 0:0.01:8;
+
+figure; hold on;
+for i = 1:4
+    y = K * (1 - exp(-t / tau_values(i)));
+    plot(t, y, 'LineWidth', 2, ...
+        'DisplayName', sprintf('\\tau = %.1fs', tau_values(i)));
+end
+yline(0.632, 'k--', '63.2%');
+grid on;
+xlabel('Time (s)'); ylabel('Normalised Output');
+title('First-Order Step Response \mdash Effect of \tau');
+legend('Location', 'southeast');
+```
+
+## Second-Order: Effect of Damping Ratio
+
+```matlab
+wn   = 5;    % natural frequency (rad/s)
+zeta_values = [0.1, 0.3, 0.7, 1.0, 2.0];
+t = 0:0.001:4;
+
+figure; hold on;
+for i = 1:5
+    z = zeta_values(i);
+    G = tf(wn^2, [1, 2*z*wn, wn^2]);
+    [y, ~] = step(G, t);
+    plot(t, y, 'LineWidth', 2, ...
+        'DisplayName', sprintf('\\zeta = %.1f', z));
+end
+yline(1.0, 'k--', 'Final value');
+grid on;
+xlabel('Time (s)'); ylabel('Output');
+title('Second-Order Step Response \mdash Effect of \zeta');
+legend('Location', 'southeast');
+```
+
+## Curve Fitting Preview — How to Extract τ from Data
+
+This is the technique you will apply to your measurements:
+
+```matlab
+% Simulate "measured" data with noise
+tau_true = 1.0; K_true = 5.0;
+t = 0:0.05:6;
+y_measured = K_true*(1 - exp(-t/tau_true)) + 0.05*randn(size(t));
+
+% Fit first-order model by minimising sum of squared errors
+cost = @(p) sum((p(1)*(1-exp(-t/p(2))) - y_measured).^2);
+p0   = [4.0, 0.5];                    % initial guess [K, tau]
+p_fit = fminsearch(cost, p0);
+
+K_fit   = p_fit(1);
+tau_fit = p_fit(2);
+y_fit   = K_fit * (1 - exp(-t / tau_fit));
+
+figure; hold on;
+scatter(t, y_measured, 30, 'b', 'DisplayName', 'Measured (with noise)');
+plot(t, y_fit, 'r', 'LineWidth', 2, 'DisplayName', ...
+    sprintf('Fit: K=%.2f, \\tau=%.2fs', K_fit, tau_fit));
+grid on;
+xlabel('Time (s)'); ylabel('Output');
+title('First-Order Curve Fit \mdash fminsearch');
+legend('Location', 'southeast');
+fprintf('True:  K=%.2f  tau=%.2fs\n', K_true, tau_true);
+fprintf('Fitted: K=%.2f  tau=%.2fs\n', K_fit, tau_fit);
+```
+
+## Prediction Table
+
+| System | Expected τ | Expected K | Response type |
+|--------|-----------|-----------|---------------|
+| RC (10kΩ, 100µF) | | | |
+| RC (10kΩ, 220µF) | | | |
+| RC (22kΩ, 100µF) | | | |
+| Motor (from Project 5) | | | |
+
+---
+
 # Components Required
 
 - Arduino Uno
 - Breadboard
-- LED
-- Potentiometer
-- Capacitors
-- Resistors
+- 10 kΩ resistor
+- 22 kΩ resistor
+- 100 µF capacitor
+- 220 µF capacitor
+- DC motor + IRLZ44N MOSFET + flyback diode (from Project 5)
+- Jumper wires
 - DSO Nano Oscilloscope
+
+Optional (frequency response identification):
+
+- Signal generator
 
 ---
 
@@ -662,70 +756,82 @@ Refine Model
 
 ---
 
-# MATLAB Exercise - First-Order Response
+# MATLAB Comparison
+
+Now fit first-order models to your measured RC and motor step responses and validate them.
+
+## RC Circuit Model Fit
 
 ```matlab
-t = 0:0.01:5;
+% Enter your measured RC step response
+% t_data: time vector (s), y_data: capacitor voltage (V)
+t_data = [0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0]; % replace
+y_data = [0, 0.9, 1.6, 2.2, 2.7, 3.1, 3.7, 4.1, 4.6, 4.8, 5.0]; % replace (V)
 
-tau = 1;
+Vfinal = max(y_data);
 
-y = 1 - exp(-t/tau);
+% Fit first-order model: y = K*(1 - exp(-t/tau))
+cost   = @(p) sum((p(1)*(1-exp(-t_data/p(2))) - y_data).^2);
+p_fit  = fminsearch(cost, [Vfinal, 0.5]);
+K_fit  = p_fit(1);
+tau_fit = p_fit(2);
 
-plot(t,y,'LineWidth',2)
+t_model = 0:0.01:max(t_data);
+y_model = K_fit * (1 - exp(-t_model / tau_fit));
 
-grid on
+figure; hold on;
+scatter(t_data, y_data, 50, 'b', 'filled', 'DisplayName', 'Measured');
+plot(t_model, y_model, 'r', 'LineWidth', 2, 'DisplayName', ...
+    sprintf('Fit: K=%.2fV, \\tau=%.3fs', K_fit, tau_fit));
+xline(tau_fit, 'k--', sprintf('\\tau=%.3fs', tau_fit));
+yline(0.632*K_fit, 'k:', '63.2%');
+grid on;
+xlabel('Time (s)'); ylabel('Capacitor Voltage (V)');
+title('RC Circuit \mdash First-Order Model Fit');
+legend('Location', 'southeast');
 
-xlabel('Time (s)')
-ylabel('Output')
-
-title('First-Order Step Response')
+tau_theory = 10000 * 100e-6;
+fprintf('Theoretical \\tau: %.3f s\n', tau_theory);
+fprintf('Fitted      \\tau: %.3f s\n', tau_fit);
+fprintf('Error:            %.1f%%\n', 100*abs(tau_fit-tau_theory)/tau_theory);
 ```
 
----
-
-# Expected Result
-
-At:
-
-```text
-1 Second
-```
-
-the output should reach approximately:
-
-```text
-63.2%
-```
-
----
-
-# MATLAB Exercise - Second-Order Response
+## Motor Step Response Model Fit
 
 ```matlab
-t = 0:0.01:10;
+% Enter your motor step response from Project 5 (or re-measure here)
+% Normalise speed: 0 = stopped, 1 = full speed
+t_motor = [0, 0.1, 0.2, 0.3, 0.5, 0.7, 1.0, 1.5, 2.0]; % replace (s)
+y_motor = [0, 0.3, 0.5, 0.6, 0.8, 0.9, 0.95, 0.99, 1.0]; % replace (normalised)
 
-zeta = 0.3;
+cost_m  = @(p) sum((p(1)*(1-exp(-t_motor/p(2))) - y_motor).^2);
+p_motor = fminsearch(cost_m, [1.0, 0.3]);
+K_m     = p_motor(1);
+tau_m   = p_motor(2);
 
-wn = 2;
+t_m = 0:0.01:max(t_motor);
+y_m = K_m * (1 - exp(-t_m / tau_m));
 
-sys = tf(wn^2,[1 2*zeta*wn wn^2]);
+figure; hold on;
+scatter(t_motor, y_motor, 50, 'b', 'filled', 'DisplayName', 'Measured');
+plot(t_m, y_m, 'r', 'LineWidth', 2, 'DisplayName', ...
+    sprintf('Fit: K=%.2f, \\tau=%.3fs', K_m, tau_m));
+xline(tau_m, 'k--', sprintf('\\tau=%.3fs', tau_m));
+yline(0.632*K_m, 'k:', '63.2%');
+grid on;
+xlabel('Time (s)'); ylabel('Normalised Speed');
+title('Motor \mdash First-Order Model Fit');
+legend('Location', 'southeast');
 
-step(sys)
-
-grid on
-
-title('Second-Order Step Response')
+fprintf('Motor model: G(s) = %.2f / (%.3f*s + 1)\n', K_m, tau_m);
+fprintf('Compare with Project 5 estimate: tau = ?\n');
 ```
 
----
+## Reflection
 
-# Expected Result
-
-An oscillatory response should be visible because:
-
-$$
-\zeta < 1
-$$
+- How close is your fitted RC τ to the theoretical value RC = 1.0s? What causes the difference?
+- Does the motor step response fit well to a first-order model, or do you see a delay or second-order behaviour?
+- How does the motor τ identified here compare to your informal estimate from Project 5?
 
 ---
 
@@ -842,6 +948,18 @@ ____________________
 ## Question 5
 
 Why is model validation important?
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
+## Question 6
+
+Your curve fit gives τ = 1.12s for the RC circuit but the theoretical value is 1.0s. Name two physical reasons that could explain this, and explain how you would use the fitted model (rather than the theoretical one) in controller design.
 
 Answer:
 

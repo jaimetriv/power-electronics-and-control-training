@@ -518,17 +518,94 @@ Disadvantages:
 
 ---
 
+# MATLAB Simulation
+
+Before building the circuit, simulate the three inverter waveform types and compare their harmonic content.
+
+## Square Wave, SPWM and Filtered Output
+
+```matlab
+f_out = 50;           % output frequency (Hz)
+f_sw  = 2000;         % SPWM carrier frequency (Hz)
+t     = 0:1e-5:0.06;
+
+% Ideal sine wave reference
+v_sine = sin(2*pi*f_out*t);
+
+% Square wave inverter output
+v_square = sign(v_sine);
+
+% SPWM: compare sine reference against triangular carrier
+Ts_sw    = 1 / f_sw;
+carrier  = 2*abs(mod(t, Ts_sw)/Ts_sw - 0.5) - 0.5;  % triangular -0.5 to +0.5
+v_spwm   = sign(v_sine - carrier);                    % +1 or -1
+
+% Simulate LC filter on SPWM output (simple first-order for illustration)
+L = 1e-3; C = 10e-6;
+G_filt = tf(1, [L*C, 0, 1]);
+[v_filt, ~] = lsim(G_filt, v_spwm, t);
+
+figure;
+subplot(4,1,1); plot(t*1e3, v_sine,   'b', 'LineWidth',1.5); grid on;
+ylabel('V'); title('Reference Sine Wave (50 Hz)');
+subplot(4,1,2); plot(t*1e3, v_square, 'r', 'LineWidth',1.5); grid on;
+ylabel('V'); title('Square Wave Inverter Output');
+subplot(4,1,3); plot(t*1e3, v_spwm,   'g', 'LineWidth',1); grid on;
+ylabel('V'); title(sprintf('SPWM Output (f_{sw}=%d Hz)', f_sw));
+subplot(4,1,4); plot(t*1e3, v_filt,   'm', 'LineWidth',2); hold on;
+plot(t*1e3, v_sine, 'b--', 'LineWidth',1); grid on;
+ylabel('V'); title('Filtered SPWM \approx Sine Wave');
+xlabel('Time (ms)');
+sgtitle('Inverter Waveform Comparison');
+```
+
+## Harmonic Spectrum — Square Wave vs Sine Wave
+
+```matlab
+fs = 1/1e-5;          % sample rate
+N  = length(t);
+
+F_sq   = abs(fft(v_square)) / N;
+F_sine = abs(fft(v_sine))   / N;
+freqs  = (0:N-1) * fs / N;
+
+figure;
+subplot(2,1,1);
+stem(freqs(1:500), F_sq(1:500)*2, 'r', 'filled', 'MarkerSize', 3);
+xlabel('Frequency (Hz)'); ylabel('Amplitude');
+title('Square Wave \mdash Harmonic Spectrum');
+grid on; xlim([0 1000]);
+
+subplot(2,1,2);
+stem(freqs(1:500), F_sine(1:500)*2, 'b', 'filled', 'MarkerSize', 3);
+xlabel('Frequency (Hz)'); ylabel('Amplitude');
+title('Sine Wave \mdash Harmonic Spectrum');
+grid on; xlim([0 1000]);
+```
+
+## Prediction Table
+
+| Waveform | Fundamental (Hz) | Harmonic content | Suitable for sensitive loads? |
+|----------|-----------------|-----------------|------------------------------|
+| Square wave | | | |
+| SPWM (unfiltered) | | | |
+| SPWM (filtered) | | | |
+
+---
+
 # Components Required
 
 - Arduino Uno
 - Breadboard
-- Jumper Wires
-- MOSFETs
+- Jumper wires
+- 2 × IRLZ44N MOSFETs (for half-bridge demonstration)
 - DSO Nano Oscilloscope
 
 Optional:
 
-- H-Bridge Driver Module
+- IR2104 half-bridge gate driver (handles dead time automatically)
+
+> Note: Full H-bridge experiments require 4 MOSFETs and gate driver ICs. This project demonstrates the waveform generation principles using single-ended PWM outputs.
 
 ---
 
@@ -769,6 +846,109 @@ Measure:
 
 ---
 
+# Experiment 4 - SPWM Generation
+
+## Objective
+
+Generate a sinusoidal PWM pattern using a sine lookup table.
+
+The duty cycle varies each cycle to follow a sine wave shape.
+
+---
+
+# Arduino Code
+
+```cpp
+// SPWM: 50Hz output, 490Hz PWM carrier
+// Duty cycle follows a half-sine lookup table
+
+const int N = 10;                    // steps per half cycle
+const int sine_table[N] = {         // half-sine, scaled 0-255
+    128, 203, 243, 255, 243,
+    203, 128,  53,  13,   0
+};
+
+void setup()
+{
+    pinMode(9, OUTPUT);
+}
+
+void loop()
+{
+    for (int i = 0; i < N; i++)
+    {
+        analogWrite(9, sine_table[i]);
+        delay(2);                    // 2ms per step -> 20ms period -> 50Hz
+    }
+}
+```
+
+---
+
+# What Is Happening?
+
+Each PWM cycle has a different duty cycle.
+
+The duty cycle follows the shape of a sine wave.
+
+The average voltage at each step approximates:
+
+$$
+V_{AVG}(t) = V_{DC} \cdot \sin(2\pi f_{out} t)
+$$
+
+After low-pass filtering this produces an approximate sine wave output.
+
+---
+
+# DSO Nano Settings
+
+Vertical:
+
+```text
+2 V/div
+```
+
+Horizontal:
+
+```text
+2 ms/div
+```
+
+Trigger:
+
+```text
+Rising Edge
+```
+
+---
+
+# Expected Observation
+
+You should observe PWM pulses with varying width:
+
+```text
+| |   | |     | |       | |     | |   | |
+```
+
+Narrow pulses at the start and end, wide pulses in the middle.
+
+This is the SPWM pattern.
+
+---
+
+# Measurements
+
+| Parameter | Expected | Measured |
+|-----------|----------|----------|
+| PWM carrier frequency | ~490 Hz | |
+| Output period | ~20 ms | |
+| Output frequency | ~50 Hz | |
+| Min duty cycle | ~0% | |
+| Max duty cycle | ~100% | |
+
+---
+
 # Relationship to Previous Projects
 
 ## Project 1
@@ -816,63 +996,63 @@ Inverter
 
 ---
 
-# MATLAB Exercise - Generate a Sine Wave
+# MATLAB Comparison
+
+Now compare your measured square wave and SPWM waveforms against the simulated predictions.
+
+## Enter Your Measured Values
 
 ```matlab
-t = 0:0.0001:0.1;
+f_measured   = 50.0;     % replace with your measured frequency from Experiment 1 (Hz)
+T_measured   = 1 / f_measured;
+Vpeak_meas   = 5.0;      % replace with your measured peak voltage (V)
 
-v = sin(2*pi*50*t);
+t = 0:1e-5:0.06;
 
-plot(t,v,'LineWidth',2)
+% Ideal 50Hz square wave
+v_ideal = Vpeak_meas * sign(sin(2*pi*50*t));
 
-grid on
+% Reconstructed from measured frequency
+v_meas  = Vpeak_meas * sign(sin(2*pi*f_measured*t));
 
-xlabel('Time (s)')
-ylabel('Amplitude')
+figure; hold on;
+plot(t*1e3, v_ideal, 'b--', 'LineWidth', 2, ...
+    'DisplayName', sprintf('Ideal 50Hz square wave'));
+plot(t*1e3, v_meas,  'r',   'LineWidth', 2, ...
+    'DisplayName', sprintf('Measured f=%.1fHz', f_measured));
+grid on;
+xlabel('Time (ms)'); ylabel('Voltage (V)');
+title('Square Wave Inverter \mdash Ideal vs Measured');
+legend('Location', 'northeast');
 
-title('50 Hz Sine Wave')
+fprintf('Ideal frequency:    50.0 Hz\n');
+fprintf('Measured frequency: %.1f Hz\n', f_measured);
+fprintf('Frequency error:    %.2f%%\n', 100*abs(f_measured-50)/50);
 ```
 
----
-
-# MATLAB Exercise - Generate a Square Wave
+## SPWM Duty Cycle Verification
 
 ```matlab
-t = 0:0.0001:0.1;
+% Theoretical SPWM duty cycles from the lookup table
+N = 10;
+i = 0:N-1;
+D_theory  = 0.5 * (1 + sin(2*pi*i/N));   % normalised 0-1
+D_arduino = [128, 203, 243, 255, 243, 203, 128, 53, 13, 0] / 255;
 
-v = sign(sin(2*pi*50*t));
-
-plot(t,v,'LineWidth',2)
-
-grid on
-
-xlabel('Time (s)')
-ylabel('Amplitude')
-
-title('50 Hz Square Wave')
+figure; hold on;
+plot(i, D_theory,  'b--o', 'LineWidth', 2, 'DisplayName', 'Ideal sine');
+plot(i, D_arduino, 'r-s',  'LineWidth', 2, 'DisplayName', 'Arduino lookup table');
+grid on;
+xlabel('Step'); ylabel('Duty Cycle');
+title('SPWM Lookup Table \mdash Ideal vs Arduino');
+legend('Location', 'south');
 ```
 
----
+## Reflection
 
-# Compare
-
-Observe the difference between:
-
-```text
-Sine Wave
-```
-
-and
-
-```text
-Square Wave
-```
-
-Consider:
-
-- Waveform shape
-- Harmonic content
-- Smoothness
+- Does your measured square wave frequency match 50 Hz? What causes any discrepancy? (Arduino `delay()` accuracy, loop overhead)
+- The SPWM lookup table uses only 10 steps per cycle. How would increasing to 20 steps improve the output waveform quality?
+- Why does the square wave have significant harmonic content at 150 Hz, 250 Hz, 350 Hz etc., while a pure sine wave does not?
 
 ---
 
@@ -963,6 +1143,18 @@ ____________________
 ## Question 5
 
 What is shoot-through?
+
+Answer:
+
+```text
+____________________
+```
+
+---
+
+## Question 6
+
+A square wave at 50 Hz contains harmonics at 150 Hz, 250 Hz, 350 Hz and so on. Explain why these odd harmonics are present and why they are absent in a pure sine wave. Why does this matter for motor drives?
 
 Answer:
 
