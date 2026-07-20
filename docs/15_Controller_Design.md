@@ -800,7 +800,7 @@ fprintf('Simulated settling time:%.3f s\n', si.SettlingTime);
 final = y_meas(end);
 within2 = find(abs(y_meas - final) <= 0.02*final, 1);
 if ~isempty(within2)
-    fprintf('Measured settling time: %.3f s\n', t_meas(within2));
+    fprintf('Measured settling time: %.3f s\n', t_meas(within2(1)));
 end
 ```
 

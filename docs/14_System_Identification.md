@@ -510,7 +510,7 @@ fprintf('Fitted: K=%.2f  tau=%.2fs\n', K_fit, tau_fit);
 - 10 kΩ resistor
 - 22 kΩ resistor
 - 100 µF capacitor
-- 220 µF capacitor
+- 220 µF capacitor (needed for Experiment 2 Test B — add to shopping list if not already purchased)
 - DC motor + IRLZ44N MOSFET + flyback diode (from Project 5)
 - Jumper wires
 - DSO Nano Oscilloscope

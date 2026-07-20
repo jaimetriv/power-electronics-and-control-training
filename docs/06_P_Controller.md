@@ -561,7 +561,7 @@ Control motor speed using a P controller.
 The potentiometer acts as the speed setpoint.
 The motor PWM is the controller output.
 
-> Note: Without a speed sensor, this experiment demonstrates open-loop P control — the controller output is proportional to the setpoint. True closed-loop control (with feedback) is introduced conceptually here and implemented fully when a sensor is available.
+> Note: Without a speed sensor, this experiment demonstrates open-loop P control — the controller output is proportional to the setpoint. True closed-loop control (with feedback) is introduced conceptually here and implemented fully when a sensor is available. The motor model identified in Project 14 and the controller design process in Project 15 will show how to tune gains once a feedback path exists. The motor model identified in Project 14 and the controller design process in Project 15 will show how to tune gains once a feedback path exists.
 
 ---
 

@@ -1321,11 +1321,23 @@ Reflection questions:
 
 What is the primary difference between Grid-Following and Grid-Forming control?
 
+Answer:
+
+```text
+____________________
+```
+
 ---
 
 ## Question 2
 
 Why is a PLL unnecessary in a Grid-Forming converter?
+
+Answer:
+
+```text
+____________________
+```
 
 ---
 
@@ -1333,17 +1345,35 @@ Why is a PLL unnecessary in a Grid-Forming converter?
 
 What does the voltage controller regulate?
 
+Answer:
+
+```text
+____________________
+```
+
 ---
 
 ## Question 4
 
 What is droop control?
 
+Answer:
+
+```text
+____________________
+```
+
 ---
 
 ## Question 5
 
 What is a Virtual Synchronous Machine?
+
+Answer:
+
+```text
+____________________
+```
 
 ---
 

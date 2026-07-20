@@ -506,18 +506,16 @@ v_hw       = max(v_ac, 0);           % half-wave
 v_fw       = abs(v_ac);              % full-wave
 
 % RC smoothing: simulate capacitor discharge between peaks
-function v_smooth = smooth_rc(v_rect, t, R, C)
-    v_smooth = zeros(size(v_rect));
-    v_smooth(1) = v_rect(1);
-    dt = t(2) - t(1);
-    for i = 2:length(t)
-        v_discharge = v_smooth(i-1) * exp(-dt / (R*C));
-        v_smooth(i) = max(v_rect(i), v_discharge);
-    end
-end
+% RC smoothing: inline (avoids nested function restriction in scripts)
+dt = t(2) - t(1);
+C1 = 100e-6; C2 = 470e-6;
 
-v_fw_100  = smooth_rc(v_fw, t, R, 100e-6);
-v_fw_470  = smooth_rc(v_fw, t, R, 470e-6);
+v_fw_100 = zeros(size(v_fw)); v_fw_100(1) = v_fw(1);
+v_fw_470 = zeros(size(v_fw)); v_fw_470(1) = v_fw(1);
+for i = 2:length(t)
+    v_fw_100(i) = max(v_fw(i), v_fw_100(i-1) * exp(-dt / (R*C1)));
+    v_fw_470(i) = max(v_fw(i), v_fw_470(i-1) * exp(-dt / (R*C2)));
+end
 
 configs = {v_hw, v_fw, v_fw_100, v_fw_470};
 titles  = {'Half-Wave', 'Full-Wave (no cap)', ...
@@ -885,9 +883,14 @@ t = 0:0.0001:0.1;
 v_ac = Vpeak * sin(2*pi*f*t);
 v_fw = abs(v_ac);
 
-% Simulated configurations
-v_fw_100 = smooth_rc(v_fw, t, R, 100e-6);
-v_fw_470 = smooth_rc(v_fw, t, R, 470e-6);
+% Simulated configurations (inline RC smoothing)
+dt = t(2) - t(1);
+v_fw_100 = zeros(size(v_fw)); v_fw_100(1) = v_fw(1);
+v_fw_470 = zeros(size(v_fw)); v_fw_470(1) = v_fw(1);
+for i = 2:length(t)
+    v_fw_100(i) = max(v_fw(i), v_fw_100(i-1) * exp(-dt / (R*100e-6)));
+    v_fw_470(i) = max(v_fw(i), v_fw_470(i-1) * exp(-dt / (R*470e-6)));
+end
 
 % Your measured values — replace zeros
 Vavg_measured  = [0.0, 0.0, 0.0, 0.0];   % (V) half-wave, FW, FW+100uF, FW+470uF

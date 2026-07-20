@@ -423,6 +423,8 @@ Equipment:
 Implement a PI controller driving the motor via MOSFET.
 The potentiometer sets the speed reference.
 
+> Note: Without a speed sensor, this experiment demonstrates open-loop PI control. True closed-loop control is introduced conceptually here and implemented fully when a sensor is available. The motor model identified in Project 14 and the controller design process in Project 15 will show how to tune gains once a feedback path exists.
+
 ---
 
 # Circuit

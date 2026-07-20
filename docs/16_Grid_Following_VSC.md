@@ -847,7 +847,7 @@ grid on;
 
 % --- Subplot 2: SPWM carrier vs modulating signal ---
 subplot(3,1,2);
-carrier = sawtooth(2*pi*f_pwm*t, 0.5);   % triangle carrier
+carrier = 2*abs(mod(t, 1/f_pwm)/(1/f_pwm) - 0.5) - 0.5;  % triangle, no toolbox needed
 mod_sig = sin(theta);                      % modulating sine
 plot(t(1:500), carrier(1:500), 'k', t(1:500), mod_sig(1:500), 'r', 'LineWidth', 1);
 legend('Carrier','Modulating'); grid on;
