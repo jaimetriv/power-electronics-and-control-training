@@ -5,7 +5,7 @@
 Complete:
 
 - 00_Introduction.md
-- 00A_DSO_Nano_Familiarisation.md
+- 00B_Oscilloscope_Familiarisation.md
 - 01_PWM_Fundamentals.md
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md

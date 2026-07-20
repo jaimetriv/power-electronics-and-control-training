@@ -56,7 +56,7 @@ markdown_extensions:
 extra_javascript:
   - javascripts/mathjax.js
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-  - https://unpkg.com/mermaid@11/dist/mermaid.min
+  - https://unpkg.com/mermaid@11/dist/mermaid.min.js
 
 nav:
 
@@ -64,9 +64,9 @@ nav:
 
   - Getting Started:
       - Introduction: 00_Introduction.md
-      - Arduino Uno Familiarisation: 00A_Arduino_Uno_Familiarisation.md
-      - DSO Nano V3 Familiarisation: 00B_DSO_Nano_V3_Familiarisation.md
-      - ESP32 DevKit Familiarisation: 00C_ESP32_DevKit_Familiarisation.md
+      - Microcontroller Familiarisation: 00A_Microcontroller_Familiarisation.md
+      - Oscilloscope Familiarisation: 00B_Oscilloscope_Familiarisation.md
+      - WiFi Controller Familiarisation: 00C_WiFi_Controller_Familiarisation.md
 
   - Electronics:
       - PWM Fundamentals: 01_PWM_Fundamentals.md

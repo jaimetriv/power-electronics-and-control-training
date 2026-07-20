@@ -5,7 +5,7 @@
 Complete:
 
 - 00_Introduction.md
-- 00A_DSO_Nano_Familiarisation.md
+- 00B_Oscilloscope_Familiarisation.md
 - 01_PWM_Fundamentals.md
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
@@ -692,13 +692,12 @@ DC Chopper Converters
 
 # Next Project
 
-**12_System_Identification.md**
+**12_AC_DC_Rectifiers.md**
 
 Topics:
 
-- Experimental Modelling
-- Transfer Functions
-- First-Order Models
-- Second-Order Models
-- Parameter Estimation
-- Model Validation
+- AC and DC Fundamentals
+- Half-Wave Rectification
+- Bridge Rectifiers
+- Capacitor Smoothing
+- Ripple Voltage

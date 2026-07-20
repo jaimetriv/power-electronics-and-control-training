@@ -5,7 +5,7 @@
 Complete:
 
 - 00_Introduction.md
-- 00A_DSO_Nano_Familiarisation.md
+- 00B_Oscilloscope_Familiarisation.md
 - 01_PWM_Fundamentals.md
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
@@ -944,13 +944,12 @@ These converters form the foundation of many modern power electronic systems.
 
 # Next Project
 
-**12_System_Identification.md**
+**11B_DC_Chopper_Converters.md**
 
 Topics:
 
-- Dynamic System Modelling
-- Experimental Measurements
-- Time Constant Estimation
-- Transfer Functions
-- Model Validation
-- Control-Oriented Modelling
+- Chopper Converter Fundamentals
+- DC Motor Drives
+- Average Voltage Control
+- Quadrant Operation
+- Buck and Boost Chopper Relationships

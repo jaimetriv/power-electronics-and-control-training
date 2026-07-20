@@ -327,13 +327,49 @@ Concepts:
 
 ---
 
-# Phase 5 - MATLAB and System Analysis
+## Project 11B
 
-The final phase focuses on modelling and design.
+### DC Chopper Converters
+
+Concepts:
+
+- Chopper Operation
+- DC Motor Drives
+- Quadrant Operation
 
 ---
 
 ## Project 12
+
+### AC-DC Rectifiers
+
+Concepts:
+
+- Half-Wave Rectification
+- Bridge Rectifiers
+- Capacitor Smoothing
+
+---
+
+## Project 13
+
+### DC-AC Inverters
+
+Concepts:
+
+- H-Bridge Circuits
+- SPWM
+- AC Generation
+
+---
+
+# Phase 5 - Advanced Topics
+
+The final phase focuses on modelling, design and grid-connected systems.
+
+---
+
+## Project 14
 
 ### System Identification
 
@@ -345,7 +381,7 @@ Concepts:
 
 ---
 
-## Project 13
+## Project 15
 
 ### Controller Design
 
@@ -355,6 +391,30 @@ Concepts:
 - PI Controllers
 - PID Controllers
 - Closed-Loop Analysis
+
+---
+
+## Project 16
+
+### Grid-Following VSC
+
+Concepts:
+
+- PLL Synchronisation
+- Current Control
+- dq Control
+
+---
+
+## Project 17
+
+### Grid-Forming VSC
+
+Concepts:
+
+- Autonomous AC Generation
+- Voltage Regulation
+- Droop Control
 
 ---
 
@@ -613,7 +673,11 @@ After completing all projects you should be capable of:
 ```text
 00_Introduction.md
 
-00A_DSO_Nano_Familiarisation.md
+00A_Microcontroller_Familiarisation.md
+
+00B_Oscilloscope_Familiarisation.md
+
+00C_WiFi_Controller_Familiarisation.md
 
 01_PWM_Fundamentals.md
 
@@ -637,9 +701,19 @@ After completing all projects you should be capable of:
 
 11_Boost_Converter.md
 
-12_System_Identification.md
+11B_DC_Chopper_Converters.md
 
-13_Controller_Design.md
+12_AC_DC_Rectifiers.md
+
+13_DC_AC_Inverters.md
+
+14_System_Identification.md
+
+15_Controller_Design.md
+
+16_Grid_Following_VSC.md
+
+17_Grid_Forming_VSC.md
 ```
 
 ---

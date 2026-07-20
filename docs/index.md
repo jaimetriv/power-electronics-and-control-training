@@ -50,17 +50,21 @@ E --> F[Control Systems]
 
 F --> G[Buck Converter]
 
-G --> H[Boost Converter]
+G --> H[Closed Loop Buck]
 
-H --> I[Rectifiers]
+H --> I[Boost Converter]
 
-I --> J[Inverters]
+I --> J[DC Chopper Converters]
 
-J --> K[System Identification]
+J --> K[Rectifiers]
 
-K --> L[Controller Design]
+K --> L[Inverters]
 
-L --> M[Grid Following VSC]
+L --> M[System Identification]
 
-M --> N[Grid Forming VSC]
+M --> N[Controller Design]
+
+N --> O[Grid Following VSC]
+
+O --> P[Grid Forming VSC]
 ```

@@ -5,7 +5,7 @@
 Complete:
 
 - 00_Introduction.md
-- 00A_DSO_Nano_Familiarisation.md
+- 00B_Oscilloscope_Familiarisation.md
 - 01_PWM_Fundamentals.md
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
@@ -714,28 +714,28 @@ Kp = 2;
 
 T = feedback(Kp*G,1);
 
-step(T*
+step(T)
 
 grid on
 
-title('Closed*Loop Response')
+title('Closed-Loop Response')
 ```
 
 ---
 
-# MATLAB*Exercise*- PI Controller
+# MATLAB Exercise - PI Controller
 
 ```matlab
-s = tf(*s');
+s = tf('s');
 
 G = 1/(s+1);
 
-Kp = 2*
+Kp = 2;
 Ki = 1;
 
 C = Kp + Ki/s;
 
-* = feedback(C*G,1);
+T = feedback(C*G,1);
 
 step(T)
 

@@ -5,7 +5,7 @@
 Complete:
 
 - 00_Introduction.md
-- 00A_DSO_Nano_Familiarisation.md
+- 00B_Oscilloscope_Familiarisation.md
 
 ---
 

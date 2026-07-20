@@ -905,7 +905,7 @@ In this project you learned:
 These skills form the foundation for the next project:
 
 ```text
-00B_DSO_Nano_V3_Familiarisation.md
+00B_Oscilloscope_Familiarisation.md
 ```
 
 where you will learn how to measure and analyse signals using an oscilloscope.
