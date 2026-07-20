@@ -1,0 +1,2476 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Practical Electronics, Control Systems and Power Electronics Training">
+      
+      
+        <meta name="author" content="Jaime Trivino">
+      
+      
+      
+        <link rel="prev" href="../16_Grid_Following_VSC/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Grid Forming VSC - Power Electronics and Control Training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#project-17-grid-forming-voltage-source-converter-vsc" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Power Electronics and Control Training" class="md-header__button md-logo" aria-label="Power Electronics and Control Training" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Power Electronics and Control Training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Grid Forming VSC
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jaimetriv/power-electronics-and-control-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jaimetriv/power-electronics-and-control-training
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Power Electronics and Control Training" class="md-nav__button md-logo" aria-label="Power Electronics and Control Training" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Power Electronics and Control Training
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jaimetriv/power-electronics-and-control-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jaimetriv/power-electronics-and-control-training
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00_Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00A_Microcontroller_Familiarisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microcontroller Familiarisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00B_Oscilloscope_Familiarisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oscilloscope Familiarisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00C_WiFi_Controller_Familiarisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WiFi Controller Familiarisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Electronics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Electronics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_PWM_Fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PWM Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_RC_Circuits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_RLC_Circuits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_MOSFET_Fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MOSFET Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Control Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_PWM_Motor_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PWM Motor Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_P_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_PI_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PI Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08_PID_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PID Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power Electronics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Power Electronics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_Buck_Converter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Buck Converter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_Closed_Loop_Buck/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Closed Loop Buck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11_Boost_Converter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boost Converter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11B_DC_Chopper_Converters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DC Chopper Converters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12_AC_DC_Rectifiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AC-DC Rectifiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13_DC_AC_Inverters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DC-AC Inverters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Advanced Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14_System_Identification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Identification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15_Controller_Design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Controller Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16_Grid_Following_VSC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grid Following VSC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grid Forming VSC
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grid Forming VSC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="project-17-grid-forming-voltage-source-converter-vsc">Project 17 - Grid-Forming Voltage Source Converter (VSC)<a class="headerlink" href="#project-17-grid-forming-voltage-source-converter-vsc" title="Permanent link">&para;</a></h1>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<p>Complete:</p>
+<ul>
+<li>00_Introduction.md</li>
+<li>00B_Oscilloscope_Familiarisation.md</li>
+<li>01_PWM_Fundamentals.md</li>
+<li>02_RC_Circuits.md</li>
+<li>03_RLC_Circuits.md</li>
+<li>04_MOSFET_Fundamentals.md</li>
+<li>05_PWM_Motor_Control.md</li>
+<li>06_P_Controller.md</li>
+<li>07_PI_Controller.md</li>
+<li>08_PID_Controller.md</li>
+<li>09_Buck_Converter.md</li>
+<li>10_Closed_Loop_Buck.md</li>
+<li>11_Boost_Converter.md</li>
+<li>11B_DC_Chopper_Converters.md</li>
+<li>12_AC_DC_Rectifiers.md</li>
+<li>13_DC_AC_Inverters.md</li>
+<li>14_System_Identification.md</li>
+<li>15_Controller_Design.md</li>
+<li>16_Grid_Following_VSC.md</li>
+</ul>
+<hr />
+<h1 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h1>
+<p>In this project you will learn:</p>
+<ul>
+<li>What a Grid-Forming Converter is</li>
+<li>How Grid-Forming differs from Grid-Following</li>
+<li>How an inverter creates voltage and frequency</li>
+<li>Voltage feedback control</li>
+<li>Frequency regulation</li>
+<li>SPWM implementation</li>
+<li>Droop control</li>
+<li>Virtual Synchronous Machine concepts</li>
+<li>Microgrid fundamentals</li>
+</ul>
+<p>This project serves as the capstone project for the course.</p>
+<hr />
+<h1 id="learning-outcomes">Learning Outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h1>
+<p>At the end of this project you should be able to:</p>
+<p>✅ Explain Grid-Forming operation</p>
+<p>✅ Generate AC voltage autonomously</p>
+<p>✅ Implement SPWM</p>
+<p>✅ Implement voltage feedback</p>
+<p>✅ Regulate output voltage</p>
+<p>✅ Explain droop control</p>
+<p>✅ Understand Virtual Synchronous Machines</p>
+<p>✅ Compare Grid-Following and Grid-Forming converters</p>
+<hr />
+<h1 id="safety-notice">Safety Notice<a class="headerlink" href="#safety-notice" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>DO NOT CONNECT DIRECTLY TO MAINS VOLTAGE
+</code></pre></div>
+<p>All experiments must use:</p>
+<ul>
+<li>Low-voltage DC supplies</li>
+<li>Low-power loads</li>
+<li>Isolated laboratory circuits</li>
+</ul>
+<p>Recommended:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>12 V DC Input
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>5–12 V RMS Output
+</code></pre></div>
+<hr />
+<h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h1>
+<p>Project 16 introduced:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Grid-Following Converters
+</code></pre></div>
+<p>Those converters require an existing grid.</p>
+<p>They:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Measure Voltage
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Inject Current
+</code></pre></div>
+<hr />
+<h1 id="what-if-no-grid-exists">What If No Grid Exists?<a class="headerlink" href="#what-if-no-grid-exists" title="Permanent link">&para;</a></h1>
+<p>Examples:</p>
+<ul>
+<li>Microgrids</li>
+<li>Battery Systems</li>
+<li>Standalone Power Systems</li>
+<li>Backup Generators</li>
+</ul>
+<p>There may be:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>No Existing Voltage Reference
+</code></pre></div>
+<p>The inverter must therefore create:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Voltage
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Frequency
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>Phase
+</code></pre></div>
+<p>itself.</p>
+<hr />
+<h1 id="grid-forming-concept">Grid-Forming Concept<a class="headerlink" href="#grid-forming-concept" title="Permanent link">&para;</a></h1>
+<p>A Grid-Forming converter behaves as an AC voltage source.</p>
+<p>Instead of:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Current Control
+</code></pre></div>
+<p>it primarily performs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Voltage Control
+</code></pre></div>
+<hr />
+<h1 id="grid-following-versus-grid-forming">Grid-Following versus Grid-Forming<a class="headerlink" href="#grid-following-versus-grid-forming" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Grid-Following</th>
+<th>Grid-Forming</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PLL Required</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Existing Grid Required</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Controls Current</td>
+<td>Yes</td>
+<td>Usually</td>
+</tr>
+<tr>
+<td>Controls Voltage</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Controls Frequency</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Black Start</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Islanded Operation</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="black-start-capability">Black Start Capability<a class="headerlink" href="#black-start-capability" title="Permanent link">&para;</a></h1>
+<p>A Grid-Forming converter can:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Start a Dead Network
+</code></pre></div>
+<p>without requiring an external voltage source.</p>
+<p>This capability is known as:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Black Start
+</code></pre></div>
+<hr />
+<h1 id="complete-system-architecture">Complete System Architecture<a class="headerlink" href="#complete-system-architecture" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>          Voltage Reference
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>                  │
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>                  ▼
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>         Frequency Generator
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>                  │
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>                  ▼
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>           PI Controller
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>                  │
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>                  ▼
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>         Modulation Index
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>                  │
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>                  ▼
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>                SPWM
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>                  │
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>                  ▼
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>             H-Bridge
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>                  │
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>                  ▼
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>             LC Filter
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>                  │
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>                  ▼
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>                Load
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>                  ▲
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>                  │
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>           Voltage Sensor
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>                  │
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>                  └────────── Feedback
+</code></pre></div>
+<hr />
+<h1 id="hardware-requirements">Hardware Requirements<a class="headerlink" href="#hardware-requirements" title="Permanent link">&para;</a></h1>
+<h2 id="controller">Controller<a class="headerlink" href="#controller" title="Permanent link">&para;</a></h2>
+<p>Recommended:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ESP32 DevKit
+</code></pre></div>
+<p>Alternatives:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>STM32 Nucleo
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Arduino Mega
+</code></pre></div>
+<hr />
+<h2 id="inverter-stage">Inverter Stage<a class="headerlink" href="#inverter-stage" title="Permanent link">&para;</a></h2>
+<h3 id="gate-driver">Gate Driver<a class="headerlink" href="#gate-driver" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>IR2104
+</code></pre></div>
+<p>Recommended.</p>
+<p>Alternative:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>IR2110
+</code></pre></div>
+<hr />
+<h3 id="mosfets">MOSFETs<a class="headerlink" href="#mosfets" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>4 × IRLZ44N
+</code></pre></div>
+<hr />
+<h2 id="sensors">Sensors<a class="headerlink" href="#sensors" title="Permanent link">&para;</a></h2>
+<h3 id="voltage-measurement">Voltage Measurement<a class="headerlink" href="#voltage-measurement" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Resistor Divider
+</code></pre></div>
+<h3 id="current-measurement">Current Measurement<a class="headerlink" href="#current-measurement" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ACS712
+</code></pre></div>
+<p>or</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>ACS758
+</code></pre></div>
+<hr />
+<h2 id="lc-filter">LC Filter<a class="headerlink" href="#lc-filter" title="Permanent link">&para;</a></h2>
+<h3 id="inductor">Inductor<a class="headerlink" href="#inductor" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>1 mH to 5 mH
+</code></pre></div>
+<h3 id="capacitor">Capacitor<a class="headerlink" href="#capacitor" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>1 µF Film Capacitor
+</code></pre></div>
+<hr />
+<h2 id="test-equipment">Test Equipment<a class="headerlink" href="#test-equipment" title="Permanent link">&para;</a></h2>
+<ul>
+<li>DSO Nano</li>
+<li>Multimeter</li>
+<li>Bench Power Supply</li>
+</ul>
+<hr />
+<h1 id="complete-materials-list">Complete Materials List<a class="headerlink" href="#complete-materials-list" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>ESP32 DevKit
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>IR2104 Driver
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>4 × IRLZ44N MOSFETs
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>ACS712 Current Sensor
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>1 mH Inductor
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>
+<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>1 µF Film Capacitor
+<a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>
+<a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>470 µF Electrolytic Capacitor
+<a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>
+<a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>100 nF Ceramic Capacitor
+<a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>
+<a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a>12 V Bench Supply
+<a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a>
+<a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a>DSO Nano
+<a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a>
+<a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a>Breadboard
+<a id="__codelineno-21-22" name="__codelineno-21-22" href="#__codelineno-21-22"></a>
+<a id="__codelineno-21-23" name="__codelineno-21-23" href="#__codelineno-21-23"></a>Jumper Wires
+<a id="__codelineno-21-24" name="__codelineno-21-24" href="#__codelineno-21-24"></a>
+<a id="__codelineno-21-25" name="__codelineno-21-25" href="#__codelineno-21-25"></a>Multimeter
+</code></pre></div>
+<hr />
+<h1 id="full-system-schematic">Full System Schematic<a class="headerlink" href="#full-system-schematic" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>                    +12V DC Supply
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>                           │
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>                           │
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>                    DC Link Capacitor
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>                           │
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>                           ▼
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>                  ┌────────────────┐
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>                  │   H-BRIDGE     │
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>                  │ Q1 Q2 Q3 Q4    │
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>                  └───────┬────────┘
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>                          │
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>                       SPWM
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>                          ▲
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>                          │
+<a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a>
+<a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a>                  ┌─────────────┐
+<a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a>                  │    ESP32    │
+<a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a>                  │             │
+<a id="__codelineno-22-21" name="__codelineno-22-21" href="#__codelineno-22-21"></a>                  │ PI Control  │
+<a id="__codelineno-22-22" name="__codelineno-22-22" href="#__codelineno-22-22"></a>                  │ Frequency   │
+<a id="__codelineno-22-23" name="__codelineno-22-23" href="#__codelineno-22-23"></a>                  │ Generator   │
+<a id="__codelineno-22-24" name="__codelineno-22-24" href="#__codelineno-22-24"></a>                  └─────┬───────┘
+<a id="__codelineno-22-25" name="__codelineno-22-25" href="#__codelineno-22-25"></a>                        │
+<a id="__codelineno-22-26" name="__codelineno-22-26" href="#__codelineno-22-26"></a>
+<a id="__codelineno-22-27" name="__codelineno-22-27" href="#__codelineno-22-27"></a>             ┌──────────┴──────────┐
+<a id="__codelineno-22-28" name="__codelineno-22-28" href="#__codelineno-22-28"></a>
+<a id="__codelineno-22-29" name="__codelineno-22-29" href="#__codelineno-22-29"></a>             ▼                     ▼
+<a id="__codelineno-22-30" name="__codelineno-22-30" href="#__codelineno-22-30"></a>
+<a id="__codelineno-22-31" name="__codelineno-22-31" href="#__codelineno-22-31"></a>      Voltage Sensor        Current Sensor
+<a id="__codelineno-22-32" name="__codelineno-22-32" href="#__codelineno-22-32"></a>
+<a id="__codelineno-22-33" name="__codelineno-22-33" href="#__codelineno-22-33"></a>             ▲                     ▲
+<a id="__codelineno-22-34" name="__codelineno-22-34" href="#__codelineno-22-34"></a>
+<a id="__codelineno-22-35" name="__codelineno-22-35" href="#__codelineno-22-35"></a>             └─────────┬───────────┘
+<a id="__codelineno-22-36" name="__codelineno-22-36" href="#__codelineno-22-36"></a>                       │
+<a id="__codelineno-22-37" name="__codelineno-22-37" href="#__codelineno-22-37"></a>
+<a id="__codelineno-22-38" name="__codelineno-22-38" href="#__codelineno-22-38"></a>                    LC Filter
+<a id="__codelineno-22-39" name="__codelineno-22-39" href="#__codelineno-22-39"></a>
+<a id="__codelineno-22-40" name="__codelineno-22-40" href="#__codelineno-22-40"></a>                       │
+<a id="__codelineno-22-41" name="__codelineno-22-41" href="#__codelineno-22-41"></a>
+<a id="__codelineno-22-42" name="__codelineno-22-42" href="#__codelineno-22-42"></a>                       ▼
+<a id="__codelineno-22-43" name="__codelineno-22-43" href="#__codelineno-22-43"></a>
+<a id="__codelineno-22-44" name="__codelineno-22-44" href="#__codelineno-22-44"></a>                      Load
+</code></pre></div>
+<hr />
+<h1 id="dc-link-circuit">DC Link Circuit<a class="headerlink" href="#dc-link-circuit" title="Permanent link">&para;</a></h1>
+<p>Every practical inverter requires a DC-link capacitor.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>          +12 V Supply
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>                │
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>           ┌────────┐
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>           │ 470µF  │
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>           │        │
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>           └────────┘
+<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>
+<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>                │
+<a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>
+<a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>           H-Bridge
+</code></pre></div>
+<p>Recommended:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>470 µF Electrolytic
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>+
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>100 nF Ceramic
+</code></pre></div>
+<p>mounted near the MOSFET bridge.</p>
+<hr />
+<h1 id="full-h-bridge-schematic">Full H-Bridge Schematic<a class="headerlink" href="#full-h-bridge-schematic" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>              +Vdc
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>                │
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>          ┌─────┴─────┐
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>          │           │
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>         Q1          Q2
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>          │           │
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>          ├─── LOAD ──┤
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>          │           │
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>         Q3          Q4
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>          │           │
+<a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>          └─────┬─────┘
+<a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>                │
+<a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>               GND
+</code></pre></div>
+<hr />
+<h1 id="h-bridge-operation">H-Bridge Operation<a class="headerlink" href="#h-bridge-operation" title="Permanent link">&para;</a></h1>
+<h2 id="positive-half-cycle">Positive Half-Cycle<a class="headerlink" href="#positive-half-cycle" title="Permanent link">&para;</a></h2>
+<p>Turn ON:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Q1
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>Q4
+</code></pre></div>
+<p>Current flows:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>+Vdc
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a> ↓
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>Q1
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a> ↓
+<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>
+<a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a>Load
+<a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a>
+<a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a> ↓
+<a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a>
+<a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a>Q4
+<a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a>
+<a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a> ↓
+<a id="__codelineno-27-16" name="__codelineno-27-16" href="#__codelineno-27-16"></a>
+<a id="__codelineno-27-17" name="__codelineno-27-17" href="#__codelineno-27-17"></a>GND
+</code></pre></div>
+<hr />
+<h2 id="negative-half-cycle">Negative Half-Cycle<a class="headerlink" href="#negative-half-cycle" title="Permanent link">&para;</a></h2>
+<p>Turn ON:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>Q2
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>Q3
+</code></pre></div>
+<p>Current flows in the opposite direction.</p>
+<hr />
+<h1 id="shoot-through-warning">Shoot-Through Warning<a class="headerlink" href="#shoot-through-warning" title="Permanent link">&para;</a></h1>
+<p>Never enable:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>Q1 and Q3
+</code></pre></div>
+<p>or:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>Q2 and Q4
+</code></pre></div>
+<p>simultaneously.</p>
+<p>This creates:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>Direct Supply Short Circuit
+</code></pre></div>
+<hr />
+<h1 id="dead-time">Dead Time<a class="headerlink" href="#dead-time" title="Permanent link">&para;</a></h1>
+<p>A delay is inserted between switching events.</p>
+<p>This delay is called:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>Dead Time
+</code></pre></div>
+<p>Typical values:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>1 µs to 5 µs
+</code></pre></div>
+<hr />
+<h1 id="example-dead-time-logic">Example Dead-Time Logic<a class="headerlink" href="#example-dead-time-logic" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>Q1 OFF
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>Wait
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>
+<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>Q4 OFF
+<a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a>
+<a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a>Wait
+<a id="__codelineno-34-8" name="__codelineno-34-8" href="#__codelineno-34-8"></a>
+<a id="__codelineno-34-9" name="__codelineno-34-9" href="#__codelineno-34-9"></a>Q2 ON
+<a id="__codelineno-34-10" name="__codelineno-34-10" href="#__codelineno-34-10"></a>
+<a id="__codelineno-34-11" name="__codelineno-34-11" href="#__codelineno-34-11"></a>Q3 ON
+</code></pre></div>
+<hr />
+<h1 id="mosfet-driver-connections">MOSFET Driver Connections<a class="headerlink" href="#mosfet-driver-connections" title="Permanent link">&para;</a></h1>
+<p>Example using an IR2104.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>             ESP32
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>         PWM_H   PWM_L
+<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>            │      │
+<a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>            ▼      ▼
+<a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a>
+<a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a>            IR2104
+<a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a>
+<a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a>          HO      LO
+<a id="__codelineno-35-10" name="__codelineno-35-10" href="#__codelineno-35-10"></a>
+<a id="__codelineno-35-11" name="__codelineno-35-11" href="#__codelineno-35-11"></a>           │       │
+<a id="__codelineno-35-12" name="__codelineno-35-12" href="#__codelineno-35-12"></a>
+<a id="__codelineno-35-13" name="__codelineno-35-13" href="#__codelineno-35-13"></a>           ▼       ▼
+<a id="__codelineno-35-14" name="__codelineno-35-14" href="#__codelineno-35-14"></a>
+<a id="__codelineno-35-15" name="__codelineno-35-15" href="#__codelineno-35-15"></a>          Q1      Q3
+<a id="__codelineno-35-16" name="__codelineno-35-16" href="#__codelineno-35-16"></a>
+<a id="__codelineno-35-17" name="__codelineno-35-17" href="#__codelineno-35-17"></a>          Q2      Q4
+</code></pre></div>
+<hr />
+<h1 id="lc-output-filter">LC Output Filter<a class="headerlink" href="#lc-output-filter" title="Permanent link">&para;</a></h1>
+<p>The H-Bridge output contains PWM ripple.</p>
+<p>An LC filter smooths the waveform.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>            H-Bridge
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>                │
+<a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>
+<a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>                L
+<a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a>
+<a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a>                │
+<a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a>
+<a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a>                ●────── Load
+<a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a>
+<a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a>                │
+<a id="__codelineno-36-12" name="__codelineno-36-12" href="#__codelineno-36-12"></a>
+<a id="__codelineno-36-13" name="__codelineno-36-13" href="#__codelineno-36-13"></a>                C
+<a id="__codelineno-36-14" name="__codelineno-36-14" href="#__codelineno-36-14"></a>
+<a id="__codelineno-36-15" name="__codelineno-36-15" href="#__codelineno-36-15"></a>                │
+<a id="__codelineno-36-16" name="__codelineno-36-16" href="#__codelineno-36-16"></a>
+<a id="__codelineno-36-17" name="__codelineno-36-17" href="#__codelineno-36-17"></a>               GND
+</code></pre></div>
+<hr />
+<h1 id="why-use-an-lc-filter">Why Use an LC Filter?<a class="headerlink" href="#why-use-an-lc-filter" title="Permanent link">&para;</a></h1>
+<p>Advantages:</p>
+<p>✅ Lower harmonic distortion</p>
+<p>✅ Reduced ripple</p>
+<p>✅ Better voltage quality</p>
+<p>✅ Improved sine-wave approximation</p>
+<hr />
+<h1 id="voltage-measurement-circuit">Voltage Measurement Circuit<a class="headerlink" href="#voltage-measurement-circuit" title="Permanent link">&para;</a></h1>
+<p>The ESP32 must never measure the inverter voltage directly.</p>
+<p>Use a divider:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>Output Voltage
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>      │
+<a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>
+<a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a>     47 kΩ
+<a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a>
+<a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a>      │──── ADC
+<a id="__codelineno-37-8" name="__codelineno-37-8" href="#__codelineno-37-8"></a>
+<a id="__codelineno-37-9" name="__codelineno-37-9" href="#__codelineno-37-9"></a>     10 kΩ
+<a id="__codelineno-37-10" name="__codelineno-37-10" href="#__codelineno-37-10"></a>
+<a id="__codelineno-37-11" name="__codelineno-37-11" href="#__codelineno-37-11"></a>      │
+<a id="__codelineno-37-12" name="__codelineno-37-12" href="#__codelineno-37-12"></a>
+<a id="__codelineno-37-13" name="__codelineno-37-13" href="#__codelineno-37-13"></a>     GND
+</code></pre></div>
+<hr />
+<h1 id="current-measurement-circuit">Current Measurement Circuit<a class="headerlink" href="#current-measurement-circuit" title="Permanent link">&para;</a></h1>
+<p>Place the ACS712 after the filter.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>          LC Filter
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>               │
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>               ▼
+<a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>
+<a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>            ACS712
+<a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a>
+<a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a>               │
+<a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a>
+<a id="__codelineno-38-11" name="__codelineno-38-11" href="#__codelineno-38-11"></a>               ▼
+<a id="__codelineno-38-12" name="__codelineno-38-12" href="#__codelineno-38-12"></a>
+<a id="__codelineno-38-13" name="__codelineno-38-13" href="#__codelineno-38-13"></a>              Load
+</code></pre></div>
+<hr />
+<h1 id="voltage-reference">Voltage Reference<a class="headerlink" href="#voltage-reference" title="Permanent link">&para;</a></h1>
+<p>The inverter generates:</p>
+<div class="arithmatex">\[
+v^*(t)
+=
+V_m \sin(\omega t)
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(V_m\)</span> = Desired Peak Voltage</li>
+<li><span class="arithmatex">\(\omega\)</span> = Angular Frequency</li>
+</ul>
+<hr />
+<h1 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h1>
+<p>Desired output:</p>
+<div class="arithmatex">\[
+v^*(t)
+=
+5\sin(2\pi50t)
+\]</div>
+<p>Produces:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>50 Hz AC Reference
+</code></pre></div>
+<hr />
+<h1 id="internal-oscillator">Internal Oscillator<a class="headerlink" href="#internal-oscillator" title="Permanent link">&para;</a></h1>
+<p>Unlike Grid-Following converters:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>No PLL Required
+</code></pre></div>
+<p>The inverter generates its own electrical angle.</p>
+<hr />
+<h1 id="angle-generation">Angle Generation<a class="headerlink" href="#angle-generation" title="Permanent link">&para;</a></h1>
+<div class="arithmatex">\[
+\theta
+=
+\omega t
+\]</div>
+<p>where:</p>
+<div class="arithmatex">\[
+\omega
+=
+2\pi f
+\]</div>
+<p>For:</p>
+<div class="arithmatex">\[
+f=50Hz
+\]</div>
+<hr />
+<h1 id="voltage-error">Voltage Error<a class="headerlink" href="#voltage-error" title="Permanent link">&para;</a></h1>
+<p>The controller computes:</p>
+<div class="arithmatex">\[
+e
+=
+V^*
+-
+V
+\]</div>
+<hr />
+<h1 id="voltage-control-loop">Voltage Control Loop<a class="headerlink" href="#voltage-control-loop" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>Voltage Reference
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>        ↓
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>   Error Calculation
+<a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>        ↓
+<a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>    PI Controller
+<a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>        ↓
+<a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a>  Modulation Index
+<a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a>        ↓
+<a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a>       SPWM
+<a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a>        ↓
+<a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a>     Inverter
+<a id="__codelineno-41-12" name="__codelineno-41-12" href="#__codelineno-41-12"></a>        ↓
+<a id="__codelineno-41-13" name="__codelineno-41-13" href="#__codelineno-41-13"></a>   Output Voltage
+<a id="__codelineno-41-14" name="__codelineno-41-14" href="#__codelineno-41-14"></a>        ↓
+<a id="__codelineno-41-15" name="__codelineno-41-15" href="#__codelineno-41-15"></a>      Feedback
+</code></pre></div>
+<hr />
+<h1 id="pi-voltage-controller">PI Voltage Controller<a class="headerlink" href="#pi-voltage-controller" title="Permanent link">&para;</a></h1>
+<div class="arithmatex">\[
+u
+=
+K_Pe
++
+K_I\int e\,dt
+\]</div>
+<hr />
+<h1 id="why-use-pi-control">Why Use PI Control?<a class="headerlink" href="#why-use-pi-control" title="Permanent link">&para;</a></h1>
+<p>The PI controller:</p>
+<p>✅ Removes steady-state error</p>
+<p>✅ Improves regulation</p>
+<p>✅ Compensates for load changes</p>
+<hr />
+<h1 id="modulation-index">Modulation Index<a class="headerlink" href="#modulation-index" title="Permanent link">&para;</a></h1>
+<p>Symbol:</p>
+<div class="arithmatex">\[
+m
+\]</div>
+<p>Range:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>0 to 1
+</code></pre></div>
+<p>Relationship:</p>
+<div class="arithmatex">\[
+V_{OUT} \propto m
+\]</div>
+<p>As modulation index increases:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>Output Voltage Increases
+</code></pre></div>
+<hr />
+<h1 id="spwm-implementation">SPWM Implementation<a class="headerlink" href="#spwm-implementation" title="Permanent link">&para;</a></h1>
+<p>SPWM stands for:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>Sinusoidal Pulse Width Modulation
+</code></pre></div>
+<hr />
+<h1 id="spwm-concept">SPWM Concept<a class="headerlink" href="#spwm-concept" title="Permanent link">&para;</a></h1>
+<p>A sine-wave reference is compared with a high-frequency carrier.</p>
+<hr />
+<h1 id="comparator-logic">Comparator Logic<a class="headerlink" href="#comparator-logic" title="Permanent link">&para;</a></h1>
+<p>If:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>Reference &gt; Carrier
+</code></pre></div>
+<p>PWM Output:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>HIGH
+</code></pre></div>
+<p>If:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>Reference &lt; Carrier
+</code></pre></div>
+<p>PWM Output:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>LOW
+</code></pre></div>
+<hr />
+<h1 id="spwm-hardware-flow">SPWM Hardware Flow<a class="headerlink" href="#spwm-hardware-flow" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>50 Hz Reference
+<a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>       │
+<a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a>       ▼
+<a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a>
+<a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>   sin(theta)
+<a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a>
+<a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a>       │
+<a id="__codelineno-49-8" name="__codelineno-49-8" href="#__codelineno-49-8"></a>       ▼
+<a id="__codelineno-49-9" name="__codelineno-49-9" href="#__codelineno-49-9"></a>
+<a id="__codelineno-49-10" name="__codelineno-49-10" href="#__codelineno-49-10"></a>Compare With
+<a id="__codelineno-49-11" name="__codelineno-49-11" href="#__codelineno-49-11"></a>
+<a id="__codelineno-49-12" name="__codelineno-49-12" href="#__codelineno-49-12"></a>20 kHz Carrier
+<a id="__codelineno-49-13" name="__codelineno-49-13" href="#__codelineno-49-13"></a>
+<a id="__codelineno-49-14" name="__codelineno-49-14" href="#__codelineno-49-14"></a>       │
+<a id="__codelineno-49-15" name="__codelineno-49-15" href="#__codelineno-49-15"></a>       ▼
+<a id="__codelineno-49-16" name="__codelineno-49-16" href="#__codelineno-49-16"></a>
+<a id="__codelineno-49-17" name="__codelineno-49-17" href="#__codelineno-49-17"></a> PWM Pulses
+<a id="__codelineno-49-18" name="__codelineno-49-18" href="#__codelineno-49-18"></a>
+<a id="__codelineno-49-19" name="__codelineno-49-19" href="#__codelineno-49-19"></a>       │
+<a id="__codelineno-49-20" name="__codelineno-49-20" href="#__codelineno-49-20"></a>       ▼
+<a id="__codelineno-49-21" name="__codelineno-49-21" href="#__codelineno-49-21"></a>
+<a id="__codelineno-49-22" name="__codelineno-49-22" href="#__codelineno-49-22"></a> MOSFET Driver
+<a id="__codelineno-49-23" name="__codelineno-49-23" href="#__codelineno-49-23"></a>
+<a id="__codelineno-49-24" name="__codelineno-49-24" href="#__codelineno-49-24"></a>       │
+<a id="__codelineno-49-25" name="__codelineno-49-25" href="#__codelineno-49-25"></a>       ▼
+<a id="__codelineno-49-26" name="__codelineno-49-26" href="#__codelineno-49-26"></a>
+<a id="__codelineno-49-27" name="__codelineno-49-27" href="#__codelineno-49-27"></a>   H-Bridge
+</code></pre></div>
+<hr />
+<h1 id="conceptual-spwm-pattern">Conceptual SPWM Pattern<a class="headerlink" href="#conceptual-spwm-pattern" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>| |
+<a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>| | |
+<a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a>| | | |
+<a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a>| | | | |
+<a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a>| | | | | |
+<a id="__codelineno-50-6" name="__codelineno-50-6" href="#__codelineno-50-6"></a>| | | | |
+<a id="__codelineno-50-7" name="__codelineno-50-7" href="#__codelineno-50-7"></a>| | | |
+</code></pre></div>
+<hr />
+<h1 id="digital-spwm-implementation">Digital SPWM Implementation<a class="headerlink" href="#digital-spwm-implementation" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="n">theta</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">omega</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ts</span><span class="p">;</span>
+<a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>
+<a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a><span class="k">if</span><span class="p">(</span><span class="n">theta</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">PI</span><span class="p">)</span>
+<a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a><span class="p">{</span>
+<a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a><span class="w">    </span><span class="n">theta</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">PI</span><span class="p">;</span>
+<a id="__codelineno-51-6" name="__codelineno-51-6" href="#__codelineno-51-6"></a><span class="p">}</span>
+<a id="__codelineno-51-7" name="__codelineno-51-7" href="#__codelineno-51-7"></a>
+<a id="__codelineno-51-8" name="__codelineno-51-8" href="#__codelineno-51-8"></a><span class="kt">float</span><span class="w"> </span><span class="n">reference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span>
+<a id="__codelineno-51-9" name="__codelineno-51-9" href="#__codelineno-51-9"></a>
+<a id="__codelineno-51-10" name="__codelineno-51-10" href="#__codelineno-51-10"></a><span class="kt">int</span><span class="w"> </span><span class="n">pwm</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-51-11" name="__codelineno-51-11" href="#__codelineno-51-11"></a><span class="w">    </span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="mi">127</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">127</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">reference</span><span class="p">);</span>
+<a id="__codelineno-51-12" name="__codelineno-51-12" href="#__codelineno-51-12"></a>
+<a id="__codelineno-51-13" name="__codelineno-51-13" href="#__codelineno-51-13"></a><span class="n">pwm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">constrain</span><span class="p">(</span><span class="n">pwm</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">);</span>
+</code></pre></div>
+<p>Where:</p>
+<ul>
+<li><code>theta</code> = Electrical Angle</li>
+<li><code>omega</code> = Angular Frequency</li>
+<li><code>Ts</code> = Sampling Time</li>
+<li><code>reference</code> = Sine Reference</li>
+<li><code>pwm</code> = PWM Duty Cycle</li>
+</ul>
+<hr />
+<h1 id="relationship-between-pi-and-spwm">Relationship Between PI and SPWM<a class="headerlink" href="#relationship-between-pi-and-spwm" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>Voltage Error
+<a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>      ↓
+<a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a>PI Controller
+<a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a>      ↓
+<a id="__codelineno-52-5" name="__codelineno-52-5" href="#__codelineno-52-5"></a>Modulation Index
+<a id="__codelineno-52-6" name="__codelineno-52-6" href="#__codelineno-52-6"></a>      ↓
+<a id="__codelineno-52-7" name="__codelineno-52-7" href="#__codelineno-52-7"></a>SPWM Generator
+<a id="__codelineno-52-8" name="__codelineno-52-8" href="#__codelineno-52-8"></a>      ↓
+<a id="__codelineno-52-9" name="__codelineno-52-9" href="#__codelineno-52-9"></a>Gate Signals
+<a id="__codelineno-52-10" name="__codelineno-52-10" href="#__codelineno-52-10"></a>      ↓
+<a id="__codelineno-52-11" name="__codelineno-52-11" href="#__codelineno-52-11"></a>H-Bridge
+</code></pre></div>
+<hr />
+<h1 id="frequency-regulation">Frequency Regulation<a class="headerlink" href="#frequency-regulation" title="Permanent link">&para;</a></h1>
+<p>The converter maintains:</p>
+<div class="arithmatex">\[
+f = 50Hz
+\]</div>
+<p>independently of load conditions.</p>
+<hr />
+<h1 id="droop-control">Droop Control<a class="headerlink" href="#droop-control" title="Permanent link">&para;</a></h1>
+<p>Grid-Forming converters often emulate synchronous generators.</p>
+<hr />
+<h1 id="active-power-droop">Active Power Droop<a class="headerlink" href="#active-power-droop" title="Permanent link">&para;</a></h1>
+<div class="arithmatex">\[
+f
+=
+f_0
+-
+K_P(P-P_0)
+\]</div>
+<hr />
+<h1 id="reactive-power-droop">Reactive Power Droop<a class="headerlink" href="#reactive-power-droop" title="Permanent link">&para;</a></h1>
+<div class="arithmatex">\[
+V
+=
+V_0
+-
+K_Q(Q-Q_0)
+\]</div>
+<hr />
+<h1 id="why-use-droop-control">Why Use Droop Control?<a class="headerlink" href="#why-use-droop-control" title="Permanent link">&para;</a></h1>
+<p>Droop allows:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>Multiple Inverters
+</code></pre></div>
+<p>to share loads automatically.</p>
+<hr />
+<h1 id="virtual-synchronous-machine-vsm">Virtual Synchronous Machine (VSM)<a class="headerlink" href="#virtual-synchronous-machine-vsm" title="Permanent link">&para;</a></h1>
+<p>A Virtual Synchronous Machine emulates the behavior of a rotating generator using software.</p>
+<hr />
+<h1 id="benefits-of-vsm-control">Benefits of VSM Control<a class="headerlink" href="#benefits-of-vsm-control" title="Permanent link">&para;</a></h1>
+<p>✅ Synthetic Inertia</p>
+<p>✅ Better Frequency Stability</p>
+<p>✅ Improved Dynamic Response</p>
+<p>✅ Enhanced Microgrid Performance</p>
+<hr />
+<h1 id="recommended-build-stages">Recommended Build Stages<a class="headerlink" href="#recommended-build-stages" title="Permanent link">&para;</a></h1>
+<h2 id="stage-1">Stage 1<a class="headerlink" href="#stage-1" title="Permanent link">&para;</a></h2>
+<p>Generate a 50 Hz reference.</p>
+<p>Verify:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>Frequency
+<a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>
+<a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a>Amplitude
+</code></pre></div>
+<hr />
+<h2 id="stage-2">Stage 2<a class="headerlink" href="#stage-2" title="Permanent link">&para;</a></h2>
+<p>Generate SPWM.</p>
+<p>Verify:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>PWM Frequency
+<a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>
+<a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a>Duty Cycle Variation
+</code></pre></div>
+<hr />
+<h2 id="stage-3">Stage 3<a class="headerlink" href="#stage-3" title="Permanent link">&para;</a></h2>
+<p>Build and test the H-Bridge.</p>
+<p>Verify:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>Alternating Output Voltage
+</code></pre></div>
+<hr />
+<h2 id="stage-4">Stage 4<a class="headerlink" href="#stage-4" title="Permanent link">&para;</a></h2>
+<p>Install the LC Filter.</p>
+<p>Verify:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>Smooth AC Voltage
+</code></pre></div>
+<hr />
+<h2 id="stage-5">Stage 5<a class="headerlink" href="#stage-5" title="Permanent link">&para;</a></h2>
+<p>Implement Voltage Measurement.</p>
+<p>Verify ADC accuracy.</p>
+<hr />
+<h2 id="stage-6">Stage 6<a class="headerlink" href="#stage-6" title="Permanent link">&para;</a></h2>
+<p>Implement PI Voltage Control.</p>
+<p>Verify stable regulation.</p>
+<hr />
+<h2 id="stage-7">Stage 7<a class="headerlink" href="#stage-7" title="Permanent link">&para;</a></h2>
+<p>Implement Droop Control.</p>
+<p>Study power-sharing behavior.</p>
+<hr />
+<h1 id="experiment-1-generate-ac-voltage">Experiment 1 - Generate AC Voltage<a class="headerlink" href="#experiment-1-generate-ac-voltage" title="Permanent link">&para;</a></h1>
+<h2 id="objective_1">Objective<a class="headerlink" href="#objective_1" title="Permanent link">&para;</a></h2>
+<p>Generate a stable AC voltage waveform.</p>
+<hr />
+<h1 id="measurements">Measurements<a class="headerlink" href="#measurements" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Measured</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frequency</td>
+<td></td>
+</tr>
+<tr>
+<td>RMS Voltage</td>
+<td></td>
+</tr>
+<tr>
+<td>Peak Voltage</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="experiment-2-load-regulation">Experiment 2 - Load Regulation<a class="headerlink" href="#experiment-2-load-regulation" title="Permanent link">&para;</a></h1>
+<h2 id="test-loads">Test Loads<a class="headerlink" href="#test-loads" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>100 Ω
+<a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>
+<a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a>220 Ω
+<a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a>
+<a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a>470 Ω
+</code></pre></div>
+<hr />
+<h1 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Load</th>
+<th>Output Voltage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100 Ω</td>
+<td></td>
+</tr>
+<tr>
+<td>220 Ω</td>
+<td></td>
+</tr>
+<tr>
+<td>470 Ω</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="experiment-3-pi-tuning">Experiment 3 - PI Tuning<a class="headerlink" href="#experiment-3-pi-tuning" title="Permanent link">&para;</a></h1>
+<p>Measure:</p>
+<ul>
+<li>Overshoot</li>
+<li>Settling Time</li>
+<li>Voltage Error</li>
+<li>Stability</li>
+</ul>
+<p>for different gain settings.</p>
+<hr />
+<h1 id="matlab-simulation">MATLAB Simulation<a class="headerlink" href="#matlab-simulation" title="Permanent link">&para;</a></h1>
+<p>Before building, simulate the LC filter response, the PI voltage controller, and the droop characteristic to predict hardware behaviour.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="c">% System parameters</span>
+<a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a><span class="n">Vm</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">       </span><span class="c">% desired peak output voltage (V)</span>
+<a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a><span class="n">f_grid</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span><span class="w">      </span><span class="c">% Hz</span>
+<a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a><span class="n">L</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="mf">1e-3</span><span class="p">;</span><span class="w">    </span><span class="c">% filter inductance (H)</span>
+<a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a><span class="n">C</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="mf">1e-6</span><span class="p">;</span><span class="w">    </span><span class="c">% filter capacitance (F)</span>
+<a id="__codelineno-59-6" name="__codelineno-59-6" href="#__codelineno-59-6"></a><span class="n">R_load</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">220</span><span class="p">;</span><span class="w">     </span><span class="c">% load resistance (Ohm)</span>
+<a id="__codelineno-59-7" name="__codelineno-59-7" href="#__codelineno-59-7"></a><span class="n">Kp_v</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w">       </span><span class="c">% voltage controller Kp</span>
+<a id="__codelineno-59-8" name="__codelineno-59-8" href="#__codelineno-59-8"></a><span class="n">Ki_v</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w">     </span><span class="c">% voltage controller Ki</span>
+<a id="__codelineno-59-9" name="__codelineno-59-9" href="#__codelineno-59-9"></a>
+<a id="__codelineno-59-10" name="__codelineno-59-10" href="#__codelineno-59-10"></a><span class="n">s</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="s">&#39;s&#39;</span><span class="p">);</span>
+<a id="__codelineno-59-11" name="__codelineno-59-11" href="#__codelineno-59-11"></a>
+<a id="__codelineno-59-12" name="__codelineno-59-12" href="#__codelineno-59-12"></a><span class="c">% LC filter plant (voltage across C with load)</span>
+<a id="__codelineno-59-13" name="__codelineno-59-13" href="#__codelineno-59-13"></a><span class="n">G_lc</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">R_load</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">L</span><span class="o">*</span><span class="n">C</span><span class="o">*</span><span class="n">R_load</span><span class="o">*</span><span class="n">s</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">L</span><span class="o">*</span><span class="n">s</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">R_load</span><span class="p">);</span>
+<a id="__codelineno-59-14" name="__codelineno-59-14" href="#__codelineno-59-14"></a>
+<a id="__codelineno-59-15" name="__codelineno-59-15" href="#__codelineno-59-15"></a><span class="c">% PI voltage controller</span>
+<a id="__codelineno-59-16" name="__codelineno-59-16" href="#__codelineno-59-16"></a><span class="n">C_pi</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Kp_v</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Ki_v</span><span class="o">/</span><span class="n">s</span><span class="p">;</span>
+<a id="__codelineno-59-17" name="__codelineno-59-17" href="#__codelineno-59-17"></a><span class="n">T_v</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">feedback</span><span class="p">(</span><span class="n">C_pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">G_lc</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-59-18" name="__codelineno-59-18" href="#__codelineno-59-18"></a>
+<a id="__codelineno-59-19" name="__codelineno-59-19" href="#__codelineno-59-19"></a><span class="n">t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">1e-5</span><span class="p">:</span><span class="mf">0.05</span><span class="p">;</span>
+<a id="__codelineno-59-20" name="__codelineno-59-20" href="#__codelineno-59-20"></a>
+<a id="__codelineno-59-21" name="__codelineno-59-21" href="#__codelineno-59-21"></a><span class="nb">figure</span><span class="p">;</span>
+<a id="__codelineno-59-22" name="__codelineno-59-22" href="#__codelineno-59-22"></a>
+<a id="__codelineno-59-23" name="__codelineno-59-23" href="#__codelineno-59-23"></a><span class="c">% --- Subplot 1: LC filter Bode plot ---</span>
+<a id="__codelineno-59-24" name="__codelineno-59-24" href="#__codelineno-59-24"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-59-25" name="__codelineno-59-25" href="#__codelineno-59-25"></a><span class="n">bode</span><span class="p">(</span><span class="n">G_lc</span><span class="p">);</span><span class="w"> </span><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-59-26" name="__codelineno-59-26" href="#__codelineno-59-26"></a><span class="nb">title</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;LC Filter Bode  L=%.0fmH  C=%.0f\muF  R_{load}=%.0f\Omega&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-59-27" name="__codelineno-59-27" href="#__codelineno-59-27"></a><span class="w">    </span><span class="n">L</span><span class="o">*</span><span class="mf">1e3</span><span class="p">,</span><span class="w"> </span><span class="n">C</span><span class="o">*</span><span class="mf">1e6</span><span class="p">,</span><span class="w"> </span><span class="n">R_load</span><span class="p">));</span>
+<a id="__codelineno-59-28" name="__codelineno-59-28" href="#__codelineno-59-28"></a>
+<a id="__codelineno-59-29" name="__codelineno-59-29" href="#__codelineno-59-29"></a><span class="c">% --- Subplot 2: PI voltage controller step response ---</span>
+<a id="__codelineno-59-30" name="__codelineno-59-30" href="#__codelineno-59-30"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-59-31" name="__codelineno-59-31" href="#__codelineno-59-31"></a><span class="p">[</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">Vm</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">T_v</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
+<a id="__codelineno-59-32" name="__codelineno-59-32" href="#__codelineno-59-32"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="p">);</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-59-33" name="__codelineno-59-33" href="#__codelineno-59-33"></a><span class="nb">yline</span><span class="p">(</span><span class="n">Vm</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">);</span>
+<a id="__codelineno-59-34" name="__codelineno-59-34" href="#__codelineno-59-34"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (s)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Voltage (V)&#39;</span><span class="p">);</span>
+<a id="__codelineno-59-35" name="__codelineno-59-35" href="#__codelineno-59-35"></a><span class="nb">title</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;PI Voltage Controller  Kp=%.0f Ki=%.0f&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Kp_v</span><span class="p">,</span><span class="w"> </span><span class="n">Ki_v</span><span class="p">));</span>
+<a id="__codelineno-59-36" name="__codelineno-59-36" href="#__codelineno-59-36"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-59-37" name="__codelineno-59-37" href="#__codelineno-59-37"></a>
+<a id="__codelineno-59-38" name="__codelineno-59-38" href="#__codelineno-59-38"></a><span class="n">si</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">stepinfo</span><span class="p">(</span><span class="n">T_v</span><span class="p">);</span>
+<a id="__codelineno-59-39" name="__codelineno-59-39" href="#__codelineno-59-39"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Rise time:     %.4f s\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">si</span><span class="p">.</span><span class="n">RiseTime</span><span class="p">);</span>
+<a id="__codelineno-59-40" name="__codelineno-59-40" href="#__codelineno-59-40"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Overshoot:     %.1f %%\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">si</span><span class="p">.</span><span class="n">Overshoot</span><span class="p">);</span>
+<a id="__codelineno-59-41" name="__codelineno-59-41" href="#__codelineno-59-41"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Settling time: %.4f s\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">si</span><span class="p">.</span><span class="n">SettlingTime</span><span class="p">);</span>
+<a id="__codelineno-59-42" name="__codelineno-59-42" href="#__codelineno-59-42"></a>
+<a id="__codelineno-59-43" name="__codelineno-59-43" href="#__codelineno-59-43"></a><span class="c">% --- Subplot 3: frequency droop for two inverters ---</span>
+<a id="__codelineno-59-44" name="__codelineno-59-44" href="#__codelineno-59-44"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+<a id="__codelineno-59-45" name="__codelineno-59-45" href="#__codelineno-59-45"></a><span class="n">P</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">10</span><span class="p">;</span>
+<a id="__codelineno-59-46" name="__codelineno-59-46" href="#__codelineno-59-46"></a><span class="n">f0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span><span class="w">  </span><span class="n">Kd1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span><span class="w">  </span><span class="n">Kd2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">0.2</span><span class="p">;</span>
+<a id="__codelineno-59-47" name="__codelineno-59-47" href="#__codelineno-59-47"></a><span class="nb">plot</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="n">f0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Kd1</span><span class="o">*</span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="n">f0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Kd2</span><span class="o">*</span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="p">);</span>
+<a id="__codelineno-59-48" name="__codelineno-59-48" href="#__codelineno-59-48"></a><span class="nb">legend</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;Inverter 1  K_d=%.1f&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Kd1</span><span class="p">),</span><span class="w"> </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;Inverter 2  K_d=%.1f&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Kd2</span><span class="p">));</span>
+<a id="__codelineno-59-49" name="__codelineno-59-49" href="#__codelineno-59-49"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Active Power (W)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Frequency (Hz)&#39;</span><span class="p">);</span>
+<a id="__codelineno-59-50" name="__codelineno-59-50" href="#__codelineno-59-50"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Frequency Droop Characteristic&#39;</span><span class="p">);</span><span class="w"> </span><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-59-51" name="__codelineno-59-51" href="#__codelineno-59-51"></a>
+<a id="__codelineno-59-52" name="__codelineno-59-52" href="#__codelineno-59-52"></a><span class="c">% Natural frequency and damping of LC filter</span>
+<a id="__codelineno-59-53" name="__codelineno-59-53" href="#__codelineno-59-53"></a><span class="n">wn</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="nb">sqrt</span><span class="p">(</span><span class="n">L</span><span class="o">*</span><span class="n">C</span><span class="p">);</span>
+<a id="__codelineno-59-54" name="__codelineno-59-54" href="#__codelineno-59-54"></a><span class="n">zeta</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">R_load</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">sqrt</span><span class="p">(</span><span class="n">L</span><span class="o">/</span><span class="n">C</span><span class="p">);</span>
+<a id="__codelineno-59-55" name="__codelineno-59-55" href="#__codelineno-59-55"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;\nLC filter natural frequency: %.1f Hz\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">wn</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="p">));</span>
+<a id="__codelineno-59-56" name="__codelineno-59-56" href="#__codelineno-59-56"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;LC filter damping ratio:     %.3f\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">zeta</span><span class="p">);</span>
+</code></pre></div>
+<p>Record the predicted rise time, overshoot, and LC natural frequency before proceeding to the experiments.</p>
+<hr />
+<h1 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h1>
+<p>After completing the experiments, enter your measured load regulation data and PI step response to compare against simulation.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a><span class="c">% --- Enter your system parameters ---</span>
+<a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a><span class="n">Vm</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">       </span><span class="c">% target peak voltage (V)</span>
+<a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a><span class="n">L</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="mf">1e-3</span><span class="p">;</span><span class="w">    </span><span class="c">% H</span>
+<a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a><span class="n">C</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="mf">1e-6</span><span class="p">;</span><span class="w">    </span><span class="c">% F</span>
+<a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a><span class="n">Kp_v</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<a id="__codelineno-60-6" name="__codelineno-60-6" href="#__codelineno-60-6"></a><span class="n">Ki_v</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+<a id="__codelineno-60-7" name="__codelineno-60-7" href="#__codelineno-60-7"></a>
+<a id="__codelineno-60-8" name="__codelineno-60-8" href="#__codelineno-60-8"></a><span class="c">% --- Enter measured Vout for each load (Experiment 2) ---</span>
+<a id="__codelineno-60-9" name="__codelineno-60-9" href="#__codelineno-60-9"></a><span class="n">R_loads</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">220</span><span class="p">,</span><span class="w"> </span><span class="mi">470</span><span class="p">];</span><span class="w">          </span><span class="c">% Ohm</span>
+<a id="__codelineno-60-10" name="__codelineno-60-10" href="#__codelineno-60-10"></a><span class="n">V_meas</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">4.6</span><span class="p">,</span><span class="w"> </span><span class="mf">4.85</span><span class="p">,</span><span class="w"> </span><span class="mf">4.95</span><span class="p">];</span><span class="w">       </span><span class="c">% V peak — replace with your readings</span>
+<a id="__codelineno-60-11" name="__codelineno-60-11" href="#__codelineno-60-11"></a>
+<a id="__codelineno-60-12" name="__codelineno-60-12" href="#__codelineno-60-12"></a><span class="c">% Simulate Vout vs load</span>
+<a id="__codelineno-60-13" name="__codelineno-60-13" href="#__codelineno-60-13"></a><span class="n">s</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="s">&#39;s&#39;</span><span class="p">);</span>
+<a id="__codelineno-60-14" name="__codelineno-60-14" href="#__codelineno-60-14"></a><span class="n">V_sim</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">numel</span><span class="p">(</span><span class="n">R_loads</span><span class="p">));</span>
+<a id="__codelineno-60-15" name="__codelineno-60-15" href="#__codelineno-60-15"></a><span class="k">for</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="nb">numel</span><span class="p">(</span><span class="n">R_loads</span><span class="p">)</span>
+<a id="__codelineno-60-16" name="__codelineno-60-16" href="#__codelineno-60-16"></a><span class="w">    </span><span class="n">R</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">R_loads</span><span class="p">(</span><span class="n">k</span><span class="p">);</span>
+<a id="__codelineno-60-17" name="__codelineno-60-17" href="#__codelineno-60-17"></a><span class="w">    </span><span class="n">G_lc</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">L</span><span class="o">*</span><span class="n">C</span><span class="o">*</span><span class="n">R</span><span class="o">*</span><span class="n">s</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">L</span><span class="o">*</span><span class="n">s</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">R</span><span class="p">);</span>
+<a id="__codelineno-60-18" name="__codelineno-60-18" href="#__codelineno-60-18"></a><span class="w">    </span><span class="n">C_pi</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Kp_v</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Ki_v</span><span class="o">/</span><span class="n">s</span><span class="p">;</span>
+<a id="__codelineno-60-19" name="__codelineno-60-19" href="#__codelineno-60-19"></a><span class="w">    </span><span class="n">T_v</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">feedback</span><span class="p">(</span><span class="n">C_pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">G_lc</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-60-20" name="__codelineno-60-20" href="#__codelineno-60-20"></a><span class="w">    </span><span class="n">V_sim</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vm</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dcgain</span><span class="p">(</span><span class="n">T_v</span><span class="p">);</span>
+<a id="__codelineno-60-21" name="__codelineno-60-21" href="#__codelineno-60-21"></a><span class="k">end</span>
+<a id="__codelineno-60-22" name="__codelineno-60-22" href="#__codelineno-60-22"></a>
+<a id="__codelineno-60-23" name="__codelineno-60-23" href="#__codelineno-60-23"></a><span class="nb">figure</span><span class="p">;</span>
+<a id="__codelineno-60-24" name="__codelineno-60-24" href="#__codelineno-60-24"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-60-25" name="__codelineno-60-25" href="#__codelineno-60-25"></a><span class="nb">plot</span><span class="p">(</span><span class="n">R_loads</span><span class="p">,</span><span class="w"> </span><span class="n">V_sim</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b-o&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">R_loads</span><span class="p">,</span><span class="w"> </span><span class="n">V_meas</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r-s&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="p">);</span>
+<a id="__codelineno-60-26" name="__codelineno-60-26" href="#__codelineno-60-26"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Simulated&#39;</span><span class="p">,</span><span class="s">&#39;Measured&#39;</span><span class="p">);</span><span class="w"> </span><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-60-27" name="__codelineno-60-27" href="#__codelineno-60-27"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Load Resistance (\Omega)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Output Voltage (V)&#39;</span><span class="p">);</span>
+<a id="__codelineno-60-28" name="__codelineno-60-28" href="#__codelineno-60-28"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Load Regulation: Simulated vs Measured&#39;</span><span class="p">);</span>
+<a id="__codelineno-60-29" name="__codelineno-60-29" href="#__codelineno-60-29"></a><span class="nb">yline</span><span class="p">(</span><span class="n">Vm</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">);</span>
+<a id="__codelineno-60-30" name="__codelineno-60-30" href="#__codelineno-60-30"></a>
+<a id="__codelineno-60-31" name="__codelineno-60-31" href="#__codelineno-60-31"></a><span class="c">% --- Enter measured PI step response (Experiment 3) ---</span>
+<a id="__codelineno-60-32" name="__codelineno-60-32" href="#__codelineno-60-32"></a><span class="n">t_meas</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.002</span><span class="p">,</span><span class="w"> </span><span class="mf">0.005</span><span class="p">,</span><span class="w"> </span><span class="mf">0.010</span><span class="p">,</span><span class="w"> </span><span class="mf">0.015</span><span class="p">,</span><span class="w"> </span><span class="mf">0.020</span><span class="p">,</span><span class="w"> </span><span class="mf">0.030</span><span class="p">];</span><span class="w">  </span><span class="c">% s — replace</span>
+<a id="__codelineno-60-33" name="__codelineno-60-33" href="#__codelineno-60-33"></a><span class="n">v_meas</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="p">,</span><span class="w">   </span><span class="mf">4.2</span><span class="p">,</span><span class="w">   </span><span class="mf">5.3</span><span class="p">,</span><span class="w">   </span><span class="mf">5.1</span><span class="p">,</span><span class="w">   </span><span class="mf">5.0</span><span class="p">,</span><span class="w">   </span><span class="mf">5.0</span><span class="p">];</span><span class="w">    </span><span class="c">% V — replace</span>
+<a id="__codelineno-60-34" name="__codelineno-60-34" href="#__codelineno-60-34"></a>
+<a id="__codelineno-60-35" name="__codelineno-60-35" href="#__codelineno-60-35"></a><span class="n">R_nom</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">220</span><span class="p">;</span>
+<a id="__codelineno-60-36" name="__codelineno-60-36" href="#__codelineno-60-36"></a><span class="n">G_lc</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">R_nom</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">L</span><span class="o">*</span><span class="n">C</span><span class="o">*</span><span class="n">R_nom</span><span class="o">*</span><span class="n">s</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">L</span><span class="o">*</span><span class="n">s</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">R_nom</span><span class="p">);</span>
+<a id="__codelineno-60-37" name="__codelineno-60-37" href="#__codelineno-60-37"></a><span class="n">C_pi</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">Kp_v</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Ki_v</span><span class="o">/</span><span class="n">s</span><span class="p">;</span>
+<a id="__codelineno-60-38" name="__codelineno-60-38" href="#__codelineno-60-38"></a><span class="n">T_v</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="n">feedback</span><span class="p">(</span><span class="n">C_pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">G_lc</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-60-39" name="__codelineno-60-39" href="#__codelineno-60-39"></a><span class="p">[</span><span class="n">y_sim</span><span class="p">,</span><span class="w"> </span><span class="n">t_sim</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">Vm</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">T_v</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">1e-5</span><span class="p">:</span><span class="mf">0.05</span><span class="p">);</span>
+<a id="__codelineno-60-40" name="__codelineno-60-40" href="#__codelineno-60-40"></a>
+<a id="__codelineno-60-41" name="__codelineno-60-41" href="#__codelineno-60-41"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-60-42" name="__codelineno-60-42" href="#__codelineno-60-42"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t_sim</span><span class="p">,</span><span class="w"> </span><span class="n">y_sim</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="p">);</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-60-43" name="__codelineno-60-43" href="#__codelineno-60-43"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t_meas</span><span class="p">,</span><span class="w"> </span><span class="n">v_meas</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;ro--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;MarkerSize&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
+<a id="__codelineno-60-44" name="__codelineno-60-44" href="#__codelineno-60-44"></a><span class="nb">yline</span><span class="p">(</span><span class="n">Vm</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">);</span>
+<a id="__codelineno-60-45" name="__codelineno-60-45" href="#__codelineno-60-45"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Simulated&#39;</span><span class="p">,</span><span class="s">&#39;Measured&#39;</span><span class="p">);</span><span class="w"> </span><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-60-46" name="__codelineno-60-46" href="#__codelineno-60-46"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (s)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Voltage (V)&#39;</span><span class="p">);</span>
+<a id="__codelineno-60-47" name="__codelineno-60-47" href="#__codelineno-60-47"></a><span class="nb">title</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;PI Voltage Step Response  Kp=%.0f Ki=%.0f&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Kp_v</span><span class="p">,</span><span class="w"> </span><span class="n">Ki_v</span><span class="p">));</span>
+<a id="__codelineno-60-48" name="__codelineno-60-48" href="#__codelineno-60-48"></a>
+<a id="__codelineno-60-49" name="__codelineno-60-49" href="#__codelineno-60-49"></a><span class="c">% --- Metrics ---</span>
+<a id="__codelineno-60-50" name="__codelineno-60-50" href="#__codelineno-60-50"></a><span class="n">reg_pct</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">V_meas</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Vm</span><span class="p">)</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="n">Vm</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+<a id="__codelineno-60-51" name="__codelineno-60-51" href="#__codelineno-60-51"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;\nVoltage regulation error:\n&#39;</span><span class="p">);</span>
+<a id="__codelineno-60-52" name="__codelineno-60-52" href="#__codelineno-60-52"></a><span class="k">for</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="nb">numel</span><span class="p">(</span><span class="n">R_loads</span><span class="p">)</span>
+<a id="__codelineno-60-53" name="__codelineno-60-53" href="#__codelineno-60-53"></a><span class="w">    </span><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;  R=%3d Ohm: sim=%.3fV  meas=%.3fV  error=%.1f%%\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-60-54" name="__codelineno-60-54" href="#__codelineno-60-54"></a><span class="w">        </span><span class="n">R_loads</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">V_sim</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">V_meas</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">reg_pct</span><span class="p">(</span><span class="n">k</span><span class="p">));</span>
+<a id="__codelineno-60-55" name="__codelineno-60-55" href="#__codelineno-60-55"></a><span class="k">end</span>
+</code></pre></div>
+<p>Reflection questions:</p>
+<ol>
+<li>Does voltage regulation worsen at lower load resistance (higher current)? What physical effect causes this?</li>
+<li>How does the LC filter natural frequency relate to the PI controller bandwidth? What happens if the controller bandwidth exceeds the filter resonance?</li>
+<li>How would adding a second inverter with a different droop coefficient change the load-sharing behaviour?</li>
+</ol>
+<hr />
+<h1 id="knowledge-check">Knowledge Check<a class="headerlink" href="#knowledge-check" title="Permanent link">&para;</a></h1>
+<h2 id="question-1">Question 1<a class="headerlink" href="#question-1" title="Permanent link">&para;</a></h2>
+<p>What is the primary difference between Grid-Following and Grid-Forming control?</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>____________________
+</code></pre></div>
+<hr />
+<h2 id="question-2">Question 2<a class="headerlink" href="#question-2" title="Permanent link">&para;</a></h2>
+<p>Why is a PLL unnecessary in a Grid-Forming converter?</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>____________________
+</code></pre></div>
+<hr />
+<h2 id="question-3">Question 3<a class="headerlink" href="#question-3" title="Permanent link">&para;</a></h2>
+<p>What does the voltage controller regulate?</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>____________________
+</code></pre></div>
+<hr />
+<h2 id="question-4">Question 4<a class="headerlink" href="#question-4" title="Permanent link">&para;</a></h2>
+<p>What is droop control?</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>____________________
+</code></pre></div>
+<hr />
+<h2 id="question-5">Question 5<a class="headerlink" href="#question-5" title="Permanent link">&para;</a></h2>
+<p>What is a Virtual Synchronous Machine?</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>____________________
+</code></pre></div>
+<hr />
+<h2 id="question-6">Question 6<a class="headerlink" href="#question-6" title="Permanent link">&para;</a></h2>
+<p>Your MATLAB simulation predicted less than 1% voltage regulation error across all three loads, but the physical inverter showed 8% error at the 100 Ω load. Identify two physical causes and explain what change to the controller or hardware would reduce the error.</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>____________________
+</code></pre></div>
+<hr />
+<h1 id="troubleshooting-checklist">Troubleshooting Checklist<a class="headerlink" href="#troubleshooting-checklist" title="Permanent link">&para;</a></h1>
+<p>✅ SPWM operating correctly</p>
+<p>✅ Dead time implemented</p>
+<p>✅ H-Bridge switching correctly</p>
+<p>✅ LC filter installed</p>
+<p>✅ Voltage sensor calibrated</p>
+<p>✅ PI controller operating</p>
+<p>✅ Output frequency stable</p>
+<p>✅ Output voltage regulated</p>
+<p>✅ Safe load connection verified</p>
+<hr />
+<h1 id="project-summary">Project Summary<a class="headerlink" href="#project-summary" title="Permanent link">&para;</a></h1>
+<p>In this project you learned:</p>
+<p>✅ Grid-Forming operation</p>
+<p>✅ Autonomous AC generation</p>
+<p>✅ Voltage regulation</p>
+<p>✅ Frequency regulation</p>
+<p>✅ SPWM implementation</p>
+<p>✅ Droop control</p>
+<p>✅ Virtual Synchronous Machines</p>
+<p>✅ Microgrid fundamentals</p>
+<p>This project combines:</p>
+<p>✅ PWM</p>
+<p>✅ Inverters</p>
+<p>✅ MOSFET Switching</p>
+<p>✅ PI Controllers</p>
+<p>✅ Power Electronics</p>
+<p>✅ System Identification</p>
+<p>✅ Controller Design</p>
+<p>✅ AC Systems</p>
+<p>✅ Renewable Energy Systems</p>
+<p>into a complete Grid-Forming Voltage Source Converter architecture.</p>
+<p>You have now progressed from:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>Basic PWM Generation
+</code></pre></div>
+<p>to:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>Autonomous AC Grid Creation
+</code></pre></div>
+<p>using the same fundamental principles employed in modern:</p>
+<ul>
+<li>Battery Energy Storage Systems</li>
+<li>Grid-Forming Inverters</li>
+<li>Standalone Microgrids</li>
+<li>Renewable Energy Plants</li>
+<li>Future Electrical Power Systems</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@11/dist/mermaid.min"></script>
+      
+    
+  </body>
+</html>

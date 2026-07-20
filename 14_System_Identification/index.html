@@ -1,0 +1,2161 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Practical Electronics, Control Systems and Power Electronics Training">
+      
+      
+        <meta name="author" content="Jaime Trivino">
+      
+      
+      
+        <link rel="prev" href="../13_DC_AC_Inverters/">
+      
+      
+        <link rel="next" href="../15_Controller_Design/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>System Identification - Power Electronics and Control Training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#project-14-system-identification-and-dynamic-modelling" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Power Electronics and Control Training" class="md-header__button md-logo" aria-label="Power Electronics and Control Training" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Power Electronics and Control Training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              System Identification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jaimetriv/power-electronics-and-control-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jaimetriv/power-electronics-and-control-training
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Power Electronics and Control Training" class="md-nav__button md-logo" aria-label="Power Electronics and Control Training" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Power Electronics and Control Training
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jaimetriv/power-electronics-and-control-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jaimetriv/power-electronics-and-control-training
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00_Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00A_Microcontroller_Familiarisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microcontroller Familiarisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00B_Oscilloscope_Familiarisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oscilloscope Familiarisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00C_WiFi_Controller_Familiarisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WiFi Controller Familiarisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Electronics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Electronics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_PWM_Fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PWM Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_RC_Circuits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_RLC_Circuits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_MOSFET_Fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MOSFET Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Control Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_PWM_Motor_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PWM Motor Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_P_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_PI_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PI Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08_PID_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PID Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power Electronics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Power Electronics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_Buck_Converter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Buck Converter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_Closed_Loop_Buck/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Closed Loop Buck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11_Boost_Converter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boost Converter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11B_DC_Chopper_Converters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DC Chopper Converters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12_AC_DC_Rectifiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AC-DC Rectifiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13_DC_AC_Inverters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DC-AC Inverters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Advanced Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Identification
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Identification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15_Controller_Design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Controller Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16_Grid_Following_VSC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grid Following VSC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17_Grid_Forming_VSC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grid Forming VSC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="project-14-system-identification-and-dynamic-modelling">Project 14 - System Identification and Dynamic Modelling<a class="headerlink" href="#project-14-system-identification-and-dynamic-modelling" title="Permanent link">&para;</a></h1>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<p>Complete:</p>
+<ul>
+<li>00_Introduction.md</li>
+<li>00B_Oscilloscope_Familiarisation.md</li>
+<li>01_PWM_Fundamentals.md</li>
+<li>02_RC_Circuits.md</li>
+<li>03_RLC_Circuits.md</li>
+<li>04_MOSFET_Fundamentals.md</li>
+<li>05_PWM_Motor_Control.md</li>
+<li>06_P_Controller.md</li>
+<li>07_PI_Controller.md</li>
+<li>08_PID_Controller.md</li>
+<li>09_Buck_Converter.md</li>
+<li>10_Closed_Loop_Buck.md</li>
+<li>11_Boost_Converter.md</li>
+<li>11B_DC_Chopper_Converters.md</li>
+<li>12_AC_DC_Rectifiers.md</li>
+<li>13_DC_AC_Inverters.md</li>
+</ul>
+<hr />
+<h1 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h1>
+<p>In this project you will learn:</p>
+<ul>
+<li>What system identification is</li>
+<li>Why mathematical models are useful</li>
+<li>How engineers model real systems</li>
+<li>First-order system behaviour</li>
+<li>Second-order system behaviour</li>
+<li>Time constants</li>
+<li>Step response analysis</li>
+<li>Experimental parameter estimation</li>
+</ul>
+<p>System identification provides the bridge between:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Real Hardware
+</code></pre></div>
+<p>and:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Control System Design
+</code></pre></div>
+<hr />
+<h1 id="learning-outcomes">Learning Outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h1>
+<p>At the end of this project you should be able to:</p>
+<p>✅ Explain system identification</p>
+<p>✅ Measure a step response</p>
+<p>✅ Estimate a time constant</p>
+<p>✅ Identify first-order behaviour</p>
+<p>✅ Identify second-order behaviour</p>
+<p>✅ Create simple mathematical models</p>
+<p>✅ Validate a model using measurements</p>
+<hr />
+<h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h1>
+<p>Control engineers rarely design controllers directly from hardware.</p>
+<p>Instead they first create a:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Mathematical Model
+</code></pre></div>
+<p>of the system.</p>
+<p>The process of obtaining a model from measurements is called:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>System Identification
+</code></pre></div>
+<hr />
+<h1 id="why-do-we-need-models">Why Do We Need Models?<a class="headerlink" href="#why-do-we-need-models" title="Permanent link">&para;</a></h1>
+<p>Models allow engineers to:</p>
+<ul>
+<li>Predict behaviour</li>
+<li>Design controllers</li>
+<li>Simulate systems</li>
+<li>Improve performance</li>
+<li>Reduce development time</li>
+</ul>
+<p>Without a model:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Controller Design Becomes Difficult
+</code></pre></div>
+<hr />
+<h1 id="what-is-a-dynamic-system">What Is a Dynamic System?<a class="headerlink" href="#what-is-a-dynamic-system" title="Permanent link">&para;</a></h1>
+<p>A dynamic system changes over time.</p>
+<p>Examples:</p>
+<ul>
+<li>RC circuits</li>
+<li>RLC circuits</li>
+<li>Electric motors</li>
+<li>Buck converters</li>
+<li>Temperature systems</li>
+</ul>
+<hr />
+<h1 id="input-and-output">Input and Output<a class="headerlink" href="#input-and-output" title="Permanent link">&para;</a></h1>
+<p>A system receives:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Input
+</code></pre></div>
+<p>and produces:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Output
+</code></pre></div>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>PWM Duty Cycle
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>      ↓
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>     Motor
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>      ↓
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a> Motor Speed
+</code></pre></div>
+<hr />
+<h1 id="black-box-representation">Black Box Representation<a class="headerlink" href="#black-box-representation" title="Permanent link">&para;</a></h1>
+<pre class="mermaid"><code>graph LR
+
+A[Input]
+--&gt; B[System]
+
+B --&gt; C[Output]</code></pre>
+<p>The internal details may be unknown.</p>
+<p>System identification attempts to determine how the system behaves.</p>
+<hr />
+<h1 id="what-is-a-step-input">What Is a Step Input?<a class="headerlink" href="#what-is-a-step-input" title="Permanent link">&para;</a></h1>
+<p>A step input changes suddenly.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>0 V → 5 V
+</code></pre></div>
+<p>or:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>0% → 100% PWM
+</code></pre></div>
+<hr />
+<h1 id="why-use-a-step-input">Why Use a Step Input?<a class="headerlink" href="#why-use-a-step-input" title="Permanent link">&para;</a></h1>
+<p>Step responses are easy to generate and contain valuable information about system dynamics.</p>
+<hr />
+<h1 id="first-order-systems">First-Order Systems<a class="headerlink" href="#first-order-systems" title="Permanent link">&para;</a></h1>
+<p>Many engineering systems can be approximated as first-order systems.</p>
+<p>Examples:</p>
+<ul>
+<li>RC circuits</li>
+<li>Thermal systems</li>
+<li>Some motor systems</li>
+</ul>
+<hr />
+<h1 id="first-order-transfer-function">First-Order Transfer Function<a class="headerlink" href="#first-order-transfer-function" title="Permanent link">&para;</a></h1>
+<p>A first-order transfer function is:</p>
+<div class="arithmatex">\[
+G(s)=\frac{K}{\tau s+1}
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(K\)</span> = System Gain</li>
+<li><span class="arithmatex">\(\tau\)</span> = Time Constant</li>
+</ul>
+<hr />
+<h1 id="time-constant">Time Constant<a class="headerlink" href="#time-constant" title="Permanent link">&para;</a></h1>
+<p>The time constant describes how quickly a system responds.</p>
+<p>Symbol:</p>
+<div class="arithmatex">\[
+\tau
+\]</div>
+<p>Units:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Seconds
+</code></pre></div>
+<hr />
+<h1 id="first-order-step-response">First-Order Step Response<a class="headerlink" href="#first-order-step-response" title="Permanent link">&para;</a></h1>
+<p>A first-order system responds according to:</p>
+<div class="arithmatex">\[
+y(t)
+=
+K\left(1-e^{-t/\tau}\right)
+\]</div>
+<hr />
+<h1 id="time-constant-rule">Time Constant Rule<a class="headerlink" href="#time-constant-rule" title="Permanent link">&para;</a></h1>
+<p>At:</p>
+<div class="arithmatex">\[
+t=\tau
+\]</div>
+<p>the output reaches approximately:</p>
+<div class="arithmatex">\[
+63.2\%
+\]</div>
+<p>of its final value.</p>
+<hr />
+<h1 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h1>
+<p>If the final value is:</p>
+<div class="arithmatex">\[
+10V
+\]</div>
+<p>then at:</p>
+<div class="arithmatex">\[
+t=\tau
+\]</div>
+<p>the output is:</p>
+<div class="arithmatex">\[
+6.32V
+\]</div>
+<hr />
+<h1 id="typical-first-order-response">Typical First-Order Response<a class="headerlink" href="#typical-first-order-response" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Output
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>100% |                 ______
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>      |              /
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>      |           /
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>      |        /
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>63.2% |-----*
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>      |   /
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>      | /
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>  0%  +--------------------
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>            Time
+</code></pre></div>
+<hr />
+<h1 id="reviewing-rc-circuits">Reviewing RC Circuits<a class="headerlink" href="#reviewing-rc-circuits" title="Permanent link">&para;</a></h1>
+<p>Recall Project 2.</p>
+<p>The capacitor charging equation is:</p>
+<div class="arithmatex">\[
+V_C(t)
+=
+V_S
+\left(
+1-e^{-t/(RC)}
+\right)
+\]</div>
+<p>The RC circuit is a first-order system.</p>
+<hr />
+<h1 id="second-order-systems">Second-Order Systems<a class="headerlink" href="#second-order-systems" title="Permanent link">&para;</a></h1>
+<p>Many systems exhibit oscillation.</p>
+<p>Examples:</p>
+<ul>
+<li>RLC circuits</li>
+<li>Mechanical systems</li>
+<li>Motor drive systems</li>
+<li>Closed-loop controllers</li>
+</ul>
+<hr />
+<h1 id="second-order-transfer-function">Second-Order Transfer Function<a class="headerlink" href="#second-order-transfer-function" title="Permanent link">&para;</a></h1>
+<p>A common form is:</p>
+<div class="arithmatex">\[
+G(s)
+=
+\frac{\omega_n^2}
+{s^2+2\zeta\omega_n s+\omega_n^2}
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(\omega_n\)</span> = Natural Frequency</li>
+<li><span class="arithmatex">\(\zeta\)</span> = Damping Ratio</li>
+</ul>
+<hr />
+<h1 id="damping-ratio">Damping Ratio<a class="headerlink" href="#damping-ratio" title="Permanent link">&para;</a></h1>
+<p>The damping ratio determines the response shape.</p>
+<hr />
+<h2 id="underdamped">Underdamped<a class="headerlink" href="#underdamped" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Oscillatory
+</code></pre></div>
+<hr />
+<h2 id="critically-damped">Critically Damped<a class="headerlink" href="#critically-damped" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Fast Response
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Without Oscillation
+</code></pre></div>
+<hr />
+<h2 id="overdamped">Overdamped<a class="headerlink" href="#overdamped" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Slow Response
+</code></pre></div>
+<hr />
+<h1 id="step-response-characteristics">Step Response Characteristics<a class="headerlink" href="#step-response-characteristics" title="Permanent link">&para;</a></h1>
+<p>Important measurements include:</p>
+<hr />
+<h2 id="rise-time">Rise Time<a class="headerlink" href="#rise-time" title="Permanent link">&para;</a></h2>
+<p>Time required to reach the target.</p>
+<hr />
+<h2 id="overshoot">Overshoot<a class="headerlink" href="#overshoot" title="Permanent link">&para;</a></h2>
+<p>Amount exceeding the target value.</p>
+<hr />
+<h2 id="settling-time">Settling Time<a class="headerlink" href="#settling-time" title="Permanent link">&para;</a></h2>
+<p>Time required to stabilize.</p>
+<hr />
+<h2 id="steady-state-error">Steady-State Error<a class="headerlink" href="#steady-state-error" title="Permanent link">&para;</a></h2>
+<p>Final difference between reference and output.</p>
+<hr />
+<h1 id="matlab-simulation">MATLAB Simulation<a class="headerlink" href="#matlab-simulation" title="Permanent link">&para;</a></h1>
+<p>Before measuring, simulate first-order and second-order step responses across parameter ranges to build intuition for what you will observe.</p>
+<h2 id="first-order-effect-of-time-constant">First-Order: Effect of Time Constant<a class="headerlink" href="#first-order-effect-of-time-constant" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">tau_values</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">];</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">K</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="mi">8</span><span class="p">;</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">tau_values</span><span class="p">(</span><span class="nb">i</span><span class="p">)));</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">    </span><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">        </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;\\tau = %.1fs&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">tau_values</span><span class="p">(</span><span class="nb">i</span><span class="p">)));</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="k">end</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="nb">yline</span><span class="p">(</span><span class="mf">0.632</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;63.2%&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (s)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Normalised Output&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;First-Order Step Response \mdash Effect of \tau&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;southeast&#39;</span><span class="p">);</span>
+</code></pre></div>
+<h2 id="second-order-effect-of-damping-ratio">Second-Order: Effect of Damping Ratio<a class="headerlink" href="#second-order-effect-of-damping-ratio" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">wn</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">    </span><span class="c">% natural frequency (rad/s)</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="n">zeta_values</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">];</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="n">t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.001</span><span class="p">:</span><span class="mi">4</span><span class="p">;</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">    </span><span class="n">z</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">zeta_values</span><span class="p">(</span><span class="nb">i</span><span class="p">);</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">    </span><span class="n">G</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="n">wn</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">z</span><span class="o">*</span><span class="n">wn</span><span class="p">,</span><span class="w"> </span><span class="n">wn</span><span class="o">^</span><span class="mi">2</span><span class="p">]);</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">    </span><span class="p">[</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">    </span><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="w">        </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;\\zeta = %.1f&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">));</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="k">end</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="nb">yline</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Final value&#39;</span><span class="p">);</span>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (s)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Output&#39;</span><span class="p">);</span>
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Second-Order Step Response \mdash Effect of \zeta&#39;</span><span class="p">);</span>
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;southeast&#39;</span><span class="p">);</span>
+</code></pre></div>
+<h2 id="curve-fitting-preview-how-to-extract-from-data">Curve Fitting Preview — How to Extract τ from Data<a class="headerlink" href="#curve-fitting-preview-how-to-extract-from-data" title="Permanent link">&para;</a></h2>
+<p>This is the technique you will apply to your measurements:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c">% Simulate &quot;measured&quot; data with noise</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="n">tau_true</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"> </span><span class="n">K_true</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">5.0</span><span class="p">;</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="n">t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.05</span><span class="p">:</span><span class="mi">6</span><span class="p">;</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="n">y_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">K_true</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="o">/</span><span class="n">tau_true</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.05</span><span class="o">*</span><span class="nb">randn</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">t</span><span class="p">));</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="c">% Fit first-order model by minimising sum of squared errors</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="n">cost</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">@(</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="nb">sum</span><span class="p">((</span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="o">/</span><span class="n">p</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">y_measured</span><span class="p">)</span><span class="o">.^</span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="n">p0</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">4.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">];</span><span class="w">                    </span><span class="c">% initial guess [K, tau]</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="n">p_fit</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fminsearch</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span><span class="w"> </span><span class="n">p0</span><span class="p">);</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="n">K_fit</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="n">p_fit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="n">tau_fit</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">p_fit</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="n">y_fit</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="n">K_fit</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">tau_fit</span><span class="p">));</span>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="nb">scatter</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y_measured</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Measured (with noise)&#39;</span><span class="p">);</span>
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y_fit</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a><span class="w">    </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;Fit: K=%.2f, \\tau=%.2fs&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">K_fit</span><span class="p">,</span><span class="w"> </span><span class="n">tau_fit</span><span class="p">));</span>
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (s)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Output&#39;</span><span class="p">);</span>
+<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;First-Order Curve Fit \mdash fminsearch&#39;</span><span class="p">);</span>
+<a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;southeast&#39;</span><span class="p">);</span>
+<a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;True:  K=%.2f  tau=%.2fs\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">K_true</span><span class="p">,</span><span class="w"> </span><span class="n">tau_true</span><span class="p">);</span>
+<a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Fitted: K=%.2f  tau=%.2fs\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">K_fit</span><span class="p">,</span><span class="w"> </span><span class="n">tau_fit</span><span class="p">);</span>
+</code></pre></div>
+<h2 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Expected τ</th>
+<th>Expected K</th>
+<th>Response type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RC (10kΩ, 100µF)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>RC (10kΩ, 220µF)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>RC (22kΩ, 100µF)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Motor (from Project 5)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="components-required">Components Required<a class="headerlink" href="#components-required" title="Permanent link">&para;</a></h1>
+<ul>
+<li>Arduino Uno</li>
+<li>Breadboard</li>
+<li>10 kΩ resistor</li>
+<li>22 kΩ resistor</li>
+<li>100 µF capacitor</li>
+<li>220 µF capacitor (needed for Experiment 2 Test B — add to shopping list if not already purchased)</li>
+<li>DC motor + IRLZ44N MOSFET + flyback diode (from Project 5)</li>
+<li>Jumper wires</li>
+<li>DSO Nano Oscilloscope</li>
+</ul>
+<p>Optional (frequency response identification):</p>
+<ul>
+<li>Signal generator</li>
+</ul>
+<hr />
+<h1 id="experiment-1-identify-an-rc-circuit">Experiment 1 - Identify an RC Circuit<a class="headerlink" href="#experiment-1-identify-an-rc-circuit" title="Permanent link">&para;</a></h1>
+<h2 id="objective_1">Objective<a class="headerlink" href="#objective_1" title="Permanent link">&para;</a></h2>
+<p>Measure the time constant of an RC circuit.</p>
+<hr />
+<h1 id="circuit">Circuit<a class="headerlink" href="#circuit" title="Permanent link">&para;</a></h1>
+<p>Use:</p>
+<ul>
+<li>10 kΩ resistor</li>
+<li>100 µF capacitor</li>
+</ul>
+<hr />
+<h1 id="rc-time-constant">RC Time Constant<a class="headerlink" href="#rc-time-constant" title="Permanent link">&para;</a></h1>
+<p>Calculate:</p>
+<div class="arithmatex">\[
+\tau=RC
+\]</div>
+<p>Substituting:</p>
+<div class="arithmatex">\[
+\tau
+=
+10000 \times 100 \times 10^{-6}
+\]</div>
+<div class="arithmatex">\[
+\tau=1s
+\]</div>
+<hr />
+<h1 id="arduino-step-input">Arduino Step Input<a class="headerlink" href="#arduino-step-input" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="p">{</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="p">}</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="p">{</span>
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h1 id="dso-nano-connections">DSO Nano Connections<a class="headerlink" href="#dso-nano-connections" title="Permanent link">&para;</a></h1>
+<p>Probe Tip:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Capacitor Voltage
+</code></pre></div>
+<p>Probe Ground:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>GND
+</code></pre></div>
+<hr />
+<h1 id="dso-nano-settings">DSO Nano Settings<a class="headerlink" href="#dso-nano-settings" title="Permanent link">&para;</a></h1>
+<p>Vertical:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>1 V/div
+</code></pre></div>
+<p>Horizontal:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>500 ms/div
+</code></pre></div>
+<p>Trigger:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>Rising Edge
+</code></pre></div>
+<hr />
+<h1 id="measurement-procedure">Measurement Procedure<a class="headerlink" href="#measurement-procedure" title="Permanent link">&para;</a></h1>
+<ol>
+<li>Apply the step input.</li>
+<li>Observe the capacitor charging curve.</li>
+<li>Record the final voltage.</li>
+<li>Calculate 63.2% of the final value.</li>
+<li>Measure the time required to reach that point.</li>
+</ol>
+<hr />
+<h1 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Final Voltage</td>
+<td></td>
+</tr>
+<tr>
+<td>63.2% Voltage</td>
+<td></td>
+</tr>
+<tr>
+<td>Measured Time Constant</td>
+<td></td>
+</tr>
+<tr>
+<td>Calculated Time Constant</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="experiment-2-vary-component-values">Experiment 2 - Vary Component Values<a class="headerlink" href="#experiment-2-vary-component-values" title="Permanent link">&para;</a></h1>
+<h2 id="objective_2">Objective<a class="headerlink" href="#objective_2" title="Permanent link">&para;</a></h2>
+<p>Observe how component values affect system dynamics.</p>
+<hr />
+<h1 id="test-a">Test A<a class="headerlink" href="#test-a" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>10 kΩ
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>100 µF
+</code></pre></div>
+<hr />
+<h1 id="test-b">Test B<a class="headerlink" href="#test-b" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>10 kΩ
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>220 µF
+</code></pre></div>
+<hr />
+<h1 id="test-c">Test C<a class="headerlink" href="#test-c" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>22 kΩ
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>100 µF
+</code></pre></div>
+<hr />
+<h1 id="results-table_1">Results Table<a class="headerlink" href="#results-table_1" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>Resistance</th>
+<th>Capacitance</th>
+<th>Time Constant</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10 kΩ</td>
+<td>100 µF</td>
+<td></td>
+</tr>
+<tr>
+<td>10 kΩ</td>
+<td>220 µF</td>
+<td></td>
+</tr>
+<tr>
+<td>22 kΩ</td>
+<td>100 µF</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="experiment-3-identify-motor-dynamics">Experiment 3 - Identify Motor Dynamics<a class="headerlink" href="#experiment-3-identify-motor-dynamics" title="Permanent link">&para;</a></h1>
+<h2 id="objective_3">Objective<a class="headerlink" href="#objective_3" title="Permanent link">&para;</a></h2>
+<p>Observe dynamic motor response.</p>
+<hr />
+<h1 id="procedure">Procedure<a class="headerlink" href="#procedure" title="Permanent link">&para;</a></h1>
+<p>Apply a PWM step change:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>0% → 50%
+</code></pre></div>
+<p>Observe:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>Motor Response
+</code></pre></div>
+<hr />
+<h1 id="record">Record<a class="headerlink" href="#record" title="Permanent link">&para;</a></h1>
+<ul>
+<li>Initial Speed</li>
+<li>Final Speed</li>
+<li>Rise Time</li>
+<li>Settling Time</li>
+</ul>
+<hr />
+<h1 id="model-validation">Model Validation<a class="headerlink" href="#model-validation" title="Permanent link">&para;</a></h1>
+<p>Once a model is identified:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>Model Output
+</code></pre></div>
+<p>should be compared against:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>Measured Output
+</code></pre></div>
+<hr />
+<h1 id="why-validation-matters">Why Validation Matters<a class="headerlink" href="#why-validation-matters" title="Permanent link">&para;</a></h1>
+<p>A model is only useful if it accurately predicts real behaviour.</p>
+<hr />
+<h1 id="identification-procedure-summary">Identification Procedure Summary<a class="headerlink" href="#identification-procedure-summary" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>Apply Input
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>      ↓
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>Measure Output
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>      ↓
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>Determine Model
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>      ↓
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>Compare Results
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>      ↓
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>Refine Model
+</code></pre></div>
+<hr />
+<h1 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h1>
+<p>Now fit first-order models to your measured RC and motor step responses and validate them.</p>
+<h2 id="rc-circuit-model-fit">RC Circuit Model Fit<a class="headerlink" href="#rc-circuit-model-fit" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="c">% Enter your measured RC step response</span>
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="c">% t_data: time vector (s), y_data: capacitor voltage (V)</span>
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="n">t_data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.4</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">,</span><span class="w"> </span><span class="mf">4.0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">];</span><span class="w"> </span><span class="c">% replace</span>
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="n">y_data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.9</span><span class="p">,</span><span class="w"> </span><span class="mf">1.6</span><span class="p">,</span><span class="w"> </span><span class="mf">2.2</span><span class="p">,</span><span class="w"> </span><span class="mf">2.7</span><span class="p">,</span><span class="w"> </span><span class="mf">3.1</span><span class="p">,</span><span class="w"> </span><span class="mf">3.7</span><span class="p">,</span><span class="w"> </span><span class="mf">4.1</span><span class="p">,</span><span class="w"> </span><span class="mf">4.6</span><span class="p">,</span><span class="w"> </span><span class="mf">4.8</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">];</span><span class="w"> </span><span class="c">% replace (V)</span>
+<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>
+<a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a><span class="n">Vfinal</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="n">y_data</span><span class="p">);</span>
+<a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>
+<a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a><span class="c">% Fit first-order model: y = K*(1 - exp(-t/tau))</span>
+<a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a><span class="n">cost</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="p">@(</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="nb">sum</span><span class="p">((</span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t_data</span><span class="o">/</span><span class="n">p</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">y_data</span><span class="p">)</span><span class="o">.^</span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a><span class="n">p_fit</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="nb">fminsearch</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">Vfinal</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">]);</span>
+<a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a><span class="n">K_fit</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">p_fit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a><span class="n">tau_fit</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">p_fit</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a>
+<a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a><span class="n">t_model</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="nb">max</span><span class="p">(</span><span class="n">t_data</span><span class="p">);</span>
+<a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a><span class="n">y_model</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">K_fit</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t_model</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">tau_fit</span><span class="p">));</span>
+<a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a>
+<a id="__codelineno-32-17" name="__codelineno-32-17" href="#__codelineno-32-17"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-32-18" name="__codelineno-32-18" href="#__codelineno-32-18"></a><span class="nb">scatter</span><span class="p">(</span><span class="n">t_data</span><span class="p">,</span><span class="w"> </span><span class="n">y_data</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;filled&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Measured&#39;</span><span class="p">);</span>
+<a id="__codelineno-32-19" name="__codelineno-32-19" href="#__codelineno-32-19"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t_model</span><span class="p">,</span><span class="w"> </span><span class="n">y_model</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-32-20" name="__codelineno-32-20" href="#__codelineno-32-20"></a><span class="w">    </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;Fit: K=%.2fV, \\tau=%.3fs&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">K_fit</span><span class="p">,</span><span class="w"> </span><span class="n">tau_fit</span><span class="p">));</span>
+<a id="__codelineno-32-21" name="__codelineno-32-21" href="#__codelineno-32-21"></a><span class="nb">xline</span><span class="p">(</span><span class="n">tau_fit</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;\\tau=%.3fs&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">tau_fit</span><span class="p">));</span>
+<a id="__codelineno-32-22" name="__codelineno-32-22" href="#__codelineno-32-22"></a><span class="nb">yline</span><span class="p">(</span><span class="mf">0.632</span><span class="o">*</span><span class="n">K_fit</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k:&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;63.2%&#39;</span><span class="p">);</span>
+<a id="__codelineno-32-23" name="__codelineno-32-23" href="#__codelineno-32-23"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-32-24" name="__codelineno-32-24" href="#__codelineno-32-24"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (s)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Capacitor Voltage (V)&#39;</span><span class="p">);</span>
+<a id="__codelineno-32-25" name="__codelineno-32-25" href="#__codelineno-32-25"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;RC Circuit \mdash First-Order Model Fit&#39;</span><span class="p">);</span>
+<a id="__codelineno-32-26" name="__codelineno-32-26" href="#__codelineno-32-26"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;southeast&#39;</span><span class="p">);</span>
+<a id="__codelineno-32-27" name="__codelineno-32-27" href="#__codelineno-32-27"></a>
+<a id="__codelineno-32-28" name="__codelineno-32-28" href="#__codelineno-32-28"></a><span class="n">tau_theory</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">10000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">100e-6</span><span class="p">;</span>
+<a id="__codelineno-32-29" name="__codelineno-32-29" href="#__codelineno-32-29"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Theoretical \\tau: %.3f s\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">tau_theory</span><span class="p">);</span>
+<a id="__codelineno-32-30" name="__codelineno-32-30" href="#__codelineno-32-30"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Fitted      \\tau: %.3f s\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">tau_fit</span><span class="p">);</span>
+<a id="__codelineno-32-31" name="__codelineno-32-31" href="#__codelineno-32-31"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Error:            %.1f%%\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">tau_fit</span><span class="o">-</span><span class="n">tau_theory</span><span class="p">)</span><span class="o">/</span><span class="n">tau_theory</span><span class="p">);</span>
+</code></pre></div>
+<h2 id="motor-step-response-model-fit">Motor Step Response Model Fit<a class="headerlink" href="#motor-step-response-model-fit" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="c">% Enter your motor step response from Project 5 (or re-measure here)</span>
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="c">% Normalise speed: 0 = stopped, 1 = full speed</span>
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="n">t_motor</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">];</span><span class="w"> </span><span class="c">% replace (s)</span>
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="n">y_motor</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w"> </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.9</span><span class="p">,</span><span class="w"> </span><span class="mf">0.95</span><span class="p">,</span><span class="w"> </span><span class="mf">0.99</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">];</span><span class="w"> </span><span class="c">% replace (normalised)</span>
+<a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>
+<a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a><span class="n">cost_m</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="p">@(</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="nb">sum</span><span class="p">((</span><span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t_motor</span><span class="o">/</span><span class="n">p</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">y_motor</span><span class="p">)</span><span class="o">.^</span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a><span class="n">p_motor</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fminsearch</span><span class="p">(</span><span class="n">cost_m</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">]);</span>
+<a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a><span class="n">K_m</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">p_motor</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a><span class="n">tau_m</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="n">p_motor</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-33-10" name="__codelineno-33-10" href="#__codelineno-33-10"></a>
+<a id="__codelineno-33-11" name="__codelineno-33-11" href="#__codelineno-33-11"></a><span class="n">t_m</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="nb">max</span><span class="p">(</span><span class="n">t_motor</span><span class="p">);</span>
+<a id="__codelineno-33-12" name="__codelineno-33-12" href="#__codelineno-33-12"></a><span class="n">y_m</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">K_m</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t_m</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">tau_m</span><span class="p">));</span>
+<a id="__codelineno-33-13" name="__codelineno-33-13" href="#__codelineno-33-13"></a>
+<a id="__codelineno-33-14" name="__codelineno-33-14" href="#__codelineno-33-14"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-33-15" name="__codelineno-33-15" href="#__codelineno-33-15"></a><span class="nb">scatter</span><span class="p">(</span><span class="n">t_motor</span><span class="p">,</span><span class="w"> </span><span class="n">y_motor</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;filled&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Measured&#39;</span><span class="p">);</span>
+<a id="__codelineno-33-16" name="__codelineno-33-16" href="#__codelineno-33-16"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t_m</span><span class="p">,</span><span class="w"> </span><span class="n">y_m</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-33-17" name="__codelineno-33-17" href="#__codelineno-33-17"></a><span class="w">    </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;Fit: K=%.2f, \\tau=%.3fs&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">K_m</span><span class="p">,</span><span class="w"> </span><span class="n">tau_m</span><span class="p">));</span>
+<a id="__codelineno-33-18" name="__codelineno-33-18" href="#__codelineno-33-18"></a><span class="nb">xline</span><span class="p">(</span><span class="n">tau_m</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;\\tau=%.3fs&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">tau_m</span><span class="p">));</span>
+<a id="__codelineno-33-19" name="__codelineno-33-19" href="#__codelineno-33-19"></a><span class="nb">yline</span><span class="p">(</span><span class="mf">0.632</span><span class="o">*</span><span class="n">K_m</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k:&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;63.2%&#39;</span><span class="p">);</span>
+<a id="__codelineno-33-20" name="__codelineno-33-20" href="#__codelineno-33-20"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-33-21" name="__codelineno-33-21" href="#__codelineno-33-21"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (s)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Normalised Speed&#39;</span><span class="p">);</span>
+<a id="__codelineno-33-22" name="__codelineno-33-22" href="#__codelineno-33-22"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Motor \mdash First-Order Model Fit&#39;</span><span class="p">);</span>
+<a id="__codelineno-33-23" name="__codelineno-33-23" href="#__codelineno-33-23"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;southeast&#39;</span><span class="p">);</span>
+<a id="__codelineno-33-24" name="__codelineno-33-24" href="#__codelineno-33-24"></a>
+<a id="__codelineno-33-25" name="__codelineno-33-25" href="#__codelineno-33-25"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Motor model: G(s) = %.2f / (%.3f*s + 1)\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">K_m</span><span class="p">,</span><span class="w"> </span><span class="n">tau_m</span><span class="p">);</span>
+<a id="__codelineno-33-26" name="__codelineno-33-26" href="#__codelineno-33-26"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Compare with Project 5 estimate: tau = ?\n&#39;</span><span class="p">);</span>
+</code></pre></div>
+<h2 id="reflection">Reflection<a class="headerlink" href="#reflection" title="Permanent link">&para;</a></h2>
+<ul>
+<li>How close is your fitted RC τ to the theoretical value RC = 1.0s? What causes the difference?</li>
+<li>Does the motor step response fit well to a first-order model, or do you see a delay or second-order behaviour?</li>
+<li>How does the motor τ identified here compare to your informal estimate from Project 5?</li>
+</ul>
+<hr />
+<h1 id="relationship-to-previous-projects">Relationship to Previous Projects<a class="headerlink" href="#relationship-to-previous-projects" title="Permanent link">&para;</a></h1>
+<h2 id="project-2">Project 2<a class="headerlink" href="#project-2" title="Permanent link">&para;</a></h2>
+<p>RC circuit dynamics.</p>
+<hr />
+<h2 id="project-3">Project 3<a class="headerlink" href="#project-3" title="Permanent link">&para;</a></h2>
+<p>RLC circuit dynamics.</p>
+<hr />
+<h2 id="projects-6-to-8">Projects 6 to 8<a class="headerlink" href="#projects-6-to-8" title="Permanent link">&para;</a></h2>
+<p>Closed-loop controller behaviour.</p>
+<hr />
+<h2 id="projects-9-to-13">Projects 9 to 13<a class="headerlink" href="#projects-9-to-13" title="Permanent link">&para;</a></h2>
+<p>Power electronic system dynamics.</p>
+<hr />
+<h1 id="engineering-applications">Engineering Applications<a class="headerlink" href="#engineering-applications" title="Permanent link">&para;</a></h1>
+<p>System identification is used in:</p>
+<h2 id="robotics">Robotics<a class="headerlink" href="#robotics" title="Permanent link">&para;</a></h2>
+<p>Motion control models.</p>
+<hr />
+<h2 id="aerospace">Aerospace<a class="headerlink" href="#aerospace" title="Permanent link">&para;</a></h2>
+<p>Aircraft modelling.</p>
+<hr />
+<h2 id="automotive-systems">Automotive Systems<a class="headerlink" href="#automotive-systems" title="Permanent link">&para;</a></h2>
+<p>Engine and vehicle dynamics.</p>
+<hr />
+<h2 id="industrial-automation">Industrial Automation<a class="headerlink" href="#industrial-automation" title="Permanent link">&para;</a></h2>
+<p>Process modelling.</p>
+<hr />
+<h2 id="power-electronics">Power Electronics<a class="headerlink" href="#power-electronics" title="Permanent link">&para;</a></h2>
+<p>Converter modelling and control.</p>
+<hr />
+<h1 id="knowledge-check">Knowledge Check<a class="headerlink" href="#knowledge-check" title="Permanent link">&para;</a></h1>
+<h2 id="question-1">Question 1<a class="headerlink" href="#question-1" title="Permanent link">&para;</a></h2>
+<p>What is system identification?</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>____________________
+</code></pre></div>
+<hr />
+<h2 id="question-2">Question 2<a class="headerlink" href="#question-2" title="Permanent link">&para;</a></h2>
+<p>What is a time constant?</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>____________________
+</code></pre></div>
+<hr />
+<h2 id="question-3">Question 3<a class="headerlink" href="#question-3" title="Permanent link">&para;</a></h2>
+<p>What percentage of the final value is reached after one time constant?</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>____________________
+</code></pre></div>
+<hr />
+<h2 id="question-4">Question 4<a class="headerlink" href="#question-4" title="Permanent link">&para;</a></h2>
+<p>What is a step input?</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>____________________
+</code></pre></div>
+<hr />
+<h2 id="question-5">Question 5<a class="headerlink" href="#question-5" title="Permanent link">&para;</a></h2>
+<p>Why is model validation important?</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>____________________
+</code></pre></div>
+<hr />
+<h2 id="question-6">Question 6<a class="headerlink" href="#question-6" title="Permanent link">&para;</a></h2>
+<p>Your curve fit gives τ = 1.12s for the RC circuit but the theoretical value is 1.0s. Name two physical reasons that could explain this, and explain how you would use the fitted model (rather than the theoretical one) in controller design.</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>____________________
+</code></pre></div>
+<hr />
+<h1 id="common-mistakes">Common Mistakes<a class="headerlink" href="#common-mistakes" title="Permanent link">&para;</a></h1>
+<h2 id="incorrect-time-constant">Incorrect Time Constant<a class="headerlink" href="#incorrect-time-constant" title="Permanent link">&para;</a></h2>
+<p>Check:</p>
+<ul>
+<li>Component values</li>
+<li>Oscilloscope scaling</li>
+<li>Trigger location</li>
+</ul>
+<hr />
+<h2 id="poor-measurements">Poor Measurements<a class="headerlink" href="#poor-measurements" title="Permanent link">&para;</a></h2>
+<p>Check:</p>
+<ul>
+<li>Probe grounding</li>
+<li>Trigger settings</li>
+<li>Timebase settings</li>
+</ul>
+<hr />
+<h2 id="model-does-not-match-data">Model Does Not Match Data<a class="headerlink" href="#model-does-not-match-data" title="Permanent link">&para;</a></h2>
+<p>Check:</p>
+<ul>
+<li>Assumptions</li>
+<li>Measurement accuracy</li>
+<li>System nonlinearities</li>
+</ul>
+<hr />
+<h1 id="troubleshooting-checklist">Troubleshooting Checklist<a class="headerlink" href="#troubleshooting-checklist" title="Permanent link">&para;</a></h1>
+<p>✅ Step input applied correctly</p>
+<p>✅ Output waveform captured</p>
+<p>✅ Final value measured</p>
+<p>✅ 63.2% point calculated</p>
+<p>✅ Time constant measured</p>
+<p>✅ Model compared with measurements</p>
+<hr />
+<h1 id="project-summary">Project Summary<a class="headerlink" href="#project-summary" title="Permanent link">&para;</a></h1>
+<p>In this project you learned:</p>
+<p>✅ System identification</p>
+<p>✅ Dynamic system modelling</p>
+<p>✅ First-order systems</p>
+<p>✅ Second-order systems</p>
+<p>✅ Time constants</p>
+<p>✅ Step response analysis</p>
+<p>✅ Model validation</p>
+<p>✅ Experimental parameter estimation</p>
+<p>You now have the foundation required to move from measuring system behaviour to designing controllers based on mathematical models.</p>
+<hr />
+<h1 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h1>
+<p><strong>15_Controller_Design.md</strong></p>
+<p>Topics:</p>
+<ul>
+<li>Controller Design Process</li>
+<li>Model-Based Design</li>
+<li>Stability</li>
+<li>Controller Tuning</li>
+<li>Performance Optimization</li>
+<li>Practical Control Engineering</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@11/dist/mermaid.min"></script>
+      
+    
+  </body>
+</html>

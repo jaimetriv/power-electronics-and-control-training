@@ -1,0 +1,1936 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Practical Electronics, Control Systems and Power Electronics Training">
+      
+      
+        <meta name="author" content="Jaime Trivino">
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../00A_Microcontroller_Familiarisation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Introduction - Power Electronics and Control Training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#arduino-power-electronics-and-control-theory-lab" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Power Electronics and Control Training" class="md-header__button md-logo" aria-label="Power Electronics and Control Training" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Power Electronics and Control Training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introduction
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jaimetriv/power-electronics-and-control-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jaimetriv/power-electronics-and-control-training
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Power Electronics and Control Training" class="md-nav__button md-logo" aria-label="Power Electronics and Control Training" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Power Electronics and Control Training
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jaimetriv/power-electronics-and-control-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jaimetriv/power-electronics-and-control-training
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#author" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Author
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00A_Microcontroller_Familiarisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microcontroller Familiarisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00B_Oscilloscope_Familiarisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oscilloscope Familiarisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00C_WiFi_Controller_Familiarisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WiFi Controller Familiarisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Electronics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Electronics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_PWM_Fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PWM Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_RC_Circuits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_RLC_Circuits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_MOSFET_Fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MOSFET Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Control Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_PWM_Motor_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PWM Motor Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_P_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_PI_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PI Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08_PID_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PID Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power Electronics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Power Electronics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_Buck_Converter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Buck Converter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_Closed_Loop_Buck/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Closed Loop Buck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11_Boost_Converter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boost Converter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11B_DC_Chopper_Converters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DC Chopper Converters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12_AC_DC_Rectifiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AC-DC Rectifiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13_DC_AC_Inverters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DC-AC Inverters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Advanced Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14_System_Identification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Identification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15_Controller_Design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Controller Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16_Grid_Following_VSC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grid Following VSC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17_Grid_Forming_VSC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grid Forming VSC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#author" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Author
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="arduino-power-electronics-and-control-theory-lab">Arduino Power Electronics and Control Theory Lab<a class="headerlink" href="#arduino-power-electronics-and-control-theory-lab" title="Permanent link">&para;</a></h1>
+<h2 id="author">Author<a class="headerlink" href="#author" title="Permanent link">&para;</a></h2>
+<p>Jaime Triviño</p>
+<hr />
+<h1 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h1>
+<p>This repository documents a structured learning journey through:</p>
+<ul>
+<li>Electronics</li>
+<li>Embedded Systems</li>
+<li>Arduino Programming</li>
+<li>Oscilloscope Measurements</li>
+<li>Power Electronics</li>
+<li>Control Theory</li>
+<li>MATLAB Modelling</li>
+<li>Practical Engineering</li>
+</ul>
+<p>The goal is to combine:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Theory
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>+
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Simulation
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>+
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Practical Experiments
+</code></pre></div>
+<p>to build a solid foundation in modern electrical and electronic engineering.</p>
+<hr />
+<h1 id="available-equipment">Available Equipment<a class="headerlink" href="#available-equipment" title="Permanent link">&para;</a></h1>
+<h2 id="hardware">Hardware<a class="headerlink" href="#hardware" title="Permanent link">&para;</a></h2>
+<h3 id="arduino">Arduino<a class="headerlink" href="#arduino" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Arduino Uno</li>
+</ul>
+<h3 id="sparkfun-inventors-kit">SparkFun Inventor's Kit<a class="headerlink" href="#sparkfun-inventors-kit" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Breadboard</li>
+<li>LEDs</li>
+<li>Resistors</li>
+<li>Capacitors</li>
+<li>Transistors</li>
+<li>Potentiometers</li>
+<li>Sensors</li>
+<li>Push Buttons</li>
+</ul>
+<h3 id="robotics">Robotics<a class="headerlink" href="#robotics" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Parallax BOE-Bot</li>
+</ul>
+<h3 id="test-equipment">Test Equipment<a class="headerlink" href="#test-equipment" title="Permanent link">&para;</a></h3>
+<ul>
+<li>DSO Nano Portable Oscilloscope</li>
+</ul>
+<h3 id="software">Software<a class="headerlink" href="#software" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Arduino IDE</li>
+<li>MATLAB</li>
+<li>Simulink</li>
+</ul>
+<hr />
+<h1 id="course-philosophy">Course Philosophy<a class="headerlink" href="#course-philosophy" title="Permanent link">&para;</a></h1>
+<p>The best way to learn engineering is by combining:</p>
+<ol>
+<li>Theory</li>
+<li>Calculations</li>
+<li>Simulation</li>
+<li>Measurements</li>
+<li>Reflection</li>
+</ol>
+<p>Every project in this repository follows the same structure:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Objective
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Theory
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Calculations
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Components
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>Wiring
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>Implementation
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>Measurements
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>MATLAB Exercises
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>Questions
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>Summary
+</code></pre></div>
+<p>The purpose is not simply to build projects.</p>
+<p>The purpose is to understand:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Why things work
+</code></pre></div>
+<p>and</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>How to predict their behaviour
+</code></pre></div>
+<p>before building them.</p>
+<hr />
+<h1 id="learning-roadmap">Learning Roadmap<a class="headerlink" href="#learning-roadmap" title="Permanent link">&para;</a></h1>
+<p>The projects are organised so that each project builds naturally upon the previous one.</p>
+<hr />
+<h1 id="phase-1-signals-and-fundamental-electronics">Phase 1 - Signals and Fundamental Electronics<a class="headerlink" href="#phase-1-signals-and-fundamental-electronics" title="Permanent link">&para;</a></h1>
+<p>The first phase introduces:</p>
+<ul>
+<li>Signals</li>
+<li>Frequency</li>
+<li>PWM</li>
+<li>Capacitors</li>
+<li>Inductors</li>
+<li>Dynamic Systems</li>
+</ul>
+<hr />
+<h2 id="project-1">Project 1<a class="headerlink" href="#project-1" title="Permanent link">&para;</a></h2>
+<h3 id="pwm-fundamentals-and-oscilloscope-measurements">PWM Fundamentals and Oscilloscope Measurements<a class="headerlink" href="#pwm-fundamentals-and-oscilloscope-measurements" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>Frequency</li>
+<li>Period</li>
+<li>Duty Cycle</li>
+<li>PWM</li>
+<li>DSO Nano Measurements</li>
+</ul>
+<p>File:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>01_PWM_Fundamentals.md
+</code></pre></div>
+<hr />
+<h2 id="project-2">Project 2<a class="headerlink" href="#project-2" title="Permanent link">&para;</a></h2>
+<h3 id="rc-circuits-and-time-constants">RC Circuits and Time Constants<a class="headerlink" href="#rc-circuits-and-time-constants" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>Capacitor Charging</li>
+<li>Capacitor Discharging</li>
+<li>Exponential Response</li>
+<li>Time Constants</li>
+<li>First-Order Systems</li>
+</ul>
+<p>File:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>02_RC_Circuits.md
+</code></pre></div>
+<hr />
+<h2 id="project-3">Project 3<a class="headerlink" href="#project-3" title="Permanent link">&para;</a></h2>
+<h3 id="rlc-circuits-and-resonance">RLC Circuits and Resonance<a class="headerlink" href="#rlc-circuits-and-resonance" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>Inductors</li>
+<li>Resonance</li>
+<li>Ringing</li>
+<li>Natural Frequency</li>
+<li>Damping</li>
+<li>Second-Order Systems</li>
+</ul>
+<p>File:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>03_RLC_Circuits.md
+</code></pre></div>
+<hr />
+<h1 id="phase-2-power-electronics-fundamentals">Phase 2 - Power Electronics Fundamentals<a class="headerlink" href="#phase-2-power-electronics-fundamentals" title="Permanent link">&para;</a></h1>
+<p>The second phase introduces the foundation of modern power electronics.</p>
+<hr />
+<h2 id="project-4">Project 4<a class="headerlink" href="#project-4" title="Permanent link">&para;</a></h2>
+<h3 id="mosfet-fundamentals-and-electronic-switching">MOSFET Fundamentals and Electronic Switching<a class="headerlink" href="#mosfet-fundamentals-and-electronic-switching" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>MOSFETs</li>
+<li>Gate Control</li>
+<li>Electronic Switching</li>
+<li>PWM Power Control</li>
+</ul>
+<p>File:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>04_MOSFET_Fundamentals.md
+</code></pre></div>
+<hr />
+<h2 id="project-5">Project 5<a class="headerlink" href="#project-5" title="Permanent link">&para;</a></h2>
+<h3 id="pwm-motor-control">PWM Motor Control<a class="headerlink" href="#pwm-motor-control" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>DC Motors</li>
+<li>First-Order Systems</li>
+<li>Motor Time Constants</li>
+<li>Open Loop Speed Control</li>
+</ul>
+<p>File:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>05_PWM_Motor_Control.md
+</code></pre></div>
+<hr />
+<h1 id="phase-3-control-systems">Phase 3 - Control Systems<a class="headerlink" href="#phase-3-control-systems" title="Permanent link">&para;</a></h1>
+<p>The third phase introduces feedback control.</p>
+<hr />
+<h2 id="project-6">Project 6<a class="headerlink" href="#project-6" title="Permanent link">&para;</a></h2>
+<h3 id="p-controller">P Controller<a class="headerlink" href="#p-controller" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>Error</li>
+<li>Feedback</li>
+<li>Gain</li>
+</ul>
+<hr />
+<h2 id="project-7">Project 7<a class="headerlink" href="#project-7" title="Permanent link">&para;</a></h2>
+<h3 id="pi-controller">PI Controller<a class="headerlink" href="#pi-controller" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>Integral Action</li>
+<li>Steady-State Error</li>
+</ul>
+<hr />
+<h2 id="project-8">Project 8<a class="headerlink" href="#project-8" title="Permanent link">&para;</a></h2>
+<h3 id="pid-controller">PID Controller<a class="headerlink" href="#pid-controller" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>Derivative Action</li>
+<li>Stability</li>
+<li>Tuning</li>
+</ul>
+<hr />
+<h1 id="phase-4-power-electronics">Phase 4 - Power Electronics<a class="headerlink" href="#phase-4-power-electronics" title="Permanent link">&para;</a></h1>
+<p>The fourth phase combines everything learned so far.</p>
+<hr />
+<h2 id="project-9">Project 9<a class="headerlink" href="#project-9" title="Permanent link">&para;</a></h2>
+<h3 id="buck-converter">Buck Converter<a class="headerlink" href="#buck-converter" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>Energy Transfer</li>
+<li>Switching Power Supplies</li>
+<li>Output Ripple</li>
+</ul>
+<hr />
+<h2 id="project-10">Project 10<a class="headerlink" href="#project-10" title="Permanent link">&para;</a></h2>
+<h3 id="closed-loop-buck-converter">Closed-Loop Buck Converter<a class="headerlink" href="#closed-loop-buck-converter" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>Voltage Regulation</li>
+<li>PI Control</li>
+<li>Feedback Systems</li>
+</ul>
+<hr />
+<h2 id="project-11">Project 11<a class="headerlink" href="#project-11" title="Permanent link">&para;</a></h2>
+<h3 id="boost-converter">Boost Converter<a class="headerlink" href="#boost-converter" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>Voltage Step-Up</li>
+<li>Energy Storage</li>
+<li>Converter Efficiency</li>
+</ul>
+<hr />
+<h2 id="project-11b">Project 11B<a class="headerlink" href="#project-11b" title="Permanent link">&para;</a></h2>
+<h3 id="dc-chopper-converters">DC Chopper Converters<a class="headerlink" href="#dc-chopper-converters" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>Chopper Operation</li>
+<li>DC Motor Drives</li>
+<li>Quadrant Operation</li>
+</ul>
+<hr />
+<h2 id="project-12">Project 12<a class="headerlink" href="#project-12" title="Permanent link">&para;</a></h2>
+<h3 id="ac-dc-rectifiers">AC-DC Rectifiers<a class="headerlink" href="#ac-dc-rectifiers" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>Half-Wave Rectification</li>
+<li>Bridge Rectifiers</li>
+<li>Capacitor Smoothing</li>
+</ul>
+<hr />
+<h2 id="project-13">Project 13<a class="headerlink" href="#project-13" title="Permanent link">&para;</a></h2>
+<h3 id="dc-ac-inverters">DC-AC Inverters<a class="headerlink" href="#dc-ac-inverters" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>H-Bridge Circuits</li>
+<li>SPWM</li>
+<li>AC Generation</li>
+</ul>
+<hr />
+<h1 id="phase-5-advanced-topics">Phase 5 - Advanced Topics<a class="headerlink" href="#phase-5-advanced-topics" title="Permanent link">&para;</a></h1>
+<p>The final phase focuses on modelling, design and grid-connected systems.</p>
+<hr />
+<h2 id="project-14">Project 14<a class="headerlink" href="#project-14" title="Permanent link">&para;</a></h2>
+<h3 id="system-identification">System Identification<a class="headerlink" href="#system-identification" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>Experimental Modelling</li>
+<li>Parameter Estimation</li>
+<li>Transfer Functions</li>
+</ul>
+<hr />
+<h2 id="project-15">Project 15<a class="headerlink" href="#project-15" title="Permanent link">&para;</a></h2>
+<h3 id="controller-design">Controller Design<a class="headerlink" href="#controller-design" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>P Controllers</li>
+<li>PI Controllers</li>
+<li>PID Controllers</li>
+<li>Closed-Loop Analysis</li>
+</ul>
+<hr />
+<h2 id="project-16">Project 16<a class="headerlink" href="#project-16" title="Permanent link">&para;</a></h2>
+<h3 id="grid-following-vsc">Grid-Following VSC<a class="headerlink" href="#grid-following-vsc" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>PLL Synchronisation</li>
+<li>Current Control</li>
+<li>dq Control</li>
+</ul>
+<hr />
+<h2 id="project-17">Project 17<a class="headerlink" href="#project-17" title="Permanent link">&para;</a></h2>
+<h3 id="grid-forming-vsc">Grid-Forming VSC<a class="headerlink" href="#grid-forming-vsc" title="Permanent link">&para;</a></h3>
+<p>Concepts:</p>
+<ul>
+<li>Autonomous AC Generation</li>
+<li>Voltage Regulation</li>
+<li>Droop Control</li>
+</ul>
+<hr />
+<h1 id="mathematical-toolbox">Mathematical Toolbox<a class="headerlink" href="#mathematical-toolbox" title="Permanent link">&para;</a></h1>
+<p>The following equations will appear repeatedly throughout this repository.</p>
+<hr />
+<h2 id="ohms-law">Ohm's Law<a class="headerlink" href="#ohms-law" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[
+V = I \cdot R
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(V\)</span> = Voltage (V)</li>
+<li><span class="arithmatex">\(I\)</span> = Current (A)</li>
+<li><span class="arithmatex">\(R\)</span> = Resistance (Ω)</li>
+</ul>
+<hr />
+<h2 id="electrical-power">Electrical Power<a class="headerlink" href="#electrical-power" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[
+P = V \cdot I
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(P\)</span> = Power (W)</li>
+<li><span class="arithmatex">\(V\)</span> = Voltage (V)</li>
+<li><span class="arithmatex">\(I\)</span> = Current (A)</li>
+</ul>
+<hr />
+<h2 id="frequency">Frequency<a class="headerlink" href="#frequency" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[
+f = \frac{1}{T}
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(f\)</span> = Frequency (Hz)</li>
+<li><span class="arithmatex">\(T\)</span> = Period (s)</li>
+</ul>
+<hr />
+<h2 id="duty-cycle">Duty Cycle<a class="headerlink" href="#duty-cycle" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[
+D = \frac{T_{ON}}{T}
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(D\)</span> = Duty Cycle</li>
+<li><span class="arithmatex">\(T_{ON}\)</span> = Time signal is HIGH</li>
+<li><span class="arithmatex">\(T\)</span> = Total period</li>
+</ul>
+<hr />
+<h2 id="pwm-average-voltage">PWM Average Voltage<a class="headerlink" href="#pwm-average-voltage" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[
+V_{AVG} = D \cdot V_S
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(V_{AVG}\)</span> = Average Voltage</li>
+<li><span class="arithmatex">\(D\)</span> = Duty Cycle</li>
+<li><span class="arithmatex">\(V_S\)</span> = Supply Voltage</li>
+</ul>
+<hr />
+<h2 id="capacitor-energy">Capacitor Energy<a class="headerlink" href="#capacitor-energy" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[
+E = \frac{1}{2}CV^2
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(E\)</span> = Energy (J)</li>
+<li><span class="arithmatex">\(C\)</span> = Capacitance (F)</li>
+<li><span class="arithmatex">\(V\)</span> = Voltage (V)</li>
+</ul>
+<hr />
+<h2 id="inductor-energy">Inductor Energy<a class="headerlink" href="#inductor-energy" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[
+E = \frac{1}{2}LI^2
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(E\)</span> = Energy (J)</li>
+<li><span class="arithmatex">\(L\)</span> = Inductance (H)</li>
+<li><span class="arithmatex">\(I\)</span> = Current (A)</li>
+</ul>
+<hr />
+<h2 id="rc-time-constant">RC Time Constant<a class="headerlink" href="#rc-time-constant" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[
+\tau = RC
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(\tau\)</span> = Time Constant (s)</li>
+<li><span class="arithmatex">\(R\)</span> = Resistance (Ω)</li>
+<li><span class="arithmatex">\(C\)</span> = Capacitance (F)</li>
+</ul>
+<hr />
+<h2 id="rl-time-constant">RL Time Constant<a class="headerlink" href="#rl-time-constant" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[
+\tau = \frac{L}{R}
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(\tau\)</span> = Time Constant (s)</li>
+<li><span class="arithmatex">\(L\)</span> = Inductance (H)</li>
+<li><span class="arithmatex">\(R\)</span> = Resistance (Ω)</li>
+</ul>
+<hr />
+<h2 id="natural-frequency">Natural Frequency<a class="headerlink" href="#natural-frequency" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[
+\omega_n = \frac{1}{\sqrt{LC}}
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(\omega_n\)</span> = Natural Frequency (rad/s)</li>
+<li><span class="arithmatex">\(L\)</span> = Inductance (H)</li>
+<li><span class="arithmatex">\(C\)</span> = Capacitance (F)</li>
+</ul>
+<hr />
+<h2 id="damping-ratio">Damping Ratio<a class="headerlink" href="#damping-ratio" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[
+\zeta = \frac{R}{2}\sqrt{\frac{C}{L}}
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(\zeta\)</span> = Damping Ratio</li>
+</ul>
+<hr />
+<h2 id="pid-controller_1">PID Controller<a class="headerlink" href="#pid-controller_1" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[
+u(t)=K_Pe(t)+K_I\int e(t)\,dt+K_D\frac{de(t)}{dt}
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(K_P\)</span> = Proportional Gain</li>
+<li><span class="arithmatex">\(K_I\)</span> = Integral Gain</li>
+<li><span class="arithmatex">\(K_D\)</span> = Derivative Gain</li>
+<li><span class="arithmatex">\(e(t)\)</span> = Error Signal</li>
+</ul>
+<hr />
+<h1 id="using-the-dso-nano">Using the DSO Nano<a class="headerlink" href="#using-the-dso-nano" title="Permanent link">&para;</a></h1>
+<p>The DSO Nano will be used throughout this repository to measure:</p>
+<ul>
+<li>PWM signals</li>
+<li>RC charging curves</li>
+<li>RC discharging curves</li>
+<li>Oscillations</li>
+<li>Resonance</li>
+<li>Ringing</li>
+<li>MOSFET gate signals</li>
+<li>Motor drive signals</li>
+<li>Converter ripple</li>
+<li>Closed-loop responses</li>
+</ul>
+<p>The oscilloscope is one of the most important learning tools in this course.</p>
+<p>Theory should always be compared with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Measured Reality
+</code></pre></div>
+<hr />
+<h1 id="recommended-workflow">Recommended Workflow<a class="headerlink" href="#recommended-workflow" title="Permanent link">&para;</a></h1>
+<p>For every project:</p>
+<ol>
+<li>Read the theory.</li>
+<li>Complete the calculations.</li>
+<li>Predict the outcome.</li>
+<li>Build the circuit.</li>
+<li>Measure the response.</li>
+<li>Compare measurements with theory.</li>
+<li>Simulate in MATLAB.</li>
+<li>Explain any differences.</li>
+</ol>
+<p>This workflow mirrors how real engineering projects are carried out.</p>
+<hr />
+<h1 id="final-learning-objectives">Final Learning Objectives<a class="headerlink" href="#final-learning-objectives" title="Permanent link">&para;</a></h1>
+<p>After completing all projects you should be capable of:</p>
+<p>✅ Using an oscilloscope confidently</p>
+<p>✅ Understanding first-order systems</p>
+<p>✅ Understanding second-order systems</p>
+<p>✅ Measuring time constants</p>
+<p>✅ Measuring natural frequencies</p>
+<p>✅ Understanding resonance</p>
+<p>✅ Understanding damping</p>
+<p>✅ Using MOSFETs correctly</p>
+<p>✅ Designing PWM systems</p>
+<p>✅ Implementing control systems</p>
+<p>✅ Building Buck converters</p>
+<p>✅ Building Boost converters</p>
+<p>✅ Performing MATLAB analysis</p>
+<p>✅ Designing simple closed-loop controllers</p>
+<p>✅ Understanding the fundamentals of power electronics</p>
+<hr />
+<h1 id="repository-structure">Repository Structure<a class="headerlink" href="#repository-structure" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>00_Introduction.md
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>00A_Microcontroller_Familiarisation.md
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>00B_Oscilloscope_Familiarisation.md
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>00C_WiFi_Controller_Familiarisation.md
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>01_PWM_Fundamentals.md
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>02_RC_Circuits.md
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>03_RLC_Circuits.md
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>04_MOSFET_Fundamentals.md
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>05_PWM_Motor_Control.md
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>06_P_Controller.md
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>07_PI_Controller.md
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>08_PID_Controller.md
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>09_Buck_Converter.md
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>10_Closed_Loop_Buck.md
+<a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a>
+<a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>11_Boost_Converter.md
+<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a>
+<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a>11B_DC_Chopper_Converters.md
+<a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a>
+<a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a>12_AC_DC_Rectifiers.md
+<a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a>
+<a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a>13_DC_AC_Inverters.md
+<a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a>
+<a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a>14_System_Identification.md
+<a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a>
+<a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a>15_Controller_Design.md
+<a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a>
+<a id="__codelineno-10-41" name="__codelineno-10-41" href="#__codelineno-10-41"></a>16_Grid_Following_VSC.md
+<a id="__codelineno-10-42" name="__codelineno-10-42" href="#__codelineno-10-42"></a>
+<a id="__codelineno-10-43" name="__codelineno-10-43" href="#__codelineno-10-43"></a>17_Grid_Forming_VSC.md
+</code></pre></div>
+<hr />
+<h1 id="lets-begin">Let's Begin<a class="headerlink" href="#lets-begin" title="Permanent link">&para;</a></h1>
+<p>The first project introduces the fundamental concept behind most modern power electronic systems:</p>
+<p><strong>Pulse Width Modulation (PWM)</strong></p>
+<p>Proceed to:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>01_PWM_Fundamentals.md
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@11/dist/mermaid.min"></script>
+      
+    
+  </body>
+</html>
