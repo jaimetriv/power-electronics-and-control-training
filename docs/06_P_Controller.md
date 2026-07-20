@@ -482,11 +482,12 @@ From your existing kit:
 
 - Arduino Uno
 - Breadboard
-- Potentiometer (feedback sensor)
+- Potentiometer (speed setpoint)
 - IRLZ44N MOSFET
 - DC Motor
 - Flyback diode (1N4001–1N4007)
 - 220 Ω resistor (gate resistor)
+- 2 × 10 kΩ resistors (back-EMF voltage divider)
 - Jumper wires
 - External battery pack
 
@@ -552,26 +553,33 @@ This value represents the desired motor speed setpoint.
 
 ---
 
-# Experiment 2 - Proportional Motor Speed Controller
+# Experiment 2 - Closed-Loop P Controller with Back-EMF Feedback
 
 ## Objective
 
-Control motor speed using a P controller.
+Close the feedback loop using the motor's back-EMF voltage as a proxy for speed.
 
-The potentiometer acts as the speed setpoint.
-The motor PWM is the controller output.
+When a DC motor spins it generates a voltage proportional to speed — this is called back-EMF. A resistor divider on the motor terminals feeds this voltage into the Arduino ADC, giving a real feedback signal without a dedicated speed sensor.
 
-> Note: Without a speed sensor, this experiment demonstrates open-loop P control — the controller output is proportional to the setpoint. True closed-loop control (with feedback) is introduced conceptually here and implemented fully when a sensor is available. The motor model identified in Project 14 and the controller design process in Project 15 will show how to tune gains once a feedback path exists. The motor model identified in Project 14 and the controller design process in Project 15 will show how to tune gains once a feedback path exists.
+> Note: Back-EMF is not a perfect speed measurement — it is affected by winding resistance and load current. It is however sufficient to demonstrate true closed-loop behaviour and observe steady-state error with a P controller.
 
 ---
 
-# Circuit
+# Back-EMF Sensing Circuit
+
+Add a voltage divider from the motor positive terminal to GND:
 
 ```text
 Battery +
     |
   Motor
     |--- Flyback diode (cathode to Battery+)
+    |
+    +--- 10kΩ ---+--- A1
+                 |
+               10kΩ
+                 |
+                GND
   Drain
   MOSFET (IRLZ44N)
   Source
@@ -582,12 +590,14 @@ Arduino Pin 9 --- 220Ω --- Gate
 Potentiometer centre pin --- A0
 ```
 
+The divider scales the motor terminal voltage by 0.5 so it stays within the 0–5V ADC range.
+
 ---
 
 # Arduino Code
 
 ```cpp
-float Kp = 0.25;
+float Kp = 0.5;
 
 void setup()
 {
@@ -597,13 +607,18 @@ void setup()
 
 void loop()
 {
-    int reference = analogRead(A0);          // desired speed (0-1023)
-    int output    = (int)(Kp * reference);   // P controller: u = Kp * r
-    output        = constrain(output, 0, 255);
+    int reference = analogRead(A0);   // desired speed setpoint (0-1023)
+    int feedback  = analogRead(A1);   // back-EMF proxy (0-1023, scaled x2 for actual)
+
+    int error  = reference - feedback;
+    int output = (int)(Kp * error);
+    output     = constrain(output, 0, 255);
 
     analogWrite(9, output);
 
-    Serial.print("Ref: "); Serial.print(reference);
+    Serial.print("Ref: ");  Serial.print(reference);
+    Serial.print("  Fbk: "); Serial.print(feedback);
+    Serial.print("  Err: "); Serial.print(error);
     Serial.print("  PWM: "); Serial.println(output);
 
     delay(50);
@@ -614,21 +629,41 @@ void loop()
 
 # What Is Happening?
 
-The potentiometer generates the reference:
+The potentiometer sets the reference:
 
 $$
 r
 $$
 
+The back-EMF divider measures actual motor speed (proxy):
+
+$$
+y
+$$
+
 The P controller computes:
 
 $$
-u = K_P \cdot r
+u = K_P (r - y)
 $$
 
-The PWM duty cycle drives the motor via the MOSFET.
+This is now a **true closed loop** — the controller reacts to the difference between desired and actual speed.
 
-Rotating the pot increases the reference → increases PWM → increases motor speed.
+---
+
+# Observe
+
+With the loop closed:
+
+1. Set a mid-range reference with the potentiometer. Observe the motor settle.
+2. Gently load the motor shaft with your finger. Observe the PWM increase as the controller fights the disturbance.
+3. Release. Observe the PWM return toward its previous value.
+
+Record observations:
+
+```text
+____________________________________
+```
 
 ---
 
@@ -636,7 +671,9 @@ Rotating the pot increases the reference → increases PWM → increases motor s
 
 ## Objective
 
-Observe how Kp changes the relationship between setpoint and motor speed.
+Observe how Kp changes closed-loop behaviour.
+
+Use the same closed-loop code from Experiment 2. Change only the Kp value.
 
 ---
 
@@ -748,7 +785,7 @@ The controller increases PWM to reduce the error.
 ```mermaid
 graph LR
 
-R[Reference\nPotentiometer]
+R[Reference\nPotentiometer A0]
 --> E[Error]
 
 E --> C[P Controller]
@@ -757,7 +794,7 @@ C --> P[MOSFET + Motor]
 
 P --> Y[Motor Speed]
 
-Y --> F[Speed Sensor\nfuture]
+Y --> F[Back-EMF Divider\nA1]
 
 F --> E
 ```
@@ -931,6 +968,7 @@ legend('Location', 'southeast');
 - Which Kp gave the fastest response without saturation?
 - Does the simulated steady-state error match the formula $e_{ss} = 1/(1 + K_P K)$?
 - What would happen to the response if τ were larger (heavier motor load)?
+- The back-EMF feedback is a proxy for speed, not a true tachometer. How does winding resistance affect the accuracy of this feedback signal, and in which direction would it bias the steady-state error?
 
 ---
 
@@ -1087,13 +1125,19 @@ Check:
 
 ✅ Motor circuit wired correctly (MOSFET + flyback diode)
 
+✅ Back-EMF divider connected to A1
+
 ✅ Shared ground between Arduino and battery
 
 ✅ Potentiometer reading changes in Serial Monitor
 
+✅ Feedback reading changes with motor speed in Serial Monitor
+
 ✅ PWM duty cycle visible on DSO Nano
 
 ✅ Motor speed changes with potentiometer
+
+✅ Controller reacts to manual load disturbance
 
 ✅ Kp value produces unsaturated PWM range
 
@@ -1107,6 +1151,8 @@ In this project you learned:
 
 ✅ Closed-loop control
 
+✅ Back-EMF feedback sensing
+
 ✅ Feedback
 
 ✅ Error signals
@@ -1116,6 +1162,8 @@ In this project you learned:
 ✅ Gain tuning
 
 ✅ Steady-state error
+
+✅ Disturbance rejection (manual load test)
 
 ✅ Controller behaviour
 

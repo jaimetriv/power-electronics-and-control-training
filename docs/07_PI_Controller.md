@@ -407,6 +407,7 @@ Same circuit as Project 6:
 - DC Motor
 - Flyback diode (1N4001–1N4007)
 - 220 Ω resistor (gate resistor)
+- 2 × 10 kΩ resistors (back-EMF divider — already installed from Project 6)
 - Jumper wires
 - External battery pack
 
@@ -416,26 +417,30 @@ Equipment:
 
 ---
 
-# Experiment 1 - Build a PI Motor Controller
+# Experiment 1 - Build a Closed-Loop PI Motor Controller
 
 ## Objective
 
-Implement a PI controller driving the motor via MOSFET.
-The potentiometer sets the speed reference.
-
-> Note: Without a speed sensor, this experiment demonstrates open-loop PI control. True closed-loop control is introduced conceptually here and implemented fully when a sensor is available. The motor model identified in Project 14 and the controller design process in Project 15 will show how to tune gains once a feedback path exists.
+Implement a PI controller with back-EMF feedback closing the loop on the motor.
+The potentiometer sets the speed reference. The back-EMF divider on A1 provides the feedback signal.
 
 ---
 
 # Circuit
 
-Same as Project 6:
+Same as Project 6 — back-EMF divider already in place:
 
 ```text
 Battery +
     |
   Motor
     |--- Flyback diode (cathode to Battery+)
+    |
+    +--- 10kΩ ---+--- A1  (back-EMF feedback)
+                 |
+               10kΩ
+                 |
+                GND
   Drain
   MOSFET (IRLZ44N)
   Source
@@ -454,8 +459,10 @@ Potentiometer centre pin --- A0
 float Kp = 0.5;
 float Ki = 1.0;
 
-float integral    = 0;
-float integral_max = 200;    // anti-windup limit
+const float dt      = 0.05;    // sample time (s) — matches delay(50)
+const float int_max = 500.0;   // anti-windup limit
+
+float integral = 0;
 
 void setup()
 {
@@ -465,24 +472,26 @@ void setup()
 
 void loop()
 {
-    int reference = analogRead(A0);      // desired speed (0-1023)
-    int feedback  = 0;                   // no sensor yet: open-loop PI
+    int reference = analogRead(A0);   // desired speed setpoint (0-1023)
+    int feedback  = analogRead(A1);   // back-EMF proxy (0-1023)
 
     float error = reference - feedback;
 
-    integral = integral + error * 0.01;  // 0.01s sample time
-    integral = constrain(integral, -integral_max, integral_max);
+    integral = integral + error * dt;
+    integral = constrain(integral, -int_max, int_max);
 
     float output = Kp * error + Ki * integral;
     output = constrain(output, 0, 255);
 
     analogWrite(9, (int)output);
 
-    Serial.print("Ref: "); Serial.print(reference);
-    Serial.print("  Int: "); Serial.print(integral);
+    Serial.print("Ref: ");  Serial.print(reference);
+    Serial.print("  Fbk: "); Serial.print(feedback);
+    Serial.print("  Err: "); Serial.print((int)error);
+    Serial.print("  Int: "); Serial.print(integral, 2);
     Serial.print("  PWM: "); Serial.println((int)output);
 
-    delay(10);
+    delay(50);
 }
 ```
 
@@ -490,23 +499,21 @@ void loop()
 
 # What Is Happening?
 
-The controller calculates:
+The potentiometer sets the reference $r$.
+
+The back-EMF divider on A1 measures actual motor speed (proxy) $y$.
+
+The PI controller computes:
 
 $$
-e=r-y
+e = r - y
 $$
 
-Then accumulates:
-
 $$
-\int e(t)\,dt
+u = K_P e + K_I \int e\,dt
 $$
 
-Then applies:
-
-$$
-u=K_Pe+K_I\int e(t)\,dt
-$$
+With the loop closed, the integral term drives the error toward zero — you should observe the feedback reading converge toward the reference in the Serial Monitor.
 
 ---
 
@@ -832,6 +839,7 @@ fprintf('PI Overshoot:     %.1f%%\n', info_PI.Overshoot);
 - Does the PI simulation confirm zero steady-state error compared to P only?
 - At what Ki did overshoot first appear in your experiments?
 - How does the simulated settling time compare to what you observed on the motor?
+- With the loop closed via back-EMF, does the feedback reading converge to the reference in the Serial Monitor? If a residual offset remains, what physical effect could cause it?
 
 ---
 
@@ -995,15 +1003,21 @@ Check:
 
 ✅ Motor circuit wired correctly (same as Project 6)
 
+✅ Back-EMF divider connected to A1
+
 ✅ Shared ground between Arduino and battery
 
 ✅ Potentiometer reading visible in Serial Monitor
+
+✅ Feedback reading changes with motor speed in Serial Monitor
 
 ✅ PWM duty cycle visible on DSO Nano
 
 ✅ Anti-windup limit in code
 
 ✅ Motor speed changes with potentiometer
+
+✅ Integral drives feedback toward reference
 
 ---
 
@@ -1014,6 +1028,8 @@ In this project you learned:
 ✅ Integral action
 
 ✅ PI control
+
+✅ Closed-loop operation with back-EMF feedback
 
 ✅ Steady-state error
 
