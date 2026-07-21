@@ -487,6 +487,11 @@ Horizontal:
 100 ms/div
 ```
 
+Important:
+
+- Ensure probe attenuation on the oscilloscope matches the probe switch (x1 or x10).
+- If the probe is set to x10 but the oscilloscope is set to x1, displayed voltage will be incorrect.
+
 ---
 
 ## Expected Result
@@ -603,6 +608,8 @@ Expected:
 $$
 f \approx 490Hz
 $$
+
+On Arduino Uno Pin 9, this value is typically around 490 Hz. Small variation is normal.
 
 ---
 
