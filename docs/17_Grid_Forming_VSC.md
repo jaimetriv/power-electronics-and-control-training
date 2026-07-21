@@ -1,6 +1,6 @@
 # Project 17 - Grid-Forming Voltage Source Converter (VSC)
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -26,7 +26,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -44,7 +44,7 @@ This project serves as the capstone project for the course.
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -66,7 +66,7 @@ At the end of this project you should be able to:
 
 ---
 
-# Safety Notice
+## Safety Notice
 
 ```text
 DO NOT CONNECT DIRECTLY TO MAINS VOLTAGE
@@ -88,7 +88,7 @@ Recommended:
 
 ---
 
-# Introduction
+## Introduction
 
 Project 16 introduced:
 
@@ -108,7 +108,7 @@ Inject Current
 
 ---
 
-# What If No Grid Exists?
+## What If No Grid Exists?
 
 Examples:
 
@@ -137,7 +137,7 @@ itself.
 
 ---
 
-# Grid-Forming Concept
+## Grid-Forming Concept
 
 A Grid-Forming converter behaves as an AC voltage source.
 
@@ -155,7 +155,7 @@ Voltage Control
 
 ---
 
-# Grid-Following versus Grid-Forming
+## Grid-Following versus Grid-Forming
 
 | Feature | Grid-Following | Grid-Forming |
 |----------|--------------|--------------|
@@ -169,7 +169,7 @@ Voltage Control
 
 ---
 
-# Black Start Capability
+## Black Start Capability
 
 A Grid-Forming converter can:
 
@@ -187,7 +187,7 @@ Black Start
 
 ---
 
-# Complete System Architecture
+## Complete System Architecture
 
 ```text
           Voltage Reference
@@ -221,9 +221,9 @@ Black Start
 
 ---
 
-# Hardware Requirements
+## Hardware Requirements
 
-## Controller
+### Controller
 
 Recommended:
 
@@ -241,7 +241,7 @@ Arduino Mega
 
 ---
 
-## Inverter Stage
+### Inverter Stage
 
 ### Gate Driver
 
@@ -267,7 +267,7 @@ IR2110
 
 ---
 
-## Sensors
+### Sensors
 
 ### Voltage Measurement
 
@@ -289,7 +289,7 @@ ACS758
 
 ---
 
-## LC Filter
+### LC Filter
 
 ### Inductor
 
@@ -305,7 +305,7 @@ ACS758
 
 ---
 
-## Test Equipment
+### Test Equipment
 
 - DSO Nano
 - Multimeter
@@ -313,7 +313,7 @@ ACS758
 
 ---
 
-# Complete Materials List
+## Complete Materials List
 
 ```text
 ESP32 DevKit
@@ -345,7 +345,7 @@ Multimeter
 
 ---
 
-# Full System Schematic
+## Full System Schematic
 
 ```text
                     +12V DC Supply
@@ -396,7 +396,7 @@ Multimeter
 
 ---
 
-# DC Link Circuit
+## DC Link Circuit
 
 Every practical inverter requires a DC-link capacitor.
 
@@ -432,7 +432,7 @@ mounted near the MOSFET bridge.
 
 ---
 
-# Full H-Bridge Schematic
+## Full H-Bridge Schematic
 
 ```text
               +Vdc
@@ -452,9 +452,9 @@ mounted near the MOSFET bridge.
 
 ---
 
-# H-Bridge Operation
+## H-Bridge Operation
 
-## Positive Half-Cycle
+### Positive Half-Cycle
 
 Turn ON:
 
@@ -488,7 +488,7 @@ GND
 
 ---
 
-## Negative Half-Cycle
+### Negative Half-Cycle
 
 Turn ON:
 
@@ -502,7 +502,7 @@ Current flows in the opposite direction.
 
 ---
 
-# Shoot-Through Warning
+## Shoot-Through Warning
 
 Never enable:
 
@@ -526,7 +526,7 @@ Direct Supply Short Circuit
 
 ---
 
-# Dead Time
+## Dead Time
 
 A delay is inserted between switching events.
 
@@ -544,7 +544,7 @@ Typical values:
 
 ---
 
-# Example Dead-Time Logic
+## Example Dead-Time Logic
 
 ```text
 Q1 OFF
@@ -562,7 +562,7 @@ Q3 ON
 
 ---
 
-# MOSFET Driver Connections
+## MOSFET Driver Connections
 
 Example using an IR2104.
 
@@ -588,7 +588,7 @@ Example using an IR2104.
 
 ---
 
-# LC Output Filter
+## LC Output Filter
 
 The H-Bridge output contains PWM ripple.
 
@@ -616,7 +616,7 @@ An LC filter smooths the waveform.
 
 ---
 
-# Why Use an LC Filter?
+## Why Use an LC Filter?
 
 Advantages:
 
@@ -630,7 +630,7 @@ Advantages:
 
 ---
 
-# Voltage Measurement Circuit
+## Voltage Measurement Circuit
 
 The ESP32 must never measure the inverter voltage directly.
 
@@ -654,7 +654,7 @@ Output Voltage
 
 ---
 
-# Current Measurement Circuit
+## Current Measurement Circuit
 
 Place the ACS712 after the filter.
 
@@ -676,7 +676,7 @@ Place the ACS712 after the filter.
 
 ---
 
-# Voltage Reference
+## Voltage Reference
 
 The inverter generates:
 
@@ -693,7 +693,7 @@ Where:
 
 ---
 
-# Example
+## Example
 
 Desired output:
 
@@ -711,7 +711,7 @@ Produces:
 
 ---
 
-# Internal Oscillator
+## Internal Oscillator
 
 Unlike Grid-Following converters:
 
@@ -723,7 +723,7 @@ The inverter generates its own electrical angle.
 
 ---
 
-# Angle Generation
+## Angle Generation
 
 $$
 \theta
@@ -747,7 +747,7 @@ $$
 
 ---
 
-# Voltage Error
+## Voltage Error
 
 The controller computes:
 
@@ -761,7 +761,7 @@ $$
 
 ---
 
-# Voltage Control Loop
+## Voltage Control Loop
 
 ```text
 Voltage Reference
@@ -783,7 +783,7 @@ Voltage Reference
 
 ---
 
-# PI Voltage Controller
+## PI Voltage Controller
 
 $$
 u
@@ -795,7 +795,7 @@ $$
 
 ---
 
-# Why Use PI Control?
+## Why Use PI Control?
 
 The PI controller:
 
@@ -807,7 +807,7 @@ The PI controller:
 
 ---
 
-# Modulation Index
+## Modulation Index
 
 Symbol:
 
@@ -835,7 +835,7 @@ Output Voltage Increases
 
 ---
 
-# SPWM Implementation
+## SPWM Implementation
 
 SPWM stands for:
 
@@ -845,13 +845,13 @@ Sinusoidal Pulse Width Modulation
 
 ---
 
-# SPWM Concept
+## SPWM Concept
 
 A sine-wave reference is compared with a high-frequency carrier.
 
 ---
 
-# Comparator Logic
+## Comparator Logic
 
 If:
 
@@ -879,7 +879,7 @@ LOW
 
 ---
 
-# SPWM Hardware Flow
+## SPWM Hardware Flow
 
 ```text
 50 Hz Reference
@@ -913,7 +913,7 @@ Compare With
 
 ---
 
-# Conceptual SPWM Pattern
+## Conceptual SPWM Pattern
 
 ```text
 | |
@@ -927,7 +927,7 @@ Compare With
 
 ---
 
-# Digital SPWM Implementation
+## Digital SPWM Implementation
 
 ```cpp
 theta += omega * Ts;
@@ -955,7 +955,7 @@ Where:
 
 ---
 
-# Relationship Between PI and SPWM
+## Relationship Between PI and SPWM
 
 ```text
 Voltage Error
@@ -973,7 +973,7 @@ H-Bridge
 
 ---
 
-# Frequency Regulation
+## Frequency Regulation
 
 The converter maintains:
 
@@ -985,13 +985,13 @@ independently of load conditions.
 
 ---
 
-# Droop Control
+## Droop Control
 
 Grid-Forming converters often emulate synchronous generators.
 
 ---
 
-# Active Power Droop
+## Active Power Droop
 
 $$
 f
@@ -1003,7 +1003,7 @@ $$
 
 ---
 
-# Reactive Power Droop
+## Reactive Power Droop
 
 $$
 V
@@ -1015,7 +1015,7 @@ $$
 
 ---
 
-# Why Use Droop Control?
+## Why Use Droop Control?
 
 Droop allows:
 
@@ -1027,13 +1027,13 @@ to share loads automatically.
 
 ---
 
-# Virtual Synchronous Machine (VSM)
+## Virtual Synchronous Machine (VSM)
 
 A Virtual Synchronous Machine emulates the behavior of a rotating generator using software.
 
 ---
 
-# Benefits of VSM Control
+## Benefits of VSM Control
 
 ✅ Synthetic Inertia
 
@@ -1045,9 +1045,9 @@ A Virtual Synchronous Machine emulates the behavior of a rotating generator usin
 
 ---
 
-# Recommended Build Stages
+## Recommended Build Stages
 
-## Stage 1
+### Stage 1
 
 Generate a 50 Hz reference.
 
@@ -1061,7 +1061,7 @@ Amplitude
 
 ---
 
-## Stage 2
+### Stage 2
 
 Generate SPWM.
 
@@ -1075,7 +1075,7 @@ Duty Cycle Variation
 
 ---
 
-## Stage 3
+### Stage 3
 
 Build and test the H-Bridge.
 
@@ -1087,7 +1087,7 @@ Alternating Output Voltage
 
 ---
 
-## Stage 4
+### Stage 4
 
 Install the LC Filter.
 
@@ -1099,7 +1099,7 @@ Smooth AC Voltage
 
 ---
 
-## Stage 5
+### Stage 5
 
 Implement Voltage Measurement.
 
@@ -1107,7 +1107,7 @@ Verify ADC accuracy.
 
 ---
 
-## Stage 6
+### Stage 6
 
 Implement PI Voltage Control.
 
@@ -1115,7 +1115,7 @@ Verify stable regulation.
 
 ---
 
-## Stage 7
+### Stage 7
 
 Implement Droop Control.
 
@@ -1123,15 +1123,15 @@ Study power-sharing behavior.
 
 ---
 
-# Experiment 1 - Generate AC Voltage
+## Experiment 1 - Generate AC Voltage
 
-## Objective
+### Objective
 
 Generate a stable AC voltage waveform.
 
 ---
 
-# Measurements
+## Measurements
 
 | Parameter | Measured |
 |------------|----------|
@@ -1141,9 +1141,9 @@ Generate a stable AC voltage waveform.
 
 ---
 
-# Experiment 2 - Load Regulation
+## Experiment 2 - Load Regulation
 
-## Test Loads
+### Test Loads
 
 ```text
 100 Ω
@@ -1155,7 +1155,7 @@ Generate a stable AC voltage waveform.
 
 ---
 
-# Results Table
+## Results Table
 
 | Load | Output Voltage |
 |--------|---------------|
@@ -1165,7 +1165,7 @@ Generate a stable AC voltage waveform.
 
 ---
 
-# Experiment 3 - PI Tuning
+## Experiment 3 - PI Tuning
 
 Measure:
 
@@ -1178,7 +1178,7 @@ for different gain settings.
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before building, simulate the LC filter response, the PI voltage controller, and the droop characteristic to predict hardware behaviour.
 
@@ -1245,7 +1245,7 @@ Record the predicted rise time, overshoot, and LC natural frequency before proce
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 After completing the experiments, enter your measured load regulation data and PI step response to compare against simulation.
 
@@ -1315,9 +1315,9 @@ Reflection questions:
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 What is the primary difference between Grid-Following and Grid-Forming control?
 
@@ -1329,7 +1329,7 @@ ____________________
 
 ---
 
-## Question 2
+### Question 2
 
 Why is a PLL unnecessary in a Grid-Forming converter?
 
@@ -1341,7 +1341,7 @@ ____________________
 
 ---
 
-## Question 3
+### Question 3
 
 What does the voltage controller regulate?
 
@@ -1353,7 +1353,7 @@ ____________________
 
 ---
 
-## Question 4
+### Question 4
 
 What is droop control?
 
@@ -1365,7 +1365,7 @@ ____________________
 
 ---
 
-## Question 5
+### Question 5
 
 What is a Virtual Synchronous Machine?
 
@@ -1377,7 +1377,7 @@ ____________________
 
 ---
 
-## Question 6
+### Question 6
 
 Your MATLAB simulation predicted less than 1% voltage regulation error across all three loads, but the physical inverter showed 8% error at the 100 Ω load. Identify two physical causes and explain what change to the controller or hardware would reduce the error.
 
@@ -1389,7 +1389,7 @@ ____________________
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ SPWM operating correctly
 
@@ -1411,7 +1411,7 @@ ____________________
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 

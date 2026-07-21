@@ -1,6 +1,6 @@
 # Project 11B - DC Chopper Converters and DC Motor Drives
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -20,7 +20,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -46,7 +46,7 @@ Motor Drives
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -66,7 +66,7 @@ At the end of this project you should be able to:
 
 ---
 
-# Introduction
+## Introduction
 
 A Chopper Converter is a:
 
@@ -78,7 +78,7 @@ that controls the average value of a DC voltage by rapidly switching a semicondu
 
 ---
 
-# Why Is It Called a Chopper?
+## Why Is It Called a Chopper?
 
 The input DC voltage is:
 
@@ -101,7 +101,7 @@ The average value depends on the duty cycle.
 
 ---
 
-# Chopper Principle
+## Chopper Principle
 
 The switch repeatedly alternates between:
 
@@ -121,7 +121,7 @@ A PWM signal controls the switching process.
 
 ---
 
-# Average Output Voltage
+## Average Output Voltage
 
 For an ideal step-down chopper:
 
@@ -137,7 +137,7 @@ Where:
 
 ---
 
-# Example
+## Example
 
 Given:
 
@@ -163,9 +163,9 @@ $$
 
 ---
 
-# Chopper Versus Linear Control
+## Chopper Versus Linear Control
 
-## Linear Control
+### Linear Control
 
 ```text
 Input
@@ -182,7 +182,7 @@ Disadvantages:
 
 ---
 
-## Chopper Control
+### Chopper Control
 
 ```text
 Input
@@ -200,13 +200,13 @@ Advantages:
 
 ---
 
-# Chopper Classification
+## Chopper Classification
 
 Traditional power electronics classifies choppers by operating quadrant.
 
 ---
 
-# Type A Chopper
+## Type A Chopper
 
 Also called:
 
@@ -227,7 +227,7 @@ Characteristics:
 
 ---
 
-# Type B Chopper
+## Type B Chopper
 
 Also called:
 
@@ -247,7 +247,7 @@ Characteristics:
 
 ---
 
-# Quadrant Concept
+## Quadrant Concept
 
 Motor drives are often described using:
 
@@ -263,7 +263,7 @@ Speed
 
 ---
 
-# First Quadrant
+## First Quadrant
 
 ```text
 Positive Voltage
@@ -276,7 +276,7 @@ Forward motoring.
 
 ---
 
-# Four Quadrants
+## Four Quadrants
 
 ```text
       Speed
@@ -294,7 +294,7 @@ Forward motoring.
 
 ---
 
-# Practical Relevance
+## Practical Relevance
 
 Most Arduino motor control projects operate in:
 
@@ -312,15 +312,15 @@ This is sufficient for:
 
 ---
 
-# Relationship to Previous Projects
+## Relationship to Previous Projects
 
-## Project 5
+### Project 5
 
 PWM motor control.
 
 ---
 
-## Project 9
+### Project 9
 
 Buck Converter.
 
@@ -328,7 +328,7 @@ Type A Chopper.
 
 ---
 
-## Project 11
+### Project 11
 
 Boost Converter.
 
@@ -336,7 +336,7 @@ Type B Chopper.
 
 ---
 
-# Chopper Controlled Motor Drive
+## Chopper Controlled Motor Drive
 
 ```mermaid
 graph LR
@@ -349,7 +349,7 @@ B --> C[DC Motor]
 
 ---
 
-# How Speed Control Works
+## How Speed Control Works
 
 Motor average voltage is:
 
@@ -366,11 +366,11 @@ Motor speed is approximately proportional to average voltage.
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before building the circuit, simulate the chopper waveforms and unified converter comparison to consolidate what you have learned in Projects 9, 10 and 11.
 
-## Unified Chopper Comparison
+### Unified Chopper Comparison
 
 ```matlab
 Vin = 5;
@@ -392,7 +392,7 @@ legend('Location', 'northwest');
 ylim([0 20]);
 ```
 
-## Simulate Chopper Waveform at Each Duty Cycle
+### Simulate Chopper Waveform at Each Duty Cycle
 
 ```matlab
 Vin = 5;
@@ -416,7 +416,7 @@ xlabel('Time (ms)');
 sgtitle('Chopper Waveforms \mdash 490 Hz, V_{IN}=5V');
 ```
 
-## Prediction Table
+### Prediction Table
 
 | PWM Value | Duty Cycle | Predicted V\_{AVG} (V) | Motor speed |
 |-----------|------------|------------------------|-------------|
@@ -426,15 +426,15 @@ sgtitle('Chopper Waveforms \mdash 490 Hz, V_{IN}=5V');
 
 ---
 
-# Experiment 1 - PWM Chopper Waveform
+## Experiment 1 - PWM Chopper Waveform
 
-## Objective
+### Objective
 
 Observe chopper operation using Arduino PWM.
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 void setup()
@@ -450,7 +450,7 @@ void loop()
 
 ---
 
-# Oscilloscope Setup
+## Oscilloscope Setup
 
 Probe Tip:
 
@@ -466,7 +466,7 @@ Arduino GND
 
 ---
 
-# DSO Nano Settings
+## DSO Nano Settings
 
 Vertical:
 
@@ -488,7 +488,7 @@ Rising Edge
 
 ---
 
-# Expected Waveform
+## Expected Waveform
 
 ```text
 5V ─────      ─────
@@ -499,7 +499,7 @@ Rising Edge
 
 ---
 
-# Measurements
+## Measurements
 
 | Parameter | Expected |
 |------------|-----------|
@@ -509,9 +509,9 @@ Rising Edge
 
 ---
 
-# Experiment 2 - Duty Cycle Investigation
+## Experiment 2 - Duty Cycle Investigation
 
-## Test A
+### Test A
 
 ```cpp
 analogWrite(9,64);
@@ -525,7 +525,7 @@ Expected Duty Cycle:
 
 ---
 
-## Test B
+### Test B
 
 ```cpp
 analogWrite(9,128);
@@ -539,7 +539,7 @@ Expected Duty Cycle:
 
 ---
 
-## Test C
+### Test C
 
 ```cpp
 analogWrite(9,192);
@@ -553,7 +553,7 @@ Expected Duty Cycle:
 
 ---
 
-# Results Table
+## Results Table
 
 | PWM Value | Duty Cycle | Observation |
 |------------|------------|-------------|
@@ -563,7 +563,7 @@ Expected Duty Cycle:
 
 ---
 
-# Chopper Efficiency
+## Chopper Efficiency
 
 The MOSFET is typically either:
 
@@ -587,45 +587,45 @@ compared with linear control.
 
 ---
 
-# Industrial Applications
+## Industrial Applications
 
 Choppers are used in:
 
-## Electric Vehicles
+### Electric Vehicles
 
 Battery power conversion.
 
 ---
 
-## DC Motor Drives
+### DC Motor Drives
 
 Speed control.
 
 ---
 
-## Railway Traction
+### Railway Traction
 
 Locomotive drives.
 
 ---
 
-## Battery Chargers
+### Battery Chargers
 
 Efficient regulation.
 
 ---
 
-## Renewable Energy Systems
+### Renewable Energy Systems
 
 Solar power conversion.
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 Now overlay your measured duty cycles and average voltages against the ideal chopper theory, and consolidate all three converter types on one plot.
 
-## Enter Your Measured Values
+### Enter Your Measured Values
 
 ```matlab
 Vin = 5;
@@ -656,7 +656,7 @@ for i = 1:3
 end
 ```
 
-## Consolidation Plot — All Three Topologies
+### Consolidation Plot — All Three Topologies
 
 ```matlab
 Vin = 5;
@@ -675,7 +675,7 @@ legend('Location', 'northwest');
 ylim([0 20]);
 ```
 
-## Reflection
+### Reflection
 
 - Do your measured average voltages fall on the ideal line?
 - The Type A (Buck) and motor chopper curves are identical. What does this tell you about the relationship between a Buck Converter and a DC motor drive?
@@ -683,9 +683,9 @@ ylim([0 20]);
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 What is a chopper converter?
 
@@ -697,7 +697,7 @@ ____________________
 
 ---
 
-## Question 2
+### Question 2
 
 Why is PWM used in choppers?
 
@@ -709,7 +709,7 @@ ____________________
 
 ---
 
-## Question 3
+### Question 3
 
 What type of chopper is a Buck Converter?
 
@@ -721,7 +721,7 @@ ____________________
 
 ---
 
-## Question 4
+### Question 4
 
 What determines the average output voltage?
 
@@ -733,7 +733,7 @@ ____________________
 
 ---
 
-## Question 5
+### Question 5
 
 Why are chopper converters efficient?
 
@@ -751,7 +751,7 @@ ____________________
 
 ---
 
-## Question 6
+### Question 6
 
 A DC motor drive and a Buck Converter both use the equation VAVG = D × VS. Explain one key circuit difference between them that makes the Buck Converter suitable for powering sensitive electronics while the basic motor chopper is not.
 
@@ -763,7 +763,7 @@ ____________________
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 
@@ -797,7 +797,7 @@ DC Chopper Converters
 
 ---
 
-# Next Project
+## Next Project
 
 **12_AC_DC_Rectifiers.md**
 

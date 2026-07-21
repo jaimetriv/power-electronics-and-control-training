@@ -1,6 +1,6 @@
 # Project 12 - AC-DC Rectifiers and Power Supplies
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -21,7 +21,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -46,7 +46,7 @@ AC Power Supply
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -66,7 +66,7 @@ At the end of this project you should be able to:
 
 ---
 
-# Introduction
+## Introduction
 
 Most electrical distribution systems use:
 
@@ -96,7 +96,7 @@ Rectification
 
 ---
 
-# What Is DC?
+## What Is DC?
 
 Direct current flows in a single direction.
 
@@ -119,7 +119,7 @@ Voltage
 
 ---
 
-# What Is AC?
+## What Is AC?
 
 Alternating current continuously changes polarity.
 
@@ -139,7 +139,7 @@ The voltage repeatedly becomes positive and negative.
 
 ---
 
-# AC Frequency
+## AC Frequency
 
 AC voltage repeats periodically.
 
@@ -152,7 +152,7 @@ Examples:
 
 ---
 
-# RMS Voltage
+## RMS Voltage
 
 AC voltages are normally specified using the RMS value.
 
@@ -166,7 +166,7 @@ $$
 
 ---
 
-# Example
+## Example
 
 Given:
 
@@ -189,7 +189,7 @@ $$
 
 ---
 
-# Review of Diodes
+## Review of Diodes
 
 A diode allows current flow in one direction.
 
@@ -201,7 +201,7 @@ Symbol:
 
 ---
 
-# Forward Bias
+## Forward Bias
 
 When forward biased:
 
@@ -211,7 +211,7 @@ Current Flows
 
 ---
 
-# Reverse Bias
+## Reverse Bias
 
 When reverse biased:
 
@@ -221,7 +221,7 @@ Current Is Blocked
 
 ---
 
-# Why Diodes Can Rectify AC
+## Why Diodes Can Rectify AC
 
 Because a diode blocks current in one direction, it can remove portions of an AC waveform.
 
@@ -239,7 +239,7 @@ Pulsating DC Voltage
 
 ---
 
-# Half-Wave Rectifier
+## Half-Wave Rectifier
 
 The simplest rectifier uses:
 
@@ -249,7 +249,7 @@ One Diode
 
 ---
 
-# Circuit
+## Circuit
 
 ```mermaid
 graph LR
@@ -264,9 +264,9 @@ C --> D[Ground]
 
 ---
 
-# Half-Wave Operation
+## Half-Wave Operation
 
-## Positive Half-Cycle
+### Positive Half-Cycle
 
 The diode conducts.
 
@@ -274,7 +274,7 @@ Output voltage appears across the load.
 
 ---
 
-## Negative Half-Cycle
+### Negative Half-Cycle
 
 The diode blocks current.
 
@@ -282,7 +282,7 @@ Output voltage becomes approximately zero.
 
 ---
 
-# Half-Wave Output
+## Half-Wave Output
 
 Input:
 
@@ -306,7 +306,7 @@ Negative portions are removed.
 
 ---
 
-# Limitations of Half-Wave Rectification
+## Limitations of Half-Wave Rectification
 
 Disadvantages:
 
@@ -316,7 +316,7 @@ Disadvantages:
 
 ---
 
-# Full-Wave Rectification
+## Full-Wave Rectification
 
 A better approach uses both halves of the AC waveform.
 
@@ -328,7 +328,7 @@ Bridge Rectifier
 
 ---
 
-# Bridge Rectifier
+## Bridge Rectifier
 
 A bridge rectifier contains:
 
@@ -340,7 +340,7 @@ arranged in a bridge configuration.
 
 ---
 
-# Simplified Block Diagram
+## Simplified Block Diagram
 
 ```mermaid
 graph LR
@@ -353,7 +353,7 @@ B --> C[DC Output]
 
 ---
 
-# Full-Wave Operation
+## Full-Wave Operation
 
 Negative half cycles are inverted.
 
@@ -361,7 +361,7 @@ The output remains positive during both halves of the AC cycle.
 
 ---
 
-# Full-Wave Output
+## Full-Wave Output
 
 Input:
 
@@ -381,7 +381,7 @@ ___/    \__/    \__/    \___
 
 ---
 
-# Advantages of Full-Wave Rectification
+## Advantages of Full-Wave Rectification
 
 ✅ Higher average voltage
 
@@ -393,7 +393,7 @@ ___/    \__/    \__/    \___
 
 ---
 
-# Capacitor Smoothing
+## Capacitor Smoothing
 
 The output of a bridge rectifier is not pure DC.
 
@@ -401,7 +401,7 @@ A capacitor is added across the output.
 
 ---
 
-# Smoothing Capacitor Circuit
+## Smoothing Capacitor Circuit
 
 ```mermaid
 graph LR
@@ -416,7 +416,7 @@ B --> D[Load]
 
 ---
 
-# How the Capacitor Works
+## How the Capacitor Works
 
 When the rectified voltage rises:
 
@@ -434,7 +434,7 @@ The capacitor supplies energy to the load and helps keep the output voltage stab
 
 ---
 
-# Output Without Capacitor
+## Output Without Capacitor
 
 ```text
      /\      /\      /\
@@ -444,7 +444,7 @@ ___/    \__/    \__/    \___
 
 ---
 
-# Output With Capacitor
+## Output With Capacitor
 
 ```text
 ───────────────
@@ -456,7 +456,7 @@ The average voltage becomes smoother.
 
 ---
 
-# Ripple Voltage
+## Ripple Voltage
 
 Ripple voltage is the small AC variation remaining on a DC output.
 
@@ -474,7 +474,7 @@ DC + Ripple
 
 ---
 
-# Factors Affecting Ripple
+## Factors Affecting Ripple
 
 Ripple increases when:
 
@@ -489,11 +489,11 @@ Ripple decreases when:
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before building the circuit, simulate all four rectifier configurations to predict the waveforms you will observe on the DSO Nano.
 
-## Simulate All Four Configurations
+### Simulate All Four Configurations
 
 ```matlab
 Vpeak = 10;          % set to match your signal generator output (V)
@@ -535,7 +535,7 @@ xlabel('Time (ms)');
 sgtitle(sprintf('Rectifier Configurations \mdash V_{peak}=%.0fV, f=%dHz', Vpeak, f));
 ```
 
-## Calculate Theoretical Values
+### Calculate Theoretical Values
 
 ```matlab
 Vpeak = 10;
@@ -550,7 +550,7 @@ fprintf('Half-wave average Vdc:   %.2f V\n', V_hw_avg);
 fprintf('Full-wave average Vdc:   %.2f V\n', V_fw_avg);
 ```
 
-## Prediction Table
+### Prediction Table
 
 Set your signal generator to: **10 Vpeak, 50 Hz, sine wave**
 
@@ -563,16 +563,16 @@ Set your signal generator to: **10 Vpeak, 50 Hz, sine wave**
 
 ---
 
-# Components Required
+## Components Required
 
-## Components to Purchase
+### Components to Purchase
 
 - 4 × 1N4001–1N4007 diodes
 - 100 µF electrolytic capacitor
 - 470 µF electrolytic capacitor
 - 1 kΩ load resistor
 
-## Equipment You Already Have
+### Equipment You Already Have
 
 - Signal generator (AC source — set to 10 Vpeak, 50 Hz, sine)
 - DSO Nano Oscilloscope
@@ -581,7 +581,7 @@ Set your signal generator to: **10 Vpeak, 50 Hz, sine wave**
 
 ---
 
-# Safety Notice
+## Safety Notice
 
 ```text
 DO NOT CONNECT DIRECTLY TO MAINS VOLTAGE
@@ -594,15 +594,15 @@ For laboratory work use only:
 
 ---
 
-# Experiment 1 - Measure AC Voltage
+## Experiment 1 - Measure AC Voltage
 
-## Objective
+### Objective
 
 Observe an AC waveform.
 
 ---
 
-# Probe Connections
+## Probe Connections
 
 Probe Tip:
 
@@ -618,7 +618,7 @@ Reference Ground
 
 ---
 
-# DSO Nano Settings
+## DSO Nano Settings
 
 Vertical:
 
@@ -640,7 +640,7 @@ Rising Edge
 
 ---
 
-# Expected Waveform
+## Expected Waveform
 
 ```text
       /\
@@ -652,7 +652,7 @@ Rising Edge
 
 ---
 
-# Record Measurements
+## Record Measurements
 
 | Parameter | Measured Value |
 |-----------|---------------|
@@ -662,21 +662,21 @@ Rising Edge
 
 ---
 
-# Experiment 2 - Half-Wave Rectifier
+## Experiment 2 - Half-Wave Rectifier
 
-## Objective
+### Objective
 
 Observe half-wave rectification.
 
 ---
 
-# Circuit
+## Circuit
 
 One diode and one load resistor.
 
 ---
 
-# Expected Output
+## Expected Output
 
 ```text
       /\      /\
@@ -688,7 +688,7 @@ ______________________
 
 ---
 
-# Record Measurements
+## Record Measurements
 
 | Parameter | Measured Value |
 |-----------|---------------|
@@ -698,21 +698,21 @@ ______________________
 
 ---
 
-# Experiment 3 - Bridge Rectifier
+## Experiment 3 - Bridge Rectifier
 
-## Objective
+### Objective
 
 Observe full-wave rectification.
 
 ---
 
-# Circuit
+## Circuit
 
 Bridge rectifier plus load resistor.
 
 ---
 
-# Expected Output
+## Expected Output
 
 ```text
      /\      /\      /\
@@ -722,7 +722,7 @@ ___/    \__/    \__/    \___
 
 ---
 
-# Record Measurements
+## Record Measurements
 
 | Parameter | Measured Value |
 |-----------|---------------|
@@ -732,7 +732,7 @@ ___/    \__/    \__/    \___
 
 ---
 
-# Why Is Full-Wave Rectification Better?
+## Why Is Full-Wave Rectification Better?
 
 Advantages:
 
@@ -746,15 +746,15 @@ Advantages:
 
 ---
 
-# Experiment 4 - Capacitor Smoothing
+## Experiment 4 - Capacitor Smoothing
 
-## Objective
+### Objective
 
 Reduce ripple voltage.
 
 ---
 
-# Add Capacitor
+## Add Capacitor
 
 Connect:
 
@@ -766,7 +766,7 @@ across the rectifier output.
 
 ---
 
-# Observe
+## Observe
 
 Compare:
 
@@ -782,9 +782,9 @@ With Capacitor
 
 ---
 
-# DSO Nano Measurement
+## DSO Nano Measurement
 
-## Probe Connections
+### Probe Connections
 
 Probe Tip:
 
@@ -800,7 +800,7 @@ Circuit Ground
 
 ---
 
-# DSO Nano Settings
+## DSO Nano Settings
 
 Vertical:
 
@@ -822,7 +822,7 @@ Rising Edge
 
 ---
 
-# Record Observations
+## Record Observations
 
 ```text
 _____________________________________
@@ -834,7 +834,7 @@ _____________________________________
 
 ---
 
-# Results Table
+## Results Table
 
 | Configuration | Ripple Voltage |
 |---------------|---------------|
@@ -845,37 +845,37 @@ _____________________________________
 
 ---
 
-# Relationship to Previous Projects
+## Relationship to Previous Projects
 
-## Project 2
+### Project 2
 
 Capacitor charging and discharging.
 
 ---
 
-## Project 3
+### Project 3
 
 Energy storage concepts.
 
 ---
 
-## Project 9
+### Project 9
 
 Output ripple in Buck Converters.
 
 ---
 
-## Project 11
+### Project 11
 
 Energy transfer using inductors.
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 Now overlay your measured waveform parameters against the simulated predictions.
 
-## Enter Your Measured Values
+### Enter Your Measured Values
 
 ```matlab
 Vpeak = 10; f = 50; R = 1000;
@@ -920,7 +920,7 @@ ylabel('Ripple Voltage (V)'); grid on;
 title('Ripple Voltage \mdash Simulation vs Measurement');
 ```
 
-## Reflection
+### Reflection
 
 - Does increasing capacitance from 100µF to 470µF reduce ripple by the ratio you expected (470/100 ≈ 4.7×)?
 - The bridge rectifier uses two diodes in series per half-cycle. How does this affect the measured average voltage compared to the simulation which assumed ideal diodes?
@@ -928,43 +928,43 @@ title('Ripple Voltage \mdash Simulation vs Measurement');
 
 ---
 
-# Engineering Applications
+## Engineering Applications
 
 Rectifiers are used in:
 
-## Power Supplies
+### Power Supplies
 
 AC-to-DC conversion.
 
 ---
 
-## Battery Chargers
+### Battery Chargers
 
 Charging DC batteries.
 
 ---
 
-## Industrial Drives
+### Industrial Drives
 
 Generating DC bus voltage.
 
 ---
 
-## Renewable Energy Systems
+### Renewable Energy Systems
 
 Power conversion stages.
 
 ---
 
-## Consumer Electronics
+### Consumer Electronics
 
 Phone chargers and adapters.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 What is rectification?
 
@@ -976,7 +976,7 @@ ____________________
 
 ---
 
-## Question 2
+### Question 2
 
 What does a diode do?
 
@@ -988,7 +988,7 @@ ____________________
 
 ---
 
-## Question 3
+### Question 3
 
 Why is a bridge rectifier better than a half-wave rectifier?
 
@@ -1000,7 +1000,7 @@ ____________________
 
 ---
 
-## Question 4
+### Question 4
 
 What is ripple voltage?
 
@@ -1012,7 +1012,7 @@ ____________________
 
 ---
 
-## Question 5
+### Question 5
 
 Why is a smoothing capacitor used?
 
@@ -1024,7 +1024,7 @@ ____________________
 
 ---
 
-## Question 6
+### Question 6
 
 A full-wave rectifier with a 100µF capacitor produces 2V of ripple at 50Hz with a 1kΩ load. Estimate the ripple if the capacitor is replaced with 470µF, using the approximation V_ripple ≈ I_load / (f_ripple × C). Show your working.
 
@@ -1036,9 +1036,9 @@ ____________________
 
 ---
 
-# Common Mistakes
+## Common Mistakes
 
-## No Output Voltage
+### No Output Voltage
 
 Check:
 
@@ -1048,7 +1048,7 @@ Check:
 
 ---
 
-## Excessive Ripple
+### Excessive Ripple
 
 Check:
 
@@ -1058,7 +1058,7 @@ Check:
 
 ---
 
-## Incorrect Waveform
+### Incorrect Waveform
 
 Check:
 
@@ -1068,7 +1068,7 @@ Check:
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ AC source connected
 
@@ -1086,7 +1086,7 @@ Check:
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 
@@ -1116,7 +1116,7 @@ which is the first stage of many practical power electronic systems.
 
 ---
 
-# Next Project
+## Next Project
 
 **13_DC_AC_Inverters.md**
 

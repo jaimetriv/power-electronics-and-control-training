@@ -1,6 +1,6 @@
 # Project 5 - PWM Motor Control and First-Order System Dynamics
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -13,7 +13,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -41,7 +41,7 @@ The motor will become our first real-world dynamic plant.
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -61,9 +61,9 @@ At the end of this project you should be able to:
 
 ---
 
-# Theory
+## Theory
 
-## What Is a DC Motor?
+### What Is a DC Motor?
 
 A DC motor converts:
 
@@ -86,7 +86,7 @@ When voltage is applied:
 
 ---
 
-# Simplified Motor Model
+## Simplified Motor Model
 
 ```text
 Voltage
@@ -103,7 +103,7 @@ Speed
 
 ---
 
-# Why Doesn't a Motor Reach Full Speed Instantly?
+## Why Doesn't a Motor Reach Full Speed Instantly?
 
 Motors have:
 
@@ -135,7 +135,7 @@ Instead speed rises gradually.
 
 ---
 
-# Example Motor Response
+## Example Motor Response
 
 ```text
 Speed
@@ -153,7 +153,7 @@ Notice how the response resembles the RC charging curve from Project 2.
 
 ---
 
-# First-Order Motor Model
+## First-Order Motor Model
 
 A DC motor can often be approximated by:
 
@@ -170,7 +170,7 @@ This is exactly the same form as the RC circuit studied previously.
 
 ---
 
-# PWM Motor Control
+## PWM Motor Control
 
 PWM controls the average voltage applied to the motor.
 
@@ -187,7 +187,7 @@ Where:
 
 ---
 
-# Example
+## Example
 
 Given:
 
@@ -211,7 +211,7 @@ The motor receives less average voltage and therefore rotates more slowly.
 
 ---
 
-# Why Use PWM Instead of a Resistor?
+## Why Use PWM Instead of a Resistor?
 
 Resistor control wastes energy.
 
@@ -233,11 +233,11 @@ which minimises power loss.
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before building the circuit, simulate the motor's first-order step response and PWM voltage to predict what you will observe.
 
-## First-Order Step Response — Effect of Time Constant
+### First-Order Step Response — Effect of Time Constant
 
 ```matlab
 K      = 1;
@@ -259,7 +259,7 @@ title('First-Order Motor Model \mdash Step Response');
 legend('Location', 'southeast');
 ```
 
-## PWM Average Voltage — Operating Points
+### PWM Average Voltage — Operating Points
 
 ```matlab
 D    = 0:0.01:1;
@@ -277,7 +277,7 @@ title('Motor Voltage vs Duty Cycle');
 legend('Theory', 'Experiment points', 'Location', 'northwest');
 ```
 
-## Prediction Table
+### Prediction Table
 
 Before running Experiment 4, estimate the motor time constant by looking at the simulation:
 
@@ -289,9 +289,9 @@ Before running Experiment 4, estimate the motor time constant by looking at the 
 
 ---
 
-# Required Components
+## Required Components
 
-## Hardware
+### Hardware
 
 - Arduino Uno
 - Breadboard
@@ -301,13 +301,13 @@ Before running Experiment 4, estimate the motor time constant by looking at the 
 - Flyback Diode (1N4001-1N4007)
 - External Battery Pack
 
-## Equipment
+### Equipment
 
 - DSO Nano Oscilloscope
 
 ---
 
-# Important Safety Note
+## Important Safety Note
 
 Never connect a motor directly to an Arduino output pin.
 
@@ -321,7 +321,7 @@ MOSFET Driver Circuit
 
 ---
 
-# Why Is a Flyback Diode Needed?
+## Why Is a Flyback Diode Needed?
 
 Motors are inductive loads.
 
@@ -335,7 +335,7 @@ The flyback diode protects:
 
 ---
 
-# Motor Driver Circuit
+## Motor Driver Circuit
 
 ```mermaid
 graph TD
@@ -361,7 +361,7 @@ H[Flyback Diode]
 
 ---
 
-# Simplified Wiring Diagram
+## Simplified Wiring Diagram
 
 ```text
 Battery +
@@ -389,15 +389,15 @@ Flyback Diode Across Motor
 
 ---
 
-# Experiment 1 - Full-Speed Motor Control
+## Experiment 1 - Full-Speed Motor Control
 
-## Objective
+### Objective
 
 Turn the motor fully ON and OFF.
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 void setup()
@@ -419,7 +419,7 @@ void loop()
 
 ---
 
-# Observation
+## Observation
 
 Notice:
 
@@ -434,7 +434,7 @@ The response is not instantaneous.
 
 ---
 
-# Questions
+## Questions
 
 Why does speed increase slowly?
 
@@ -452,15 +452,15 @@ ________________________________
 
 ---
 
-# Experiment 2 - PWM Speed Control
+## Experiment 2 - PWM Speed Control
 
-## Objective
+### Objective
 
 Control motor speed using PWM.
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 void setup()
@@ -476,13 +476,13 @@ void loop()
 
 ---
 
-# Expected Result
+## Expected Result
 
 The motor should rotate at a lower speed than full power.
 
 ---
 
-# DSO Nano Measurement
+## DSO Nano Measurement
 
 Probe Location:
 
@@ -498,7 +498,7 @@ Circuit Ground
 
 ---
 
-# DSO Nano Settings
+## DSO Nano Settings
 
 Vertical:
 
@@ -520,7 +520,7 @@ Rising Edge
 
 ---
 
-# Expected Waveform
+## Expected Waveform
 
 ```text
 5V ─────      ─────
@@ -531,7 +531,7 @@ Rising Edge
 
 ---
 
-# Measurements
+## Measurements
 
 | Measurement | Expected |
 |------------|----------|
@@ -541,15 +541,15 @@ Rising Edge
 
 ---
 
-# Experiment 3 - Speed Versus Duty Cycle
+## Experiment 3 - Speed Versus Duty Cycle
 
-## Objective
+### Objective
 
 Investigate the relationship between PWM and motor speed.
 
 ---
 
-# Test 1
+## Test 1
 
 ```cpp
 analogWrite(9,64);
@@ -569,7 +569,7 @@ Low
 
 ---
 
-# Test 2
+## Test 2
 
 ```cpp
 analogWrite(9,128);
@@ -589,7 +589,7 @@ Medium
 
 ---
 
-# Test 3
+## Test 3
 
 ```cpp
 analogWrite(9,192);
@@ -609,7 +609,7 @@ High
 
 ---
 
-# Test 4
+## Test 4
 
 ```cpp
 analogWrite(9,255);
@@ -629,7 +629,7 @@ Maximum
 
 ---
 
-# Results Table
+## Results Table
 
 | PWM Value | Duty Cycle | Relative Speed |
 |------------|------------|----------------|
@@ -640,9 +640,9 @@ Maximum
 
 ---
 
-# Experiment 4 - Motor Step Response
+## Experiment 4 - Motor Step Response
 
-## Objective
+### Objective
 
 Observe motor dynamics.
 
@@ -654,7 +654,7 @@ Control Theory
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 void setup()
@@ -676,7 +676,7 @@ void loop()
 
 ---
 
-# Observation
+## Observation
 
 The motor speed should respond like:
 
@@ -694,7 +694,7 @@ Speed
 
 ---
 
-# Why?
+## Why?
 
 The motor possesses:
 
@@ -706,7 +706,7 @@ These create a first-order response.
 
 ---
 
-# Estimating A Time Constant
+## Estimating A Time Constant
 
 Observe:
 
@@ -732,9 +732,9 @@ the motor time constant.
 
 ---
 
-# First-Order Comparison
+## First-Order Comparison
 
-## RC Circuit
+### RC Circuit
 
 $$
 \tau = RC
@@ -742,7 +742,7 @@ $$
 
 ---
 
-## Motor System
+### Motor System
 
 Motor time constant:
 
@@ -758,11 +758,11 @@ determined by:
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 Now fit your measured step response to the first-order model using the time constant you estimated in Experiment 4.
 
-## Enter Your Measured Time Constant
+### Enter Your Measured Time Constant
 
 ```matlab
 K            = 1;
@@ -797,7 +797,7 @@ title('First-Order Motor Model \mdash Measured \tau Fit');
 legend('Location', 'southeast');
 ```
 
-## Record Your Model Parameters
+### Record Your Model Parameters
 
 | Parameter | Value |
 |-----------|-------|
@@ -807,7 +807,7 @@ legend('Location', 'southeast');
 
 > Keep this table. Projects 6, 7 and 8 will use this motor model as the plant for P, PI and PID controller design.
 
-## Reflection
+### Reflection
 
 - Does the simulated curve match the shape you observed on the motor?
 - What physical factors determine the motor time constant?
@@ -815,43 +815,43 @@ legend('Location', 'southeast');
 
 ---
 
-# Engineering Applications
+## Engineering Applications
 
 PWM motor control is used in:
 
-## Electric Vehicles
+### Electric Vehicles
 
 Motor speed control.
 
 ---
 
-## Robotics
+### Robotics
 
 Wheel speed control.
 
 ---
 
-## Drones
+### Drones
 
 Propeller speed control.
 
 ---
 
-## Industrial Automation
+### Industrial Automation
 
 Conveyors and actuators.
 
 ---
 
-## CNC Machines
+### CNC Machines
 
 Position and speed control.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 Why can't a motor reach full speed instantly?
 
@@ -863,7 +863,7 @@ ________________________
 
 ---
 
-## Question 2
+### Question 2
 
 What controls motor speed in this experiment?
 
@@ -875,7 +875,7 @@ ________________________
 
 ---
 
-## Question 3
+### Question 3
 
 Why is a flyback diode required?
 
@@ -887,7 +887,7 @@ ________________________
 
 ---
 
-## Question 4
+### Question 4
 
 Why is a MOSFET used?
 
@@ -899,7 +899,7 @@ ________________________
 
 ---
 
-## Question 5
+### Question 5
 
 Why can a motor often be modelled as a first-order system?
 
@@ -911,7 +911,7 @@ ________________________
 
 ---
 
-## Question 6
+### Question 6
 
 You estimated τ = 0.5s from the step response. How would you verify this estimate, and why does an accurate τ matter for designing the controller in Project 6?
 
@@ -923,9 +923,9 @@ ________________________
 
 ---
 
-# Common Mistakes
+## Common Mistakes
 
-## Motor Doesn't Spin
+### Motor Doesn't Spin
 
 Check:
 
@@ -935,7 +935,7 @@ Check:
 
 ---
 
-## Arduino Resets
+### Arduino Resets
 
 Check:
 
@@ -944,7 +944,7 @@ Check:
 
 ---
 
-## MOSFET Gets Hot
+### MOSFET Gets Hot
 
 Check:
 
@@ -954,7 +954,7 @@ Check:
 
 ---
 
-## PWM Not Visible
+### PWM Not Visible
 
 Check:
 
@@ -964,7 +964,7 @@ Check:
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ Flyback diode installed
 
@@ -980,7 +980,7 @@ Check:
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 
@@ -1012,7 +1012,7 @@ and begin building true control systems.
 
 ---
 
-# Next Project
+## Next Project
 
 **06_P_Controller.md**
 

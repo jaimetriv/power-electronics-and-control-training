@@ -1,6 +1,6 @@
 # Project 2 - RC Circuits and Time Constants
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -10,7 +10,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -34,7 +34,7 @@ Many real-world systems behave similarly:
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -56,9 +56,9 @@ At the end of this project you should be able to:
 
 ---
 
-# Theory
+## Theory
 
-## What is a Capacitor?
+### What is a Capacitor?
 
 A capacitor stores energy in an electric field.
 
@@ -81,7 +81,7 @@ A capacitor:
 
 ---
 
-# Capacitor Energy
+## Capacitor Energy
 
 The energy stored in a capacitor is:
 
@@ -97,7 +97,7 @@ Where:
 
 ---
 
-# The RC Circuit
+## The RC Circuit
 
 An RC circuit contains:
 
@@ -130,7 +130,7 @@ the voltage across the capacitor.
 
 ---
 
-# Why Does the Capacitor Not Charge Instantly?
+## Why Does the Capacitor Not Charge Instantly?
 
 The resistor limits current.
 
@@ -140,7 +140,7 @@ The capacitor therefore follows a smooth curve rather than an immediate jump.
 
 ---
 
-# Capacitor Charging
+## Capacitor Charging
 
 When power is applied:
 
@@ -166,7 +166,7 @@ Where:
 
 ---
 
-# Capacitor Discharging
+## Capacitor Discharging
 
 When the supply is disconnected:
 
@@ -180,7 +180,7 @@ Where:
 
 ---
 
-# Time Constant
+## Time Constant
 
 The quantity:
 
@@ -196,7 +196,7 @@ This is one of the most important equations in electronics and control engineeri
 
 ---
 
-# Physical Meaning of Time Constant
+## Physical Meaning of Time Constant
 
 After:
 
@@ -214,7 +214,7 @@ of its final value.
 
 ---
 
-# Charging Table
+## Charging Table
 
 | Time | Charge Level |
 |--------|--------------|
@@ -234,11 +234,11 @@ the capacitor is considered fully charged.
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before building the circuit, simulate the charging and discharging curves to predict what you will observe on the oscilloscope.
 
-## Simulate Charging and Discharging
+### Simulate Charging and Discharging
 
 ```matlab
 R = 10000;
@@ -273,7 +273,7 @@ title('RC Discharging — R=10k\Omega, C=100\muF');
 ylim([0 5.5]);
 ```
 
-## Simulate All Component Combinations
+### Simulate All Component Combinations
 
 Compare how changing R and C affects the time constant:
 
@@ -300,7 +300,7 @@ title('RC Charging — Component Comparison');
 legend('Location','southeast');
 ```
 
-## Prediction Table
+### Prediction Table
 
 Record your predicted time constants before measuring:
 
@@ -312,7 +312,7 @@ Record your predicted time constants before measuring:
 
 ---
 
-# Components Required
+## Components Required
 
 From the SparkFun Inventor Kit:
 
@@ -328,7 +328,7 @@ Equipment:
 
 ---
 
-# Verify Component Values
+## Verify Component Values
 
 Before building the circuit:
 
@@ -346,7 +346,7 @@ Capacitor:
 
 ---
 
-# Capacitor Polarity
+## Capacitor Polarity
 
 Electrolytic capacitors are polarized.
 
@@ -368,7 +368,7 @@ Negative Lead -> GND
 
 ---
 
-# Calculate the Theoretical Time Constant
+## Calculate the Theoretical Time Constant
 
 Given:
 
@@ -410,7 +410,7 @@ $$
 
 ---
 
-# Prediction
+## Prediction
 
 After:
 
@@ -432,7 +432,7 @@ $$
 
 ---
 
-# Calculate Expected Voltage at One Time Constant
+## Calculate Expected Voltage at One Time Constant
 
 Calculate:
 
@@ -462,7 +462,7 @@ $$
 
 ---
 
-# Circuit
+## Circuit
 
 ```mermaid
 graph TD
@@ -479,7 +479,7 @@ D --> E[GND]
 
 ---
 
-# Oscilloscope Connections
+## Oscilloscope Connections
 
 Probe Tip:
 
@@ -495,7 +495,7 @@ GND
 
 ---
 
-# Physical Connection Diagram
+## Physical Connection Diagram
 
 ```text
 Arduino Pin 9
@@ -511,15 +511,15 @@ Arduino Pin 9
 
 ---
 
-# Experiment 1 - Observe Charging and Discharging
+## Experiment 1 - Observe Charging and Discharging
 
-## Objective
+### Objective
 
 Observe the capacitor charging and discharging.
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 void setup()
@@ -541,7 +541,7 @@ void loop()
 
 ---
 
-# What Does This Program Do?
+## What Does This Program Do?
 
 Pin 9 stays:
 
@@ -571,7 +571,7 @@ continuously.
 
 ---
 
-# DSO Nano Settings
+## DSO Nano Settings
 
 Vertical Scale:
 
@@ -593,7 +593,7 @@ Rising Edge
 
 ---
 
-# Expected Charging Curve
+## Expected Charging Curve
 
 You should observe something similar to:
 
@@ -614,7 +614,7 @@ Notice:
 
 ---
 
-# Expected Discharging Curve
+## Expected Discharging Curve
 
 ```text
 5V |
@@ -633,15 +633,15 @@ Notice:
 
 ---
 
-# Experiment 2 - Measure the Time Constant
+## Experiment 2 - Measure the Time Constant
 
-## Objective
+### Objective
 
 Verify the theoretical time constant.
 
 ---
 
-# Step 1
+## Step 1
 
 Locate:
 
@@ -653,13 +653,13 @@ on the charging curve.
 
 ---
 
-# Step 2
+## Step 2
 
 Measure the time required to reach this voltage.
 
 ---
 
-# Prediction
+## Prediction
 
 The measured time should be approximately:
 
@@ -669,7 +669,7 @@ $$
 
 ---
 
-# Results Table
+## Results Table
 
 | Parameter | Theory | Measurement |
 |------------|----------|-------------|
@@ -680,7 +680,7 @@ $$
 
 ---
 
-# Experiment 3 - Change the Capacitor
+## Experiment 3 - Change the Capacitor
 
 Replace:
 
@@ -696,7 +696,7 @@ with:
 
 ---
 
-# Calculate New Time Constant
+## Calculate New Time Constant
 
 Convert:
 
@@ -724,13 +724,13 @@ $$
 
 ---
 
-# Prediction
+## Prediction
 
 The charging curve should be much faster.
 
 ---
 
-# Results Table
+## Results Table
 
 | Capacitor | Time Constant |
 |------------|---------------|
@@ -739,7 +739,7 @@ The charging curve should be much faster.
 
 ---
 
-# Experiment 4 - Change the Resistor
+## Experiment 4 - Change the Resistor
 
 Replace:
 
@@ -761,7 +761,7 @@ Return capacitor to:
 
 ---
 
-# Calculate
+## Calculate
 
 $$
 \tau = RC
@@ -777,13 +777,13 @@ $$
 
 ---
 
-# Prediction
+## Prediction
 
 The capacitor should charge much faster.
 
 ---
 
-# Results Table
+## Results Table
 
 | Resistor | Time Constant |
 |-----------|--------------|
@@ -792,7 +792,7 @@ The capacitor should charge much faster.
 
 ---
 
-# Understanding First-Order Systems
+## Understanding First-Order Systems
 
 An RC circuit is called a:
 
@@ -821,11 +821,11 @@ We will revisit this equation many times throughout the course.
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 Now overlay your measured time constant against the theoretical curve.
 
-## Enter Your Measured Time Constant
+### Enter Your Measured Time Constant
 
 From Experiment 2, record the time at which Vc reached 3.16V:
 
@@ -852,7 +852,7 @@ title('RC Charging — Theory vs Measurement');
 legend('Location','southeast');
 ```
 
-## Reflection
+### Reflection
 
 - Does your measured τ match the theoretical value?
 - If not, what could explain the difference? (component tolerances, contact resistance, oscilloscope probe loading)
@@ -860,43 +860,43 @@ legend('Location','southeast');
 
 ---
 
-# Engineering Applications
+## Engineering Applications
 
 RC circuits are used in:
 
-## Filters
+### Filters
 
 Remove noise.
 
 ---
 
-## Sensors
+### Sensors
 
 Condition signals.
 
 ---
 
-## Timing Circuits
+### Timing Circuits
 
 Create delays.
 
 ---
 
-## Power Electronics
+### Power Electronics
 
 Reduce voltage ripple.
 
 ---
 
-## Control Systems
+### Control Systems
 
 Model first-order dynamics.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 What is a time constant?
 
@@ -908,7 +908,7 @@ ______________________
 
 ---
 
-## Question 2
+### Question 2
 
 What voltage should the capacitor reach after one time constant when charging to 5V?
 
@@ -920,7 +920,7 @@ ______________________
 
 ---
 
-## Question 3
+### Question 3
 
 What happens when capacitance increases?
 
@@ -932,7 +932,7 @@ ______________________
 
 ---
 
-## Question 4
+### Question 4
 
 What happens when resistance increases?
 
@@ -944,7 +944,7 @@ ______________________
 
 ---
 
-## Question 5
+### Question 5
 
 Why is an RC circuit considered a first-order system?
 
@@ -956,7 +956,7 @@ ______________________
 
 ---
 
-## Question 6
+### Question 6
 
 Your MATLAB simulation predicted τ = 1.0s but you measured τ = 1.15s. Name two physical reasons that could explain this discrepancy.
 
@@ -968,15 +968,15 @@ ______________________
 
 ---
 
-# Common Mistakes
+## Common Mistakes
 
-## Capacitor Connected Backwards
+### Capacitor Connected Backwards
 
 Check polarity carefully.
 
 ---
 
-## Flat Line On Oscilloscope
+### Flat Line On Oscilloscope
 
 Check:
 
@@ -986,7 +986,7 @@ Check:
 
 ---
 
-## Time Constant Not Matching
+### Time Constant Not Matching
 
 Check:
 
@@ -996,7 +996,7 @@ Check:
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ Capacitor polarity correct
 
@@ -1014,7 +1014,7 @@ Check:
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 
@@ -1046,7 +1046,7 @@ These concepts provide the foundation for:
 
 ---
 
-# Next Project
+## Next Project
 
 **03_RLC_Circuits.md**
 

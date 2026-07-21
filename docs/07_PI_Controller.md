@@ -1,6 +1,6 @@
 # Project 7 - PI Control and Eliminating Steady-State Error
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -15,7 +15,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -45,7 +45,7 @@ because it can eliminate steady-state error.
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -65,7 +65,7 @@ At the end of this project you should be able to:
 
 ---
 
-# Review of Proportional Control
+## Review of Proportional Control
 
 The proportional controller is:
 
@@ -81,7 +81,7 @@ Where:
 
 ---
 
-# The Limitation of P Control
+## The Limitation of P Control
 
 Suppose:
 
@@ -119,7 +119,7 @@ Steady-State Error
 
 ---
 
-# Why Does Steady-State Error Occur?
+## Why Does Steady-State Error Occur?
 
 As the error becomes smaller:
 
@@ -133,7 +133,7 @@ Eventually the correction is no longer large enough to eliminate the remaining e
 
 ---
 
-# Introducing Integral Action
+## Introducing Integral Action
 
 The solution is to accumulate error over time.
 
@@ -145,7 +145,7 @@ Integral Action
 
 ---
 
-# The Integral Term
+## The Integral Term
 
 The integral term is:
 
@@ -161,7 +161,7 @@ Total Accumulated Error
 
 ---
 
-# Understanding Accumulated Error
+## Understanding Accumulated Error
 
 Imagine an error of:
 
@@ -181,7 +181,7 @@ The controller therefore continues increasing its output.
 
 ---
 
-# Everyday Analogy
+## Everyday Analogy
 
 Imagine filling a bucket.
 
@@ -207,7 +207,7 @@ not just instantaneous error.
 
 ---
 
-# PI Controller Equation
+## PI Controller Equation
 
 A PI controller combines:
 
@@ -229,9 +229,9 @@ Where:
 
 ---
 
-# Effect of Each Term
+## Effect of Each Term
 
-## Proportional Term
+### Proportional Term
 
 Provides:
 
@@ -247,7 +247,7 @@ $$
 
 ---
 
-## Integral Term
+### Integral Term
 
 Provides:
 
@@ -263,7 +263,7 @@ $$
 
 ---
 
-# Why PI Controllers Work
+## Why PI Controllers Work
 
 Suppose a small error remains.
 
@@ -281,7 +281,7 @@ Eventually the controller produces enough output to eliminate the error complete
 
 ---
 
-# PI Controller Block Diagram
+## PI Controller Block Diagram
 
 ```mermaid
 graph LR
@@ -308,11 +308,11 @@ Y --> E
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before building the circuit, simulate the closed-loop PI response on the first-order motor model to predict how integral action eliminates steady-state error.
 
-## PI Closed-Loop Transfer Function
+### PI Closed-Loop Transfer Function
 
 The PI controller in the s-domain is:
 
@@ -326,7 +326,7 @@ $$
 G(s) = \frac{K}{\tau s + 1}
 $$
 
-## Effect of Ki — Fixed Kp
+### Effect of Ki — Fixed Kp
 
 ```matlab
 K   = 1;
@@ -354,7 +354,7 @@ title('PI Controller \mdash Effect of K_I (Motor Plant)');
 legend('Location', 'southeast');
 ```
 
-## P vs PI Comparison
+### P vs PI Comparison
 
 ```matlab
 K   = 1;
@@ -384,7 +384,7 @@ title('P vs PI \mdash Steady-State Error Elimination');
 legend('Location', 'southeast');
 ```
 
-## Prediction Table
+### Prediction Table
 
 | Kp | Ki | Predicted e\_{ss} | Expected overshoot? |
 |----|----|------------------|---------------------|
@@ -396,7 +396,7 @@ legend('Location', 'southeast');
 
 ---
 
-# Components Required
+## Components Required
 
 Same circuit as Project 6:
 
@@ -417,16 +417,16 @@ Equipment:
 
 ---
 
-# Experiment 1 - Build a Closed-Loop PI Motor Controller
+## Experiment 1 - Build a Closed-Loop PI Motor Controller
 
-## Objective
+### Objective
 
 Implement a PI controller with back-EMF feedback closing the loop on the motor.
 The potentiometer sets the speed reference. The back-EMF divider on A1 provides the feedback signal.
 
 ---
 
-# Circuit
+## Circuit
 
 Same as Project 6 — back-EMF divider already in place:
 
@@ -453,7 +453,7 @@ Potentiometer centre pin --- A0
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 float Kp = 0.5;
@@ -497,7 +497,7 @@ void loop()
 
 ---
 
-# What Is Happening?
+## What Is Happening?
 
 The potentiometer sets the reference $r$.
 
@@ -517,9 +517,9 @@ With the loop closed, the integral term drives the error toward zero — you sho
 
 ---
 
-# Experiment 2 - Effect of Integral Gain
+## Experiment 2 - Effect of Integral Gain
 
-## Objective
+### Objective
 
 Observe the effect of changing:
 
@@ -529,7 +529,7 @@ $$
 
 ---
 
-## Test A
+### Test A
 
 ```cpp
 Ki = 0;
@@ -549,7 +549,7 @@ _______________________
 
 ---
 
-## Test B
+### Test B
 
 ```cpp
 Ki = 0.01;
@@ -563,7 +563,7 @@ _______________________
 
 ---
 
-## Test C
+### Test C
 
 ```cpp
 Ki = 0.05;
@@ -577,7 +577,7 @@ _______________________
 
 ---
 
-## Test D
+### Test D
 
 ```cpp
 Ki = 0.1;
@@ -591,7 +591,7 @@ _______________________
 
 ---
 
-# Results Table
+## Results Table
 
 | Ki | Behaviour |
 |----|-----------|
@@ -602,7 +602,7 @@ _______________________
 
 ---
 
-# Experiment 3 - Effect of Proportional Gain
+## Experiment 3 - Effect of Proportional Gain
 
 Keep:
 
@@ -618,7 +618,7 @@ Kp
 
 ---
 
-## Test A
+### Test A
 
 ```cpp
 Kp = 0.1;
@@ -626,7 +626,7 @@ Kp = 0.1;
 
 ---
 
-## Test B
+### Test B
 
 ```cpp
 Kp = 0.5;
@@ -634,7 +634,7 @@ Kp = 0.5;
 
 ---
 
-## Test C
+### Test C
 
 ```cpp
 Kp = 1.0;
@@ -642,7 +642,7 @@ Kp = 1.0;
 
 ---
 
-# Results Table
+## Results Table
 
 | Kp | Behaviour |
 |----|-----------|
@@ -652,7 +652,7 @@ Kp = 1.0;
 
 ---
 
-# Understanding Integral Windup
+## Understanding Integral Windup
 
 One common problem is:
 
@@ -662,7 +662,7 @@ Integral Windup
 
 ---
 
-# What Is Windup?
+## What Is Windup?
 
 Suppose:
 
@@ -684,7 +684,7 @@ Result:
 
 ---
 
-# Example
+## Example
 
 The integral term keeps growing:
 
@@ -698,7 +698,7 @@ The stored integral value becomes excessive.
 
 ---
 
-# Anti-Windup
+## Anti-Windup
 
 A simple solution is to limit the integral value.
 
@@ -716,13 +716,13 @@ Anti-Windup
 
 ---
 
-# DSO Nano Exercise
+## DSO Nano Exercise
 
 Observe the controller PWM output.
 
 ---
 
-# Probe Location
+## Probe Location
 
 Probe Tip:
 
@@ -738,7 +738,7 @@ GND
 
 ---
 
-# DSO Nano Settings
+## DSO Nano Settings
 
 Vertical:
 
@@ -760,7 +760,7 @@ Rising Edge
 
 ---
 
-# Observation
+## Observation
 
 As:
 
@@ -782,7 +782,7 @@ __________________________________
 
 ---
 
-# Comparing P and PI Control
+## Comparing P and PI Control
 
 | Property | P Controller | PI Controller |
 |-----------|-------------|--------------|
@@ -794,11 +794,11 @@ __________________________________
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 Now simulate the closed-loop PI response using your actual Kp and Ki values from Experiments 2 and 3, and compare P vs PI directly.
 
-## Enter Your Parameters
+### Enter Your Parameters
 
 ```matlab
 K   = 1;
@@ -834,7 +834,7 @@ fprintf('PI Settling time: %.2fs\n', info_PI.SettlingTime);
 fprintf('PI Overshoot:     %.1f%%\n', info_PI.Overshoot);
 ```
 
-## Reflection
+### Reflection
 
 - Does the PI simulation confirm zero steady-state error compared to P only?
 - At what Ki did overshoot first appear in your experiments?
@@ -843,43 +843,43 @@ fprintf('PI Overshoot:     %.1f%%\n', info_PI.Overshoot);
 
 ---
 
-# Engineering Applications
+## Engineering Applications
 
 PI controllers are widely used in:
 
-## Motor Speed Control
+### Motor Speed Control
 
 Industrial drives.
 
 ---
 
-## Power Supplies
+### Power Supplies
 
 Voltage regulation.
 
 ---
 
-## Buck Converters
+### Buck Converters
 
 Output voltage control.
 
 ---
 
-## Boost Converters
+### Boost Converters
 
 Feedback regulation.
 
 ---
 
-## Process Control
+### Process Control
 
 Flow, pressure and temperature control.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 What is steady-state error?
 
@@ -891,7 +891,7 @@ ____________________
 
 ---
 
-## Question 2
+### Question 2
 
 What does the integral term represent?
 
@@ -903,7 +903,7 @@ ____________________
 
 ---
 
-## Question 3
+### Question 3
 
 Write the PI controller equation.
 
@@ -915,7 +915,7 @@ ____________________
 
 ---
 
-## Question 4
+### Question 4
 
 Why does integral action eliminate steady-state error?
 
@@ -927,7 +927,7 @@ ____________________
 
 ---
 
-## Question 5
+### Question 5
 
 What is integral windup?
 
@@ -939,7 +939,7 @@ ____________________
 
 ---
 
-## Question 6
+### Question 6
 
 Your PI simulation shows overshoot at Ki = 5.0 but not at Ki = 1.0. Explain why increasing Ki too much causes overshoot, and how anti-windup helps.
 
@@ -951,9 +951,9 @@ ____________________
 
 ---
 
-# Common Mistakes
+## Common Mistakes
 
-## Motor Doesn't Respond
+### Motor Doesn't Respond
 
 Check:
 
@@ -964,7 +964,7 @@ Check:
 
 ---
 
-## Output Saturates Immediately
+### Output Saturates Immediately
 
 Check:
 
@@ -974,7 +974,7 @@ Check:
 
 ---
 
-## Oscillation Appears
+### Oscillation Appears
 
 Reduce:
 
@@ -990,7 +990,7 @@ Kp
 
 ---
 
-## Integral Grows Without Bound
+### Integral Grows Without Bound
 
 Check:
 
@@ -999,7 +999,7 @@ Check:
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ Motor circuit wired correctly (same as Project 6)
 
@@ -1021,7 +1021,7 @@ Check:
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 
@@ -1049,7 +1049,7 @@ PI controllers are among the most widely used controllers in engineering because
 
 ---
 
-# Next Project
+## Next Project
 
 **08_PID_Controller.md**
 

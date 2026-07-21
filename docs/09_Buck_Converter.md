@@ -1,6 +1,6 @@
 # Project 9 - Buck Converter Fundamentals
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -17,7 +17,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -43,7 +43,7 @@ and forms the foundation of modern power electronics.
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -65,7 +65,7 @@ At the end of this project you should be able to:
 
 ---
 
-# Introduction
+## Introduction
 
 A Buck Converter is a:
 
@@ -89,7 +89,7 @@ Unlike resistor-based voltage reduction, a Buck Converter can operate with very 
 
 ---
 
-# Why Not Use a Resistor?
+## Why Not Use a Resistor?
 
 Suppose we want:
 
@@ -109,7 +109,7 @@ As current increases, the power loss also increases.
 
 ---
 
-# Why Buck Converters Are Efficient
+## Why Buck Converters Are Efficient
 
 Buck Converters use:
 
@@ -139,7 +139,7 @@ which minimizes power loss.
 
 ---
 
-# Basic Buck Converter
+## Basic Buck Converter
 
 ```mermaid
 graph LR
@@ -158,7 +158,7 @@ C --> GND[Ground]
 
 ---
 
-# Main Components
+## Main Components
 
 A basic Buck Converter contains:
 
@@ -170,7 +170,7 @@ A basic Buck Converter contains:
 
 ---
 
-# Role of the MOSFET
+## Role of the MOSFET
 
 The MOSFET acts as a high-speed electronic switch.
 
@@ -186,7 +186,7 @@ from input to output.
 
 ---
 
-# Role of the Inductor
+## Role of the Inductor
 
 The inductor stores energy in a magnetic field.
 
@@ -202,7 +202,7 @@ This is one of the key principles behind Buck Converter operation.
 
 ---
 
-# Role of the Capacitor
+## Role of the Capacitor
 
 The capacitor smooths the output voltage.
 
@@ -216,7 +216,7 @@ The capacitor helps reduce output voltage ripple.
 
 ---
 
-# Role of the Diode
+## Role of the Diode
 
 When the MOSFET turns OFF:
 
@@ -234,7 +234,7 @@ Freewheel Path
 
 ---
 
-# Ideal Buck Converter Equation
+## Ideal Buck Converter Equation
 
 The ideal Buck Converter voltage relationship is:
 
@@ -250,7 +250,7 @@ Where:
 
 ---
 
-# Example 1
+## Example 1
 
 Given:
 
@@ -276,7 +276,7 @@ $$
 
 ---
 
-# Example 2
+## Example 2
 
 Given:
 
@@ -302,11 +302,11 @@ $$
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before building the circuit, simulate the ideal Buck Converter behaviour to predict what you will measure.
 
-## Vout vs Duty Cycle — 5V Supply
+### Vout vs Duty Cycle — 5V Supply
 
 ```matlab
 Vin = 5;                          % Arduino 5V supply
@@ -325,7 +325,7 @@ title('Ideal Buck Converter \mdash V_{IN} = 5V');
 legend('Ideal V_{OUT} = D \cdot V_{IN}', 'Experiment points', 'Location', 'northwest');
 ```
 
-## Simulate Inductor Current Waveform
+### Simulate Inductor Current Waveform
 
 The inductor current ramps up during MOSFET ON and ramps down during MOSFET OFF:
 
@@ -356,7 +356,7 @@ title(sprintf('Inductor Current Ripple \mdash D=%.0f%%, L=%d\muH, f_{sw}=%dHz', 
 yline(Iavg*1e3, 'r--', sprintf('I_{avg} = %.0f mA', Iavg*1e3));
 ```
 
-## Prediction Table
+### Prediction Table
 
 Record your predicted output voltages before measuring:
 
@@ -368,9 +368,9 @@ Record your predicted output voltages before measuring:
 
 ---
 
-# Components Required
+## Components Required
 
-## Additional Components
+### Additional Components
 
 Recommended:
 
@@ -381,7 +381,7 @@ Recommended:
 
 ---
 
-## Existing Equipment
+### Existing Equipment
 
 - Arduino Uno
 - Breadboard
@@ -390,7 +390,7 @@ Recommended:
 
 ---
 
-# Safety Notice
+## Safety Notice
 
 For this introductory project use:
 
@@ -408,7 +408,7 @@ This reduces the risk of component damage while learning.
 
 ---
 
-# Experimental Buck Converter
+## Experimental Buck Converter
 
 ```mermaid
 graph LR
@@ -432,9 +432,9 @@ D --> GND
 
 ---
 
-# Operating Principle
+## Operating Principle
 
-## MOSFET ON
+### MOSFET ON
 
 Current path:
 
@@ -452,7 +452,7 @@ The inductor stores energy.
 
 ---
 
-## MOSFET OFF
+### MOSFET OFF
 
 Current path:
 
@@ -468,15 +468,15 @@ Stored magnetic energy continues supplying current.
 
 ---
 
-# Experiment 1 - Generate the Switching Signal
+## Experiment 1 - Generate the Switching Signal
 
-## Objective
+### Objective
 
 Observe the PWM waveform driving the converter.
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 void setup()
@@ -492,7 +492,7 @@ void loop()
 
 ---
 
-# Oscilloscope Measurement
+## Oscilloscope Measurement
 
 Probe Tip:
 
@@ -508,7 +508,7 @@ Ground
 
 ---
 
-# DSO Nano Settings
+## DSO Nano Settings
 
 Vertical:
 
@@ -530,7 +530,7 @@ Rising Edge
 
 ---
 
-# Expected Waveform
+## Expected Waveform
 
 ```text
 5V ─────      ─────
@@ -541,7 +541,7 @@ Rising Edge
 
 ---
 
-# Measurements
+## Measurements
 
 | Parameter | Expected | Measured |
 |------------|-----------|-----------|
@@ -551,15 +551,15 @@ Rising Edge
 
 ---
 
-# Experiment 2 - Duty Cycle Versus Output Voltage
+## Experiment 2 - Duty Cycle Versus Output Voltage
 
-## Objective
+### Objective
 
 Observe how duty cycle changes output voltage.
 
 ---
 
-# Test A
+## Test A
 
 Upload:
 
@@ -581,7 +581,7 @@ Output Voltage = __________
 
 ---
 
-# Test B
+## Test B
 
 Upload:
 
@@ -603,7 +603,7 @@ Output Voltage = __________
 
 ---
 
-# Test C
+## Test C
 
 Upload:
 
@@ -625,7 +625,7 @@ Output Voltage = __________
 
 ---
 
-# Results Table
+## Results Table
 
 | PWM Value | Duty Cycle | Output Voltage |
 |------------|------------|---------------|
@@ -635,15 +635,15 @@ Output Voltage = __________
 
 ---
 
-# Experiment 3 - Observe Output Ripple
+## Experiment 3 - Observe Output Ripple
 
-## Objective
+### Objective
 
 Measure output voltage ripple.
 
 ---
 
-# Probe Location
+## Probe Location
 
 Probe Tip:
 
@@ -659,7 +659,7 @@ Ground
 
 ---
 
-# DSO Nano Settings
+## DSO Nano Settings
 
 Vertical:
 
@@ -681,7 +681,7 @@ Rising Edge
 
 ---
 
-# Expected Observation
+## Expected Observation
 
 The output should not be perfectly DC.
 
@@ -698,7 +698,7 @@ The ripple should be relatively small compared to the average output voltage.
 
 ---
 
-# Why Does Ripple Occur?
+## Why Does Ripple Occur?
 
 The capacitor is repeatedly:
 
@@ -724,7 +724,7 @@ appear at the output.
 
 ---
 
-# How Can Ripple Be Reduced?
+## How Can Ripple Be Reduced?
 
 Ripple can generally be reduced by:
 
@@ -735,43 +735,43 @@ Ripple can generally be reduced by:
 
 ---
 
-# Relationship to Previous Projects
+## Relationship to Previous Projects
 
-## Project 1
+### Project 1
 
 PWM controls duty cycle.
 
 ---
 
-## Project 2
+### Project 2
 
 Capacitors store energy and smooth voltage.
 
 ---
 
-## Project 3
+### Project 3
 
 Inductors store energy and resist sudden current changes.
 
 ---
 
-## Project 4
+### Project 4
 
 MOSFETs switch efficiently.
 
 ---
 
-## Projects 6 to 8
+### Projects 6 to 8
 
 Controllers can later regulate the output automatically.
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 Now overlay your measured output voltages against the ideal theory line to quantify converter losses.
 
-## Enter Your Measured Values
+### Enter Your Measured Values
 
 ```matlab
 Vin = 5;
@@ -799,7 +799,7 @@ for i = 1:3
 end
 ```
 
-## Reflection
+### Reflection
 
 - Is the measured Vout lower than the ideal prediction? Why? (MOSFET Vds(on), diode forward voltage drop, inductor DCR)
 - Is the voltage drop consistent across all three duty cycles, or does it change?
@@ -807,43 +807,43 @@ end
 
 ---
 
-# Engineering Applications
+## Engineering Applications
 
 Buck Converters are found in:
 
-## Laptop Power Systems
+### Laptop Power Systems
 
 Voltage regulation.
 
 ---
 
-## Mobile Devices
+### Mobile Devices
 
 Internal power conversion.
 
 ---
 
-## Automotive Electronics
+### Automotive Electronics
 
 Battery voltage conversion.
 
 ---
 
-## Robotics
+### Robotics
 
 Efficient motor and logic power supplies.
 
 ---
 
-## Industrial Equipment
+### Industrial Equipment
 
 DC power regulation.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 Write the ideal Buck Converter equation.
 
@@ -855,7 +855,7 @@ ____________________
 
 ---
 
-## Question 2
+### Question 2
 
 What is the role of the inductor?
 
@@ -867,7 +867,7 @@ ____________________
 
 ---
 
-## Question 3
+### Question 3
 
 What is the role of the capacitor?
 
@@ -879,7 +879,7 @@ ____________________
 
 ---
 
-## Question 4
+### Question 4
 
 Why are Buck Converters efficient?
 
@@ -891,7 +891,7 @@ ____________________
 
 ---
 
-## Question 5
+### Question 5
 
 What causes output ripple?
 
@@ -903,7 +903,7 @@ ____________________
 
 ---
 
-## Question 6
+### Question 6
 
 Your simulation predicted Vout = 2.5V at 50% duty cycle but you measured 2.1V. The MOSFET has Vds(on) = 0.1V and the 1N5819 has a forward voltage of 0.3V. Show how these account for the 0.4V discrepancy.
 
@@ -915,9 +915,9 @@ ____________________
 
 ---
 
-# Common Mistakes
+## Common Mistakes
 
-## No Output Voltage
+### No Output Voltage
 
 Check:
 
@@ -928,7 +928,7 @@ Check:
 
 ---
 
-## Excessive Ripple
+### Excessive Ripple
 
 Check:
 
@@ -938,7 +938,7 @@ Check:
 
 ---
 
-## No PWM Signal
+### No PWM Signal
 
 Check:
 
@@ -949,7 +949,7 @@ Check:
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ PWM present at MOSFET gate
 
@@ -967,7 +967,7 @@ Check:
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 
@@ -991,7 +991,7 @@ This project combines many concepts introduced throughout the earlier projects a
 
 ---
 
-# Next Project
+## Next Project
 
 **10_Closed_Loop_Buck.md**
 

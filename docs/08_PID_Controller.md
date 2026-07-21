@@ -1,6 +1,6 @@
 # Project 8 - PID Control, Damping and Stability
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -16,7 +16,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -45,7 +45,7 @@ because they provide:
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -65,9 +65,9 @@ At the end of this project you should be able to:
 
 ---
 
-# Review of Previous Controllers
+## Review of Previous Controllers
 
-## Proportional Controller
+### Proportional Controller
 
 $$
 u(t)=K_Pe(t)
@@ -77,7 +77,7 @@ Provides immediate response.
 
 ---
 
-## PI Controller
+### PI Controller
 
 $$
 u(t)=K_Pe(t)+K_I\int e(t)\,dt
@@ -94,7 +94,7 @@ Limitation:
 
 ---
 
-# Why Do We Need Derivative Action?
+## Why Do We Need Derivative Action?
 
 Consider the following response:
 
@@ -120,7 +120,7 @@ Overshoot
 
 ---
 
-# Overshoot
+## Overshoot
 
 Overshoot occurs when the controller reacts too aggressively.
 
@@ -143,7 +143,7 @@ Long settling time
 
 ---
 
-# Derivative Action
+## Derivative Action
 
 Derivative action predicts future behaviour.
 
@@ -157,7 +157,7 @@ rather than simply how large the error is.
 
 ---
 
-# Derivative Term
+## Derivative Term
 
 The derivative term is:
 
@@ -177,7 +177,7 @@ Rate of Change of Error
 
 ---
 
-# Intuition
+## Intuition
 
 If the error is changing very rapidly:
 
@@ -189,7 +189,7 @@ The controller applies a braking effect.
 
 ---
 
-# Vehicle Analogy
+## Vehicle Analogy
 
 Imagine driving toward a red traffic light.
 
@@ -209,7 +209,7 @@ The derivative term anticipates future behaviour.
 
 ---
 
-# PID Controller Equation
+## PID Controller Equation
 
 A PID controller combines:
 
@@ -238,9 +238,9 @@ Where:
 
 ---
 
-# What Each Term Does
+## What Each Term Does
 
-## Proportional Action
+### Proportional Action
 
 $$
 K_Pe(t)
@@ -254,7 +254,7 @@ Immediate Correction
 
 ---
 
-## Integral Action
+### Integral Action
 
 $$
 K_I\int e(t)\,dt
@@ -270,7 +270,7 @@ Eliminates steady-state error.
 
 ---
 
-## Derivative Action
+### Derivative Action
 
 $$
 K_D\frac{de(t)}{dt}
@@ -286,7 +286,7 @@ Reduces overshoot.
 
 ---
 
-# Summary Table
+## Summary Table
 
 | Term | Purpose |
 |--------|---------|
@@ -296,11 +296,11 @@ Reduces overshoot.
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before building the circuit, simulate the closed-loop PID response on the motor plant to predict how derivative action reduces overshoot.
 
-## PID Transfer Function
+### PID Transfer Function
 
 The PID controller in the s-domain is:
 
@@ -308,7 +308,7 @@ $$
 C(s) = K_P + \frac{K_I}{s} + K_D s
 $$
 
-## Effect of Kd — Fixed Kp and Ki
+### Effect of Kd — Fixed Kp and Ki
 
 ```matlab
 K   = 1;
@@ -337,7 +337,7 @@ title('PID Controller \mdash Effect of K_D (Motor Plant)');
 legend('Location', 'northeast');
 ```
 
-## Simulate Experiment 3 Cases
+### Simulate Experiment 3 Cases
 
 ```matlab
 K   = 1;
@@ -372,7 +372,7 @@ title('PID \mdash Experiment 3 Cases');
 legend('Location', 'northeast');
 ```
 
-## Prediction Table
+### Prediction Table
 
 | Case | Kp | Ki | Kd | Predicted overshoot | Predicted settling time |
 |------|----|----|----|--------------------|-----------------------|
@@ -382,7 +382,7 @@ legend('Location', 'northeast');
 
 ---
 
-# Components Required
+## Components Required
 
 Same circuit as Projects 6 and 7:
 
@@ -402,9 +402,9 @@ Equipment:
 
 ---
 
-# Experiment 1 - Implement a PID Motor Controller
+## Experiment 1 - Implement a PID Motor Controller
 
-## Objective
+### Objective
 
 Implement a full PID controller driving the motor via MOSFET.
 The potentiometer sets the speed reference.
@@ -413,7 +413,7 @@ The potentiometer sets the speed reference.
 
 ---
 
-# Circuit
+## Circuit
 
 Same as Projects 6 and 7:
 
@@ -434,7 +434,7 @@ Potentiometer centre pin --- A0
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 float Kp = 0.5;
@@ -480,7 +480,7 @@ void loop()
 
 ---
 
-# Understanding the Code
+## Understanding the Code
 
 Proportional Term:
 
@@ -512,15 +512,15 @@ Provides damping.
 
 ---
 
-# Experiment 2 - Effect of Derivative Gain
+## Experiment 2 - Effect of Derivative Gain
 
-## Objective
+### Objective
 
 Observe how changing Kd affects behaviour.
 
 ---
 
-## Test A
+### Test A
 
 ```cpp
 Kd = 0;
@@ -540,7 +540,7 @@ ______________________
 
 ---
 
-## Test B
+### Test B
 
 ```cpp
 Kd = 0.02;
@@ -554,7 +554,7 @@ ______________________
 
 ---
 
-## Test C
+### Test C
 
 ```cpp
 Kd = 0.10;
@@ -568,7 +568,7 @@ ______________________
 
 ---
 
-## Test D
+### Test D
 
 ```cpp
 Kd = 0.50;
@@ -582,7 +582,7 @@ ______________________
 
 ---
 
-# Results Table
+## Results Table
 
 | Kd | Behaviour |
 |----|-----------|
@@ -593,7 +593,7 @@ ______________________
 
 ---
 
-# Understanding Damping
+## Understanding Damping
 
 In Project 3 we studied:
 
@@ -628,15 +628,15 @@ and improves:
 
 ---
 
-# Experiment 3 - Controller Tuning
+## Experiment 3 - Controller Tuning
 
-## Objective
+### Objective
 
 Investigate the effects of all three gains.
 
 ---
 
-# Case 1
+## Case 1
 
 Large Kp
 
@@ -660,7 +660,7 @@ Overshoot
 
 ---
 
-# Case 2
+## Case 2
 
 Large Ki
 
@@ -684,7 +684,7 @@ Oscillation
 
 ---
 
-# Case 3
+## Case 3
 
 Add Derivative
 
@@ -702,9 +702,9 @@ Improved Stability
 
 ---
 
-# Tuning Guidelines
+## Tuning Guidelines
 
-## If Response Is Too Slow
+### If Response Is Too Slow
 
 Increase:
 
@@ -714,7 +714,7 @@ $$
 
 ---
 
-## If Steady-State Error Exists
+### If Steady-State Error Exists
 
 Increase:
 
@@ -724,7 +724,7 @@ $$
 
 ---
 
-## If Overshoot Is Excessive
+### If Overshoot Is Excessive
 
 Increase:
 
@@ -734,13 +734,13 @@ $$
 
 ---
 
-# DSO Nano Exercise
+## DSO Nano Exercise
 
 Observe the PWM output.
 
 ---
 
-# Probe Connections
+## Probe Connections
 
 Probe Tip:
 
@@ -756,7 +756,7 @@ GND
 
 ---
 
-# DSO Nano Settings
+## DSO Nano Settings
 
 Vertical:
 
@@ -778,7 +778,7 @@ Rising Edge
 
 ---
 
-# Observation
+## Observation
 
 Adjust gains and observe changes in PWM duty cycle.
 
@@ -790,37 +790,37 @@ __________________________________
 
 ---
 
-# Controller Performance Metrics
+## Controller Performance Metrics
 
 When evaluating a controller we often examine:
 
 ---
 
-## Rise Time
+### Rise Time
 
 Time required to reach the target.
 
 ---
 
-## Overshoot
+### Overshoot
 
 Amount by which the output exceeds the target.
 
 ---
 
-## Settling Time
+### Settling Time
 
 Time required for oscillations to disappear.
 
 ---
 
-## Steady-State Error
+### Steady-State Error
 
 Remaining error after the system settles.
 
 ---
 
-# Desired Response
+## Desired Response
 
 A well-tuned PID controller typically produces:
 
@@ -845,11 +845,11 @@ Characteristics:
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 Now simulate the closed-loop PID response using your actual gains from Experiments 2 and 3, and compare P, PI and PID directly.
 
-## Enter Your Parameters
+### Enter Your Parameters
 
 ```matlab
 K   = 1;
@@ -893,7 +893,7 @@ for i = 1:3
 end
 ```
 
-## Reflection
+### Reflection
 
 - Does adding Kd reduce overshoot compared to PI alone?
 - Is there a Kd value beyond which the response gets worse? Why?
@@ -901,43 +901,43 @@ end
 
 ---
 
-# Typical Controller Applications
+## Typical Controller Applications
 
 PID controllers are widely used in:
 
-## Motor Control
+### Motor Control
 
 Speed and position control.
 
 ---
 
-## Robotics
+### Robotics
 
 Motion systems.
 
 ---
 
-## Process Control
+### Process Control
 
 Temperature, pressure and flow regulation.
 
 ---
 
-## Power Electronics
+### Power Electronics
 
 Converter regulation.
 
 ---
 
-## Industrial Automation
+### Industrial Automation
 
 Closed-loop control systems.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 What does derivative action measure?
 
@@ -949,7 +949,7 @@ ____________________
 
 ---
 
-## Question 2
+### Question 2
 
 Write the PID controller equation.
 
@@ -961,7 +961,7 @@ ____________________
 
 ---
 
-## Question 3
+### Question 3
 
 What does the integral term do?
 
@@ -973,7 +973,7 @@ ____________________
 
 ---
 
-## Question 4
+### Question 4
 
 What does the derivative term do?
 
@@ -985,7 +985,7 @@ ____________________
 
 ---
 
-## Question 5
+### Question 5
 
 Which gain is primarily used to reduce overshoot?
 
@@ -997,7 +997,7 @@ ____________________
 
 ---
 
-## Question 6
+### Question 6
 
 Your MATLAB comparison shows PID settling time is shorter than PI but overshoot is also lower. Explain in terms of the derivative term why this is possible — how can the controller be both faster and less oscillatory?
 
@@ -1009,9 +1009,9 @@ ____________________
 
 ---
 
-# Common Mistakes
+## Common Mistakes
 
-## Excessive Oscillation
+### Excessive Oscillation
 
 Reduce:
 
@@ -1024,13 +1024,13 @@ or increase:
 
 ---
 
-## Very Slow Response
+### Very Slow Response
 
 Increase Kp carefully.
 
 ---
 
-## Motor Doesn't Respond
+### Motor Doesn't Respond
 
 Check:
 
@@ -1041,7 +1041,7 @@ Check:
 
 ---
 
-## Controller Saturation
+### Controller Saturation
 
 Check:
 
@@ -1051,14 +1051,14 @@ Check:
 
 ---
 
-## Derivative Spike on Setpoint Change
+### Derivative Spike on Setpoint Change
 
 This is normal — the derivative term reacts to the sudden change in error.
 Reduce Kd or apply derivative on measurement only (advanced topic).
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ Motor circuit wired correctly (same as Projects 6 and 7)
 
@@ -1076,7 +1076,7 @@ Reduce Kd or apply derivative on measurement only (advanced topic).
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 
@@ -1100,7 +1100,7 @@ You now understand the most widely used controller in classical control engineer
 
 ---
 
-# Next Project
+## Next Project
 
 **09_Buck_Converter.md**
 

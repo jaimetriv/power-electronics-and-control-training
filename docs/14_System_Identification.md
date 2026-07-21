@@ -1,6 +1,6 @@
 # Project 14 - System Identification and Dynamic Modelling
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -23,7 +23,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -50,7 +50,7 @@ Control System Design
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -70,7 +70,7 @@ At the end of this project you should be able to:
 
 ---
 
-# Introduction
+## Introduction
 
 Control engineers rarely design controllers directly from hardware.
 
@@ -90,7 +90,7 @@ System Identification
 
 ---
 
-# Why Do We Need Models?
+## Why Do We Need Models?
 
 Models allow engineers to:
 
@@ -108,7 +108,7 @@ Controller Design Becomes Difficult
 
 ---
 
-# What Is a Dynamic System?
+## What Is a Dynamic System?
 
 A dynamic system changes over time.
 
@@ -122,7 +122,7 @@ Examples:
 
 ---
 
-# Input and Output
+## Input and Output
 
 A system receives:
 
@@ -148,7 +148,7 @@ PWM Duty Cycle
 
 ---
 
-# Black Box Representation
+## Black Box Representation
 
 ```mermaid
 graph LR
@@ -165,7 +165,7 @@ System identification attempts to determine how the system behaves.
 
 ---
 
-# What Is a Step Input?
+## What Is a Step Input?
 
 A step input changes suddenly.
 
@@ -183,13 +183,13 @@ or:
 
 ---
 
-# Why Use a Step Input?
+## Why Use a Step Input?
 
 Step responses are easy to generate and contain valuable information about system dynamics.
 
 ---
 
-# First-Order Systems
+## First-Order Systems
 
 Many engineering systems can be approximated as first-order systems.
 
@@ -201,7 +201,7 @@ Examples:
 
 ---
 
-# First-Order Transfer Function
+## First-Order Transfer Function
 
 A first-order transfer function is:
 
@@ -216,7 +216,7 @@ Where:
 
 ---
 
-# Time Constant
+## Time Constant
 
 The time constant describes how quickly a system responds.
 
@@ -234,7 +234,7 @@ Seconds
 
 ---
 
-# First-Order Step Response
+## First-Order Step Response
 
 A first-order system responds according to:
 
@@ -246,7 +246,7 @@ $$
 
 ---
 
-# Time Constant Rule
+## Time Constant Rule
 
 At:
 
@@ -264,7 +264,7 @@ of its final value.
 
 ---
 
-# Example
+## Example
 
 If the final value is:
 
@@ -286,7 +286,7 @@ $$
 
 ---
 
-# Typical First-Order Response
+## Typical First-Order Response
 
 ```text
 Output
@@ -304,7 +304,7 @@ Output
 
 ---
 
-# Reviewing RC Circuits
+## Reviewing RC Circuits
 
 Recall Project 2.
 
@@ -323,7 +323,7 @@ The RC circuit is a first-order system.
 
 ---
 
-# Second-Order Systems
+## Second-Order Systems
 
 Many systems exhibit oscillation.
 
@@ -336,7 +336,7 @@ Examples:
 
 ---
 
-# Second-Order Transfer Function
+## Second-Order Transfer Function
 
 A common form is:
 
@@ -354,13 +354,13 @@ Where:
 
 ---
 
-# Damping Ratio
+## Damping Ratio
 
 The damping ratio determines the response shape.
 
 ---
 
-## Underdamped
+### Underdamped
 
 ```text
 Oscillatory
@@ -368,7 +368,7 @@ Oscillatory
 
 ---
 
-## Critically Damped
+### Critically Damped
 
 ```text
 Fast Response
@@ -377,7 +377,7 @@ Without Oscillation
 
 ---
 
-## Overdamped
+### Overdamped
 
 ```text
 Slow Response
@@ -385,41 +385,41 @@ Slow Response
 
 ---
 
-# Step Response Characteristics
+## Step Response Characteristics
 
 Important measurements include:
 
 ---
 
-## Rise Time
+### Rise Time
 
 Time required to reach the target.
 
 ---
 
-## Overshoot
+### Overshoot
 
 Amount exceeding the target value.
 
 ---
 
-## Settling Time
+### Settling Time
 
 Time required to stabilize.
 
 ---
 
-## Steady-State Error
+### Steady-State Error
 
 Final difference between reference and output.
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before measuring, simulate first-order and second-order step responses across parameter ranges to build intuition for what you will observe.
 
-## First-Order: Effect of Time Constant
+### First-Order: Effect of Time Constant
 
 ```matlab
 tau_values = [0.2, 0.5, 1.0, 2.0];
@@ -439,7 +439,7 @@ title('First-Order Step Response \mdash Effect of \tau');
 legend('Location', 'southeast');
 ```
 
-## Second-Order: Effect of Damping Ratio
+### Second-Order: Effect of Damping Ratio
 
 ```matlab
 wn   = 5;    % natural frequency (rad/s)
@@ -461,7 +461,7 @@ title('Second-Order Step Response \mdash Effect of \zeta');
 legend('Location', 'southeast');
 ```
 
-## Curve Fitting Preview — How to Extract τ from Data
+### Curve Fitting Preview — How to Extract τ from Data
 
 This is the technique you will apply to your measurements:
 
@@ -492,7 +492,7 @@ fprintf('True:  K=%.2f  tau=%.2fs\n', K_true, tau_true);
 fprintf('Fitted: K=%.2f  tau=%.2fs\n', K_fit, tau_fit);
 ```
 
-## Prediction Table
+### Prediction Table
 
 | System | Expected τ | Expected K | Response type |
 |--------|-----------|-----------|---------------|
@@ -503,7 +503,7 @@ fprintf('Fitted: K=%.2f  tau=%.2fs\n', K_fit, tau_fit);
 
 ---
 
-# Components Required
+## Components Required
 
 - Arduino Uno
 - Breadboard
@@ -521,15 +521,15 @@ Optional (frequency response identification):
 
 ---
 
-# Experiment 1 - Identify an RC Circuit
+## Experiment 1 - Identify an RC Circuit
 
-## Objective
+### Objective
 
 Measure the time constant of an RC circuit.
 
 ---
 
-# Circuit
+## Circuit
 
 Use:
 
@@ -538,7 +538,7 @@ Use:
 
 ---
 
-# RC Time Constant
+## RC Time Constant
 
 Calculate:
 
@@ -560,7 +560,7 @@ $$
 
 ---
 
-# Arduino Step Input
+## Arduino Step Input
 
 ```cpp
 void setup()
@@ -581,7 +581,7 @@ void loop()
 
 ---
 
-# DSO Nano Connections
+## DSO Nano Connections
 
 Probe Tip:
 
@@ -597,7 +597,7 @@ GND
 
 ---
 
-# DSO Nano Settings
+## DSO Nano Settings
 
 Vertical:
 
@@ -619,7 +619,7 @@ Rising Edge
 
 ---
 
-# Measurement Procedure
+## Measurement Procedure
 
 1. Apply the step input.
 2. Observe the capacitor charging curve.
@@ -629,7 +629,7 @@ Rising Edge
 
 ---
 
-# Results Table
+## Results Table
 
 | Parameter | Value |
 |-----------|-------|
@@ -640,15 +640,15 @@ Rising Edge
 
 ---
 
-# Experiment 2 - Vary Component Values
+## Experiment 2 - Vary Component Values
 
-## Objective
+### Objective
 
 Observe how component values affect system dynamics.
 
 ---
 
-# Test A
+## Test A
 
 ```text
 10 kΩ
@@ -657,7 +657,7 @@ Observe how component values affect system dynamics.
 
 ---
 
-# Test B
+## Test B
 
 ```text
 10 kΩ
@@ -666,7 +666,7 @@ Observe how component values affect system dynamics.
 
 ---
 
-# Test C
+## Test C
 
 ```text
 22 kΩ
@@ -675,7 +675,7 @@ Observe how component values affect system dynamics.
 
 ---
 
-# Results Table
+## Results Table
 
 | Resistance | Capacitance | Time Constant |
 |------------|-------------|--------------|
@@ -685,15 +685,15 @@ Observe how component values affect system dynamics.
 
 ---
 
-# Experiment 3 - Identify Motor Dynamics
+## Experiment 3 - Identify Motor Dynamics
 
-## Objective
+### Objective
 
 Observe dynamic motor response.
 
 ---
 
-# Procedure
+## Procedure
 
 Apply a PWM step change:
 
@@ -709,7 +709,7 @@ Motor Response
 
 ---
 
-# Record
+## Record
 
 - Initial Speed
 - Final Speed
@@ -718,7 +718,7 @@ Motor Response
 
 ---
 
-# Model Validation
+## Model Validation
 
 Once a model is identified:
 
@@ -734,13 +734,13 @@ Measured Output
 
 ---
 
-# Why Validation Matters
+## Why Validation Matters
 
 A model is only useful if it accurately predicts real behaviour.
 
 ---
 
-# Identification Procedure Summary
+## Identification Procedure Summary
 
 ```text
 Apply Input
@@ -756,11 +756,11 @@ Refine Model
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 Now fit first-order models to your measured RC and motor step responses and validate them.
 
-## RC Circuit Model Fit
+### RC Circuit Model Fit
 
 ```matlab
 % Enter your measured RC step response
@@ -796,7 +796,7 @@ fprintf('Fitted      \\tau: %.3f s\n', tau_fit);
 fprintf('Error:            %.1f%%\n', 100*abs(tau_fit-tau_theory)/tau_theory);
 ```
 
-## Motor Step Response Model Fit
+### Motor Step Response Model Fit
 
 ```matlab
 % Enter your motor step response from Project 5 (or re-measure here)
@@ -827,7 +827,7 @@ fprintf('Motor model: G(s) = %.2f / (%.3f*s + 1)\n', K_m, tau_m);
 fprintf('Compare with Project 5 estimate: tau = ?\n');
 ```
 
-## Reflection
+### Reflection
 
 - How close is your fitted RC τ to the theoretical value RC = 1.0s? What causes the difference?
 - Does the motor step response fit well to a first-order model, or do you see a delay or second-order behaviour?
@@ -835,69 +835,69 @@ fprintf('Compare with Project 5 estimate: tau = ?\n');
 
 ---
 
-# Relationship to Previous Projects
+## Relationship to Previous Projects
 
-## Project 2
+### Project 2
 
 RC circuit dynamics.
 
 ---
 
-## Project 3
+### Project 3
 
 RLC circuit dynamics.
 
 ---
 
-## Projects 6 to 8
+### Projects 6 to 8
 
 Closed-loop controller behaviour.
 
 ---
 
-## Projects 9 to 13
+### Projects 9 to 13
 
 Power electronic system dynamics.
 
 ---
 
-# Engineering Applications
+## Engineering Applications
 
 System identification is used in:
 
-## Robotics
+### Robotics
 
 Motion control models.
 
 ---
 
-## Aerospace
+### Aerospace
 
 Aircraft modelling.
 
 ---
 
-## Automotive Systems
+### Automotive Systems
 
 Engine and vehicle dynamics.
 
 ---
 
-## Industrial Automation
+### Industrial Automation
 
 Process modelling.
 
 ---
 
-## Power Electronics
+### Power Electronics
 
 Converter modelling and control.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 What is system identification?
 
@@ -909,7 +909,7 @@ ____________________
 
 ---
 
-## Question 2
+### Question 2
 
 What is a time constant?
 
@@ -921,7 +921,7 @@ ____________________
 
 ---
 
-## Question 3
+### Question 3
 
 What percentage of the final value is reached after one time constant?
 
@@ -933,7 +933,7 @@ ____________________
 
 ---
 
-## Question 4
+### Question 4
 
 What is a step input?
 
@@ -945,7 +945,7 @@ ____________________
 
 ---
 
-## Question 5
+### Question 5
 
 Why is model validation important?
 
@@ -957,7 +957,7 @@ ____________________
 
 ---
 
-## Question 6
+### Question 6
 
 Your curve fit gives τ = 1.12s for the RC circuit but the theoretical value is 1.0s. Name two physical reasons that could explain this, and explain how you would use the fitted model (rather than the theoretical one) in controller design.
 
@@ -969,9 +969,9 @@ ____________________
 
 ---
 
-# Common Mistakes
+## Common Mistakes
 
-## Incorrect Time Constant
+### Incorrect Time Constant
 
 Check:
 
@@ -981,7 +981,7 @@ Check:
 
 ---
 
-## Poor Measurements
+### Poor Measurements
 
 Check:
 
@@ -991,7 +991,7 @@ Check:
 
 ---
 
-## Model Does Not Match Data
+### Model Does Not Match Data
 
 Check:
 
@@ -1001,7 +1001,7 @@ Check:
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ Step input applied correctly
 
@@ -1017,7 +1017,7 @@ Check:
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 
@@ -1041,7 +1041,7 @@ You now have the foundation required to move from measuring system behaviour to 
 
 ---
 
-# Next Project
+## Next Project
 
 **15_Controller_Design.md**
 

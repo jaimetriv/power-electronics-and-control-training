@@ -1,6 +1,6 @@
 # Project 13 - DC-AC Inverters and AC Generation
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -22,7 +22,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -47,7 +47,7 @@ DC → AC
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -69,7 +69,7 @@ At the end of this project you should be able to:
 
 ---
 
-# Introduction
+## Introduction
 
 An inverter converts:
 
@@ -97,7 +97,7 @@ The actual output voltage depends on the inverter design and transformer ratio.
 
 ---
 
-# Why Are Inverters Important?
+## Why Are Inverters Important?
 
 Many electrical energy sources naturally produce DC power:
 
@@ -124,41 +124,41 @@ DC Source
 
 ---
 
-# Applications
+## Applications
 
 Inverters are used in:
 
-## Solar Energy Systems
+### Solar Energy Systems
 
 Converting solar-generated DC into AC.
 
 ---
 
-## Uninterruptible Power Supplies
+### Uninterruptible Power Supplies
 
 Providing backup AC power.
 
 ---
 
-## Electric Vehicles
+### Electric Vehicles
 
 Driving AC traction motors.
 
 ---
 
-## Variable-Speed Drives
+### Variable-Speed Drives
 
 Controlling industrial motors.
 
 ---
 
-## Renewable Energy Systems
+### Renewable Energy Systems
 
 Grid-connected power conversion.
 
 ---
 
-# Review of AC Voltage
+## Review of AC Voltage
 
 AC voltage changes polarity over time.
 
@@ -178,7 +178,7 @@ To create AC from DC we must repeatedly reverse the voltage polarity applied to 
 
 ---
 
-# Basic Inverter Principle
+## Basic Inverter Principle
 
 Suppose a load is connected alternately to:
 
@@ -196,13 +196,13 @@ The voltage applied to the load changes polarity and an AC waveform is produced.
 
 ---
 
-# Square-Wave Inverter
+## Square-Wave Inverter
 
 The simplest inverter produces alternating positive and negative voltages.
 
 ---
 
-# Square-Wave Output
+## Square-Wave Output
 
 ```text
 +V  ________        ________
@@ -215,7 +215,7 @@ The polarity reverses periodically, creating AC.
 
 ---
 
-# Output Frequency
+## Output Frequency
 
 The switching frequency determines the output frequency.
 
@@ -233,7 +233,7 @@ or
 
 ---
 
-# What Is an H-Bridge?
+## What Is an H-Bridge?
 
 An H-Bridge is the most common inverter topology.
 
@@ -241,7 +241,7 @@ It uses four switches to reverse the voltage across a load.
 
 ---
 
-# Simplified H-Bridge
+## Simplified H-Bridge
 
 ```text
       +V
@@ -259,7 +259,7 @@ It uses four switches to reverse the voltage across a load.
 
 ---
 
-# Why Is It Called an H-Bridge?
+## Why Is It Called an H-Bridge?
 
 The arrangement resembles the letter:
 
@@ -269,7 +269,7 @@ H
 
 ---
 
-# State A
+## State A
 
 Switches ON:
 
@@ -287,7 +287,7 @@ Load voltage is positive.
 
 ---
 
-# State B
+## State B
 
 Switches ON:
 
@@ -305,13 +305,13 @@ Load voltage is negative.
 
 ---
 
-# AC Generation
+## AC Generation
 
 Alternating between State A and State B creates an AC output waveform.
 
 ---
 
-# Shoot-Through
+## Shoot-Through
 
 Never turn ON:
 
@@ -339,7 +339,7 @@ Shoot-Through
 
 ---
 
-# Dead Time
+## Dead Time
 
 Practical inverters introduce a small delay between switching transitions.
 
@@ -359,7 +359,7 @@ and protects the switching devices.
 
 ---
 
-# MOSFET-Based Inverters
+## MOSFET-Based Inverters
 
 Most modern inverters use:
 
@@ -385,7 +385,7 @@ Advantages:
 
 ---
 
-# PWM Inverters
+## PWM Inverters
 
 Modern inverters rarely use pure square waves.
 
@@ -397,7 +397,7 @@ Pulse Width Modulation
 
 ---
 
-# Why Use PWM?
+## Why Use PWM?
 
 PWM provides:
 
@@ -408,7 +408,7 @@ PWM provides:
 
 ---
 
-# PWM Inverter Concept
+## PWM Inverter Concept
 
 ```text
 High-Frequency PWM
@@ -420,7 +420,7 @@ High-Frequency PWM
 
 ---
 
-# Sinusoidal PWM (SPWM)
+## Sinusoidal PWM (SPWM)
 
 Most modern inverters use:
 
@@ -436,7 +436,7 @@ SPWM
 
 ---
 
-# How SPWM Works
+## How SPWM Works
 
 A sinewave reference is compared against a high-frequency carrier waveform.
 
@@ -446,7 +446,7 @@ The average voltage follows a sinusoidal shape.
 
 ---
 
-# Conceptual SPWM Pattern
+## Conceptual SPWM Pattern
 
 ```text
 | |
@@ -462,7 +462,7 @@ The pulse widths increase and then decrease.
 
 ---
 
-# Filtered Output
+## Filtered Output
 
 After passing through a filter:
 
@@ -476,9 +476,9 @@ Approximate Sine Wave
 
 ---
 
-# Inverter Types
+## Inverter Types
 
-## Square-Wave Inverter
+### Square-Wave Inverter
 
 Advantages:
 
@@ -492,7 +492,7 @@ Disadvantages:
 
 ---
 
-## PWM Inverter
+### PWM Inverter
 
 Advantages:
 
@@ -505,7 +505,7 @@ Disadvantages:
 
 ---
 
-## Pure Sine Wave Inverter
+### Pure Sine Wave Inverter
 
 Advantages:
 
@@ -518,11 +518,11 @@ Disadvantages:
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before building the circuit, simulate the three inverter waveform types and compare their harmonic content.
 
-## Square Wave, SPWM and Filtered Output
+### Square Wave, SPWM and Filtered Output
 
 ```matlab
 f_out = 50;           % output frequency (Hz)
@@ -559,7 +559,7 @@ xlabel('Time (ms)');
 sgtitle('Inverter Waveform Comparison');
 ```
 
-## Harmonic Spectrum — Square Wave vs Sine Wave
+### Harmonic Spectrum — Square Wave vs Sine Wave
 
 ```matlab
 fs = 1/1e-5;          % sample rate
@@ -583,7 +583,7 @@ title('Sine Wave \mdash Harmonic Spectrum');
 grid on; xlim([0 1000]);
 ```
 
-## Prediction Table
+### Prediction Table
 
 | Waveform | Fundamental (Hz) | Harmonic content | Suitable for sensitive loads? |
 |----------|-----------------|-----------------|------------------------------|
@@ -593,7 +593,7 @@ grid on; xlim([0 1000]);
 
 ---
 
-# Components Required
+## Components Required
 
 - Arduino Uno
 - Breadboard
@@ -609,7 +609,7 @@ Optional:
 
 ---
 
-# Safety Notice
+## Safety Notice
 
 This project uses:
 
@@ -621,15 +621,15 @@ Do not connect experimental circuits directly to mains wiring.
 
 ---
 
-# Experiment 1 - Generate a 50 Hz Square Wave
+## Experiment 1 - Generate a 50 Hz Square Wave
 
-## Objective
+### Objective
 
 Generate a low-frequency inverter waveform.
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 void setup()
@@ -651,7 +651,7 @@ void loop()
 
 ---
 
-# Frequency Calculation
+## Frequency Calculation
 
 The period is:
 
@@ -675,7 +675,7 @@ $$
 
 ---
 
-# Oscilloscope Connections
+## Oscilloscope Connections
 
 Probe Tip:
 
@@ -691,7 +691,7 @@ Arduino GND
 
 ---
 
-# DSO Nano Settings
+## DSO Nano Settings
 
 Vertical:
 
@@ -713,7 +713,7 @@ Rising Edge
 
 ---
 
-# Expected Waveform
+## Expected Waveform
 
 ```text
 5V  ________        ________
@@ -724,7 +724,7 @@ Rising Edge
 
 ---
 
-# Measurements
+## Measurements
 
 | Parameter | Expected | Measured |
 |-----------|----------|----------|
@@ -734,15 +734,15 @@ Rising Edge
 
 ---
 
-# Experiment 2 - Observe PWM Switching
+## Experiment 2 - Observe PWM Switching
 
-## Objective
+### Objective
 
 Observe high-frequency PWM operation.
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 void setup()
@@ -758,7 +758,7 @@ void loop()
 
 ---
 
-# Expected Observation
+## Expected Observation
 
 A PWM waveform should be visible on the oscilloscope.
 
@@ -770,9 +770,9 @@ Approximately 490 Hz
 
 ---
 
-# Experiment 3 - Duty Cycle Investigation
+## Experiment 3 - Duty Cycle Investigation
 
-## Test A
+### Test A
 
 ```cpp
 analogWrite(9,64);
@@ -786,7 +786,7 @@ Expected:
 
 ---
 
-## Test B
+### Test B
 
 ```cpp
 analogWrite(9,128);
@@ -800,7 +800,7 @@ Expected:
 
 ---
 
-## Test C
+### Test C
 
 ```cpp
 analogWrite(9,192);
@@ -814,7 +814,7 @@ Expected:
 
 ---
 
-# Results Table
+## Results Table
 
 | PWM Value | Duty Cycle | Observation |
 |-----------|------------|-------------|
@@ -824,9 +824,9 @@ Expected:
 
 ---
 
-# DSO Nano Exercise
+## DSO Nano Exercise
 
-## Observe the Square Wave
+### Observe the Square Wave
 
 Measure:
 
@@ -836,7 +836,7 @@ Measure:
 
 ---
 
-## Observe the PWM Signal
+### Observe the PWM Signal
 
 Measure:
 
@@ -846,9 +846,9 @@ Measure:
 
 ---
 
-# Experiment 4 - SPWM Generation
+## Experiment 4 - SPWM Generation
 
-## Objective
+### Objective
 
 Generate a sinusoidal PWM pattern using a sine lookup table.
 
@@ -856,7 +856,7 @@ The duty cycle varies each cycle to follow a sine wave shape.
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 // SPWM: 50Hz output, 490Hz PWM carrier
@@ -885,7 +885,7 @@ void loop()
 
 ---
 
-# What Is Happening?
+## What Is Happening?
 
 Each PWM cycle has a different duty cycle.
 
@@ -901,7 +901,7 @@ After low-pass filtering this produces an approximate sine wave output.
 
 ---
 
-# DSO Nano Settings
+## DSO Nano Settings
 
 Vertical:
 
@@ -923,7 +923,7 @@ Rising Edge
 
 ---
 
-# Expected Observation
+## Expected Observation
 
 You should observe PWM pulses with varying width:
 
@@ -937,7 +937,7 @@ This is the SPWM pattern.
 
 ---
 
-# Measurements
+## Measurements
 
 | Parameter | Expected | Measured |
 |-----------|----------|----------|
@@ -949,39 +949,39 @@ This is the SPWM pattern.
 
 ---
 
-# Relationship to Previous Projects
+## Relationship to Previous Projects
 
-## Project 1
+### Project 1
 
 PWM generation.
 
 ---
 
-## Project 4
+### Project 4
 
 MOSFET switching.
 
 ---
 
-## Project 9
+### Project 9
 
 Buck Converter operation.
 
 ---
 
-## Project 11
+### Project 11
 
 Boost Converter operation.
 
 ---
 
-## Project 12
+### Project 12
 
 AC-to-DC rectification.
 
 ---
 
-# Complete Power Conversion Map
+## Complete Power Conversion Map
 
 ```text
 AC → DC
@@ -996,11 +996,11 @@ Inverter
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 Now compare your measured square wave and SPWM waveforms against the simulated predictions.
 
-## Enter Your Measured Values
+### Enter Your Measured Values
 
 ```matlab
 f_measured   = 50.0;     % replace with your measured frequency from Experiment 1 (Hz)
@@ -1030,7 +1030,7 @@ fprintf('Measured frequency: %.1f Hz\n', f_measured);
 fprintf('Frequency error:    %.2f%%\n', 100*abs(f_measured-50)/50);
 ```
 
-## SPWM Duty Cycle Verification
+### SPWM Duty Cycle Verification
 
 ```matlab
 % Theoretical SPWM duty cycles from the lookup table
@@ -1048,7 +1048,7 @@ title('SPWM Lookup Table \mdash Ideal vs Arduino');
 legend('Location', 'south');
 ```
 
-## Reflection
+### Reflection
 
 - Does your measured square wave frequency match 50 Hz? What causes any discrepancy? (Arduino `delay()` accuracy, loop overhead)
 - The SPWM lookup table uses only 10 steps per cycle. How would increasing to 20 steps improve the output waveform quality?
@@ -1056,43 +1056,43 @@ legend('Location', 'south');
 
 ---
 
-# Engineering Applications
+## Engineering Applications
 
 Inverters are used in:
 
-## Solar Inverters
+### Solar Inverters
 
 Converting solar power into AC.
 
 ---
 
-## Electric Vehicles
+### Electric Vehicles
 
 Motor drive systems.
 
 ---
 
-## UPS Systems
+### UPS Systems
 
 Backup power.
 
 ---
 
-## Industrial Drives
+### Industrial Drives
 
 Variable-speed motor control.
 
 ---
 
-## Renewable Energy Systems
+### Renewable Energy Systems
 
 Grid-connected power conversion.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 What is an inverter?
 
@@ -1104,7 +1104,7 @@ ____________________
 
 ---
 
-## Question 2
+### Question 2
 
 What is the purpose of an H-Bridge?
 
@@ -1116,7 +1116,7 @@ ____________________
 
 ---
 
-## Question 3
+### Question 3
 
 Why is PWM used in modern inverters?
 
@@ -1128,7 +1128,7 @@ ____________________
 
 ---
 
-## Question 4
+### Question 4
 
 What is SPWM?
 
@@ -1140,7 +1140,7 @@ ____________________
 
 ---
 
-## Question 5
+### Question 5
 
 What is shoot-through?
 
@@ -1152,7 +1152,7 @@ ____________________
 
 ---
 
-## Question 6
+### Question 6
 
 A square wave at 50 Hz contains harmonics at 150 Hz, 250 Hz, 350 Hz and so on. Explain why these odd harmonics are present and why they are absent in a pure sine wave. Why does this matter for motor drives?
 
@@ -1164,9 +1164,9 @@ ____________________
 
 ---
 
-# Common Mistakes
+## Common Mistakes
 
-## Incorrect Frequency
+### Incorrect Frequency
 
 Check:
 
@@ -1175,7 +1175,7 @@ Check:
 
 ---
 
-## PWM Not Visible
+### PWM Not Visible
 
 Check:
 
@@ -1185,7 +1185,7 @@ Check:
 
 ---
 
-## Unstable Display
+### Unstable Display
 
 Check:
 
@@ -1195,7 +1195,7 @@ Check:
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ Arduino operating correctly
 
@@ -1211,7 +1211,7 @@ Check:
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 
@@ -1252,7 +1252,7 @@ These technologies form the foundation of:
 
 ---
 
-# Next Project
+## Next Project
 
 **14_System_Identification.md**
 

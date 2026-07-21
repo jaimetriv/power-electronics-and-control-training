@@ -1,6 +1,6 @@
 # Project 4 - MOSFET Fundamentals and Electronic Switching
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -12,7 +12,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -35,7 +35,7 @@ This project marks the beginning of:
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -55,9 +55,9 @@ At the end of this project you should be able to:
 
 ---
 
-# Theory
+## Theory
 
-## What is a MOSFET?
+### What is a MOSFET?
 
 MOSFET stands for:
 
@@ -73,7 +73,7 @@ Arduino controls the switch electronically.
 
 ---
 
-# Why MOSFETs Are Important
+## Why MOSFETs Are Important
 
 Imagine controlling:
 
@@ -94,7 +94,7 @@ Large Power Control
 
 ---
 
-# MOSFET Symbol
+## MOSFET Symbol
 
 Simplified N-Channel MOSFET:
 
@@ -112,11 +112,11 @@ Gate ----|
 
 ---
 
-# MOSFET Terminals
+## MOSFET Terminals
 
 Every MOSFET has:
 
-## Gate (G)
+### Gate (G)
 
 Control terminal.
 
@@ -128,19 +128,19 @@ Switch Handle
 
 ---
 
-## Drain (D)
+### Drain (D)
 
 Current enters here.
 
 ---
 
-## Source (S)
+### Source (S)
 
 Current exits here.
 
 ---
 
-# How an N-Channel MOSFET Works
+## How an N-Channel MOSFET Works
 
 When:
 
@@ -176,7 +176,7 @@ $$
 
 ---
 
-# Logic Level MOSFETs
+## Logic Level MOSFETs
 
 For Arduino projects always use a:
 
@@ -199,7 +199,7 @@ for beginner Arduino projects.
 
 ---
 
-# Why a MOSFET is Efficient
+## Why a MOSFET is Efficient
 
 Power loss is:
 
@@ -239,11 +239,11 @@ This is why switching devices are efficient.
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before building the circuit, simulate the gate waveform and average voltage to predict what you will observe.
 
-## Simulate Gate PWM Waveforms
+### Simulate Gate PWM Waveforms
 
 ```matlab
 f  = 490;                    % Arduino PWM frequency (Hz)
@@ -268,7 +268,7 @@ xlabel('Time (ms)');
 sgtitle('MOSFET Gate PWM — 490 Hz');
 ```
 
-## Average Voltage vs Duty Cycle
+### Average Voltage vs Duty Cycle
 
 ```matlab
 D    = 0:0.01:1;
@@ -287,7 +287,7 @@ title('MOSFET PWM — V_{AVG} vs Duty Cycle');
 legend('Theory', 'Experiment points', 'Location', 'northwest');
 ```
 
-## Prediction Table
+### Prediction Table
 
 Record your predicted average voltages before measuring:
 
@@ -300,9 +300,9 @@ Record your predicted average voltages before measuring:
 
 ---
 
-# Components Required
+## Components Required
 
-## Purchase
+### Purchase
 
 Recommended:
 
@@ -312,7 +312,7 @@ IRLZ44N MOSFET
 
 ---
 
-## Existing Components
+### Existing Components
 
 From SparkFun Inventor Kit:
 
@@ -328,7 +328,7 @@ Equipment:
 
 ---
 
-# Verify MOSFET Pinout
+## Verify MOSFET Pinout
 
 For an IRLZ44N:
 
@@ -349,13 +349,13 @@ Always verify with the datasheet.
 
 ---
 
-# Project Circuit
+## Project Circuit
 
 We will use the MOSFET as an electronic switch to control an LED.
 
 ---
 
-# Circuit Diagram
+## Circuit Diagram
 
 ```mermaid
 graph TD
@@ -379,7 +379,7 @@ H --> I[Drain]
 
 ---
 
-# Simplified Wiring Diagram
+## Simplified Wiring Diagram
 
 ```text
 Arduino Pin 9
@@ -397,9 +397,9 @@ Source ---------------- GND
 
 ---
 
-# Understanding Current Flow
+## Understanding Current Flow
 
-## MOSFET OFF
+### MOSFET OFF
 
 Gate:
 
@@ -421,7 +421,7 @@ OFF
 
 ---
 
-## MOSFET ON
+### MOSFET ON
 
 Gate:
 
@@ -439,15 +439,15 @@ ON
 
 ---
 
-# Experiment 1 - MOSFET as an Electronic Switch
+## Experiment 1 - MOSFET as an Electronic Switch
 
-## Objective
+### Objective
 
 Switch an LED ON and OFF using a MOSFET.
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 void setup()
@@ -469,7 +469,7 @@ void loop()
 
 ---
 
-# Expected Behaviour
+## Expected Behaviour
 
 The LED should:
 
@@ -483,15 +483,15 @@ continuously.
 
 ---
 
-# DSO Nano Measurement
+## DSO Nano Measurement
 
-## Objective
+### Objective
 
 Measure the gate voltage.
 
 ---
 
-# Probe Location
+## Probe Location
 
 Probe Tip:
 
@@ -507,7 +507,7 @@ GND
 
 ---
 
-# DSO Nano Setup
+## DSO Nano Setup
 
 Vertical:
 
@@ -529,7 +529,7 @@ Rising Edge
 
 ---
 
-# Expected Waveform
+## Expected Waveform
 
 ```text
 5V ────────
@@ -540,7 +540,7 @@ Rising Edge
 
 ---
 
-# Record Measurements
+## Record Measurements
 
 | Parameter | Expected | Measured |
 |------------|-----------|-----------|
@@ -549,15 +549,15 @@ Rising Edge
 
 ---
 
-# Experiment 2 - PWM Controlled MOSFET
+## Experiment 2 - PWM Controlled MOSFET
 
-## Objective
+### Objective
 
 Control the MOSFET using PWM.
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 void setup()
@@ -573,7 +573,7 @@ void loop()
 
 ---
 
-# What Is Happening?
+## What Is Happening?
 
 Arduino produces:
 
@@ -603,7 +603,7 @@ $$
 
 ---
 
-# Probe Location
+## Probe Location
 
 Measure:
 
@@ -615,7 +615,7 @@ again.
 
 ---
 
-# DSO Nano Setup
+## DSO Nano Setup
 
 Vertical:
 
@@ -637,7 +637,7 @@ Rising Edge
 
 ---
 
-# Expected Waveform
+## Expected Waveform
 
 ```text
 5V ─────      ─────
@@ -648,7 +648,7 @@ Rising Edge
 
 ---
 
-# Record Measurements
+## Record Measurements
 
 | Parameter | Measured |
 |------------|-----------|
@@ -658,15 +658,15 @@ Rising Edge
 
 ---
 
-# Experiment 3 - LED Brightness Control
+## Experiment 3 - LED Brightness Control
 
-## Objective
+### Objective
 
 Use PWM to control LED brightness.
 
 ---
 
-## Case 1
+### Case 1
 
 Upload:
 
@@ -686,7 +686,7 @@ LED should appear dim.
 
 ---
 
-## Case 2
+### Case 2
 
 Upload:
 
@@ -704,7 +704,7 @@ LED should appear moderately bright.
 
 ---
 
-## Case 3
+### Case 3
 
 Upload:
 
@@ -722,7 +722,7 @@ LED should appear bright.
 
 ---
 
-## Case 4
+### Case 4
 
 Upload:
 
@@ -740,7 +740,7 @@ LED should be fully ON.
 
 ---
 
-# Results Table
+## Results Table
 
 | PWM Value | Duty Cycle | Brightness |
 |------------|------------|------------|
@@ -751,7 +751,7 @@ LED should be fully ON.
 
 ---
 
-# Why PWM Works
+## Why PWM Works
 
 Average voltage is:
 
@@ -786,7 +786,7 @@ The LED receives less average power.
 
 ---
 
-# Why Arduino Needs a MOSFET
+## Why Arduino Needs a MOSFET
 
 Arduino output current is limited.
 
@@ -810,7 +810,7 @@ A MOSFET allows Arduino to control these loads safely.
 
 ---
 
-# Practical Example
+## Practical Example
 
 Arduino:
 
@@ -832,11 +832,11 @@ motor via MOSFET.
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 Now compare your measured gate waveform against the ideal simulation.
 
-## Enter Your Measured Values
+### Enter Your Measured Values
 
 From Experiment 2, record the frequency and duty cycle you measured on the DSO Nano:
 
@@ -875,7 +875,7 @@ title('Average Voltage — Theory vs Measurement');
 legend('Location','northwest');
 ```
 
-## Reflection
+### Reflection
 
 - Does your measured frequency match 490 Hz?
 - Does your measured VAVG match the theoretical value D × 5V?
@@ -883,49 +883,49 @@ legend('Location','northwest');
 
 ---
 
-# Engineering Applications
+## Engineering Applications
 
 MOSFETs are used in:
 
-## LED Drivers
+### LED Drivers
 
 Adjust brightness.
 
 ---
 
-## DC Motor Drives
+### DC Motor Drives
 
 Adjust speed.
 
 ---
 
-## Buck Converters
+### Buck Converters
 
 Step voltage down.
 
 ---
 
-## Boost Converters
+### Boost Converters
 
 Step voltage up.
 
 ---
 
-## Inverters
+### Inverters
 
 Convert DC to AC.
 
 ---
 
-## Solar Controllers
+### Solar Controllers
 
 Battery charging and regulation.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 What does MOSFET stand for?
 
@@ -937,7 +937,7 @@ ____________________
 
 ---
 
-## Question 2
+### Question 2
 
 What are the three MOSFET terminals?
 
@@ -949,7 +949,7 @@ ____________________
 
 ---
 
-## Question 3
+### Question 3
 
 What controls the MOSFET?
 
@@ -961,7 +961,7 @@ ____________________
 
 ---
 
-## Question 4
+### Question 4
 
 Why are MOSFETs used in power electronics?
 
@@ -973,7 +973,7 @@ ____________________
 
 ---
 
-## Question 5
+### Question 5
 
 Why can't Arduino drive large motors directly?
 
@@ -985,7 +985,7 @@ ____________________
 
 ---
 
-## Question 6
+### Question 6
 
 Your simulation predicted VAVG = 2.5V at 50% duty cycle but you measured 2.3V. Give two physical reasons that could explain this.
 
@@ -997,9 +997,9 @@ ____________________
 
 ---
 
-# Common Mistakes
+## Common Mistakes
 
-## LED Never Turns ON
+### LED Never Turns ON
 
 Check:
 
@@ -1009,7 +1009,7 @@ Check:
 
 ---
 
-## MOSFET Gets Hot
+### MOSFET Gets Hot
 
 Check:
 
@@ -1020,7 +1020,7 @@ Use a logic-level MOSFET.
 
 ---
 
-## No PWM Visible
+### No PWM Visible
 
 Check:
 
@@ -1030,7 +1030,7 @@ Check:
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ MOSFET orientation correct
 
@@ -1046,7 +1046,7 @@ Check:
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 
@@ -1074,7 +1074,7 @@ These ideas are the building blocks for:
 
 ---
 
-# Next Project
+## Next Project
 
 **05_PWM_Motor_Control.md**
 

@@ -1,6 +1,6 @@
 # Project 16 - Grid-Following Voltage Source Converter (VSC)
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -25,7 +25,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -42,9 +42,9 @@ This is the capstone project for the course.
 
 ---
 
-# Safety Notice
+## Safety Notice
 
-## Important
+### Important
 
 This project:
 
@@ -74,7 +74,7 @@ Recommended AC test voltage:
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -96,7 +96,7 @@ At the end of this project you should be able to:
 
 ---
 
-# Introduction
+## Introduction
 
 Most modern renewable energy systems use:
 
@@ -115,7 +115,7 @@ Examples:
 
 ---
 
-# What Is a Grid-Following Converter?
+## What Is a Grid-Following Converter?
 
 A Grid-Following Converter does not create the grid voltage.
 
@@ -129,7 +129,7 @@ The Converter Injects Current
 
 ---
 
-# Why Current Control?
+## Why Current Control?
 
 The grid already establishes:
 
@@ -147,7 +147,7 @@ rather than voltage.
 
 ---
 
-# Power Transfer
+## Power Transfer
 
 Real power is:
 
@@ -163,7 +163,7 @@ Where:
 
 ---
 
-# Power Flow Example
+## Power Flow Example
 
 If:
 
@@ -187,7 +187,7 @@ Maximum real power is transferred.
 
 ---
 
-# Overall Control Structure
+## Overall Control Structure
 
 ```text
 Grid Voltage
@@ -209,7 +209,7 @@ Grid Voltage
 
 ---
 
-# Hardware Overview
+## Hardware Overview
 
 The laboratory setup consists of:
 
@@ -243,9 +243,9 @@ Filter
 
 ---
 
-# Recommended Hardware
+## Recommended Hardware
 
-## Controller
+### Controller
 
 Recommended:
 
@@ -258,7 +258,7 @@ Acceptable:
 
 ---
 
-## Oscilloscope
+### Oscilloscope
 
 - DSO Nano
 - FNIRSI Scope
@@ -266,7 +266,7 @@ Acceptable:
 
 ---
 
-## Signal Generator
+### Signal Generator
 
 Used as the simulated grid.
 
@@ -278,7 +278,7 @@ Examples:
 
 ---
 
-## Current Sensor
+### Current Sensor
 
 Recommended:
 
@@ -287,7 +287,7 @@ Recommended:
 
 ---
 
-## Voltage Measurement
+### Voltage Measurement
 
 Recommended:
 
@@ -296,7 +296,7 @@ Recommended:
 
 ---
 
-## Inverter Stage
+### Inverter Stage
 
 - MOSFET H-Bridge
 - MOSFET Driver
@@ -308,7 +308,7 @@ Examples:
 
 ---
 
-## Filter
+### Filter
 
 Recommended:
 
@@ -326,9 +326,9 @@ Typical:
 
 ---
 
-# Hardware Purchasing Checklist
+## Hardware Purchasing Checklist
 
-## Essential
+### Essential
 
 - ESP32 Development Board
 - Function Generator
@@ -340,7 +340,7 @@ Typical:
 
 ---
 
-## Recommended
+### Recommended
 
 - Differential Probe
 - External Power Supply
@@ -348,7 +348,7 @@ Typical:
 
 ---
 
-# System Schematic
+## System Schematic
 
 ```text
 Function Generator
@@ -396,7 +396,7 @@ Simulated Grid
 
 ---
 
-# Concept of Synchronization
+## Concept of Synchronization
 
 Before current can be injected:
 
@@ -408,7 +408,7 @@ must be known.
 
 ---
 
-# Grid Voltage
+## Grid Voltage
 
 Assume:
 
@@ -424,7 +424,7 @@ The controller must determine:
 
 ---
 
-# Phase Locked Loop (PLL)
+## Phase Locked Loop (PLL)
 
 A PLL estimates:
 
@@ -440,7 +440,7 @@ $$
 
 ---
 
-# PLL Purpose
+## PLL Purpose
 
 The PLL continuously estimates:
 
@@ -456,7 +456,7 @@ Grid Frequency
 
 ---
 
-# Why Is The PLL Important?
+## Why Is The PLL Important?
 
 Without synchronization:
 
@@ -474,7 +474,7 @@ This can result in:
 
 ---
 
-# Simplified PLL Block Diagram
+## Simplified PLL Block Diagram
 
 ```text
 Grid Voltage
@@ -492,7 +492,7 @@ Grid Voltage
 
 ---
 
-# Review of PI Controllers
+## Review of PI Controllers
 
 From earlier projects:
 
@@ -509,7 +509,7 @@ The PLL itself contains a PI controller.
 
 ---
 
-# Grid Angle
+## Grid Angle
 
 The PLL produces:
 
@@ -521,7 +521,7 @@ This angle is used throughout the controller.
 
 ---
 
-# Why Use dq Control?
+## Why Use dq Control?
 
 AC currents are sinusoidal.
 
@@ -529,7 +529,7 @@ Sinusoids are difficult to regulate directly.
 
 ---
 
-# dq Transformation
+## dq Transformation
 
 The dq transform converts:
 
@@ -545,7 +545,7 @@ DC Signals
 
 ---
 
-# Example
+## Example
 
 Current:
 
@@ -565,7 +565,7 @@ which is easier to regulate.
 
 ---
 
-# Current Reference
+## Current Reference
 
 Example:
 
@@ -575,7 +575,7 @@ Inject 1 A
 
 ---
 
-# Current Error
+## Current Error
 
 The current controller calculates:
 
@@ -594,7 +594,7 @@ Where:
 
 ---
 
-# Current PI Controller
+## Current PI Controller
 
 The controller output is:
 
@@ -608,7 +608,7 @@ $$
 
 ---
 
-# SPWM Generation
+## SPWM Generation
 
 The controller output is converted into:
 
@@ -620,7 +620,7 @@ for the inverter.
 
 ---
 
-# Inverter Stage
+## Inverter Stage
 
 The inverter converts:
 
@@ -642,7 +642,7 @@ using:
 
 ---
 
-# Output Filter
+## Output Filter
 
 The inverter output is PWM.
 
@@ -650,7 +650,7 @@ An inductor smooths the current.
 
 ---
 
-# Why Is The Filter Required?
+## Why Is The Filter Required?
 
 Without a filter:
 
@@ -662,7 +662,7 @@ would be injected into the grid.
 
 ---
 
-# L Filter
+## L Filter
 
 Simplified structure:
 
@@ -676,25 +676,25 @@ Inverter
 
 ---
 
-# Current Measurement
+## Current Measurement
 
 Current feedback is essential.
 
 Possible sensors:
 
-## ACS712
+### ACS712
 
 Low cost.
 
 ---
 
-## ACS758
+### ACS758
 
 Higher current capability.
 
 ---
 
-# Control Loop Summary
+## Control Loop Summary
 
 ```text
 Measure Grid Voltage
@@ -718,15 +718,15 @@ Measure Grid Voltage
 
 ---
 
-# Experiment 1 - PLL Observation
+## Experiment 1 - PLL Observation
 
-## Objective
+### Objective
 
 Measure grid phase angle.
 
 ---
 
-# Procedure
+## Procedure
 
 Generate:
 
@@ -750,15 +750,15 @@ PLL Tracking
 
 ---
 
-# Experiment 2 - SPWM Generation
+## Experiment 2 - SPWM Generation
 
-## Objective
+### Objective
 
 Create sinusoidal PWM.
 
 ---
 
-# Observe
+## Observe
 
 Measure:
 
@@ -768,15 +768,15 @@ Measure:
 
 ---
 
-# Experiment 3 - Inverter Output
+## Experiment 3 - Inverter Output
 
-## Objective
+### Objective
 
 Measure filtered inverter voltage.
 
 ---
 
-# Measurements
+## Measurements
 
 Record:
 
@@ -789,15 +789,15 @@ Record:
 
 ---
 
-# Experiment 4 - Current Control
+## Experiment 4 - Current Control
 
-## Objective
+### Objective
 
 Regulate injected current.
 
 ---
 
-# Setpoint Tests
+## Setpoint Tests
 
 ```text
 0.5 A
@@ -809,7 +809,7 @@ Regulate injected current.
 
 ---
 
-# Results Table
+## Results Table
 
 | Current Reference | Measured Current |
 |------------------|------------------|
@@ -819,7 +819,7 @@ Regulate injected current.
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before building, simulate three key subsystems: PLL angle tracking, SPWM generation, and the PI current controller on an L-filter plant.
 
@@ -877,7 +877,7 @@ Record the predicted current controller rise time and overshoot before running E
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 After completing the experiments, enter your measured current tracking data and compare against the simulated PI response.
 
@@ -942,43 +942,43 @@ Reflection questions:
 
 ---
 
-# Engineering Applications
+## Engineering Applications
 
 Grid-following VSCs are used in:
 
-## Solar Inverters
+### Solar Inverters
 
 Grid-connected photovoltaic systems.
 
 ---
 
-## Battery Storage
+### Battery Storage
 
 Energy storage integration.
 
 ---
 
-## EV Chargers
+### EV Chargers
 
 Bidirectional charging systems.
 
 ---
 
-## Renewable Energy Systems
+### Renewable Energy Systems
 
 Grid support and power conversion.
 
 ---
 
-## HVDC Systems
+### HVDC Systems
 
 Large-scale power transmission.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 What does a grid-following converter control?
 
@@ -990,7 +990,7 @@ ____________________
 
 ---
 
-## Question 2
+### Question 2
 
 Why is a PLL required?
 
@@ -1002,7 +1002,7 @@ ____________________
 
 ---
 
-## Question 3
+### Question 3
 
 Why is current control used instead of voltage control?
 
@@ -1014,7 +1014,7 @@ ____________________
 
 ---
 
-## Question 4
+### Question 4
 
 What is the purpose of the output filter?
 
@@ -1026,7 +1026,7 @@ ____________________
 
 ---
 
-## Question 5
+### Question 5
 
 Why is dq control useful?
 
@@ -1038,7 +1038,7 @@ ____________________
 
 ---
 
-## Question 6
+### Question 6
 
 During Experiment 4 your measured current settling time was longer than the MATLAB simulation predicted. List two physical causes and explain how you would update the plant model `G(s) = 1/(Ls + R)` to account for them.
 
@@ -1050,9 +1050,9 @@ ____________________
 
 ---
 
-# Common Mistakes
+## Common Mistakes
 
-## PLL Not Locking
+### PLL Not Locking
 
 Check:
 
@@ -1062,7 +1062,7 @@ Check:
 
 ---
 
-## Excessive Current Ripple
+### Excessive Current Ripple
 
 Check:
 
@@ -1071,7 +1071,7 @@ Check:
 
 ---
 
-## Unstable Current Control
+### Unstable Current Control
 
 Check:
 
@@ -1080,7 +1080,7 @@ Check:
 
 ---
 
-## Poor Synchronization
+### Poor Synchronization
 
 Check:
 
@@ -1089,7 +1089,7 @@ Check:
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ Grid signal available
 
@@ -1109,7 +1109,7 @@ Check:
 
 ---
 
-# Final Course Summary
+## Final Course Summary
 
 This project combines:
 

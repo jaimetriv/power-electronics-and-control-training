@@ -1,6 +1,6 @@
 # DSO Nano Familiarisation
 
-## Prerequisites
+### Prerequisites
 
 Before starting any project in this repository, spend some time becoming familiar with the DSO Nano oscilloscope.
 
@@ -16,7 +16,7 @@ We will repeatedly use it to:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -31,7 +31,7 @@ In this project you will learn:
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this exercise you should be able to:
 
@@ -51,7 +51,7 @@ At the end of this exercise you should be able to:
 
 ---
 
-# What Is An Oscilloscope?
+## What Is An Oscilloscope?
 
 An oscilloscope displays:
 
@@ -68,7 +68,7 @@ Unlike a multimeter, which provides a single number, an oscilloscope shows how v
 
 ---
 
-# Why Oscilloscopes Are Important
+## Why Oscilloscopes Are Important
 
 A multimeter can tell you:
 
@@ -89,7 +89,7 @@ An oscilloscope can.
 
 ---
 
-# About The DSO Nano
+## About The DSO Nano
 
 The DSO Nano is a portable digital oscilloscope.
 
@@ -111,7 +111,7 @@ It is ideal for:
 
 ---
 
-# Limitations
+## Limitations
 
 The DSO Nano is not a high-end laboratory oscilloscope.
 
@@ -125,7 +125,7 @@ These limitations do not affect the experiments in this repository.
 
 ---
 
-# Understanding The Screen
+## Understanding The Screen
 
 The display shows:
 
@@ -152,9 +152,9 @@ Time
 
 ---
 
-# Important Controls
+## Important Controls
 
-## Vertical Scale
+### Vertical Scale
 
 Vertical scale controls:
 
@@ -176,7 +176,7 @@ Examples:
 
 ---
 
-# What Is A Division?
+## What Is A Division?
 
 The oscilloscope screen is divided into squares.
 
@@ -198,7 +198,7 @@ Division
 
 ---
 
-# Example
+## Example
 
 Suppose:
 
@@ -220,7 +220,7 @@ $$
 
 ---
 
-# Horizontal Scale
+## Horizontal Scale
 
 Horizontal scale controls:
 
@@ -246,7 +246,7 @@ Examples:
 
 ---
 
-# Example
+## Example
 
 Suppose:
 
@@ -268,7 +268,7 @@ $$
 
 ---
 
-# Frequency Review
+## Frequency Review
 
 Frequency is:
 
@@ -294,7 +294,7 @@ $$
 
 ---
 
-# Triggering
+## Triggering
 
 Triggering stabilises the display.
 
@@ -312,7 +312,7 @@ Waveform remains stable
 
 ---
 
-# Trigger Type
+## Trigger Type
 
 For almost every project in this repository use:
 
@@ -322,7 +322,7 @@ Edge Trigger
 
 ---
 
-# Trigger Edge
+## Trigger Edge
 
 Use:
 
@@ -336,7 +336,7 @@ This means the oscilloscope begins drawing the waveform when voltage increases.
 
 ---
 
-# Safe Oscilloscope Connections
+## Safe Oscilloscope Connections
 
 For Arduino projects:
 
@@ -354,7 +354,7 @@ Arduino Ground
 
 ---
 
-# Safe Connection
+## Safe Connection
 
 ```text
 Probe Tip
@@ -370,7 +370,7 @@ Arduino GND
 
 ---
 
-# Important Rule
+## Important Rule
 
 Never connect the ground clip to random points in a circuit.
 
@@ -388,15 +388,15 @@ Always.
 
 ---
 
-# Experiment 1 - Ground Verification
+## Experiment 1 - Ground Verification
 
-## Objective
+### Objective
 
 Verify that the oscilloscope is operating correctly.
 
 ---
 
-# Connections
+## Connections
 
 Connect:
 
@@ -408,7 +408,7 @@ Probe Ground -> GND
 
 ---
 
-# Expected Result
+## Expected Result
 
 You should see:
 
@@ -420,7 +420,7 @@ a flat horizontal line.
 
 ---
 
-# Why?
+## Why?
 
 Ground is:
 
@@ -432,15 +432,15 @@ and does not change with time.
 
 ---
 
-# Experiment 2 - Measure Arduino DC Voltage
+## Experiment 2 - Measure Arduino DC Voltage
 
-## Objective
+### Objective
 
 Measure a constant voltage.
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 void setup()
@@ -457,7 +457,7 @@ void loop()
 
 ---
 
-# Connections
+## Connections
 
 Probe Tip:
 
@@ -473,7 +473,7 @@ Arduino GND
 
 ---
 
-# DSO Nano Settings
+## DSO Nano Settings
 
 Vertical:
 
@@ -489,7 +489,7 @@ Horizontal:
 
 ---
 
-# Expected Result
+## Expected Result
 
 You should observe a flat line.
 
@@ -501,7 +501,7 @@ $$
 
 ---
 
-# Record Measurements
+## Record Measurements
 
 | Parameter | Value |
 |------------|--------|
@@ -509,15 +509,15 @@ $$
 
 ---
 
-# Experiment 3 - Observe PWM
+## Experiment 3 - Observe PWM
 
-## Objective
+### Objective
 
 Observe a PWM signal.
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 void setup()
@@ -533,7 +533,7 @@ void loop()
 
 ---
 
-# Connections
+## Connections
 
 Probe Tip:
 
@@ -549,7 +549,7 @@ Arduino GND
 
 ---
 
-# DSO Nano Setup
+## DSO Nano Setup
 
 Vertical:
 
@@ -571,7 +571,7 @@ Rising Edge
 
 ---
 
-# Expected Waveform
+## Expected Waveform
 
 ```text
 5V ─────      ─────
@@ -582,11 +582,11 @@ Rising Edge
 
 ---
 
-# Measurements
+## Measurements
 
 Measure:
 
-## Peak Voltage
+### Peak Voltage
 
 Expected:
 
@@ -596,7 +596,7 @@ $$
 
 ---
 
-## Frequency
+### Frequency
 
 Expected:
 
@@ -606,7 +606,7 @@ $$
 
 ---
 
-## Period
+### Period
 
 Expected:
 
@@ -616,7 +616,7 @@ $$
 
 ---
 
-# Oscilloscope Measurement Worksheet
+## Oscilloscope Measurement Worksheet
 
 | Measurement | Expected | Actual |
 |------------|-----------|---------|
@@ -626,9 +626,9 @@ $$
 
 ---
 
-# Understanding Scale Selection
+## Understanding Scale Selection
 
-## If Signal Is Too Small
+### If Signal Is Too Small
 
 Increase sensitivity:
 
@@ -642,7 +642,7 @@ Increase sensitivity:
 
 ---
 
-## If Signal Is Too Large
+### If Signal Is Too Large
 
 Decrease sensitivity:
 
@@ -658,9 +658,9 @@ Decrease sensitivity:
 
 ---
 
-# Understanding Time Scale Selection
+## Understanding Time Scale Selection
 
-## If Waveform Is Too Compressed
+### If Waveform Is Too Compressed
 
 Use:
 
@@ -680,7 +680,7 @@ Example:
 
 ---
 
-## If Waveform Is Too Wide
+### If Waveform Is Too Wide
 
 Use:
 
@@ -700,11 +700,11 @@ Example:
 
 ---
 
-# Common Measurements We Will Perform Later
+## Common Measurements We Will Perform Later
 
 Throughout this repository the DSO Nano will be used to measure:
 
-## Project 1
+### Project 1
 
 PWM Frequency
 
@@ -712,7 +712,7 @@ PWM Duty Cycle
 
 ---
 
-## Project 2
+### Project 2
 
 RC Charging
 
@@ -722,7 +722,7 @@ Time Constants
 
 ---
 
-## Project 3
+### Project 3
 
 Ringing
 
@@ -732,7 +732,7 @@ Natural Frequency
 
 ---
 
-## Project 4
+### Project 4
 
 MOSFET Gate Signals
 
@@ -740,13 +740,13 @@ Switching Behaviour
 
 ---
 
-## Project 5
+### Project 5
 
 Motor PWM Drive Signals
 
 ---
 
-## Project 9
+### Project 9
 
 Buck Converter Ripple
 
@@ -754,7 +754,7 @@ Switch Node Waveforms
 
 ---
 
-## Project 10
+### Project 10
 
 Closed Loop Responses
 
@@ -764,9 +764,9 @@ Transient Behaviour
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 What does the vertical axis represent?
 
@@ -778,7 +778,7 @@ ____________________
 
 ---
 
-## Question 2
+### Question 2
 
 What does the horizontal axis represent?
 
@@ -790,7 +790,7 @@ ____________________
 
 ---
 
-## Question 3
+### Question 3
 
 What does 2 V/div mean?
 
@@ -802,7 +802,7 @@ ____________________
 
 ---
 
-## Question 4
+### Question 4
 
 Why is trigger important?
 
@@ -814,7 +814,7 @@ ____________________
 
 ---
 
-## Question 5
+### Question 5
 
 Where should the probe ground be connected?
 
@@ -826,9 +826,9 @@ ____________________
 
 ---
 
-# Common Mistakes
+## Common Mistakes
 
-## No Signal Visible
+### No Signal Visible
 
 Check:
 
@@ -838,7 +838,7 @@ Check:
 
 ---
 
-## Unstable Waveform
+### Unstable Waveform
 
 Check:
 
@@ -847,7 +847,7 @@ Check:
 
 ---
 
-## Incorrect Voltage Measurement
+### Incorrect Voltage Measurement
 
 Check:
 
@@ -856,7 +856,7 @@ Check:
 
 ---
 
-## Incorrect Frequency Measurement
+### Incorrect Frequency Measurement
 
 Check:
 
@@ -865,7 +865,7 @@ Check:
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ Battery charged
 
@@ -881,7 +881,7 @@ Check:
 
 ---
 
-# Summary
+## Summary
 
 In this exercise you learned:
 
@@ -905,7 +905,7 @@ You are now ready to begin the laboratory projects.
 
 ---
 
-# Next Step
+## Next Step
 
 Proceed to:
 

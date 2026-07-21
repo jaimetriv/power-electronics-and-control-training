@@ -1,6 +1,6 @@
 # Project 3 - RLC Circuits, Resonance and Second-Order Systems
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -11,7 +11,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -38,7 +38,7 @@ These concepts are fundamental to:
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -58,9 +58,9 @@ At the end of this project you should be able to:
 
 ---
 
-# Theory
+## Theory
 
-## What is an Inductor?
+### What is an Inductor?
 
 An inductor stores energy in a magnetic field.
 
@@ -76,7 +76,7 @@ An inductor resists changes in current.
 
 ---
 
-# Inductor Voltage Equation
+## Inductor Voltage Equation
 
 The voltage across an inductor is:
 
@@ -92,7 +92,7 @@ Where:
 
 ---
 
-# Inductor Energy
+## Inductor Energy
 
 The energy stored in an inductor is:
 
@@ -108,7 +108,7 @@ Where:
 
 ---
 
-# Building an RLC Circuit
+## Building an RLC Circuit
 
 An RLC circuit contains:
 
@@ -124,7 +124,7 @@ R + L + C
 
 ---
 
-# Circuit Diagram
+## Circuit Diagram
 
 ```text
 Vin
@@ -142,7 +142,7 @@ GND
 
 ---
 
-# What Makes RLC Circuits Different?
+## What Makes RLC Circuits Different?
 
 In Project 2 the capacitor stored energy.
 
@@ -157,7 +157,7 @@ This causes oscillation.
 
 ---
 
-# Mechanical Analogy
+## Mechanical Analogy
 
 An RLC circuit behaves similarly to a:
 
@@ -181,7 +181,7 @@ This analogy appears frequently in control engineering.
 
 ---
 
-# Second-Order Systems
+## Second-Order Systems
 
 An RC circuit is:
 
@@ -204,7 +204,7 @@ because it has two energy storage elements:
 
 ---
 
-# Governing Equation
+## Governing Equation
 
 The series RLC circuit obeys:
 
@@ -228,7 +228,7 @@ For now, it is enough to understand:
 
 ---
 
-# Natural Frequency
+## Natural Frequency
 
 The most important property of an RLC circuit is its natural frequency.
 
@@ -246,7 +246,7 @@ Where:
 
 ---
 
-# Converting to Hertz
+## Converting to Hertz
 
 To convert from radians per second to Hertz:
 
@@ -260,7 +260,7 @@ Where:
 
 ---
 
-# Example Calculation
+## Example Calculation
 
 Given:
 
@@ -312,7 +312,7 @@ $$
 
 ---
 
-# Damping
+## Damping
 
 The resistor removes energy from the system.
 
@@ -336,7 +336,7 @@ Less damping
 
 ---
 
-# Damping Ratio
+## Damping Ratio
 
 The damping ratio is:
 
@@ -350,9 +350,9 @@ Where:
 
 ---
 
-# Types of Response
+## Types of Response
 
-## Underdamped
+### Underdamped
 
 $$
 \zeta < 1
@@ -366,7 +366,7 @@ Characteristics:
 
 ---
 
-## Critically Damped
+### Critically Damped
 
 $$
 \zeta = 1
@@ -378,7 +378,7 @@ Characteristics:
 
 ---
 
-## Overdamped
+### Overdamped
 
 $$
 \zeta > 1
@@ -391,11 +391,11 @@ Characteristics:
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before building the circuit, simulate the step response for each resistor value to predict what you will observe on the oscilloscope.
 
-## Calculate Damping Ratios
+### Calculate Damping Ratios
 
 ```matlab
 L = 0.1;
@@ -416,7 +416,7 @@ for i = 1:3
 end
 ```
 
-## Simulate Step Responses
+### Simulate Step Responses
 
 ```matlab
 L = 0.1;
@@ -441,7 +441,7 @@ title('RLC Step Response \mdash Damping Comparison');
 legend('Location', 'northeast');
 ```
 
-## Prediction Table
+### Prediction Table
 
 Record your predictions before measuring:
 
@@ -453,7 +453,7 @@ Record your predictions before measuring:
 
 ---
 
-# Components Required
+## Components Required
 
 Additional components:
 
@@ -470,7 +470,7 @@ Existing tools:
 
 ---
 
-# Circuit
+## Circuit
 
 ```mermaid
 graph TD
@@ -489,7 +489,7 @@ E --> F[GND]
 
 ---
 
-# Probe Location
+## Probe Location
 
 Probe Tip:
 
@@ -505,7 +505,7 @@ GND
 
 ---
 
-# Physical Layout
+## Physical Layout
 
 ```text
 Arduino Pin 9
@@ -523,15 +523,15 @@ Arduino Pin 9
 
 ---
 
-# Experiment 1 - Observe Ringing
+## Experiment 1 - Observe Ringing
 
-## Objective
+### Objective
 
 Observe the oscillatory response of a second-order system.
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 void setup()
@@ -551,7 +551,7 @@ void loop()
 
 ---
 
-# Why Use a Square Wave?
+## Why Use a Square Wave?
 
 A square wave contains fast transitions.
 
@@ -561,7 +561,7 @@ This allows us to observe resonance.
 
 ---
 
-# DSO Nano Setup
+## DSO Nano Setup
 
 Vertical:
 
@@ -583,7 +583,7 @@ Rising Edge
 
 ---
 
-# Expected Waveform
+## Expected Waveform
 
 Instead of a simple square wave you should observe:
 
@@ -602,7 +602,7 @@ Ringing
 
 ---
 
-# Why Does Ringing Occur?
+## Why Does Ringing Occur?
 
 Energy is exchanged between:
 
@@ -625,15 +625,15 @@ As energy decreases:
 
 ---
 
-# Experiment 2 - Measure Resonant Frequency
+## Experiment 2 - Measure Resonant Frequency
 
-## Objective
+### Objective
 
 Estimate the natural frequency.
 
 ---
 
-# Step 1
+## Step 1
 
 Zoom into the ringing waveform.
 
@@ -647,7 +647,7 @@ if necessary.
 
 ---
 
-# Step 2
+## Step 2
 
 Measure one oscillation period.
 
@@ -660,7 +660,7 @@ _____________
 
 ---
 
-# Step 3
+## Step 3
 
 Calculate frequency.
 
@@ -696,7 +696,7 @@ $$
 
 ---
 
-# Compare with Theory
+## Compare with Theory
 
 Theoretical value:
 
@@ -712,7 +712,7 @@ _____________
 
 ---
 
-# Results Table
+## Results Table
 
 | Parameter | Theory | Measured |
 |------------|---------|-----------|
@@ -723,7 +723,7 @@ _____________
 
 ---
 
-# Experiment 3 - Increase Damping
+## Experiment 3 - Increase Damping
 
 Replace:
 
@@ -739,7 +739,7 @@ with:
 
 ---
 
-# Prediction
+## Prediction
 
 Higher resistance means:
 
@@ -749,7 +749,7 @@ Higher resistance means:
 
 ---
 
-# Observe
+## Observe
 
 Describe the waveform:
 
@@ -759,7 +759,7 @@ _________________________________
 
 ---
 
-# Results Table
+## Results Table
 
 | Resistance | Ringing |
 |------------|----------|
@@ -768,7 +768,7 @@ _________________________________
 
 ---
 
-# Experiment 4 - Reduce Damping
+## Experiment 4 - Reduce Damping
 
 Replace:
 
@@ -784,7 +784,7 @@ with:
 
 ---
 
-# Prediction
+## Prediction
 
 Lower resistance means:
 
@@ -794,7 +794,7 @@ Lower resistance means:
 
 ---
 
-# Observe
+## Observe
 
 Describe the waveform:
 
@@ -804,7 +804,7 @@ _________________________________
 
 ---
 
-# Results Table
+## Results Table
 
 | Resistance | Response |
 |------------|-----------|
@@ -814,7 +814,7 @@ _________________________________
 
 ---
 
-# Understanding Overshoot
+## Understanding Overshoot
 
 An underdamped system often exceeds its final value.
 
@@ -842,11 +842,11 @@ Overshoot is extremely important in:
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 Now overlay your measured resonant frequency against the theoretical simulation.
 
-## Enter Your Measured Period
+### Enter Your Measured Period
 
 From Experiment 2, record the oscillation period you measured on the DSO Nano:
 
@@ -888,7 +888,7 @@ title('RLC Step Response \mdash Theory vs Measurement');
 legend('Location', 'northeast');
 ```
 
-## Pole Locations
+### Pole Locations
 
 Inspect the poles to understand stability and oscillation:
 
@@ -901,7 +901,7 @@ pzmap(tf([1/C], [L, R, 1/C])); grid on;
 title('Pole-Zero Map');
 ```
 
-## Reflection
+### Reflection
 
 - How close is your measured fn to the theoretical value?
 - Are the poles real or complex? What does that tell you about the response?
@@ -909,49 +909,49 @@ title('Pole-Zero Map');
 
 ---
 
-# Engineering Applications
+## Engineering Applications
 
 RLC systems appear in:
 
-## Radio Tuners
+### Radio Tuners
 
 Frequency selection.
 
 ---
 
-## Filters
+### Filters
 
 Signal processing.
 
 ---
 
-## Buck Converters
+### Buck Converters
 
 Output filter dynamics.
 
 ---
 
-## Boost Converters
+### Boost Converters
 
 Energy transfer systems.
 
 ---
 
-## Motor Drives
+### Motor Drives
 
 Current loop behaviour.
 
 ---
 
-## Control Systems
+### Control Systems
 
 Second-order system models.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 What is resonance?
 
@@ -963,7 +963,7 @@ __________________________
 
 ---
 
-## Question 2
+### Question 2
 
 What is natural frequency?
 
@@ -975,7 +975,7 @@ __________________________
 
 ---
 
-## Question 3
+### Question 3
 
 What causes ringing?
 
@@ -987,7 +987,7 @@ __________________________
 
 ---
 
-## Question 4
+### Question 4
 
 What happens when resistance increases?
 
@@ -999,7 +999,7 @@ __________________________
 
 ---
 
-## Question 5
+### Question 5
 
 Why is an RLC circuit a second-order system?
 
@@ -1011,7 +1011,7 @@ __________________________
 
 ---
 
-## Question 6
+### Question 6
 
 Your MATLAB simulation predicted fn = 1591 Hz but you measured fn = 1520 Hz. Name two physical reasons that could explain this discrepancy.
 
@@ -1023,9 +1023,9 @@ __________________________
 
 ---
 
-# Common Mistakes
+## Common Mistakes
 
-## No Ringing Visible
+### No Ringing Visible
 
 Check:
 
@@ -1035,7 +1035,7 @@ Check:
 
 ---
 
-## Frequency Does Not Match Theory
+### Frequency Does Not Match Theory
 
 Check:
 
@@ -1044,7 +1044,7 @@ Check:
 
 ---
 
-## Unstable Display
+### Unstable Display
 
 Adjust:
 
@@ -1060,7 +1060,7 @@ Time Base
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ Arduino powered
 
@@ -1078,7 +1078,7 @@ Time Base
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 
@@ -1114,7 +1114,7 @@ These concepts form the foundation of:
 
 ---
 
-# Next Project
+## Next Project
 
 **04_MOSFET_Fundamentals.md**
 

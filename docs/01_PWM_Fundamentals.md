@@ -1,6 +1,6 @@
 # Project 1 - PWM Fundamentals and Oscilloscope Measurements
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -9,7 +9,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -36,7 +36,7 @@ PWM is used in:
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -56,9 +56,9 @@ At the end of this project you should be able to:
 
 ---
 
-# Theory
+## Theory
 
-## What is PWM?
+### What is PWM?
 
 PWM stands for:
 
@@ -91,7 +91,7 @@ Although the signal is digital, the average energy delivered to a load can be co
 
 ---
 
-# Period
+## Period
 
 The period is the duration of one complete cycle.
 
@@ -120,7 +120,7 @@ Units:
 
 ---
 
-# Frequency
+## Frequency
 
 Frequency is the number of cycles occurring per second.
 
@@ -159,7 +159,7 @@ $$
 
 ---
 
-# Duty Cycle
+## Duty Cycle
 
 Duty cycle describes how long a signal remains HIGH.
 
@@ -175,7 +175,7 @@ Where:
 
 ---
 
-## 25% Duty Cycle
+### 25% Duty Cycle
 
 ```text
 5V ──
@@ -186,7 +186,7 @@ Where:
 
 ---
 
-## 50% Duty Cycle
+### 50% Duty Cycle
 
 ```text
 5V ─────
@@ -197,7 +197,7 @@ Where:
 
 ---
 
-## 75% Duty Cycle
+### 75% Duty Cycle
 
 ```text
 5V ─────────
@@ -208,7 +208,7 @@ Where:
 
 ---
 
-# Average Voltage
+## Average Voltage
 
 The average output voltage of a PWM waveform is approximately:
 
@@ -248,7 +248,7 @@ $$
 
 ---
 
-# PWM on Arduino Uno
+## PWM on Arduino Uno
 
 The Arduino function:
 
@@ -282,11 +282,11 @@ Pin 9
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before building the circuit, simulate a PWM waveform in MATLAB to predict what you will observe on the oscilloscope.
 
-## Simulate a PWM Waveform
+### Simulate a PWM Waveform
 
 ```matlab
 fs = 490;
@@ -308,7 +308,7 @@ ylabel('Voltage (V)')
 title('Simulated PWM Waveform - 490 Hz, 50% Duty Cycle')
 ```
 
-## Expected Result
+### Expected Result
 
 You should see a square wave switching between:
 
@@ -324,7 +324,7 @@ and
 
 with equal ON and OFF times.
 
-## Predict
+### Predict
 
 Before measuring, record your predictions:
 
@@ -337,7 +337,7 @@ Before measuring, record your predictions:
 
 ---
 
-## Simulate Multiple Duty Cycles
+### Simulate Multiple Duty Cycles
 
 Repeat the simulation for 25%, 50% and 75% duty cycles:
 
@@ -367,7 +367,7 @@ end
 xlabel('Time (ms)')
 ```
 
-## Expected Result
+### Expected Result
 
 Observe how the ON time increases as duty cycle increases while the period remains constant.
 
@@ -375,9 +375,9 @@ This is exactly what you will measure on the oscilloscope in the experiments bel
 
 ---
 
-# Required Components
+## Required Components
 
-## SparkFun Inventor Kit
+### SparkFun Inventor Kit
 
 - Arduino Uno
 - Breadboard
@@ -385,21 +385,21 @@ This is exactly what you will measure on the oscilloscope in the experiments bel
 - 220 Ω resistor
 - Jumper wires
 
-## Equipment
+### Equipment
 
 - DSO Nano Oscilloscope
 
 ---
 
-# Experiment 1 - Generate a PWM Signal
+## Experiment 1 - Generate a PWM Signal
 
-## Objective
+### Objective
 
 Generate PWM and observe it with the DSO Nano.
 
 ---
 
-# Wiring
+## Wiring
 
 ```mermaid
 graph LR
@@ -413,7 +413,7 @@ C[Arduino GND]
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 void setup()
@@ -429,7 +429,7 @@ void loop()
 
 ---
 
-# Why 128?
+## Why 128?
 
 Arduino uses a PWM range of:
 
@@ -453,7 +453,7 @@ $$
 
 ---
 
-# DSO Nano Setup
+## DSO Nano Setup
 
 Vertical Scale:
 
@@ -479,7 +479,7 @@ Rising Edge
 
 ---
 
-# Expected Waveform
+## Expected Waveform
 
 ```text
 5V ─────      ─────
@@ -490,9 +490,9 @@ Rising Edge
 
 ---
 
-# Measurements
+## Measurements
 
-## Frequency
+### Frequency
 
 Measure the PWM frequency.
 
@@ -511,7 +511,7 @@ ________________
 
 ---
 
-## Period
+### Period
 
 Using:
 
@@ -534,7 +534,7 @@ ________________
 
 ---
 
-## Peak Voltage
+### Peak Voltage
 
 Expected:
 
@@ -551,15 +551,15 @@ ________________
 
 ---
 
-# Experiment 2 - Duty Cycle Investigation
+## Experiment 2 - Duty Cycle Investigation
 
-## Objective
+### Objective
 
 Observe how duty cycle affects the PWM waveform.
 
 ---
 
-## Test A
+### Test A
 
 Upload:
 
@@ -578,7 +578,7 @@ Observe waveform.
 
 ---
 
-## Test B
+### Test B
 
 Upload:
 
@@ -596,7 +596,7 @@ Observe waveform.
 
 ---
 
-## Test C
+### Test C
 
 Upload:
 
@@ -614,7 +614,7 @@ Observe waveform.
 
 ---
 
-# Results Table
+## Results Table
 
 | PWM Value | Expected Duty Cycle | Measured Duty Cycle |
 |------------|-------------------|---------------------|
@@ -625,15 +625,15 @@ Observe waveform.
 
 ---
 
-# Experiment 3 - LED Brightness Control
+## Experiment 3 - LED Brightness Control
 
-## Objective
+### Objective
 
 Use PWM to control LED brightness.
 
 ---
 
-# Circuit
+## Circuit
 
 ```mermaid
 graph TD
@@ -648,7 +648,7 @@ C --> D[GND]
 
 ---
 
-# Step 1
+## Step 1
 
 Upload:
 
@@ -660,7 +660,7 @@ Observe brightness.
 
 ---
 
-# Step 2
+## Step 2
 
 Upload:
 
@@ -672,7 +672,7 @@ Observe brightness.
 
 ---
 
-# Step 3
+## Step 3
 
 Upload:
 
@@ -684,7 +684,7 @@ Observe brightness.
 
 ---
 
-# Step 4
+## Step 4
 
 Upload:
 
@@ -696,7 +696,7 @@ Observe brightness.
 
 ---
 
-# Results Table
+## Results Table
 
 | PWM Value | Brightness |
 |------------|------------|
@@ -707,7 +707,7 @@ Observe brightness.
 
 ---
 
-# Why Does Brightness Change?
+## Why Does Brightness Change?
 
 The LED is switching ON and OFF approximately:
 
@@ -727,11 +727,11 @@ A higher duty cycle means:
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 Now compare your measured results against the theoretical prediction.
 
-## Step 1 - Plot the Theoretical Line
+### Step 1 - Plot the Theoretical Line
 
 ```matlab
 D = 0:0.01:1;
@@ -748,7 +748,7 @@ ylabel('Average Voltage (V)')
 title('PWM Average Voltage - Theory vs Measurement')
 ```
 
-## Step 2 - Overlay Your Measurements
+### Step 2 - Overlay Your Measurements
 
 Enter the duty cycle values you measured from the oscilloscope and the corresponding average voltages you calculated:
 
@@ -766,7 +766,7 @@ plot(D_measured, Vavg_measured, 'ro', ...
 legend('Theory', 'Measured', 'Location', 'northwest')
 ```
 
-## Step 3 - Simulate the Measured Waveforms
+### Step 3 - Simulate the Measured Waveforms
 
 Using your measured frequency, simulate the waveform and compare against the theoretical 490 Hz:
 
@@ -789,7 +789,7 @@ ylabel('Voltage (V)')
 title(['Simulated PWM at Measured Frequency: ' num2str(f_measured) ' Hz'])
 ```
 
-## Reflection
+### Reflection
 
 Answer the following:
 
@@ -799,35 +799,35 @@ Answer the following:
 
 ---
 
-# Engineering Applications
+## Engineering Applications
 
 PWM is used in:
 
-## LED Dimmers
+### LED Dimmers
 
 Control light intensity efficiently.
 
-## Motor Controllers
+### Motor Controllers
 
 Control speed.
 
-## Buck Converters
+### Buck Converters
 
 Control output voltage.
 
-## Switching Power Supplies
+### Switching Power Supplies
 
 Improve efficiency.
 
-## Control Systems
+### Control Systems
 
 Drive actuators.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 What frequency did you measure?
 
@@ -839,7 +839,7 @@ ____________________
 
 ---
 
-## Question 2
+### Question 2
 
 What period did you measure?
 
@@ -851,7 +851,7 @@ ____________________
 
 ---
 
-## Question 3
+### Question 3
 
 What duty cycle corresponds to:
 
@@ -867,7 +867,7 @@ ____________________
 
 ---
 
-## Question 4
+### Question 4
 
 Why does PWM control LED brightness?
 
@@ -879,7 +879,7 @@ ____________________
 
 ---
 
-## Question 5
+### Question 5
 
 Your MATLAB simulation predicted a frequency of 490 Hz but you measured 492 Hz on the oscilloscope. What could explain this difference?
 
@@ -891,9 +891,9 @@ ____________________
 
 ---
 
-# Common Mistakes
+## Common Mistakes
 
-## No Signal Visible
+### No Signal Visible
 
 Check:
 
@@ -903,7 +903,7 @@ Check:
 
 ---
 
-## LED Does Not Light
+### LED Does Not Light
 
 Check:
 
@@ -913,7 +913,7 @@ Check:
 
 ---
 
-## Unstable Waveform
+### Unstable Waveform
 
 Check:
 
@@ -922,7 +922,7 @@ Check:
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ Arduino powered
 
@@ -940,7 +940,7 @@ Check:
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 
@@ -964,7 +964,7 @@ These concepts will appear repeatedly throughout the rest of this repository.
 
 ---
 
-# Next Project
+## Next Project
 
 **02_RC_Circuits.md**
 

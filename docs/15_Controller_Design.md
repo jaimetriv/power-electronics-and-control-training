@@ -1,6 +1,6 @@
 # Project 15 - Controller Design and Practical Control Engineering
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -24,7 +24,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -40,7 +40,7 @@ This project brings together everything learned throughout the course.
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -62,7 +62,7 @@ At the end of this project you should be able to:
 
 ---
 
-# Introduction
+## Introduction
 
 Control engineering is the process of designing systems that automatically achieve desired performance.
 
@@ -76,7 +76,7 @@ Examples include:
 
 ---
 
-# Review of the Control Loop
+## Review of the Control Loop
 
 A feedback control system consists of:
 
@@ -96,7 +96,7 @@ The controller continually adjusts the plant input to reduce error.
 
 ---
 
-# Closed-Loop Block Diagram
+## Closed-Loop Block Diagram
 
 ```mermaid
 graph LR
@@ -117,7 +117,7 @@ F --> E
 
 ---
 
-# Controller Design Process
+## Controller Design Process
 
 A typical design process consists of:
 
@@ -137,7 +137,7 @@ Test and Refine
 
 ---
 
-# Step 1 - Define Requirements
+## Step 1 - Define Requirements
 
 Before designing a controller, performance requirements must be specified.
 
@@ -151,7 +151,7 @@ Typical requirements include:
 
 ---
 
-# Example Requirements
+## Example Requirements
 
 Suppose we want a motor speed controller.
 
@@ -169,7 +169,7 @@ Steady-State Error = 0
 
 ---
 
-# Step 2 - Obtain a Model
+## Step 2 - Obtain a Model
 
 The system must be modelled.
 
@@ -183,7 +183,7 @@ provides mathematical models using experimental measurements.
 
 ---
 
-# Example First-Order Model
+## Example First-Order Model
 
 $$
 G(s)
@@ -198,7 +198,7 @@ Where:
 
 ---
 
-# Why Models Matter
+## Why Models Matter
 
 Models allow engineers to:
 
@@ -211,7 +211,7 @@ without risking hardware damage.
 
 ---
 
-# Step 3 - Select a Controller
+## Step 3 - Select a Controller
 
 Common controller choices include:
 
@@ -223,7 +223,7 @@ Common controller choices include:
 
 ---
 
-# Review of P Control
+## Review of P Control
 
 P control uses:
 
@@ -243,7 +243,7 @@ Disadvantages:
 
 ---
 
-# Review of PI Control
+## Review of PI Control
 
 PI control uses:
 
@@ -267,7 +267,7 @@ Disadvantages:
 
 ---
 
-# Review of PID Control
+## Review of PID Control
 
 PID control uses:
 
@@ -295,31 +295,31 @@ Disadvantages:
 
 ---
 
-# Step 4 - Evaluate Performance
+## Step 4 - Evaluate Performance
 
 Controllers are evaluated using performance metrics.
 
 ---
 
-## Rise Time
+### Rise Time
 
 The time required for the output to approach its target value.
 
 ---
 
-## Overshoot
+### Overshoot
 
 The amount by which the output exceeds the desired value.
 
 ---
 
-## Settling Time
+### Settling Time
 
 The time required to remain within an acceptable error band.
 
 ---
 
-## Steady-State Error
+### Steady-State Error
 
 The final difference between:
 
@@ -335,7 +335,7 @@ Output
 
 ---
 
-# Typical Response
+## Typical Response
 
 ```text
 Output
@@ -357,13 +357,13 @@ Important measurements:
 
 ---
 
-# Stability
+## Stability
 
 A stable control system eventually settles to a predictable value.
 
 ---
 
-# Stable Response
+## Stable Response
 
 ```text
 Output
@@ -377,7 +377,7 @@ Output
 
 ---
 
-# Unstable Response
+## Unstable Response
 
 ```text
 Output
@@ -392,13 +392,13 @@ Oscillations continue growing or never settle.
 
 ---
 
-# Controller Tuning
+## Controller Tuning
 
 Controller tuning means selecting suitable gain values.
 
 ---
 
-# Effect of Increasing Kp
+## Effect of Increasing Kp
 
 Increasing:
 
@@ -416,7 +416,7 @@ typically:
 
 ---
 
-# Effect of Increasing Ki
+## Effect of Increasing Ki
 
 Increasing:
 
@@ -432,7 +432,7 @@ typically:
 
 ---
 
-# Effect of Increasing Kd
+## Effect of Increasing Kd
 
 Increasing:
 
@@ -450,7 +450,7 @@ typically:
 
 ---
 
-# Practical Tuning Procedure
+## Practical Tuning Procedure
 
 A common approach is:
 
@@ -498,7 +498,7 @@ if overshoot or oscillation is excessive.
 
 ---
 
-# Controller Saturation
+## Controller Saturation
 
 Real actuators have limits.
 
@@ -513,7 +513,7 @@ The controller output cannot exceed these limits.
 
 ---
 
-# Integral Windup
+## Integral Windup
 
 If the controller saturates, the integral term may continue accumulating.
 
@@ -525,7 +525,7 @@ Integral Windup
 
 ---
 
-# Anti-Windup
+## Anti-Windup
 
 A simple solution is:
 
@@ -537,7 +537,7 @@ This limits integral growth.
 
 ---
 
-# Design Trade-Offs
+## Design Trade-Offs
 
 Control systems always involve compromises.
 
@@ -550,15 +550,15 @@ Control systems always involve compromises.
 
 ---
 
-# Experiment 1 - Manual Controller Tuning
+## Experiment 1 - Manual Controller Tuning
 
-## Objective
+### Objective
 
 Observe how gain values affect behaviour.
 
 ---
 
-# Initial Values
+## Initial Values
 
 ```cpp
 Kp = 1.0;
@@ -570,7 +570,7 @@ Record observations.
 
 ---
 
-# Increase Kp
+## Increase Kp
 
 Test:
 
@@ -586,7 +586,7 @@ Record:
 
 ---
 
-# Add Integral Action
+## Add Integral Action
 
 Test:
 
@@ -602,7 +602,7 @@ Observe:
 
 ---
 
-# Add Derivative Action
+## Add Derivative Action
 
 Test:
 
@@ -620,7 +620,7 @@ Observe:
 
 ---
 
-# Results Table
+## Results Table
 
 | Kp | Ki | Kd | Behaviour |
 |----|----|----|-----------|
@@ -631,15 +631,15 @@ Observe:
 
 ---
 
-# Experiment 2 - Disturbance Rejection
+## Experiment 2 - Disturbance Rejection
 
-## Objective
+### Objective
 
 Observe controller response to disturbances.
 
 ---
 
-# Procedure
+## Procedure
 
 Operate the system normally.
 
@@ -657,7 +657,7 @@ Observe the response.
 
 ---
 
-# Questions
+## Questions
 
 Does the controller:
 
@@ -670,7 +670,7 @@ Record observations.
 
 ---
 
-# Robustness
+## Robustness
 
 Robustness refers to the ability of a controller to tolerate:
 
@@ -683,7 +683,7 @@ without significant degradation.
 
 ---
 
-# Engineering Workflow
+## Engineering Workflow
 
 A typical industrial workflow is:
 
@@ -703,7 +703,7 @@ Optimization
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before building, use the motor model identified in Project 14 to predict how P, PI, and PID controllers will perform.
 
@@ -758,7 +758,7 @@ Record the predicted rise time, overshoot, and settling time for each controller
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 Enter your identified motor model and the gains you settled on during the experiments. Overlay the simulated step response against your measured Serial data to quantify how well the model predicted real behaviour.
 
@@ -812,63 +812,63 @@ Reflection questions:
 
 ---
 
-# Relationship to Previous Projects
+## Relationship to Previous Projects
 
-## Projects 6 to 8
+### Projects 6 to 8
 
 Controller implementation.
 
 ---
 
-## Projects 9 to 13
+### Projects 9 to 13
 
 Practical power electronic systems.
 
 ---
 
-## Project 14
+### Project 14
 
 System identification and modelling.
 
 ---
 
-# Engineering Applications
+## Engineering Applications
 
 Controller design is used in:
 
-## Robotics
+### Robotics
 
 Motion control.
 
 ---
 
-## Aerospace
+### Aerospace
 
 Flight control systems.
 
 ---
 
-## Automotive Systems
+### Automotive Systems
 
 Cruise control and engine management.
 
 ---
 
-## Industrial Automation
+### Industrial Automation
 
 Process regulation.
 
 ---
 
-## Power Electronics
+### Power Electronics
 
 Converter and inverter control.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 Why is a mathematical model useful?
 
@@ -880,7 +880,7 @@ ____________________
 
 ---
 
-## Question 2
+### Question 2
 
 What does integral action do?
 
@@ -892,7 +892,7 @@ ____________________
 
 ---
 
-## Question 3
+### Question 3
 
 What does derivative action do?
 
@@ -904,7 +904,7 @@ ____________________
 
 ---
 
-## Question 4
+### Question 4
 
 What is integral windup?
 
@@ -916,7 +916,7 @@ ____________________
 
 ---
 
-## Question 5
+### Question 5
 
 What is the purpose of controller tuning?
 
@@ -928,7 +928,7 @@ ____________________
 
 ---
 
-## Question 6
+### Question 6
 
 Your MATLAB simulation predicted zero steady-state error and 8% overshoot with a PI controller, but the physical motor showed 20% overshoot and a small residual error. List two physical effects that could explain each discrepancy, and describe how you would update the model to reduce the gap.
 
@@ -940,9 +940,9 @@ ____________________
 
 ---
 
-# Common Mistakes
+## Common Mistakes
 
-## Gains Too Large
+### Gains Too Large
 
 Symptoms:
 
@@ -952,7 +952,7 @@ Symptoms:
 
 ---
 
-## Gains Too Small
+### Gains Too Small
 
 Symptoms:
 
@@ -961,7 +961,7 @@ Symptoms:
 
 ---
 
-## Ignoring Actuator Limits
+### Ignoring Actuator Limits
 
 Can result in:
 
@@ -971,7 +971,7 @@ Can result in:
 
 ---
 
-## Ignoring Measurement Noise
+### Ignoring Measurement Noise
 
 Can affect:
 
@@ -981,7 +981,7 @@ Can affect:
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ Model identified correctly
 
@@ -999,7 +999,7 @@ Can affect:
 
 ---
 
-# Final Course Summary
+## Final Course Summary
 
 Throughout this course you have studied:
 

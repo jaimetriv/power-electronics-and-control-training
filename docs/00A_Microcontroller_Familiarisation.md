@@ -2,7 +2,7 @@
 
 ---
 
-# Objective
+## Objective
 
 The objective of this project is to become familiar with the Arduino Uno development platform and the Arduino Integrated Development Environment (IDE).
 
@@ -18,7 +18,7 @@ This project introduces the basic skills required for the remainder of the cours
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -40,7 +40,7 @@ At the end of this project you should be able to:
 
 ---
 
-# What Is Arduino?
+## What Is Arduino?
 
 Arduino is an educational and prototyping platform designed for learning electronics, programming, automation and control systems.
 
@@ -58,7 +58,7 @@ on a single development board.
 
 ---
 
-# Why Learn Arduino?
+## Why Learn Arduino?
 
 Arduino provides an excellent introduction to:
 
@@ -78,7 +78,7 @@ Many of the concepts learned with Arduino later transfer directly to:
 
 ---
 
-# Arduino Uno Overview
+## Arduino Uno Overview
 
 Typical Arduino Uno:
 
@@ -97,9 +97,9 @@ Typical Arduino Uno:
 
 ---
 
-# Main Features
+## Main Features
 
-## Microcontroller
+### Microcontroller
 
 ```text
 ATmega328P
@@ -107,7 +107,7 @@ ATmega328P
 
 ---
 
-## Clock Frequency
+### Clock Frequency
 
 ```text
 16 MHz
@@ -115,7 +115,7 @@ ATmega328P
 
 ---
 
-## Digital I/O Pins
+### Digital I/O Pins
 
 ```text
 14
@@ -129,7 +129,7 @@ D0 to D13
 
 ---
 
-## Analogue Inputs
+### Analogue Inputs
 
 ```text
 6
@@ -143,7 +143,7 @@ A0 to A5
 
 ---
 
-## PWM Outputs
+### PWM Outputs
 
 Pins:
 
@@ -160,9 +160,9 @@ support PWM generation.
 
 ---
 
-# Important Pins
+## Important Pins
 
-## 5V
+### 5V
 
 Provides:
 
@@ -174,7 +174,7 @@ power output.
 
 ---
 
-## GND
+### GND
 
 Circuit reference.
 
@@ -182,7 +182,7 @@ All circuits require a common ground connection.
 
 ---
 
-## Digital Pins
+### Digital Pins
 
 Used for:
 
@@ -192,7 +192,7 @@ ON/OFF Signals
 
 ---
 
-## Analogue Inputs
+### Analogue Inputs
 
 Used for:
 
@@ -208,7 +208,7 @@ Examples:
 
 ---
 
-# Development Environment
+## Development Environment
 
 Programs are written using:
 
@@ -218,7 +218,7 @@ Arduino IDE
 
 ---
 
-# Installing Arduino IDE
+## Installing Arduino IDE
 
 Download from:
 
@@ -230,13 +230,13 @@ Install using default settings.
 
 ---
 
-# First Program
+## First Program
 
 A traditional first program flashes an LED.
 
 ---
 
-# Built-In LED
+## Built-In LED
 
 The Arduino Uno contains a built-in LED connected to:
 
@@ -246,7 +246,7 @@ Pin 13
 
 ---
 
-# Blink Program
+## Blink Program
 
 ```cpp
 void setup()
@@ -266,7 +266,7 @@ void loop()
 
 ---
 
-# Understanding setup()
+## Understanding setup()
 
 The function:
 
@@ -289,7 +289,7 @@ Typically used for:
 
 ---
 
-# Understanding loop()
+## Understanding loop()
 
 The function:
 
@@ -307,15 +307,15 @@ until power is removed.
 
 ---
 
-# Experiment 1 - LED Flashing
+## Experiment 1 - LED Flashing
 
-## Objective
+### Objective
 
 Flash the onboard LED.
 
 ---
 
-# Procedure
+## Procedure
 
 1. Connect Arduino via USB.
 2. Open Arduino IDE.
@@ -325,7 +325,7 @@ Flash the onboard LED.
 
 ---
 
-# Observe
+## Observe
 
 The LED should:
 
@@ -339,7 +339,7 @@ repeatedly.
 
 ---
 
-# Digital Outputs
+## Digital Outputs
 
 Digital outputs have two possible states:
 
@@ -359,9 +359,9 @@ or:
 
 ---
 
-# Experiment 2 - External LED
+## Experiment 2 - External LED
 
-## Components
+### Components
 
 - LED
 - 220 Ω resistor
@@ -369,7 +369,7 @@ or:
 
 ---
 
-# Circuit
+## Circuit
 
 ```text
 Arduino D8
@@ -383,7 +383,7 @@ Arduino D8
 
 ---
 
-# Code
+## Code
 
 ```cpp
 void setup()
@@ -403,7 +403,7 @@ void loop()
 
 ---
 
-# Digital Inputs
+## Digital Inputs
 
 Digital inputs can detect:
 
@@ -417,9 +417,9 @@ signals.
 
 ---
 
-# Experiment 3 - Push Button
+## Experiment 3 - Push Button
 
-## Circuit
+### Circuit
 
 ```text
 5V
@@ -435,7 +435,7 @@ GND
 
 ---
 
-# Code
+## Code
 
 ```cpp
 void setup()
@@ -455,7 +455,7 @@ void loop()
 
 ---
 
-# What Is An Analogue Input?
+## What Is An Analogue Input?
 
 Some signals vary continuously.
 
@@ -467,7 +467,7 @@ Examples:
 
 ---
 
-# ADC Fundamentals
+## ADC Fundamentals
 
 ADC stands for:
 
@@ -491,7 +491,7 @@ digital counts.
 
 ---
 
-# Example
+## Example
 
 ```text
 0 V     → 0
@@ -505,9 +505,9 @@ approximately.
 
 ---
 
-# Experiment 4 - Reading a Potentiometer
+## Experiment 4 - Reading a Potentiometer
 
-## Circuit
+### Circuit
 
 ```text
 5V
@@ -520,7 +520,7 @@ GND
 
 ---
 
-# Code
+## Code
 
 ```cpp
 void setup()
@@ -541,7 +541,7 @@ void loop()
 
 ---
 
-# Serial Monitor
+## Serial Monitor
 
 The Serial Monitor allows communication between:
 
@@ -555,7 +555,7 @@ Computer
 
 ---
 
-# Opening Serial Monitor
+## Opening Serial Monitor
 
 In Arduino IDE:
 
@@ -575,7 +575,7 @@ Select:
 
 ---
 
-# PWM Fundamentals
+## PWM Fundamentals
 
 PWM stands for:
 
@@ -587,7 +587,7 @@ PWM allows a digital output to behave like an analogue output.
 
 ---
 
-# PWM Concept
+## PWM Concept
 
 Instead of changing voltage directly:
 
@@ -611,7 +611,7 @@ very rapidly.
 
 ---
 
-# Duty Cycle
+## Duty Cycle
 
 Duty cycle is:
 
@@ -621,7 +621,7 @@ Percentage ON Time
 
 ---
 
-# Example
+## Example
 
 ```text
 0%   OFF
@@ -633,7 +633,7 @@ Percentage ON Time
 
 ---
 
-# Arduino PWM Command
+## Arduino PWM Command
 
 ```cpp
 analogWrite(pin,value);
@@ -641,7 +641,7 @@ analogWrite(pin,value);
 
 ---
 
-# PWM Range
+## PWM Range
 
 ```text
 0 to 255
@@ -649,7 +649,7 @@ analogWrite(pin,value);
 
 ---
 
-# Examples
+## Examples
 
 ```cpp
 analogWrite(9,0);
@@ -681,9 +681,9 @@ analogWrite(9,255);
 
 ---
 
-# Experiment 5 - LED Brightness Control
+## Experiment 5 - LED Brightness Control
 
-## Circuit
+### Circuit
 
 ```text
 D9
@@ -697,7 +697,7 @@ GND
 
 ---
 
-# Code
+## Code
 
 ```cpp
 void setup()
@@ -724,7 +724,7 @@ void loop()
 
 ---
 
-# Observe
+## Observe
 
 The LED should:
 
@@ -736,7 +736,7 @@ Gradually Dim
 
 ---
 
-# Why PWM Is Important
+## Why PWM Is Important
 
 PWM is one of the most important concepts in this course.
 
@@ -750,9 +750,9 @@ It will later be used for:
 
 ---
 
-# Troubleshooting
+## Troubleshooting
 
-## Upload Fails
+### Upload Fails
 
 Check:
 
@@ -764,7 +764,7 @@ Check:
 
 ---
 
-## LED Does Not Flash
+### LED Does Not Flash
 
 Check:
 
@@ -776,7 +776,7 @@ Check:
 
 ---
 
-## Serial Monitor Empty
+### Serial Monitor Empty
 
 Check:
 
@@ -788,11 +788,11 @@ Check:
 
 ---
 
-# Laboratory Exercises
+## Laboratory Exercises
 
 Complete the following:
 
-## Exercise 1
+### Exercise 1
 
 Modify Blink to flash:
 
@@ -804,7 +804,7 @@ Modify Blink to flash:
 
 ---
 
-## Exercise 2
+### Exercise 2
 
 Create a pattern:
 
@@ -818,27 +818,27 @@ Long Flash
 
 ---
 
-## Exercise 3
+### Exercise 3
 
 Read a potentiometer and display values using the Serial Monitor.
 
 ---
 
-## Exercise 4
+### Exercise 4
 
 Control LED brightness using PWM.
 
 ---
 
-## Exercise 5
+### Exercise 5
 
 Connect a button and use it to switch an LED ON and OFF.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 What is the purpose of:
 
@@ -848,7 +848,7 @@ setup()
 
 ---
 
-## Question 2
+### Question 2
 
 What is the purpose of:
 
@@ -858,13 +858,13 @@ loop()
 
 ---
 
-## Question 3
+### Question 3
 
 How many digital I/O pins does the Arduino Uno provide?
 
 ---
 
-## Question 4
+### Question 4
 
 What range of values can:
 
@@ -876,13 +876,13 @@ accept?
 
 ---
 
-## Question 5
+### Question 5
 
 What does PWM stand for?
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 

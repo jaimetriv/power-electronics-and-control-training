@@ -1,6 +1,6 @@
 # Project 6 - Proportional Control (P Control) and Feedback Systems
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -14,7 +14,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -30,7 +30,7 @@ This project introduces the foundations of modern control engineering.
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -52,9 +52,9 @@ At the end of this project you should be able to:
 
 ---
 
-# Theory
+## Theory
 
-## What is a Control System?
+### What is a Control System?
 
 A control system attempts to make a system behave in a desired manner.
 
@@ -79,7 +79,7 @@ Output
 
 ---
 
-# Open-Loop Control
+## Open-Loop Control
 
 Open-loop control means:
 
@@ -99,7 +99,7 @@ The controller assumes the motor behaves correctly.
 
 ---
 
-# Open-Loop Block Diagram
+## Open-Loop Block Diagram
 
 ```mermaid
 graph LR
@@ -112,7 +112,7 @@ B --> C[Output]
 
 ---
 
-# Problems with Open-Loop Control
+## Problems with Open-Loop Control
 
 Suppose a motor is running at:
 
@@ -138,7 +138,7 @@ No correction occurs
 
 ---
 
-# Closed-Loop Control
+## Closed-Loop Control
 
 Closed-loop control uses:
 
@@ -162,7 +162,7 @@ Actual Value
 
 ---
 
-# Closed-Loop Block Diagram
+## Closed-Loop Block Diagram
 
 ```mermaid
 graph LR
@@ -183,7 +183,7 @@ F --> E
 
 ---
 
-# Advantages of Feedback
+## Advantages of Feedback
 
 Feedback can:
 
@@ -199,7 +199,7 @@ Feedback can:
 
 ---
 
-# Reference Signal
+## Reference Signal
 
 The reference is the desired value.
 
@@ -223,7 +223,7 @@ $$
 
 ---
 
-# Output Signal
+## Output Signal
 
 The output is the actual measured value.
 
@@ -247,7 +247,7 @@ $$
 
 ---
 
-# Error Signal
+## Error Signal
 
 The error is the difference between the desired value and the measured value.
 
@@ -263,7 +263,7 @@ Where:
 
 ---
 
-# Example
+## Example
 
 Given:
 
@@ -293,7 +293,7 @@ $$
 
 ---
 
-# Proportional Control
+## Proportional Control
 
 The simplest controller is:
 
@@ -305,7 +305,7 @@ The controller output is proportional to the error.
 
 ---
 
-# Proportional Control Equation
+## Proportional Control Equation
 
 $$
 u(t)=K_Pe(t)
@@ -319,13 +319,13 @@ Where:
 
 ---
 
-# Understanding Gain
+## Understanding Gain
 
 The gain determines how strongly the controller reacts to error.
 
 ---
 
-## Small Gain Example
+### Small Gain Example
 
 Given:
 
@@ -357,7 +357,7 @@ The controller responds gently.
 
 ---
 
-## Large Gain Example
+### Large Gain Example
 
 Given:
 
@@ -385,7 +385,7 @@ The controller responds aggressively.
 
 ---
 
-# Control Concept
+## Control Concept
 
 ```text
 Error
@@ -399,11 +399,11 @@ Reduced Error
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before building the circuit, simulate the closed-loop P controller applied to the first-order motor model from Project 5.
 
-## Closed-Loop Step Response — Effect of Kp
+### Closed-Loop Step Response — Effect of Kp
 
 The closed-loop transfer function for a P controller with a first-order plant is:
 
@@ -442,7 +442,7 @@ title('P Controller \mdash Closed-Loop Step Response');
 legend('Location', 'southeast');
 ```
 
-## Steady-State Error vs Kp
+### Steady-State Error vs Kp
 
 For a first-order plant with unity feedback, the steady-state error is:
 
@@ -462,7 +462,7 @@ xlabel('Kp'); ylabel('Steady-State Error (%)');
 title('P Controller \mdash Steady-State Error vs Gain');
 ```
 
-## Prediction Table
+### Prediction Table
 
 Record your predicted steady-state error before experimenting:
 
@@ -476,7 +476,7 @@ Record your predicted steady-state error before experimenting:
 
 ---
 
-# Components Required
+## Components Required
 
 From your existing kit:
 
@@ -497,15 +497,15 @@ Equipment:
 
 ---
 
-# Experiment 1 - Create a Reference Signal
+## Experiment 1 - Create a Reference Signal
 
-## Objective
+### Objective
 
 Generate a user-adjustable reference input using the potentiometer.
 
 ---
 
-# Wiring
+## Wiring
 
 ```mermaid
 graph LR
@@ -521,7 +521,7 @@ D[GND]
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 void setup()
@@ -541,7 +541,7 @@ void loop()
 
 ---
 
-# Expected Behaviour
+## Expected Behaviour
 
 Rotating the potentiometer changes the measured value between approximately:
 
@@ -553,9 +553,9 @@ This value represents the desired motor speed setpoint.
 
 ---
 
-# Experiment 2 - Closed-Loop P Controller with Back-EMF Feedback
+## Experiment 2 - Closed-Loop P Controller with Back-EMF Feedback
 
-## Objective
+### Objective
 
 Close the feedback loop using the motor's back-EMF voltage as a proxy for speed.
 
@@ -565,7 +565,7 @@ When a DC motor spins it generates a voltage proportional to speed — this is c
 
 ---
 
-# Back-EMF Sensing Circuit
+## Back-EMF Sensing Circuit
 
 Add a voltage divider from the motor positive terminal to GND:
 
@@ -594,7 +594,7 @@ The divider scales the motor terminal voltage by 0.5 so it stays within the 0–
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 float Kp = 0.5;
@@ -627,7 +627,7 @@ void loop()
 
 ---
 
-# What Is Happening?
+## What Is Happening?
 
 The potentiometer sets the reference:
 
@@ -651,7 +651,7 @@ This is now a **true closed loop** — the controller reacts to the difference b
 
 ---
 
-# Observe
+## Observe
 
 With the loop closed:
 
@@ -667,9 +667,9 @@ ____________________________________
 
 ---
 
-# Experiment 3 - Investigate Controller Gain
+## Experiment 3 - Investigate Controller Gain
 
-## Objective
+### Objective
 
 Observe how Kp changes closed-loop behaviour.
 
@@ -677,7 +677,7 @@ Use the same closed-loop code from Experiment 2. Change only the Kp value.
 
 ---
 
-## Test A
+### Test A
 
 ```cpp
 Kp = 0.1;
@@ -691,7 +691,7 @@ ______________________
 
 ---
 
-## Test B
+### Test B
 
 ```cpp
 Kp = 0.25;
@@ -705,7 +705,7 @@ ______________________
 
 ---
 
-## Test C
+### Test C
 
 ```cpp
 Kp = 0.5;
@@ -719,7 +719,7 @@ ______________________
 
 ---
 
-## Test D
+### Test D
 
 ```cpp
 Kp = 1.0;
@@ -733,7 +733,7 @@ ______________________
 
 ---
 
-# Results Table
+## Results Table
 
 | Kp | Motor behaviour | PWM saturates? |
 |----|----------------|----------------|
@@ -744,7 +744,7 @@ ______________________
 
 ---
 
-# Experiment 4 - Error Calculation
+## Experiment 4 - Error Calculation
 
 Suppose the desired speed corresponds to:
 
@@ -780,7 +780,7 @@ The controller increases PWM to reduce the error.
 
 ---
 
-# Control Loop Representation
+## Control Loop Representation
 
 ```mermaid
 graph LR
@@ -801,13 +801,13 @@ F --> E
 
 ---
 
-# DSO Nano Exercise
+## DSO Nano Exercise
 
 Observe how the PWM duty cycle changes as you rotate the potentiometer.
 
 ---
 
-# Probe Connections
+## Probe Connections
 
 Probe Tip:
 
@@ -823,7 +823,7 @@ GND
 
 ---
 
-# DSO Nano Settings
+## DSO Nano Settings
 
 Vertical:
 
@@ -845,7 +845,7 @@ Rising Edge
 
 ---
 
-# Observation
+## Observation
 
 Rotate the potentiometer slowly from minimum to maximum.
 
@@ -863,7 +863,7 @@ ____________________________________
 
 ---
 
-# Steady-State Error
+## Steady-State Error
 
 One limitation of a proportional controller is:
 
@@ -875,7 +875,7 @@ The output often remains slightly different from the reference.
 
 ---
 
-# Example
+## Example
 
 Reference:
 
@@ -907,7 +907,7 @@ The controller gets close to the target but does not completely eliminate the er
 
 ---
 
-# Limitations of Proportional Control
+## Limitations of Proportional Control
 
 Increasing gain usually reduces error.
 
@@ -931,11 +931,11 @@ Stability
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 Now simulate the closed-loop response using your actual Kp values from Experiment 3 and the motor model from Project 5.
 
-## Enter Your Parameters
+### Enter Your Parameters
 
 ```matlab
 K   = 1;
@@ -963,7 +963,7 @@ title('P Controller \mdash Closed-Loop Response (Motor Plant)');
 legend('Location', 'southeast');
 ```
 
-## Reflection
+### Reflection
 
 - Which Kp gave the fastest response without saturation?
 - Does the simulated steady-state error match the formula $e_{ss} = 1/(1 + K_P K)$?
@@ -972,43 +972,43 @@ legend('Location', 'southeast');
 
 ---
 
-# Engineering Applications
+## Engineering Applications
 
 Proportional control is used in:
 
-## Motor Speed Control
+### Motor Speed Control
 
 Basic regulation.
 
 ---
 
-## Temperature Control
+### Temperature Control
 
 Simple thermostats.
 
 ---
 
-## Position Control
+### Position Control
 
 Actuator systems.
 
 ---
 
-## Voltage Regulation
+### Voltage Regulation
 
 Basic power electronics.
 
 ---
 
-## Robotics
+### Robotics
 
 Basic servo control loops.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 What is feedback?
 
@@ -1020,7 +1020,7 @@ ____________________
 
 ---
 
-## Question 2
+### Question 2
 
 What is the error signal?
 
@@ -1032,7 +1032,7 @@ ____________________
 
 ---
 
-## Question 3
+### Question 3
 
 Write the proportional controller equation.
 
@@ -1044,7 +1044,7 @@ ____________________
 
 ---
 
-## Question 4
+### Question 4
 
 What happens when Kp increases?
 
@@ -1056,7 +1056,7 @@ ____________________
 
 ---
 
-## Question 5
+### Question 5
 
 Why can a proportional controller still have steady-state error?
 
@@ -1068,7 +1068,7 @@ ____________________
 
 ---
 
-## Question 6
+### Question 6
 
 Your simulation shows e_ss = 16.7% at Kp = 5. What would Kp need to be to reduce e_ss below 5%? Show your working using the formula $e_{ss} = 1/(1 + K_P K)$.
 
@@ -1080,9 +1080,9 @@ ____________________
 
 ---
 
-# Common Mistakes
+## Common Mistakes
 
-## Motor Doesn't Respond to Pot
+### Motor Doesn't Respond to Pot
 
 Check:
 
@@ -1093,7 +1093,7 @@ Check:
 
 ---
 
-## PWM Saturates Immediately
+### PWM Saturates Immediately
 
 Check:
 
@@ -1102,7 +1102,7 @@ Check:
 
 ---
 
-## Potentiometer Not Responding
+### Potentiometer Not Responding
 
 Check:
 
@@ -1111,7 +1111,7 @@ Check:
 
 ---
 
-## No PWM Visible on DSO Nano
+### No PWM Visible on DSO Nano
 
 Check:
 
@@ -1121,7 +1121,7 @@ Check:
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ Motor circuit wired correctly (MOSFET + flyback diode)
 
@@ -1143,7 +1143,7 @@ Check:
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 
@@ -1171,7 +1171,7 @@ These concepts are the foundation of all modern control systems.
 
 ---
 
-# Next Project
+## Next Project
 
 **07_PI_Controller.md**
 

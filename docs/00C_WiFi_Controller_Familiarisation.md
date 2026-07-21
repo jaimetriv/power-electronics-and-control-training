@@ -2,7 +2,7 @@
 
 ---
 
-# Objective
+## Objective
 
 The objective of this project is to become familiar with the ESP32 DevKit V1 development platform and how to program it using the Arduino IDE.
 
@@ -17,7 +17,7 @@ This project introduces the key differences between the ESP32 and the Arduino Un
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -41,7 +41,7 @@ At the end of this project you should be able to:
 
 ---
 
-# What Is the ESP32?
+## What Is the ESP32?
 
 The ESP32 is a powerful microcontroller designed for connected and high-performance embedded applications.
 
@@ -61,7 +61,7 @@ on a single development board.
 
 ---
 
-# Why Use the ESP32?
+## Why Use the ESP32?
 
 The ESP32 offers significant advantages over the Arduino Uno for advanced projects:
 
@@ -88,7 +88,7 @@ is required for precise control of:
 
 ---
 
-# ESP32 DevKit V1 Overview
+## ESP32 DevKit V1 Overview
 
 Typical ESP32 DevKit V1:
 
@@ -107,9 +107,9 @@ Typical ESP32 DevKit V1:
 
 ---
 
-# Main Features
+## Main Features
 
-## Microcontroller
+### Microcontroller
 
 ```text
 ESP32-WROOM-32
@@ -117,7 +117,7 @@ ESP32-WROOM-32
 
 ---
 
-## Clock Frequency
+### Clock Frequency
 
 ```text
 240 MHz
@@ -127,7 +127,7 @@ Dual-core architecture.
 
 ---
 
-## Digital I/O Pins
+### Digital I/O Pins
 
 ```text
 Up to 34
@@ -143,7 +143,7 @@ Not all pins are available on every DevKit layout.
 
 ---
 
-## Analogue Inputs
+### Analogue Inputs
 
 ```text
 18
@@ -157,7 +157,7 @@ Not all pins are available on every DevKit layout.
 
 ---
 
-## PWM
+### PWM
 
 The ESP32 uses a dedicated peripheral called:
 
@@ -175,7 +175,7 @@ Features:
 
 ---
 
-## Logic Level
+### Logic Level
 
 ```text
 3.3 V
@@ -185,7 +185,7 @@ This is an important difference from the Arduino Uno.
 
 ---
 
-# Important Difference - Logic Level
+## Important Difference - Logic Level
 
 The Arduino Uno operates at:
 
@@ -205,9 +205,9 @@ This can permanently damage the device.
 
 ---
 
-# Important Pins
+## Important Pins
 
-## 3.3V
+### 3.3V
 
 Provides:
 
@@ -221,7 +221,7 @@ Maximum current is limited.
 
 ---
 
-## GND
+### GND
 
 Circuit reference.
 
@@ -229,7 +229,7 @@ All circuits require a common ground connection.
 
 ---
 
-## GPIO Pins
+### GPIO Pins
 
 Used for:
 
@@ -239,7 +239,7 @@ Digital and Analogue Signals
 
 ---
 
-## VIN
+### VIN
 
 Accepts:
 
@@ -253,7 +253,7 @@ The onboard regulator converts this to 3.3 V internally.
 
 ---
 
-# Development Environment
+## Development Environment
 
 Programs are written using:
 
@@ -265,9 +265,9 @@ The ESP32 requires an additional board package to be installed.
 
 ---
 
-# Installing the ESP32 Board Package
+## Installing the ESP32 Board Package
 
-## Step 1
+### Step 1
 
 Open Arduino IDE.
 
@@ -283,7 +283,7 @@ Preferences
 
 ---
 
-## Step 2
+### Step 2
 
 In the field:
 
@@ -299,7 +299,7 @@ https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32
 
 ---
 
-## Step 3
+### Step 3
 
 Go to:
 
@@ -329,7 +329,7 @@ esp32 by Espressif Systems
 
 ---
 
-## Step 4
+### Step 4
 
 Select the board:
 
@@ -351,7 +351,7 @@ DOIT ESP32 DevKit V1
 
 ---
 
-## Step 5
+### Step 5
 
 Select the correct COM port:
 
@@ -365,13 +365,13 @@ Port
 
 ---
 
-# First Program
+## First Program
 
 A traditional first program flashes an LED.
 
 ---
 
-# Built-In LED
+## Built-In LED
 
 The ESP32 DevKit V1 contains a built-in LED connected to:
 
@@ -381,7 +381,7 @@ GPIO2
 
 ---
 
-# Blink Program
+## Blink Program
 
 ```cpp
 void setup()
@@ -401,7 +401,7 @@ void loop()
 
 ---
 
-# Understanding setup()
+## Understanding setup()
 
 The function:
 
@@ -424,7 +424,7 @@ Typically used for:
 
 ---
 
-# Understanding loop()
+## Understanding loop()
 
 The function:
 
@@ -442,15 +442,15 @@ until power is removed.
 
 ---
 
-# Experiment 1 - LED Flashing
+## Experiment 1 - LED Flashing
 
-## Objective
+### Objective
 
 Flash the onboard LED.
 
 ---
 
-# Procedure
+## Procedure
 
 1. Connect ESP32 via USB.
 2. Open Arduino IDE.
@@ -461,7 +461,7 @@ Flash the onboard LED.
 
 ---
 
-# Observe
+## Observe
 
 The LED should:
 
@@ -475,15 +475,15 @@ repeatedly.
 
 ---
 
-# Experiment 2 - External LED
+## Experiment 2 - External LED
 
-## Important
+### Important
 
 Use a current-limiting resistor.
 
 The ESP32 GPIO pins operate at 3.3 V.
 
-## Components
+### Components
 
 - LED
 - 220 Ω resistor
@@ -491,7 +491,7 @@ The ESP32 GPIO pins operate at 3.3 V.
 
 ---
 
-# Circuit
+## Circuit
 
 ```text
 ESP32 GPIO18
@@ -505,7 +505,7 @@ ESP32 GPIO18
 
 ---
 
-# Code
+## Code
 
 ```cpp
 void setup()
@@ -525,7 +525,7 @@ void loop()
 
 ---
 
-# Digital Inputs
+## Digital Inputs
 
 Digital inputs can detect:
 
@@ -539,7 +539,7 @@ signals.
 
 ---
 
-# Input Voltage Levels
+## Input Voltage Levels
 
 For the ESP32:
 
@@ -553,9 +553,9 @@ Never apply 5 V to an input pin.
 
 ---
 
-# Experiment 3 - Push Button
+## Experiment 3 - Push Button
 
-## Circuit
+### Circuit
 
 ```text
 3.3V
@@ -571,7 +571,7 @@ GND
 
 ---
 
-# Code
+## Code
 
 ```cpp
 void setup()
@@ -591,7 +591,7 @@ void loop()
 
 ---
 
-# What Is An Analogue Input?
+## What Is An Analogue Input?
 
 Some signals vary continuously.
 
@@ -604,7 +604,7 @@ Examples:
 
 ---
 
-# ADC Fundamentals
+## ADC Fundamentals
 
 The ESP32 ADC converts:
 
@@ -628,7 +628,7 @@ Resolution:
 
 ---
 
-# Example
+## Example
 
 ```text
 0 V     → 0
@@ -642,7 +642,7 @@ approximately.
 
 ---
 
-# ADC Note
+## ADC Note
 
 The ESP32 ADC has known non-linearity near:
 
@@ -662,9 +662,9 @@ For best accuracy keep signals between:
 
 ---
 
-# Experiment 4 - Reading a Potentiometer
+## Experiment 4 - Reading a Potentiometer
 
-## Circuit
+### Circuit
 
 ```text
 3.3V
@@ -679,7 +679,7 @@ Use GPIO34 which is input-only and ADC-capable.
 
 ---
 
-# Code
+## Code
 
 ```cpp
 void setup()
@@ -699,7 +699,7 @@ void loop()
 
 ---
 
-# Serial Monitor
+## Serial Monitor
 
 The Serial Monitor allows communication between:
 
@@ -713,7 +713,7 @@ Computer
 
 ---
 
-# Opening Serial Monitor
+## Opening Serial Monitor
 
 In Arduino IDE:
 
@@ -735,7 +735,7 @@ The ESP32 typically uses 115200 baud rather than 9600.
 
 ---
 
-# PWM on the ESP32
+## PWM on the ESP32
 
 The ESP32 does not use:
 
@@ -747,7 +747,7 @@ Instead it uses the LEDC peripheral.
 
 ---
 
-# LEDC PWM Setup
+## LEDC PWM Setup
 
 Three steps are required:
 
@@ -761,9 +761,9 @@ Three steps are required:
 
 ---
 
-# LEDC Functions
+## LEDC Functions
 
-## Configure Channel
+### Configure Channel
 
 ```cpp
 ledcSetup(channel, frequency, resolution);
@@ -771,7 +771,7 @@ ledcSetup(channel, frequency, resolution);
 
 ---
 
-## Attach Pin
+### Attach Pin
 
 ```cpp
 ledcAttachPin(pin, channel);
@@ -779,7 +779,7 @@ ledcAttachPin(pin, channel);
 
 ---
 
-## Set Duty Cycle
+### Set Duty Cycle
 
 ```cpp
 ledcWrite(channel, duty);
@@ -787,7 +787,7 @@ ledcWrite(channel, duty);
 
 ---
 
-# PWM Resolution
+## PWM Resolution
 
 With 8-bit resolution:
 
@@ -811,9 +811,9 @@ Higher resolution allows finer control.
 
 ---
 
-# Experiment 5 - LED Brightness Control
+## Experiment 5 - LED Brightness Control
 
-## Circuit
+### Circuit
 
 ```text
 GPIO18
@@ -827,7 +827,7 @@ GND
 
 ---
 
-# Code
+## Code
 
 ```cpp
 void setup()
@@ -857,7 +857,7 @@ void loop()
 
 ---
 
-# Understanding the Code
+## Understanding the Code
 
 ```cpp
 ledcSetup(0, 5000, 8);
@@ -885,7 +885,7 @@ ledcWrite(0, i);
 
 ---
 
-# Observe
+## Observe
 
 The LED should:
 
@@ -897,7 +897,7 @@ Gradually Dim
 
 ---
 
-# Experiment 6 - Higher PWM Resolution
+## Experiment 6 - Higher PWM Resolution
 
 Repeat Experiment 5 using 10-bit resolution.
 
@@ -929,7 +929,7 @@ void loop()
 
 ---
 
-# Observe
+## Observe
 
 The transition should appear smoother because:
 
@@ -945,7 +945,7 @@ are available instead of:
 
 ---
 
-# Comparison Table
+## Comparison Table
 
 | Feature | Arduino Uno | ESP32 DevKit V1 |
 |---------|------------|----------------|
@@ -960,7 +960,7 @@ are available instead of:
 
 ---
 
-# Why PWM Resolution Matters
+## Why PWM Resolution Matters
 
 In power electronics applications:
 
@@ -996,9 +996,9 @@ This is important for precise voltage regulation.
 
 ---
 
-# Troubleshooting
+## Troubleshooting
 
-## Upload Fails
+### Upload Fails
 
 Check:
 
@@ -1012,7 +1012,7 @@ Check:
 
 ---
 
-## LED Does Not Flash
+### LED Does Not Flash
 
 Check:
 
@@ -1026,7 +1026,7 @@ Check:
 
 ---
 
-## Serial Monitor Empty
+### Serial Monitor Empty
 
 Check:
 
@@ -1038,7 +1038,7 @@ Check:
 
 ---
 
-## LEDC PWM Not Working
+### LEDC PWM Not Working
 
 Check:
 
@@ -1050,11 +1050,11 @@ Check:
 
 ---
 
-# Laboratory Exercises
+## Laboratory Exercises
 
 Complete the following:
 
-## Exercise 1
+### Exercise 1
 
 Modify Blink to flash at:
 
@@ -1066,63 +1066,63 @@ Modify Blink to flash at:
 
 ---
 
-## Exercise 2
+### Exercise 2
 
 Read a potentiometer on GPIO34 and print the value to the Serial Monitor.
 
 ---
 
-## Exercise 3
+### Exercise 3
 
 Map the potentiometer reading to a PWM duty cycle and control LED brightness.
 
 ---
 
-## Exercise 4
+### Exercise 4
 
 Change the PWM frequency to 20 kHz and observe any difference in LED behaviour.
 
 ---
 
-## Exercise 5
+### Exercise 5
 
 Use 12-bit PWM resolution and sweep the duty cycle from 0 to 4095.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 What logic voltage level does the ESP32 use?
 
 ---
 
-## Question 2
+### Question 2
 
 What function replaces analogWrite() on the ESP32?
 
 ---
 
-## Question 3
+### Question 3
 
 What is the ADC resolution of the ESP32?
 
 ---
 
-## Question 4
+### Question 4
 
 How many PWM channels does the ESP32 LEDC peripheral provide?
 
 ---
 
-## Question 5
+### Question 5
 
 Why is higher PWM resolution important in power electronics?
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 

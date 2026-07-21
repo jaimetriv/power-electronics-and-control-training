@@ -1,6 +1,6 @@
 # Project 11 - Boost Converter Fundamentals
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -19,7 +19,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -35,7 +35,7 @@ This project introduces the second major non-isolated DC-DC converter topology.
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -55,7 +55,7 @@ At the end of this project you should be able to:
 
 ---
 
-# Introduction
+## Introduction
 
 A Boost Converter is a:
 
@@ -89,7 +89,7 @@ Voltage conversion is achieved using:
 
 ---
 
-# Why Are Boost Converters Useful?
+## Why Are Boost Converters Useful?
 
 Many systems require a voltage higher than the available battery or supply.
 
@@ -103,7 +103,7 @@ Examples:
 
 ---
 
-# Energy Conversion Concept
+## Energy Conversion Concept
 
 A Boost Converter operates in two stages:
 
@@ -117,7 +117,7 @@ The inductor stores energy and then releases it into the output circuit.
 
 ---
 
-# Main Components
+## Main Components
 
 A Boost Converter contains:
 
@@ -129,7 +129,7 @@ A Boost Converter contains:
 
 ---
 
-# Basic Circuit
+## Basic Circuit
 
 ```mermaid
 graph LR
@@ -155,7 +155,7 @@ M --> GND
 
 ---
 
-# Role of the Inductor
+## Role of the Inductor
 
 The inductor stores energy in a magnetic field.
 
@@ -179,7 +179,7 @@ Stored Energy Increases
 
 ---
 
-# Role of the MOSFET
+## Role of the MOSFET
 
 The MOSFET acts as a PWM-controlled switch.
 
@@ -193,7 +193,7 @@ inside the inductor.
 
 ---
 
-# Role of the Diode
+## Role of the Diode
 
 The diode provides a path for inductor current when the MOSFET turns OFF.
 
@@ -207,7 +207,7 @@ from the output back to the input.
 
 ---
 
-# Role of the Capacitor
+## Role of the Capacitor
 
 The capacitor smooths the output voltage.
 
@@ -221,9 +221,9 @@ The capacitor reduces ripple and supports the load between switching intervals.
 
 ---
 
-# Operating Principle
+## Operating Principle
 
-## Phase 1 - MOSFET ON
+### Phase 1 - MOSFET ON
 
 Current path:
 
@@ -245,7 +245,7 @@ During this phase:
 
 ---
 
-# Phase 2 - MOSFET OFF
+## Phase 2 - MOSFET OFF
 
 When the MOSFET switches OFF:
 
@@ -269,7 +269,7 @@ The output voltage becomes higher than the input voltage.
 
 ---
 
-# Why Can Output Voltage Exceed Input Voltage?
+## Why Can Output Voltage Exceed Input Voltage?
 
 Recall:
 
@@ -291,7 +291,7 @@ is possible.
 
 ---
 
-# Ideal Boost Converter Equation
+## Ideal Boost Converter Equation
 
 For an ideal Boost Converter:
 
@@ -309,7 +309,7 @@ Where:
 
 ---
 
-# Example 1
+## Example 1
 
 Given:
 
@@ -337,7 +337,7 @@ $$
 
 ---
 
-# Example 2
+## Example 2
 
 Given:
 
@@ -365,7 +365,7 @@ $$
 
 ---
 
-# Important Practical Note
+## Important Practical Note
 
 Real converters are not ideal.
 
@@ -378,11 +378,11 @@ Actual output voltage is lower because of:
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before building the circuit, simulate the ideal Boost Converter characteristics to predict what you will measure.
 
-## Vout vs Duty Cycle — Nonlinear Gain
+### Vout vs Duty Cycle — Nonlinear Gain
 
 ```matlab
 Vin = 5;
@@ -404,7 +404,7 @@ legend('Ideal V_{OUT}', 'Experiment points', 'Location', 'northwest');
 ylim([0 30]);
 ```
 
-## Simulate Inductor Current Waveform
+### Simulate Inductor Current Waveform
 
 In a Boost Converter the inductor current ramps up during MOSFET ON (energy storage) and ramps down during MOSFET OFF (energy transfer to output):
 
@@ -433,7 +433,7 @@ title(sprintf('Boost Inductor Current \mdash D=%.0f%%, L=%d\muH', D*100, L*1e6))
 yline(Iavg*1e3, 'r--', sprintf('I_{avg} = %.0f mA', Iavg*1e3));
 ```
 
-## Prediction Table
+### Prediction Table
 
 Record your predicted output voltages before measuring:
 
@@ -447,7 +447,7 @@ Record your predicted output voltages before measuring:
 
 ---
 
-# Components Required
+## Components Required
 
 Additional Components:
 
@@ -465,7 +465,7 @@ Existing Equipment:
 
 ---
 
-# Safety Notice
+## Safety Notice
 
 Begin with:
 
@@ -479,7 +479,7 @@ Do not connect sensitive electronics directly to an untested converter output.
 
 ---
 
-# Experimental Boost Converter
+## Experimental Boost Converter
 
 ```mermaid
 graph LR
@@ -505,15 +505,15 @@ M --> GND
 
 ---
 
-# Experiment 1 - Generate PWM
+## Experiment 1 - Generate PWM
 
-## Objective
+### Objective
 
 Observe the switching signal that drives the converter.
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 void setup()
@@ -529,7 +529,7 @@ void loop()
 
 ---
 
-# Oscilloscope Connections
+## Oscilloscope Connections
 
 Probe Tip:
 
@@ -545,7 +545,7 @@ Ground
 
 ---
 
-# DSO Nano Settings
+## DSO Nano Settings
 
 Vertical:
 
@@ -567,7 +567,7 @@ Rising Edge
 
 ---
 
-# Expected Waveform
+## Expected Waveform
 
 ```text
 5V ─────      ─────
@@ -578,7 +578,7 @@ Rising Edge
 
 ---
 
-# Measurements
+## Measurements
 
 | Parameter | Expected | Measured |
 |------------|-----------|-----------|
@@ -588,15 +588,15 @@ Rising Edge
 
 ---
 
-# Experiment 2 - Duty Cycle Investigation
+## Experiment 2 - Duty Cycle Investigation
 
-## Objective
+### Objective
 
 Observe how duty cycle affects output voltage.
 
 ---
 
-# Test A
+## Test A
 
 ```cpp
 analogWrite(9,64);
@@ -616,7 +616,7 @@ Output Voltage = __________
 
 ---
 
-# Test B
+## Test B
 
 ```cpp
 analogWrite(9,128);
@@ -636,7 +636,7 @@ Output Voltage = __________
 
 ---
 
-# Test C
+## Test C
 
 ```cpp
 analogWrite(9,192);
@@ -656,7 +656,7 @@ Output Voltage = __________
 
 ---
 
-# Results Table
+## Results Table
 
 | PWM Value | Duty Cycle | Output Voltage |
 |------------|------------|---------------|
@@ -666,15 +666,15 @@ Output Voltage = __________
 
 ---
 
-# Experiment 3 - Measure Output Ripple
+## Experiment 3 - Measure Output Ripple
 
-## Objective
+### Objective
 
 Observe output voltage ripple.
 
 ---
 
-# Probe Location
+## Probe Location
 
 Probe Tip:
 
@@ -690,7 +690,7 @@ Ground
 
 ---
 
-# DSO Nano Settings
+## DSO Nano Settings
 
 Vertical:
 
@@ -712,7 +712,7 @@ Rising Edge
 
 ---
 
-# Expected Observation
+## Expected Observation
 
 The output should contain:
 
@@ -730,7 +730,7 @@ Ripple occurs because the capacitor continuously charges and discharges.
 
 ---
 
-# Reducing Ripple
+## Reducing Ripple
 
 Ripple can often be reduced by:
 
@@ -740,7 +740,7 @@ Ripple can often be reduced by:
 
 ---
 
-# Comparing Buck and Boost Converters
+## Comparing Buck and Boost Converters
 
 | Property | Buck Converter | Boost Converter |
 |-----------|---------------|----------------|
@@ -753,55 +753,55 @@ Ripple can often be reduced by:
 
 ---
 
-# Relationship to Previous Projects
+## Relationship to Previous Projects
 
-## Project 1
+### Project 1
 
 PWM controls duty cycle.
 
 ---
 
-## Project 2
+### Project 2
 
 Capacitors smooth voltage.
 
 ---
 
-## Project 3
+### Project 3
 
 Inductors store energy.
 
 ---
 
-## Project 4
+### Project 4
 
 MOSFETs provide efficient switching.
 
 ---
 
-## Projects 6 to 8
+### Projects 6 to 8
 
 Controllers regulate converter output.
 
 ---
 
-## Project 9
+### Project 9
 
 Buck Converters perform step-down conversion.
 
 ---
 
-## Project 10
+### Project 10
 
 Closed-loop control automatically regulates voltage.
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 Now overlay your measured output voltages against the ideal Boost Converter curve and compare with the Buck Converter results from Project 9.
 
-## Enter Your Measured Values
+### Enter Your Measured Values
 
 ```matlab
 Vin = 5;
@@ -835,7 +835,7 @@ for i = 1:3
 end
 ```
 
-## Buck vs Boost Comparison
+### Buck vs Boost Comparison
 
 ```matlab
 Vin = 5;
@@ -855,7 +855,7 @@ legend('Location', 'north');
 ylim([0 20]);
 ```
 
-## Reflection
+### Reflection
 
 - Is the measured Vout lower than ideal at all three duty cycles? Which duty cycle shows the largest absolute error?
 - The Boost conversion ratio M = Vout/Vin becomes very sensitive to D near D = 1. Why is this a practical problem for control?
@@ -863,43 +863,43 @@ ylim([0 20]);
 
 ---
 
-# Engineering Applications
+## Engineering Applications
 
 Boost Converters are used in:
 
-## LED Drivers
+### LED Drivers
 
 Generating higher output voltages.
 
 ---
 
-## Portable Electronics
+### Portable Electronics
 
 Battery voltage conversion.
 
 ---
 
-## Electric Vehicles
+### Electric Vehicles
 
 Power conversion systems.
 
 ---
 
-## Solar Energy Systems
+### Solar Energy Systems
 
 Maximum power point applications.
 
 ---
 
-## Industrial Power Supplies
+### Industrial Power Supplies
 
 Generating multiple voltage rails.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 Write the ideal Boost Converter equation.
 
@@ -911,7 +911,7 @@ ____________________
 
 ---
 
-## Question 2
+### Question 2
 
 Why can the output voltage exceed the input voltage?
 
@@ -923,7 +923,7 @@ ____________________
 
 ---
 
-## Question 3
+### Question 3
 
 What is the role of the diode?
 
@@ -935,7 +935,7 @@ ____________________
 
 ---
 
-## Question 4
+### Question 4
 
 What stores energy in a Boost Converter?
 
@@ -947,7 +947,7 @@ ____________________
 
 ---
 
-## Question 5
+### Question 5
 
 What happens when duty cycle increases?
 
@@ -959,7 +959,7 @@ ____________________
 
 ---
 
-## Question 6
+### Question 6
 
 The ideal Boost equation predicts Vout = 20V at D = 0.75 with Vin = 5V. Your measured value was lower. Apart from component losses, explain why the nonlinear gain curve makes the Boost Converter harder to control at high duty cycles than the Buck Converter.
 
@@ -971,9 +971,9 @@ ____________________
 
 ---
 
-# Common Mistakes
+## Common Mistakes
 
-## Output Voltage Does Not Increase
+### Output Voltage Does Not Increase
 
 Check:
 
@@ -983,7 +983,7 @@ Check:
 
 ---
 
-## Excessive Ripple
+### Excessive Ripple
 
 Check:
 
@@ -993,7 +993,7 @@ Check:
 
 ---
 
-## No PWM Observed
+### No PWM Observed
 
 Check:
 
@@ -1003,7 +1003,7 @@ Check:
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ PWM present
 
@@ -1021,7 +1021,7 @@ Check:
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 
@@ -1048,7 +1048,7 @@ These converters form the foundation of many modern power electronic systems.
 
 ---
 
-# Next Project
+## Next Project
 
 **11B_DC_Chopper_Converters.md**
 

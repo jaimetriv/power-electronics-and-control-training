@@ -6,7 +6,7 @@ Jaime Triviño
 
 ---
 
-# Purpose
+## Purpose
 
 This repository documents a structured learning journey through:
 
@@ -33,7 +33,7 @@ to build a solid foundation in modern electrical and electronic engineering.
 
 ---
 
-# Available Equipment
+## Available Equipment
 
 ## Hardware
 
@@ -58,7 +58,8 @@ to build a solid foundation in modern electrical and electronic engineering.
 
 ### Test Equipment
 
-- DSO Nano Portable Oscilloscope
+- DSO Nano Portable Oscilloscope (baseline)
+- OWON HDS272S (optional upgrade)
 
 ### Software
 
@@ -68,7 +69,7 @@ to build a solid foundation in modern electrical and electronic engineering.
 
 ---
 
-# Course Philosophy
+## Course Philosophy
 
 The best way to learn engineering is by combining:
 
@@ -78,7 +79,7 @@ The best way to learn engineering is by combining:
 4. Measurements
 5. Reflection
 
-Every project in this repository follows the same structure:
+Each project follows a common core structure, with optional sections added when relevant to the topic:
 
 ```text
 Objective
@@ -120,13 +121,13 @@ before building them.
 
 ---
 
-# Learning Roadmap
+## Learning Roadmap
 
 The projects are organised so that each project builds naturally upon the previous one.
 
 ---
 
-# Phase 1 - Signals and Fundamental Electronics
+## Phase 1 - Signals and Fundamental Electronics
 
 The first phase introduces:
 
@@ -200,7 +201,7 @@ File:
 
 ---
 
-# Phase 2 - Power Electronics Fundamentals
+## Phase 2 - Power Electronics Fundamentals
 
 The second phase introduces the foundation of modern power electronics.
 
@@ -244,7 +245,7 @@ File:
 
 ---
 
-# Phase 3 - Control Systems
+## Phase 3 - Control Systems
 
 The third phase introduces feedback control.
 
@@ -285,7 +286,7 @@ Concepts:
 
 ---
 
-# Phase 4 - Power Electronics
+## Phase 4 - Power Electronics
 
 The fourth phase combines everything learned so far.
 
@@ -363,7 +364,7 @@ Concepts:
 
 ---
 
-# Phase 5 - Advanced Topics
+## Phase 5 - Advanced Topics
 
 The final phase focuses on modelling, design and grid-connected systems.
 
@@ -418,7 +419,7 @@ Concepts:
 
 ---
 
-# Mathematical Toolbox
+## Mathematical Toolbox
 
 The following equations will appear repeatedly throughout this repository.
 
@@ -590,7 +591,7 @@ Where:
 
 ---
 
-# Using the DSO Nano
+## Using the DSO Nano
 
 The DSO Nano will be used throughout this repository to measure:
 
@@ -615,7 +616,7 @@ Measured Reality
 
 ---
 
-# Recommended Workflow
+## Recommended Workflow
 
 For every project:
 
@@ -632,7 +633,7 @@ This workflow mirrors how real engineering projects are carried out.
 
 ---
 
-# Final Learning Objectives
+## Final Learning Objectives
 
 After completing all projects you should be capable of:
 
@@ -668,7 +669,7 @@ After completing all projects you should be capable of:
 
 ---
 
-# Repository Structure
+## Repository Structure
 
 ```text
 00_Introduction.md
@@ -718,7 +719,7 @@ After completing all projects you should be capable of:
 
 ---
 
-# Let's Begin
+## Let's Begin
 
 The first project introduces the fundamental concept behind most modern power electronic systems:
 

@@ -1,6 +1,6 @@
 # Project 10 - Closed-Loop Buck Converter Control
 
-## Prerequisites
+### Prerequisites
 
 Complete:
 
@@ -18,7 +18,7 @@ Complete:
 
 ---
 
-# Objective
+## Objective
 
 In this project you will learn:
 
@@ -42,7 +42,7 @@ to create a practical regulated power supply.
 
 ---
 
-# Learning Outcomes
+## Learning Outcomes
 
 At the end of this project you should be able to:
 
@@ -62,7 +62,7 @@ At the end of this project you should be able to:
 
 ---
 
-# Introduction
+## Introduction
 
 In Project 9 the Buck Converter operated in:
 
@@ -88,7 +88,7 @@ No automatic correction occurred.
 
 ---
 
-# Problem with Open-Loop Operation
+## Problem with Open-Loop Operation
 
 Suppose:
 
@@ -114,7 +114,7 @@ No Correction Occurs
 
 ---
 
-# Closed-Loop Control
+## Closed-Loop Control
 
 Closed-loop control measures the output voltage continuously.
 
@@ -124,7 +124,7 @@ The controller then adjusts duty cycle automatically.
 
 ---
 
-# Closed-Loop Block Diagram
+## Closed-Loop Block Diagram
 
 ```mermaid
 graph LR
@@ -145,7 +145,7 @@ F --> E
 
 ---
 
-# Reference Voltage
+## Reference Voltage
 
 The desired output voltage is called the:
 
@@ -167,7 +167,7 @@ $$
 
 ---
 
-# Measured Output Voltage
+## Measured Output Voltage
 
 The actual converter output is:
 
@@ -183,7 +183,7 @@ $$
 
 ---
 
-# Error Signal
+## Error Signal
 
 The controller calculates:
 
@@ -199,7 +199,7 @@ Where:
 
 ---
 
-# Example Error Calculation
+## Example Error Calculation
 
 Given:
 
@@ -229,7 +229,7 @@ $$
 
 ---
 
-# Controller Response
+## Controller Response
 
 If:
 
@@ -259,7 +259,7 @@ Reduces Duty Cycle
 
 ---
 
-# Why PI Control Is Common
+## Why PI Control Is Common
 
 Buck Converters are frequently regulated using:
 
@@ -279,7 +279,7 @@ because they:
 
 ---
 
-# PI Controller Equation
+## PI Controller Equation
 
 $$
 u(t)=K_Pe(t)+K_I\int e(t)\,dt
@@ -294,7 +294,7 @@ Where:
 
 ---
 
-# Converter Control Strategy
+## Converter Control Strategy
 
 ```text
 Measure Output
@@ -310,7 +310,7 @@ Correct Output Voltage
 
 ---
 
-# Measuring Converter Output Voltage
+## Measuring Converter Output Voltage
 
 Arduino inputs can only measure voltages within:
 
@@ -322,7 +322,7 @@ A voltage divider is therefore required.
 
 ---
 
-# Voltage Divider Circuit
+## Voltage Divider Circuit
 
 ```mermaid
 graph TD
@@ -339,7 +339,7 @@ D --> E[GND]
 
 ---
 
-# Divider Equation
+## Divider Equation
 
 $$
 V_{A0}
@@ -365,11 +365,11 @@ $$
 
 ---
 
-# MATLAB Simulation
+## MATLAB Simulation
 
 Before building the circuit, simulate the closed-loop PI voltage regulator applied to the Buck Converter plant.
 
-## Buck Converter Plant Model
+### Buck Converter Plant Model
 
 The LC output filter of a Buck Converter is a second-order plant:
 
@@ -399,7 +399,7 @@ plot(t*1e3, y_ol, 'k--', 'LineWidth', 2, 'DisplayName', 'Open-loop');
 hold on;
 ```
 
-## Closed-Loop PI Response — Three Gain Sets
+### Closed-Loop PI Response — Three Gain Sets
 
 ```matlab
 gain_sets = [2, 0.2; 10, 1.0; 50, 5.0];
@@ -421,7 +421,7 @@ title('Closed-Loop Buck Converter \mdash PI Gain Comparison');
 legend('Location', 'southeast');
 ```
 
-## Simulate Disturbance Rejection
+### Simulate Disturbance Rejection
 
 ```matlab
 Kp = 10; Ki = 1;
@@ -446,7 +446,7 @@ title('Disturbance Rejection \mdash Open vs Closed Loop');
 legend('Location', 'northeast');
 ```
 
-## Prediction Table
+### Prediction Table
 
 | Kp | Ki | Predicted behaviour | Predicted ess |
 |----|----|--------------------|--------------|
@@ -456,7 +456,7 @@ legend('Location', 'northeast');
 
 ---
 
-# Components Required
+## Components Required
 
 - Arduino Uno
 - Buck Converter from Project 9
@@ -466,15 +466,15 @@ legend('Location', 'northeast');
 
 ---
 
-# Experiment 1 - Measure Converter Output
+## Experiment 1 - Measure Converter Output
 
-## Objective
+### Objective
 
 Read the converter output voltage using the Arduino ADC.
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 void setup()
@@ -494,7 +494,7 @@ void loop()
 
 ---
 
-# Expected Behaviour
+## Expected Behaviour
 
 The ADC value should vary with:
 
@@ -504,7 +504,7 @@ The ADC value should vary with:
 
 ---
 
-# Convert ADC Reading to Voltage
+## Convert ADC Reading to Voltage
 
 Arduino ADC range:
 
@@ -530,15 +530,15 @@ $$
 
 ---
 
-# Experiment 2 - Implement PI Regulation
+## Experiment 2 - Implement PI Regulation
 
-## Objective
+### Objective
 
 Automatically regulate output voltage.
 
 ---
 
-# Arduino Code
+## Arduino Code
 
 ```cpp
 const float dt        = 0.01;     // sample time (s) — matches delay(10)
@@ -580,7 +580,7 @@ void loop()
 
 ---
 
-# Understanding the Controller
+## Understanding the Controller
 
 Reference:
 
@@ -614,15 +614,15 @@ PWM Duty Cycle Command
 
 ---
 
-# Experiment 3 - Disturbance Rejection
+## Experiment 3 - Disturbance Rejection
 
-## Objective
+### Objective
 
 Observe how feedback corrects disturbances.
 
 ---
 
-# Procedure
+## Procedure
 
 Operate the converter normally.
 
@@ -640,7 +640,7 @@ Change the Input Voltage Slightly
 
 ---
 
-# Observation
+## Observation
 
 The output voltage will deviate briefly.
 
@@ -654,7 +654,7 @@ and return the voltage toward the target value.
 
 ---
 
-# Disturbance Rejection
+## Disturbance Rejection
 
 The ability to recover from disturbances is called:
 
@@ -666,15 +666,15 @@ This is one of the primary advantages of closed-loop control.
 
 ---
 
-# Experiment 4 - PI Gain Tuning
+## Experiment 4 - PI Gain Tuning
 
-## Objective
+### Objective
 
 Observe how controller gains affect system behaviour.
 
 ---
 
-# Test A
+## Test A
 
 ```cpp
 Kp = 2;
@@ -689,7 +689,7 @@ Slow Response
 
 ---
 
-# Test B
+## Test B
 
 ```cpp
 Kp = 10;
@@ -704,7 +704,7 @@ Balanced Response
 
 ---
 
-# Test C
+## Test C
 
 ```cpp
 Kp = 50;
@@ -725,7 +725,7 @@ Oscillation
 
 ---
 
-# Results Table
+## Results Table
 
 | Kp | Ki | Behaviour |
 |----|----|------------|
@@ -735,9 +735,9 @@ Oscillation
 
 ---
 
-# DSO Nano Exercise
+## DSO Nano Exercise
 
-## PWM Signal
+### PWM Signal
 
 Probe Tip:
 
@@ -755,7 +755,7 @@ Observe the PWM duty cycle.
 
 ---
 
-## Output Voltage
+### Output Voltage
 
 Probe Tip:
 
@@ -773,7 +773,7 @@ Observe output voltage and ripple.
 
 ---
 
-# DSO Nano Settings
+## DSO Nano Settings
 
 PWM Measurement:
 
@@ -793,7 +793,7 @@ Output Ripple Measurement:
 
 ---
 
-# Observe
+## Observe
 
 As the controller regulates voltage:
 
@@ -803,31 +803,31 @@ As the controller regulates voltage:
 
 ---
 
-# Control Performance Metrics
+## Control Performance Metrics
 
 Several metrics are commonly used to evaluate controller performance.
 
 ---
 
-## Rise Time
+### Rise Time
 
 Time required to approach the target voltage.
 
 ---
 
-## Overshoot
+### Overshoot
 
 Amount by which the voltage exceeds the target value.
 
 ---
 
-## Settling Time
+### Settling Time
 
 Time required to remain within an acceptable error band.
 
 ---
 
-## Steady-State Error
+### Steady-State Error
 
 Final difference between:
 
@@ -843,7 +843,7 @@ Output Voltage
 
 ---
 
-# Desired Response
+## Desired Response
 
 ```text
 Voltage
@@ -866,11 +866,11 @@ Characteristics:
 
 ---
 
-# MATLAB Comparison
+## MATLAB Comparison
 
 Now compare your measured steady-state output voltages against the simulated closed-loop responses.
 
-## Enter Your Measured Values
+### Enter Your Measured Values
 
 ```matlab
 L = 100e-6; C = 100e-6; R = 100; Vin = 5; H = 0.5;
@@ -914,7 +914,7 @@ for i = 1:3
 end
 ```
 
-## Reflection
+### Reflection
 
 - Does the PI controller eliminate steady-state error in both simulation and measurement?
 - Which gain set gave the best balance of speed and stability on the real converter?
@@ -922,43 +922,43 @@ end
 
 ---
 
-# Engineering Applications
+## Engineering Applications
 
 Closed-loop Buck Converters are widely used in:
 
-## Computer Power Supplies
+### Computer Power Supplies
 
 Stable voltage rails.
 
 ---
 
-## Telecommunications Equipment
+### Telecommunications Equipment
 
 Regulated DC supplies.
 
 ---
 
-## Industrial Electronics
+### Industrial Electronics
 
 Power conversion systems.
 
 ---
 
-## Electric Vehicles
+### Electric Vehicles
 
 Battery management and auxiliary power.
 
 ---
 
-## Robotics
+### Robotics
 
 Logic and actuator power regulation.
 
 ---
 
-# Knowledge Check
+## Knowledge Check
 
-## Question 1
+### Question 1
 
 What is the purpose of voltage feedback?
 
@@ -970,7 +970,7 @@ ____________________
 
 ---
 
-## Question 2
+### Question 2
 
 Write the PI controller equation.
 
@@ -982,7 +982,7 @@ ____________________
 
 ---
 
-## Question 3
+### Question 3
 
 What is disturbance rejection?
 
@@ -994,7 +994,7 @@ ____________________
 
 ---
 
-## Question 4
+### Question 4
 
 Why is a voltage divider required?
 
@@ -1006,7 +1006,7 @@ ____________________
 
 ---
 
-## Question 5
+### Question 5
 
 What happens if the gains are too large?
 
@@ -1018,7 +1018,7 @@ ____________________
 
 ---
 
-## Question 6
+### Question 6
 
 The voltage divider scales Vout by 0.5 before the ADC. The reference in the code is set to 2.5V. What actual output voltage is the controller regulating to, and what would you change in the code to regulate to 3.0V instead?
 
@@ -1030,9 +1030,9 @@ ____________________
 
 ---
 
-# Common Mistakes
+## Common Mistakes
 
-## Output Voltage Oscillates
+### Output Voltage Oscillates
 
 Check:
 
@@ -1041,7 +1041,7 @@ Check:
 
 ---
 
-## No Feedback Reading
+### No Feedback Reading
 
 Check:
 
@@ -1050,7 +1050,7 @@ Check:
 
 ---
 
-## PWM Saturated
+### PWM Saturated
 
 Check:
 
@@ -1059,7 +1059,7 @@ Check:
 
 ---
 
-## No Regulation
+### No Regulation
 
 Check:
 
@@ -1069,7 +1069,7 @@ Check:
 
 ---
 
-# Troubleshooting Checklist
+## Troubleshooting Checklist
 
 ✅ Voltage divider functioning
 
@@ -1087,7 +1087,7 @@ Check:
 
 ---
 
-# Project Summary
+## Project Summary
 
 In this project you learned:
 
@@ -1111,7 +1111,7 @@ This project brings together power electronics and control theory to create a pr
 
 ---
 
-# Next Project
+## Next Project
 
 **11_Boost_Converter.md**
 
