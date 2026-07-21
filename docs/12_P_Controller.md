@@ -1,4 +1,4 @@
-# Project 6 - Proportional Control (P Control) and Feedback Systems
+# Project 12 - Proportional Control (P Control) and Feedback Systems
 
 ### Prerequisites
 
@@ -10,7 +10,7 @@ Complete:
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
 - 04_MOSFET_Fundamentals.md
-- 05_PWM_Motor_Control.md
+- 10_PWM_Motor_Control.md
 
 ---
 
@@ -1239,7 +1239,7 @@ These concepts are the foundation of all modern control systems.
 
 ## Next Project
 
-**07_PI_Controller.md**
+**13_PI_Controller.md**
 
 Topics:
 

@@ -1,4 +1,4 @@
-# Project 9 - Buck Converter Fundamentals
+# Project 08 - Buck Converter Fundamentals
 
 ### Prerequisites
 
@@ -10,10 +10,10 @@ Complete:
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
 - 04_MOSFET_Fundamentals.md
-- 05_PWM_Motor_Control.md
-- 06_P_Controller.md
-- 07_PI_Controller.md
-- 08_PID_Controller.md
+- 10_PWM_Motor_Control.md
+- 12_P_Controller.md
+- 13_PI_Controller.md
+- 14_PID_Controller.md
 
 ---
 
@@ -1043,7 +1043,7 @@ This project combines many concepts introduced throughout the earlier projects a
 
 ## Next Project
 
-**10_Closed_Loop_Buck.md**
+**15_Closed_Loop_Buck.md**
 
 Topics:
 

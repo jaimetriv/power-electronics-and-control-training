@@ -1148,9 +1148,9 @@ In this project you learned:
 These skills are required for the advanced projects in this course:
 
 ```text
-16_Grid_Following_VSC.md
+17_Grid_Following_VSC.md
 
-17_Grid_Forming_VSC.md
+18_Grid_Forming_VSC.md
 ```
 
 where the ESP32 is used as the primary controller.

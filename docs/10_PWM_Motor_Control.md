@@ -1,4 +1,4 @@
-# Project 5 - PWM Motor Control and First-Order System Dynamics
+# Project 10 - PWM Motor Control and First-Order System Dynamics
 
 ### Prerequisites
 
@@ -1108,7 +1108,7 @@ and begin building true control systems.
 
 ## Next Project
 
-**06_P_Controller.md**
+**12_P_Controller.md**
 
 Topics:
 

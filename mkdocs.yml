@@ -68,28 +68,28 @@ nav:
       - Oscilloscope Familiarisation: 00B_Oscilloscope_Familiarisation.md
       - WiFi Controller Familiarisation: 00C_WiFi_Controller_Familiarisation.md
 
-  - Electronics:
+  - Core Electronics:
       - PWM Fundamentals: 01_PWM_Fundamentals.md
       - RC Circuits: 02_RC_Circuits.md
       - RLC Circuits: 03_RLC_Circuits.md
       - MOSFET Fundamentals: 04_MOSFET_Fundamentals.md
 
-  - Control Systems:
-      - PWM Motor Control: 05_PWM_Motor_Control.md
-      - P Controller: 06_P_Controller.md
-      - PI Controller: 07_PI_Controller.md
-      - PID Controller: 08_PID_Controller.md
+  - Power Conversion:
+      - AC-DC Rectifiers: 05_AC_DC_Rectifiers.md
+      - DC-AC Inverters: 06_DC_AC_Inverters.md
+      - DC Chopper Converters: 07_DC_Chopper_Converters.md
+      - Buck Converter: 08_Buck_Converter.md
+      - Boost Converter: 09_Boost_Converter.md
+      - PWM Motor Control: 10_PWM_Motor_Control.md
 
-  - Power Electronics:
-      - Buck Converter: 09_Buck_Converter.md
-      - Closed Loop Buck: 10_Closed_Loop_Buck.md
-      - Boost Converter: 11_Boost_Converter.md
-      - DC Chopper Converters: 11B_DC_Chopper_Converters.md
-      - AC-DC Rectifiers: 12_AC_DC_Rectifiers.md
-      - DC-AC Inverters: 13_DC_AC_Inverters.md
+  - Control Systems:
+      - System Identification: 11_System_Identification.md
+      - P Controller: 12_P_Controller.md
+      - PI Controller: 13_PI_Controller.md
+      - PID Controller: 14_PID_Controller.md
+      - Closed Loop Buck: 15_Closed_Loop_Buck.md
 
   - Advanced Topics:
-      - System Identification: 14_System_Identification.md
-      - Controller Design: 15_Controller_Design.md
-      - Grid Following VSC: 16_Grid_Following_VSC.md
-      - Grid Forming VSC: 17_Grid_Forming_VSC.md
+      - Controller Design: 16_Controller_Design.md
+      - Grid Following VSC: 17_Grid_Following_VSC.md
+      - Grid Forming VSC: 18_Grid_Forming_VSC.md

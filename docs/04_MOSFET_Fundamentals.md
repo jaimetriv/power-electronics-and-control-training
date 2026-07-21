@@ -1142,7 +1142,7 @@ These ideas are the building blocks for:
 
 ## Next Project
 
-**05_PWM_Motor_Control.md**
+**10_PWM_Motor_Control.md**
 
 Topics:
 

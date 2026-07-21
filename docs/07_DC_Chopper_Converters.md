@@ -1,4 +1,4 @@
-# Project 11B - DC Chopper Converters and DC Motor Drives
+# Project 07 - DC Chopper Converters and DC Motor Drives
 
 ### Prerequisites
 
@@ -10,13 +10,13 @@ Complete:
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
 - 04_MOSFET_Fundamentals.md
-- 05_PWM_Motor_Control.md
-- 06_P_Controller.md
-- 07_PI_Controller.md
-- 08_PID_Controller.md
-- 09_Buck_Converter.md
-- 10_Closed_Loop_Buck.md
-- 11_Boost_Converter.md
+- 10_PWM_Motor_Control.md
+- 12_P_Controller.md
+- 13_PI_Controller.md
+- 14_PID_Controller.md
+- 08_Buck_Converter.md
+- 15_Closed_Loop_Buck.md
+- 09_Boost_Converter.md
 
 ---
 
@@ -832,7 +832,7 @@ DC Chopper Converters
 
 ## Next Project
 
-**12_AC_DC_Rectifiers.md**
+**05_AC_DC_Rectifiers.md**
 
 Topics:
 

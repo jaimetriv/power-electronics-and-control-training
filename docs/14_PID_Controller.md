@@ -1,4 +1,4 @@
-# Project 8 - PID Control, Damping and Stability
+# Project 14 - PID Control, Damping and Stability
 
 ### Prerequisites
 
@@ -10,9 +10,9 @@ Complete:
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
 - 04_MOSFET_Fundamentals.md
-- 05_PWM_Motor_Control.md
-- 06_P_Controller.md
-- 07_PI_Controller.md
+- 10_PWM_Motor_Control.md
+- 12_P_Controller.md
+- 13_PI_Controller.md
 
 ---
 
@@ -1195,7 +1195,7 @@ You now understand the most widely used controller in classical control engineer
 
 ## Next Project
 
-**09_Buck_Converter.md**
+**08_Buck_Converter.md**
 
 Topics:
 

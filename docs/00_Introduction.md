@@ -242,7 +242,7 @@ Concepts:
 File:
 
 ```text
-05_PWM_Motor_Control.md
+10_PWM_Motor_Control.md
 ```
 
 ---
@@ -706,33 +706,33 @@ After completing all projects you should be capable of:
 
 04_MOSFET_Fundamentals.md
 
-05_PWM_Motor_Control.md
+10_PWM_Motor_Control.md
 
-06_P_Controller.md
+12_P_Controller.md
 
-07_PI_Controller.md
+13_PI_Controller.md
 
-08_PID_Controller.md
+14_PID_Controller.md
 
-09_Buck_Converter.md
+08_Buck_Converter.md
 
-10_Closed_Loop_Buck.md
+15_Closed_Loop_Buck.md
 
-11_Boost_Converter.md
+09_Boost_Converter.md
 
-11B_DC_Chopper_Converters.md
+07_DC_Chopper_Converters.md
 
-12_AC_DC_Rectifiers.md
+05_AC_DC_Rectifiers.md
 
-13_DC_AC_Inverters.md
+06_DC_AC_Inverters.md
 
-14_System_Identification.md
+11_System_Identification.md
 
-15_Controller_Design.md
+16_Controller_Design.md
 
-16_Grid_Following_VSC.md
+17_Grid_Following_VSC.md
 
-17_Grid_Forming_VSC.md
+18_Grid_Forming_VSC.md
 ```
 
 ---

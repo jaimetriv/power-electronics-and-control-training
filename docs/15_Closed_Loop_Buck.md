@@ -1,4 +1,4 @@
-# Project 10 - Closed-Loop Buck Converter Control
+# Project 15 - Closed-Loop Buck Converter Control
 
 ### Prerequisites
 
@@ -10,11 +10,11 @@ Complete:
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
 - 04_MOSFET_Fundamentals.md
-- 05_PWM_Motor_Control.md
-- 06_P_Controller.md
-- 07_PI_Controller.md
-- 08_PID_Controller.md
-- 09_Buck_Converter.md
+- 10_PWM_Motor_Control.md
+- 12_P_Controller.md
+- 13_PI_Controller.md
+- 14_PID_Controller.md
+- 08_Buck_Converter.md
 
 ---
 
@@ -1188,7 +1188,7 @@ This project brings together power electronics and control theory to create a pr
 
 ## Next Project
 
-**11_Boost_Converter.md**
+**09_Boost_Converter.md**
 
 Topics:
 

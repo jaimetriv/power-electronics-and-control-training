@@ -1,4 +1,4 @@
-# Project 7 - PI Control and Eliminating Steady-State Error
+# Project 13 - PI Control and Eliminating Steady-State Error
 
 ### Prerequisites
 
@@ -10,8 +10,8 @@ Complete:
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
 - 04_MOSFET_Fundamentals.md
-- 05_PWM_Motor_Control.md
-- 06_P_Controller.md
+- 10_PWM_Motor_Control.md
+- 12_P_Controller.md
 
 ---
 
@@ -1109,7 +1109,7 @@ PI controllers are among the most widely used controllers in engineering because
 
 ## Next Project
 
-**08_PID_Controller.md**
+**14_PID_Controller.md**
 
 Topics:
 

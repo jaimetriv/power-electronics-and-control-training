@@ -1,4 +1,4 @@
-# Project 11 - Boost Converter Fundamentals
+# Project 09 - Boost Converter Fundamentals
 
 ### Prerequisites
 
@@ -10,12 +10,12 @@ Complete:
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
 - 04_MOSFET_Fundamentals.md
-- 05_PWM_Motor_Control.md
-- 06_P_Controller.md
-- 07_PI_Controller.md
-- 08_PID_Controller.md
-- 09_Buck_Converter.md
-- 10_Closed_Loop_Buck.md
+- 10_PWM_Motor_Control.md
+- 12_P_Controller.md
+- 13_PI_Controller.md
+- 14_PID_Controller.md
+- 08_Buck_Converter.md
+- 15_Closed_Loop_Buck.md
 
 ---
 
@@ -1100,7 +1100,7 @@ These converters form the foundation of many modern power electronic systems.
 
 ## Next Project
 
-**11B_DC_Chopper_Converters.md**
+**07_DC_Chopper_Converters.md**
 
 Topics:
 
