@@ -18,10 +18,10 @@ In this project you will learn:
 
 - What a MOSFET is
 - How a MOSFET works
-- How Arduino controls a MOSFET
+- How a microcontroller (Arduino or ESP32) controls a MOSFET
 - Why MOSFETs are used in power electronics
 - How PWM and MOSFETs work together
-- How to use the DSO Nano to measure switching signals
+- How to use an oscilloscope to measure switching signals (OWON HDS272S recommended, DSO Nano compatible)
 - Why switching converters are efficient
 
 This project marks the beginning of:
@@ -45,7 +45,7 @@ At the end of this project you should be able to:
 
 ✅ Use a MOSFET as a switch
 
-✅ Drive a MOSFET from Arduino
+✅ Drive a MOSFET from a microcontroller
 
 ✅ Measure PWM on the MOSFET gate
 
@@ -68,7 +68,7 @@ A MOSFET behaves like an electronic switch.
 Instead of using your finger to open and close a switch:
 
 ```text
-Arduino controls the switch electronically.
+The controller drives the switch electronically.
 ```
 
 ---
@@ -82,7 +82,7 @@ Imagine controlling:
 - A Buck Converter
 - A Power Supply
 
-All require more current than Arduino can safely provide.
+All require more current than a microcontroller pin can safely provide.
 
 A MOSFET allows:
 
@@ -159,10 +159,10 @@ OFF
 When:
 
 $$
-V_{GS}=5V
+V_{GS}>V_{TH}
 $$
 
-MOSFET is:
+and high enough for low $R_{DS(on)}$ at your gate-drive voltage, the MOSFET is:
 
 ```text
 ON
@@ -178,7 +178,7 @@ $$
 
 ## Logic Level MOSFETs
 
-For Arduino projects always use a:
+For controller projects always use a:
 
 ```text
 Logic Level MOSFET
@@ -195,7 +195,7 @@ Avoid:
 
 - IRFZ44N
 
-for beginner Arduino projects.
+for beginner controller projects.
 
 ---
 
@@ -265,7 +265,7 @@ for i = 1:4
     title(sprintf('D = %d%%', D*100));
 end
 xlabel('Time (ms)');
-sgtitle('MOSFET Gate PWM — 490 Hz');
+sgtitle('MOSFET Gate PWM - 490 Hz');
 ```
 
 ### Average Voltage vs Duty Cycle
@@ -283,7 +283,7 @@ scatter(D_points, Vavg_points, 80, 'r', 'filled', ...
     'DisplayName', 'Experiment points');
 grid on;
 xlabel('Duty Cycle'); ylabel('Average Voltage (V)');
-title('MOSFET PWM — V_{AVG} vs Duty Cycle');
+title('MOSFET PWM - V_{AVG} vs Duty Cycle');
 legend('Theory', 'Experiment points', 'Location', 'northwest');
 ```
 
@@ -317,6 +317,7 @@ IRLZ44N MOSFET
 From SparkFun Inventor Kit:
 
 - Arduino Uno
+- ESP32 DevKit V1 (alternative controller)
 - LED
 - 220 Ω resistor
 - Breadboard
@@ -324,7 +325,7 @@ From SparkFun Inventor Kit:
 
 Equipment:
 
-- DSO Nano Oscilloscope
+- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
 
 ---
 
@@ -362,7 +363,11 @@ graph TD
 
 A[Arduino Pin 9]
 
+A2[ESP32 GPIO18]
+
 A --> B[220 Ohm Gate Resistor]
+
+A2 --> B
 
 B --> C[Gate]
 
@@ -382,7 +387,7 @@ H --> I[Drain]
 ## Simplified Wiring Diagram
 
 ```text
-Arduino Pin 9
+PWM Output (Arduino Pin 9 or ESP32 GPIO18)
       |
      220Ω
       |
@@ -426,8 +431,10 @@ OFF
 Gate:
 
 $$
-V_G = 5V
+V_G = V_S
 $$
+
+where $V_S$ is the controller output high level (typically about 5.0V for Arduino Uno or about 3.3V for ESP32).
 
 Current flows.
 
@@ -467,6 +474,25 @@ void loop()
 }
 ```
 
+### ESP32 Equivalent
+
+```cpp
+const int PWM_PIN = 18;
+
+void setup()
+{
+    pinMode(PWM_PIN, OUTPUT);
+}
+
+void loop()
+{
+    digitalWrite(PWM_PIN, HIGH);
+    delay(1000);
+    digitalWrite(PWM_PIN, LOW);
+    delay(1000);
+}
+```
+
 ---
 
 ## Expected Behaviour
@@ -483,7 +509,7 @@ continuously.
 
 ---
 
-## DSO Nano Measurement
+## Oscilloscope Measurement
 
 ### Objective
 
@@ -507,7 +533,11 @@ GND
 
 ---
 
-## DSO Nano Setup
+## Oscilloscope Setup (OWON Baseline)
+
+Recommended scope: OWON HDS272S.
+
+Compatible alternative: DSO Nano.
 
 Vertical:
 
@@ -545,7 +575,7 @@ Rising Edge
 | Parameter | Expected | Measured |
 |------------|-----------|-----------|
 | Gate LOW | 0V | |
-| Gate HIGH | 5V | |
+| Gate HIGH | V_S (about 5V Arduino or about 3.3V ESP32) | |
 
 ---
 
@@ -571,11 +601,30 @@ void loop()
 }
 ```
 
+### ESP32 Equivalent (LEDC PWM)
+
+```cpp
+const int PWM_PIN = 18;
+const int PWM_CH = 0;
+const int PWM_FREQ = 500;
+const int PWM_RES = 8;
+
+void setup()
+{
+    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+}
+
+void loop()
+{
+    ledcWrite(PWM_PIN, 128);
+}
+```
+
 ---
 
 ## What Is Happening?
 
-Arduino produces:
+The controller produces:
 
 $$
 50\%
@@ -598,7 +647,7 @@ OFF
 approximately:
 
 $$
-490Hz
+490Hz (Arduino nominal, ESP32 configured value)
 $$
 
 ---
@@ -615,7 +664,11 @@ again.
 
 ---
 
-## DSO Nano Setup
+## Oscilloscope Setup (OWON Baseline)
+
+Recommended scope: OWON HDS272S.
+
+Compatible alternative: DSO Nano.
 
 Vertical:
 
@@ -640,7 +693,7 @@ Rising Edge
 ## Expected Waveform
 
 ```text
-5V ─────      ─────
+V_S ────      ─────
          │      │
          │      │
 0V ______│______│______
@@ -773,22 +826,24 @@ $$
 and:
 
 $$
-V_S=5V
+V_S
 $$
 
 Then:
 
 $$
-V_{AVG}=2.5V
+V_{AVG}=0.5V_S
 $$
+
+Examples: $V_{AVG}=2.5V$ for a 5.0V Arduino signal, or $V_{AVG}=1.65V$ for a 3.3V ESP32 signal.
 
 The LED receives less average power.
 
 ---
 
-## Why Arduino Needs a MOSFET
+## Why a Microcontroller Needs a MOSFET
 
-Arduino output current is limited.
+Microcontroller output current is limited.
 
 Typical safe current per pin:
 
@@ -806,13 +861,13 @@ or
 Several amps
 ```
 
-A MOSFET allows Arduino to control these loads safely.
+A MOSFET allows the controller to control these loads safely.
 
 ---
 
 ## Practical Example
 
-Arduino:
+Controller pin:
 
 ```text
 5V
@@ -838,10 +893,10 @@ Now compare your measured gate waveform against the ideal simulation.
 
 ### Enter Your Measured Values
 
-From Experiment 2, record the frequency and duty cycle you measured on the DSO Nano:
+From Experiment 2, record the frequency and duty cycle you measured on the oscilloscope:
 
 ```matlab
-Vs = 5;
+Vs = 5;                      % use 5.0 for Arduino or 3.3 for ESP32
 f_theory  = 490;             % ideal Arduino PWM frequency (Hz)
 f_measured = 490;            % replace with your measured frequency (Hz)
 D_measured = 0.50;           % replace with your measured duty cycle (0-1)
@@ -861,7 +916,7 @@ hold on;
 plot(t*1e3, pwm_measured, 'r',   'LineWidth', 2, 'DisplayName', ...
     sprintf('Measured f=%.0fHz D=%.0f%%', f_measured, D_measured*100));
 grid on; legend; ylabel('Gate Voltage (V)');
-title('Gate Waveform — Theory vs Measurement');
+title('Gate Waveform - Theory vs Measurement');
 
 subplot(2,1,2);
 D_vals = [0.25, 0.50, 0.75, 1.00];
@@ -871,14 +926,14 @@ bar(D_vals*100, Vavg_theory, 0.4, 'b', 'DisplayName', 'Theory'); hold on;
 scatter(D_measured*100, Vavg_measured, 100, 'r', 'filled', ...
     'DisplayName', 'Measured');
 grid on; xlabel('Duty Cycle (%)'); ylabel('V_{AVG} (V)');
-title('Average Voltage — Theory vs Measurement');
+title('Average Voltage - Theory vs Measurement');
 legend('Location','northwest');
 ```
 
 ### Reflection
 
 - Does your measured frequency match 490 Hz?
-- Does your measured VAVG match the theoretical value D × 5V?
+- Does your measured VAVG match the theoretical value D × V_S?
 - Why might the measured average voltage differ slightly from theory? (gate resistor drop, MOSFET on-state voltage, probe loading)
 
 ---
@@ -896,6 +951,8 @@ Adjust brightness.
 ### DC Motor Drives
 
 Adjust speed.
+
+Note: for inductive loads such as motors and solenoids, add a flyback diode across the load.
 
 ---
 
@@ -975,7 +1032,7 @@ ____________________
 
 ### Question 5
 
-Why can't Arduino drive large motors directly?
+Why can't a microcontroller pin drive large motors directly?
 
 Answer:
 
@@ -1026,7 +1083,16 @@ Check:
 
 - Trigger settings
 - Probe location
-- Arduino code
+- Controller PWM code
+
+---
+
+### Motor Does Not Switch Safely
+
+Check:
+
+- Flyback diode installed across inductive load
+- Diode polarity correct
 
 ---
 
@@ -1034,7 +1100,7 @@ Check:
 
 ✅ MOSFET orientation correct
 
-✅ Shared ground between Arduino and MOSFET
+✅ Shared ground between controller and MOSFET
 
 ✅ Probe on Gate
 
@@ -1060,7 +1126,7 @@ In this project you learned:
 
 ✅ MOSFET efficiency
 
-✅ How Arduino controls larger loads
+✅ How a microcontroller controls larger loads
 
 ✅ Foundations of power electronics
 
@@ -1085,4 +1151,4 @@ Topics:
 - PWM Motor Drives
 - Motor Time Constants
 - First-Order Motor Models
-- Measuring Motor Response with the DSO Nano
+- Measuring Motor Response with the Oscilloscope
