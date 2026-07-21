@@ -228,7 +228,7 @@ Black Start
 Recommended:
 
 ```text
-ESP32 DevKit
+ESP32 DevKit V1
 ```
 
 Alternatives:
@@ -307,7 +307,8 @@ ACS758
 
 ### Test Equipment
 
-- DSO Nano
+- OWON HDS272S (recommended)
+- DSO Nano (compatible)
 - Multimeter
 - Bench Power Supply
 
@@ -334,7 +335,7 @@ ACS712 Current Sensor
 
 12 V Bench Supply
 
-DSO Nano
+OWON HDS272S (DSO Nano compatible)
 
 Breadboard
 
