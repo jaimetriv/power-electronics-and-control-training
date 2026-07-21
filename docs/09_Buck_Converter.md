@@ -29,7 +29,7 @@ In this project you will learn:
 - The role of the capacitor
 - The role of the freewheel diode
 - How energy is transferred in switched-mode power supplies
-- How to measure converter waveforms using the DSO Nano
+- How to measure converter waveforms using an oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
 
 This project combines concepts from:
 
@@ -174,7 +174,7 @@ A basic Buck Converter contains:
 
 The MOSFET acts as a high-speed electronic switch.
 
-Arduino generates PWM.
+The controller generates PWM.
 
 PWM controls:
 
@@ -309,7 +309,7 @@ Before building the circuit, simulate the ideal Buck Converter behaviour to pred
 ### Vout vs Duty Cycle — 5V Supply
 
 ```matlab
-Vin = 5;                          % Arduino 5V supply
+Vin = 5;                          % introductory low-voltage test supply
 D   = 0:0.01:1;
 Vout_ideal = D .* Vin;
 
@@ -321,7 +321,7 @@ plot(D, Vout_ideal, 'b', 'LineWidth', 2); hold on;
 scatter(D_exp, Vout_exp, 80, 'r', 'filled', 'DisplayName', 'Experiment points');
 grid on;
 xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
-title('Ideal Buck Converter \mdash V_{IN} = 5V');
+title('Ideal Buck Converter - V_{IN} = 5V');
 legend('Ideal V_{OUT} = D \cdot V_{IN}', 'Experiment points', 'Location', 'northwest');
 ```
 
@@ -334,7 +334,7 @@ Vin  = 5;
 D    = 0.5;
 Vout = D * Vin;          % ideal
 L    = 100e-6;           % 100 uH
-fsw  = 490;              % Arduino PWM frequency (Hz)
+fsw  = 490;              % switching frequency (Hz)
 Ts   = 1 / fsw;
 Iavg = 0.05;             % assumed average load current (A)
 
@@ -351,7 +351,7 @@ figure;
 plot([t_on, t_off]*1e3, [iL_on, iL_off]*1e3, 'b', 'LineWidth', 2);
 grid on;
 xlabel('Time (ms)'); ylabel('Inductor Current (mA)');
-title(sprintf('Inductor Current Ripple \mdash D=%.0f%%, L=%d\muH, f_{sw}=%dHz', ...
+title(sprintf('Inductor Current Ripple - D=%.0f%%, L=%d\muH, f_{sw}=%dHz', ...
     D*100, L*1e6, fsw));
 yline(Iavg*1e3, 'r--', sprintf('I_{avg} = %.0f mA', Iavg*1e3));
 ```
@@ -384,9 +384,10 @@ Recommended:
 ### Existing Equipment
 
 - Arduino Uno
+- ESP32 DevKit V1 (alternative controller)
 - Breadboard
 - Jumper Wires
-- DSO Nano Oscilloscope
+- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
 
 ---
 
@@ -405,6 +406,8 @@ rather than:
 ```
 
 This reduces the risk of component damage while learning.
+
+If using ESP32 gate drive (about 3.3V), choose a logic-level MOSFET with low Rds(on) specified at low Vgs, or use a gate driver.
 
 ---
 
@@ -490,6 +493,25 @@ void loop()
 }
 ```
 
+### ESP32 Equivalent (LEDC PWM)
+
+```cpp
+const int PWM_PIN  = 18;
+const int PWM_CH   = 0;
+const int PWM_FREQ = 500;
+const int PWM_RES  = 8;
+
+void setup()
+{
+  ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+}
+
+void loop()
+{
+  ledcWrite(PWM_PIN, 128);
+}
+```
+
 ---
 
 ## Oscilloscope Measurement
@@ -508,7 +530,11 @@ Ground
 
 ---
 
-## DSO Nano Settings
+## Oscilloscope Settings (OWON Baseline)
+
+Recommended scope: OWON HDS272S.
+
+Compatible alternative: DSO Nano.
 
 Vertical:
 
@@ -533,7 +559,7 @@ Rising Edge
 ## Expected Waveform
 
 ```text
-5V ─────      ─────
+V_S ────      ─────
          │      │
          │      │
 0V ______│______│______
@@ -547,7 +573,7 @@ Rising Edge
 |------------|-----------|-----------|
 | Frequency | ~490 Hz | |
 | Duty Cycle | ~50% | |
-| Gate Voltage | ~5 V | |
+| Gate Voltage | ~V_S (about 5V Arduino or about 3.3V ESP32) | |
 
 ---
 
@@ -565,6 +591,12 @@ Upload:
 
 ```cpp
 analogWrite(9,64);
+```
+
+ESP32 equivalent duty command:
+
+```cpp
+ledcWrite(PWM_PIN, 64);
 ```
 
 Expected Duty Cycle:
@@ -589,6 +621,12 @@ Upload:
 analogWrite(9,128);
 ```
 
+ESP32 equivalent duty command:
+
+```cpp
+ledcWrite(PWM_PIN, 128);
+```
+
 Expected Duty Cycle:
 
 ```text
@@ -609,6 +647,12 @@ Upload:
 
 ```cpp
 analogWrite(9,192);
+```
+
+ESP32 equivalent duty command:
+
+```cpp
+ledcWrite(PWM_PIN, 192);
 ```
 
 Expected Duty Cycle:
@@ -659,7 +703,13 @@ Ground
 
 ---
 
-## DSO Nano Settings
+## Oscilloscope Settings (OWON Baseline)
+
+Use the same scope setup approach as Experiment 1, then increase vertical sensitivity for ripple.
+
+Recommended scope: OWON HDS272S.
+
+Compatible alternative: DSO Nano.
 
 Vertical:
 
@@ -787,7 +837,7 @@ plot(D_ideal, Vout_ideal, 'b--', 'LineWidth', 2, 'DisplayName', 'Ideal: V_{OUT} 
 scatter(D_measured, Vout_measured, 80, 'r', 'filled', 'DisplayName', 'Measured');
 grid on;
 xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
-title('Buck Converter \mdash Ideal vs Measured');
+title('Buck Converter - Ideal vs Measured');
 legend('Location', 'northwest');
 
 % Calculate and print voltage drop at each operating point
@@ -942,7 +992,7 @@ Check:
 
 Check:
 
-- Arduino sketch
+- Controller sketch
 - Pin selection
 - Oscilloscope trigger
 - Probe connection
