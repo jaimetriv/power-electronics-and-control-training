@@ -70,7 +70,7 @@ In Project 9 the Buck Converter operated in:
 Open Loop
 ```
 
-The Arduino generated a fixed duty cycle.
+The controller generated a fixed duty cycle.
 
 Example:
 
@@ -312,10 +312,10 @@ Correct Output Voltage
 
 ## Measuring Converter Output Voltage
 
-Arduino inputs can only measure voltages within:
+Controller ADC inputs can only measure voltages within their supported range.
 
 ```text
-0V to 5V
+0V to ADC full scale
 ```
 
 A voltage divider is therefore required.
@@ -417,7 +417,7 @@ end
 yline(2.5, 'r:', 'Reference 2.5V');
 grid on;
 xlabel('Time (ms)'); ylabel('Output Voltage (V)');
-title('Closed-Loop Buck Converter \mdash PI Gain Comparison');
+title('Closed-Loop Buck Converter - PI Gain Comparison');
 legend('Location', 'southeast');
 ```
 
@@ -442,7 +442,7 @@ plot(t*1e3, y_ol_d, 'b--', 'LineWidth', 2, 'DisplayName', 'Open-loop');
 plot(t*1e3, y_cl,   'r',   'LineWidth', 2, 'DisplayName', 'Closed-loop PI');
 grid on;
 xlabel('Time (ms)'); ylabel('Voltage Deviation (V)');
-title('Disturbance Rejection \mdash Open vs Closed Loop');
+title('Disturbance Rejection - Open vs Closed Loop');
 legend('Location', 'northeast');
 ```
 
@@ -459,10 +459,11 @@ legend('Location', 'northeast');
 ## Components Required
 
 - Arduino Uno
+- ESP32 DevKit V1 (alternative controller)
 - Buck Converter from Project 9
 - 10 kΩ resistor
 - 10 kΩ resistor
-- DSO Nano Oscilloscope
+- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
 
 ---
 
@@ -470,7 +471,7 @@ legend('Location', 'northeast');
 
 ### Objective
 
-Read the converter output voltage using the Arduino ADC.
+Read the converter output voltage using the controller ADC.
 
 ---
 
@@ -492,6 +493,26 @@ void loop()
 }
 ```
 
+### ESP32 Equivalent
+
+```cpp
+const int FBK_PIN = 34;  // divider midpoint to ADC pin
+
+void setup()
+{
+    Serial.begin(115200);
+}
+
+void loop()
+{
+    int adc = analogRead(FBK_PIN);   // 0-4095 on 12-bit ADC
+
+    Serial.println(adc);
+
+    delay(100);
+}
+```
+
 ---
 
 ## Expected Behaviour
@@ -506,16 +527,18 @@ The ADC value should vary with:
 
 ## Convert ADC Reading to Voltage
 
-Arduino ADC range:
+ADC range examples:
 
 ```text
-0 to 1023
+0 to 1023 (Arduino Uno)
+0 to 4095 (ESP32)
 ```
 
 represents:
 
 ```text
-0V to 5V
+0V to 5V (Arduino Uno)
+0V to 3.3V (ESP32)
 ```
 
 Measured ADC input voltage:
@@ -577,6 +600,54 @@ void loop()
     delay(10);
 }
 ```
+
+### ESP32 Equivalent (LEDC + ADC Feedback)
+
+```cpp
+const int PWM_PIN  = 18;
+const int PWM_CH   = 0;
+const int PWM_FREQ = 500;
+const int PWM_RES  = 8;
+const int FBK_PIN  = 34;
+
+const float dt      = 0.01;
+const float Vref    = 1.65;    // target divider midpoint for ~3.3V output
+const float int_max = 50.0;
+
+float Kp = 10.0;
+float Ki = 1.0;
+float integral = 0;
+
+void setup()
+{
+    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+    Serial.begin(115200);
+}
+
+void loop()
+{
+    int   adc      = analogRead(FBK_PIN);
+    float Vfb      = (adc / 4095.0) * 3.3;   // voltage at divider midpoint
+    float Vout_est = Vfb * 2.0;              // estimated converter output
+    float error    = Vref - Vfb;
+
+    integral = integral + error * dt;
+    integral = constrain(integral, -int_max, int_max);
+
+    float control = Kp * error + Ki * integral;
+    control = constrain(control, 0, 255);
+
+    ledcWrite(PWM_PIN, (int)control);
+
+    Serial.print("Vout: ");  Serial.print(Vout_est, 3);
+    Serial.print("V  PWM: "); Serial.print((int)control);
+    Serial.print("  Int: ");  Serial.println(integral, 3);
+
+    delay(10);
+}
+```
+
+Note: if you change ADC or PWM resolution, rescale and retune Kp/Ki.
 
 ---
 
@@ -735,7 +806,7 @@ Oscillation
 
 ---
 
-## DSO Nano Exercise
+## Oscilloscope Exercise
 
 ### PWM Signal
 
@@ -773,7 +844,11 @@ Observe output voltage and ripple.
 
 ---
 
-## DSO Nano Settings
+## Oscilloscope Settings (OWON Baseline)
+
+Recommended scope: OWON HDS272S.
+
+Compatible alternative: DSO Nano.
 
 PWM Measurement:
 
@@ -900,7 +975,7 @@ scatter([50, 50, 50], Vout_measured, 80, 'r', 'filled', ...
     'DisplayName', 'Measured Vout');
 grid on;
 xlabel('Time (ms)'); ylabel('Output Voltage (V)');
-title('Closed-Loop Buck \mdash Simulation vs Measurement');
+title('Closed-Loop Buck - Simulation vs Measurement');
 legend('Location', 'southeast');
 
 % Print steady-state error for each case
