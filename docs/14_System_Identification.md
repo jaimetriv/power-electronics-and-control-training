@@ -435,7 +435,7 @@ end
 yline(0.632, 'k--', '63.2%');
 grid on;
 xlabel('Time (s)'); ylabel('Normalised Output');
-title('First-Order Step Response \mdash Effect of \tau');
+title('First-Order Step Response - Effect of \tau');
 legend('Location', 'southeast');
 ```
 
@@ -457,7 +457,7 @@ end
 yline(1.0, 'k--', 'Final value');
 grid on;
 xlabel('Time (s)'); ylabel('Output');
-title('Second-Order Step Response \mdash Effect of \zeta');
+title('Second-Order Step Response - Effect of \zeta');
 legend('Location', 'southeast');
 ```
 
@@ -486,7 +486,7 @@ plot(t, y_fit, 'r', 'LineWidth', 2, 'DisplayName', ...
     sprintf('Fit: K=%.2f, \\tau=%.2fs', K_fit, tau_fit));
 grid on;
 xlabel('Time (s)'); ylabel('Output');
-title('First-Order Curve Fit \mdash fminsearch');
+title('First-Order Curve Fit - fminsearch');
 legend('Location', 'southeast');
 fprintf('True:  K=%.2f  tau=%.2fs\n', K_true, tau_true);
 fprintf('Fitted: K=%.2f  tau=%.2fs\n', K_fit, tau_fit);
@@ -506,6 +506,7 @@ fprintf('Fitted: K=%.2f  tau=%.2fs\n', K_fit, tau_fit);
 ## Components Required
 
 - Arduino Uno
+- ESP32 DevKit V1 (alternative controller)
 - Breadboard
 - 10 kΩ resistor
 - 22 kΩ resistor
@@ -513,7 +514,7 @@ fprintf('Fitted: K=%.2f  tau=%.2fs\n', K_fit, tau_fit);
 - 220 µF capacitor (needed for Experiment 2 Test B — add to shopping list if not already purchased)
 - DC motor + IRLZ44N MOSFET + flyback diode (from Project 5)
 - Jumper wires
-- DSO Nano Oscilloscope
+- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
 
 Optional (frequency response identification):
 
@@ -579,9 +580,30 @@ void loop()
 }
 ```
 
+### ESP32 Equivalent Step Input
+
+```cpp
+const int STEP_PIN = 18;
+
+void setup()
+{
+    pinMode(STEP_PIN, OUTPUT);
+
+    digitalWrite(STEP_PIN, LOW);
+
+    delay(2000);
+
+    digitalWrite(STEP_PIN, HIGH);
+}
+
+void loop()
+{
+}
+```
+
 ---
 
-## DSO Nano Connections
+## Oscilloscope Connections
 
 Probe Tip:
 
@@ -597,7 +619,11 @@ GND
 
 ---
 
-## DSO Nano Settings
+## Oscilloscope Settings (OWON Baseline)
+
+Recommended scope: OWON HDS272S.
+
+Compatible alternative: DSO Nano.
 
 Vertical:
 
@@ -787,7 +813,7 @@ xline(tau_fit, 'k--', sprintf('\\tau=%.3fs', tau_fit));
 yline(0.632*K_fit, 'k:', '63.2%');
 grid on;
 xlabel('Time (s)'); ylabel('Capacitor Voltage (V)');
-title('RC Circuit \mdash First-Order Model Fit');
+title('RC Circuit - First-Order Model Fit');
 legend('Location', 'southeast');
 
 tau_theory = 10000 * 100e-6;
@@ -820,7 +846,7 @@ xline(tau_m, 'k--', sprintf('\\tau=%.3fs', tau_m));
 yline(0.632*K_m, 'k:', '63.2%');
 grid on;
 xlabel('Time (s)'); ylabel('Normalised Speed');
-title('Motor \mdash First-Order Model Fit');
+title('Motor - First-Order Model Fit');
 legend('Location', 'southeast');
 
 fprintf('Motor model: G(s) = %.2f / (%.3f*s + 1)\n', K_m, tau_m);
