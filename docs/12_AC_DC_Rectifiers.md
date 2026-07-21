@@ -104,7 +104,7 @@ Examples:
 
 - Batteries
 - USB supplies
-- Arduino power rails
+- Microcontroller power rails
 
 Typical waveform:
 
@@ -491,7 +491,7 @@ Ripple decreases when:
 
 ## MATLAB Simulation
 
-Before building the circuit, simulate all four rectifier configurations to predict the waveforms you will observe on the DSO Nano.
+Before building the circuit, simulate all four rectifier configurations to predict the waveforms you will observe on the oscilloscope.
 
 ### Simulate All Four Configurations
 
@@ -532,7 +532,7 @@ for i = 1:4
     title(sprintf('%s  |  Ripple=%.2fV', titles{i}, ripple));
 end
 xlabel('Time (ms)');
-sgtitle(sprintf('Rectifier Configurations \mdash V_{peak}=%.0fV, f=%dHz', Vpeak, f));
+sgtitle(sprintf('Rectifier Configurations - V_{peak}=%.0fV, f=%dHz', Vpeak, f));
 ```
 
 ### Calculate Theoretical Values
@@ -575,7 +575,7 @@ Set your signal generator to: **10 Vpeak, 50 Hz, sine wave**
 ### Equipment You Already Have
 
 - Signal generator (AC source — set to 10 Vpeak, 50 Hz, sine)
-- DSO Nano Oscilloscope
+- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
 - Multimeter
 - Breadboard and jumper wires
 
@@ -618,7 +618,11 @@ Reference Ground
 
 ---
 
-## DSO Nano Settings
+## Oscilloscope Settings (OWON Baseline)
+
+Recommended scope: OWON HDS272S.
+
+Compatible alternative: DSO Nano.
 
 Vertical:
 
@@ -782,7 +786,7 @@ With Capacitor
 
 ---
 
-## DSO Nano Measurement
+## Oscilloscope Measurement
 
 ### Probe Connections
 
@@ -800,7 +804,11 @@ Circuit Ground
 
 ---
 
-## DSO Nano Settings
+## Oscilloscope Settings (OWON Baseline)
+
+Recommended scope: OWON HDS272S.
+
+Compatible alternative: DSO Nano.
 
 Vertical:
 
@@ -909,7 +917,7 @@ bar(x, [Vavg_sim; Vavg_measured]', 0.6);
 set(gca,'XTickLabel', labels);
 legend('Simulated','Measured','Location','northwest');
 ylabel('Average Voltage (V)'); grid on;
-title('Average DC Voltage \mdash Simulation vs Measurement');
+title('Average DC Voltage - Simulation vs Measurement');
 
 ripple_sim = cellfun(@(v) max(v)-min(v), configs);
 subplot(2,1,2);
@@ -917,7 +925,7 @@ bar(x, [ripple_sim; ripple_measured]', 0.6);
 set(gca,'XTickLabel', labels);
 legend('Simulated','Measured','Location','northeast');
 ylabel('Ripple Voltage (V)'); grid on;
-title('Ripple Voltage \mdash Simulation vs Measurement');
+title('Ripple Voltage - Simulation vs Measurement');
 ```
 
 ### Reflection
