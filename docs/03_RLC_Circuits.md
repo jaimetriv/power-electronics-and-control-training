@@ -22,7 +22,7 @@ In this project you will learn:
 - What natural frequency is
 - What damping is
 - How second-order systems behave
-- How to measure oscillations using the DSO Nano
+- How to measure oscillations using an oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
 
 This project marks the transition from first-order systems to second-order systems.
 
@@ -437,7 +437,7 @@ for i = 1:3
 end
 grid on;
 xlabel('Time (ms)'); ylabel('Capacitor Voltage (V)');
-title('RLC Step Response \mdash Damping Comparison');
+title('RLC Step Response - Damping Comparison');
 legend('Location', 'northeast');
 ```
 
@@ -463,10 +463,10 @@ Additional components:
 
 Existing tools:
 
-- Arduino Uno
+- Controller (Arduino Uno or ESP32 DevKit V1)
 - Breadboard
 - Jumper wires
-- DSO Nano Oscilloscope
+- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
 
 ---
 
@@ -477,6 +477,9 @@ graph TD
 
 A[Arduino Pin 9]
 --> B[100 Ohm]
+
+A2[ESP32 GPIO18]
+--> B
 
 B --> C[100 mH Inductor]
 
@@ -508,7 +511,7 @@ GND
 ## Physical Layout
 
 ```text
-Arduino Pin 9
+PWM Output (Arduino Pin 9 or ESP32 GPIO18)
       |
     100Ω
       |
@@ -559,9 +562,16 @@ These transitions excite the natural dynamics of the RLC circuit.
 
 This allows us to observe resonance.
 
+In hardware we use periodic square-wave excitation to repeatedly trigger ringing.
+In simulation we use a step response to isolate and study the intrinsic second-order dynamics.
+
 ---
 
-## DSO Nano Setup
+## Oscilloscope Setup (OWON Baseline)
+
+Recommended scope: OWON HDS272S.
+
+Compatible alternative: DSO Nano.
 
 Vertical:
 
@@ -848,7 +858,7 @@ Now overlay your measured resonant frequency against the theoretical simulation.
 
 ### Enter Your Measured Period
 
-From Experiment 2, record the oscillation period you measured on the DSO Nano:
+From Experiment 2, record the oscillation period you measured on the oscilloscope:
 
 ```matlab
 L = 0.1;
@@ -884,7 +894,7 @@ plot(t * 1e3, y_meas,   'r',   'LineWidth', 2, 'DisplayName', ...
     sprintf('Measured fn=%.0fHz', f_measured));
 grid on;
 xlabel('Time (ms)'); ylabel('Voltage (V)');
-title('RLC Step Response \mdash Theory vs Measurement');
+title('RLC Step Response - Theory vs Measurement');
 legend('Location', 'northeast');
 ```
 
@@ -1062,7 +1072,7 @@ Time Base
 
 ## Troubleshooting Checklist
 
-✅ Arduino powered
+✅ Controller powered (Arduino or ESP32)
 
 ✅ Code uploaded
 
@@ -1072,7 +1082,7 @@ Time Base
 
 ✅ Correct component values
 
-✅ DSO Nano triggering correctly
+✅ Oscilloscope triggering correctly (OWON or DSO Nano)
 
 ✅ Appropriate time scale selected
 
