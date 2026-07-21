@@ -399,7 +399,7 @@ xline(0.75, 'r--', 'Max safe D for 5V in / 20V out');
 yline(20, 'k:', '20V practical limit');
 grid on;
 xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
-title('Ideal Boost Converter \mdash V_{IN} = 5V');
+title('Ideal Boost Converter - V_{IN} = 5V');
 legend('Ideal V_{OUT}', 'Experiment points', 'Location', 'northwest');
 ylim([0 30]);
 ```
@@ -429,7 +429,7 @@ figure;
 plot([t_on, t_off]*1e3, [iL_on, iL_off]*1e3, 'b', 'LineWidth', 2);
 grid on;
 xlabel('Time (ms)'); ylabel('Inductor Current (mA)');
-title(sprintf('Boost Inductor Current \mdash D=%.0f%%, L=%d\muH', D*100, L*1e6));
+title(sprintf('Boost Inductor Current - D=%.0f%%, L=%d\muH', D*100, L*1e6));
 yline(Iavg*1e3, 'r--', sprintf('I_{avg} = %.0f mA', Iavg*1e3));
 ```
 
@@ -459,9 +459,10 @@ Additional Components:
 Existing Equipment:
 
 - Arduino Uno
+- ESP32 DevKit V1 (alternative controller)
 - Breadboard
 - Jumper Wires
-- DSO Nano Oscilloscope
+- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
 
 ---
 
@@ -474,6 +475,8 @@ Begin with:
 ```
 
 and low power loads.
+
+If using ESP32 gate drive (about 3.3V), use a logic-level MOSFET with low Rds(on) specified at low Vgs, or use a gate driver.
 
 Do not connect sensitive electronics directly to an untested converter output.
 
@@ -527,6 +530,25 @@ void loop()
 }
 ```
 
+### ESP32 Equivalent (LEDC PWM)
+
+```cpp
+const int PWM_PIN  = 18;
+const int PWM_CH   = 0;
+const int PWM_FREQ = 500;
+const int PWM_RES  = 8;
+
+void setup()
+{
+  ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+}
+
+void loop()
+{
+  ledcWrite(PWM_PIN, 128);
+}
+```
+
 ---
 
 ## Oscilloscope Connections
@@ -545,7 +567,11 @@ Ground
 
 ---
 
-## DSO Nano Settings
+## Oscilloscope Settings (OWON Baseline)
+
+Recommended scope: OWON HDS272S.
+
+Compatible alternative: DSO Nano.
 
 Vertical:
 
@@ -570,7 +596,7 @@ Rising Edge
 ## Expected Waveform
 
 ```text
-5V ─────      ─────
+V_S ────      ─────
          │      │
          │      │
 0V ______│______│______
@@ -584,7 +610,7 @@ Rising Edge
 |------------|-----------|-----------|
 | Frequency | ~490 Hz | |
 | Duty Cycle | ~50% | |
-| Gate Voltage | ~5 V | |
+| Gate Voltage | ~V_S (about 5V Arduino or about 3.3V ESP32) | |
 
 ---
 
@@ -600,6 +626,12 @@ Observe how duty cycle affects output voltage.
 
 ```cpp
 analogWrite(9,64);
+```
+
+ESP32 equivalent duty command:
+
+```cpp
+ledcWrite(PWM_PIN, 64);
 ```
 
 Expected Duty Cycle:
@@ -622,6 +654,12 @@ Output Voltage = __________
 analogWrite(9,128);
 ```
 
+ESP32 equivalent duty command:
+
+```cpp
+ledcWrite(PWM_PIN, 128);
+```
+
 Expected Duty Cycle:
 
 ```text
@@ -640,6 +678,12 @@ Output Voltage = __________
 
 ```cpp
 analogWrite(9,192);
+```
+
+ESP32 equivalent duty command:
+
+```cpp
+ledcWrite(PWM_PIN, 192);
 ```
 
 Expected Duty Cycle:
@@ -690,7 +734,13 @@ Ground
 
 ---
 
-## DSO Nano Settings
+## Oscilloscope Settings (OWON Baseline)
+
+Use the same scope setup approach as Experiment 1, then increase vertical sensitivity for ripple.
+
+Recommended scope: OWON HDS272S.
+
+Compatible alternative: DSO Nano.
 
 Vertical:
 
@@ -819,7 +869,7 @@ scatter(D_measured, Vout_measured, 80, 'r', 'filled', ...
     'DisplayName', 'Measured');
 grid on;
 xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
-title('Boost Converter \mdash Ideal vs Measured');
+title('Boost Converter - Ideal vs Measured');
 legend('Location', 'northwest');
 ylim([0 25]);
 
@@ -850,7 +900,7 @@ plot(D, Vout_boost, 'r', 'LineWidth', 2, 'DisplayName', 'Boost: V_{IN}/(1-D)');
 yline(Vin, 'k--', sprintf('V_{IN} = %.0fV', Vin));
 grid on;
 xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
-title('Buck vs Boost \mdash Voltage Conversion');
+title('Buck vs Boost - Voltage Conversion');
 legend('Location', 'north');
 ylim([0 20]);
 ```
@@ -997,7 +1047,7 @@ Check:
 
 Check:
 
-- Arduino sketch
+- Controller sketch
 - Probe connection
 - Trigger settings
 
