@@ -406,10 +406,10 @@ Equipment:
 
 ### Objective
 
-Implement a full PID controller driving the motor via MOSFET.
-The potentiometer sets the speed reference.
+Implement a full closed-loop PID controller driving the motor via MOSFET.
+The potentiometer sets the speed reference and back-EMF on A1 provides feedback.
 
-> Note: Without a speed sensor, this experiment demonstrates open-loop PID control. True closed-loop control is introduced conceptually here and implemented fully when a sensor is available. The motor model identified in Project 14 and the controller design process in Project 15 will show how to tune gains once a feedback path exists.
+> Note: Back-EMF is a proxy for speed, not a perfect tachometer measurement. It is affected by winding resistance and load current, but it is sufficient to demonstrate true closed-loop PID behaviour and gain-tuning tradeoffs.
 
 ---
 
@@ -422,6 +422,12 @@ Battery +
     |
   Motor
     |--- Flyback diode (cathode to Battery+)
+        |
+        +--- 10kΩ ---+--- A1  (back-EMF feedback)
+                                 |
+                             10kΩ
+                                 |
+                                GND
   Drain
   MOSFET (IRLZ44N)
   Source
@@ -441,8 +447,8 @@ float Kp = 0.5;
 float Ki = 1.0;
 float Kd = 0.1;
 
-const float dt           = 0.01;    // sample time (s) matches delay(10)
-const float integral_max = 200.0;
+const float dt           = 0.05;    // sample time (s) matches delay(50)
+const float integral_max = 500.0;
 
 float integral     = 0;
 float previousError = 0;
@@ -456,7 +462,7 @@ void setup()
 void loop()
 {
     int reference = analogRead(A0);           // desired speed (0-1023)
-    int feedback  = 0;                        // no sensor yet
+    int feedback  = analogRead(A1);           // back-EMF proxy (0-1023)
 
     float error      = reference - feedback;
     integral         = integral + error * dt;
@@ -469,14 +475,36 @@ void loop()
     analogWrite(9, (int)output);
 
     Serial.print("Ref: ");  Serial.print(reference);
+    Serial.print("  Fbk: "); Serial.print(feedback);
+    Serial.print("  Err: "); Serial.print((int)error);
     Serial.print("  Int: "); Serial.print(integral, 2);
     Serial.print("  Der: "); Serial.print(derivative, 2);
     Serial.print("  PWM: "); Serial.println((int)output);
 
     previousError = error;
-    delay(10);
+    delay(50);
 }
 ```
+
+---
+
+## What Is Happening?
+
+The potentiometer sets the reference $r$.
+
+The back-EMF divider on A1 provides the measured output proxy $y$.
+
+The controller computes:
+
+$$
+e = r - y
+$$
+
+$$
+u = K_P e + K_I \int e\,dt + K_D \frac{de}{dt}
+$$
+
+With the loop closed, you should observe feedback moving toward the reference in the Serial Monitor while PWM adjusts automatically.
 
 ---
 
@@ -516,7 +544,7 @@ Provides damping.
 
 ### Objective
 
-Observe how changing Kd affects behaviour.
+Observe how changing Kd affects closed-loop behaviour (overshoot, damping and settling).
 
 ---
 
@@ -736,7 +764,7 @@ $$
 
 ## DSO Nano Exercise
 
-Observe the PWM output.
+Observe the PWM output while changing the reference and gains.
 
 ---
 
@@ -1064,7 +1092,9 @@ Reduce Kd or apply derivative on measurement only (advanced topic).
 
 ✅ Shared ground between Arduino and battery
 
-✅ Serial Monitor shows reference, integral, derivative and PWM
+✅ Serial Monitor shows reference, feedback, error, integral, derivative and PWM
+
+✅ Feedback reading on A1 changes with motor speed
 
 ✅ PWM duty cycle visible on DSO Nano
 
@@ -1095,6 +1125,8 @@ In this project you learned:
 ✅ Closed-loop performance metrics
 
 ✅ Practical PID implementation
+
+✅ Practical closed-loop PID implementation with back-EMF feedback
 
 You now understand the most widely used controller in classical control engineering.
 
