@@ -296,7 +296,7 @@ Forward motoring.
 
 ## Practical Relevance
 
-Most Arduino motor control projects operate in:
+Most microcontroller motor control projects operate in:
 
 ```text
 First Quadrant
@@ -387,7 +387,7 @@ plot(D, Vavg_motor, 'g--','LineWidth', 1.5,'DisplayName', 'Motor Drive    V_{AVG
 yline(Vin, 'k:', sprintf('V_{IN} = %.0fV', Vin));
 grid on;
 xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
-title('DC Chopper Converters \mdash Unified Comparison (V_{IN}=5V)');
+title('DC Chopper Converters - Unified Comparison (V_{IN}=5V)');
 legend('Location', 'northwest');
 ylim([0 20]);
 ```
@@ -413,7 +413,7 @@ for i = 1:3
     title(sprintf('D = %d%%  \\rightarrow  V_{AVG} = %.2fV', D*100, Vin*D));
 end
 xlabel('Time (ms)');
-sgtitle('Chopper Waveforms \mdash 490 Hz, V_{IN}=5V');
+sgtitle('Chopper Waveforms - 490 Hz, V_{IN}=5V');
 ```
 
 ### Prediction Table
@@ -430,7 +430,7 @@ sgtitle('Chopper Waveforms \mdash 490 Hz, V_{IN}=5V');
 
 ### Objective
 
-Observe chopper operation using Arduino PWM.
+Observe chopper operation using controller PWM.
 
 ---
 
@@ -448,6 +448,25 @@ void loop()
 }
 ```
 
+### ESP32 Equivalent (LEDC PWM)
+
+```cpp
+const int PWM_PIN  = 18;
+const int PWM_CH   = 0;
+const int PWM_FREQ = 500;
+const int PWM_RES  = 8;
+
+void setup()
+{
+    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+}
+
+void loop()
+{
+    ledcWrite(PWM_PIN, 128);
+}
+```
+
 ---
 
 ## Oscilloscope Setup
@@ -455,18 +474,22 @@ void loop()
 Probe Tip:
 
 ```text
-Pin 9
+PWM node (Arduino Pin 9 or ESP32 GPIO18)
 ```
 
 Probe Ground:
 
 ```text
-Arduino GND
+Controller ground
 ```
 
 ---
 
-## DSO Nano Settings
+## Oscilloscope Settings (OWON Baseline)
+
+Recommended scope: OWON HDS272S.
+
+Compatible alternative: DSO Nano.
 
 Vertical:
 
@@ -505,7 +528,7 @@ Rising Edge
 |------------|-----------|
 | Frequency | ~490 Hz |
 | Duty Cycle | ~50% |
-| Peak Voltage | ~5 V |
+| Peak Voltage | ~V_S (about 5V Arduino or about 3.3V ESP32) |
 
 ---
 
@@ -515,6 +538,12 @@ Rising Edge
 
 ```cpp
 analogWrite(9,64);
+```
+
+ESP32 equivalent duty command:
+
+```cpp
+ledcWrite(PWM_PIN, 64);
 ```
 
 Expected Duty Cycle:
@@ -531,6 +560,12 @@ Expected Duty Cycle:
 analogWrite(9,128);
 ```
 
+ESP32 equivalent duty command:
+
+```cpp
+ledcWrite(PWM_PIN, 128);
+```
+
 Expected Duty Cycle:
 
 ```text
@@ -543,6 +578,12 @@ Expected Duty Cycle:
 
 ```cpp
 analogWrite(9,192);
+```
+
+ESP32 equivalent duty command:
+
+```cpp
+ledcWrite(PWM_PIN, 192);
 ```
 
 Expected Duty Cycle:
@@ -643,7 +684,7 @@ scatter(D_measured, Vavg_measured, 80, 'r', 'filled', ...
     'DisplayName', 'Measured');
 grid on;
 xlabel('Duty Cycle'); ylabel('Average Voltage (V)');
-title('DC Chopper \mdash Ideal vs Measured');
+title('DC Chopper - Ideal vs Measured');
 legend('Location', 'northwest');
 
 % Print efficiency at each operating point
@@ -670,7 +711,7 @@ scatter(D_measured, Vavg_measured, 80, 'gs', 'filled', ...
 yline(Vin, 'k:', 'V_{IN}');
 grid on;
 xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
-title('Buck / Boost / Chopper \mdash Unified View');
+title('Buck / Boost / Chopper - Unified View');
 legend('Location', 'northwest');
 ylim([0 20]);
 ```
@@ -742,14 +783,6 @@ Answer:
 ```text
 ____________________
 ```
-
-Answer:
-
-```text
-____________________
-```
-
----
 
 ### Question 6
 
