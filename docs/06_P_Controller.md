@@ -438,7 +438,7 @@ end
 yline(1.0, 'k--', 'Reference');
 grid on;
 xlabel('Time (s)'); ylabel('Normalised Output');
-title('P Controller \mdash Closed-Loop Step Response');
+title('P Controller - Closed-Loop Step Response');
 legend('Location', 'southeast');
 ```
 
@@ -459,7 +459,7 @@ figure;
 plot(Kp_range, ess * 100, 'b', 'LineWidth', 2);
 grid on;
 xlabel('Kp'); ylabel('Steady-State Error (%)');
-title('P Controller \mdash Steady-State Error vs Gain');
+title('P Controller - Steady-State Error vs Gain');
 ```
 
 ### Prediction Table
@@ -481,6 +481,7 @@ Record your predicted steady-state error before experimenting:
 From your existing kit:
 
 - Arduino Uno
+- ESP32 DevKit V1 (alternative controller)
 - Breadboard
 - Potentiometer (speed setpoint)
 - IRLZ44N MOSFET
@@ -493,7 +494,7 @@ From your existing kit:
 
 Equipment:
 
-- DSO Nano Oscilloscope
+- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
 
 ---
 
@@ -510,7 +511,7 @@ Generate a user-adjustable reference input using the potentiometer.
 ```mermaid
 graph LR
 
-A[5V]
+A[Controller VCC\n5V Uno or 3.3V ESP32]
 --> B[Potentiometer]
 
 B --> C[A0]
@@ -539,6 +540,26 @@ void loop()
 }
 ```
 
+### ESP32 Equivalent
+
+```cpp
+const int REF_PIN = 34;   // potentiometer wiper to ADC pin
+
+void setup()
+{
+    Serial.begin(115200);
+}
+
+void loop()
+{
+    int reference = analogRead(REF_PIN);   // 0-4095 on 12-bit ADC
+
+    Serial.println(reference);
+
+    delay(100);
+}
+```
+
 ---
 
 ## Expected Behaviour
@@ -546,7 +567,7 @@ void loop()
 Rotating the potentiometer changes the measured value between approximately:
 
 ```text
-0 and 1023
+0 and full ADC scale (about 0-1023 on Arduino Uno, about 0-4095 on ESP32)
 ```
 
 This value represents the desired motor speed setpoint.
@@ -559,7 +580,7 @@ This value represents the desired motor speed setpoint.
 
 Close the feedback loop using the motor's back-EMF voltage as a proxy for speed.
 
-When a DC motor spins it generates a voltage proportional to speed — this is called back-EMF. A resistor divider on the motor terminals feeds this voltage into the Arduino ADC, giving a real feedback signal without a dedicated speed sensor.
+When a DC motor spins it generates a voltage proportional to speed — this is called back-EMF. A resistor divider on the motor terminals feeds this voltage into the controller ADC, giving a real feedback signal without a dedicated speed sensor.
 
 > Note: Back-EMF is not a perfect speed measurement — it is affected by winding resistance and load current. It is however sufficient to demonstrate true closed-loop behaviour and observe steady-state error with a P controller.
 
@@ -586,11 +607,14 @@ Battery +
     |
    GND
 
-Arduino Pin 9 --- 220Ω --- Gate
+PWM Output (Arduino Pin 9 or ESP32 GPIO18) --- 220Ω --- Gate
 Potentiometer centre pin --- A0
 ```
 
-The divider scales the motor terminal voltage by 0.5 so it stays within the 0–5V ADC range.
+For ESP32, map A0/A1 equivalents to available ADC pins (for example REF_PIN=GPIO34 and FBK_PIN=GPIO35).
+
+The divider scales the motor terminal voltage so it stays within the ADC range.
+Use divider values compatible with your controller: 0-5V for Arduino Uno ADC, 0-3.3V for ESP32 ADC.
 
 ---
 
@@ -615,6 +639,44 @@ void loop()
     output     = constrain(output, 0, 255);
 
     analogWrite(9, output);
+
+    Serial.print("Ref: ");  Serial.print(reference);
+    Serial.print("  Fbk: "); Serial.print(feedback);
+    Serial.print("  Err: "); Serial.print(error);
+    Serial.print("  PWM: "); Serial.println(output);
+
+    delay(50);
+}
+```
+
+### ESP32 Equivalent (LEDC + ADC Feedback)
+
+```cpp
+const int PWM_PIN   = 18;
+const int PWM_CH    = 0;
+const int PWM_FREQ  = 500;
+const int PWM_RES   = 8;
+const int REF_PIN   = 34;   // potentiometer wiper
+const int FBK_PIN   = 35;   // back-EMF divider output
+
+float Kp = 0.5;
+
+void setup()
+{
+    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+    Serial.begin(115200);
+}
+
+void loop()
+{
+    int reference = analogRead(REF_PIN);   // 0-4095 on ESP32 ADC
+    int feedback  = analogRead(FBK_PIN);   // back-EMF proxy
+
+    int error  = reference - feedback;
+    int output = (int)(Kp * error / 16.0); // scale 12-bit error to 8-bit PWM
+    output     = constrain(output, 0, 255);
+
+    ledcWrite(PWM_PIN, output);
 
     Serial.print("Ref: ");  Serial.print(reference);
     Serial.print("  Fbk: "); Serial.print(feedback);
@@ -801,7 +863,7 @@ F --> E
 
 ---
 
-## DSO Nano Exercise
+## Oscilloscope Exercise
 
 Observe how the PWM duty cycle changes as you rotate the potentiometer.
 
@@ -812,7 +874,7 @@ Observe how the PWM duty cycle changes as you rotate the potentiometer.
 Probe Tip:
 
 ```text
-MOSFET Gate (Pin 9)
+MOSFET Gate PWM node (Arduino Pin 9 or ESP32 GPIO18)
 ```
 
 Probe Ground:
@@ -823,7 +885,11 @@ GND
 
 ---
 
-## DSO Nano Settings
+## Oscilloscope Settings (OWON Baseline)
+
+Recommended scope: OWON HDS272S.
+
+Compatible alternative: DSO Nano.
 
 Vertical:
 
@@ -959,7 +1025,7 @@ end
 yline(1.0, 'k--', 'Reference');
 grid on;
 xlabel('Time (s)'); ylabel('Normalised Output');
-title('P Controller \mdash Closed-Loop Response (Motor Plant)');
+title('P Controller - Closed-Loop Response (Motor Plant)');
 legend('Location', 'southeast');
 ```
 
@@ -1088,7 +1154,7 @@ Check:
 
 - MOSFET wiring
 - Battery connected
-- Shared ground between Arduino and motor supply
+- Shared ground between controller and motor supply
 - Flyback diode installed
 
 ---
@@ -1106,18 +1172,18 @@ Check:
 
 Check:
 
-- Centre pin connected to A0
-- 5V and GND connected to outer pins
+- Centre pin connected to reference ADC input (A0 on Arduino, REF_PIN on ESP32)
+- Controller VCC and GND connected to outer pins
 
 ---
 
-### No PWM Visible on DSO Nano
+### No PWM Visible on Oscilloscope
 
 Check:
 
 - Probe on MOSFET gate
 - Trigger setting
-- Arduino code uploaded
+- Controller code uploaded
 
 ---
 
@@ -1125,15 +1191,15 @@ Check:
 
 ✅ Motor circuit wired correctly (MOSFET + flyback diode)
 
-✅ Back-EMF divider connected to A1
+✅ Back-EMF divider connected to feedback ADC input (A1 on Arduino or FBK_PIN on ESP32)
 
-✅ Shared ground between Arduino and battery
+✅ Shared ground between controller and battery
 
 ✅ Potentiometer reading changes in Serial Monitor
 
 ✅ Feedback reading changes with motor speed in Serial Monitor
 
-✅ PWM duty cycle visible on DSO Nano
+✅ PWM duty cycle visible on oscilloscope (OWON or DSO Nano)
 
 ✅ Motor speed changes with potentiometer
 
