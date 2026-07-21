@@ -67,6 +67,7 @@ to build a solid foundation in modern electrical and electronic engineering.
 - Arduino IDE
 - MATLAB
 - Simulink
+- Simscape Electrical
 
 ---
 
@@ -119,6 +120,49 @@ How to predict their behaviour
 ```
 
 before building them.
+
+For many projects, the repository now supports three complementary modelling layers:
+
+1. MATLAB scripts for equations, plotting and parameter sweeps
+2. Simulink for signal-flow and controller structure
+3. Simscape Electrical for physical electrical and electromechanical models
+
+The goal is not to replace the hardware labs.
+
+The goal is to let you move between:
+
+```text
+Theory
+Simulation
+Hardware
+```
+
+with a clearer understanding of what each layer contributes.
+
+---
+
+## Simulation Companion Track
+
+Some projects will include dedicated simulation companion pages.
+
+These companion pages are intended to help you:
+
+- validate theory before wiring hardware
+- observe internal signals that are hard to measure physically
+- compare ideal and non-ideal behaviour
+- test controller ideas before hardware implementation
+
+Current companion pages cover:
+
+- Buck converter modeling
+- Boost converter modeling
+- PWM motor modeling
+- P, PI and PID controller modeling
+- closed-loop Buck converter control
+- grid-following converter modeling
+- grid-forming converter modeling
+
+The simulation track is intended to expand progressively wherever simulation adds clear learning value without replacing the hardware-first structure of the course.
 
 ---
 

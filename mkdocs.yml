@@ -82,6 +82,9 @@ nav:
       - Boost Converter: 09_Boost_Converter.md
       - PWM Motor Control: 10_PWM_Motor_Control.md
 
+  - Simulation Track:
+      - Overview: Simulation_Track_Overview.md
+
   - Control Systems:
       - System Identification: 11_System_Identification.md
       - P Controller: 12_P_Controller.md

@@ -7,6 +7,9 @@ Welcome to the course.
 - Electronics Fundamentals
 - PWM
 - RC and RLC Circuits
+- MATLAB Modelling
+- Simulink Control Design
+- Simscape Electrical Modelling
 - Control Systems
 - Power Electronics
 - Inverters
@@ -26,6 +29,12 @@ Welcome to the course.
 - DSO Nano V3
 - OWON HDS272S
 
+### Software
+
+- MATLAB
+- Simulink
+- Simscape Electrical
+
 ## Start Here
 
 1. Introduction
@@ -34,37 +43,55 @@ Welcome to the course.
 
 ## Learning Path
 
+The main learning path remains hardware-first, with simulation companion pages added where they provide clear value.
+
+See also:
+
+- Simulation_Track_Overview.md
+
 ```mermaid
 flowchart TD
 
 A[Introduction]
---> B[PWM]
+--> B[Arduino Familiarisation]
 
-B --> C[RC Circuits]
+B --> C[Oscilloscope Familiarisation]
 
-C --> D[RLC Circuits]
+C --> D[ESP32 Familiarisation]
 
-D --> E[MOSFET Fundamentals]
+D --> E[PWM Fundamentals]
 
-E --> F[Control Systems]
+E --> F[RC Circuits]
 
-F --> G[Buck Converter]
+F --> G[RLC Circuits]
 
-G --> H[Closed Loop Buck]
+G --> H[MOSFET Fundamentals]
 
-H --> I[Boost Converter]
+H --> I[AC-DC Rectifiers]
 
-I --> J[DC Chopper Converters]
+I --> J[DC-AC Inverters]
 
-J --> K[Rectifiers]
+J --> K[DC Chopper Converters]
 
-K --> L[Inverters]
+K --> L[Buck Converter]
 
-L --> M[System Identification]
+L --> M[Boost Converter]
 
-M --> N[Controller Design]
+M --> N[PWM Motor Control]
 
-N --> O[Grid Following VSC]
+N --> O[System Identification]
 
-O --> P[Grid Forming VSC]
+O --> P[P Controller]
+
+P --> Q[PI Controller]
+
+Q --> R[PID Controller]
+
+R --> S[Closed-Loop Buck]
+
+S --> T[Controller Design]
+
+T --> U[Grid Following VSC]
+
+U --> V[Grid Forming VSC]
 ```
