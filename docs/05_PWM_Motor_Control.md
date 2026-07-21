@@ -51,7 +51,7 @@ At the end of this project you should be able to:
 
 ✅ Drive a motor using a MOSFET
 
-✅ Measure PWM signals using the DSO Nano
+✅ Measure PWM signals using an oscilloscope
 
 ✅ Explain motor inertia
 
@@ -198,14 +198,16 @@ $$
 and:
 
 $$
-V_S=5V
+V_S
 $$
 
 Then:
 
 $$
-V_{AVG}=2.5V
+V_{AVG}=0.5V_S
 $$
+
+Examples: $V_{AVG}=2.5V$ for a 5.0V Arduino signal, or $V_{AVG}=1.65V$ for a 3.3V ESP32 signal.
 
 The motor receives less average voltage and therefore rotates more slowly.
 
@@ -255,7 +257,7 @@ end
 yline(0.632, 'k--', '63.2%');
 grid on;
 xlabel('Time (s)'); ylabel('Normalised Speed');
-title('First-Order Motor Model \mdash Step Response');
+title('First-Order Motor Model - Step Response');
 legend('Location', 'southeast');
 ```
 
@@ -294,6 +296,7 @@ Before running Experiment 4, estimate the motor time constant by looking at the 
 ### Hardware
 
 - Arduino Uno
+- ESP32 DevKit V1 (alternative controller)
 - Breadboard
 - Jumper Wires
 - Logic-Level MOSFET (IRLZ44N recommended)
@@ -303,15 +306,15 @@ Before running Experiment 4, estimate the motor time constant by looking at the 
 
 ### Equipment
 
-- DSO Nano Oscilloscope
+- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
 
 ---
 
 ## Important Safety Note
 
-Never connect a motor directly to an Arduino output pin.
+Never connect a motor directly to a microcontroller output pin.
 
-Motors can draw significantly more current than the Arduino can safely provide.
+Motors can draw significantly more current than the microcontroller can safely provide.
 
 Always use:
 
@@ -329,7 +332,7 @@ When current is interrupted, a high voltage spike can occur.
 
 The flyback diode protects:
 
-- Arduino
+- Controller
 - MOSFET
 - Other electronics
 
@@ -342,6 +345,9 @@ graph TD
 
 A[Arduino Pin 9]
 --> B[220 Ohm]
+
+A2[ESP32 GPIO18]
+--> B
 
 B --> C[Gate]
 
@@ -378,7 +384,7 @@ Source
     |
    GND
 
-Arduino Pin 9
+PWM Output (Arduino Pin 9 or ESP32 GPIO18)
       |
     220Ω
       |
@@ -413,6 +419,25 @@ void loop()
 
     digitalWrite(9, LOW);
 
+    delay(3000);
+}
+```
+
+### ESP32 Equivalent
+
+```cpp
+const int PWM_PIN = 18;
+
+void setup()
+{
+    pinMode(PWM_PIN, OUTPUT);
+}
+
+void loop()
+{
+    digitalWrite(PWM_PIN, HIGH);
+    delay(3000);
+    digitalWrite(PWM_PIN, LOW);
     delay(3000);
 }
 ```
@@ -474,6 +499,25 @@ void loop()
 }
 ```
 
+### ESP32 Equivalent (LEDC PWM)
+
+```cpp
+const int PWM_PIN = 18;
+const int PWM_CH = 0;
+const int PWM_FREQ = 500;
+const int PWM_RES = 8;
+
+void setup()
+{
+    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+}
+
+void loop()
+{
+    ledcWrite(PWM_PIN, 128);
+}
+```
+
 ---
 
 ## Expected Result
@@ -482,7 +526,7 @@ The motor should rotate at a lower speed than full power.
 
 ---
 
-## DSO Nano Measurement
+## Oscilloscope Measurement
 
 Probe Location:
 
@@ -498,7 +542,11 @@ Circuit Ground
 
 ---
 
-## DSO Nano Settings
+## Oscilloscope Settings (OWON Baseline)
+
+Recommended scope: OWON HDS272S.
+
+Compatible alternative: DSO Nano.
 
 Vertical:
 
@@ -523,7 +571,7 @@ Rising Edge
 ## Expected Waveform
 
 ```text
-5V ─────      ─────
+V_S ────      ─────
          │      │
          │      │
 0V ______│______│______
@@ -536,7 +584,7 @@ Rising Edge
 | Measurement | Expected |
 |------------|----------|
 | Frequency | ~490Hz |
-| Gate Voltage | ~5V |
+| Gate Voltage | ~V_S (about 5V Arduino or about 3.3V ESP32) |
 | Duty Cycle | ~50% |
 
 ---
@@ -553,6 +601,12 @@ Investigate the relationship between PWM and motor speed.
 
 ```cpp
 analogWrite(9,64);
+```
+
+ESP32 equivalent duty command:
+
+```cpp
+ledcWrite(PWM_PIN, 64);
 ```
 
 Expected:
@@ -575,6 +629,12 @@ Low
 analogWrite(9,128);
 ```
 
+ESP32 equivalent duty command:
+
+```cpp
+ledcWrite(PWM_PIN, 128);
+```
+
 Expected:
 
 $$
@@ -595,6 +655,12 @@ Medium
 analogWrite(9,192);
 ```
 
+ESP32 equivalent duty command:
+
+```cpp
+ledcWrite(PWM_PIN, 192);
+```
+
 Expected:
 
 $$
@@ -613,6 +679,12 @@ High
 
 ```cpp
 analogWrite(9,255);
+```
+
+ESP32 equivalent duty command:
+
+```cpp
+ledcWrite(PWM_PIN, 255);
 ```
 
 Expected:
@@ -670,6 +742,28 @@ void loop()
 
     analogWrite(9,0);
 
+    delay(5000);
+}
+```
+
+### ESP32 Equivalent (Step Test)
+
+```cpp
+const int PWM_PIN = 18;
+const int PWM_CH = 0;
+const int PWM_FREQ = 500;
+const int PWM_RES = 8;
+
+void setup()
+{
+    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+}
+
+void loop()
+{
+    ledcWrite(PWM_PIN, 255);
+    delay(5000);
+    ledcWrite(PWM_PIN, 0);
     delay(5000);
 }
 ```
@@ -793,7 +887,7 @@ yline(0.632, 'k:', '63.2% threshold');
 xline(tau_measured, 'r:', sprintf('\\tau = %.2fs', tau_measured));
 grid on;
 xlabel('Time (s)'); ylabel('Normalised Speed');
-title('First-Order Motor Model \mdash Measured \tau Fit');
+title('First-Order Motor Model - Measured \tau Fit');
 legend('Location', 'southeast');
 ```
 
@@ -935,7 +1029,7 @@ Check:
 
 ---
 
-### Arduino Resets
+### Controller Resets
 
 Check:
 
@@ -972,9 +1066,9 @@ Check:
 
 ✅ MOSFET pinout verified
 
-✅ Shared ground between Arduino and motor supply
+✅ Shared ground between controller and motor supply
 
-✅ DSO Nano probing gate correctly
+✅ Oscilloscope probing gate correctly (OWON or DSO Nano)
 
 ✅ PWM observed
 
@@ -998,7 +1092,7 @@ In this project you learned:
 
 ✅ Open-loop control
 
-✅ DSO Nano motor measurements
+✅ Oscilloscope motor measurements
 
 The motor is the first real plant we will control.
 
