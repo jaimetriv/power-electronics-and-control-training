@@ -333,7 +333,7 @@ end
 yline(1.0, 'k--', 'Reference');
 grid on;
 xlabel('Time (s)'); ylabel('Normalised Output');
-title('PID Controller \mdash Effect of K_D (Motor Plant)');
+title('PID Controller - Effect of K_D (Motor Plant)');
 legend('Location', 'northeast');
 ```
 
@@ -368,7 +368,7 @@ end
 yline(1.0, 'k--', 'Reference');
 grid on;
 xlabel('Time (s)'); ylabel('Normalised Output');
-title('PID \mdash Experiment 3 Cases');
+title('PID - Experiment 3 Cases');
 legend('Location', 'northeast');
 ```
 
@@ -387,6 +387,7 @@ legend('Location', 'northeast');
 Same circuit as Projects 6 and 7:
 
 - Arduino Uno
+- ESP32 DevKit V1 (alternative controller)
 - Breadboard
 - Potentiometer (setpoint)
 - IRLZ44N MOSFET
@@ -398,7 +399,7 @@ Same circuit as Projects 6 and 7:
 
 Equipment:
 
-- DSO Nano Oscilloscope
+- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
 
 ---
 
@@ -407,7 +408,7 @@ Equipment:
 ### Objective
 
 Implement a full closed-loop PID controller driving the motor via MOSFET.
-The potentiometer sets the speed reference and back-EMF on A1 provides feedback.
+The potentiometer sets the speed reference and back-EMF provides feedback.
 
 > Note: Back-EMF is a proxy for speed, not a perfect tachometer measurement. It is affected by winding resistance and load current, but it is sufficient to demonstrate true closed-loop PID behaviour and gain-tuning tradeoffs.
 
@@ -434,9 +435,11 @@ Battery +
     |
    GND
 
-Arduino Pin 9 --- 220Ω --- Gate
+PWM Output (Arduino Pin 9 or ESP32 GPIO18) --- 220Ω --- Gate
 Potentiometer centre pin --- A0
 ```
+
+For ESP32, map A0/A1 equivalents to available ADC pins (for example REF_PIN=GPIO34 and FBK_PIN=GPIO35).
 
 ---
 
@@ -486,13 +489,67 @@ void loop()
 }
 ```
 
+### ESP32 Equivalent (LEDC + ADC Feedback)
+
+```cpp
+float Kp = 0.5;
+float Ki = 1.0;
+float Kd = 0.1;
+
+const int PWM_PIN      = 18;
+const int PWM_CH       = 0;
+const int PWM_FREQ     = 500;
+const int PWM_RES      = 8;
+const int REF_PIN      = 34;   // potentiometer wiper
+const int FBK_PIN      = 35;   // back-EMF divider output
+const float dt         = 0.05; // sample time (s)
+const float integralMax = 500.0;
+
+float integral      = 0;
+float previousError = 0;
+
+void setup()
+{
+    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+    Serial.begin(115200);
+}
+
+void loop()
+{
+    int reference = analogRead(REF_PIN);      // 0-4095 on ESP32 ADC
+    int feedback  = analogRead(FBK_PIN);      // back-EMF proxy
+
+    float error      = (reference - feedback) / 16.0; // scale to 8-bit PWM domain
+    integral         = integral + error * dt;
+    integral         = constrain(integral, -integralMax, integralMax);
+    float derivative = (error - previousError) / dt;
+
+    float output = Kp * error + Ki * integral + Kd * derivative;
+    output = constrain(output, 0, 255);
+
+    ledcWrite(PWM_PIN, (int)output);
+
+    Serial.print("Ref: ");  Serial.print(reference);
+    Serial.print("  Fbk: "); Serial.print(feedback);
+    Serial.print("  Err8: "); Serial.print(error, 1);
+    Serial.print("  Int: "); Serial.print(integral, 2);
+    Serial.print("  Der: "); Serial.print(derivative, 2);
+    Serial.print("  PWM: "); Serial.println((int)output);
+
+    previousError = error;
+    delay(50);
+}
+```
+
+Note: if ADC or PWM resolution changes, rescale the error path and retune Kp/Ki/Kd.
+
 ---
 
 ## What Is Happening?
 
 The potentiometer sets the reference $r$.
 
-The back-EMF divider on A1 provides the measured output proxy $y$.
+The back-EMF divider provides the measured output proxy $y$.
 
 The controller computes:
 
@@ -762,7 +819,7 @@ $$
 
 ---
 
-## DSO Nano Exercise
+## Oscilloscope Exercise
 
 Observe the PWM output while changing the reference and gains.
 
@@ -773,7 +830,7 @@ Observe the PWM output while changing the reference and gains.
 Probe Tip:
 
 ```text
-Pin 9
+MOSFET Gate PWM node (Arduino Pin 9 or ESP32 GPIO18)
 ```
 
 Probe Ground:
@@ -784,7 +841,11 @@ GND
 
 ---
 
-## DSO Nano Settings
+## Oscilloscope Settings (OWON Baseline)
+
+Recommended scope: OWON HDS272S.
+
+Compatible alternative: DSO Nano.
 
 Vertical:
 
@@ -907,7 +968,7 @@ plot(t, y_PID, 'g',   'LineWidth', 2, 'DisplayName', 'PID');
 yline(1.0, 'k--', 'Reference');
 grid on;
 xlabel('Time (s)'); ylabel('Normalised Output');
-title('P vs PI vs PID \mdash Motor Plant');
+title('P vs PI vs PID - Motor Plant');
 legend('Location', 'northeast');
 
 % Print performance metrics
@@ -1090,13 +1151,13 @@ Reduce Kd or apply derivative on measurement only (advanced topic).
 
 ✅ Motor circuit wired correctly (same as Projects 6 and 7)
 
-✅ Shared ground between Arduino and battery
+✅ Shared ground between controller and battery
 
 ✅ Serial Monitor shows reference, feedback, error, integral, derivative and PWM
 
-✅ Feedback reading on A1 changes with motor speed
+✅ Feedback reading on feedback ADC input changes with motor speed (A1 on Arduino or FBK_PIN on ESP32)
 
-✅ PWM duty cycle visible on DSO Nano
+✅ PWM duty cycle visible on oscilloscope (OWON or DSO Nano)
 
 ✅ Anti-windup limit in code
 
