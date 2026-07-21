@@ -451,6 +451,18 @@ Where:
 - $V$ = Voltage (V)
 - $I$ = Current (A)
 
+For DC systems (or instantaneous power):
+
+$$
+p(t) = v(t)i(t)
+$$
+
+For sinusoidal AC average real power:
+
+$$
+P = V_{rms}I_{rms}\cos(\phi)
+$$
+
 ---
 
 ## Frequency
@@ -574,6 +586,8 @@ Where:
 
 - $\zeta$ = Damping Ratio
 
+This form corresponds to the standard series RLC second-order model used in this course.
+
 ---
 
 ## PID Controller
@@ -622,11 +636,11 @@ For every project:
 
 1. Read the theory.
 2. Complete the calculations.
-3. Predict the outcome.
-4. Build the circuit.
-5. Measure the response.
-6. Compare measurements with theory.
-7. Simulate in MATLAB.
+3. Simulate in MATLAB.
+4. Predict the outcome.
+5. Build the circuit.
+6. Measure the response.
+7. Compare simulation, measurements and theory.
 8. Explain any differences.
 
 This workflow mirrors how real engineering projects are carried out.
