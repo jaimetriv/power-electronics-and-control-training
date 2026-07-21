@@ -1,8 +1,11 @@
-# DSO Nano Familiarisation
+# Oscilloscope Familiarisation (OWON HDS272S + DSO Nano)
 
 ### Prerequisites
 
-Before starting any project in this repository, spend some time becoming familiar with the DSO Nano oscilloscope.
+Before starting any project in this repository, spend some time becoming familiar with your oscilloscope.
+
+This guide uses the OWON HDS272S as the baseline scope.
+Equivalent measurements can be made with the DSO Nano.
 
 The oscilloscope will be one of the most important tools used throughout this course.
 
@@ -28,6 +31,8 @@ In this project you will learn:
 - How to measure voltage
 - How to measure frequency
 - How to measure PWM signals
+
+For OWON HDS272S users, this project also establishes the default setup workflow used in later labs.
 
 ---
 
@@ -86,6 +91,22 @@ but it cannot easily tell you:
 - Transient response
 
 An oscilloscope can.
+
+---
+
+## About The OWON HDS272S and DSO Nano
+
+The OWON HDS272S is the recommended baseline oscilloscope for this repository.
+
+It provides:
+
+✅ Higher bandwidth and sampling capability
+
+✅ Larger display and easier waveform inspection
+
+✅ Better triggering and measurement tools
+
+The DSO Nano remains useful as a portable fallback option.
 
 ---
 
@@ -474,6 +495,8 @@ Arduino GND
 ---
 
 ## DSO Nano Settings
+
+For OWON HDS272S users, use equivalent vertical/time scales and edge trigger settings.
 
 Vertical:
 
