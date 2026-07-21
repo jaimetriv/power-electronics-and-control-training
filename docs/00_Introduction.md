@@ -1,4 +1,4 @@
-# Arduino Power Electronics and Control Theory Lab
+# Microcontroller Power Electronics and Control Theory Lab
 
 ## Author
 
@@ -12,7 +12,7 @@ This repository documents a structured learning journey through:
 
 - Electronics
 - Embedded Systems
-- Arduino Programming
+- Microcontroller Programming (Arduino and ESP32)
 - Oscilloscope Measurements
 - Power Electronics
 - Control Theory
@@ -37,9 +37,10 @@ to build a solid foundation in modern electrical and electronic engineering.
 
 ## Hardware
 
-### Arduino
+### Controllers
 
 - Arduino Uno
+- ESP32 DevKit V1
 
 ### SparkFun Inventor's Kit
 
@@ -58,8 +59,8 @@ to build a solid foundation in modern electrical and electronic engineering.
 
 ### Test Equipment
 
-- DSO Nano Portable Oscilloscope (baseline)
-- OWON HDS272S (optional upgrade)
+- OWON HDS272S (baseline)
+- DSO Nano Portable Oscilloscope (portable fallback)
 
 ### Software
 
@@ -151,6 +152,7 @@ Concepts:
 - Duty Cycle
 - PWM
 - DSO Nano Measurements
+- OWON HDS272S Measurements
 
 File:
 
@@ -605,9 +607,9 @@ Where:
 
 ---
 
-## Using the DSO Nano
+## Using the Oscilloscope (OWON HDS272S Baseline)
 
-The DSO Nano will be used throughout this repository to measure:
+The OWON HDS272S will be used throughout this repository to measure:
 
 - PWM signals
 - RC charging curves
@@ -621,6 +623,8 @@ The DSO Nano will be used throughout this repository to measure:
 - Closed-loop responses
 
 The oscilloscope is one of the most important learning tools in this course.
+
+If needed, the same procedures can be followed using the DSO Nano as a fallback scope.
 
 Theory should always be compared with:
 
