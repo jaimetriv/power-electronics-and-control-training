@@ -18,7 +18,7 @@ In this project you will learn:
 - How capacitors charge and discharge
 - What a time constant is
 - How to calculate a time constant
-- How to measure a time constant using the DSO Nano
+- How to measure a time constant using an oscilloscope (OWON HDS272S or DSO Nano)
 - What a first-order system is
 - How theory compares with real measurements
 
@@ -107,7 +107,7 @@ An RC circuit contains:
 Circuit:
 
 ```text
-5V
+V_S
  |
  |
  R
@@ -145,7 +145,7 @@ The capacitor therefore follows a smooth curve rather than an immediate jump.
 When power is applied:
 
 ```text
-0V -> 5V
+0V -> V_S
 ```
 
 the capacitor voltage rises exponentially.
@@ -248,29 +248,30 @@ tau = R * C;
 t = 0:0.001:5;
 
 % Charging: 0 to 5V
-Vc_charge = 5 * (1 - exp(-t / tau));
+Vs = 5.0;   % use 5.0 for Arduino Uno, 3.3 for ESP32
+Vc_charge = Vs * (1 - exp(-t / tau));
 
 % Discharging: 5V to 0V
-Vc_discharge = 5 * exp(-t / tau);
+Vc_discharge = Vs * exp(-t / tau);
 
 figure;
 subplot(2,1,1);
 plot(t, Vc_charge, 'b', 'LineWidth', 2);
-yline(3.16, 'r--', '63.2% = 3.16V');
+yline(0.632*Vs, 'r--', sprintf('63.2%% = %.2fV', 0.632*Vs));
 xline(tau, 'k--', sprintf('\\tau = %.1fs', tau));
 grid on;
 xlabel('Time (s)'); ylabel('Voltage (V)');
 title('RC Charging — R=10k\Omega, C=100\muF');
-ylim([0 5.5]);
+ylim([0 1.1*Vs]);
 
 subplot(2,1,2);
 plot(t, Vc_discharge, 'r', 'LineWidth', 2);
-yline(5*0.368, 'b--', '36.8% = 1.84V');
+yline(0.368*Vs, 'b--', sprintf('36.8%% = %.2fV', 0.368*Vs));
 xline(tau, 'k--', sprintf('\\tau = %.1fs', tau));
 grid on;
 xlabel('Time (s)'); ylabel('Voltage (V)');
 title('RC Discharging — R=10k\Omega, C=100\muF');
-ylim([0 5.5]);
+ylim([0 1.1*Vs]);
 ```
 
 ### Simulate All Component Combinations
@@ -292,7 +293,8 @@ labels = {'R=10k, C=100\muF (\tau=1.0s)', ...
 figure; hold on;
 for i = 1:3
     tau_i = combinations(i,1) * combinations(i,2);
-    plot(t, 5*(1-exp(-t/tau_i)), 'LineWidth', 2, 'DisplayName', labels{i});
+    Vs = 5.0;   % use 5.0 for Arduino Uno, 3.3 for ESP32
+    plot(t, Vs*(1-exp(-t/tau_i)), 'LineWidth', 2, 'DisplayName', labels{i});
 end
 grid on;
 xlabel('Time (s)'); ylabel('Capacitor Voltage (V)');
@@ -316,7 +318,7 @@ Record your predicted time constants before measuring:
 
 From the SparkFun Inventor Kit:
 
-- Arduino Uno
+- Arduino Uno or ESP32 DevKit V1
 - Breadboard
 - Jumper wires
 - 10 kΩ resistor
@@ -324,7 +326,8 @@ From the SparkFun Inventor Kit:
 
 Equipment:
 
-- DSO Nano Oscilloscope
+- OWON HDS272S Oscilloscope (recommended)
+- DSO Nano Oscilloscope (compatible)
 
 ---
 
@@ -427,8 +430,13 @@ $$
 of:
 
 $$
-5V
+V_S
 $$
+
+Examples:
+
+- Arduino Uno ($V_S=5.0V$): $V_C(\tau) \approx 3.16V$
+- ESP32 ($V_S=3.3V$): $V_C(\tau) \approx 2.09V$
 
 ---
 
@@ -437,13 +445,13 @@ $$
 Calculate:
 
 $$
-0.632 \times 5
+0.632 \times V_S
 $$
 
 Result:
 
 $$
-V_C = 3.16V
+V_C(\tau) = 0.632V_S
 $$
 
 Prediction:
@@ -457,7 +465,7 @@ $$
 the capacitor voltage should be approximately:
 
 $$
-3.16V
+0.632V_S
 $$
 
 ---
@@ -476,6 +484,8 @@ C --> D[100uF Capacitor]
 
 D --> E[GND]
 ```
+
+ESP32 equivalent pin option: use GPIO18 instead of Arduino Pin 9.
 
 ---
 
@@ -498,7 +508,7 @@ GND
 ## Physical Connection Diagram
 
 ```text
-Arduino Pin 9
+Controller PWM pin (Arduino Pin 9 or ESP32 GPIO18)
       |
      10kΩ
       |
@@ -539,6 +549,26 @@ void loop()
 }
 ```
 
+### ESP32 Equivalent Code
+
+```cpp
+void setup()
+{
+    pinMode(18, OUTPUT);
+}
+
+void loop()
+{
+    digitalWrite(18, HIGH);
+
+    delay(3000);
+
+    digitalWrite(18, LOW);
+
+    delay(3000);
+}
+```
+
 ---
 
 ## What Does This Program Do?
@@ -572,6 +602,8 @@ continuously.
 ---
 
 ## DSO Nano Settings
+
+For OWON HDS272S users, use equivalent vertical/time scales and edge trigger settings.
 
 Vertical Scale:
 
@@ -646,7 +678,7 @@ Verify the theoretical time constant.
 Locate:
 
 $$
-V_C = 3.16V
+V_C = 0.632V_S
 $$
 
 on the charging curve.
@@ -827,25 +859,26 @@ Now overlay your measured time constant against the theoretical curve.
 
 ### Enter Your Measured Time Constant
 
-From Experiment 2, record the time at which Vc reached 3.16V:
+From Experiment 2, record the time at which Vc reached $0.632V_S$:
 
 ```matlab
 R = 10000;
 C = 100e-6;
+Vs = 5.0;                   % use measured supply voltage (5.0 for Arduino, 3.3 for ESP32)
 tau_theory = R * C;          % theoretical: 1.0s
 tau_measured = 1.0;          % replace with your measured value (s)
 
 t = 0:0.001:5;
 
-Vc_theory   = 5 * (1 - exp(-t / tau_theory));
-Vc_measured = 5 * (1 - exp(-t / tau_measured));
+Vc_theory   = Vs * (1 - exp(-t / tau_theory));
+Vc_measured = Vs * (1 - exp(-t / tau_measured));
 
 figure; hold on;
 plot(t, Vc_theory,   'b--', 'LineWidth', 2, 'DisplayName', ...
     sprintf('Theory  \\tau = %.3fs', tau_theory));
 plot(t, Vc_measured, 'r',   'LineWidth', 2, 'DisplayName', ...
     sprintf('Measured \\tau = %.3fs', tau_measured));
-yline(3.16, 'k:', '63.2% threshold');
+yline(0.632*Vs, 'k:', sprintf('63.2%% threshold = %.2fV', 0.632*Vs));
 grid on;
 xlabel('Time (s)'); ylabel('Capacitor Voltage (V)');
 title('RC Charging — Theory vs Measurement');
@@ -982,7 +1015,7 @@ Check:
 
 - Probe location
 - Ground connection
-- Arduino code
+- Controller code (Arduino/ESP32)
 
 ---
 
@@ -1004,11 +1037,11 @@ Check:
 
 ✅ Probe ground connected to GND
 
-✅ Arduino powered
+✅ Controller powered (Arduino or ESP32)
 
 ✅ Sketch uploaded
 
-✅ DSO Nano set to approximately 500 ms/div
+✅ Scope set to approximately 500 ms/div (OWON or DSO Nano)
 
 ✅ Trigger enabled
 
@@ -1032,7 +1065,7 @@ In this project you learned:
 
 ✅ First-order systems
 
-✅ DSO Nano transient measurements
+✅ Oscilloscope transient measurements (OWON or DSO Nano)
 
 ✅ MATLAB modelling
 
