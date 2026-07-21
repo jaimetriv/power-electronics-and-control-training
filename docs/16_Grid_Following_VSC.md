@@ -249,20 +249,20 @@ Filter
 
 Recommended:
 
-- ESP32
-- STM32 Nucleo
+- ESP32 DevKit V1
 
 Acceptable:
 
+- STM32 Nucleo
 - Arduino Mega
 
 ---
 
 ### Oscilloscope
 
-- DSO Nano
-- FNIRSI Scope
-- Bench Oscilloscope
+- OWON HDS272S (recommended)
+- DSO Nano (compatible)
+- Bench Oscilloscope (compatible)
 
 ---
 
@@ -344,7 +344,7 @@ Typical:
 
 - Differential Probe
 - External Power Supply
-- Bench Oscilloscope
+- OWON HDS272S (or compatible bench oscilloscope)
 
 ---
 
