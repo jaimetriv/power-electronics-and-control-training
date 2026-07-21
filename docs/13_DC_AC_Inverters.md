@@ -573,13 +573,13 @@ figure;
 subplot(2,1,1);
 stem(freqs(1:500), F_sq(1:500)*2, 'r', 'filled', 'MarkerSize', 3);
 xlabel('Frequency (Hz)'); ylabel('Amplitude');
-title('Square Wave \mdash Harmonic Spectrum');
+title('Square Wave - Harmonic Spectrum');
 grid on; xlim([0 1000]);
 
 subplot(2,1,2);
 stem(freqs(1:500), F_sine(1:500)*2, 'b', 'filled', 'MarkerSize', 3);
 xlabel('Frequency (Hz)'); ylabel('Amplitude');
-title('Sine Wave \mdash Harmonic Spectrum');
+title('Sine Wave - Harmonic Spectrum');
 grid on; xlim([0 1000]);
 ```
 
@@ -596,10 +596,11 @@ grid on; xlim([0 1000]);
 ## Components Required
 
 - Arduino Uno
+- ESP32 DevKit V1 (alternative controller)
 - Breadboard
 - Jumper wires
 - 2 × IRLZ44N MOSFETs (for half-bridge demonstration)
-- DSO Nano Oscilloscope
+- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
 
 Optional:
 
@@ -649,6 +650,25 @@ void loop()
 }
 ```
 
+### ESP32 Equivalent (50 Hz Toggle)
+
+```cpp
+const int OUT_PIN = 18;
+
+void setup()
+{
+    pinMode(OUT_PIN, OUTPUT);
+}
+
+void loop()
+{
+    digitalWrite(OUT_PIN, HIGH);
+    delay(10);
+    digitalWrite(OUT_PIN, LOW);
+    delay(10);
+}
+```
+
 ---
 
 ## Frequency Calculation
@@ -680,18 +700,22 @@ $$
 Probe Tip:
 
 ```text
-Pin 9
+Output node (Arduino Pin 9 or ESP32 GPIO18)
 ```
 
 Probe Ground:
 
 ```text
-Arduino GND
+Controller ground
 ```
 
 ---
 
-## DSO Nano Settings
+## Oscilloscope Settings (OWON Baseline)
+
+Recommended scope: OWON HDS272S.
+
+Compatible alternative: DSO Nano.
 
 Vertical:
 
@@ -730,7 +754,7 @@ Rising Edge
 |-----------|----------|----------|
 | Frequency | 50 Hz | |
 | Period | 20 ms | |
-| Peak Voltage | 5 V | |
+| Peak Voltage | ~V_S (about 5V Arduino or about 3.3V ESP32) | |
 
 ---
 
@@ -753,6 +777,24 @@ void setup()
 void loop()
 {
     analogWrite(9,128);
+}
+```
+
+### ESP32 Equivalent (LEDC PWM)
+
+```cpp
+const int PWM_PIN  = 18;
+const int PWM_FREQ = 500;
+const int PWM_RES  = 8;
+
+void setup()
+{
+    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+}
+
+void loop()
+{
+    ledcWrite(PWM_PIN, 128);
 }
 ```
 
@@ -824,7 +866,8 @@ Expected:
 
 ---
 
-## DSO Nano Exercise
+## Oscilloscope Exercise
+## Oscilloscope Exercise
 
 ### Observe the Square Wave
 
@@ -883,6 +926,33 @@ void loop()
 }
 ```
 
+### ESP32 Equivalent (LEDC SPWM)
+
+```cpp
+const int PWM_PIN  = 18;
+const int PWM_FREQ = 500;
+const int PWM_RES  = 8;
+const int N = 10;
+const int sine_table[N] = {
+    128, 203, 243, 255, 243,
+    203, 128, 53, 13, 0
+};
+
+void setup()
+{
+    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+}
+
+void loop()
+{
+    for (int i = 0; i < N; i++)
+    {
+        ledcWrite(PWM_PIN, sine_table[i]);
+        delay(2);
+    }
+}
+```
+
 ---
 
 ## What Is Happening?
@@ -901,7 +971,11 @@ After low-pass filtering this produces an approximate sine wave output.
 
 ---
 
-## DSO Nano Settings
+## Oscilloscope Settings (OWON Baseline)
+
+Recommended scope: OWON HDS272S.
+
+Compatible alternative: DSO Nano.
 
 Vertical:
 
@@ -1022,7 +1096,7 @@ plot(t*1e3, v_meas,  'r',   'LineWidth', 2, ...
     'DisplayName', sprintf('Measured f=%.1fHz', f_measured));
 grid on;
 xlabel('Time (ms)'); ylabel('Voltage (V)');
-title('Square Wave Inverter \mdash Ideal vs Measured');
+title('Square Wave Inverter - Ideal vs Measured');
 legend('Location', 'northeast');
 
 fprintf('Ideal frequency:    50.0 Hz\n');
@@ -1044,13 +1118,13 @@ plot(i, D_theory,  'b--o', 'LineWidth', 2, 'DisplayName', 'Ideal sine');
 plot(i, D_arduino, 'r-s',  'LineWidth', 2, 'DisplayName', 'Arduino lookup table');
 grid on;
 xlabel('Step'); ylabel('Duty Cycle');
-title('SPWM Lookup Table \mdash Ideal vs Arduino');
+title('SPWM Lookup Table - Ideal vs Arduino');
 legend('Location', 'south');
 ```
 
 ### Reflection
 
-- Does your measured square wave frequency match 50 Hz? What causes any discrepancy? (Arduino `delay()` accuracy, loop overhead)
+- Does your measured square wave frequency match 50 Hz? What causes any discrepancy? (controller `delay()` accuracy, loop overhead)
 - The SPWM lookup table uses only 10 steps per cycle. How would increasing to 20 steps improve the output waveform quality?
 - Why does the square wave have significant harmonic content at 150 Hz, 250 Hz, 350 Hz etc., while a pure sine wave does not?
 
@@ -1179,7 +1253,7 @@ Check:
 
 Check:
 
-- Arduino sketch
+- Controller sketch
 - Probe location
 - Trigger settings
 
@@ -1197,7 +1271,7 @@ Check:
 
 ## Troubleshooting Checklist
 
-✅ Arduino operating correctly
+✅ Controller operating correctly
 
 ✅ Square wave measured
 
@@ -1207,7 +1281,7 @@ Check:
 
 ✅ Duty cycle changes correctly
 
-✅ DSO Nano triggering correctly
+✅ Oscilloscope triggering correctly
 
 ---
 
