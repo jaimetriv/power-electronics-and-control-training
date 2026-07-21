@@ -40,6 +40,14 @@ In this project you will learn:
 
 This is the capstone project for the course.
 
+Simulation companion:
+
+```text
+17A_Grid_Following_Simulink_Simscape.md
+```
+
+Use that companion page if you want to model the PLL, current controller, inverter and filter in Simulink and Simscape Electrical alongside this hardware lab.
+
 ---
 
 ## Safety Notice

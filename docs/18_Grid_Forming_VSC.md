@@ -42,6 +42,14 @@ In this project you will learn:
 
 This project serves as the capstone project for the course.
 
+Simulation companion:
+
+```text
+18A_Grid_Forming_Simulink_Simscape.md
+```
+
+Use that companion page if you want to model voltage control, droop behaviour, inverter switching and LC filtering in Simulink and Simscape Electrical alongside this hardware lab.
+
 ---
 
 ## Learning Outcomes

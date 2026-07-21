@@ -39,6 +39,14 @@ Control Systems
 
 The motor will become our first real-world dynamic plant.
 
+Simulation companion:
+
+```text
+10A_Motor_Simulink_Simscape.md
+```
+
+Use that companion page if you want to compare the simplified first-order motor model with a Simulink PWM model and a Simscape Electrical motor-drive model alongside this hardware lab.
+
 ---
 
 ## Learning Outcomes

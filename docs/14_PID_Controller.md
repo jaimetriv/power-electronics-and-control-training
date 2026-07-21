@@ -43,6 +43,14 @@ because they provide:
 - Small overshoot
 - Zero steady-state error
 
+Simulation companion:
+
+```text
+14A_PID_Controller_Simulink.md
+```
+
+Use that companion page if you want to compare P, PI and PID behaviour in Simulink before tuning the hardware implementation.
+
 ---
 
 ## Learning Outcomes

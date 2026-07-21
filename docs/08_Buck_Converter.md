@@ -41,6 +41,14 @@ This project combines concepts from:
 
 and forms the foundation of modern power electronics.
 
+Simulation companion:
+
+```text
+08A_Buck_Simulink_Simscape.md
+```
+
+Use that companion page if you want to build an ideal MATLAB model, a Simulink PWM/control model, and a Simscape Electrical power-stage model alongside this hardware lab.
+
 ---
 
 ## Learning Outcomes

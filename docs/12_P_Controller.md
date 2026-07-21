@@ -28,6 +28,14 @@ In this project you will learn:
 
 This project introduces the foundations of modern control engineering.
 
+Simulation companion:
+
+```text
+12A_P_Controller_Simulink.md
+```
+
+Use that companion page if you want to model the closed-loop proportional controller in Simulink before tuning the hardware implementation.
+
 ---
 
 ## Learning Outcomes

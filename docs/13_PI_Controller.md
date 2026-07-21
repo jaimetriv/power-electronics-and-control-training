@@ -43,6 +43,14 @@ P Control
 
 because it can eliminate steady-state error.
 
+Simulation companion:
+
+```text
+13A_PI_Controller_Simulink.md
+```
+
+Use that companion page if you want to compare P and PI behaviour in Simulink before tuning the hardware implementation.
+
 ---
 
 ## Learning Outcomes

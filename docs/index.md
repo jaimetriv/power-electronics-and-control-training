@@ -49,6 +49,18 @@ See also:
 
 - Simulation_Track_Overview.md
 
+Current simulation companion pages:
+
+- 08A_Buck_Simulink_Simscape.md
+- 09A_Boost_Simulink_Simscape.md
+- 10A_Motor_Simulink_Simscape.md
+- 12A_P_Controller_Simulink.md
+- 13A_PI_Controller_Simulink.md
+- 14A_PID_Controller_Simulink.md
+- 15A_Closed_Loop_Buck_Simulink_Simscape.md
+- 17A_Grid_Following_Simulink_Simscape.md
+- 18A_Grid_Forming_Simulink_Simscape.md
+
 ```mermaid
 flowchart TD
 
@@ -94,4 +106,14 @@ S --> T[Controller Design]
 T --> U[Grid Following VSC]
 
 U --> V[Grid Forming VSC]
+
+L -.-> L1[08A Buck Simulink/Simscape]
+M -.-> M1[09A Boost Simulink/Simscape]
+N -.-> N1[10A Motor Simulink/Simscape]
+P -.-> P1[12A P Control Simulink]
+Q -.-> Q1[13A PI Control Simulink]
+R -.-> R1[14A PID Control Simulink]
+S -.-> S1[15A Closed-Loop Buck Simulink/Simscape]
+U -.-> U1[17A Grid-Following Simulink/Simscape]
+V -.-> V1[18A Grid-Forming Simulink/Simscape]
 ```

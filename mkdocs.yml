@@ -84,6 +84,15 @@ nav:
 
   - Simulation Track:
       - Overview: Simulation_Track_Overview.md
+      - Buck Converter in Simulink and Simscape: 08A_Buck_Simulink_Simscape.md
+      - Boost Converter in Simulink and Simscape: 09A_Boost_Simulink_Simscape.md
+      - PWM Motor Control in Simulink and Simscape: 10A_Motor_Simulink_Simscape.md
+      - P Control in Simulink: 12A_P_Controller_Simulink.md
+      - PI Control in Simulink: 13A_PI_Controller_Simulink.md
+      - PID Control in Simulink: 14A_PID_Controller_Simulink.md
+      - Closed-Loop Buck in Simulink and Simscape: 15A_Closed_Loop_Buck_Simulink_Simscape.md
+      - Grid-Following VSC in Simulink and Simscape: 17A_Grid_Following_Simulink_Simscape.md
+      - Grid-Forming VSC in Simulink and Simscape: 18A_Grid_Forming_Simulink_Simscape.md
 
   - Control Systems:
       - System Identification: 11_System_Identification.md

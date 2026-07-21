@@ -40,6 +40,14 @@ Control Systems
 
 to create a practical regulated power supply.
 
+Simulation companion:
+
+```text
+15A_Closed_Loop_Buck_Simulink_Simscape.md
+```
+
+Use that companion page if you want to model the PI control loop in Simulink and the converter plant in Simscape Electrical alongside this hardware lab.
+
 ---
 
 ## Learning Outcomes

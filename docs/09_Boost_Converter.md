@@ -33,6 +33,14 @@ In this project you will learn:
 
 This project introduces the second major non-isolated DC-DC converter topology.
 
+Simulation companion:
+
+```text
+09A_Boost_Simulink_Simscape.md
+```
+
+Use that companion page if you want to build an ideal MATLAB model, a Simulink PWM/control model, and a Simscape Electrical power-stage model alongside this hardware lab.
+
 ---
 
 ## Learning Outcomes
