@@ -267,6 +267,9 @@ The ESP32 requires an additional board package to be installed.
 
 ## Installing the ESP32 Board Package
 
+This tutorial is validated with the Arduino-ESP32 core available through Boards Manager.
+If you use a newer major core version, LEDC API calls may change; check the official migration notes if examples do not compile.
+
 ### Step 1
 
 Open Arduino IDE.
@@ -558,16 +561,14 @@ Never apply 5 V to an input pin.
 ### Circuit
 
 ```text
-3.3V
+GPIO4
  │
 Button
  │
- GPIO4
- │
-10kΩ
- │
 GND
 ```
+
+Use ESP32 internal pull-up for a robust digital input configuration.
 
 ---
 
@@ -576,14 +577,14 @@ GND
 ```cpp
 void setup()
 {
-    pinMode(4, INPUT);
+    pinMode(4, INPUT_PULLUP);
 
     pinMode(2, OUTPUT);
 }
 
 void loop()
 {
-    int state = digitalRead(4);
+    int state = !digitalRead(4);   // button pressed -> LOW -> LED ON
 
     digitalWrite(2, state);
 }
@@ -619,6 +620,8 @@ into:
 ```
 
 digital counts.
+
+In practice, ADC behaviour depends on attenuation settings, reference calibration and chip-to-chip variation, so real readings can deviate from the ideal mapping.
 
 Resolution:
 
