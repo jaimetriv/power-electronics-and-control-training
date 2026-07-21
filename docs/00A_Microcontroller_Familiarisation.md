@@ -422,16 +422,14 @@ signals.
 ### Circuit
 
 ```text
-5V
+D2
  │
 Button
  │
- D2
- │
-10kΩ
- │
 GND
 ```
+
+Use Arduino internal pull-up for a robust digital input configuration.
 
 ---
 
@@ -440,14 +438,14 @@ GND
 ```cpp
 void setup()
 {
-    pinMode(2, INPUT);
+    pinMode(2, INPUT_PULLUP);
 
     pinMode(13, OUTPUT);
 }
 
 void loop()
 {
-    int state = digitalRead(2);
+    int state = !digitalRead(2);   // button pressed -> LOW -> LED ON
 
     digitalWrite(13, state);
 }
@@ -488,6 +486,8 @@ into:
 ```
 
 digital counts.
+
+In practice, conversion depends on the actual ADC reference voltage (typically Vcc), so values may vary slightly.
 
 ---
 
@@ -583,7 +583,7 @@ PWM stands for:
 Pulse Width Modulation
 ```
 
-PWM allows a digital output to behave like an analogue output.
+PWM is a digital switching signal whose average effect can behave like an analogue output for suitable loads (for example LEDs or motors).
 
 ---
 
