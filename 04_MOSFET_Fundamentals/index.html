@@ -16,7 +16,7 @@
         <link rel="prev" href="../03_RLC_Circuits/">
       
       
-        <link rel="next" href="../05_PWM_Motor_Control/">
+        <link rel="next" href="../05_AC_DC_Rectifiers/">
       
       
         
@@ -490,7 +490,7 @@
   <span class="md-ellipsis">
     
   
-    Electronics
+    Core Electronics
   
 
     
@@ -506,7 +506,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Electronics
+    Core Electronics
   
 
           </label>
@@ -673,6 +673,998 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Outcomes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Theory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Theory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-mosfet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is a MOSFET?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-mosfets-are-important" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why MOSFETs Are Important
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mosfet-symbol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MOSFET Symbol
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mosfet-terminals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MOSFET Terminals
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MOSFET Terminals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gate-g" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gate (G)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drain-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drain (D)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#source-s" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Source (S)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-an-n-channel-mosfet-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How an N-Channel MOSFET Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logic-level-mosfets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logic Level MOSFETs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-a-mosfet-is-efficient" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a MOSFET is Efficient
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matlab-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MATLAB Simulation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MATLAB Simulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simulate-gate-pwm-waveforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simulate Gate PWM Waveforms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#average-voltage-vs-duty-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Average Voltage vs Duty Cycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prediction Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#components-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Components Required
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Components Required">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purchase
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#existing-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Existing Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-mosfet-pinout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify MOSFET Pinout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Circuit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#circuit-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Circuit Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simplified-wiring-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simplified Wiring Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-current-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding Current Flow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding Current Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mosfet-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MOSFET OFF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mosfet-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MOSFET ON
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-1-mosfet-as-an-electronic-switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment 1 - MOSFET as an Electronic Switch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experiment 1 - MOSFET as an Electronic Switch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arduino-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Arduino Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#esp32-equivalent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESP32 Equivalent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expected-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected Behaviour
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oscilloscope-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Oscilloscope Measurement
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Oscilloscope Measurement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probe-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probe Location
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oscilloscope-setup-owon-baseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Oscilloscope Setup (OWON Baseline)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expected-waveform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected Waveform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#record-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Record Measurements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-2-pwm-controlled-mosfet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment 2 - PWM Controlled MOSFET
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experiment 2 - PWM Controlled MOSFET">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arduino-code_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Arduino Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#esp32-equivalent-ledc-pwm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESP32 Equivalent (LEDC PWM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-happening" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Is Happening?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probe-location_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probe Location
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oscilloscope-setup-owon-baseline_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Oscilloscope Setup (OWON Baseline)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expected-waveform_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected Waveform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#record-measurements_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Record Measurements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-3-led-brightness-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment 3 - LED Brightness Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experiment 3 - LED Brightness Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 4
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-pwm-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why PWM Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-a-microcontroller-needs-a-mosfet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a Microcontroller Needs a MOSFET
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matlab-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MATLAB Comparison
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MATLAB Comparison">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enter-your-measured-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enter Your Measured Values
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reflection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reflection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#engineering-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Engineering Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Engineering Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#led-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LED Drivers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dc-motor-drives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DC Motor Drives
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#buck-converters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Buck Converters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boost-converters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Boost Converters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inverters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inverters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solar-controllers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solar Controllers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#knowledge-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Knowledge Check
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Knowledge Check">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#question-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 4
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 5
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 6
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Mistakes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Mistakes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#led-never-turns-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LED Never Turns ON
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mosfet-gets-hot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MOSFET Gets Hot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-pwm-visible" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No PWM Visible
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#motor-does-not-switch-safely" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motor Does Not Switch Safely
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Project
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -721,7 +1713,7 @@
   <span class="md-ellipsis">
     
   
-    Control Systems
+    Power Conversion
   
 
     
@@ -737,7 +1729,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Control Systems
+    Power Conversion
   
 
           </label>
@@ -750,7 +1742,147 @@
   
   
     <li class="md-nav__item">
-      <a href="../05_PWM_Motor_Control/" class="md-nav__link">
+      <a href="../05_AC_DC_Rectifiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AC-DC Rectifiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_DC_AC_Inverters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DC-AC Inverters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_DC_Chopper_Converters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DC Chopper Converters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08_Buck_Converter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Buck Converter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_Boost_Converter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boost Converter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_PWM_Motor_Control/" class="md-nav__link">
         
   
   
@@ -758,90 +1890,6 @@
     
   
     PWM Motor Control
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../06_P_Controller/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    P Controller
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../07_PI_Controller/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    PI Controller
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../08_PID_Controller/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    PID Controller
   
 
     
@@ -894,7 +1942,7 @@
   <span class="md-ellipsis">
     
   
-    Power Electronics
+    Control Systems
   
 
     
@@ -910,7 +1958,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Power Electronics
+    Control Systems
   
 
           </label>
@@ -923,14 +1971,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../09_Buck_Converter/" class="md-nav__link">
+      <a href="../11_System_Identification/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Buck Converter
+    System Identification
   
 
     
@@ -951,7 +1999,91 @@
   
   
     <li class="md-nav__item">
-      <a href="../10_Closed_Loop_Buck/" class="md-nav__link">
+      <a href="../12_P_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13_PI_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PI Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14_PID_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PID Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15_Closed_Loop_Buck/" class="md-nav__link">
         
   
   
@@ -959,118 +2091,6 @@
     
   
     Closed Loop Buck
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../11_Boost_Converter/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Boost Converter
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../11B_DC_Chopper_Converters/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    DC Chopper Converters
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../12_AC_DC_Rectifiers/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    AC-DC Rectifiers
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../13_DC_AC_Inverters/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    DC-AC Inverters
   
 
     
@@ -1152,35 +2172,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../14_System_Identification/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    System Identification
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../15_Controller_Design/" class="md-nav__link">
+      <a href="../16_Controller_Design/" class="md-nav__link">
         
   
   
@@ -1208,7 +2200,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../16_Grid_Following_VSC/" class="md-nav__link">
+      <a href="../17_Grid_Following_VSC/" class="md-nav__link">
         
   
   
@@ -1236,7 +2228,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../17_Grid_Forming_VSC/" class="md-nav__link">
+      <a href="../18_Grid_Forming_VSC/" class="md-nav__link">
         
   
   
@@ -1301,6 +2293,998 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Outcomes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Theory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Theory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-mosfet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is a MOSFET?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-mosfets-are-important" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why MOSFETs Are Important
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mosfet-symbol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MOSFET Symbol
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mosfet-terminals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MOSFET Terminals
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MOSFET Terminals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gate-g" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gate (G)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drain-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drain (D)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#source-s" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Source (S)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-an-n-channel-mosfet-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How an N-Channel MOSFET Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logic-level-mosfets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logic Level MOSFETs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-a-mosfet-is-efficient" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a MOSFET is Efficient
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matlab-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MATLAB Simulation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MATLAB Simulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simulate-gate-pwm-waveforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simulate Gate PWM Waveforms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#average-voltage-vs-duty-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Average Voltage vs Duty Cycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prediction Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#components-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Components Required
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Components Required">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purchase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purchase
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#existing-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Existing Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-mosfet-pinout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify MOSFET Pinout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Circuit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#circuit-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Circuit Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simplified-wiring-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simplified Wiring Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-current-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding Current Flow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding Current Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mosfet-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MOSFET OFF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mosfet-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MOSFET ON
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-1-mosfet-as-an-electronic-switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment 1 - MOSFET as an Electronic Switch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experiment 1 - MOSFET as an Electronic Switch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arduino-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Arduino Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#esp32-equivalent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESP32 Equivalent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expected-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected Behaviour
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oscilloscope-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Oscilloscope Measurement
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Oscilloscope Measurement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probe-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probe Location
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oscilloscope-setup-owon-baseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Oscilloscope Setup (OWON Baseline)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expected-waveform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected Waveform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#record-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Record Measurements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-2-pwm-controlled-mosfet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment 2 - PWM Controlled MOSFET
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experiment 2 - PWM Controlled MOSFET">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arduino-code_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Arduino Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#esp32-equivalent-ledc-pwm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESP32 Equivalent (LEDC PWM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-happening" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Is Happening?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probe-location_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probe Location
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oscilloscope-setup-owon-baseline_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Oscilloscope Setup (OWON Baseline)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expected-waveform_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected Waveform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#record-measurements_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Record Measurements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-3-led-brightness-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment 3 - LED Brightness Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experiment 3 - LED Brightness Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 4
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-pwm-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why PWM Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-a-microcontroller-needs-a-mosfet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a Microcontroller Needs a MOSFET
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matlab-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MATLAB Comparison
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MATLAB Comparison">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enter-your-measured-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enter Your Measured Values
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reflection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reflection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#engineering-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Engineering Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Engineering Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#led-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LED Drivers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dc-motor-drives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DC Motor Drives
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#buck-converters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Buck Converters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boost-converters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Boost Converters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inverters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inverters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solar-controllers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solar Controllers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#knowledge-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Knowledge Check
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Knowledge Check">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#question-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 4
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 5
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 6
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Mistakes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Mistakes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#led-never-turns-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LED Never Turns ON
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mosfet-gets-hot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MOSFET Gets Hot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-pwm-visible" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No PWM Visible
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#motor-does-not-switch-safely" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motor Does Not Switch Safely
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Project
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1322,7 +3306,7 @@
 
 
 <h1 id="project-4-mosfet-fundamentals-and-electronic-switching">Project 4 - MOSFET Fundamentals and Electronic Switching<a class="headerlink" href="#project-4-mosfet-fundamentals-and-electronic-switching" title="Permanent link">&para;</a></h1>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
 <p>Complete:</p>
 <ul>
 <li>00_Introduction.md</li>
@@ -1332,15 +3316,15 @@
 <li>03_RLC_Circuits.md</li>
 </ul>
 <hr />
-<h1 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h1>
+<h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
 <p>In this project you will learn:</p>
 <ul>
 <li>What a MOSFET is</li>
 <li>How a MOSFET works</li>
-<li>How Arduino controls a MOSFET</li>
+<li>How a microcontroller (Arduino or ESP32) controls a MOSFET</li>
 <li>Why MOSFETs are used in power electronics</li>
 <li>How PWM and MOSFETs work together</li>
-<li>How to use the DSO Nano to measure switching signals</li>
+<li>How to use an oscilloscope to measure switching signals (OWON HDS272S recommended, DSO Nano compatible)</li>
 <li>Why switching converters are efficient</li>
 </ul>
 <p>This project marks the beginning of:</p>
@@ -1353,26 +3337,26 @@
 <li>Inverters</li>
 </ul>
 <hr />
-<h1 id="learning-outcomes">Learning Outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h1>
+<h2 id="learning-outcomes">Learning Outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
 <p>At the end of this project you should be able to:</p>
 <p>✅ Explain MOSFET operation</p>
 <p>✅ Identify Gate, Drain and Source</p>
 <p>✅ Use a MOSFET as a switch</p>
-<p>✅ Drive a MOSFET from Arduino</p>
+<p>✅ Drive a MOSFET from a microcontroller</p>
 <p>✅ Measure PWM on the MOSFET gate</p>
 <p>✅ Explain switching losses</p>
 <p>✅ Understand the foundation of power electronics</p>
 <hr />
-<h1 id="theory">Theory<a class="headerlink" href="#theory" title="Permanent link">&para;</a></h1>
-<h2 id="what-is-a-mosfet">What is a MOSFET?<a class="headerlink" href="#what-is-a-mosfet" title="Permanent link">&para;</a></h2>
+<h2 id="theory">Theory<a class="headerlink" href="#theory" title="Permanent link">&para;</a></h2>
+<h3 id="what-is-a-mosfet">What is a MOSFET?<a class="headerlink" href="#what-is-a-mosfet" title="Permanent link">&para;</a></h3>
 <p>MOSFET stands for:</p>
 <p><strong>Metal Oxide Semiconductor Field Effect Transistor</strong></p>
 <p>A MOSFET behaves like an electronic switch.</p>
 <p>Instead of using your finger to open and close a switch:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Arduino controls the switch electronically.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>The controller drives the switch electronically.
 </code></pre></div>
 <hr />
-<h1 id="why-mosfets-are-important">Why MOSFETs Are Important<a class="headerlink" href="#why-mosfets-are-important" title="Permanent link">&para;</a></h1>
+<h2 id="why-mosfets-are-important">Why MOSFETs Are Important<a class="headerlink" href="#why-mosfets-are-important" title="Permanent link">&para;</a></h2>
 <p>Imagine controlling:</p>
 <ul>
 <li>A DC motor</li>
@@ -1380,14 +3364,14 @@
 <li>A Buck Converter</li>
 <li>A Power Supply</li>
 </ul>
-<p>All require more current than Arduino can safely provide.</p>
+<p>All require more current than a microcontroller pin can safely provide.</p>
 <p>A MOSFET allows:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Small Control Signal
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>        ↓
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Large Power Control
 </code></pre></div>
 <hr />
-<h1 id="mosfet-symbol">MOSFET Symbol<a class="headerlink" href="#mosfet-symbol" title="Permanent link">&para;</a></h1>
+<h2 id="mosfet-symbol">MOSFET Symbol<a class="headerlink" href="#mosfet-symbol" title="Permanent link">&para;</a></h2>
 <p>Simplified N-Channel MOSFET:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>       Drain
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>         |
@@ -1400,21 +3384,21 @@
 <a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>       Source
 </code></pre></div>
 <hr />
-<h1 id="mosfet-terminals">MOSFET Terminals<a class="headerlink" href="#mosfet-terminals" title="Permanent link">&para;</a></h1>
+<h2 id="mosfet-terminals">MOSFET Terminals<a class="headerlink" href="#mosfet-terminals" title="Permanent link">&para;</a></h2>
 <p>Every MOSFET has:</p>
-<h2 id="gate-g">Gate (G)<a class="headerlink" href="#gate-g" title="Permanent link">&para;</a></h2>
+<h3 id="gate-g">Gate (G)<a class="headerlink" href="#gate-g" title="Permanent link">&para;</a></h3>
 <p>Control terminal.</p>
 <p>Equivalent to:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Switch Handle
 </code></pre></div>
 <hr />
-<h2 id="drain-d">Drain (D)<a class="headerlink" href="#drain-d" title="Permanent link">&para;</a></h2>
+<h3 id="drain-d">Drain (D)<a class="headerlink" href="#drain-d" title="Permanent link">&para;</a></h3>
 <p>Current enters here.</p>
 <hr />
-<h2 id="source-s">Source (S)<a class="headerlink" href="#source-s" title="Permanent link">&para;</a></h2>
+<h3 id="source-s">Source (S)<a class="headerlink" href="#source-s" title="Permanent link">&para;</a></h3>
 <p>Current exits here.</p>
 <hr />
-<h1 id="how-an-n-channel-mosfet-works">How an N-Channel MOSFET Works<a class="headerlink" href="#how-an-n-channel-mosfet-works" title="Permanent link">&para;</a></h1>
+<h2 id="how-an-n-channel-mosfet-works">How an N-Channel MOSFET Works<a class="headerlink" href="#how-an-n-channel-mosfet-works" title="Permanent link">&para;</a></h2>
 <p>When:</p>
 <div class="arithmatex">\[
 V_{GS}=0V
@@ -1425,9 +3409,9 @@ V_{GS}=0V
 <hr />
 <p>When:</p>
 <div class="arithmatex">\[
-V_{GS}=5V
+V_{GS}&gt;V_{TH}
 \]</div>
-<p>MOSFET is:</p>
+<p>and high enough for low <span class="arithmatex">\(R_{DS(on)}\)</span> at your gate-drive voltage, the MOSFET is:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ON
 </code></pre></div>
 <p>Where:</p>
@@ -1435,8 +3419,8 @@ V_{GS}=5V
 V_{GS}=V_G-V_S
 \]</div>
 <hr />
-<h1 id="logic-level-mosfets">Logic Level MOSFETs<a class="headerlink" href="#logic-level-mosfets" title="Permanent link">&para;</a></h1>
-<p>For Arduino projects always use a:</p>
+<h2 id="logic-level-mosfets">Logic Level MOSFETs<a class="headerlink" href="#logic-level-mosfets" title="Permanent link">&para;</a></h2>
+<p>For controller projects always use a:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Logic Level MOSFET
 </code></pre></div>
 <p>Recommended:</p>
@@ -1450,9 +3434,9 @@ V_{GS}=V_G-V_S
 <ul>
 <li>IRFZ44N</li>
 </ul>
-<p>for beginner Arduino projects.</p>
+<p>for beginner controller projects.</p>
 <hr />
-<h1 id="why-a-mosfet-is-efficient">Why a MOSFET is Efficient<a class="headerlink" href="#why-a-mosfet-is-efficient" title="Permanent link">&para;</a></h1>
+<h2 id="why-a-mosfet-is-efficient">Why a MOSFET is Efficient<a class="headerlink" href="#why-a-mosfet-is-efficient" title="Permanent link">&para;</a></h2>
 <p>Power loss is:</p>
 <div class="arithmatex">\[
 P = V \cdot I
@@ -1477,9 +3461,9 @@ P \approx 0
 <hr />
 <p>This is why switching devices are efficient.</p>
 <hr />
-<h1 id="matlab-simulation">MATLAB Simulation<a class="headerlink" href="#matlab-simulation" title="Permanent link">&para;</a></h1>
+<h2 id="matlab-simulation">MATLAB Simulation<a class="headerlink" href="#matlab-simulation" title="Permanent link">&para;</a></h2>
 <p>Before building the circuit, simulate the gate waveform and average voltage to predict what you will observe.</p>
-<h2 id="simulate-gate-pwm-waveforms">Simulate Gate PWM Waveforms<a class="headerlink" href="#simulate-gate-pwm-waveforms" title="Permanent link">&para;</a></h2>
+<h3 id="simulate-gate-pwm-waveforms">Simulate Gate PWM Waveforms<a class="headerlink" href="#simulate-gate-pwm-waveforms" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">f</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mi">490</span><span class="p">;</span><span class="w">                    </span><span class="c">% Arduino PWM frequency (Hz)</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">Ts</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">f</span><span class="p">;</span>
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">duty_cycles</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.50</span><span class="p">,</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span><span class="w"> </span><span class="mf">1.00</span><span class="p">];</span>
@@ -1499,9 +3483,9 @@ P \approx 0
 <a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">    </span><span class="nb">title</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;D = %d%%&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="o">*</span><span class="mi">100</span><span class="p">));</span>
 <a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="k">end</span>
 <a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (ms)&#39;</span><span class="p">);</span>
-<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="nb">sgtitle</span><span class="p">(</span><span class="s">&#39;MOSFET Gate PWM — 490 Hz&#39;</span><span class="p">);</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="nb">sgtitle</span><span class="p">(</span><span class="s">&#39;MOSFET Gate PWM - 490 Hz&#39;</span><span class="p">);</span>
 </code></pre></div>
-<h2 id="average-voltage-vs-duty-cycle">Average Voltage vs Duty Cycle<a class="headerlink" href="#average-voltage-vs-duty-cycle" title="Permanent link">&para;</a></h2>
+<h3 id="average-voltage-vs-duty-cycle">Average Voltage vs Duty Cycle<a class="headerlink" href="#average-voltage-vs-duty-cycle" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">D</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">Vavg</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">D</span><span class="p">;</span>
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
@@ -1514,10 +3498,10 @@ P \approx 0
 <a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Experiment points&#39;</span><span class="p">);</span>
 <a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
 <a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Duty Cycle&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Average Voltage (V)&#39;</span><span class="p">);</span>
-<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;MOSFET PWM — V_{AVG} vs Duty Cycle&#39;</span><span class="p">);</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;MOSFET PWM - V_{AVG} vs Duty Cycle&#39;</span><span class="p">);</span>
 <a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Theory&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Experiment points&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;northwest&#39;</span><span class="p">);</span>
 </code></pre></div>
-<h2 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h2>
+<h3 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h3>
 <p>Record your predicted average voltages before measuring:</p>
 <table>
 <thead>
@@ -1551,16 +3535,17 @@ P \approx 0
 </tbody>
 </table>
 <hr />
-<h1 id="components-required">Components Required<a class="headerlink" href="#components-required" title="Permanent link">&para;</a></h1>
-<h2 id="purchase">Purchase<a class="headerlink" href="#purchase" title="Permanent link">&para;</a></h2>
+<h2 id="components-required">Components Required<a class="headerlink" href="#components-required" title="Permanent link">&para;</a></h2>
+<h3 id="purchase">Purchase<a class="headerlink" href="#purchase" title="Permanent link">&para;</a></h3>
 <p>Recommended:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>IRLZ44N MOSFET
 </code></pre></div>
 <hr />
-<h2 id="existing-components">Existing Components<a class="headerlink" href="#existing-components" title="Permanent link">&para;</a></h2>
+<h3 id="existing-components">Existing Components<a class="headerlink" href="#existing-components" title="Permanent link">&para;</a></h3>
 <p>From SparkFun Inventor Kit:</p>
 <ul>
 <li>Arduino Uno</li>
+<li>ESP32 DevKit V1 (alternative controller)</li>
 <li>LED</li>
 <li>220 Ω resistor</li>
 <li>Breadboard</li>
@@ -1568,10 +3553,10 @@ P \approx 0
 </ul>
 <p>Equipment:</p>
 <ul>
-<li>DSO Nano Oscilloscope</li>
+<li>Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)</li>
 </ul>
 <hr />
-<h1 id="verify-mosfet-pinout">Verify MOSFET Pinout<a class="headerlink" href="#verify-mosfet-pinout" title="Permanent link">&para;</a></h1>
+<h2 id="verify-mosfet-pinout">Verify MOSFET Pinout<a class="headerlink" href="#verify-mosfet-pinout" title="Permanent link">&para;</a></h2>
 <p>For an IRLZ44N:</p>
 <p>Front View:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>      _________
@@ -1585,15 +3570,19 @@ P \approx 0
 </code></pre></div>
 <p>Always verify with the datasheet.</p>
 <hr />
-<h1 id="project-circuit">Project Circuit<a class="headerlink" href="#project-circuit" title="Permanent link">&para;</a></h1>
+<h2 id="project-circuit">Project Circuit<a class="headerlink" href="#project-circuit" title="Permanent link">&para;</a></h2>
 <p>We will use the MOSFET as an electronic switch to control an LED.</p>
 <hr />
-<h1 id="circuit-diagram">Circuit Diagram<a class="headerlink" href="#circuit-diagram" title="Permanent link">&para;</a></h1>
+<h2 id="circuit-diagram">Circuit Diagram<a class="headerlink" href="#circuit-diagram" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>graph TD
 
 A[Arduino Pin 9]
 
+A2[ESP32 GPIO18]
+
 A --&gt; B[220 Ohm Gate Resistor]
+
+A2 --&gt; B
 
 B --&gt; C[Gate]
 
@@ -1607,8 +3596,8 @@ G --&gt; H[LED]
 
 H --&gt; I[Drain]</code></pre>
 <hr />
-<h1 id="simplified-wiring-diagram">Simplified Wiring Diagram<a class="headerlink" href="#simplified-wiring-diagram" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Arduino Pin 9
+<h2 id="simplified-wiring-diagram">Simplified Wiring Diagram<a class="headerlink" href="#simplified-wiring-diagram" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>PWM Output (Arduino Pin 9 or ESP32 GPIO18)
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>      |
 <a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>     220Ω
 <a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>      |
@@ -1621,8 +3610,8 @@ H --&gt; I[Drain]</code></pre>
 <a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>Source ---------------- GND
 </code></pre></div>
 <hr />
-<h1 id="understanding-current-flow">Understanding Current Flow<a class="headerlink" href="#understanding-current-flow" title="Permanent link">&para;</a></h1>
-<h2 id="mosfet-off">MOSFET OFF<a class="headerlink" href="#mosfet-off" title="Permanent link">&para;</a></h2>
+<h2 id="understanding-current-flow">Understanding Current Flow<a class="headerlink" href="#understanding-current-flow" title="Permanent link">&para;</a></h2>
+<h3 id="mosfet-off">MOSFET OFF<a class="headerlink" href="#mosfet-off" title="Permanent link">&para;</a></h3>
 <p>Gate:</p>
 <div class="arithmatex">\[
 V_G = 0V
@@ -1635,21 +3624,22 @@ I = 0
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>OFF
 </code></pre></div>
 <hr />
-<h2 id="mosfet-on">MOSFET ON<a class="headerlink" href="#mosfet-on" title="Permanent link">&para;</a></h2>
+<h3 id="mosfet-on">MOSFET ON<a class="headerlink" href="#mosfet-on" title="Permanent link">&para;</a></h3>
 <p>Gate:</p>
 <div class="arithmatex">\[
-V_G = 5V
+V_G = V_S
 \]</div>
+<p>where <span class="arithmatex">\(V_S\)</span> is the controller output high level (typically about 5.0V for Arduino Uno or about 3.3V for ESP32).</p>
 <p>Current flows.</p>
 <p>LED:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ON
 </code></pre></div>
 <hr />
-<h1 id="experiment-1-mosfet-as-an-electronic-switch">Experiment 1 - MOSFET as an Electronic Switch<a class="headerlink" href="#experiment-1-mosfet-as-an-electronic-switch" title="Permanent link">&para;</a></h1>
-<h2 id="objective_1">Objective<a class="headerlink" href="#objective_1" title="Permanent link">&para;</a></h2>
+<h2 id="experiment-1-mosfet-as-an-electronic-switch">Experiment 1 - MOSFET as an Electronic Switch<a class="headerlink" href="#experiment-1-mosfet-as-an-electronic-switch" title="Permanent link">&para;</a></h2>
+<h3 id="objective_1">Objective<a class="headerlink" href="#objective_1" title="Permanent link">&para;</a></h3>
 <p>Switch an LED ON and OFF using a MOSFET.</p>
 <hr />
-<h1 id="arduino-code">Arduino Code<a class="headerlink" href="#arduino-code" title="Permanent link">&para;</a></h1>
+<h2 id="arduino-code">Arduino Code<a class="headerlink" href="#arduino-code" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="p">{</span>
 <a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
@@ -1666,46 +3656,64 @@ V_G = 5V
 <a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
 <a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="p">}</span>
 </code></pre></div>
-<hr />
-<h1 id="expected-behaviour">Expected Behaviour<a class="headerlink" href="#expected-behaviour" title="Permanent link">&para;</a></h1>
-<p>The LED should:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>ON for 1 second
+<h3 id="esp32-equivalent">ESP32 Equivalent<a class="headerlink" href="#esp32-equivalent" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PWM_PIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">18</span><span class="p">;</span>
 <a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>OFF for 1 second
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="p">{</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="n">PWM_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="p">}</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="p">{</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">PWM_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">PWM_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="expected-behaviour">Expected Behaviour<a class="headerlink" href="#expected-behaviour" title="Permanent link">&para;</a></h2>
+<p>The LED should:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>ON for 1 second
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>OFF for 1 second
 </code></pre></div>
 <p>continuously.</p>
 <hr />
-<h1 id="dso-nano-measurement">DSO Nano Measurement<a class="headerlink" href="#dso-nano-measurement" title="Permanent link">&para;</a></h1>
-<h2 id="objective_2">Objective<a class="headerlink" href="#objective_2" title="Permanent link">&para;</a></h2>
+<h2 id="oscilloscope-measurement">Oscilloscope Measurement<a class="headerlink" href="#oscilloscope-measurement" title="Permanent link">&para;</a></h2>
+<h3 id="objective_2">Objective<a class="headerlink" href="#objective_2" title="Permanent link">&para;</a></h3>
 <p>Measure the gate voltage.</p>
 <hr />
-<h1 id="probe-location">Probe Location<a class="headerlink" href="#probe-location" title="Permanent link">&para;</a></h1>
+<h2 id="probe-location">Probe Location<a class="headerlink" href="#probe-location" title="Permanent link">&para;</a></h2>
 <p>Probe Tip:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Gate
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Gate
 </code></pre></div>
 <p>Probe Ground:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>GND
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>GND
 </code></pre></div>
 <hr />
-<h1 id="dso-nano-setup">DSO Nano Setup<a class="headerlink" href="#dso-nano-setup" title="Permanent link">&para;</a></h1>
+<h2 id="oscilloscope-setup-owon-baseline">Oscilloscope Setup (OWON Baseline)<a class="headerlink" href="#oscilloscope-setup-owon-baseline" title="Permanent link">&para;</a></h2>
+<p>Recommended scope: OWON HDS272S.</p>
+<p>Compatible alternative: DSO Nano.</p>
 <p>Vertical:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>2 V/div
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>2 V/div
 </code></pre></div>
 <p>Horizontal:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>200 ms/div
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>200 ms/div
 </code></pre></div>
 <p>Trigger:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Rising Edge
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>Rising Edge
 </code></pre></div>
 <hr />
-<h1 id="expected-waveform">Expected Waveform<a class="headerlink" href="#expected-waveform" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>5V ────────
-<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>           │
-<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>           │
-<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>0V ________│________
+<h2 id="expected-waveform">Expected Waveform<a class="headerlink" href="#expected-waveform" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>5V ────────
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>           │
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>           │
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>0V ________│________
 </code></pre></div>
 <hr />
-<h1 id="record-measurements">Record Measurements<a class="headerlink" href="#record-measurements" title="Permanent link">&para;</a></h1>
+<h2 id="record-measurements">Record Measurements<a class="headerlink" href="#record-measurements" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1722,73 +3730,91 @@ V_G = 5V
 </tr>
 <tr>
 <td>Gate HIGH</td>
-<td>5V</td>
+<td>V_S (about 5V Arduino or about 3.3V ESP32)</td>
 <td></td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h1 id="experiment-2-pwm-controlled-mosfet">Experiment 2 - PWM Controlled MOSFET<a class="headerlink" href="#experiment-2-pwm-controlled-mosfet" title="Permanent link">&para;</a></h1>
-<h2 id="objective_3">Objective<a class="headerlink" href="#objective_3" title="Permanent link">&para;</a></h2>
+<h2 id="experiment-2-pwm-controlled-mosfet">Experiment 2 - PWM Controlled MOSFET<a class="headerlink" href="#experiment-2-pwm-controlled-mosfet" title="Permanent link">&para;</a></h2>
+<h3 id="objective_3">Objective<a class="headerlink" href="#objective_3" title="Permanent link">&para;</a></h3>
 <p>Control the MOSFET using PWM.</p>
 <hr />
-<h1 id="arduino-code_1">Arduino Code<a class="headerlink" href="#arduino-code_1" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
-<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="p">{</span>
-<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
-<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="p">}</span>
-<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
-<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
-<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="p">{</span>
-<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">128</span><span class="p">);</span>
-<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="p">}</span>
+<h2 id="arduino-code_1">Arduino Code<a class="headerlink" href="#arduino-code_1" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="p">{</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="p">}</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="p">{</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">128</span><span class="p">);</span>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="esp32-equivalent-ledc-pwm">ESP32 Equivalent (LEDC PWM)<a class="headerlink" href="#esp32-equivalent-ledc-pwm" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PWM_PIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">18</span><span class="p">;</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PWM_CH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PWM_FREQ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">500</span><span class="p">;</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PWM_RES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="p">{</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="w">    </span><span class="n">ledcAttach</span><span class="p">(</span><span class="n">PWM_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">PWM_FREQ</span><span class="p">,</span><span class="w"> </span><span class="n">PWM_RES</span><span class="p">);</span>
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="p">}</span>
+<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>
+<a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a><span class="p">{</span>
+<a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="n">PWM_PIN</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span>
+<a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a><span class="p">}</span>
 </code></pre></div>
 <hr />
-<h1 id="what-is-happening">What Is Happening?<a class="headerlink" href="#what-is-happening" title="Permanent link">&para;</a></h1>
-<p>Arduino produces:</p>
+<h2 id="what-is-happening">What Is Happening?<a class="headerlink" href="#what-is-happening" title="Permanent link">&para;</a></h2>
+<p>The controller produces:</p>
 <div class="arithmatex">\[
 50\%
 \]</div>
 <p>duty cycle PWM.</p>
 <p>The MOSFET switches:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>ON
-<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
-<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>OFF
-<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>
-<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>ON
-<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>
-<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>OFF
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>ON
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>OFF
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>ON
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>OFF
 </code></pre></div>
 <p>approximately:</p>
 <div class="arithmatex">\[
-490Hz
+490Hz (Arduino nominal, ESP32 configured value)
 \]</div>
 <hr />
-<h1 id="probe-location_1">Probe Location<a class="headerlink" href="#probe-location_1" title="Permanent link">&para;</a></h1>
+<h2 id="probe-location_1">Probe Location<a class="headerlink" href="#probe-location_1" title="Permanent link">&para;</a></h2>
 <p>Measure:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Gate Voltage
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Gate Voltage
 </code></pre></div>
 <p>again.</p>
 <hr />
-<h1 id="dso-nano-setup_1">DSO Nano Setup<a class="headerlink" href="#dso-nano-setup_1" title="Permanent link">&para;</a></h1>
+<h2 id="oscilloscope-setup-owon-baseline_1">Oscilloscope Setup (OWON Baseline)<a class="headerlink" href="#oscilloscope-setup-owon-baseline_1" title="Permanent link">&para;</a></h2>
+<p>Recommended scope: OWON HDS272S.</p>
+<p>Compatible alternative: DSO Nano.</p>
 <p>Vertical:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>2V/div
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>2V/div
 </code></pre></div>
 <p>Horizontal:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>500 us/div
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>500 us/div
 </code></pre></div>
 <p>Trigger:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>Rising Edge
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>Rising Edge
 </code></pre></div>
 <hr />
-<h1 id="expected-waveform_1">Expected Waveform<a class="headerlink" href="#expected-waveform_1" title="Permanent link">&para;</a></h1>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>5V ─────      ─────
-<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>         │      │
-<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>         │      │
-<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>0V ______│______│______
+<h2 id="expected-waveform_1">Expected Waveform<a class="headerlink" href="#expected-waveform_1" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>V_S ────      ─────
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>         │      │
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>         │      │
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>0V ______│______│______
 </code></pre></div>
 <hr />
-<h1 id="record-measurements_1">Record Measurements<a class="headerlink" href="#record-measurements_1" title="Permanent link">&para;</a></h1>
+<h2 id="record-measurements_1">Record Measurements<a class="headerlink" href="#record-measurements_1" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1812,13 +3838,13 @@ V_G = 5V
 </tbody>
 </table>
 <hr />
-<h1 id="experiment-3-led-brightness-control">Experiment 3 - LED Brightness Control<a class="headerlink" href="#experiment-3-led-brightness-control" title="Permanent link">&para;</a></h1>
-<h2 id="objective_4">Objective<a class="headerlink" href="#objective_4" title="Permanent link">&para;</a></h2>
+<h2 id="experiment-3-led-brightness-control">Experiment 3 - LED Brightness Control<a class="headerlink" href="#experiment-3-led-brightness-control" title="Permanent link">&para;</a></h2>
+<h3 id="objective_4">Objective<a class="headerlink" href="#objective_4" title="Permanent link">&para;</a></h3>
 <p>Use PWM to control LED brightness.</p>
 <hr />
-<h2 id="case-1">Case 1<a class="headerlink" href="#case-1" title="Permanent link">&para;</a></h2>
+<h3 id="case-1">Case 1<a class="headerlink" href="#case-1" title="Permanent link">&para;</a></h3>
 <p>Upload:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">64</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">64</span><span class="p">);</span>
 </code></pre></div>
 <p>Expected:</p>
 <div class="arithmatex">\[
@@ -1827,9 +3853,9 @@ V_G = 5V
 <p>duty cycle.</p>
 <p>LED should appear dim.</p>
 <hr />
-<h2 id="case-2">Case 2<a class="headerlink" href="#case-2" title="Permanent link">&para;</a></h2>
+<h3 id="case-2">Case 2<a class="headerlink" href="#case-2" title="Permanent link">&para;</a></h3>
 <p>Upload:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">128</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">128</span><span class="p">);</span>
 </code></pre></div>
 <p>Expected:</p>
 <div class="arithmatex">\[
@@ -1837,9 +3863,9 @@ V_G = 5V
 \]</div>
 <p>LED should appear moderately bright.</p>
 <hr />
-<h2 id="case-3">Case 3<a class="headerlink" href="#case-3" title="Permanent link">&para;</a></h2>
+<h3 id="case-3">Case 3<a class="headerlink" href="#case-3" title="Permanent link">&para;</a></h3>
 <p>Upload:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">192</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">192</span><span class="p">);</span>
 </code></pre></div>
 <p>Expected:</p>
 <div class="arithmatex">\[
@@ -1847,9 +3873,9 @@ V_G = 5V
 \]</div>
 <p>LED should appear bright.</p>
 <hr />
-<h2 id="case-4">Case 4<a class="headerlink" href="#case-4" title="Permanent link">&para;</a></h2>
+<h3 id="case-4">Case 4<a class="headerlink" href="#case-4" title="Permanent link">&para;</a></h3>
 <p>Upload:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">255</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">255</span><span class="p">);</span>
 </code></pre></div>
 <p>Expected:</p>
 <div class="arithmatex">\[
@@ -1857,7 +3883,7 @@ V_G = 5V
 \]</div>
 <p>LED should be fully ON.</p>
 <hr />
-<h1 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h1>
+<h2 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1890,7 +3916,7 @@ V_G = 5V
 </tbody>
 </table>
 <hr />
-<h1 id="why-pwm-works">Why PWM Works<a class="headerlink" href="#why-pwm-works" title="Permanent link">&para;</a></h1>
+<h2 id="why-pwm-works">Why PWM Works<a class="headerlink" href="#why-pwm-works" title="Permanent link">&para;</a></h2>
 <p>Average voltage is:</p>
 <div class="arithmatex">\[
 V_{AVG}=D \cdot V_S
@@ -1906,144 +3932,146 @@ D=0.5
 \]</div>
 <p>and:</p>
 <div class="arithmatex">\[
-V_S=5V
+V_S
 \]</div>
 <p>Then:</p>
 <div class="arithmatex">\[
-V_{AVG}=2.5V
+V_{AVG}=0.5V_S
 \]</div>
+<p>Examples: <span class="arithmatex">\(V_{AVG}=2.5V\)</span> for a 5.0V Arduino signal, or <span class="arithmatex">\(V_{AVG}=1.65V\)</span> for a 3.3V ESP32 signal.</p>
 <p>The LED receives less average power.</p>
 <hr />
-<h1 id="why-arduino-needs-a-mosfet">Why Arduino Needs a MOSFET<a class="headerlink" href="#why-arduino-needs-a-mosfet" title="Permanent link">&para;</a></h1>
-<p>Arduino output current is limited.</p>
+<h2 id="why-a-microcontroller-needs-a-mosfet">Why a Microcontroller Needs a MOSFET<a class="headerlink" href="#why-a-microcontroller-needs-a-mosfet" title="Permanent link">&para;</a></h2>
+<p>Microcontroller output current is limited.</p>
 <p>Typical safe current per pin:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>20 mA
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>20 mA
 </code></pre></div>
 <p>Many loads require:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>Hundreds of milliamps
-<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>
-<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>or
-<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>
-<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>Several amps
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>Hundreds of milliamps
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>or
+<a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>
+<a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>Several amps
 </code></pre></div>
-<p>A MOSFET allows Arduino to control these loads safely.</p>
+<p>A MOSFET allows the controller to control these loads safely.</p>
 <hr />
-<h1 id="practical-example">Practical Example<a class="headerlink" href="#practical-example" title="Permanent link">&para;</a></h1>
-<p>Arduino:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>5V
-<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>
-<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>20mA
+<h2 id="practical-example">Practical Example<a class="headerlink" href="#practical-example" title="Permanent link">&para;</a></h2>
+<p>Controller pin:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>5V
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>20mA
 </code></pre></div>
 <p>controls</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>12V
-<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>
-<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>2A
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>12V
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>2A
 </code></pre></div>
 <p>motor via MOSFET.</p>
 <hr />
-<h1 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h1>
+<h2 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h2>
 <p>Now compare your measured gate waveform against the ideal simulation.</p>
-<h2 id="enter-your-measured-values">Enter Your Measured Values<a class="headerlink" href="#enter-your-measured-values" title="Permanent link">&para;</a></h2>
-<p>From Experiment 2, record the frequency and duty cycle you measured on the DSO Nano:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="n">Vs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
-<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="n">f_theory</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mi">490</span><span class="p">;</span><span class="w">             </span><span class="c">% ideal Arduino PWM frequency (Hz)</span>
-<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="n">f_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">490</span><span class="p">;</span><span class="w">            </span><span class="c">% replace with your measured frequency (Hz)</span>
-<a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a><span class="n">D_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">0.50</span><span class="p">;</span><span class="w">           </span><span class="c">% replace with your measured duty cycle (0-1)</span>
-<a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a>
-<a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a><span class="n">Ts_t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">f_theory</span><span class="p">;</span>
-<a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a><span class="n">Ts_m</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">f_measured</span><span class="p">;</span>
-<a id="__codelineno-37-8" name="__codelineno-37-8" href="#__codelineno-37-8"></a><span class="n">t</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">1e-6</span><span class="p">:</span><span class="mi">4</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="n">Ts_t</span><span class="p">,</span><span class="w"> </span><span class="n">Ts_m</span><span class="p">);</span>
-<a id="__codelineno-37-9" name="__codelineno-37-9" href="#__codelineno-37-9"></a>
-<a id="__codelineno-37-10" name="__codelineno-37-10" href="#__codelineno-37-10"></a><span class="n">pwm_theory</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">Vs</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">double</span><span class="p">(</span><span class="nb">mod</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">Ts_t</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.50</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ts_t</span><span class="p">);</span>
-<a id="__codelineno-37-11" name="__codelineno-37-11" href="#__codelineno-37-11"></a><span class="n">pwm_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vs</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">double</span><span class="p">(</span><span class="nb">mod</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">Ts_m</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">D_measured</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ts_m</span><span class="p">);</span>
-<a id="__codelineno-37-12" name="__codelineno-37-12" href="#__codelineno-37-12"></a>
-<a id="__codelineno-37-13" name="__codelineno-37-13" href="#__codelineno-37-13"></a><span class="nb">figure</span><span class="p">;</span>
-<a id="__codelineno-37-14" name="__codelineno-37-14" href="#__codelineno-37-14"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<a id="__codelineno-37-15" name="__codelineno-37-15" href="#__codelineno-37-15"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="o">*</span><span class="mf">1e3</span><span class="p">,</span><span class="w"> </span><span class="n">pwm_theory</span><span class="p">,</span><span class="w">   </span><span class="s">&#39;b--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-37-16" name="__codelineno-37-16" href="#__codelineno-37-16"></a><span class="w">    </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;Theory  f=%.0fHz D=50%%&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">f_theory</span><span class="p">));</span>
-<a id="__codelineno-37-17" name="__codelineno-37-17" href="#__codelineno-37-17"></a><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-37-18" name="__codelineno-37-18" href="#__codelineno-37-18"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="o">*</span><span class="mf">1e3</span><span class="p">,</span><span class="w"> </span><span class="n">pwm_measured</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w">   </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-37-19" name="__codelineno-37-19" href="#__codelineno-37-19"></a><span class="w">    </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;Measured f=%.0fHz D=%.0f%%&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">f_measured</span><span class="p">,</span><span class="w"> </span><span class="n">D_measured</span><span class="o">*</span><span class="mi">100</span><span class="p">));</span>
-<a id="__codelineno-37-20" name="__codelineno-37-20" href="#__codelineno-37-20"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span><span class="w"> </span><span class="nb">legend</span><span class="p">;</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Gate Voltage (V)&#39;</span><span class="p">);</span>
-<a id="__codelineno-37-21" name="__codelineno-37-21" href="#__codelineno-37-21"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Gate Waveform — Theory vs Measurement&#39;</span><span class="p">);</span>
-<a id="__codelineno-37-22" name="__codelineno-37-22" href="#__codelineno-37-22"></a>
-<a id="__codelineno-37-23" name="__codelineno-37-23" href="#__codelineno-37-23"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
-<a id="__codelineno-37-24" name="__codelineno-37-24" href="#__codelineno-37-24"></a><span class="n">D_vals</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.50</span><span class="p">,</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span><span class="w"> </span><span class="mf">1.00</span><span class="p">];</span>
-<a id="__codelineno-37-25" name="__codelineno-37-25" href="#__codelineno-37-25"></a><span class="n">Vavg_theory</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="n">Vs</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">D_vals</span><span class="p">;</span>
-<a id="__codelineno-37-26" name="__codelineno-37-26" href="#__codelineno-37-26"></a><span class="n">Vavg_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vs</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">D_measured</span><span class="p">;</span><span class="w">   </span><span class="c">% single measured point</span>
-<a id="__codelineno-37-27" name="__codelineno-37-27" href="#__codelineno-37-27"></a><span class="nb">bar</span><span class="p">(</span><span class="n">D_vals</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="n">Vavg_theory</span><span class="p">,</span><span class="w"> </span><span class="mf">0.4</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Theory&#39;</span><span class="p">);</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-37-28" name="__codelineno-37-28" href="#__codelineno-37-28"></a><span class="nb">scatter</span><span class="p">(</span><span class="n">D_measured</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="n">Vavg_measured</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;filled&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-37-29" name="__codelineno-37-29" href="#__codelineno-37-29"></a><span class="w">    </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Measured&#39;</span><span class="p">);</span>
-<a id="__codelineno-37-30" name="__codelineno-37-30" href="#__codelineno-37-30"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span><span class="w"> </span><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Duty Cycle (%)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;V_{AVG} (V)&#39;</span><span class="p">);</span>
-<a id="__codelineno-37-31" name="__codelineno-37-31" href="#__codelineno-37-31"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Average Voltage — Theory vs Measurement&#39;</span><span class="p">);</span>
-<a id="__codelineno-37-32" name="__codelineno-37-32" href="#__codelineno-37-32"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="s">&#39;northwest&#39;</span><span class="p">);</span>
+<h3 id="enter-your-measured-values">Enter Your Measured Values<a class="headerlink" href="#enter-your-measured-values" title="Permanent link">&para;</a></h3>
+<p>From Experiment 2, record the frequency and duty cycle you measured on the oscilloscope:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="n">Vs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">                      </span><span class="c">% use 5.0 for Arduino or 3.3 for ESP32</span>
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="n">f_theory</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mi">490</span><span class="p">;</span><span class="w">             </span><span class="c">% ideal Arduino PWM frequency (Hz)</span>
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a><span class="n">f_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">490</span><span class="p">;</span><span class="w">            </span><span class="c">% replace with your measured frequency (Hz)</span>
+<a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a><span class="n">D_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">0.50</span><span class="p">;</span><span class="w">           </span><span class="c">% replace with your measured duty cycle (0-1)</span>
+<a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>
+<a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a><span class="n">Ts_t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">f_theory</span><span class="p">;</span>
+<a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a><span class="n">Ts_m</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">f_measured</span><span class="p">;</span>
+<a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a><span class="n">t</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">1e-6</span><span class="p">:</span><span class="mi">4</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="n">Ts_t</span><span class="p">,</span><span class="w"> </span><span class="n">Ts_m</span><span class="p">);</span>
+<a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a>
+<a id="__codelineno-39-10" name="__codelineno-39-10" href="#__codelineno-39-10"></a><span class="n">pwm_theory</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">Vs</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">double</span><span class="p">(</span><span class="nb">mod</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">Ts_t</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.50</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ts_t</span><span class="p">);</span>
+<a id="__codelineno-39-11" name="__codelineno-39-11" href="#__codelineno-39-11"></a><span class="n">pwm_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vs</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">double</span><span class="p">(</span><span class="nb">mod</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">Ts_m</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">D_measured</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ts_m</span><span class="p">);</span>
+<a id="__codelineno-39-12" name="__codelineno-39-12" href="#__codelineno-39-12"></a>
+<a id="__codelineno-39-13" name="__codelineno-39-13" href="#__codelineno-39-13"></a><span class="nb">figure</span><span class="p">;</span>
+<a id="__codelineno-39-14" name="__codelineno-39-14" href="#__codelineno-39-14"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-39-15" name="__codelineno-39-15" href="#__codelineno-39-15"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="o">*</span><span class="mf">1e3</span><span class="p">,</span><span class="w"> </span><span class="n">pwm_theory</span><span class="p">,</span><span class="w">   </span><span class="s">&#39;b--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-39-16" name="__codelineno-39-16" href="#__codelineno-39-16"></a><span class="w">    </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;Theory  f=%.0fHz D=50%%&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">f_theory</span><span class="p">));</span>
+<a id="__codelineno-39-17" name="__codelineno-39-17" href="#__codelineno-39-17"></a><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-39-18" name="__codelineno-39-18" href="#__codelineno-39-18"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="o">*</span><span class="mf">1e3</span><span class="p">,</span><span class="w"> </span><span class="n">pwm_measured</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w">   </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-39-19" name="__codelineno-39-19" href="#__codelineno-39-19"></a><span class="w">    </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;Measured f=%.0fHz D=%.0f%%&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">f_measured</span><span class="p">,</span><span class="w"> </span><span class="n">D_measured</span><span class="o">*</span><span class="mi">100</span><span class="p">));</span>
+<a id="__codelineno-39-20" name="__codelineno-39-20" href="#__codelineno-39-20"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span><span class="w"> </span><span class="nb">legend</span><span class="p">;</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Gate Voltage (V)&#39;</span><span class="p">);</span>
+<a id="__codelineno-39-21" name="__codelineno-39-21" href="#__codelineno-39-21"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Gate Waveform - Theory vs Measurement&#39;</span><span class="p">);</span>
+<a id="__codelineno-39-22" name="__codelineno-39-22" href="#__codelineno-39-22"></a>
+<a id="__codelineno-39-23" name="__codelineno-39-23" href="#__codelineno-39-23"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-39-24" name="__codelineno-39-24" href="#__codelineno-39-24"></a><span class="n">D_vals</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.50</span><span class="p">,</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span><span class="w"> </span><span class="mf">1.00</span><span class="p">];</span>
+<a id="__codelineno-39-25" name="__codelineno-39-25" href="#__codelineno-39-25"></a><span class="n">Vavg_theory</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="n">Vs</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">D_vals</span><span class="p">;</span>
+<a id="__codelineno-39-26" name="__codelineno-39-26" href="#__codelineno-39-26"></a><span class="n">Vavg_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vs</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">D_measured</span><span class="p">;</span><span class="w">   </span><span class="c">% single measured point</span>
+<a id="__codelineno-39-27" name="__codelineno-39-27" href="#__codelineno-39-27"></a><span class="nb">bar</span><span class="p">(</span><span class="n">D_vals</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="n">Vavg_theory</span><span class="p">,</span><span class="w"> </span><span class="mf">0.4</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Theory&#39;</span><span class="p">);</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-39-28" name="__codelineno-39-28" href="#__codelineno-39-28"></a><span class="nb">scatter</span><span class="p">(</span><span class="n">D_measured</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="n">Vavg_measured</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;filled&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-39-29" name="__codelineno-39-29" href="#__codelineno-39-29"></a><span class="w">    </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Measured&#39;</span><span class="p">);</span>
+<a id="__codelineno-39-30" name="__codelineno-39-30" href="#__codelineno-39-30"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span><span class="w"> </span><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Duty Cycle (%)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;V_{AVG} (V)&#39;</span><span class="p">);</span>
+<a id="__codelineno-39-31" name="__codelineno-39-31" href="#__codelineno-39-31"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Average Voltage - Theory vs Measurement&#39;</span><span class="p">);</span>
+<a id="__codelineno-39-32" name="__codelineno-39-32" href="#__codelineno-39-32"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="s">&#39;northwest&#39;</span><span class="p">);</span>
 </code></pre></div>
-<h2 id="reflection">Reflection<a class="headerlink" href="#reflection" title="Permanent link">&para;</a></h2>
+<h3 id="reflection">Reflection<a class="headerlink" href="#reflection" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Does your measured frequency match 490 Hz?</li>
-<li>Does your measured VAVG match the theoretical value D × 5V?</li>
+<li>Does your measured VAVG match the theoretical value D × V_S?</li>
 <li>Why might the measured average voltage differ slightly from theory? (gate resistor drop, MOSFET on-state voltage, probe loading)</li>
 </ul>
 <hr />
-<h1 id="engineering-applications">Engineering Applications<a class="headerlink" href="#engineering-applications" title="Permanent link">&para;</a></h1>
+<h2 id="engineering-applications">Engineering Applications<a class="headerlink" href="#engineering-applications" title="Permanent link">&para;</a></h2>
 <p>MOSFETs are used in:</p>
-<h2 id="led-drivers">LED Drivers<a class="headerlink" href="#led-drivers" title="Permanent link">&para;</a></h2>
+<h3 id="led-drivers">LED Drivers<a class="headerlink" href="#led-drivers" title="Permanent link">&para;</a></h3>
 <p>Adjust brightness.</p>
 <hr />
-<h2 id="dc-motor-drives">DC Motor Drives<a class="headerlink" href="#dc-motor-drives" title="Permanent link">&para;</a></h2>
+<h3 id="dc-motor-drives">DC Motor Drives<a class="headerlink" href="#dc-motor-drives" title="Permanent link">&para;</a></h3>
 <p>Adjust speed.</p>
+<p>Note: for inductive loads such as motors and solenoids, add a flyback diode across the load.</p>
 <hr />
-<h2 id="buck-converters">Buck Converters<a class="headerlink" href="#buck-converters" title="Permanent link">&para;</a></h2>
+<h3 id="buck-converters">Buck Converters<a class="headerlink" href="#buck-converters" title="Permanent link">&para;</a></h3>
 <p>Step voltage down.</p>
 <hr />
-<h2 id="boost-converters">Boost Converters<a class="headerlink" href="#boost-converters" title="Permanent link">&para;</a></h2>
+<h3 id="boost-converters">Boost Converters<a class="headerlink" href="#boost-converters" title="Permanent link">&para;</a></h3>
 <p>Step voltage up.</p>
 <hr />
-<h2 id="inverters">Inverters<a class="headerlink" href="#inverters" title="Permanent link">&para;</a></h2>
+<h3 id="inverters">Inverters<a class="headerlink" href="#inverters" title="Permanent link">&para;</a></h3>
 <p>Convert DC to AC.</p>
 <hr />
-<h2 id="solar-controllers">Solar Controllers<a class="headerlink" href="#solar-controllers" title="Permanent link">&para;</a></h2>
+<h3 id="solar-controllers">Solar Controllers<a class="headerlink" href="#solar-controllers" title="Permanent link">&para;</a></h3>
 <p>Battery charging and regulation.</p>
 <hr />
-<h1 id="knowledge-check">Knowledge Check<a class="headerlink" href="#knowledge-check" title="Permanent link">&para;</a></h1>
-<h2 id="question-1">Question 1<a class="headerlink" href="#question-1" title="Permanent link">&para;</a></h2>
+<h2 id="knowledge-check">Knowledge Check<a class="headerlink" href="#knowledge-check" title="Permanent link">&para;</a></h2>
+<h3 id="question-1">Question 1<a class="headerlink" href="#question-1" title="Permanent link">&para;</a></h3>
 <p>What does MOSFET stand for?</p>
-<p>Answer:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>____________________
-</code></pre></div>
-<hr />
-<h2 id="question-2">Question 2<a class="headerlink" href="#question-2" title="Permanent link">&para;</a></h2>
-<p>What are the three MOSFET terminals?</p>
-<p>Answer:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>____________________
-</code></pre></div>
-<hr />
-<h2 id="question-3">Question 3<a class="headerlink" href="#question-3" title="Permanent link">&para;</a></h2>
-<p>What controls the MOSFET?</p>
 <p>Answer:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>____________________
 </code></pre></div>
 <hr />
-<h2 id="question-4">Question 4<a class="headerlink" href="#question-4" title="Permanent link">&para;</a></h2>
-<p>Why are MOSFETs used in power electronics?</p>
+<h3 id="question-2">Question 2<a class="headerlink" href="#question-2" title="Permanent link">&para;</a></h3>
+<p>What are the three MOSFET terminals?</p>
 <p>Answer:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>____________________
 </code></pre></div>
 <hr />
-<h2 id="question-5">Question 5<a class="headerlink" href="#question-5" title="Permanent link">&para;</a></h2>
-<p>Why can't Arduino drive large motors directly?</p>
+<h3 id="question-3">Question 3<a class="headerlink" href="#question-3" title="Permanent link">&para;</a></h3>
+<p>What controls the MOSFET?</p>
 <p>Answer:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>____________________
 </code></pre></div>
 <hr />
-<h2 id="question-6">Question 6<a class="headerlink" href="#question-6" title="Permanent link">&para;</a></h2>
-<p>Your simulation predicted VAVG = 2.5V at 50% duty cycle but you measured 2.3V. Give two physical reasons that could explain this.</p>
+<h3 id="question-4">Question 4<a class="headerlink" href="#question-4" title="Permanent link">&para;</a></h3>
+<p>Why are MOSFETs used in power electronics?</p>
 <p>Answer:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>____________________
 </code></pre></div>
 <hr />
-<h1 id="common-mistakes">Common Mistakes<a class="headerlink" href="#common-mistakes" title="Permanent link">&para;</a></h1>
-<h2 id="led-never-turns-on">LED Never Turns ON<a class="headerlink" href="#led-never-turns-on" title="Permanent link">&para;</a></h2>
+<h3 id="question-5">Question 5<a class="headerlink" href="#question-5" title="Permanent link">&para;</a></h3>
+<p>Why can't a microcontroller pin drive large motors directly?</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>____________________
+</code></pre></div>
+<hr />
+<h3 id="question-6">Question 6<a class="headerlink" href="#question-6" title="Permanent link">&para;</a></h3>
+<p>Your simulation predicted VAVG = 2.5V at 50% duty cycle but you measured 2.3V. Give two physical reasons that could explain this.</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>____________________
+</code></pre></div>
+<hr />
+<h2 id="common-mistakes">Common Mistakes<a class="headerlink" href="#common-mistakes" title="Permanent link">&para;</a></h2>
+<h3 id="led-never-turns-on">LED Never Turns ON<a class="headerlink" href="#led-never-turns-on" title="Permanent link">&para;</a></h3>
 <p>Check:</p>
 <ul>
 <li>MOSFET pinout</li>
@@ -2051,7 +4079,7 @@ V_{AVG}=2.5V
 <li>Wiring</li>
 </ul>
 <hr />
-<h2 id="mosfet-gets-hot">MOSFET Gets Hot<a class="headerlink" href="#mosfet-gets-hot" title="Permanent link">&para;</a></h2>
+<h3 id="mosfet-gets-hot">MOSFET Gets Hot<a class="headerlink" href="#mosfet-gets-hot" title="Permanent link">&para;</a></h3>
 <p>Check:</p>
 <ul>
 <li>Correct MOSFET type</li>
@@ -2059,30 +4087,37 @@ V_{AVG}=2.5V
 </ul>
 <p>Use a logic-level MOSFET.</p>
 <hr />
-<h2 id="no-pwm-visible">No PWM Visible<a class="headerlink" href="#no-pwm-visible" title="Permanent link">&para;</a></h2>
+<h3 id="no-pwm-visible">No PWM Visible<a class="headerlink" href="#no-pwm-visible" title="Permanent link">&para;</a></h3>
 <p>Check:</p>
 <ul>
 <li>Trigger settings</li>
 <li>Probe location</li>
-<li>Arduino code</li>
+<li>Controller PWM code</li>
 </ul>
 <hr />
-<h1 id="troubleshooting-checklist">Troubleshooting Checklist<a class="headerlink" href="#troubleshooting-checklist" title="Permanent link">&para;</a></h1>
+<h3 id="motor-does-not-switch-safely">Motor Does Not Switch Safely<a class="headerlink" href="#motor-does-not-switch-safely" title="Permanent link">&para;</a></h3>
+<p>Check:</p>
+<ul>
+<li>Flyback diode installed across inductive load</li>
+<li>Diode polarity correct</li>
+</ul>
+<hr />
+<h2 id="troubleshooting-checklist">Troubleshooting Checklist<a class="headerlink" href="#troubleshooting-checklist" title="Permanent link">&para;</a></h2>
 <p>✅ MOSFET orientation correct</p>
-<p>✅ Shared ground between Arduino and MOSFET</p>
+<p>✅ Shared ground between controller and MOSFET</p>
 <p>✅ Probe on Gate</p>
 <p>✅ Probe ground on GND</p>
 <p>✅ Correct trigger settings</p>
 <p>✅ Correct PWM signal measured</p>
 <hr />
-<h1 id="project-summary">Project Summary<a class="headerlink" href="#project-summary" title="Permanent link">&para;</a></h1>
+<h2 id="project-summary">Project Summary<a class="headerlink" href="#project-summary" title="Permanent link">&para;</a></h2>
 <p>In this project you learned:</p>
 <p>✅ MOSFET operation</p>
 <p>✅ Gate, Drain and Source</p>
 <p>✅ Electronic switching</p>
 <p>✅ PWM-controlled switching</p>
 <p>✅ MOSFET efficiency</p>
-<p>✅ How Arduino controls larger loads</p>
+<p>✅ How a microcontroller controls larger loads</p>
 <p>✅ Foundations of power electronics</p>
 <p>These ideas are the building blocks for:</p>
 <ul>
@@ -2093,8 +4128,8 @@ V_{AVG}=2.5V
 <li>Switching power supplies</li>
 </ul>
 <hr />
-<h1 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h1>
-<p><strong>05_PWM_Motor_Control.md</strong></p>
+<h2 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h2>
+<p><strong>10_PWM_Motor_Control.md</strong></p>
 <p>Topics:</p>
 <ul>
 <li>DC Motor Fundamentals</li>
@@ -2102,7 +4137,7 @@ V_{AVG}=2.5V
 <li>PWM Motor Drives</li>
 <li>Motor Time Constants</li>
 <li>First-Order Motor Models</li>
-<li>Measuring Motor Response with the DSO Nano</li>
+<li>Measuring Motor Response with the Oscilloscope</li>
 </ul>
 
 

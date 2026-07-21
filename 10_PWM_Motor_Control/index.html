@@ -1,0 +1,4128 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Practical Electronics, Control Systems and Power Electronics Training">
+      
+      
+        <meta name="author" content="Jaime Trivino">
+      
+      
+      
+        <link rel="prev" href="../09_Boost_Converter/">
+      
+      
+        <link rel="next" href="../11_System_Identification/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>PWM Motor Control - Power Electronics and Control Training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#project-10-pwm-motor-control-and-first-order-system-dynamics" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Power Electronics and Control Training" class="md-header__button md-logo" aria-label="Power Electronics and Control Training" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Power Electronics and Control Training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PWM Motor Control
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jaimetriv/power-electronics-and-control-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jaimetriv/power-electronics-and-control-training
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Power Electronics and Control Training" class="md-nav__button md-logo" aria-label="Power Electronics and Control Training" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Power Electronics and Control Training
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jaimetriv/power-electronics-and-control-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jaimetriv/power-electronics-and-control-training
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00_Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00A_Microcontroller_Familiarisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microcontroller Familiarisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00B_Oscilloscope_Familiarisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oscilloscope Familiarisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00C_WiFi_Controller_Familiarisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WiFi Controller Familiarisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Electronics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core Electronics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_PWM_Fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PWM Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_RC_Circuits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_RLC_Circuits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_MOSFET_Fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MOSFET Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power Conversion
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Power Conversion
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_AC_DC_Rectifiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AC-DC Rectifiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_DC_AC_Inverters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DC-AC Inverters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_DC_Chopper_Converters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DC Chopper Converters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08_Buck_Converter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Buck Converter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_Boost_Converter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boost Converter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PWM Motor Control
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PWM Motor Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Outcomes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Theory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Theory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-dc-motor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Is a DC Motor?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simplified-motor-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simplified Motor Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-doesnt-a-motor-reach-full-speed-instantly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Doesn't a Motor Reach Full Speed Instantly?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-motor-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Motor Response
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#first-order-motor-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First-Order Motor Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pwm-motor-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PWM Motor Control
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-use-pwm-instead-of-a-resistor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Use PWM Instead of a Resistor?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matlab-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MATLAB Simulation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MATLAB Simulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-order-step-response-effect-of-time-constant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First-Order Step Response — Effect of Time Constant
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pwm-average-voltage-operating-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PWM Average Voltage — Operating Points
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prediction Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#required-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Required Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equipment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Equipment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#important-safety-note" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Important Safety Note
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-is-a-flyback-diode-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Is a Flyback Diode Needed?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motor-driver-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motor Driver Circuit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simplified-wiring-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simplified Wiring Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-1-full-speed-motor-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment 1 - Full-Speed Motor Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experiment 1 - Full-Speed Motor Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arduino-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Arduino Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#esp32-equivalent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESP32 Equivalent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-2-pwm-speed-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment 2 - PWM Speed Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experiment 2 - PWM Speed Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arduino-code_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Arduino Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#esp32-equivalent-ledc-pwm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESP32 Equivalent (LEDC PWM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expected-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected Result
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oscilloscope-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Oscilloscope Measurement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oscilloscope-settings-owon-baseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Oscilloscope Settings (OWON Baseline)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expected-waveform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected Waveform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measurements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-3-speed-versus-duty-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment 3 - Speed Versus Duty Cycle
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experiment 3 - Speed Versus Duty Cycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test 1
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test 2
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test 3
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test 4
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-4-motor-step-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment 4 - Motor Step Response
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experiment 4 - Motor Step Response">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arduino-code_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Arduino Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#esp32-equivalent-step-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESP32 Equivalent (Step Test)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observation_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estimating-a-time-constant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estimating A Time Constant
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#first-order-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First-Order Comparison
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="First-Order Comparison">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rc-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RC Circuit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#motor-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motor System
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matlab-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MATLAB Comparison
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MATLAB Comparison">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enter-your-measured-time-constant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enter Your Measured Time Constant
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#record-your-model-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Record Your Model Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reflection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reflection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#engineering-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Engineering Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Engineering Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#electric-vehicles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Electric Vehicles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#robotics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Robotics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drones
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#industrial-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Industrial Automation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cnc-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CNC Machines
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#knowledge-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Knowledge Check
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Knowledge Check">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#question-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 4
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 5
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 6
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Mistakes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Mistakes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motor-doesnt-spin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motor Doesn't Spin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controller-resets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controller Resets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mosfet-gets-hot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MOSFET Gets Hot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pwm-not-visible" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PWM Not Visible
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Project
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Control Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11_System_Identification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Identification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12_P_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13_PI_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PI Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14_PID_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PID Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15_Closed_Loop_Buck/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Closed Loop Buck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Advanced Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16_Controller_Design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Controller Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17_Grid_Following_VSC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grid Following VSC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18_Grid_Forming_VSC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grid Forming VSC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Outcomes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Theory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Theory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-a-dc-motor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Is a DC Motor?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simplified-motor-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simplified Motor Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-doesnt-a-motor-reach-full-speed-instantly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Doesn't a Motor Reach Full Speed Instantly?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-motor-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Motor Response
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#first-order-motor-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First-Order Motor Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pwm-motor-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PWM Motor Control
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-use-pwm-instead-of-a-resistor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Use PWM Instead of a Resistor?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matlab-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MATLAB Simulation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MATLAB Simulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-order-step-response-effect-of-time-constant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First-Order Step Response — Effect of Time Constant
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pwm-average-voltage-operating-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PWM Average Voltage — Operating Points
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prediction Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#required-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Required Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equipment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Equipment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#important-safety-note" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Important Safety Note
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-is-a-flyback-diode-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Is a Flyback Diode Needed?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motor-driver-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motor Driver Circuit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simplified-wiring-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simplified Wiring Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-1-full-speed-motor-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment 1 - Full-Speed Motor Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experiment 1 - Full-Speed Motor Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arduino-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Arduino Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#esp32-equivalent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESP32 Equivalent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-2-pwm-speed-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment 2 - PWM Speed Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experiment 2 - PWM Speed Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arduino-code_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Arduino Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#esp32-equivalent-ledc-pwm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESP32 Equivalent (LEDC PWM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expected-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected Result
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oscilloscope-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Oscilloscope Measurement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oscilloscope-settings-owon-baseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Oscilloscope Settings (OWON Baseline)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expected-waveform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected Waveform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measurements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-3-speed-versus-duty-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment 3 - Speed Versus Duty Cycle
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experiment 3 - Speed Versus Duty Cycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test 1
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test 2
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test 3
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test 4
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-4-motor-step-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment 4 - Motor Step Response
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Experiment 4 - Motor Step Response">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objective_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arduino-code_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Arduino Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#esp32-equivalent-step-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESP32 Equivalent (Step Test)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observation_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estimating-a-time-constant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estimating A Time Constant
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#first-order-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First-Order Comparison
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="First-Order Comparison">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rc-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RC Circuit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#motor-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motor System
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matlab-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MATLAB Comparison
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MATLAB Comparison">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enter-your-measured-time-constant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enter Your Measured Time Constant
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#record-your-model-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Record Your Model Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reflection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reflection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#engineering-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Engineering Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Engineering Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#electric-vehicles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Electric Vehicles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#robotics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Robotics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drones
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#industrial-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Industrial Automation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cnc-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CNC Machines
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#knowledge-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Knowledge Check
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Knowledge Check">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#question-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 4
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 5
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 6
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Mistakes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Mistakes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motor-doesnt-spin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motor Doesn't Spin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controller-resets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controller Resets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mosfet-gets-hot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MOSFET Gets Hot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pwm-not-visible" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PWM Not Visible
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Project
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="project-10-pwm-motor-control-and-first-order-system-dynamics">Project 10 - PWM Motor Control and First-Order System Dynamics<a class="headerlink" href="#project-10-pwm-motor-control-and-first-order-system-dynamics" title="Permanent link">&para;</a></h1>
+<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
+<p>Complete:</p>
+<ul>
+<li>00_Introduction.md</li>
+<li>00B_Oscilloscope_Familiarisation.md</li>
+<li>01_PWM_Fundamentals.md</li>
+<li>02_RC_Circuits.md</li>
+<li>03_RLC_Circuits.md</li>
+<li>04_MOSFET_Fundamentals.md</li>
+</ul>
+<hr />
+<h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
+<p>In this project you will learn:</p>
+<ul>
+<li>How DC motors work</li>
+<li>How PWM controls motor speed</li>
+<li>How a MOSFET controls motor power</li>
+<li>What motor inertia is</li>
+<li>Why motors do not respond instantly</li>
+<li>What a first-order dynamic system is</li>
+<li>How to estimate motor time constants</li>
+</ul>
+<p>This project bridges the gap between:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Electronics
+</code></pre></div>
+<p>and</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Control Systems
+</code></pre></div>
+<p>The motor will become our first real-world dynamic plant.</p>
+<hr />
+<h2 id="learning-outcomes">Learning Outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
+<p>At the end of this project you should be able to:</p>
+<p>✅ Explain DC motor operation</p>
+<p>✅ Control motor speed with PWM</p>
+<p>✅ Drive a motor using a MOSFET</p>
+<p>✅ Measure PWM signals using an oscilloscope</p>
+<p>✅ Explain motor inertia</p>
+<p>✅ Understand motor time constants</p>
+<p>✅ Model a motor as a first-order system</p>
+<hr />
+<h2 id="theory">Theory<a class="headerlink" href="#theory" title="Permanent link">&para;</a></h2>
+<h3 id="what-is-a-dc-motor">What Is a DC Motor?<a class="headerlink" href="#what-is-a-dc-motor" title="Permanent link">&para;</a></h3>
+<p>A DC motor converts:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Electrical Energy
+</code></pre></div>
+<p>into:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Mechanical Energy
+</code></pre></div>
+<p>When voltage is applied:</p>
+<ul>
+<li>Current flows through motor windings.</li>
+<li>A magnetic field is created.</li>
+<li>Torque is produced.</li>
+<li>The shaft begins to rotate.</li>
+</ul>
+<hr />
+<h2 id="simplified-motor-model">Simplified Motor Model<a class="headerlink" href="#simplified-motor-model" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Voltage
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>   |
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>   ↓
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Current
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>   |
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>   ↓
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>Torque
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>   |
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>   ↓
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>Speed
+</code></pre></div>
+<hr />
+<h2 id="why-doesnt-a-motor-reach-full-speed-instantly">Why Doesn't a Motor Reach Full Speed Instantly?<a class="headerlink" href="#why-doesnt-a-motor-reach-full-speed-instantly" title="Permanent link">&para;</a></h2>
+<p>Motors have:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Mass
+</code></pre></div>
+<p>and</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Inertia
+</code></pre></div>
+<p>Just like a car cannot instantly accelerate from:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>0 mph
+</code></pre></div>
+<p>to</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>70 mph
+</code></pre></div>
+<p>a motor cannot instantly reach maximum speed.</p>
+<p>Instead speed rises gradually.</p>
+<hr />
+<h2 id="example-motor-response">Example Motor Response<a class="headerlink" href="#example-motor-response" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Speed
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>100% |           ________
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>     |         /
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>     |       /
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>     |     /
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>     |   /
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>   0 +---------------------
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>            Time
+</code></pre></div>
+<p>Notice how the response resembles the RC charging curve from Project 2.</p>
+<hr />
+<h2 id="first-order-motor-model">First-Order Motor Model<a class="headerlink" href="#first-order-motor-model" title="Permanent link">&para;</a></h2>
+<p>A DC motor can often be approximated by:</p>
+<div class="arithmatex">\[
+G(s)=\frac{K}{\tau s+1}
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(K\)</span> = System Gain</li>
+<li><span class="arithmatex">\(\tau\)</span> = Motor Time Constant</li>
+</ul>
+<p>This is exactly the same form as the RC circuit studied previously.</p>
+<hr />
+<h2 id="pwm-motor-control">PWM Motor Control<a class="headerlink" href="#pwm-motor-control" title="Permanent link">&para;</a></h2>
+<p>PWM controls the average voltage applied to the motor.</p>
+<p>Average voltage:</p>
+<div class="arithmatex">\[
+V_{AVG}=D \cdot V_S
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(D\)</span> = Duty Cycle</li>
+<li><span class="arithmatex">\(V_S\)</span> = Supply Voltage</li>
+</ul>
+<hr />
+<h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
+<p>Given:</p>
+<div class="arithmatex">\[
+D=0.5
+\]</div>
+<p>and:</p>
+<div class="arithmatex">\[
+V_S
+\]</div>
+<p>Then:</p>
+<div class="arithmatex">\[
+V_{AVG}=0.5V_S
+\]</div>
+<p>Examples: <span class="arithmatex">\(V_{AVG}=2.5V\)</span> for a 5.0V Arduino signal, or <span class="arithmatex">\(V_{AVG}=1.65V\)</span> for a 3.3V ESP32 signal.</p>
+<p>The motor receives less average voltage and therefore rotates more slowly.</p>
+<hr />
+<h2 id="why-use-pwm-instead-of-a-resistor">Why Use PWM Instead of a Resistor?<a class="headerlink" href="#why-use-pwm-instead-of-a-resistor" title="Permanent link">&para;</a></h2>
+<p>Resistor control wastes energy.</p>
+<p>PWM control is much more efficient.</p>
+<p>The MOSFET is either:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Fully ON
+</code></pre></div>
+<p>or</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Fully OFF
+</code></pre></div>
+<p>which minimises power loss.</p>
+<hr />
+<h2 id="matlab-simulation">MATLAB Simulation<a class="headerlink" href="#matlab-simulation" title="Permanent link">&para;</a></h2>
+<p>Before building the circuit, simulate the motor's first-order step response and PWM voltage to predict what you will observe.</p>
+<h3 id="first-order-step-response-effect-of-time-constant">First-Order Step Response — Effect of Time Constant<a class="headerlink" href="#first-order-step-response-effect-of-time-constant" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">K</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">tau_values</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">];</span><span class="w">   </span><span class="c">% range of plausible motor time constants</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">labels</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">&#39;\tau=0.2s&#39;</span><span class="p">,</span><span class="s">&#39;\tau=0.5s&#39;</span><span class="p">,</span><span class="s">&#39;\tau=1.0s&#39;</span><span class="p">,</span><span class="s">&#39;\tau=2.0s&#39;</span><span class="p">};</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="n">t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="mi">10</span><span class="p">;</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">    </span><span class="n">G</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">tau_values</span><span class="p">(</span><span class="nb">i</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">]);</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">    </span><span class="p">[</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">    </span><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="p">{</span><span class="nb">i</span><span class="p">});</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="k">end</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="nb">yline</span><span class="p">(</span><span class="mf">0.632</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;63.2%&#39;</span><span class="p">);</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (s)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Normalised Speed&#39;</span><span class="p">);</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;First-Order Motor Model - Step Response&#39;</span><span class="p">);</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;southeast&#39;</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="pwm-average-voltage-operating-points">PWM Average Voltage — Operating Points<a class="headerlink" href="#pwm-average-voltage-operating-points" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">D</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">Vavg</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">D</span><span class="p">;</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="n">D_exp</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.50</span><span class="p">,</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span><span class="w"> </span><span class="mf">1.00</span><span class="p">];</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="n">Vavg_exp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">D_exp</span><span class="p">;</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="nb">figure</span><span class="p">;</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="nb">plot</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="n">Vavg</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="nb">scatter</span><span class="p">(</span><span class="n">D_exp</span><span class="p">,</span><span class="w"> </span><span class="n">Vavg_exp</span><span class="p">,</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;filled&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Experiment points&#39;</span><span class="p">);</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Duty Cycle&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Average Motor Voltage (V)&#39;</span><span class="p">);</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Motor Voltage vs Duty Cycle&#39;</span><span class="p">);</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Theory&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Experiment points&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;northwest&#39;</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h3>
+<p>Before running Experiment 4, estimate the motor time constant by looking at the simulation:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Predicted value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Motor time constant τ (s)</td>
+<td></td>
+</tr>
+<tr>
+<td>Speed at 1τ (% of max)</td>
+<td>63.2%</td>
+</tr>
+<tr>
+<td>Approximate settling time (5τ)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="required-components">Required Components<a class="headerlink" href="#required-components" title="Permanent link">&para;</a></h2>
+<h3 id="hardware">Hardware<a class="headerlink" href="#hardware" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Arduino Uno</li>
+<li>ESP32 DevKit V1 (alternative controller)</li>
+<li>Breadboard</li>
+<li>Jumper Wires</li>
+<li>Logic-Level MOSFET (IRLZ44N recommended)</li>
+<li>DC Motor</li>
+<li>Flyback Diode (1N4001-1N4007)</li>
+<li>External Battery Pack</li>
+</ul>
+<h3 id="equipment">Equipment<a class="headerlink" href="#equipment" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)</li>
+</ul>
+<hr />
+<h2 id="important-safety-note">Important Safety Note<a class="headerlink" href="#important-safety-note" title="Permanent link">&para;</a></h2>
+<p>Never connect a motor directly to a microcontroller output pin.</p>
+<p>Motors can draw significantly more current than the microcontroller can safely provide.</p>
+<p>Always use:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>MOSFET Driver Circuit
+</code></pre></div>
+<hr />
+<h2 id="why-is-a-flyback-diode-needed">Why Is a Flyback Diode Needed?<a class="headerlink" href="#why-is-a-flyback-diode-needed" title="Permanent link">&para;</a></h2>
+<p>Motors are inductive loads.</p>
+<p>When current is interrupted, a high voltage spike can occur.</p>
+<p>The flyback diode protects:</p>
+<ul>
+<li>Controller</li>
+<li>MOSFET</li>
+<li>Other electronics</li>
+</ul>
+<hr />
+<h2 id="motor-driver-circuit">Motor Driver Circuit<a class="headerlink" href="#motor-driver-circuit" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>graph TD
+
+A[Arduino Pin 9]
+--&gt; B[220 Ohm]
+
+A2[ESP32 GPIO18]
+--&gt; B
+
+B --&gt; C[Gate]
+
+D[Motor]
+--&gt; C2[Drain]
+
+C2 --&gt; E[MOSFET]
+
+E --&gt; F[GND]
+
+G[Battery +]
+--&gt; D
+
+H[Flyback Diode]
+--- D</code></pre>
+<hr />
+<h2 id="simplified-wiring-diagram">Simplified Wiring Diagram<a class="headerlink" href="#simplified-wiring-diagram" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Battery +
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    |
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>    |
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>  Motor
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>    |
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>    |
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a> Drain
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>MOSFET
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>Source
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>    |
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>   GND
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>PWM Output (Arduino Pin 9 or ESP32 GPIO18)
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>      |
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>    220Ω
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>      |
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>    Gate
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>Flyback Diode Across Motor
+</code></pre></div>
+<hr />
+<h2 id="experiment-1-full-speed-motor-control">Experiment 1 - Full-Speed Motor Control<a class="headerlink" href="#experiment-1-full-speed-motor-control" title="Permanent link">&para;</a></h2>
+<h3 id="objective_1">Objective<a class="headerlink" href="#objective_1" title="Permanent link">&para;</a></h3>
+<p>Turn the motor fully ON and OFF.</p>
+<hr />
+<h2 id="arduino-code">Arduino Code<a class="headerlink" href="#arduino-code" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="p">{</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="p">}</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="p">{</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="esp32-equivalent">ESP32 Equivalent<a class="headerlink" href="#esp32-equivalent" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PWM_PIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">18</span><span class="p">;</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="p">{</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="n">PWM_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="p">}</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="p">{</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">PWM_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">PWM_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="observation">Observation<a class="headerlink" href="#observation" title="Permanent link">&para;</a></h2>
+<p>Notice:</p>
+<ul>
+<li>Motor accelerates gradually.</li>
+<li>Motor decelerates gradually.</li>
+</ul>
+<p>Unlike an LED:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>The response is not instantaneous.
+</code></pre></div>
+<hr />
+<h2 id="questions">Questions<a class="headerlink" href="#questions" title="Permanent link">&para;</a></h2>
+<p>Why does speed increase slowly?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>________________________________
+</code></pre></div>
+<hr />
+<p>Why does speed decrease slowly?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>________________________________
+</code></pre></div>
+<hr />
+<h2 id="experiment-2-pwm-speed-control">Experiment 2 - PWM Speed Control<a class="headerlink" href="#experiment-2-pwm-speed-control" title="Permanent link">&para;</a></h2>
+<h3 id="objective_2">Objective<a class="headerlink" href="#objective_2" title="Permanent link">&para;</a></h3>
+<p>Control motor speed using PWM.</p>
+<hr />
+<h2 id="arduino-code_1">Arduino Code<a class="headerlink" href="#arduino-code_1" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="p">{</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="p">}</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="p">{</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">128</span><span class="p">);</span>
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="esp32-equivalent-ledc-pwm">ESP32 Equivalent (LEDC PWM)<a class="headerlink" href="#esp32-equivalent-ledc-pwm" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PWM_PIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">18</span><span class="p">;</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PWM_CH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PWM_FREQ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">500</span><span class="p">;</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PWM_RES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="p">{</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="w">    </span><span class="n">ledcAttach</span><span class="p">(</span><span class="n">PWM_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">PWM_FREQ</span><span class="p">,</span><span class="w"> </span><span class="n">PWM_RES</span><span class="p">);</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="p">}</span>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a><span class="p">{</span>
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="n">PWM_PIN</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span>
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="expected-result">Expected Result<a class="headerlink" href="#expected-result" title="Permanent link">&para;</a></h2>
+<p>The motor should rotate at a lower speed than full power.</p>
+<hr />
+<h2 id="oscilloscope-measurement">Oscilloscope Measurement<a class="headerlink" href="#oscilloscope-measurement" title="Permanent link">&para;</a></h2>
+<p>Probe Location:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>MOSFET Gate
+</code></pre></div>
+<p>Ground:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Circuit Ground
+</code></pre></div>
+<hr />
+<h2 id="oscilloscope-settings-owon-baseline">Oscilloscope Settings (OWON Baseline)<a class="headerlink" href="#oscilloscope-settings-owon-baseline" title="Permanent link">&para;</a></h2>
+<p>Recommended scope: OWON HDS272S.</p>
+<p>Compatible alternative: DSO Nano.</p>
+<p>Vertical:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>2 V/div
+</code></pre></div>
+<p>Horizontal:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>500 us/div
+</code></pre></div>
+<p>Trigger:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>Rising Edge
+</code></pre></div>
+<hr />
+<h2 id="expected-waveform">Expected Waveform<a class="headerlink" href="#expected-waveform" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>V_S ────      ─────
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>         │      │
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>         │      │
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>0V ______│______│______
+</code></pre></div>
+<hr />
+<h2 id="measurements">Measurements<a class="headerlink" href="#measurements" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Measurement</th>
+<th>Expected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frequency</td>
+<td>~490Hz</td>
+</tr>
+<tr>
+<td>Gate Voltage</td>
+<td>~V_S (about 5V Arduino or about 3.3V ESP32)</td>
+</tr>
+<tr>
+<td>Duty Cycle</td>
+<td>~50%</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="experiment-3-speed-versus-duty-cycle">Experiment 3 - Speed Versus Duty Cycle<a class="headerlink" href="#experiment-3-speed-versus-duty-cycle" title="Permanent link">&para;</a></h2>
+<h3 id="objective_3">Objective<a class="headerlink" href="#objective_3" title="Permanent link">&para;</a></h3>
+<p>Investigate the relationship between PWM and motor speed.</p>
+<hr />
+<h2 id="test-1">Test 1<a class="headerlink" href="#test-1" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">64</span><span class="p">);</span>
+</code></pre></div>
+<p>ESP32 equivalent duty command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="n">ledcWrite</span><span class="p">(</span><span class="n">PWM_PIN</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">);</span>
+</code></pre></div>
+<p>Expected:</p>
+<div class="arithmatex">\[
+25\%
+\]</div>
+<p>Motor speed:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>Low
+</code></pre></div>
+<hr />
+<h2 id="test-2">Test 2<a class="headerlink" href="#test-2" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">128</span><span class="p">);</span>
+</code></pre></div>
+<p>ESP32 equivalent duty command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="n">ledcWrite</span><span class="p">(</span><span class="n">PWM_PIN</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span>
+</code></pre></div>
+<p>Expected:</p>
+<div class="arithmatex">\[
+50\%
+\]</div>
+<p>Motor speed:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>Medium
+</code></pre></div>
+<hr />
+<h2 id="test-3">Test 3<a class="headerlink" href="#test-3" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">192</span><span class="p">);</span>
+</code></pre></div>
+<p>ESP32 equivalent duty command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="n">ledcWrite</span><span class="p">(</span><span class="n">PWM_PIN</span><span class="p">,</span><span class="w"> </span><span class="mi">192</span><span class="p">);</span>
+</code></pre></div>
+<p>Expected:</p>
+<div class="arithmatex">\[
+75\%
+\]</div>
+<p>Motor speed:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>High
+</code></pre></div>
+<hr />
+<h2 id="test-4">Test 4<a class="headerlink" href="#test-4" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">255</span><span class="p">);</span>
+</code></pre></div>
+<p>ESP32 equivalent duty command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="n">ledcWrite</span><span class="p">(</span><span class="n">PWM_PIN</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">);</span>
+</code></pre></div>
+<p>Expected:</p>
+<div class="arithmatex">\[
+100\%
+\]</div>
+<p>Motor speed:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>Maximum
+</code></pre></div>
+<hr />
+<h2 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>PWM Value</th>
+<th>Duty Cycle</th>
+<th>Relative Speed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>64</td>
+<td>25%</td>
+<td></td>
+</tr>
+<tr>
+<td>128</td>
+<td>50%</td>
+<td></td>
+</tr>
+<tr>
+<td>192</td>
+<td>75%</td>
+<td></td>
+</tr>
+<tr>
+<td>255</td>
+<td>100%</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="experiment-4-motor-step-response">Experiment 4 - Motor Step Response<a class="headerlink" href="#experiment-4-motor-step-response" title="Permanent link">&para;</a></h2>
+<h3 id="objective_4">Objective<a class="headerlink" href="#objective_4" title="Permanent link">&para;</a></h3>
+<p>Observe motor dynamics.</p>
+<p>This experiment introduces:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>Control Theory
+</code></pre></div>
+<hr />
+<h2 id="arduino-code_2">Arduino Code<a class="headerlink" href="#arduino-code_2" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="p">{</span>
+<a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a><span class="p">}</span>
+<a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>
+<a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a><span class="p">{</span>
+<a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">255</span><span class="p">);</span>
+<a id="__codelineno-42-9" name="__codelineno-42-9" href="#__codelineno-42-9"></a>
+<a id="__codelineno-42-10" name="__codelineno-42-10" href="#__codelineno-42-10"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">5000</span><span class="p">);</span>
+<a id="__codelineno-42-11" name="__codelineno-42-11" href="#__codelineno-42-11"></a>
+<a id="__codelineno-42-12" name="__codelineno-42-12" href="#__codelineno-42-12"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-42-13" name="__codelineno-42-13" href="#__codelineno-42-13"></a>
+<a id="__codelineno-42-14" name="__codelineno-42-14" href="#__codelineno-42-14"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">5000</span><span class="p">);</span>
+<a id="__codelineno-42-15" name="__codelineno-42-15" href="#__codelineno-42-15"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="esp32-equivalent-step-test">ESP32 Equivalent (Step Test)<a class="headerlink" href="#esp32-equivalent-step-test" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PWM_PIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">18</span><span class="p">;</span>
+<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PWM_CH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PWM_FREQ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">500</span><span class="p">;</span>
+<a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PWM_RES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span>
+<a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>
+<a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a><span class="p">{</span>
+<a id="__codelineno-43-8" name="__codelineno-43-8" href="#__codelineno-43-8"></a><span class="w">    </span><span class="n">ledcAttach</span><span class="p">(</span><span class="n">PWM_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">PWM_FREQ</span><span class="p">,</span><span class="w"> </span><span class="n">PWM_RES</span><span class="p">);</span>
+<a id="__codelineno-43-9" name="__codelineno-43-9" href="#__codelineno-43-9"></a><span class="p">}</span>
+<a id="__codelineno-43-10" name="__codelineno-43-10" href="#__codelineno-43-10"></a>
+<a id="__codelineno-43-11" name="__codelineno-43-11" href="#__codelineno-43-11"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<a id="__codelineno-43-12" name="__codelineno-43-12" href="#__codelineno-43-12"></a><span class="p">{</span>
+<a id="__codelineno-43-13" name="__codelineno-43-13" href="#__codelineno-43-13"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="n">PWM_PIN</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">);</span>
+<a id="__codelineno-43-14" name="__codelineno-43-14" href="#__codelineno-43-14"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">5000</span><span class="p">);</span>
+<a id="__codelineno-43-15" name="__codelineno-43-15" href="#__codelineno-43-15"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="n">PWM_PIN</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-43-16" name="__codelineno-43-16" href="#__codelineno-43-16"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">5000</span><span class="p">);</span>
+<a id="__codelineno-43-17" name="__codelineno-43-17" href="#__codelineno-43-17"></a><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="observation_1">Observation<a class="headerlink" href="#observation_1" title="Permanent link">&para;</a></h2>
+<p>The motor speed should respond like:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>Speed
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>100% |          ________
+<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>     |        /
+<a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>     |      /
+<a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>     |    /
+<a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a>     |  /
+<a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a>0%  +---------------------
+<a id="__codelineno-44-9" name="__codelineno-44-9" href="#__codelineno-44-9"></a>           Time
+</code></pre></div>
+<hr />
+<h2 id="why">Why?<a class="headerlink" href="#why" title="Permanent link">&para;</a></h2>
+<p>The motor possesses:</p>
+<ul>
+<li>Inertia</li>
+<li>Mechanical friction</li>
+<li>Electromagnetic dynamics</li>
+</ul>
+<p>These create a first-order response.</p>
+<hr />
+<h2 id="estimating-a-time-constant">Estimating A Time Constant<a class="headerlink" href="#estimating-a-time-constant" title="Permanent link">&para;</a></h2>
+<p>Observe:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>Motor Start
+</code></pre></div>
+<p>and estimate the time required to reach:</p>
+<div class="arithmatex">\[
+63.2\%
+\]</div>
+<p>of final speed.</p>
+<p>This estimated time is approximately:</p>
+<div class="arithmatex">\[
+\tau
+\]</div>
+<p>the motor time constant.</p>
+<hr />
+<h2 id="first-order-comparison">First-Order Comparison<a class="headerlink" href="#first-order-comparison" title="Permanent link">&para;</a></h2>
+<h3 id="rc-circuit">RC Circuit<a class="headerlink" href="#rc-circuit" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+\tau = RC
+\]</div>
+<hr />
+<h3 id="motor-system">Motor System<a class="headerlink" href="#motor-system" title="Permanent link">&para;</a></h3>
+<p>Motor time constant:</p>
+<div class="arithmatex">\[
+\tau_m
+\]</div>
+<p>determined by:</p>
+<ul>
+<li>Rotor inertia</li>
+<li>Friction</li>
+<li>Motor electrical properties</li>
+</ul>
+<hr />
+<h2 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h2>
+<p>Now fit your measured step response to the first-order model using the time constant you estimated in Experiment 4.</p>
+<h3 id="enter-your-measured-time-constant">Enter Your Measured Time Constant<a class="headerlink" href="#enter-your-measured-time-constant" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="n">K</span><span class="w">            </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a><span class="n">tau_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w">      </span><span class="c">% replace with your estimated tau from Experiment 4 (s)</span>
+<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>
+<a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a><span class="n">t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="mi">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tau_measured</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>
+<a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a><span class="c">% Sweep nearby tau values to bracket your measurement</span>
+<a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a><span class="n">tau_theory_low</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">tau_measured</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.7</span><span class="p">;</span>
+<a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a><span class="n">tau_theory_high</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tau_measured</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1.3</span><span class="p">;</span>
+<a id="__codelineno-46-9" name="__codelineno-46-9" href="#__codelineno-46-9"></a>
+<a id="__codelineno-46-10" name="__codelineno-46-10" href="#__codelineno-46-10"></a><span class="n">G_low</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">tau_theory_low</span><span class="p">,</span><span class="w">  </span><span class="mi">1</span><span class="p">]);</span>
+<a id="__codelineno-46-11" name="__codelineno-46-11" href="#__codelineno-46-11"></a><span class="n">G_mid</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">tau_measured</span><span class="p">,</span><span class="w">    </span><span class="mi">1</span><span class="p">]);</span>
+<a id="__codelineno-46-12" name="__codelineno-46-12" href="#__codelineno-46-12"></a><span class="n">G_high</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">tau_theory_high</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]);</span>
+<a id="__codelineno-46-13" name="__codelineno-46-13" href="#__codelineno-46-13"></a>
+<a id="__codelineno-46-14" name="__codelineno-46-14" href="#__codelineno-46-14"></a><span class="p">[</span><span class="n">y_low</span><span class="p">,</span><span class="w">  </span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">G_low</span><span class="p">,</span><span class="w">  </span><span class="n">t</span><span class="p">);</span>
+<a id="__codelineno-46-15" name="__codelineno-46-15" href="#__codelineno-46-15"></a><span class="p">[</span><span class="n">y_mid</span><span class="p">,</span><span class="w">  </span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">G_mid</span><span class="p">,</span><span class="w">  </span><span class="n">t</span><span class="p">);</span>
+<a id="__codelineno-46-16" name="__codelineno-46-16" href="#__codelineno-46-16"></a><span class="p">[</span><span class="n">y_high</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">G_high</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
+<a id="__codelineno-46-17" name="__codelineno-46-17" href="#__codelineno-46-17"></a>
+<a id="__codelineno-46-18" name="__codelineno-46-18" href="#__codelineno-46-18"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-46-19" name="__codelineno-46-19" href="#__codelineno-46-19"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y_low</span><span class="p">,</span><span class="w">  </span><span class="s">&#39;b--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-46-20" name="__codelineno-46-20" href="#__codelineno-46-20"></a><span class="w">    </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;\\tau = %.2fs (low)&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">tau_theory_low</span><span class="p">));</span>
+<a id="__codelineno-46-21" name="__codelineno-46-21" href="#__codelineno-46-21"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y_mid</span><span class="p">,</span><span class="w">  </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w">   </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">2.5</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-46-22" name="__codelineno-46-22" href="#__codelineno-46-22"></a><span class="w">    </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;\\tau = %.2fs (measured)&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">tau_measured</span><span class="p">));</span>
+<a id="__codelineno-46-23" name="__codelineno-46-23" href="#__codelineno-46-23"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y_high</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-46-24" name="__codelineno-46-24" href="#__codelineno-46-24"></a><span class="w">    </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;\\tau = %.2fs (high)&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">tau_theory_high</span><span class="p">));</span>
+<a id="__codelineno-46-25" name="__codelineno-46-25" href="#__codelineno-46-25"></a><span class="nb">yline</span><span class="p">(</span><span class="mf">0.632</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k:&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;63.2% threshold&#39;</span><span class="p">);</span>
+<a id="__codelineno-46-26" name="__codelineno-46-26" href="#__codelineno-46-26"></a><span class="nb">xline</span><span class="p">(</span><span class="n">tau_measured</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;\\tau = %.2fs&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">tau_measured</span><span class="p">));</span>
+<a id="__codelineno-46-27" name="__codelineno-46-27" href="#__codelineno-46-27"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-46-28" name="__codelineno-46-28" href="#__codelineno-46-28"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (s)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Normalised Speed&#39;</span><span class="p">);</span>
+<a id="__codelineno-46-29" name="__codelineno-46-29" href="#__codelineno-46-29"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;First-Order Motor Model - Measured \tau Fit&#39;</span><span class="p">);</span>
+<a id="__codelineno-46-30" name="__codelineno-46-30" href="#__codelineno-46-30"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;southeast&#39;</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="record-your-model-parameters">Record Your Model Parameters<a class="headerlink" href="#record-your-model-parameters" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Estimated τ (s)</td>
+<td></td>
+</tr>
+<tr>
+<td>Gain K</td>
+<td>1 (normalised)</td>
+</tr>
+<tr>
+<td>Transfer function G(s)</td>
+<td>K / (τs + 1)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Keep this table. Projects 6, 7 and 8 will use this motor model as the plant for P, PI and PID controller design.</p>
+</blockquote>
+<h3 id="reflection">Reflection<a class="headerlink" href="#reflection" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Does the simulated curve match the shape you observed on the motor?</li>
+<li>What physical factors determine the motor time constant?</li>
+<li>How would a heavier load (more inertia) change τ?</li>
+</ul>
+<hr />
+<h2 id="engineering-applications">Engineering Applications<a class="headerlink" href="#engineering-applications" title="Permanent link">&para;</a></h2>
+<p>PWM motor control is used in:</p>
+<h3 id="electric-vehicles">Electric Vehicles<a class="headerlink" href="#electric-vehicles" title="Permanent link">&para;</a></h3>
+<p>Motor speed control.</p>
+<hr />
+<h3 id="robotics">Robotics<a class="headerlink" href="#robotics" title="Permanent link">&para;</a></h3>
+<p>Wheel speed control.</p>
+<hr />
+<h3 id="drones">Drones<a class="headerlink" href="#drones" title="Permanent link">&para;</a></h3>
+<p>Propeller speed control.</p>
+<hr />
+<h3 id="industrial-automation">Industrial Automation<a class="headerlink" href="#industrial-automation" title="Permanent link">&para;</a></h3>
+<p>Conveyors and actuators.</p>
+<hr />
+<h3 id="cnc-machines">CNC Machines<a class="headerlink" href="#cnc-machines" title="Permanent link">&para;</a></h3>
+<p>Position and speed control.</p>
+<hr />
+<h2 id="knowledge-check">Knowledge Check<a class="headerlink" href="#knowledge-check" title="Permanent link">&para;</a></h2>
+<h3 id="question-1">Question 1<a class="headerlink" href="#question-1" title="Permanent link">&para;</a></h3>
+<p>Why can't a motor reach full speed instantly?</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>________________________
+</code></pre></div>
+<hr />
+<h3 id="question-2">Question 2<a class="headerlink" href="#question-2" title="Permanent link">&para;</a></h3>
+<p>What controls motor speed in this experiment?</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>________________________
+</code></pre></div>
+<hr />
+<h3 id="question-3">Question 3<a class="headerlink" href="#question-3" title="Permanent link">&para;</a></h3>
+<p>Why is a flyback diode required?</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>________________________
+</code></pre></div>
+<hr />
+<h3 id="question-4">Question 4<a class="headerlink" href="#question-4" title="Permanent link">&para;</a></h3>
+<p>Why is a MOSFET used?</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>________________________
+</code></pre></div>
+<hr />
+<h3 id="question-5">Question 5<a class="headerlink" href="#question-5" title="Permanent link">&para;</a></h3>
+<p>Why can a motor often be modelled as a first-order system?</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>________________________
+</code></pre></div>
+<hr />
+<h3 id="question-6">Question 6<a class="headerlink" href="#question-6" title="Permanent link">&para;</a></h3>
+<p>You estimated τ = 0.5s from the step response. How would you verify this estimate, and why does an accurate τ matter for designing the controller in Project 6?</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>________________________
+</code></pre></div>
+<hr />
+<h2 id="common-mistakes">Common Mistakes<a class="headerlink" href="#common-mistakes" title="Permanent link">&para;</a></h2>
+<h3 id="motor-doesnt-spin">Motor Doesn't Spin<a class="headerlink" href="#motor-doesnt-spin" title="Permanent link">&para;</a></h3>
+<p>Check:</p>
+<ul>
+<li>Battery connected</li>
+<li>MOSFET wiring</li>
+<li>Ground connections</li>
+</ul>
+<hr />
+<h3 id="controller-resets">Controller Resets<a class="headerlink" href="#controller-resets" title="Permanent link">&para;</a></h3>
+<p>Check:</p>
+<ul>
+<li>Shared power supply issues</li>
+<li>Missing flyback diode</li>
+</ul>
+<hr />
+<h3 id="mosfet-gets-hot">MOSFET Gets Hot<a class="headerlink" href="#mosfet-gets-hot" title="Permanent link">&para;</a></h3>
+<p>Check:</p>
+<ul>
+<li>Logic-level MOSFET</li>
+<li>Wiring</li>
+<li>Motor current rating</li>
+</ul>
+<hr />
+<h3 id="pwm-not-visible">PWM Not Visible<a class="headerlink" href="#pwm-not-visible" title="Permanent link">&para;</a></h3>
+<p>Check:</p>
+<ul>
+<li>Scope connections</li>
+<li>Trigger settings</li>
+<li>Horizontal scale</li>
+</ul>
+<hr />
+<h2 id="troubleshooting-checklist">Troubleshooting Checklist<a class="headerlink" href="#troubleshooting-checklist" title="Permanent link">&para;</a></h2>
+<p>✅ Flyback diode installed</p>
+<p>✅ Battery connected</p>
+<p>✅ MOSFET pinout verified</p>
+<p>✅ Shared ground between controller and motor supply</p>
+<p>✅ Oscilloscope probing gate correctly (OWON or DSO Nano)</p>
+<p>✅ PWM observed</p>
+<hr />
+<h2 id="project-summary">Project Summary<a class="headerlink" href="#project-summary" title="Permanent link">&para;</a></h2>
+<p>In this project you learned:</p>
+<p>✅ DC motor fundamentals</p>
+<p>✅ PWM speed control</p>
+<p>✅ MOSFET motor driving</p>
+<p>✅ Flyback diode protection</p>
+<p>✅ First-order dynamic behaviour</p>
+<p>✅ Motor time constants</p>
+<p>✅ Open-loop control</p>
+<p>✅ Oscilloscope motor measurements</p>
+<p>The motor is the first real plant we will control.</p>
+<p>In the next projects we will add:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>Feedback
+</code></pre></div>
+<p>and begin building true control systems.</p>
+<hr />
+<h2 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h2>
+<p><strong>12_P_Controller.md</strong></p>
+<p>Topics:</p>
+<ul>
+<li>Feedback</li>
+<li>Error Signals</li>
+<li>Open Loop vs Closed Loop Control</li>
+<li>Proportional Control</li>
+<li>BOE-Bot Line Following</li>
+<li>Controller Gain</li>
+<li>Stability</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@11/dist/mermaid.min"></script>
+      
+    
+  </body>
+</html>
