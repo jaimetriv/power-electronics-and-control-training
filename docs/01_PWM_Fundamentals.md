@@ -502,6 +502,8 @@ $$
 f \approx 490 \text{ Hz}
 $$
 
+On Arduino Uno Pin 9, this value is typically around 490 Hz. Small variation is normal.
+
 Record:
 
 ```text
@@ -539,8 +541,10 @@ ________________
 Expected:
 
 $$
-V_{PEAK} \approx 5V
+V_{PEAK} \approx V_S
 $$
+
+where $V_S$ is your measured Arduino supply voltage.
 
 Record:
 
@@ -621,7 +625,6 @@ Observe waveform.
 | 64 | 25% | |
 | 128 | 50% | |
 | 192 | 75% | |
-| 255 | 100% | |
 
 ---
 
@@ -756,8 +759,8 @@ Enter the duty cycle values you measured from the oscilloscope and the correspon
 % Enter your measured duty cycles here
 D_measured = [0.25, 0.50, 0.75, 1.00];
 
-% Calculate expected average voltages from your measurements
-Vavg_measured = 5 .* D_measured;
+% Enter your measured average voltages here (from measurements)
+Vavg_measured = [1.20, 2.45, 3.68, 4.90];
 
 plot(D_measured, Vavg_measured, 'ro', ...
     'MarkerSize', 10, ...
@@ -765,6 +768,9 @@ plot(D_measured, Vavg_measured, 'ro', ...
 
 legend('Theory', 'Measured', 'Location', 'northwest')
 ```
+
+Use your measured supply voltage in the theoretical line when possible
+(for example, replace 5 with your measured $V_S$).
 
 ### Step 3 - Simulate the Measured Waveforms
 
