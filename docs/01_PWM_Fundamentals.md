@@ -14,8 +14,8 @@ Complete:
 In this project you will learn:
 
 - What PWM is
-- How Arduino generates PWM
-- How to use the DSO Nano oscilloscope
+- How Arduino or ESP32 generates PWM
+- How to use the OWON HDS272S (or DSO Nano) oscilloscope
 - Frequency
 - Period
 - Duty cycle
@@ -48,9 +48,9 @@ At the end of this project you should be able to:
 
 ✅ Measure period
 
-✅ Use the DSO Nano
+✅ Use an oscilloscope (OWON HDS272S or DSO Nano)
 
-✅ Generate PWM using Arduino
+✅ Generate PWM using Arduino or ESP32
 
 ✅ Explain how PWM controls power
 
@@ -248,15 +248,17 @@ $$
 
 ---
 
-## PWM on Arduino Uno
+## PWM on Arduino Uno and ESP32
 
-The Arduino function:
+On Arduino Uno, the function:
 
 ```cpp
 analogWrite()
 ```
 
 generates PWM.
+
+On ESP32, PWM is generated with the LEDC peripheral (see Project 00C for setup details).
 
 Valid values:
 
@@ -274,10 +276,11 @@ Examples:
 | 192 | 75% |
 | 255 | 100% |
 
-For this experiment we will use:
+Controller pin options for this experiment:
 
 ```text
-Pin 9
+Arduino Uno: Pin 9
+ESP32: GPIO18
 ```
 
 ---
@@ -387,7 +390,8 @@ This is exactly what you will measure on the oscilloscope in the experiments bel
 
 ### Equipment
 
-- DSO Nano Oscilloscope
+- OWON HDS272S Oscilloscope (recommended)
+- DSO Nano Oscilloscope (compatible)
 
 ---
 
@@ -395,7 +399,7 @@ This is exactly what you will measure on the oscilloscope in the experiments bel
 
 ### Objective
 
-Generate PWM and observe it with the DSO Nano.
+Generate PWM and observe it with an oscilloscope.
 
 ---
 
@@ -411,6 +415,18 @@ C[Arduino GND]
 --> D[DSO Nano Ground]
 ```
 
+Equivalent ESP32 wiring:
+
+```mermaid
+graph LR
+
+A[ESP32 GPIO18]
+--> B[Scope Probe Tip]
+
+C[ESP32 GND]
+--> D[Scope Ground]
+```
+
 ---
 
 ## Arduino Code
@@ -424,6 +440,21 @@ void setup()
 void loop()
 {
     analogWrite(9, 128);
+}
+```
+
+### ESP32 Equivalent Code (LEDC)
+
+```cpp
+void setup()
+{
+    ledcSetup(0, 490, 8);
+    ledcAttachPin(18, 0);
+}
+
+void loop()
+{
+    ledcWrite(0, 128);
 }
 ```
 
@@ -453,7 +484,7 @@ $$
 
 ---
 
-## DSO Nano Setup
+## Oscilloscope Setup (OWON or DSO Nano)
 
 Vertical Scale:
 
@@ -503,6 +534,7 @@ f \approx 490 \text{ Hz}
 $$
 
 On Arduino Uno Pin 9, this value is typically around 490 Hz. Small variation is normal.
+If using ESP32 with the LEDC setup above, expect a value close to the configured frequency.
 
 Record:
 
@@ -571,6 +603,12 @@ Upload:
 analogWrite(9, 64);
 ```
 
+ESP32 equivalent:
+
+```cpp
+ledcWrite(0, 64);
+```
+
 Expected duty cycle:
 
 $$
@@ -590,6 +628,12 @@ Upload:
 analogWrite(9, 128);
 ```
 
+ESP32 equivalent:
+
+```cpp
+ledcWrite(0, 128);
+```
+
 Expected:
 
 $$
@@ -606,6 +650,12 @@ Upload:
 
 ```cpp
 analogWrite(9, 192);
+```
+
+ESP32 equivalent:
+
+```cpp
+ledcWrite(0, 192);
 ```
 
 Expected:
@@ -659,6 +709,12 @@ Upload:
 analogWrite(9, 64);
 ```
 
+ESP32 equivalent:
+
+```cpp
+ledcWrite(0, 64);
+```
+
 Observe brightness.
 
 ---
@@ -669,6 +725,12 @@ Upload:
 
 ```cpp
 analogWrite(9, 128);
+```
+
+ESP32 equivalent:
+
+```cpp
+ledcWrite(0, 128);
 ```
 
 Observe brightness.
@@ -683,6 +745,12 @@ Upload:
 analogWrite(9, 192);
 ```
 
+ESP32 equivalent:
+
+```cpp
+ledcWrite(0, 192);
+```
+
 Observe brightness.
 
 ---
@@ -693,6 +761,12 @@ Upload:
 
 ```cpp
 analogWrite(9, 255);
+```
+
+ESP32 equivalent:
+
+```cpp
+ledcWrite(0, 255);
 ```
 
 Observe brightness.
@@ -906,6 +980,7 @@ Check:
 - Probe connection
 - Ground connection
 - Arduino uploaded successfully
+- If using ESP32: LEDC channel configured and attached to GPIO18
 
 ---
 
@@ -930,11 +1005,11 @@ Check:
 
 ## Troubleshooting Checklist
 
-✅ Arduino powered
+✅ Controller powered (Arduino or ESP32)
 
 ✅ Sketch uploaded
 
-✅ Probe on Pin 9
+✅ Probe on active PWM pin (Arduino Pin 9 or ESP32 GPIO18)
 
 ✅ Probe ground on GND
 
@@ -960,9 +1035,9 @@ In this project you learned:
 
 ✅ Average voltage
 
-✅ Arduino PWM generation
+✅ PWM generation on Arduino or ESP32
 
-✅ DSO Nano measurements
+✅ Oscilloscope measurements (OWON or DSO Nano)
 
 ✅ LED brightness control
 
