@@ -20,6 +20,52 @@
 - Parallax BOE kit
 - Parallax PING sensor
 
+### Detailed Baseline From Your SparkFun Kits
+
+SparkFun Inventor's Kit (Arduino Uno) V3.2 baseline includes:
+
+- Arduino Uno R3 SMD
+- Arduino and breadboard holder
+- 400-point breadboard
+- USB A to Mini-B cable
+- 16x2 LCD
+- 74HC595 shift register
+- 2N2222 transistors
+- 1N4148 diodes
+- DC motor with gear
+- Small servo
+- 5 V SPDT relay
+- TMP36 temperature sensor
+- Flex sensor
+- Soft potentiometer
+- Photocell
+- Tri-color LED
+- Assorted LEDs and tactile buttons
+- 10 k potentiometer
+- Piezo buzzer
+- 12 mm pushbuttons
+- 330R and 10k resistors
+- Jumper wires
+
+SparkFun Beginner Parts Kit (KIT-13973) includes:
+
+- Adjustable parts box
+- Capacitors: 0.1 uF (10), 100 uF (5), 10 uF (5), 1 uF (5), 10 nF (5), 1 nF (5), 100 pF (5), 10 pF (5)
+- Diodes: 1N4148 (5), 1N4001 (5)
+- Transistors: 2N3904 NPN (5), 2N3906 PNP (5)
+- Headers: 20-pin female (3), 20-pin male (3)
+- Mini power switches (3)
+- Push buttons (2)
+- 10k trimpot (1)
+- LM358 op-amp (2)
+- 3.3 V regulators (2)
+- 5 V regulators (2)
+- 555 timer (1)
+- LEDs: green (1), yellow (1), red (1), red 7-segment (1)
+- Mini photocell (1)
+
+Important note: the Beginner Parts Kit does not include a resistor assortment.
+
 ---
 
 ## Labs Well Covered Already
