@@ -984,10 +984,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#arduino-code" class="md-nav__link">
+  <a href="#esp32-code" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Arduino Code
+        ESP32 Code
       
     </span>
   </a>
@@ -995,10 +995,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#esp32-equivalent-code" class="md-nav__link">
+  <a href="#arduino-equivalent-code-backup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ESP32 Equivalent Code
+        Arduino Equivalent Code (backup)
       
     </span>
   </a>
@@ -2487,10 +2487,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#arduino-code" class="md-nav__link">
+  <a href="#esp32-code" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Arduino Code
+        ESP32 Code
       
     </span>
   </a>
@@ -2498,10 +2498,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#esp32-equivalent-code" class="md-nav__link">
+  <a href="#arduino-equivalent-code-backup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ESP32 Equivalent Code
+        Arduino Equivalent Code (backup)
       
     </span>
   </a>
@@ -3274,7 +3274,7 @@ f_n = \frac{10\,000}{2\pi} \approx 1591\ \text{Hz}
 <hr />
 <h2 id="components-required">Components Required<a class="headerlink" href="#components-required" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Arduino Uno or ESP32 DevKit V1</li>
+<li>ESP32 DevKit V1 (or Arduino Uno as backup)</li>
 <li>Breadboard</li>
 <li>Jumper wires</li>
 <li>100 mH inductor</li>
@@ -3292,7 +3292,7 @@ f_n = \frac{10\,000}{2\pi} \approx 1591\ \text{Hz}
 <p>Observe the oscillatory (ringing) response of a second-order RLC circuit when excited by a square wave.</p>
 <hr />
 <h3 id="circuit-diagram">Circuit Diagram<a class="headerlink" href="#circuit-diagram" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Arduino Pin D9  (or ESP32 GPIO18)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ESP32 GPIO18  (or Arduino Pin 9 as backup)
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    │
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>   100 Ω resistor
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    │
@@ -3308,59 +3308,60 @@ f_n = \frac{10\,000}{2\pi} \approx 1591\ \text{Hz}
 <h3 id="step-by-step-wiring">Step-by-Step Wiring<a class="headerlink" href="#step-by-step-wiring" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Insert the <strong>100 Ω resistor</strong> across the breadboard so each leg is in a different row.</li>
-<li>Connect a jumper wire from <strong>Arduino pin D9</strong> to one leg of the resistor.</li>
+<li>Connect a jumper wire from <strong>ESP32 GPIO18</strong> (or <strong>Arduino pin 9</strong> as backup) to one leg of the resistor.</li>
 <li>Insert the <strong>100 mH inductor</strong> so one leg is in the same row as the other resistor leg, and the other inductor leg is in a new row below.</li>
 <li>Insert the <strong>100 nF capacitor</strong> so its positive leg is in the same row as the lower inductor leg. This junction is <span class="arithmatex">\(V_C\)</span>.</li>
-<li>Connect a jumper wire from the <strong>capacitor negative leg</strong> to any <strong>GND</strong> pin on the Arduino.</li>
+<li>Connect a jumper wire from the <strong>capacitor negative leg</strong> to any <strong>GND</strong> pin on the ESP32.</li>
 <li>Connect the <strong>oscilloscope probe tip</strong> to the <span class="arithmatex">\(V_C\)</span> junction.</li>
-<li>Connect the <strong>oscilloscope probe ground</strong> to Arduino GND.</li>
+<li>Connect the <strong>oscilloscope probe ground</strong> to ESP32 GND.</li>
 </ol>
 <p>The signal path will be:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>D9 → Resistor → Inductor → Vc (probe here) → Capacitor → GND
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>GPIO18 → Resistor → Inductor → Vc (probe here) → Capacitor → GND
 </code></pre></div>
 <hr />
 <h3 id="wiring-checklist">Wiring Checklist<a class="headerlink" href="#wiring-checklist" title="Permanent link">&para;</a></h3>
 <p>Before uploading:</p>
-<p>✅ Resistor leg in same row as Arduino D9 jumper</p>
+<p>✅ Resistor leg in same row as ESP32 GPIO18 (or Arduino pin 9 as backup) jumper</p>
 <p>✅ Inductor leg in same row as other resistor leg</p>
 <p>✅ Capacitor positive leg in same row as lower inductor leg (this is Vc)</p>
 <p>✅ Capacitor negative leg connected to GND</p>
 <p>✅ Oscilloscope probe tip connected to Vc</p>
-<p>✅ Oscilloscope probe ground connected to Arduino GND</p>
+<p>✅ Oscilloscope probe ground connected to ESP32 (or Arduino backup) GND</p>
 <hr />
-<h3 id="arduino-code">Arduino Code<a class="headerlink" href="#arduino-code" title="Permanent link">&para;</a></h3>
+<h3 id="esp32-code">ESP32 Code<a class="headerlink" href="#esp32-code" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="p">{</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="c1">// Configure pin 9 as a digital output.</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="c1">// Configure GPIO18 as a digital output.</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
 <a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">}</span>
 <a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
 <a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
 <a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="p">{</span>
-<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span><span class="c1">// Toggle pin 9 rapidly to produce a square wave.</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span><span class="c1">// Toggle GPIO18 rapidly to produce a square wave.</span>
 <a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">    </span><span class="c1">// The fast transitions excite the natural dynamics of the RLC circuit,</span>
 <a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">    </span><span class="c1">// causing the capacitor voltage to ring at the natural frequency.</span>
-<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
 <a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span><span class="w">   </span><span class="c1">// HIGH for 500 µs</span>
 <a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
-<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
 <a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">    </span><span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span><span class="w">   </span><span class="c1">// LOW for 500 µs</span>
 <a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="esp32-equivalent-code">ESP32 Equivalent Code<a class="headerlink" href="#esp32-equivalent-code" title="Permanent link">&para;</a></h3>
+<h3 id="arduino-equivalent-code-backup">Arduino Equivalent Code (backup)<a class="headerlink" href="#arduino-equivalent-code-backup" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="p">{</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="p">}</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="p">{</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
-<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
-<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">    </span><span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
-<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="p">}</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="c1">// Configure pin 9 as a digital output.</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="p">}</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="p">{</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">    </span><span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="p">}</span>
 </code></pre></div>
 <hr />
 <h3 id="why-use-a-square-wave">Why Use a Square Wave?<a class="headerlink" href="#why-use-a-square-wave" title="Permanent link">&para;</a></h3>
@@ -3633,7 +3634,6 @@ f_n \approx 1591\ \text{Hz}
 <p>✅ Correct component values and order</p>
 <p>✅ Oscilloscope triggering correctly</p>
 <p>✅ Appropriate time scale selected</p>
-<hr />
 <h2 id="laboratory-exercises">Laboratory Exercises<a class="headerlink" href="#laboratory-exercises" title="Permanent link">&para;</a></h2>
 <h3 id="exercise-1">Exercise 1<a class="headerlink" href="#exercise-1" title="Permanent link">&para;</a></h3>
 <p>Calculate the natural frequency for L = 100 mH and C = 47 nF. Build the circuit and verify your prediction on the oscilloscope.</p>

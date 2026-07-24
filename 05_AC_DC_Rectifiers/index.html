@@ -3335,7 +3335,7 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Full-wave average Vdc:   %.2f V\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">V_fw_avg</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h3>
-<p>Set your signal generator to: <strong>10 Vpeak, 50 Hz, sine wave</strong></p>
+<p>Set the OWON HDS272S waveform generator to: <strong>10 Vpeak, 50 Hz, sine wave</strong></p>
 <table>
 <thead>
 <tr>
@@ -3374,9 +3374,8 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <li>100 µF electrolytic capacitor</li>
 <li>470 µF electrolytic capacitor</li>
 <li>1 kΩ load resistor</li>
-<li>Signal generator (AC source — set to 10 Vpeak, 50 Hz, sine)</li>
-<li>OWON HDS272S Oscilloscope (recommended)</li>
-<li>DSO Nano Oscilloscope (compatible)</li>
+<li>OWON HDS272S Oscilloscope with built-in waveform generator (AC source — set to 10 Vpeak, 50 Hz, sine)</li>
+<li>DSO Nano Oscilloscope (compatible, requires separate signal generator)</li>
 <li>Multimeter</li>
 <li>Breadboard and jumper wires</li>
 </ul>
@@ -3384,20 +3383,19 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <h2 id="safety-notice">Safety Notice<a class="headerlink" href="#safety-notice" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>DO NOT CONNECT DIRECTLY TO MAINS VOLTAGE
 </code></pre></div>
-<p>For laboratory work use only:</p>
-<ul>
-<li>Low-voltage AC supplies</li>
-<li>Isolated function generators</li>
-</ul>
+<p>For laboratory work use only the OWON HDS272S built-in waveform generator output or another isolated low-voltage AC source.</p>
 <hr />
 <h2 id="experiment-1-measure-ac-voltage">Experiment 1 - Measure AC Voltage<a class="headerlink" href="#experiment-1-measure-ac-voltage" title="Permanent link">&para;</a></h2>
 <h3 id="objective_1">Objective<a class="headerlink" href="#objective_1" title="Permanent link">&para;</a></h3>
-<p>Observe and measure the AC waveform from the signal generator before any rectification.</p>
+<p>Observe and measure the AC waveform from the OWON HDS272S waveform generator before any rectification.</p>
 <hr />
 <h3 id="connections">Connections<a class="headerlink" href="#connections" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Probe Tip  ──────► Signal generator output (+)
-<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>Probe GND  ──────► Signal generator GND
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>OWON HDS272S waveform generator output (+) ──► Probe Tip
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>OWON HDS272S waveform generator GND        ──► Probe GND
 </code></pre></div>
+<blockquote>
+<p>Set the OWON HDS272S waveform generator to: <strong>10 Vpeak, 50 Hz, sine wave</strong>.</p>
+</blockquote>
 <hr />
 <h3 id="oscilloscope-settings">Oscilloscope Settings<a class="headerlink" href="#oscilloscope-settings" title="Permanent link">&para;</a></h3>
 <table>
@@ -3469,25 +3467,25 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <p>Observe half-wave rectification and measure the average DC output.</p>
 <hr />
 <h3 id="circuit-diagram_1">Circuit Diagram<a class="headerlink" href="#circuit-diagram_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>Signal Generator (+)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>OWON HDS272S waveform generator (+)
 <a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>    │
-<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>   1N4007 diode (anode toward signal generator)
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>   1N4007 diode (anode toward waveform generator)
 <a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>    │
 <a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>    ├──── Probe Tip
 <a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>    │
 <a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>   1 kΩ load resistor
 <a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>    │
-<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>Signal Generator GND ──── Probe GND
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>OWON HDS272S waveform generator GND ──── Probe GND
 </code></pre></div>
 <hr />
 <h3 id="step-by-step-wiring">Step-by-Step Wiring<a class="headerlink" href="#step-by-step-wiring" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Insert the 1N4007 diode into the breadboard. The <strong>anode</strong> (unmarked end) connects toward the signal generator positive terminal. The <strong>cathode</strong> (banded end) connects toward the load.</li>
-<li>Connect a jumper wire from the <strong>signal generator (+)</strong> to the <strong>diode anode</strong> row.</li>
+<li>Insert the 1N4007 diode into the breadboard. The <strong>anode</strong> (unmarked end) connects toward the waveform generator positive terminal. The <strong>cathode</strong> (banded end) connects toward the load.</li>
+<li>Connect a jumper wire from the <strong>OWON HDS272S waveform generator (+)</strong> to the <strong>diode anode</strong> row.</li>
 <li>Insert the <strong>1 kΩ resistor</strong> so one leg is in the same row as the <strong>diode cathode</strong> and the other leg is in a new row.</li>
-<li>Connect a jumper wire from the <strong>bottom of the resistor</strong> to the <strong>signal generator GND</strong>.</li>
+<li>Connect a jumper wire from the <strong>bottom of the resistor</strong> to the <strong>waveform generator GND</strong>.</li>
 <li>Connect the <strong>oscilloscope probe tip</strong> to the junction between the diode cathode and the resistor top.</li>
-<li>Connect the <strong>oscilloscope probe ground</strong> to the signal generator GND.</li>
+<li>Connect the <strong>oscilloscope probe ground</strong> to the waveform generator GND.</li>
 </ol>
 <hr />
 <h3 id="wiring-checklist">Wiring Checklist<a class="headerlink" href="#wiring-checklist" title="Permanent link">&para;</a></h3>
@@ -3568,8 +3566,8 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <p>Observe full-wave rectification using a bridge of four diodes.</p>
 <hr />
 <h3 id="circuit-diagram_2">Circuit Diagram<a class="headerlink" href="#circuit-diagram_2" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>Signal Generator (+) ──── D1 anode
-<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>Signal Generator (−) ──── D3 anode
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>OWON HDS272S waveform generator (+) ──── D1 anode
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>OWON HDS272S waveform generator (−) ──── D3 anode
 <a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
 <a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>D1 cathode ──┬── D2 cathode ──── DC (+) output
 <a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>             │
@@ -3601,11 +3599,11 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <li><strong>D3</strong>: anode to DC(−) rail, cathode to AC(+)</li>
 <li><strong>D4</strong>: anode to DC(−) rail, cathode to AC(−)</li>
 <li>Connect the <strong>1 kΩ load resistor</strong> between the DC(+) rail and the DC(−) rail.</li>
-<li>Connect the <strong>signal generator (+)</strong> to the AC(+) node and <strong>(−)</strong> to the AC(−) node.</li>
+<li>Connect the <strong>OWON HDS272S waveform generator (+)</strong> to the AC(+) node and <strong>(−)</strong> to the AC(−) node.</li>
 <li>Connect the <strong>oscilloscope probe tip</strong> to the DC(+) rail and <strong>probe ground</strong> to the DC(−) rail.</li>
 </ol>
 <blockquote>
-<p>Tip: The DC(−) rail is the common reference. Connect the signal generator GND and oscilloscope probe GND both to this point.</p>
+<p>Tip: The DC(−) rail is the common reference. Connect the waveform generator GND and oscilloscope probe GND both to this point.</p>
 </blockquote>
 <hr />
 <h3 id="wiring-checklist_1">Wiring Checklist<a class="headerlink" href="#wiring-checklist_1" title="Permanent link">&para;</a></h3>
@@ -3836,6 +3834,9 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <hr />
 <h3 id="troubleshooting-checklist">Troubleshooting Checklist<a class="headerlink" href="#troubleshooting-checklist" title="Permanent link">&para;</a></h3>
 <p>✅ Signal generator connected and set to 10 Vpeak, 50 Hz, sine</p>
+<blockquote>
+<p>Use the OWON HDS272S built-in waveform generator output.</p>
+</blockquote>
 <p>✅ Diodes oriented correctly</p>
 <p>✅ Load resistor connected</p>
 <p>✅ Capacitor polarity verified</p>
