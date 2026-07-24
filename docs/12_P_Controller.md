@@ -257,7 +257,7 @@ title('P Controller - Steady-State Error vs Gain');
 
 ## Components Required
 
-- Arduino Uno or ESP32 DevKit V1
+- ESP32 DevKit V1 (or Arduino Uno as backup)
 - Breadboard and jumper wires
 - Potentiometer (speed setpoint)
 - IRLZ44N MOSFET
@@ -282,13 +282,13 @@ Generate a user-adjustable reference input using the potentiometer.
 ### Circuit Diagram
 
 ```text
-Arduino 5V  (or ESP32 3.3V)
+ESP32 3.3V  (or Arduino 5V as backup)
     │
   Left leg of potentiometer
-  Centre leg ──── A0  (Arduino analogue input)
+  Centre leg ──── GPIO34  (ESP32 ADC input)
   Right leg
     │
-Arduino GND
+ESP32 GND
 ```
 
 ---
@@ -296,9 +296,9 @@ Arduino GND
 ### Step-by-Step Wiring
 
 1. Insert the potentiometer into the breadboard so all three legs are in separate rows.
-2. Connect a jumper wire from **Arduino 5V** (or **ESP32 3.3V**) to the **left outer leg**.
-3. Connect a jumper wire from the **centre leg** (wiper) to **Arduino A0** (or **ESP32 GPIO34**).
-4. Connect a jumper wire from the **right outer leg** to **Arduino GND**.
+2. Connect a jumper wire from **ESP32 3.3V** (or **Arduino 5V** as backup) to the **left outer leg**.
+3. Connect a jumper wire from the **centre leg** (wiper) to **ESP32 GPIO34** (or **Arduino A0** as backup).
+4. Connect a jumper wire from the **right outer leg** to **ESP32 GND**.
 
 ---
 
@@ -306,36 +306,15 @@ Arduino GND
 
 Before uploading:
 
-✅ 5V (or 3.3V) connected to one outer leg
+✅ 3.3V (or 5V as backup) connected to one outer leg
 
 ✅ GND connected to the other outer leg
 
-✅ Centre (wiper) leg connected to A0 (or GPIO34)
+✅ Centre (wiper) leg connected to GPIO34 (or A0 as backup)
 
 ---
 
-### Arduino Code
-
-```cpp
-void setup()
-{
-    // Start serial communication to display the reference value.
-    Serial.begin(9600);
-}
-
-void loop()
-{
-    // Read the potentiometer — this is the desired speed setpoint.
-    // analogRead() returns 0–1023 on Arduino Uno.
-    int reference = analogRead(A0);
-
-    Serial.println(reference);
-
-    delay(100);
-}
-```
-
-### ESP32 Equivalent Code
+### ESP32 Code
 
 ```cpp
 const int REF_PIN = 34;   // potentiometer wiper to ADC pin
@@ -349,6 +328,26 @@ void loop()
 {
     // analogRead() returns 0–4095 on ESP32 12-bit ADC.
     int reference = analogRead(REF_PIN);
+
+    Serial.println(reference);
+
+    delay(100);
+}
+```
+
+### Arduino Equivalent Code (backup)
+
+```cpp
+void setup()
+{
+    // Start serial communication to display the reference value.
+    Serial.begin(9600);
+}
+
+void loop()
+{
+    // analogRead() returns 0–1023 on Arduino Uno.
+    int reference = analogRead(A0);
 
     Serial.println(reference);
 
@@ -384,7 +383,7 @@ Battery (+)
   Motor
     │──── Flyback diode (cathode toward Battery+)
     │
-    ├──── 10 kΩ ──── A1  (back-EMF feedback)
+    ├──── 10 kΩ ──── GPIO35  (back-EMF feedback)
                 │
               10 kΩ
                 │
@@ -395,11 +394,11 @@ Battery (+)
     │
    GND
 
-PWM Output (Arduino Pin 9 or ESP32 GPIO18) ──── 220 Ω ──── Gate
-Potentiometer centre pin ──── A0
+ESP32 GPIO18 (or Arduino Pin 9 as backup) ──── 220 Ω ──── Gate
+Potentiometer centre pin ──── GPIO34
 ```
 
-For ESP32, use GPIO34 for the reference and GPIO35 for the feedback.
+For Arduino backup, use A0 for the reference and A1 for the feedback.
 
 The voltage divider scales the motor terminal voltage to stay within the ADC range.
 
@@ -411,52 +410,15 @@ Before uploading:
 
 ✅ Motor circuit wired correctly (MOSFET + flyback diode, same as Project 10)
 
-✅ 10 kΩ divider connected from motor positive terminal to A1 (midpoint) to GND
+✅ 10 kΩ divider connected from motor positive terminal to GPIO35 (midpoint) to GND
 
-✅ Potentiometer wiper connected to A0
+✅ Potentiometer wiper connected to GPIO34
 
-✅ Shared GND between Arduino, battery, and MOSFET Source
+✅ Shared GND between ESP32, battery, and MOSFET Source
 
 ---
 
-### Arduino Code
-
-```cpp
-float Kp = 0.5;   // proportional gain — adjust during Experiment 3
-
-void setup()
-{
-    // Configure pin 9 as PWM output for the MOSFET gate.
-    pinMode(9, OUTPUT);
-    Serial.begin(9600);
-}
-
-void loop()
-{
-    int reference = analogRead(A0);   // desired speed setpoint (0–1023)
-    int feedback  = analogRead(A1);   // back-EMF proxy (0–1023)
-
-    // Calculate error: positive error means motor is too slow.
-    int error  = reference - feedback;
-
-    // P controller: output proportional to error.
-    int output = (int)(Kp * error);
-
-    // Clamp output to valid PWM range.
-    output = constrain(output, 0, 255);
-
-    analogWrite(9, output);
-
-    Serial.print("Ref: ");  Serial.print(reference);
-    Serial.print("  Fbk: "); Serial.print(feedback);
-    Serial.print("  Err: "); Serial.print(error);
-    Serial.print("  PWM: "); Serial.println(output);
-
-    delay(50);
-}
-```
-
-### ESP32 Equivalent Code
+### ESP32 Code
 
 ```cpp
 const int PWM_PIN  = 18;
@@ -484,6 +446,43 @@ void loop()
     output     = constrain(output, 0, 255);
 
     ledcWrite(0, output);
+
+    Serial.print("Ref: ");  Serial.print(reference);
+    Serial.print("  Fbk: "); Serial.print(feedback);
+    Serial.print("  Err: "); Serial.print(error);
+    Serial.print("  PWM: "); Serial.println(output);
+
+    delay(50);
+}
+```
+
+### Arduino Equivalent Code (backup)
+
+```cpp
+float Kp = 0.5;   // proportional gain — adjust during Experiment 3
+
+void setup()
+{
+    // Configure pin 9 as PWM output for the MOSFET gate.
+    pinMode(9, OUTPUT);
+    Serial.begin(9600);
+}
+
+void loop()
+{
+    int reference = analogRead(A0);   // desired speed setpoint (0–1023)
+    int feedback  = analogRead(A1);   // back-EMF proxy (0–1023)
+
+    // Calculate error: positive error means motor is too slow.
+    int error  = reference - feedback;
+
+    // P controller: output proportional to error.
+    int output = (int)(Kp * error);
+
+    // Clamp output to valid PWM range.
+    output = constrain(output, 0, 255);
+
+    analogWrite(9, output);
 
     Serial.print("Ref: ");  Serial.print(reference);
     Serial.print("  Fbk: "); Serial.print(feedback);
@@ -610,8 +609,8 @@ ______________________
 Observe how the PWM duty cycle changes as you rotate the potentiometer.
 
 ```text
-Probe Tip  ──────► MOSFET Gate (Arduino Pin 9 or ESP32 GPIO18)
-Probe GND  ──────► Arduino GND
+Probe Tip  ──────► MOSFET Gate (ESP32 GPIO18 or Arduino Pin 9 as backup)
+Probe GND  ──────► ESP32 GND
 ```
 
 | Setting | OWON HDS272S | DSO Nano |
@@ -703,7 +702,7 @@ Check:
 
 Check:
 
-✅ Centre pin connected to A0 (Arduino) or REF_PIN (ESP32)
+✅ Centre pin connected to GPIO34 (ESP32) or A0 (Arduino backup)
 
 ✅ Controller VCC and GND connected to outer pins
 

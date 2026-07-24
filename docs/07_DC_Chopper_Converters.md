@@ -246,14 +246,10 @@ sgtitle('Chopper Waveforms - 490 Hz, V_{IN}=5V');
 
 ## Components Required
 
-- Arduino Uno or ESP32 DevKit V1
+- ESP32 DevKit V1 (or Arduino Uno as backup)
 - Breadboard
 - Jumper wires
 - Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
-
----
-
-## Experiment 1 - PWM Chopper Waveform
 
 ### Objective
 
@@ -264,31 +260,15 @@ Observe the chopper switching waveform and measure its average voltage at 50% du
 ### Connections
 
 ```text
-Probe Tip  ──────► Arduino Pin D9  (or ESP32 GPIO18)
-Probe GND  ──────► Arduino GND
+Probe Tip  ──────► ESP32 GPIO18  (or Arduino Pin 9 as backup)
+Probe GND  ──────► ESP32 GND
 ```
 
 No breadboard components are needed for this experiment.
 
 ---
 
-### Arduino Code
-
-```cpp
-void setup()
-{
-    // No explicit pinMode needed; analogWrite() configures the pin automatically.
-}
-
-void loop()
-{
-    // Output 50% duty cycle PWM — this is the chopper switching signal.
-    // Average voltage = 0.5 × V_S ≈ 2.5 V from a 5 V supply.
-    analogWrite(9, 128);
-}
-```
-
-### ESP32 Equivalent Code
+### ESP32 Code
 
 ```cpp
 void setup()
@@ -301,7 +281,24 @@ void setup()
 void loop()
 {
     // Set duty cycle to 128/255 ≈ 50%.
+    // Average voltage = 0.5 × V_S ≈ 1.65 V from a 3.3 V supply.
     ledcWrite(0, 128);
+}
+```
+
+### Arduino Equivalent Code (backup)
+
+```cpp
+void setup()
+{
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
+}
+
+void loop()
+{
+    // Output 50% duty cycle PWM — this is the chopper switching signal.
+    // Average voltage = 0.5 × V_S ≈ 2.5 V from a 5 V supply.
+    analogWrite(9, 128);
 }
 ```
 
@@ -321,17 +318,17 @@ void loop()
 ### Expected Waveform
 
 ```text
-5V ─────      ─────
-         │      │
-         │      │
-0V ______│______│______
+3.3V ─────      ─────
+          │      │
+          │      │
+0V ________│______│______
 ```
 
 ---
 
 ### Observe
 
-The waveform should switch between 0 V and approximately 5 V at ~490 Hz with equal ON and OFF times.
+The waveform should switch between 0 V and approximately 3.3 V (ESP32) or 5 V (Arduino backup) at ~500 Hz with equal ON and OFF times.
 
 ---
 
@@ -339,9 +336,9 @@ The waveform should switch between 0 V and approximately 5 V at ~490 Hz with equ
 
 | Parameter | Expected | Measured |
 |-----------|----------|---------|
-| Frequency | ~490 Hz | |
+| Frequency | ~500 Hz (ESP32) / ~490 Hz (Arduino backup) | |
 | Duty Cycle | ~50% | |
-| Peak Voltage | ~5 V (Arduino) / ~3.3 V (ESP32) | |
+| Peak Voltage | ~3.3 V (ESP32) / ~5 V (Arduino backup) | |
 
 ---
 
@@ -353,16 +350,38 @@ Observe how changing duty cycle changes the average output voltage — the funda
 
 ---
 
-### Code
+### ESP32 Code
 
 ```cpp
-void setup() {}
+void setup()
+{
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(18, 0);
+}
 
 void loop()
 {
     // Step through three duty cycles with a 3-second pause at each.
     // Average voltage = D × V_S at each step.
 
+    ledcWrite(0, 64);    // ~25% duty cycle → V_AVG ≈ 0.83 V
+    delay(3000);
+
+    ledcWrite(0, 128);   // ~50% duty cycle → V_AVG ≈ 1.65 V
+    delay(3000);
+
+    ledcWrite(0, 192);   // ~75% duty cycle → V_AVG ≈ 2.48 V
+    delay(3000);
+}
+```
+
+### Arduino Equivalent Code (backup)
+
+```cpp
+void setup() {}
+
+void loop()
+{
     analogWrite(9, 64);    // ~25% duty cycle → V_AVG ≈ 1.25 V
     delay(3000);
 
@@ -451,7 +470,7 @@ ylim([0 20]);
 
 Check:
 
-✅ Probe tip on correct pin (D9 Arduino or GPIO18 ESP32)
+✅ Probe tip on correct pin (GPIO18 ESP32 or D9 Arduino backup)
 
 ✅ Trigger type set to Edge, Rising
 

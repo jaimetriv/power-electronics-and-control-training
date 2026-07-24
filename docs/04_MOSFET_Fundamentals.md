@@ -247,7 +247,7 @@ Record your predicted average voltages before measuring:
 ## Components Required
 
 - IRLZ44N MOSFET
-- Arduino Uno or ESP32 DevKit V1
+- ESP32 DevKit V1 (or Arduino Uno as backup)
 - LED
 - 220 Ω resistor (for LED)
 - 220 Ω resistor (for gate)
@@ -272,7 +272,7 @@ The microcontroller drives the MOSFET gate. The MOSFET switches the LED current.
 ## Circuit Diagram
 
 ```text
-5V
+ESP32 3.3V  (or Arduino 5V as backup)
  │
 220 Ω  (LED current-limiting resistor)
  │
@@ -286,7 +286,7 @@ Gate (MOSFET)
  │
 220 Ω  (gate resistor)
  │
-Arduino Pin D9  (or ESP32 GPIO18)
+ESP32 GPIO18  (or Arduino Pin 9 as backup)
 ```
 
 ---
@@ -310,23 +310,23 @@ Switch an LED ON and OFF using a MOSFET controlled by the Arduino, and measure t
 ### Step-by-Step Wiring
 
 1. Insert the **IRLZ44N** into the breadboard with the three legs in separate rows. Identify Gate (G), Drain (D), and Source (S) from the pinout diagram above.
-2. Connect a jumper wire from **Arduino GND** to the **Source** leg row.
+2. Connect a jumper wire from **ESP32 GND** (or **Arduino GND** as backup) to the **Source** leg row.
 3. Insert the **LED** so its **cathode (short leg)** is in the same row as the **Drain** leg.
 4. Insert the **220 Ω LED resistor** so one leg is in the same row as the **LED anode (long leg)** and the other leg is in a new row.
-5. Connect a jumper wire from the **top of the LED resistor** to the **Arduino 5V** pin.
+5. Connect a jumper wire from the **top of the LED resistor** to the **ESP32 3.3V** pin (or **Arduino 5V** as backup).
 6. Insert the **220 Ω gate resistor** so one leg is in the same row as the **Gate** leg and the other leg is in a new row.
-7. Connect a jumper wire from the **top of the gate resistor** to **Arduino pin D9**.
+7. Connect a jumper wire from the **top of the gate resistor** to **ESP32 GPIO18** (or **Arduino pin 9** as backup).
 
 The current path when the MOSFET is ON will be:
 
 ```text
-5V → LED resistor → LED → Drain → Source → GND
+3.3V → LED resistor → LED → Drain → Source → GND
 ```
 
 The control path will be:
 
 ```text
-D9 → Gate resistor → Gate
+GPIO18 → Gate resistor → Gate
 ```
 
 ---
@@ -341,15 +341,37 @@ Before uploading:
 
 ✅ LED anode (long leg) connected to 220 Ω resistor
 
-✅ 220 Ω LED resistor connected to 5V
+✅ 220 Ω LED resistor connected to ESP32 3.3V (or Arduino 5V as backup)
 
-✅ 220 Ω gate resistor between D9 and Gate
+✅ 220 Ω gate resistor between GPIO18 (or D9 as backup) and Gate
 
-✅ Shared GND between Arduino and MOSFET Source
+✅ Shared GND between ESP32 and MOSFET Source
 
 ---
 
-### Arduino Code
+### ESP32 Code
+
+```cpp
+void setup()
+{
+    // Configure GPIO18 as a digital output.
+    // Note: ESP32 outputs 3.3 V HIGH, which is sufficient for the IRLZ44N.
+    pinMode(18, OUTPUT);
+}
+
+void loop()
+{
+    // Drive gate HIGH → MOSFET turns ON → current flows → LED ON.
+    digitalWrite(18, HIGH);
+    delay(1000);              // Hold ON for 1 second
+
+    // Drive gate LOW → MOSFET turns OFF → no current → LED OFF.
+    digitalWrite(18, LOW);
+    delay(1000);              // Hold OFF for 1 second
+}
+```
+
+### Arduino Equivalent Code (backup)
 
 ```cpp
 void setup()
@@ -362,30 +384,10 @@ void loop()
 {
     // Drive gate HIGH → MOSFET turns ON → current flows → LED ON.
     digitalWrite(9, HIGH);
-    delay(1000);              // Hold ON for 1 second
+    delay(1000);
 
     // Drive gate LOW → MOSFET turns OFF → no current → LED OFF.
     digitalWrite(9, LOW);
-    delay(1000);              // Hold OFF for 1 second
-}
-```
-
-### ESP32 Equivalent Code
-
-```cpp
-void setup()
-{
-    // Configure GPIO18 as a digital output.
-    // Note: ESP32 outputs 3.3 V HIGH, which is sufficient for the IRLZ44N.
-    pinMode(18, OUTPUT);
-}
-
-void loop()
-{
-    digitalWrite(18, HIGH);
-    delay(1000);
-
-    digitalWrite(18, LOW);
     delay(1000);
 }
 ```
@@ -398,7 +400,7 @@ Connect the probe to the MOSFET Gate to observe the switching signal.
 
 ```text
 Probe Tip  ──────► MOSFET Gate
-Probe GND  ──────► Arduino GND (= MOSFET Source)
+Probe GND  ──────► ESP32 GND (= MOSFET Source)
 ```
 
 | Setting | OWON HDS272S | DSO Nano |
@@ -413,10 +415,10 @@ Probe GND  ──────► Arduino GND (= MOSFET Source)
 ### Expected Waveform
 
 ```text
-5V  ────────
-            │
-            │
-0V  ________│________
+3.3V  ────────
+              │
+              │
+0V  __________│________
 ```
 
 ---
@@ -431,7 +433,7 @@ ON for 1 second
 OFF for 1 second
 ```
 
-On the oscilloscope you should see the gate voltage switching between 0 V and approximately 5 V (Arduino) or 3.3 V (ESP32).
+On the oscilloscope you should see the gate voltage switching between 0 V and approximately 3.3 V (ESP32) or 5 V (Arduino backup).
 
 ---
 
@@ -440,7 +442,7 @@ On the oscilloscope you should see the gate voltage switching between 0 V and ap
 | Parameter | Expected | Measured |
 |-----------|----------|---------|
 | Gate LOW | 0 V | |
-| Gate HIGH | ~5 V (Arduino) or ~3.3 V (ESP32) | |
+| Gate HIGH | ~3.3 V (ESP32) or ~5 V (Arduino backup) | |
 
 ---
 
@@ -458,24 +460,7 @@ Same as Experiment 1.
 
 ---
 
-### Arduino Code
-
-```cpp
-void setup()
-{
-    // No explicit pinMode needed; analogWrite() configures the pin automatically.
-}
-
-void loop()
-{
-    // Apply 50% duty cycle PWM to the MOSFET gate.
-    // The MOSFET switches ON and OFF approximately 490 times per second.
-    // The LED receives approximately 50% of the available power.
-    analogWrite(9, 128);
-}
-```
-
-### ESP32 Equivalent Code
+### ESP32 Code
 
 ```cpp
 void setup()
@@ -490,7 +475,24 @@ void setup()
 void loop()
 {
     // Set duty cycle to 128/255 ≈ 50%.
+    // The MOSFET switches ON and OFF approximately 500 times per second.
+    // The LED receives approximately 50% of the available power.
     ledcWrite(0, 128);
+}
+```
+
+### Arduino Equivalent Code (backup)
+
+```cpp
+void setup()
+{
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
+}
+
+void loop()
+{
+    // Apply 50% duty cycle PWM to the MOSFET gate.
+    analogWrite(9, 128);
 }
 ```
 
@@ -500,7 +502,7 @@ void loop()
 
 ```text
 Probe Tip  ──────► MOSFET Gate
-Probe GND  ──────► Arduino GND
+Probe GND  ──────► ESP32 GND
 ```
 
 | Setting | OWON HDS272S | DSO Nano |
@@ -515,10 +517,10 @@ Probe GND  ──────► Arduino GND
 ### Expected Waveform
 
 ```text
-5V  ─────      ─────
-         │    │
-         │    │
-0V  _____│____│_____
+3.3V  ─────      ─────
+           │    │
+           │    │
+0V    _____│____│_____
 ```
 
 ---
@@ -555,7 +557,35 @@ Same as Experiments 1 and 2.
 
 ---
 
-### Code
+### ESP32 Code
+
+```cpp
+void setup()
+{
+    // Configure LEDC channel 0: 500 Hz, 8-bit resolution.
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(18, 0);
+}
+
+void loop()
+{
+    // Step through four duty cycle levels with a 2-second pause at each.
+
+    ledcWrite(0, 64);    // ~25% duty cycle → LED dim
+    delay(2000);
+
+    ledcWrite(0, 128);   // ~50% duty cycle → LED medium brightness
+    delay(2000);
+
+    ledcWrite(0, 192);   // ~75% duty cycle → LED bright
+    delay(2000);
+
+    ledcWrite(0, 255);   // 100% duty cycle → LED fully ON
+    delay(2000);
+}
+```
+
+### Arduino Equivalent Code (backup)
 
 ```cpp
 void setup()
@@ -565,18 +595,16 @@ void setup()
 
 void loop()
 {
-    // Step through four duty cycle levels with a 2-second pause at each.
-
-    analogWrite(9, 64);    // ~25% duty cycle → LED dim
+    analogWrite(9, 64);
     delay(2000);
 
-    analogWrite(9, 128);   // ~50% duty cycle → LED medium brightness
+    analogWrite(9, 128);
     delay(2000);
 
-    analogWrite(9, 192);   // ~75% duty cycle → LED bright
+    analogWrite(9, 192);
     delay(2000);
 
-    analogWrite(9, 255);   // 100% duty cycle → LED fully ON
+    analogWrite(9, 255);
     delay(2000);
 }
 ```
@@ -614,10 +642,10 @@ $$
 V_{AVG} = D \cdot V_S
 $$
 
-At 50% duty cycle with a 5 V supply:
+At 50% duty cycle with a 3.3 V supply (ESP32):
 
 $$
-V_{AVG} = 0.5 \times 5 = 2.5\ \text{V}
+V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 $$
 
 The LED receives less average power and therefore appears dimmer.
@@ -629,7 +657,7 @@ The LED receives less average power and therefore appears dimmer.
 Compare your measured gate waveform against the ideal simulation.
 
 ```matlab
-Vs = 5;                      % use 5.0 for Arduino or 3.3 for ESP32
+Vs = 3.3;                    % ESP32 supply (use 5.0 for Arduino backup)
 f_theory   = 490;            % ideal Arduino PWM frequency (Hz)
 f_measured = 490;            % replace with your measured frequency (Hz)
 D_measured = 0.50;           % replace with your measured duty cycle (0–1)
@@ -679,9 +707,9 @@ Check:
 
 ✅ MOSFET pinout (Gate, Drain, Source in correct rows)
 
-✅ LED polarity (cathode to Drain, anode toward 5V)
+✅ LED polarity (cathode to Drain, anode toward ESP32 3.3V)
 
-✅ Gate resistor connected between D9 and Gate
+✅ Gate resistor connected between GPIO18 (or D9 as backup) and Gate
 
 ✅ Source connected to GND
 
@@ -705,7 +733,7 @@ Check:
 
 ✅ Probe tip on MOSFET Gate
 
-✅ Probe ground on Arduino GND (same as MOSFET Source)
+✅ Probe ground on ESP32 GND (same as MOSFET Source)
 
 ✅ Trigger type set to Edge, Rising
 
@@ -719,9 +747,9 @@ Check:
 
 ✅ Shared GND between controller and MOSFET Source
 
-✅ Gate resistor in series between D9 and Gate
+✅ Gate resistor in series between GPIO18 (or D9 as backup) and Gate
 
-✅ LED resistor in series between 5V and LED anode
+✅ LED resistor in series between ESP32 3.3V (or Arduino 5V as backup) and LED anode
 
 ✅ Probe on Gate, probe ground on GND
 
@@ -741,7 +769,7 @@ Replace the LED with a small DC motor (if available). Observe the gate waveform 
 
 ### Exercise 2
 
-Connect a potentiometer to A0 and use its reading to control the MOSFET duty cycle in real time. Observe the gate waveform change on the oscilloscope as you turn the knob.
+Connect a potentiometer to GPIO34 and use its reading to control the MOSFET duty cycle in real time. Observe the gate waveform change on the oscilloscope as you turn the knob.
 
 ---
 

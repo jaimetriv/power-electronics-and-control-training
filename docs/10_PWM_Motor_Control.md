@@ -189,7 +189,7 @@ legend('Location', 'southeast');
 
 ## Required Components
 
-- Arduino Uno or ESP32 DevKit V1
+- ESP32 DevKit V1 (or Arduino Uno as backup)
 - Breadboard and jumper wires
 - IRLZ44N MOSFET
 - DC Motor
@@ -212,9 +212,9 @@ Turn the motor fully ON and OFF and observe the gradual speed response.
 ### Step-by-Step Wiring
 
 1. Insert the **IRLZ44N MOSFET** into the breadboard. Identify Gate (G), Drain (D), and Source (S).
-2. Connect a jumper wire from **Arduino GND** to the **MOSFET Source** row. Also connect the **battery negative** to this same GND row.
+2. Connect a jumper wire from **ESP32 GND** (or **Arduino GND** as backup) to the **MOSFET Source** row. Also connect the **battery negative** to this same GND row.
 3. Insert the **220 Ω gate resistor** so one leg is in the **Gate** row and the other is in a new row.
-4. Connect a jumper wire from **Arduino pin D9** to the top of the gate resistor.
+4. Connect a jumper wire from **ESP32 GPIO18** (or **Arduino pin D9** as backup) to the top of the gate resistor.
 5. Connect one motor terminal to the **MOSFET Drain** row.
 6. Connect the other motor terminal to the **battery positive**.
 7. Insert the **flyback diode** across the motor terminals: **cathode (banded end)** toward the battery positive terminal, **anode** toward the MOSFET Drain. This protects against inductive voltage spikes.
@@ -237,34 +237,13 @@ Before uploading:
 
 ✅ Flyback diode across motor (cathode toward battery+, anode toward Drain)
 
-✅ Gate resistor between D9 and MOSFET Gate
+✅ Gate resistor between GPIO18 (or D9 as backup) and MOSFET Gate
 
 ✅ Battery connected
 
 ---
 
-### Arduino Code
-
-```cpp
-void setup()
-{
-    // Configure pin 9 as a digital output to drive the MOSFET gate.
-    pinMode(9, OUTPUT);
-}
-
-void loop()
-{
-    // Drive gate HIGH → MOSFET ON → motor runs at full speed.
-    digitalWrite(9, HIGH);
-    delay(3000);              // Run for 3 seconds
-
-    // Drive gate LOW → MOSFET OFF → motor decelerates.
-    digitalWrite(9, LOW);
-    delay(3000);              // Stop for 3 seconds
-}
-```
-
-### ESP32 Equivalent Code
+### ESP32 Code
 
 ```cpp
 void setup()
@@ -276,10 +255,31 @@ void setup()
 
 void loop()
 {
+    // Drive gate HIGH → MOSFET ON → motor runs at full speed.
     digitalWrite(18, HIGH);
+    delay(3000);              // Run for 3 seconds
+
+    // Drive gate LOW → MOSFET OFF → motor decelerates.
+    digitalWrite(18, LOW);
+    delay(3000);              // Stop for 3 seconds
+}
+```
+
+### Arduino Equivalent Code (backup)
+
+```cpp
+void setup()
+{
+    // Configure pin 9 as a digital output to drive the MOSFET gate.
+    pinMode(9, OUTPUT);
+}
+
+void loop()
+{
+    digitalWrite(9, HIGH);
     delay(3000);
 
-    digitalWrite(18, LOW);
+    digitalWrite(9, LOW);
     delay(3000);
 }
 ```
@@ -321,23 +321,7 @@ Same as Experiment 1.
 
 ---
 
-### Arduino Code
-
-```cpp
-void setup()
-{
-    // No explicit pinMode needed; analogWrite() configures the pin automatically.
-}
-
-void loop()
-{
-    // Apply 50% duty cycle PWM to the MOSFET gate.
-    // The motor receives approximately 50% of the supply voltage on average.
-    analogWrite(9, 128);
-}
-```
-
-### ESP32 Equivalent Code
+### ESP32 Code
 
 ```cpp
 void setup()
@@ -354,13 +338,28 @@ void loop()
 }
 ```
 
+### Arduino Equivalent Code (backup)
+
+```cpp
+void setup()
+{
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
+}
+
+void loop()
+{
+    // Apply 50% duty cycle PWM to the MOSFET gate.
+    analogWrite(9, 128);
+}
+```
+
 ---
 
 ### Oscilloscope Settings — Gate Signal
 
 ```text
 Probe Tip  ──────► MOSFET Gate
-Probe GND  ──────► Arduino GND (= MOSFET Source)
+Probe GND  ──────► ESP32 GND (= MOSFET Source)
 ```
 
 | Setting | OWON HDS272S | DSO Nano |
@@ -393,8 +392,8 @@ The motor should rotate at a lower speed than full power.
 
 | Measurement | Expected | Measured |
 |-------------|----------|---------|
-| Frequency | ~490 Hz | |
-| Gate Voltage | ~5 V (Arduino) / ~3.3 V (ESP32) | |
+| Frequency | ~500 Hz (ESP32) / ~490 Hz (Arduino backup) | |
+| Gate Voltage | ~3.3 V (ESP32) / ~5 V (Arduino backup) | |
 | Duty Cycle | ~50% | |
 
 ---
@@ -407,26 +406,48 @@ Investigate the relationship between PWM duty cycle and motor speed.
 
 ---
 
-### Code
+### ESP32 Code
+
+```cpp
+void setup()
+{
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(18, 0);
+}
+
+void loop()
+{
+    ledcWrite(0, 64);    // ~25% → low speed
+    delay(3000);
+
+    ledcWrite(0, 128);   // ~50% → medium speed
+    delay(3000);
+
+    ledcWrite(0, 192);   // ~75% → high speed
+    delay(3000);
+
+    ledcWrite(0, 255);   // 100% → maximum speed
+    delay(3000);
+}
+```
+
+### Arduino Equivalent Code (backup)
 
 ```cpp
 void setup() {}
 
 void loop()
 {
-    // Step through four duty cycle levels with a 3-second pause at each.
-    // Motor speed increases with duty cycle.
-
-    analogWrite(9, 64);    // ~25% → low speed
+    analogWrite(9, 64);
     delay(3000);
 
-    analogWrite(9, 128);   // ~50% → medium speed
+    analogWrite(9, 128);
     delay(3000);
 
-    analogWrite(9, 192);   // ~75% → high speed
+    analogWrite(9, 192);
     delay(3000);
 
-    analogWrite(9, 255);   // 100% → maximum speed
+    analogWrite(9, 255);
     delay(3000);
 }
 ```
@@ -452,7 +473,7 @@ Observe the motor's first-order dynamic response to a step change in PWM, and es
 
 ---
 
-### Arduino Code
+### Arduino Code (backup for Experiment 4)
 
 ```cpp
 void setup()
@@ -462,8 +483,6 @@ void setup()
 
 void loop()
 {
-    // Apply full PWM for 5 seconds (step ON) then remove for 5 seconds (step OFF).
-    // Observe the gradual speed rise and fall — this is the first-order response.
     analogWrite(9, 255);   // Step to full speed
     delay(5000);
 
@@ -472,7 +491,7 @@ void loop()
 }
 ```
 
-### ESP32 Equivalent Code
+### Arduino Equivalent Code (backup)
 
 ```cpp
 void setup()
@@ -587,7 +606,7 @@ Check:
 
 ✅ Shared GND between Arduino and battery negative
 
-✅ Gate resistor connected between D9 and Gate
+✅ Gate resistor connected between GPIO18 (or D9 as backup) and Gate
 
 ---
 
@@ -617,11 +636,11 @@ Check:
 
 ✅ Probe tip on MOSFET Gate
 
-✅ Probe ground on Arduino GND (= MOSFET Source)
+✅ Probe ground on ESP32 GND (= MOSFET Source)
 
 ✅ Trigger type set to Edge, Rising
 
-✅ Horizontal scale appropriate (500 µs/div for ~490 Hz)
+✅ Horizontal scale appropriate (500 µs/div for ~500 Hz)
 
 ---
 

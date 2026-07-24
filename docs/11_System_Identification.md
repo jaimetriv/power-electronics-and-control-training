@@ -282,7 +282,7 @@ fprintf('Fitted: K=%.2f  tau=%.2fs\n', K_fit, tau_fit);
 
 ## Components Required
 
-- Arduino Uno or ESP32 DevKit V1
+- ESP32 DevKit V1 (or Arduino Uno as backup)
 - Breadboard and jumper wires
 - 10 kΩ resistor
 - 22 kΩ resistor
@@ -305,7 +305,7 @@ Apply a step input to an RC circuit and measure the time constant from the oscil
 ### Circuit Diagram
 
 ```text
-Arduino Pin D9  (or ESP32 GPIO18)
+ESP32 GPIO18  (or Arduino Pin D9 as backup)
     │
    10 kΩ resistor
     │
@@ -321,11 +321,11 @@ Arduino Pin D9  (or ESP32 GPIO18)
 ### Step-by-Step Wiring
 
 1. Insert the **10 kΩ resistor** across the breadboard so each leg is in a different row.
-2. Connect a jumper wire from **Arduino pin D9** to one leg of the resistor.
+2. Connect a jumper wire from **ESP32 GPIO18** (or **Arduino pin D9** as backup) to one leg of the resistor.
 3. Insert the **100 µF capacitor** so its **positive leg** is in the same row as the other resistor leg. This junction is $V_C$.
-4. Connect a jumper wire from the **capacitor negative leg** to any **GND** pin on the Arduino.
+4. Connect a jumper wire from the **capacitor negative leg** to any **GND** pin on the ESP32.
 5. Connect the **oscilloscope probe tip** to the $V_C$ junction.
-6. Connect the **oscilloscope probe ground** to Arduino GND.
+6. Connect the **oscilloscope probe ground** to ESP32 GND.
 
 ---
 
@@ -333,7 +333,7 @@ Arduino Pin D9  (or ESP32 GPIO18)
 
 Before uploading:
 
-✅ Resistor leg in same row as Arduino D9 jumper
+✅ Resistor leg in same row as ESP32 GPIO18 (or Arduino D9 as backup) jumper
 
 ✅ Capacitor positive leg in same row as other resistor leg
 
@@ -341,11 +341,25 @@ Before uploading:
 
 ✅ Oscilloscope probe tip at Vc junction
 
-✅ Oscilloscope probe ground at Arduino GND
+✅ Oscilloscope probe ground at ESP32 GND
 
 ---
 
-### Arduino Code
+### ESP32 Code
+
+```cpp
+void setup()
+{
+    pinMode(18, OUTPUT);
+    digitalWrite(18, LOW);
+    delay(2000);
+    digitalWrite(18, HIGH);
+}
+
+void loop() {}
+```
+
+### Arduino Equivalent Code (backup)
 
 ```cpp
 void setup()
@@ -360,7 +374,6 @@ void setup()
     delay(2000);
 
     // Apply the step: drive pin HIGH and hold there.
-    // The capacitor will now charge through the resistor.
     digitalWrite(9, HIGH);
 }
 
@@ -368,20 +381,6 @@ void loop()
 {
     // Nothing needed here — the step is applied once in setup().
 }
-```
-
-### ESP32 Equivalent Code
-
-```cpp
-void setup()
-{
-    pinMode(18, OUTPUT);
-    digitalWrite(18, LOW);
-    delay(2000);
-    digitalWrite(18, HIGH);
-}
-
-void loop() {}
 ```
 
 ---

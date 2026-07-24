@@ -290,7 +290,7 @@ grid on; xlim([0 1000]);
 
 ## Components Required
 
-- Arduino Uno or ESP32 DevKit V1
+- ESP32 DevKit V1 (or Arduino Uno as backup)
 - Breadboard
 - Jumper wires
 - Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
@@ -325,36 +325,15 @@ Generate a low-frequency square wave that represents the fundamental switching p
 ### Connections
 
 ```text
-Probe Tip  ──────► Arduino Pin D9  (or ESP32 GPIO18)
-Probe GND  ──────► Arduino GND
+Probe Tip  ──────► ESP32 GPIO18  (or Arduino Pin D9 as backup)
+Probe GND  ──────► ESP32 GND
 ```
 
 No breadboard components are needed for this experiment.
 
 ---
 
-### Arduino Code
-
-```cpp
-void setup()
-{
-    // Configure pin 9 as a digital output.
-    pinMode(9, OUTPUT);
-}
-
-void loop()
-{
-    // Toggle pin 9 every 10 ms to produce a 50 Hz square wave.
-    // Period = 10 ms HIGH + 10 ms LOW = 20 ms → f = 1/0.02 = 50 Hz.
-    digitalWrite(9, HIGH);
-    delay(10);              // HIGH for 10 ms
-
-    digitalWrite(9, LOW);
-    delay(10);              // LOW for 10 ms
-}
-```
-
-### ESP32 Equivalent Code
+### ESP32 Code
 
 ```cpp
 void setup()
@@ -365,11 +344,32 @@ void setup()
 
 void loop()
 {
-    // Same 50 Hz toggle as Arduino version.
+    // Toggle GPIO18 every 10 ms to produce a 50 Hz square wave.
+    // Period = 10 ms HIGH + 10 ms LOW = 20 ms → f = 1/0.02 = 50 Hz.
     digitalWrite(18, HIGH);
     delay(10);
 
     digitalWrite(18, LOW);
+    delay(10);
+}
+```
+
+### Arduino Equivalent Code (backup)
+
+```cpp
+void setup()
+{
+    // Configure pin 9 as a digital output.
+    pinMode(9, OUTPUT);
+}
+
+void loop()
+{
+    // Same 50 Hz toggle as ESP32 version.
+    digitalWrite(9, HIGH);
+    delay(10);
+
+    digitalWrite(9, LOW);
     delay(10);
 }
 ```
@@ -406,17 +406,17 @@ $$
 ### Expected Waveform
 
 ```text
-5V  ________        ________
-             │      │
-             │      │
-0V __________|______|________
+3.3V  ________        ________
+              │        │
+              │        │
+0V  __________│________│________
 ```
 
 ---
 
 ### Observe
 
-The waveform should switch between 0 V and approximately 5 V (Arduino) or 3.3 V (ESP32) at 50 Hz.
+The waveform should switch between 0 V and approximately 3.3 V (ESP32) or 5 V (Arduino backup) at 50 Hz.
 
 ---
 
@@ -426,7 +426,7 @@ The waveform should switch between 0 V and approximately 5 V (Arduino) or 3.3 V 
 |-----------|----------|---------|
 | Frequency | 50 Hz | |
 | Period | 20 ms | |
-| Peak Voltage | ~5 V (Arduino) / ~3.3 V (ESP32) | |
+| Peak Voltage | ~3.3 V (ESP32) / ~5 V (Arduino backup) | |
 
 ---
 
@@ -438,23 +438,7 @@ Observe high-frequency PWM operation as used in a PWM inverter carrier.
 
 ---
 
-### Arduino Code
-
-```cpp
-void setup()
-{
-    // No explicit pinMode needed; analogWrite() configures the pin automatically.
-}
-
-void loop()
-{
-    // Output 50% duty cycle PWM at approximately 490 Hz.
-    // This represents the high-frequency carrier used in a PWM inverter.
-    analogWrite(9, 128);
-}
-```
-
-### ESP32 Equivalent Code
+### ESP32 Code
 
 ```cpp
 void setup()
@@ -467,7 +451,23 @@ void setup()
 void loop()
 {
     // Set duty cycle to 128/255 ≈ 50%.
+    // This represents the high-frequency carrier used in a PWM inverter.
     ledcWrite(0, 128);
+}
+```
+
+### Arduino Equivalent Code (backup)
+
+```cpp
+void setup()
+{
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
+}
+
+void loop()
+{
+    // Output 50% duty cycle PWM at approximately 490 Hz.
+    analogWrite(9, 128);
 }
 ```
 
@@ -486,7 +486,7 @@ void loop()
 
 ### Observe
 
-A PWM waveform should be visible at approximately 490 Hz (Arduino) or 500 Hz (ESP32).
+A PWM waveform should be visible at approximately 500 Hz (ESP32) or 490 Hz (Arduino backup).
 
 ---
 
@@ -498,21 +498,43 @@ Observe how varying duty cycle changes the average voltage — the same principl
 
 ---
 
-### Code
+### ESP32 Code
+
+```cpp
+void setup()
+{
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(18, 0);
+}
+
+void loop()
+{
+    // Step through three duty cycles with a 3-second pause at each.
+    ledcWrite(0, 64);    // ~25% duty cycle
+    delay(3000);
+
+    ledcWrite(0, 128);   // ~50% duty cycle
+    delay(3000);
+
+    ledcWrite(0, 192);   // ~75% duty cycle
+    delay(3000);
+}
+```
+
+### Arduino Equivalent Code (backup)
 
 ```cpp
 void setup() {}
 
 void loop()
 {
-    // Step through three duty cycles with a 3-second pause at each.
-    analogWrite(9, 64);    // ~25% duty cycle
+    analogWrite(9, 64);
     delay(3000);
 
-    analogWrite(9, 128);   // ~50% duty cycle
+    analogWrite(9, 128);
     delay(3000);
 
-    analogWrite(9, 192);   // ~75% duty cycle
+    analogWrite(9, 192);
     delay(3000);
 }
 ```
@@ -537,37 +559,7 @@ Generate a sinusoidal PWM pattern using a sine lookup table, demonstrating how a
 
 ---
 
-### Arduino Code
-
-```cpp
-// SPWM: 50 Hz output, ~490 Hz PWM carrier
-// The duty cycle follows a sine lookup table so the average voltage
-// at each step approximates a sine wave shape.
-
-const int N = 10;                    // steps per half cycle
-const int sine_table[N] = {         // half-sine scaled to 0–255
-    128, 203, 243, 255, 243,
-    203, 128,  53,  13,   0
-};
-
-void setup()
-{
-    // No explicit pinMode needed; analogWrite() configures the pin automatically.
-}
-
-void loop()
-{
-    for (int i = 0; i < N; i++)
-    {
-        // Set PWM duty cycle to the next sine table value.
-        // Each step lasts 2 ms → 10 steps × 2 ms = 20 ms period → 50 Hz output.
-        analogWrite(9, sine_table[i]);
-        delay(2);
-    }
-}
-```
-
-### ESP32 Equivalent Code
+### ESP32 Code
 
 ```cpp
 const int N = 10;
@@ -588,6 +580,31 @@ void loop()
     for (int i = 0; i < N; i++)
     {
         ledcWrite(0, sine_table[i]);
+        delay(2);
+    }
+}
+```
+
+### Arduino Equivalent Code (backup)
+
+```cpp
+// SPWM: 50 Hz output, ~490 Hz PWM carrier
+const int N = 10;
+const int sine_table[N] = {
+    128, 203, 243, 255, 243,
+    203, 128,  53,  13,   0
+};
+
+void setup()
+{
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
+}
+
+void loop()
+{
+    for (int i = 0; i < N; i++)
+    {
+        analogWrite(9, sine_table[i]);
         delay(2);
     }
 }
@@ -638,7 +655,7 @@ This is the SPWM pattern.
 
 | Parameter | Expected | Measured |
 |-----------|----------|---------|
-| PWM carrier frequency | ~490 Hz | |
+| PWM carrier frequency | ~500 Hz (ESP32) | |
 | Output period | ~20 ms | |
 | Output frequency | ~50 Hz | |
 | Min duty cycle | ~0% | |
@@ -715,7 +732,7 @@ Check:
 
 Check:
 
-✅ Probe tip on correct pin (D9 Arduino or GPIO18 ESP32)
+✅ Probe tip on correct pin (GPIO18 ESP32 or D9 Arduino backup)
 
 ✅ Trigger type set to Edge, Rising
 

@@ -266,7 +266,7 @@ yline(Iavg*1e3, 'r--', sprintf('I_{avg} = %.0f mA', Iavg*1e3));
 - 100 µH Inductor
 - 100 µF Electrolytic Capacitor
 - 220 Ω gate resistor
-- Arduino Uno or ESP32 DevKit V1
+- ESP32 DevKit V1 (or Arduino Uno as backup)
 - Breadboard and jumper wires
 - OWON HDS272S Oscilloscope (recommended)
 - DSO Nano Oscilloscope (compatible)
@@ -294,29 +294,13 @@ Upload the PWM code and observe the gate switching signal on the oscilloscope be
 ### Connections
 
 ```text
-Probe Tip  ──────► Arduino Pin D9  (or ESP32 GPIO18)
-Probe GND  ──────► Arduino GND
+Probe Tip  ──────► ESP32 GPIO18  (or Arduino Pin 9 as backup)
+Probe GND  ──────► ESP32 GND
 ```
 
 ---
 
-### Arduino Code
-
-```cpp
-void setup()
-{
-    // No explicit pinMode needed; analogWrite() configures the pin automatically.
-}
-
-void loop()
-{
-    // Output 50% duty cycle PWM on pin 9.
-    // This is the switching signal that will drive the MOSFET gate.
-    analogWrite(9, 128);
-}
-```
-
-### ESP32 Equivalent Code
+### ESP32 Code
 
 ```cpp
 void setup()
@@ -329,7 +313,24 @@ void setup()
 void loop()
 {
     // Set duty cycle to 128/255 ≈ 50%.
+    // This is the switching signal that will drive the MOSFET gate.
     ledcWrite(0, 128);
+}
+```
+
+### Arduino Equivalent Code (backup)
+
+```cpp
+void setup()
+{
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
+}
+
+void loop()
+{
+    // Output 50% duty cycle PWM on pin 9.
+    // This is the switching signal that will drive the MOSFET gate.
+    analogWrite(9, 128);
 }
 ```
 
@@ -349,10 +350,10 @@ void loop()
 ### Expected Waveform
 
 ```text
-5V  ─────      ─────
-         │    │
-         │    │
-0V  _____│____│_____
+3.3V  ─────      ─────
+           │    │
+           │    │
+0V    _____│____│_____
 ```
 
 ---
@@ -361,9 +362,9 @@ void loop()
 
 | Parameter | Expected | Measured |
 |-----------|----------|---------|
-| Frequency | ~490 Hz | |
+| Frequency | ~500 Hz (ESP32) / ~490 Hz (Arduino backup) | |
 | Duty Cycle | ~50% | |
-| Gate Voltage | ~5 V (Arduino) / ~3.3 V (ESP32) | |
+| Gate Voltage | ~3.3 V (ESP32) / ~5 V (Arduino backup) | |
 
 ---
 
@@ -378,14 +379,14 @@ Build the full converter circuit and observe how duty cycle controls output volt
 ### Step-by-Step Wiring
 
 1. Insert the **IRLZ44N MOSFET** into the breadboard. Identify Gate (G), Drain (D), and Source (S) from the pinout (see Project 04).
-2. Connect a jumper wire from **Arduino GND** to the **MOSFET Source** row.
+2. Connect a jumper wire from **ESP32 GND** (or **Arduino GND** as backup) to the **MOSFET Source** row.
 3. Insert the **220 Ω gate resistor** so one leg is in the **Gate** row and the other is in a new row.
-4. Connect a jumper wire from **Arduino pin D9** to the top of the gate resistor.
-5. Insert the **100 µH inductor** so one leg connects to the **5 V supply** and the other leg connects to the **MOSFET Drain** row. This junction is the switch node.
+4. Connect a jumper wire from **ESP32 GPIO18** (or **Arduino pin 9** as backup) to the top of the gate resistor.
+5. Insert the **100 µH inductor** so one leg connects to the **3.3V supply** (or **5V supply** as backup for Arduino) and the other leg connects to the **MOSFET Drain** row. This junction is the switch node.
 6. Insert the **1N5819 diode** so its **anode** is in the switch node row and its **cathode (banded end)** is in a new row toward the output. This is the output diode.
 7. Insert the **100 µF capacitor** so its **positive leg** is in the same row as the diode cathode (Vout) and its **negative leg** is in the GND row.
 8. Connect the **oscilloscope probe tip** to the Vout node (diode cathode / capacitor positive).
-9. Connect the **oscilloscope probe ground** to Arduino GND.
+9. Connect the **oscilloscope probe ground** to ESP32 (or Arduino) GND.
 
 The signal path will be:
 
@@ -411,22 +412,44 @@ Before uploading:
 
 ✅ Capacitor positive leg at Vout, negative leg at GND
 
-✅ Gate resistor between D9 and MOSFET Gate
+✅ Gate resistor between GPIO18 (or D9 as backup) and MOSFET Gate
 
-✅ Oscilloscope probe tip at Vout, probe GND at Arduino GND
+✅ Oscilloscope probe tip at Vout, probe GND at ESP32 (or Arduino backup) GND
 
 ---
 
-### Code
+### ESP32 Code
 
 ```cpp
-void setup() {}
+void setup()
+{
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(18, 0);
+}
 
 void loop()
 {
     // Step through three duty cycles with a 3-second pause at each.
     // Expected Vout = Vin / (1 - D) at each step.
 
+    ledcWrite(0, 64);    // ~25% duty cycle → Vout ≈ 4.4 V (ideal)
+    delay(3000);
+
+    ledcWrite(0, 128);   // ~50% duty cycle → Vout ≈ 6.6 V (ideal)
+    delay(3000);
+
+    ledcWrite(0, 192);   // ~75% duty cycle → Vout ≈ 13.2 V (ideal)
+    delay(3000);
+}
+```
+
+### Arduino Equivalent Code (backup)
+
+```cpp
+void setup() {}
+
+void loop()
+{
     analogWrite(9, 64);    // ~25% duty cycle → Vout ≈ 6.7 V (ideal)
     delay(3000);
 
@@ -481,7 +504,7 @@ Observe output voltage ripple at the switching frequency.
 
 ```text
 Probe Tip  ──────► Vout node
-Probe GND  ──────► Arduino GND
+Probe GND  ──────► ESP32 GND
 ```
 
 ---
@@ -612,11 +635,11 @@ Check:
 
 Check:
 
-✅ Gate resistor connected between D9 and MOSFET Gate
+✅ Gate resistor connected between GPIO18 (or D9 as backup) and MOSFET Gate
 
 ✅ Code uploaded successfully
 
-✅ Probe tip on MOSFET Gate, probe GND on Arduino GND
+✅ Probe tip on MOSFET Gate, probe GND on ESP32 (or Arduino backup) GND
 
 ---
 

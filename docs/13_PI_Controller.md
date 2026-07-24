@@ -171,7 +171,7 @@ legend('Location', 'southeast');
 
 Same circuit as Project 12:
 
-- Arduino Uno or ESP32 DevKit V1
+- ESP32 DevKit V1
 - Breadboard and jumper wires
 - Potentiometer (setpoint)
 - IRLZ44N MOSFET
@@ -182,6 +182,8 @@ Same circuit as Project 12:
 - External battery pack
 - OWON HDS272S Oscilloscope (recommended)
 - DSO Nano Oscilloscope (compatible)
+
+> Arduino Uno can be used as a backup controller if an ESP32 is not available.
 
 ---
 
@@ -205,7 +207,7 @@ Battery (+)
   Motor
     │──── Flyback diode (cathode toward Battery+)
     │
-    ├──── 10 kΩ ──── A1  (back-EMF feedback)
+    ├──── 10 kΩ ──── GPIO35  (back-EMF feedback)
                 │
               10 kΩ
                 │
@@ -216,9 +218,23 @@ Battery (+)
     │
    GND
 
-PWM Output (Arduino Pin 9 or ESP32 GPIO18) ──── 220 Ω ──── Gate
-Potentiometer centre pin ──── A0
+ESP32 GPIO18 (or Arduino Pin 9 as backup) ──── 220 Ω ──── Gate
+Potentiometer centre pin ──── GPIO34
 ```
+
+---
+
+### Step-by-Step Wiring
+
+If building fresh (circuit from Project 12 already in place, skip to the checklist):
+
+1. Keep the MOSFET motor driver circuit from Project 12 intact.
+2. Verify the **back-EMF voltage divider** is still connected: top 10 kΩ from motor positive terminal, midpoint to **GPIO35**, bottom 10 kΩ to **GND**.
+3. Verify the **potentiometer** wiper is connected to **GPIO34**.
+4. Confirm the **220 Ω gate resistor** connects **GPIO18** to the MOSFET gate.
+5. Confirm **shared GND** between the ESP32, battery negative, and MOSFET source.
+
+> Tip: If the Serial Monitor shows the feedback reading stuck at 0 or 4095, check the back-EMF divider connections — a loose wire on GPIO35 is the most common cause.
 
 ---
 
@@ -228,63 +244,15 @@ Before uploading:
 
 ✅ Motor circuit wired correctly (same as Project 12)
 
-✅ Back-EMF divider connected to A1 (Arduino) or FBK_PIN (ESP32)
+✅ Back-EMF divider connected to GPIO35 (ESP32) or A1 (Arduino backup)
 
-✅ Potentiometer wiper connected to A0 (Arduino) or REF_PIN (ESP32)
+✅ Potentiometer wiper connected to GPIO34 (ESP32) or A0 (Arduino backup)
 
 ✅ Shared GND between controller and battery
 
 ---
 
-### Arduino Code
-
-```cpp
-float Kp = 0.5;
-float Ki = 1.0;
-
-const float dt      = 0.05;    // sample time (s) — matches delay(50)
-const float int_max = 500.0;   // anti-windup limit
-
-float integral = 0;
-
-void setup()
-{
-    // Configure pin 9 as PWM output for the MOSFET gate.
-    pinMode(9, OUTPUT);
-    Serial.begin(9600);
-}
-
-void loop()
-{
-    int reference = analogRead(A0);   // desired speed setpoint (0–1023)
-    int feedback  = analogRead(A1);   // back-EMF proxy (0–1023)
-
-    // Calculate error.
-    float error = reference - feedback;
-
-    // Accumulate error over time (integral term).
-    integral = integral + error * dt;
-
-    // Anti-windup: clamp integral to prevent excessive accumulation.
-    integral = constrain(integral, -int_max, int_max);
-
-    // PI controller output.
-    float output = Kp * error + Ki * integral;
-    output = constrain(output, 0, 255);
-
-    analogWrite(9, (int)output);
-
-    Serial.print("Ref: ");  Serial.print(reference);
-    Serial.print("  Fbk: "); Serial.print(feedback);
-    Serial.print("  Err: "); Serial.print((int)error);
-    Serial.print("  Int: "); Serial.print(integral, 2);
-    Serial.print("  PWM: "); Serial.println((int)output);
-
-    delay(50);
-}
-```
-
-### ESP32 Equivalent Code
+### ESP32 Code
 
 ```cpp
 float Kp = 0.5;
@@ -308,7 +276,7 @@ void setup()
 
 void loop()
 {
-    int reference = analogRead(REF_PIN);   // 0–4095 on ESP32 ADC
+    int reference = analogRead(REF_PIN);   // 0–4095 on ESP32 12-bit ADC
     int feedback  = analogRead(FBK_PIN);
 
     // Scale 12-bit error to 8-bit PWM domain.
@@ -325,6 +293,48 @@ void loop()
     Serial.print("Ref: ");  Serial.print(reference);
     Serial.print("  Fbk: "); Serial.print(feedback);
     Serial.print("  Err8: "); Serial.print(error, 1);
+    Serial.print("  Int: "); Serial.print(integral, 2);
+    Serial.print("  PWM: "); Serial.println((int)output);
+
+    delay(50);
+}
+```
+
+### Arduino Equivalent Code (backup)
+
+```cpp
+float Kp = 0.5;
+float Ki = 1.0;
+
+const float dt      = 0.05;    // sample time (s) — matches delay(50)
+const float int_max = 500.0;   // anti-windup limit
+
+float integral = 0;
+
+void setup()
+{
+    pinMode(9, OUTPUT);
+    Serial.begin(9600);
+}
+
+void loop()
+{
+    int reference = analogRead(A0);   // 0–1023 on Arduino 10-bit ADC
+    int feedback  = analogRead(A1);
+
+    float error = reference - feedback;
+
+    integral = integral + error * dt;
+    integral = constrain(integral, -int_max, int_max);
+
+    float output = Kp * error + Ki * integral;
+    output = constrain(output, 0, 255);
+
+    analogWrite(9, (int)output);
+
+    Serial.print("Ref: ");  Serial.print(reference);
+    Serial.print("  Fbk: "); Serial.print(feedback);
+    Serial.print("  Err: "); Serial.print((int)error);
     Serial.print("  Int: "); Serial.print(integral, 2);
     Serial.print("  PWM: "); Serial.println((int)output);
 
@@ -361,6 +371,22 @@ With the loop closed:
 1. Set a mid-range reference with the potentiometer. Observe the motor settle.
 2. Watch the Serial Monitor — the feedback reading should converge toward the reference.
 3. Gently load the motor shaft. Observe the integral term grow and the PWM increase to compensate.
+
+---
+
+### Serial Monitor
+
+Open the Serial Monitor at **115200 baud** (ESP32) or **9600 baud** (Arduino backup).
+
+Expected output:
+
+```text
+Ref: 2048  Fbk: 1820  Err8: 14.2  Int: 0.71  PWM: 14
+Ref: 2048  Fbk: 1950  Err8: 6.1   Int: 1.02  PWM: 9
+Ref: 2048  Fbk: 2040  Err8: 0.5   Int: 1.04  PWM: 1
+```
+
+The feedback value should converge toward the reference value as the integral term accumulates.
 
 ---
 
@@ -464,8 +490,8 @@ Change Kp through the following values and record the behaviour.
 Observe the controller PWM output.
 
 ```text
-Probe Tip  ──────► MOSFET Gate (Arduino Pin 9 or ESP32 GPIO18)
-Probe GND  ──────► Arduino GND
+Probe Tip  ──────► MOSFET Gate (ESP32 GPIO18 or Arduino Pin 9 as backup)
+Probe GND  ──────► GND
 ```
 
 | Setting | OWON HDS272S | DSO Nano |

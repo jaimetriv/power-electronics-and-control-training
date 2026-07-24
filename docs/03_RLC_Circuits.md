@@ -305,7 +305,7 @@ Record your predictions before measuring:
 
 ## Components Required
 
-- Arduino Uno or ESP32 DevKit V1
+- ESP32 DevKit V1 (or Arduino Uno as backup)
 - Breadboard
 - Jumper wires
 - 100 mH inductor
@@ -330,7 +330,7 @@ Observe the oscillatory (ringing) response of a second-order RLC circuit when ex
 ### Circuit Diagram
 
 ```text
-Arduino Pin D9  (or ESP32 GPIO18)
+ESP32 GPIO18  (or Arduino Pin 9 as backup)
     │
    100 Ω resistor
     │
@@ -348,17 +348,17 @@ Arduino Pin D9  (or ESP32 GPIO18)
 ### Step-by-Step Wiring
 
 1. Insert the **100 Ω resistor** across the breadboard so each leg is in a different row.
-2. Connect a jumper wire from **Arduino pin D9** to one leg of the resistor.
+2. Connect a jumper wire from **ESP32 GPIO18** (or **Arduino pin 9** as backup) to one leg of the resistor.
 3. Insert the **100 mH inductor** so one leg is in the same row as the other resistor leg, and the other inductor leg is in a new row below.
 4. Insert the **100 nF capacitor** so its positive leg is in the same row as the lower inductor leg. This junction is $V_C$.
-5. Connect a jumper wire from the **capacitor negative leg** to any **GND** pin on the Arduino.
+5. Connect a jumper wire from the **capacitor negative leg** to any **GND** pin on the ESP32.
 6. Connect the **oscilloscope probe tip** to the $V_C$ junction.
-7. Connect the **oscilloscope probe ground** to Arduino GND.
+7. Connect the **oscilloscope probe ground** to ESP32 GND.
 
 The signal path will be:
 
 ```text
-D9 → Resistor → Inductor → Vc (probe here) → Capacitor → GND
+GPIO18 → Resistor → Inductor → Vc (probe here) → Capacitor → GND
 ```
 
 ---
@@ -367,7 +367,7 @@ D9 → Resistor → Inductor → Vc (probe here) → Capacitor → GND
 
 Before uploading:
 
-✅ Resistor leg in same row as Arduino D9 jumper
+✅ Resistor leg in same row as ESP32 GPIO18 (or Arduino pin 9 as backup) jumper
 
 ✅ Inductor leg in same row as other resistor leg
 
@@ -377,11 +377,33 @@ Before uploading:
 
 ✅ Oscilloscope probe tip connected to Vc
 
-✅ Oscilloscope probe ground connected to Arduino GND
+✅ Oscilloscope probe ground connected to ESP32 (or Arduino backup) GND
 
 ---
 
-### Arduino Code
+### ESP32 Code
+
+```cpp
+void setup()
+{
+    // Configure GPIO18 as a digital output.
+    pinMode(18, OUTPUT);
+}
+
+void loop()
+{
+    // Toggle GPIO18 rapidly to produce a square wave.
+    // The fast transitions excite the natural dynamics of the RLC circuit,
+    // causing the capacitor voltage to ring at the natural frequency.
+    digitalWrite(18, HIGH);
+    delayMicroseconds(500);   // HIGH for 500 µs
+
+    digitalWrite(18, LOW);
+    delayMicroseconds(500);   // LOW for 500 µs
+}
+```
+
+### Arduino Equivalent Code (backup)
 
 ```cpp
 void setup()
@@ -392,31 +414,10 @@ void setup()
 
 void loop()
 {
-    // Toggle pin 9 rapidly to produce a square wave.
-    // The fast transitions excite the natural dynamics of the RLC circuit,
-    // causing the capacitor voltage to ring at the natural frequency.
     digitalWrite(9, HIGH);
-    delayMicroseconds(500);   // HIGH for 500 µs
-
-    digitalWrite(9, LOW);
-    delayMicroseconds(500);   // LOW for 500 µs
-}
-```
-
-### ESP32 Equivalent Code
-
-```cpp
-void setup()
-{
-    pinMode(18, OUTPUT);
-}
-
-void loop()
-{
-    digitalWrite(18, HIGH);
     delayMicroseconds(500);
 
-    digitalWrite(18, LOW);
+    digitalWrite(9, LOW);
     delayMicroseconds(500);
 }
 ```
@@ -703,8 +704,6 @@ Adjust:
 ✅ Oscilloscope triggering correctly
 
 ✅ Appropriate time scale selected
-
----
 
 ## Laboratory Exercises
 

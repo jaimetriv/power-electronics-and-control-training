@@ -196,12 +196,14 @@ legend('Location', 'southeast');
 
 ## Components Required
 
-- Arduino Uno or ESP32 DevKit V1
+- ESP32 DevKit V1
 - Buck Converter from Project 08 (MOSFET, diode, inductor, capacitor)
 - 2 × 10 kΩ resistors (voltage divider)
 - Breadboard and jumper wires
 - OWON HDS272S Oscilloscope (recommended)
 - DSO Nano Oscilloscope (compatible)
+
+> Arduino Uno can be used as a backup controller if an ESP32 is not available.
 
 ---
 
@@ -219,7 +221,7 @@ Keep the Buck Converter from Project 08 intact.
 
 1. Insert the **first 10 kΩ resistor** so one leg connects to the **Vout node** and the other leg is in a new row. This is the top of the divider.
 2. Insert the **second 10 kΩ resistor** so one leg is in the same row as the bottom of the first resistor and the other leg connects to **GND**. This is the bottom of the divider.
-3. Connect a jumper wire from the **midpoint** (junction between the two resistors) to **Arduino A0** (or **ESP32 GPIO34**).
+3. Connect a jumper wire from the **midpoint** (junction between the two resistors) to **ESP32 GPIO34** (or **Arduino A0** as backup).
 
 The midpoint voltage will be:
 
@@ -237,34 +239,13 @@ Before uploading:
 
 ✅ Bottom resistor connected between divider midpoint and GND
 
-✅ Divider midpoint connected to A0 (Arduino) or GPIO34 (ESP32)
+✅ Divider midpoint connected to GPIO34 (ESP32) or A0 (Arduino backup)
 
 ✅ Buck Converter circuit intact from Project 08
 
 ---
 
-### Arduino Code
-
-```cpp
-void setup()
-{
-    // Start serial communication to display the ADC reading.
-    Serial.begin(9600);
-}
-
-void loop()
-{
-    // Read the voltage divider midpoint.
-    // This represents Vout / 2.
-    int adc = analogRead(A0);
-
-    Serial.println(adc);
-
-    delay(100);
-}
-```
-
-### ESP32 Equivalent Code
+### ESP32 Code
 
 ```cpp
 const int FBK_PIN = 34;
@@ -285,6 +266,25 @@ void loop()
 }
 ```
 
+### Arduino Equivalent Code (backup)
+
+```cpp
+void setup()
+{
+    Serial.begin(9600);
+}
+
+void loop()
+{
+    // analogRead() returns 0–1023 on Arduino 10-bit ADC.
+    int adc = analogRead(A0);
+
+    Serial.println(adc);
+
+    delay(100);
+}
+```
+
 ---
 
 ### Observe
@@ -295,7 +295,17 @@ The ADC value should vary with output voltage and duty cycle.
 
 ### Convert ADC Reading to Voltage
 
-For Arduino Uno:
+For ESP32:
+
+$$
+V_{GPIO34} = \frac{ADC}{4095} \times 3.3\ \text{V}
+$$
+
+$$
+V_{OUT} = V_{GPIO34} \times 2
+$$
+
+For Arduino backup:
 
 $$
 V_{A0} = \frac{ADC}{1023} \times 5\ \text{V}
@@ -321,60 +331,14 @@ Same as Experiment 1 — voltage divider connected to A0.
 
 ---
 
-### Arduino Code
-
-```cpp
-const float dt        = 0.01;     // sample time (s) — matches delay(10)
-const float Vref      = 2.5;      // target voltage at divider midpoint (V)
-                                  // corresponds to Vout = 5.0 V
-const float int_max   = 50.0;     // anti-windup limit
-
-float Kp = 10.0;
-float Ki = 1.0;
-float integral = 0;
-
-void setup()
-{
-    // No explicit pinMode needed; analogWrite() configures the pin automatically.
-    Serial.begin(9600);
-}
-
-void loop()
-{
-    // Read the voltage divider midpoint.
-    int   adc      = analogRead(A0);
-    float Vfb      = (adc / 1023.0) * 5.0;   // voltage at divider midpoint (V)
-    float Vout_est = Vfb * 2.0;               // estimated converter output (V)
-
-    // Error in divider-scaled units.
-    float error = Vref - Vfb;
-
-    // Integral term with anti-windup.
-    integral = integral + error * dt;
-    integral = constrain(integral, -int_max, int_max);
-
-    // PI controller output → PWM duty cycle command.
-    float control = Kp * error + Ki * integral;
-    control = constrain(control, 0, 255);
-
-    analogWrite(9, (int)control);
-
-    Serial.print("Vout: ");  Serial.print(Vout_est, 3);
-    Serial.print("V  PWM: "); Serial.print((int)control);
-    Serial.print("  Int: ");  Serial.println(integral, 3);
-
-    delay(10);
-}
-```
-
-### ESP32 Equivalent Code
+### ESP32 Code
 
 ```cpp
 const int PWM_PIN  = 18;
 const int FBK_PIN  = 34;
 
 const float dt      = 0.01;
-const float Vref    = 1.65;    // target divider midpoint for ~3.3V output
+const float Vref    = 1.65;    // target divider midpoint for ~3.3 V output
 const float int_max = 50.0;
 
 float Kp = 10.0;
@@ -403,6 +367,47 @@ void loop()
     control = constrain(control, 0, 255);
 
     ledcWrite(0, (int)control);
+
+    Serial.print("Vout: ");  Serial.print(Vout_est, 3);
+    Serial.print("V  PWM: "); Serial.print((int)control);
+    Serial.print("  Int: ");  Serial.println(integral, 3);
+
+    delay(10);
+}
+```
+
+### Arduino Equivalent Code (backup)
+
+```cpp
+const float dt        = 0.01;     // sample time (s) — matches delay(10)
+const float Vref      = 2.5;      // target voltage at divider midpoint (V)
+                                  // corresponds to Vout = 5.0 V
+const float int_max   = 50.0;     // anti-windup limit
+
+float Kp = 10.0;
+float Ki = 1.0;
+float integral = 0;
+
+void setup()
+{
+    Serial.begin(9600);
+}
+
+void loop()
+{
+    int   adc      = analogRead(A0);
+    float Vfb      = (adc / 1023.0) * 5.0;   // voltage at divider midpoint (V)
+    float Vout_est = Vfb * 2.0;               // estimated converter output (V)
+
+    float error = Vref - Vfb;
+
+    integral = integral + error * dt;
+    integral = constrain(integral, -int_max, int_max);
+
+    float control = Kp * error + Ki * integral;
+    control = constrain(control, 0, 255);
+
+    analogWrite(9, (int)control);
 
     Serial.print("Vout: ");  Serial.print(Vout_est, 3);
     Serial.print("V  PWM: "); Serial.print((int)control);

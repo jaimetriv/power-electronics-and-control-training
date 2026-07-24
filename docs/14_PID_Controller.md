@@ -197,7 +197,7 @@ legend('Location', 'northeast');
 
 Same circuit as Projects 12 and 13:
 
-- Arduino Uno or ESP32 DevKit V1
+- ESP32 DevKit V1
 - Breadboard and jumper wires
 - Potentiometer (setpoint)
 - IRLZ44N MOSFET
@@ -207,6 +207,8 @@ Same circuit as Projects 12 and 13:
 - External battery pack
 - OWON HDS272S Oscilloscope (recommended)
 - DSO Nano Oscilloscope (compatible)
+
+> Arduino Uno can be used as a backup controller if an ESP32 is not available.
 
 ---
 
@@ -230,7 +232,7 @@ Battery (+)
   Motor
     │──── Flyback diode (cathode toward Battery+)
     │
-    ├──── 10 kΩ ──── A1  (back-EMF feedback)
+    ├──── 10 kΩ ──── GPIO35  (back-EMF feedback)
                 │
               10 kΩ
                 │
@@ -241,8 +243,8 @@ Battery (+)
     │
    GND
 
-PWM Output (Arduino Pin 9 or ESP32 GPIO18) ──── 220 Ω ──── Gate
-Potentiometer centre pin ──── A0
+ESP32 GPIO18 (or Arduino Pin 9 as backup) ──── 220 Ω ──── Gate
+Potentiometer centre pin ──── GPIO34 (or Arduino A0 as backup)
 ```
 
 ---
@@ -253,79 +255,25 @@ Before uploading:
 
 ✅ Motor circuit wired correctly (same as Projects 12 and 13)
 
-✅ Back-EMF divider connected to A1 (Arduino) or FBK_PIN (ESP32)
+✅ Back-EMF divider connected to GPIO35 (ESP32) or A1 (Arduino backup)
 
-✅ Potentiometer wiper connected to A0 (Arduino) or REF_PIN (ESP32)
+✅ Potentiometer wiper connected to GPIO34 (ESP32) or A0 (Arduino backup)
 
 ✅ Shared GND between controller and battery
 
 ---
 
-### Arduino Code
+### ESP32 Code
 
 ```cpp
 float Kp = 0.5;
 float Ki = 1.0;
 float Kd = 0.1;
 
-const float dt           = 0.05;    // sample time (s) — matches delay(50)
-const float integral_max = 500.0;   // anti-windup limit
-
-float integral      = 0;
-float previousError = 0;
-
-void setup()
-{
-    // Configure pin 9 as PWM output for the MOSFET gate.
-    pinMode(9, OUTPUT);
-    Serial.begin(9600);
-}
-
-void loop()
-{
-    int reference = analogRead(A0);   // desired speed setpoint (0–1023)
-    int feedback  = analogRead(A1);   // back-EMF proxy (0–1023)
-
-    // Calculate error.
-    float error = reference - feedback;
-
-    // Integral term: accumulate error over time.
-    integral = integral + error * dt;
-    integral = constrain(integral, -integral_max, integral_max);
-
-    // Derivative term: rate of change of error.
-    float derivative = (error - previousError) / dt;
-
-    // PID output.
-    float output = Kp * error + Ki * integral + Kd * derivative;
-    output = constrain(output, 0, 255);
-
-    analogWrite(9, (int)output);
-
-    Serial.print("Ref: ");  Serial.print(reference);
-    Serial.print("  Fbk: "); Serial.print(feedback);
-    Serial.print("  Err: "); Serial.print((int)error);
-    Serial.print("  Int: "); Serial.print(integral, 2);
-    Serial.print("  Der: "); Serial.print(derivative, 2);
-    Serial.print("  PWM: "); Serial.println((int)output);
-
-    // Store error for next derivative calculation.
-    previousError = error;
-    delay(50);
-}
-```
-
-### ESP32 Equivalent Code
-
-```cpp
-float Kp = 0.5;
-float Ki = 1.0;
-float Kd = 0.1;
-
-const int PWM_PIN      = 18;
-const int REF_PIN      = 34;
-const int FBK_PIN      = 35;
-const float dt         = 0.05;
+const int PWM_PIN       = 18;
+const int REF_PIN       = 34;
+const int FBK_PIN       = 35;
+const float dt          = 0.05;
 const float integralMax = 500.0;
 
 float integral      = 0;
@@ -341,7 +289,7 @@ void setup()
 
 void loop()
 {
-    int reference = analogRead(REF_PIN);   // 0–4095 on ESP32 ADC
+    int reference = analogRead(REF_PIN);   // 0–4095 on ESP32 12-bit ADC
     int feedback  = analogRead(FBK_PIN);
 
     // Scale 12-bit error to 8-bit PWM domain.
@@ -360,6 +308,54 @@ void loop()
     Serial.print("Ref: ");  Serial.print(reference);
     Serial.print("  Fbk: "); Serial.print(feedback);
     Serial.print("  Err8: "); Serial.print(error, 1);
+    Serial.print("  Int: "); Serial.print(integral, 2);
+    Serial.print("  Der: "); Serial.print(derivative, 2);
+    Serial.print("  PWM: "); Serial.println((int)output);
+
+    previousError = error;
+    delay(50);
+}
+```
+
+### Arduino Equivalent Code (backup)
+
+```cpp
+float Kp = 0.5;
+float Ki = 1.0;
+float Kd = 0.1;
+
+const float dt           = 0.05;    // sample time (s) — matches delay(50)
+const float integral_max = 500.0;   // anti-windup limit
+
+float integral      = 0;
+float previousError = 0;
+
+void setup()
+{
+    pinMode(9, OUTPUT);
+    Serial.begin(9600);
+}
+
+void loop()
+{
+    int reference = analogRead(A0);   // 0–1023 on Arduino 10-bit ADC
+    int feedback  = analogRead(A1);
+
+    float error = reference - feedback;
+
+    integral = integral + error * dt;
+    integral = constrain(integral, -integral_max, integral_max);
+
+    float derivative = (error - previousError) / dt;
+
+    float output = Kp * error + Ki * integral + Kd * derivative;
+    output = constrain(output, 0, 255);
+
+    analogWrite(9, (int)output);
+
+    Serial.print("Ref: ");  Serial.print(reference);
+    Serial.print("  Fbk: "); Serial.print(feedback);
+    Serial.print("  Err: "); Serial.print((int)error);
     Serial.print("  Int: "); Serial.print(integral, 2);
     Serial.print("  Der: "); Serial.print(derivative, 2);
     Serial.print("  PWM: "); Serial.println((int)output);
@@ -538,8 +534,8 @@ Expected: improved stability, reduced overshoot.
 Observe the PWM output while changing the reference and gains.
 
 ```text
-Probe Tip  ──────► MOSFET Gate (Arduino Pin 9 or ESP32 GPIO18)
-Probe GND  ──────► Arduino GND
+Probe Tip  ──────► MOSFET Gate (ESP32 GPIO18 or Arduino Pin 9 as backup)
+Probe GND  ──────► GND
 ```
 
 | Setting | OWON HDS272S | DSO Nano |

@@ -395,7 +395,7 @@ fprintf('Full-wave average Vdc:   %.2f V\n', V_fw_avg);
 
 ### Prediction Table
 
-Set your signal generator to: **10 Vpeak, 50 Hz, sine wave**
+Set the OWON HDS272S waveform generator to: **10 Vpeak, 50 Hz, sine wave**
 
 | Configuration | Predicted V\_{avg} (V) | Predicted ripple |
 |---------------|----------------------|-----------------|
@@ -412,9 +412,8 @@ Set your signal generator to: **10 Vpeak, 50 Hz, sine wave**
 - 100 µF electrolytic capacitor
 - 470 µF electrolytic capacitor
 - 1 kΩ load resistor
-- Signal generator (AC source — set to 10 Vpeak, 50 Hz, sine)
-- OWON HDS272S Oscilloscope (recommended)
-- DSO Nano Oscilloscope (compatible)
+- OWON HDS272S Oscilloscope with built-in waveform generator (AC source — set to 10 Vpeak, 50 Hz, sine)
+- DSO Nano Oscilloscope (compatible, requires separate signal generator)
 - Multimeter
 - Breadboard and jumper wires
 
@@ -426,10 +425,7 @@ Set your signal generator to: **10 Vpeak, 50 Hz, sine wave**
 DO NOT CONNECT DIRECTLY TO MAINS VOLTAGE
 ```
 
-For laboratory work use only:
-
-- Low-voltage AC supplies
-- Isolated function generators
+For laboratory work use only the OWON HDS272S built-in waveform generator output or another isolated low-voltage AC source.
 
 ---
 
@@ -437,16 +433,18 @@ For laboratory work use only:
 
 ### Objective
 
-Observe and measure the AC waveform from the signal generator before any rectification.
+Observe and measure the AC waveform from the OWON HDS272S waveform generator before any rectification.
 
 ---
 
 ### Connections
 
 ```text
-Probe Tip  ──────► Signal generator output (+)
-Probe GND  ──────► Signal generator GND
+OWON HDS272S waveform generator output (+) ──► Probe Tip
+OWON HDS272S waveform generator GND        ──► Probe GND
 ```
+
+> Set the OWON HDS272S waveform generator to: **10 Vpeak, 50 Hz, sine wave**.
 
 ---
 
@@ -494,27 +492,27 @@ Observe half-wave rectification and measure the average DC output.
 ### Circuit Diagram
 
 ```text
-Signal Generator (+)
+OWON HDS272S waveform generator (+)
     │
-   1N4007 diode (anode toward signal generator)
+   1N4007 diode (anode toward waveform generator)
     │
     ├──── Probe Tip
     │
    1 kΩ load resistor
     │
-Signal Generator GND ──── Probe GND
+OWON HDS272S waveform generator GND ──── Probe GND
 ```
 
 ---
 
 ### Step-by-Step Wiring
 
-1. Insert the 1N4007 diode into the breadboard. The **anode** (unmarked end) connects toward the signal generator positive terminal. The **cathode** (banded end) connects toward the load.
-2. Connect a jumper wire from the **signal generator (+)** to the **diode anode** row.
+1. Insert the 1N4007 diode into the breadboard. The **anode** (unmarked end) connects toward the waveform generator positive terminal. The **cathode** (banded end) connects toward the load.
+2. Connect a jumper wire from the **OWON HDS272S waveform generator (+)** to the **diode anode** row.
 3. Insert the **1 kΩ resistor** so one leg is in the same row as the **diode cathode** and the other leg is in a new row.
-4. Connect a jumper wire from the **bottom of the resistor** to the **signal generator GND**.
+4. Connect a jumper wire from the **bottom of the resistor** to the **waveform generator GND**.
 5. Connect the **oscilloscope probe tip** to the junction between the diode cathode and the resistor top.
-6. Connect the **oscilloscope probe ground** to the signal generator GND.
+6. Connect the **oscilloscope probe ground** to the waveform generator GND.
 
 ---
 
@@ -578,8 +576,8 @@ Observe full-wave rectification using a bridge of four diodes.
 ### Circuit Diagram
 
 ```text
-Signal Generator (+) ──── D1 anode
-Signal Generator (−) ──── D3 anode
+OWON HDS272S waveform generator (+) ──── D1 anode
+OWON HDS272S waveform generator (−) ──── D3 anode
 
 D1 cathode ──┬── D2 cathode ──── DC (+) output
              │
@@ -616,10 +614,10 @@ The standard bridge arrangement:
    - **D3**: anode to DC(−) rail, cathode to AC(+)
    - **D4**: anode to DC(−) rail, cathode to AC(−)
 3. Connect the **1 kΩ load resistor** between the DC(+) rail and the DC(−) rail.
-4. Connect the **signal generator (+)** to the AC(+) node and **(−)** to the AC(−) node.
+4. Connect the **OWON HDS272S waveform generator (+)** to the AC(+) node and **(−)** to the AC(−) node.
 5. Connect the **oscilloscope probe tip** to the DC(+) rail and **probe ground** to the DC(−) rail.
 
-> Tip: The DC(−) rail is the common reference. Connect the signal generator GND and oscilloscope probe GND both to this point.
+> Tip: The DC(−) rail is the common reference. Connect the waveform generator GND and oscilloscope probe GND both to this point.
 
 ---
 
@@ -830,6 +828,8 @@ Check:
 ### Troubleshooting Checklist
 
 ✅ Signal generator connected and set to 10 Vpeak, 50 Hz, sine
+
+> Use the OWON HDS272S built-in waveform generator output.
 
 ✅ Diodes oriented correctly
 

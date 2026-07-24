@@ -14,7 +14,7 @@ Complete:
 In this project you will learn:
 
 - What PWM is
-- How Arduino or ESP32 generates PWM
+- How ESP32 or Arduino generates PWM
 - How to measure PWM with the OWON HDS272S oscilloscope
 - Frequency
 - Period
@@ -50,7 +50,7 @@ At the end of this project you should be able to:
 
 ✅ Use the OWON HDS272S oscilloscope
 
-✅ Generate PWM using Arduino or ESP32
+✅ Generate PWM using ESP32 or Arduino
 
 ✅ Explain how PWM controls power
 
@@ -64,7 +64,7 @@ PWM stands for:
 
 **Pulse Width Modulation**
 
-Arduino cannot produce a true analogue voltage.
+A microcontroller cannot produce a true analogue voltage.
 
 Instead it switches rapidly between:
 
@@ -75,16 +75,16 @@ Instead it switches rapidly between:
 and
 
 ```text
-5 V
+3.3 V  (ESP32)  /  5 V  (Arduino Uno)
 ```
 
 creating a square wave.
 
 ```text
-5V ──────      ──────
-         │      │
-         │      │
-0V ______│______│________
+V_S ──────      ──────
+          │      │
+          │      │
+0V ───────│──────│────────
 ```
 
 Although the signal is digital, the average energy delivered to a load can be continuously varied.
@@ -107,14 +107,6 @@ Units:
 - milliseconds (ms)
 - microseconds (µs)
 
-```text
-<------ T ------>
-5V ──────
-         │
-         │
-0V ______│______
-```
-
 ---
 
 ## Frequency
@@ -125,23 +117,12 @@ $$
 f = \frac{1}{T}
 $$
 
-Where:
-
-- $f$ = Frequency (Hz)
-- $T$ = Period (s)
-
 ### Example
 
-If:
+If $T = 1\ \text{ms}$:
 
 $$
-T = 1 \text{ ms}
-$$
-
-Then:
-
-$$
-f = \frac{1}{0.001} = 1000 \text{ Hz} = 1 \text{ kHz}
+f = \frac{1}{0.001} = 1000\ \text{Hz} = 1\ \text{kHz}
 $$
 
 ---
@@ -154,21 +135,15 @@ $$
 D = \frac{T_{ON}}{T}
 $$
 
-Where:
-
-- $D$ = Duty Cycle
-- $T_{ON}$ = Time signal is HIGH
-- $T$ = Total period
-
 ---
 
 ### 25% Duty Cycle
 
 ```text
-5V ──
-      │
-      │
-0V ___│__________
+V_S ──
+       │
+       │
+0V ────│──────────
 ```
 
 ---
@@ -176,10 +151,10 @@ Where:
 ### 50% Duty Cycle
 
 ```text
-5V ─────
-         │
-         │
-0V ______│______
+V_S ─────
+          │
+          │
+0V ───────│───────
 ```
 
 ---
@@ -187,60 +162,40 @@ Where:
 ### 75% Duty Cycle
 
 ```text
-5V ─────────
-            │
-            │
-0V __________│__
+V_S ─────────
+             │
+             │
+0V ──────────│───
 ```
 
 ---
 
 ## Average Voltage
 
-The average output voltage of a PWM waveform is approximately:
-
 $$
 V_{AVG} = D \cdot V_S
 $$
 
-Where:
-
-- $V_{AVG}$ = Average Voltage
-- $D$ = Duty Cycle
-- $V_S$ = Supply Voltage
-
 ### Example
 
-Given:
+$V_S = 3.3\ \text{V}$, $D = 0.5$:
 
 $$
-V_S = 5 \text{ V}, \quad D = 0.5
-$$
-
-Then:
-
-$$
-V_{AVG} = 0.5 \times 5 = 2.5 \text{ V}
+V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 $$
 
 ---
 
-## PWM on Arduino Uno and ESP32
-
-On Arduino Uno, the function:
-
-```cpp
-analogWrite()
-```
-
-generates PWM.
+## PWM on ESP32 and Arduino Uno
 
 On ESP32, PWM is generated with the LEDC peripheral (see Project 00C for setup details).
 
-Valid values:
+On Arduino Uno, the function `analogWrite()` generates PWM.
+
+Valid values for both:
 
 ```text
-0 → 255
+0 → 255  (8-bit)
 ```
 
 | PWM Value | Approximate Duty Cycle |
@@ -254,8 +209,8 @@ Valid values:
 Controller pin options for this experiment:
 
 ```text
-Arduino Uno: Pin 9
 ESP32:       GPIO18
+Arduino Uno: Pin 9
 ```
 
 ---
@@ -267,7 +222,7 @@ Before building the circuit, simulate a PWM waveform in MATLAB to predict what y
 ### Simulate a PWM Waveform
 
 ```matlab
-fs = 490;
+fs = 500;
 D = 0.5;
 
 T = 1/fs;
@@ -276,19 +231,15 @@ t = 0:ts:4*T;
 
 pwm = double(mod(t,T) < D*T);
 
-plot(t*1000, pwm*5, 'LineWidth', 2)
+plot(t*1000, pwm*3.3, 'LineWidth', 2)
 
 grid on
-ylim([-0.5 6])
+ylim([-0.5 4])
 
 xlabel('Time (ms)')
 ylabel('Voltage (V)')
-title('Simulated PWM Waveform - 490 Hz, 50% Duty Cycle')
+title('Simulated PWM Waveform - 500 Hz, 50% Duty Cycle')
 ```
-
-### Expected Result
-
-You should see a square wave switching between 0 V and 5 V with equal ON and OFF times.
 
 ### Predict
 
@@ -306,7 +257,7 @@ Before measuring, record your predictions:
 ### Simulate Multiple Duty Cycles
 
 ```matlab
-fs = 490;
+fs = 500;
 T = 1/fs;
 ts = T/1000;
 t = 0:ts:4*T;
@@ -321,9 +272,9 @@ for k = 1:3
     pwm = double(mod(t,T) < D*T);
 
     subplot(3,1,k)
-    plot(t*1000, pwm*5, 'LineWidth', 2)
+    plot(t*1000, pwm*3.3, 'LineWidth', 2)
     grid on
-    ylim([-0.5 6])
+    ylim([-0.5 4])
     ylabel('Voltage (V)')
     title(['Duty Cycle = ' labels{k}])
 end
@@ -331,17 +282,11 @@ end
 xlabel('Time (ms)')
 ```
 
-### Expected Result
-
-Observe how the ON time increases as duty cycle increases while the period remains constant.
-
 ---
 
 ## Required Components
 
-### SparkFun Inventor Kit
-
-- Arduino Uno
+- ESP32 DevKit V1
 - Breadboard
 - LED
 - 220 Ω resistor
@@ -365,38 +310,21 @@ Generate a 50% duty cycle PWM signal and observe it on the oscilloscope.
 ### Connections
 
 ```text
-Probe Tip  ──────► Arduino Pin D9  (or ESP32 GPIO18)
-Probe GND  ──────► Arduino GND
+Probe Tip  ──────► ESP32 GPIO18  (or Arduino Pin D9)
+Probe GND  ──────► ESP32 GND
 ```
 
 No breadboard components are needed for this experiment.
 
 ---
 
-### Arduino Code
+### ESP32 Code
 
 ```cpp
 void setup()
 {
-    // No explicit pinMode needed; analogWrite() configures the pin automatically.
-}
-
-void loop()
-{
-    // Output a PWM signal on pin 9 with approximately 50% duty cycle.
-    // analogWrite() accepts values from 0 (0%) to 255 (100%).
-    // Value 128 gives approximately 50% duty cycle: 128/255 ≈ 50%.
-    analogWrite(9, 128);
-}
-```
-
-### ESP32 Equivalent Code
-
-```cpp
-void setup()
-{
-    // Configure LEDC channel 0: frequency 490 Hz, 8-bit resolution (0–255).
-    ledcSetup(0, 490, 8);
+    // Configure LEDC channel 0: 500 Hz, 8-bit resolution (0–255).
+    ledcSetup(0, 500, 8);
 
     // Attach GPIO18 to channel 0.
     ledcAttachPin(18, 0);
@@ -409,11 +337,27 @@ void loop()
 }
 ```
 
+### Arduino Equivalent Code
+
+```cpp
+void setup()
+{
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
+}
+
+void loop()
+{
+    // Output a PWM signal on pin 9 with approximately 50% duty cycle.
+    // analogWrite() accepts values from 0 (0%) to 255 (100%).
+    analogWrite(9, 128);
+}
+```
+
 ---
 
 ### Why 128?
 
-Arduino uses a PWM range of 0 to 255. Therefore:
+The PWM range is 0 to 255. Therefore:
 
 $$
 \frac{128}{255} \approx 50\%
@@ -435,53 +379,21 @@ $$
 ### Expected Waveform
 
 ```text
-5V  ─────      ─────
-         │    │
-         │    │
-0V  _____│____│_____
+3.3V  ─────      ─────
+           │    │
+           │    │
+0V    _____│____│_____
 ```
 
 ---
 
 ### Measurements
 
-Measure the following and record in the table:
-
-#### Frequency
-
-Expected:
-
-$$
-f \approx 490 \text{ Hz}
-$$
-
-On Arduino Uno Pin 9, this value is typically around 490 Hz. Small variation is normal.
-
-#### Period
-
-Expected:
-
-$$
-T \approx 2 \text{ ms}
-$$
-
-#### Peak Voltage
-
-Expected:
-
-$$
-V_{PEAK} \approx 5 \text{ V}
-$$
-
----
-
-### Measurement Worksheet
-
 | Parameter | Expected | Measured |
 |-----------|----------|---------|
-| Frequency | 490 Hz | |
+| Frequency | 500 Hz | |
 | Period | 2 ms | |
-| Peak Voltage | 5 V | |
+| Peak Voltage | ~3.3 V | |
 
 ---
 
@@ -495,65 +407,47 @@ Observe how duty cycle affects the PWM waveform shape.
 
 ### Connections
 
-Same as Experiment 1:
-
-```text
-Probe Tip  ──────► Arduino Pin D9
-Probe GND  ──────► Arduino GND
-```
+Same as Experiment 1.
 
 ---
 
-### Test A — 25% Duty Cycle
+### Code
 
-Upload:
+```cpp
+void setup()
+{
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(18, 0);
+}
+
+void loop()
+{
+    // Step through three duty cycles with a 3-second pause at each.
+
+    ledcWrite(0, 64);    // ~25% duty cycle: short ON, long OFF
+    delay(3000);
+
+    ledcWrite(0, 128);   // ~50% duty cycle: equal ON and OFF
+    delay(3000);
+
+    ledcWrite(0, 192);   // ~75% duty cycle: long ON, short OFF
+    delay(3000);
+}
+```
+
+### Arduino Equivalent Code
 
 ```cpp
 void loop()
 {
-    // 64/255 ≈ 25% duty cycle: short ON time, long OFF time.
     analogWrite(9, 64);
-}
-```
+    delay(3000);
 
-ESP32 equivalent:
-
-```cpp
-void loop()
-{
-    ledcWrite(0, 64);
-}
-```
-
-Expected duty cycle:
-
-$$
-\frac{64}{255} \approx 25\%
-$$
-
-Observe the waveform. The ON time should be approximately one quarter of the total period.
-
----
-
-### Test B — 50% Duty Cycle
-
-```cpp
-void loop()
-{
-    // 128/255 ≈ 50% duty cycle: equal ON and OFF times.
     analogWrite(9, 128);
-}
-```
+    delay(3000);
 
----
-
-### Test C — 75% Duty Cycle
-
-```cpp
-void loop()
-{
-    // 192/255 ≈ 75% duty cycle: long ON time, short OFF time.
     analogWrite(9, 192);
+    delay(3000);
 }
 ```
 
@@ -587,14 +481,14 @@ Use PWM to control LED brightness and observe the relationship between duty cycl
 ### Circuit Diagram
 
 ```text
-Arduino Pin D9  (or ESP32 GPIO18)
+ESP32 GPIO18  (or Arduino Pin D9)
     │
    220 Ω resistor
     │
    LED anode (long leg)
    LED cathode (short leg)
     │
-Arduino GND
+ESP32 GND
 ```
 
 ---
@@ -602,14 +496,14 @@ Arduino GND
 ### Step-by-Step Wiring
 
 1. Push the 220 Ω resistor across the breadboard so each leg is in a different row.
-2. Connect a jumper wire from **Arduino pin D9** to one leg of the resistor.
+2. Connect a jumper wire from **ESP32 GPIO18** to one leg of the resistor.
 3. Insert the LED so its **long leg (anode)** sits in the same row as the other resistor leg.
-4. Connect a jumper wire from the **LED short leg (cathode)** row to any **GND** pin on the Arduino.
+4. Connect a jumper wire from the **LED short leg (cathode)** row to any **GND** pin on the ESP32.
 
 The current path will be:
 
 ```text
-D9 → Resistor → LED anode → LED cathode → GND
+GPIO18 → Resistor → LED anode → LED cathode → GND
 ```
 
 ---
@@ -618,13 +512,13 @@ D9 → Resistor → LED anode → LED cathode → GND
 
 Before uploading:
 
-✅ Resistor leg in same breadboard row as Arduino D9 jumper
+✅ Resistor leg in same breadboard row as ESP32 GPIO18 jumper
 
 ✅ LED long leg (anode) in same row as other resistor leg
 
 ✅ LED short leg (cathode) connected to GND
 
-✅ PWM pin used (D9 on Arduino Uno — not all pins support PWM)
+✅ PWM-capable pin used (GPIO18 on ESP32)
 
 ---
 
@@ -633,24 +527,46 @@ Before uploading:
 ```cpp
 void setup()
 {
-    // No explicit pinMode needed; analogWrite() configures the pin automatically.
+    // Configure LEDC channel 0: 500 Hz, 8-bit resolution.
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(18, 0);
 }
 
 void loop()
 {
     // Step through four brightness levels with a 2-second pause at each.
-    // analogWrite() range: 0 (off) to 255 (fully on).
 
-    analogWrite(9, 64);    // ~25% duty cycle → dim
+    ledcWrite(0, 64);    // ~25% duty cycle → dim
     delay(2000);
 
-    analogWrite(9, 128);   // ~50% duty cycle → medium brightness
+    ledcWrite(0, 128);   // ~50% duty cycle → medium brightness
     delay(2000);
 
-    analogWrite(9, 192);   // ~75% duty cycle → bright
+    ledcWrite(0, 192);   // ~75% duty cycle → bright
     delay(2000);
 
-    analogWrite(9, 255);   // 100% duty cycle → fully on
+    ledcWrite(0, 255);   // 100% duty cycle → fully on
+    delay(2000);
+}
+```
+
+### Arduino Equivalent Code
+
+```cpp
+void setup() {}
+
+void loop()
+{
+    analogWrite(9, 64);
+    delay(2000);
+
+    analogWrite(9, 128);
+    delay(2000);
+
+    analogWrite(9, 192);
+    delay(2000);
+
+    analogWrite(9, 255);
     delay(2000);
 }
 ```
@@ -659,15 +575,11 @@ void loop()
 
 ### Observe
 
-Watch the LED as the code cycles through each brightness level.
-
-The LED should step through:
+Watch the LED as the code cycles through each brightness level:
 
 ```text
 Dim  →  Medium  →  Bright  →  Fully ON
 ```
-
-then repeat.
 
 ---
 
@@ -684,11 +596,7 @@ then repeat.
 
 ### Why Does Brightness Change?
 
-The LED is switching ON and OFF approximately:
-
-$$
-490 \text{ times per second}
-$$
+The LED is switching ON and OFF approximately 500 times per second.
 
 Your eyes cannot distinguish individual flashes at this speed.
 
@@ -700,14 +608,10 @@ A higher duty cycle means more ON time, more delivered energy, and higher percei
 
 ## MATLAB Comparison
 
-Compare your measured results against the theoretical prediction.
-
-### Plot the Theoretical Line
-
 ```matlab
 D = 0:0.01:1;
 
-Vavg_theory = 5 .* D;
+Vavg_theory = 3.3 .* D;
 
 plot(D, Vavg_theory, 'b-', 'LineWidth', 2)
 
@@ -722,11 +626,8 @@ title('PWM Average Voltage - Theory vs Measurement')
 ### Overlay Your Measurements
 
 ```matlab
-% Enter your measured duty cycles here
 D_measured = [0.25, 0.50, 0.75, 1.00];
-
-% Enter your measured average voltages here
-Vavg_measured = [1.20, 2.45, 3.68, 4.90];
+Vavg_measured = [0.00, 0.00, 0.00, 0.00];   % replace with your values
 
 plot(D_measured, Vavg_measured, 'ro', ...
     'MarkerSize', 10, ...
@@ -734,12 +635,6 @@ plot(D_measured, Vavg_measured, 'ro', ...
 
 legend('Theory', 'Measured', 'Location', 'northwest')
 ```
-
-### Reflection
-
-- Do your measured points fall on the theoretical line?
-- Does the simulated waveform match what you observed on the oscilloscope?
-- If there are differences, what might explain them?
 
 ---
 
@@ -749,13 +644,13 @@ legend('Theory', 'Measured', 'Location', 'northwest')
 
 Check:
 
-✅ Probe tip connected to the correct pin (D9 on Arduino Uno)
+✅ Probe tip connected to GPIO18 (ESP32) or D9 (Arduino)
 
-✅ Probe ground connected to Arduino GND
+✅ Probe ground connected to GND
 
 ✅ Code uploaded successfully
 
-✅ If using ESP32: ledcSetup() and ledcAttachPin() called in setup()
+✅ ledcSetup() and ledcAttachPin() called in setup() (ESP32)
 
 ---
 
@@ -767,17 +662,7 @@ Check:
 
 ✅ 220 Ω resistor in series
 
-✅ Jumper wire from D9 to resistor
-
----
-
-### Waveform Unstable
-
-Check:
-
-✅ Trigger type set to Edge, Rising
-
-✅ Trigger level set to approximately 2.5 V
+✅ Jumper wire from GPIO18 to resistor
 
 ---
 
@@ -785,13 +670,13 @@ Check:
 
 ✅ Controller powered and sketch uploaded
 
-✅ Probe on active PWM pin (Arduino D9 or ESP32 GPIO18)
+✅ Probe on active PWM pin (ESP32 GPIO18 or Arduino D9)
 
 ✅ Probe ground on GND
 
 ✅ Trigger enabled
 
-✅ Correct time scale (500 µs/div for 490 Hz signal)
+✅ Correct time scale (500 µs/div for 500 Hz signal)
 
 ✅ Correct voltage scale (2 V/div)
 
@@ -807,13 +692,13 @@ Modify the code to output a 10% duty cycle. Calculate the expected average volta
 
 ### Exercise 2
 
-Write a sketch that smoothly fades the LED from OFF to fully ON and back, using a for loop and `analogWrite()`.
+Write a sketch that smoothly fades the LED from OFF to fully ON and back, using a for loop and `ledcWrite()`.
 
 ---
 
 ### Exercise 3
 
-Connect a potentiometer to A0 and use its reading to control the PWM duty cycle in real time. Observe the waveform change on the oscilloscope as you turn the knob.
+Connect a potentiometer to GPIO34 and use its reading to control the PWM duty cycle in real time. Observe the waveform change on the oscilloscope as you turn the knob.
 
 ---
 
@@ -827,25 +712,25 @@ What does PWM stand for?
 
 ### Question 2
 
-What duty cycle corresponds to `analogWrite(9, 128)`?
+What duty cycle corresponds to `ledcWrite(0, 128)`?
 
 ---
 
 ### Question 3
 
-If the supply voltage is 5 V and the duty cycle is 75%, what is the average voltage?
+If the supply voltage is 3.3 V and the duty cycle is 75%, what is the average voltage?
 
 ---
 
 ### Question 4
 
-Why does PWM control LED brightness even though the signal only switches between 0 V and 5 V?
+Why does PWM control LED brightness even though the signal only switches between 0 V and 3.3 V?
 
 ---
 
 ### Question 5
 
-Your MATLAB simulation predicted a frequency of 490 Hz but you measured 492 Hz on the oscilloscope. What could explain this difference?
+Your MATLAB simulation predicted a frequency of 500 Hz but you measured 502 Hz on the oscilloscope. What could explain this difference?
 
 ---
 
@@ -863,13 +748,11 @@ In this project you learned:
 
 ✅ Average voltage
 
-✅ PWM generation on Arduino or ESP32
+✅ PWM generation on ESP32 or Arduino
 
 ✅ Oscilloscope measurements with the OWON HDS272S
 
 ✅ LED brightness control
-
-These concepts will appear repeatedly throughout the rest of this course.
 
 ---
 
