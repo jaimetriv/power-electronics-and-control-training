@@ -2,7 +2,7 @@
 
 ## Author
 
-Jaime Triviño
+Jaime T
 
 ---
 
