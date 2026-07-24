@@ -35,13 +35,7 @@ In this project you will learn:
 This project connects:
 
 ```text
-Power Electronics
-```
-
-with:
-
-```text
-Motor Drives
+Power Electronics  ←→  Motor Drives
 ```
 
 ---
@@ -68,27 +62,13 @@ At the end of this project you should be able to:
 
 ## Introduction
 
-A Chopper Converter is a:
-
-```text
-DC-to-DC Converter
-```
-
-that controls the average value of a DC voltage by rapidly switching a semiconductor device ON and OFF.
+A Chopper Converter is a DC-to-DC converter that controls the average value of a DC voltage by rapidly switching a semiconductor device ON and OFF.
 
 ---
 
 ## Why Is It Called a Chopper?
 
-The input DC voltage is:
-
-```text
-Chopped
-```
-
-into pulses.
-
-Example:
+The input DC voltage is chopped into pulses:
 
 ```text
 12V ─────      ─────
@@ -101,32 +81,12 @@ The average value depends on the duty cycle.
 
 ---
 
-## Chopper Principle
-
-The switch repeatedly alternates between:
-
-```text
-ON
-```
-
-and
-
-```text
-OFF
-```
-
-states.
-
-A PWM signal controls the switching process.
-
----
-
 ## Average Output Voltage
 
 For an ideal step-down chopper:
 
 $$
-V_{OUT}=D \cdot V_{IN}
+V_{OUT} = D \cdot V_{IN}
 $$
 
 Where:
@@ -135,30 +95,12 @@ Where:
 - $D$ = Duty Cycle
 - $V_{IN}$ = Input Voltage
 
----
+### Example
 
-## Example
-
-Given:
+Given $V_{IN} = 12\ \text{V}$ and $D = 0.5$:
 
 $$
-V_{IN}=12V
-$$
-
-and:
-
-$$
-D=0.5
-$$
-
-Then:
-
-$$
-V_{OUT}=0.5 \cdot 12
-$$
-
-$$
-V_{OUT}=6V
+V_{OUT} = 0.5 \times 12 = 6\ \text{V}
 $$
 
 ---
@@ -168,199 +110,75 @@ $$
 ### Linear Control
 
 ```text
-Input
- ↓
-Resistor
- ↓
-Output
+Input → Resistor → Output
 ```
 
-Disadvantages:
-
-- Heat generation
-- Lower efficiency
-
----
+Disadvantages: heat generation, lower efficiency.
 
 ### Chopper Control
 
 ```text
-Input
- ↓
-Switching
- ↓
-Output
+Input → Switching → Output
 ```
 
-Advantages:
-
-- High efficiency
-- Low losses
-- Better performance
+Advantages: high efficiency, low losses, better performance.
 
 ---
 
 ## Chopper Classification
 
-Traditional power electronics classifies choppers by operating quadrant.
-
----
-
-## Type A Chopper
-
-Also called:
-
-```text
-Step-Down Chopper
-```
-
-or:
-
-```text
-Buck Converter
-```
-
-Characteristics:
+### Type A Chopper (Step-Down / Buck)
 
 - Positive voltage
 - Positive current
+- Output voltage lower than input
 
----
-
-## Type B Chopper
-
-Also called:
-
-```text
-Step-Up Chopper
-```
-
-or:
-
-```text
-Boost Converter
-```
-
-Characteristics:
+### Type B Chopper (Step-Up / Boost)
 
 - Voltage boosting
+- Output voltage higher than input
 
 ---
 
 ## Quadrant Concept
 
-Motor drives are often described using:
-
-```text
-Torque
-```
-
-and
-
-```text
-Speed
-```
-
----
-
-## First Quadrant
-
-```text
-Positive Voltage
-Positive Current
-```
-
-Motor operates normally.
-
-Forward motoring.
-
----
-
-## Four Quadrants
+Motor drives are described using torque and speed quadrants:
 
 ```text
       Speed
 
         +
-        |
-   II   |   I
-        |
---------+--------
-        |
-   III  |   IV
-        |
+        │
+   II   │   I
+        │
+────────┼────────
+        │
+   III  │   IV
+        │
         -
 ```
 
----
-
-## Practical Relevance
-
-Most microcontroller motor control projects operate in:
-
-```text
-First Quadrant
-```
-
-only.
-
-This is sufficient for:
-
-- PWM speed control
-- Buck converters
-- Basic robotics
-
----
-
-## Relationship to Previous Projects
-
-### Project 5
-
-PWM motor control.
-
----
-
-### Project 9
-
-Buck Converter.
-
-Type A Chopper.
-
----
-
-### Project 11
-
-Boost Converter.
-
-Type B Chopper.
+Most microcontroller motor control projects operate in First Quadrant only (positive voltage, positive current), which is sufficient for PWM speed control and Buck converters.
 
 ---
 
 ## Chopper Controlled Motor Drive
 
-```mermaid
-graph LR
-
-A[Battery]
---> B[MOSFET Chopper]
-
-B --> C[DC Motor]
+```text
+Battery (+)
+    │
+MOSFET Chopper (PWM controlled)
+    │
+DC Motor
+    │
+Battery (−) / GND
 ```
 
----
-
-## How Speed Control Works
-
-Motor average voltage is:
+Motor average voltage:
 
 $$
-V_{AVG}=D \cdot V_S
+V_{AVG} = D \cdot V_S
 $$
-
-Where:
-
-- $V_S$ = Supply Voltage
-- $D$ = Duty Cycle
 
 Motor speed is approximately proportional to average voltage.
 
@@ -368,7 +186,7 @@ Motor speed is approximately proportional to average voltage.
 
 ## MATLAB Simulation
 
-Before building the circuit, simulate the chopper waveforms and unified converter comparison to consolidate what you have learned in Projects 9, 10 and 11.
+Before building the circuit, simulate the chopper waveforms and unified converter comparison.
 
 ### Unified Chopper Comparison
 
@@ -410,7 +228,7 @@ for i = 1:3
     yline(Vin*D, 'r--', sprintf('V_{AVG}=%.2fV', Vin*D));
     ylim([-0.5, 6]); grid on;
     ylabel('V (V)');
-    title(sprintf('D = %d%%  \\rightarrow  V_{AVG} = %.2fV', D*100, Vin*D));
+    title(sprintf('D = %d%%  \rightarrow  V_{AVG} = %.2fV', D*100, Vin*D));
 end
 xlabel('Time (ms)');
 sgtitle('Chopper Waveforms - 490 Hz, V_{IN}=5V');
@@ -426,92 +244,81 @@ sgtitle('Chopper Waveforms - 490 Hz, V_{IN}=5V');
 
 ---
 
+## Components Required
+
+- Arduino Uno or ESP32 DevKit V1
+- Breadboard
+- Jumper wires
+- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
+
+---
+
 ## Experiment 1 - PWM Chopper Waveform
 
 ### Objective
 
-Observe chopper operation using controller PWM.
+Observe the chopper switching waveform and measure its average voltage at 50% duty cycle.
 
 ---
 
-## Arduino Code
+### Connections
+
+```text
+Probe Tip  ──────► Arduino Pin D9  (or ESP32 GPIO18)
+Probe GND  ──────► Arduino GND
+```
+
+No breadboard components are needed for this experiment.
+
+---
+
+### Arduino Code
 
 ```cpp
 void setup()
 {
-    pinMode(9,OUTPUT);
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
 }
 
 void loop()
 {
-    analogWrite(9,128);
+    // Output 50% duty cycle PWM — this is the chopper switching signal.
+    // Average voltage = 0.5 × V_S ≈ 2.5 V from a 5 V supply.
+    analogWrite(9, 128);
 }
 ```
 
-### ESP32 Equivalent (LEDC PWM)
+### ESP32 Equivalent Code
 
 ```cpp
-const int PWM_PIN  = 18;
-const int PWM_CH   = 0;
-const int PWM_FREQ = 500;
-const int PWM_RES  = 8;
-
 void setup()
 {
-    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+    // Configure LEDC channel 0: 500 Hz, 8-bit resolution.
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(18, 0);
 }
 
 void loop()
 {
-    ledcWrite(PWM_PIN, 128);
+    // Set duty cycle to 128/255 ≈ 50%.
+    ledcWrite(0, 128);
 }
 ```
 
 ---
 
-## Oscilloscope Setup
+### Oscilloscope Settings
 
-Probe Tip:
-
-```text
-PWM node (Arduino Pin 9 or ESP32 GPIO18)
-```
-
-Probe Ground:
-
-```text
-Controller ground
-```
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 500 µs/div | 500 µs/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
 
 ---
 
-## Oscilloscope Settings (OWON Baseline)
-
-Recommended scope: OWON HDS272S.
-
-Compatible alternative: DSO Nano.
-
-Vertical:
-
-```text
-2 V/div
-```
-
-Horizontal:
-
-```text
-500 µs/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
-
----
-
-## Expected Waveform
+### Expected Waveform
 
 ```text
 5V ─────      ─────
@@ -522,151 +329,66 @@ Rising Edge
 
 ---
 
-## Measurements
+### Observe
 
-| Parameter | Expected |
-|------------|-----------|
-| Frequency | ~490 Hz |
-| Duty Cycle | ~50% |
-| Peak Voltage | ~V_S (about 5V Arduino or about 3.3V ESP32) |
+The waveform should switch between 0 V and approximately 5 V at ~490 Hz with equal ON and OFF times.
+
+---
+
+### Measurements
+
+| Parameter | Expected | Measured |
+|-----------|----------|---------|
+| Frequency | ~490 Hz | |
+| Duty Cycle | ~50% | |
+| Peak Voltage | ~5 V (Arduino) / ~3.3 V (ESP32) | |
 
 ---
 
 ## Experiment 2 - Duty Cycle Investigation
 
-### Test A
+### Objective
+
+Observe how changing duty cycle changes the average output voltage — the fundamental principle of chopper speed control.
+
+---
+
+### Code
 
 ```cpp
-analogWrite(9,64);
-```
+void setup() {}
 
-ESP32 equivalent duty command:
+void loop()
+{
+    // Step through three duty cycles with a 3-second pause at each.
+    // Average voltage = D × V_S at each step.
 
-```cpp
-ledcWrite(PWM_PIN, 64);
-```
+    analogWrite(9, 64);    // ~25% duty cycle → V_AVG ≈ 1.25 V
+    delay(3000);
 
-Expected Duty Cycle:
+    analogWrite(9, 128);   // ~50% duty cycle → V_AVG ≈ 2.5 V
+    delay(3000);
 
-```text
-25%
+    analogWrite(9, 192);   // ~75% duty cycle → V_AVG ≈ 3.75 V
+    delay(3000);
+}
 ```
 
 ---
 
-### Test B
+### Results Table
 
-```cpp
-analogWrite(9,128);
-```
-
-ESP32 equivalent duty command:
-
-```cpp
-ledcWrite(PWM_PIN, 128);
-```
-
-Expected Duty Cycle:
-
-```text
-50%
-```
-
----
-
-### Test C
-
-```cpp
-analogWrite(9,192);
-```
-
-ESP32 equivalent duty command:
-
-```cpp
-ledcWrite(PWM_PIN, 192);
-```
-
-Expected Duty Cycle:
-
-```text
-75%
-```
-
----
-
-## Results Table
-
-| PWM Value | Duty Cycle | Observation |
-|------------|------------|-------------|
+| PWM Value | Duty Cycle | Measured V\_{AVG} |
+|-----------|------------|------------------|
 | 64 | 25% | |
 | 128 | 50% | |
 | 192 | 75% | |
 
 ---
 
-## Chopper Efficiency
-
-The MOSFET is typically either:
-
-```text
-Fully ON
-```
-
-or
-
-```text
-Fully OFF
-```
-
-Therefore:
-
-```text
-Switching Losses Are Small
-```
-
-compared with linear control.
-
----
-
-## Industrial Applications
-
-Choppers are used in:
-
-### Electric Vehicles
-
-Battery power conversion.
-
----
-
-### DC Motor Drives
-
-Speed control.
-
----
-
-### Railway Traction
-
-Locomotive drives.
-
----
-
-### Battery Chargers
-
-Efficient regulation.
-
----
-
-### Renewable Energy Systems
-
-Solar power conversion.
-
----
-
 ## MATLAB Comparison
 
-Now overlay your measured duty cycles and average voltages against the ideal chopper theory, and consolidate all three converter types on one plot.
-
-### Enter Your Measured Values
+Overlay your measured average voltages against the ideal chopper theory.
 
 ```matlab
 Vin = 5;
@@ -687,7 +409,6 @@ xlabel('Duty Cycle'); ylabel('Average Voltage (V)');
 title('DC Chopper - Ideal vs Measured');
 legend('Location', 'northwest');
 
-% Print efficiency at each operating point
 fprintf('%-8s %-12s %-12s %-12s\n', 'D', 'V_ideal(V)', 'V_meas(V)', 'Error(%)');
 for i = 1:3
     V_ideal = Vin * D_measured(i);
@@ -724,17 +445,51 @@ ylim([0 20]);
 
 ---
 
+## Troubleshooting
+
+### No PWM Visible
+
+Check:
+
+✅ Probe tip on correct pin (D9 Arduino or GPIO18 ESP32)
+
+✅ Trigger type set to Edge, Rising
+
+✅ Horizontal scale appropriate (500 µs/div for ~490 Hz)
+
+---
+
+### Average Voltage Not Matching Theory
+
+Check:
+
+✅ Duty cycle measured correctly from oscilloscope
+
+✅ Supply voltage measured with multimeter
+
+✅ Probe attenuation setting matches probe switch
+
+---
+
+### Troubleshooting Checklist
+
+✅ Controller powered and sketch uploaded
+
+✅ Probe on PWM pin
+
+✅ Probe ground on GND
+
+✅ Trigger enabled
+
+✅ Correct time scale selected
+
+---
+
 ## Knowledge Check
 
 ### Question 1
 
 What is a chopper converter?
-
-Answer:
-
-```text
-____________________
-```
 
 ---
 
@@ -742,23 +497,11 @@ ____________________
 
 Why is PWM used in choppers?
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 3
 
 What type of chopper is a Buck Converter?
-
-Answer:
-
-```text
-____________________
-```
 
 ---
 
@@ -766,33 +509,17 @@ ____________________
 
 What determines the average output voltage?
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 5
 
 Why are chopper converters efficient?
 
-Answer:
-
-```text
-____________________
-```
+---
 
 ### Question 6
 
-A DC motor drive and a Buck Converter both use the equation VAVG = D × VS. Explain one key circuit difference between them that makes the Buck Converter suitable for powering sensitive electronics while the basic motor chopper is not.
-
-Answer:
-
-```text
-____________________
-```
+A DC motor drive and a Buck Converter both use the equation $V_{AVG} = D \times V_S$. Explain one key circuit difference between them that makes the Buck Converter suitable for powering sensitive electronics while the basic motor chopper is not.
 
 ---
 
@@ -814,25 +541,13 @@ In this project you learned:
 
 ✅ Industrial power electronics terminology
 
-You now understand the broader industrial terminology that connects:
-
-- PWM
-- Motor Drives
-- Buck Converters
-- Boost Converters
-- DC-DC Converters
-
-under the common category of:
-
-```text
-DC Chopper Converters
-```
-
 ---
 
 ## Next Project
 
-**05_AC_DC_Rectifiers.md**
+```text
+05_AC_DC_Rectifiers.md
+```
 
 Topics:
 

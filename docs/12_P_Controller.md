@@ -58,34 +58,17 @@ At the end of this project you should be able to:
 
 A control system attempts to make a system behave in a desired manner.
 
-Examples:
-
-- Maintain motor speed
-- Regulate converter voltage
-- Control robot position
-- Control room temperature
-
 Every control system has:
 
 ```text
-Reference
-↓
-Controller
-↓
-Plant
-↓
-Output
+Reference → Controller → Plant → Output
 ```
 
 ---
 
 ## Open-Loop Control
 
-Open-loop control means:
-
-```text
-No Feedback
-```
+Open-loop control means no feedback.
 
 The controller sends commands without measuring the result.
 
@@ -101,158 +84,48 @@ The controller assumes the motor behaves correctly.
 
 ## Open-Loop Block Diagram
 
-```mermaid
-graph LR
-
-A[Controller]
---> B[Plant]
-
-B --> C[Output]
+```text
+Controller → Plant → Output
 ```
 
 ---
 
 ## Problems with Open-Loop Control
 
-Suppose a motor is running at:
+Suppose a motor is running at 500 RPM and an extra load is applied.
 
-```text
-500 RPM
-```
-
-and an extra load is applied.
-
-The speed drops to:
-
-```text
-300 RPM
-```
+The speed drops to 300 RPM.
 
 The controller does not know this has happened.
 
-Therefore:
-
-```text
-No correction occurs
-```
+Therefore no correction occurs.
 
 ---
 
 ## Closed-Loop Control
 
-Closed-loop control uses:
-
-```text
-Feedback
-```
+Closed-loop control uses feedback.
 
 The output is measured and returned to the controller.
 
-The controller continuously compares:
-
-```text
-Desired Value
-```
-
-with
-
-```text
-Actual Value
-```
+The controller continuously compares the desired value with the actual value.
 
 ---
 
 ## Closed-Loop Block Diagram
 
-```mermaid
-graph LR
-
-R[Reference]
---> E[Error]
-
-E --> C[Controller]
-
-C --> P[Plant]
-
-P --> Y[Output]
-
-Y --> F[Feedback]
-
-F --> E
-```
-
----
-
-## Advantages of Feedback
-
-Feedback can:
-
-✅ Reduce error
-
-✅ Improve accuracy
-
-✅ Reject disturbances
-
-✅ Improve repeatability
-
-✅ Maintain performance despite varying conditions
-
----
-
-## Reference Signal
-
-The reference is the desired value.
-
-Examples:
-
 ```text
-Desired Speed
-
-Desired Voltage
-
-Desired Position
-
-Desired Temperature
+Reference → [−] → Controller → Plant → Output
+               ↑                          │
+               └──────── Feedback ────────┘
 ```
-
-Symbol:
-
-$$
-r(t)
-$$
-
----
-
-## Output Signal
-
-The output is the actual measured value.
-
-Examples:
-
-```text
-Actual Speed
-
-Actual Voltage
-
-Actual Position
-
-Actual Temperature
-```
-
-Symbol:
-
-$$
-y(t)
-$$
 
 ---
 
 ## Error Signal
 
-The error is the difference between the desired value and the measured value.
-
 $$
-e(t)=r(t)-y(t)
+e(t) = r(t) - y(t)
 $$
 
 Where:
@@ -261,54 +134,20 @@ Where:
 - $r(t)$ = Reference Signal
 - $y(t)$ = Output Signal
 
----
+### Example
 
-## Example
-
-Given:
+$r = 100$, $y = 70$:
 
 $$
-r=100
+e = 100 - 70 = 30
 $$
-
-and
-
-$$
-y=70
-$$
-
-Then:
-
-$$
-e=r-y
-$$
-
-$$
-e=100-70
-$$
-
-$$
-e=30
-$$
-
----
-
-## Proportional Control
-
-The simplest controller is:
-
-```text
-P Controller
-```
-
-The controller output is proportional to the error.
 
 ---
 
 ## Proportional Control Equation
 
 $$
-u(t)=K_Pe(t)
+u(t) = K_P e(t)
 $$
 
 Where:
@@ -321,106 +160,54 @@ Where:
 
 ## Understanding Gain
 
-The gain determines how strongly the controller reacts to error.
-
----
-
 ### Small Gain Example
 
-Given:
+$K_P = 0.5$, $e = 20$:
 
 $$
-K_P=0.5
-$$
-
-and
-
-$$
-e=20
-$$
-
-Then:
-
-$$
-u=K_Pe
-$$
-
-$$
-u=0.5 \cdot 20
-$$
-
-$$
-u=10
+u = 0.5 \times 20 = 10
 $$
 
 The controller responds gently.
 
----
-
 ### Large Gain Example
 
-Given:
+$K_P = 5$, $e = 20$:
 
 $$
-K_P=5
-$$
-
-and
-
-$$
-e=20
-$$
-
-Then:
-
-$$
-u=5 \cdot 20
-$$
-
-$$
-u=100
+u = 5 \times 20 = 100
 $$
 
 The controller responds aggressively.
 
 ---
 
-## Control Concept
+## Steady-State Error
 
-```text
-Error
-  ↓
-Controller
-  ↓
-Correction
-  ↓
-Reduced Error
-```
+One limitation of a proportional controller is that the output often remains slightly different from the reference.
+
+Example:
+
+$r = 100$, $y = 95$:
+
+$$
+e = 100 - 95 = 5
+$$
+
+The controller gets close to the target but does not completely eliminate the error.
 
 ---
 
 ## MATLAB Simulation
 
-Before building the circuit, simulate the closed-loop P controller applied to the first-order motor model from Project 5.
+Before building the circuit, simulate the closed-loop P controller applied to the first-order motor model from Project 10.
 
 ### Closed-Loop Step Response — Effect of Kp
 
-The closed-loop transfer function for a P controller with a first-order plant is:
-
-$$
-T(s) = \frac{K_P G(s)}{1 + K_P G(s)}
-$$
-
-where:
-
-$$
-G(s) = \frac{K}{\tau s + 1}
-$$
-
 ```matlab
-% Use the motor model identified in Project 5
+% Use the motor model identified in Project 10
 K   = 1;
-tau = 0.5;          % replace with your measured tau from Project 5
+tau = 0.5;          % replace with your measured tau from Project 10
 
 G = tf(K, [tau, 1]);
 
@@ -444,12 +231,6 @@ legend('Location', 'southeast');
 
 ### Steady-State Error vs Kp
 
-For a first-order plant with unity feedback, the steady-state error is:
-
-$$
-e_{ss} = \frac{1}{1 + K_P K}
-$$
-
 ```matlab
 Kp_range = 0.1:0.1:20;
 K = 1;
@@ -464,8 +245,6 @@ title('P Controller - Steady-State Error vs Gain');
 
 ### Prediction Table
 
-Record your predicted steady-state error before experimenting:
-
 | Kp | Predicted e\_{ss} (%) | Expected behaviour |
 |----|----------------------|--------------------|
 | 0.5 | | |
@@ -478,23 +257,17 @@ Record your predicted steady-state error before experimenting:
 
 ## Components Required
 
-From your existing kit:
-
-- Arduino Uno
-- ESP32 DevKit V1 (alternative controller)
-- Breadboard
+- Arduino Uno or ESP32 DevKit V1
+- Breadboard and jumper wires
 - Potentiometer (speed setpoint)
 - IRLZ44N MOSFET
 - DC Motor
 - Flyback diode (1N4001–1N4007)
-- 220 Ω resistor (gate resistor)
+- 220 Ω gate resistor
 - 2 × 10 kΩ resistors (back-EMF voltage divider)
-- Jumper wires
 - External battery pack
-
-Equipment:
-
-- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
+- OWON HDS272S Oscilloscope (recommended)
+- DSO Nano Oscilloscope (compatible)
 
 ---
 
@@ -506,32 +279,54 @@ Generate a user-adjustable reference input using the potentiometer.
 
 ---
 
-## Wiring
+### Circuit Diagram
 
-```mermaid
-graph LR
-
-A[Controller VCC\n5V Uno or 3.3V ESP32]
---> B[Potentiometer]
-
-B --> C[A0]
-
-D[GND]
---> B
+```text
+Arduino 5V  (or ESP32 3.3V)
+    │
+  Left leg of potentiometer
+  Centre leg ──── A0  (Arduino analogue input)
+  Right leg
+    │
+Arduino GND
 ```
 
 ---
 
-## Arduino Code
+### Step-by-Step Wiring
+
+1. Insert the potentiometer into the breadboard so all three legs are in separate rows.
+2. Connect a jumper wire from **Arduino 5V** (or **ESP32 3.3V**) to the **left outer leg**.
+3. Connect a jumper wire from the **centre leg** (wiper) to **Arduino A0** (or **ESP32 GPIO34**).
+4. Connect a jumper wire from the **right outer leg** to **Arduino GND**.
+
+---
+
+### Wiring Checklist
+
+Before uploading:
+
+✅ 5V (or 3.3V) connected to one outer leg
+
+✅ GND connected to the other outer leg
+
+✅ Centre (wiper) leg connected to A0 (or GPIO34)
+
+---
+
+### Arduino Code
 
 ```cpp
 void setup()
 {
+    // Start serial communication to display the reference value.
     Serial.begin(9600);
 }
 
 void loop()
 {
+    // Read the potentiometer — this is the desired speed setpoint.
+    // analogRead() returns 0–1023 on Arduino Uno.
     int reference = analogRead(A0);
 
     Serial.println(reference);
@@ -540,7 +335,7 @@ void loop()
 }
 ```
 
-### ESP32 Equivalent
+### ESP32 Equivalent Code
 
 ```cpp
 const int REF_PIN = 34;   // potentiometer wiper to ADC pin
@@ -552,7 +347,8 @@ void setup()
 
 void loop()
 {
-    int reference = analogRead(REF_PIN);   // 0-4095 on 12-bit ADC
+    // analogRead() returns 0–4095 on ESP32 12-bit ADC.
+    int reference = analogRead(REF_PIN);
 
     Serial.println(reference);
 
@@ -562,15 +358,9 @@ void loop()
 
 ---
 
-## Expected Behaviour
+### Observe
 
-Rotating the potentiometer changes the measured value between approximately:
-
-```text
-0 and full ADC scale (about 0-1023 on Arduino Uno, about 0-4095 on ESP32)
-```
-
-This value represents the desired motor speed setpoint.
+Rotating the potentiometer should change the Serial Monitor value between approximately 0 and full ADC scale.
 
 ---
 
@@ -586,57 +376,74 @@ When a DC motor spins it generates a voltage proportional to speed — this is c
 
 ---
 
-## Back-EMF Sensing Circuit
-
-Add a voltage divider from the motor positive terminal to GND:
+### Circuit Diagram
 
 ```text
-Battery +
-    |
+Battery (+)
+    │
   Motor
-    |--- Flyback diode (cathode to Battery+)
-    |
-    +--- 10kΩ ---+--- A1
-                 |
-               10kΩ
-                 |
-                GND
-  Drain
-  MOSFET (IRLZ44N)
+    │──── Flyback diode (cathode toward Battery+)
+    │
+    ├──── 10 kΩ ──── A1  (back-EMF feedback)
+                │
+              10 kΩ
+                │
+               GND
+
+  Drain (MOSFET IRLZ44N)
   Source
-    |
+    │
    GND
 
-PWM Output (Arduino Pin 9 or ESP32 GPIO18) --- 220Ω --- Gate
-Potentiometer centre pin --- A0
+PWM Output (Arduino Pin 9 or ESP32 GPIO18) ──── 220 Ω ──── Gate
+Potentiometer centre pin ──── A0
 ```
 
-For ESP32, map A0/A1 equivalents to available ADC pins (for example REF_PIN=GPIO34 and FBK_PIN=GPIO35).
+For ESP32, use GPIO34 for the reference and GPIO35 for the feedback.
 
-The divider scales the motor terminal voltage so it stays within the ADC range.
-Use divider values compatible with your controller: 0-5V for Arduino Uno ADC, 0-3.3V for ESP32 ADC.
+The voltage divider scales the motor terminal voltage to stay within the ADC range.
 
 ---
 
-## Arduino Code
+### Wiring Checklist
+
+Before uploading:
+
+✅ Motor circuit wired correctly (MOSFET + flyback diode, same as Project 10)
+
+✅ 10 kΩ divider connected from motor positive terminal to A1 (midpoint) to GND
+
+✅ Potentiometer wiper connected to A0
+
+✅ Shared GND between Arduino, battery, and MOSFET Source
+
+---
+
+### Arduino Code
 
 ```cpp
-float Kp = 0.5;
+float Kp = 0.5;   // proportional gain — adjust during Experiment 3
 
 void setup()
 {
+    // Configure pin 9 as PWM output for the MOSFET gate.
     pinMode(9, OUTPUT);
     Serial.begin(9600);
 }
 
 void loop()
 {
-    int reference = analogRead(A0);   // desired speed setpoint (0-1023)
-    int feedback  = analogRead(A1);   // back-EMF proxy (0-1023, scaled x2 for actual)
+    int reference = analogRead(A0);   // desired speed setpoint (0–1023)
+    int feedback  = analogRead(A1);   // back-EMF proxy (0–1023)
 
+    // Calculate error: positive error means motor is too slow.
     int error  = reference - feedback;
+
+    // P controller: output proportional to error.
     int output = (int)(Kp * error);
-    output     = constrain(output, 0, 255);
+
+    // Clamp output to valid PWM range.
+    output = constrain(output, 0, 255);
 
     analogWrite(9, output);
 
@@ -649,34 +456,34 @@ void loop()
 }
 ```
 
-### ESP32 Equivalent (LEDC + ADC Feedback)
+### ESP32 Equivalent Code
 
 ```cpp
-const int PWM_PIN   = 18;
-const int PWM_CH    = 0;
-const int PWM_FREQ  = 500;
-const int PWM_RES   = 8;
-const int REF_PIN   = 34;   // potentiometer wiper
-const int FBK_PIN   = 35;   // back-EMF divider output
+const int PWM_PIN  = 18;
+const int REF_PIN  = 34;   // potentiometer wiper
+const int FBK_PIN  = 35;   // back-EMF divider output
 
 float Kp = 0.5;
 
 void setup()
 {
-    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+    // Configure LEDC channel 0: 500 Hz, 8-bit resolution.
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(PWM_PIN, 0);
     Serial.begin(115200);
 }
 
 void loop()
 {
-    int reference = analogRead(REF_PIN);   // 0-4095 on ESP32 ADC
+    int reference = analogRead(REF_PIN);   // 0–4095 on ESP32 ADC
     int feedback  = analogRead(FBK_PIN);   // back-EMF proxy
 
+    // Scale 12-bit error to 8-bit PWM domain.
     int error  = reference - feedback;
-    int output = (int)(Kp * error / 16.0); // scale 12-bit error to 8-bit PWM
+    int output = (int)(Kp * error / 16.0);
     output     = constrain(output, 0, 255);
 
-    ledcWrite(PWM_PIN, output);
+    ledcWrite(0, output);
 
     Serial.print("Ref: ");  Serial.print(reference);
     Serial.print("  Fbk: "); Serial.print(feedback);
@@ -689,19 +496,11 @@ void loop()
 
 ---
 
-## What Is Happening?
+### What Is Happening?
 
-The potentiometer sets the reference:
+The potentiometer sets the reference $r$.
 
-$$
-r
-$$
-
-The back-EMF divider measures actual motor speed (proxy):
-
-$$
-y
-$$
+The back-EMF divider measures actual motor speed (proxy) $y$.
 
 The P controller computes:
 
@@ -709,11 +508,11 @@ $$
 u = K_P (r - y)
 $$
 
-This is now a **true closed loop** — the controller reacts to the difference between desired and actual speed.
+This is a true closed loop — the controller reacts to the difference between desired and actual speed.
 
 ---
 
-## Observe
+### Observe
 
 With the loop closed:
 
@@ -735,7 +534,7 @@ ____________________________________
 
 Observe how Kp changes closed-loop behaviour.
 
-Use the same closed-loop code from Experiment 2. Change only the Kp value.
+Use the same closed-loop code from Experiment 2. Change only the Kp value at the top of the sketch.
 
 ---
 
@@ -795,7 +594,7 @@ ______________________
 
 ---
 
-## Results Table
+### Results Table
 
 | Kp | Motor behaviour | PWM saturates? |
 |----|----------------|----------------|
@@ -806,112 +605,25 @@ ______________________
 
 ---
 
-## Experiment 4 - Error Calculation
-
-Suppose the desired speed corresponds to:
-
-$$
-r = 200
-$$
-
-and the measured output is:
-
-$$
-y = 150
-$$
-
-Calculate error:
-
-$$
-e = r - y = 200 - 150 = 50
-$$
-
-If:
-
-$$
-K_P = 2
-$$
-
-Then:
-
-$$
-u = K_P e = 2 \times 50 = 100
-$$
-
-The controller increases PWM to reduce the error.
-
----
-
-## Control Loop Representation
-
-```mermaid
-graph LR
-
-R[Reference\nPotentiometer A0]
---> E[Error]
-
-E --> C[P Controller]
-
-C --> P[MOSFET + Motor]
-
-P --> Y[Motor Speed]
-
-Y --> F[Back-EMF Divider\nA1]
-
-F --> E
-```
-
----
-
 ## Oscilloscope Exercise
 
 Observe how the PWM duty cycle changes as you rotate the potentiometer.
 
----
-
-## Probe Connections
-
-Probe Tip:
-
 ```text
-MOSFET Gate PWM node (Arduino Pin 9 or ESP32 GPIO18)
+Probe Tip  ──────► MOSFET Gate (Arduino Pin 9 or ESP32 GPIO18)
+Probe GND  ──────► Arduino GND
 ```
 
-Probe Ground:
-
-```text
-GND
-```
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 500 µs/div | 500 µs/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
 
 ---
 
-## Oscilloscope Settings (OWON Baseline)
-
-Recommended scope: OWON HDS272S.
-
-Compatible alternative: DSO Nano.
-
-Vertical:
-
-```text
-2 V/div
-```
-
-Horizontal:
-
-```text
-500 us/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
-
----
-
-## Observation
+### Observe
 
 Rotate the potentiometer slowly from minimum to maximum.
 
@@ -921,95 +633,19 @@ Observe:
 - Motor speed increases
 - At high Kp, PWM saturates at 100% before pot reaches maximum
 
-Record:
-
-```text
-____________________________________
-```
-
----
-
-## Steady-State Error
-
-One limitation of a proportional controller is:
-
-```text
-Steady-State Error
-```
-
-The output often remains slightly different from the reference.
-
----
-
-## Example
-
-Reference:
-
-$$
-r=100
-$$
-
-Output:
-
-$$
-y=95
-$$
-
-Therefore:
-
-$$
-e=r-y
-$$
-
-$$
-e=100-95
-$$
-
-$$
-e=5
-$$
-
-The controller gets close to the target but does not completely eliminate the error.
-
----
-
-## Limitations of Proportional Control
-
-Increasing gain usually reduces error.
-
-However excessively high gain can cause:
-
-- Oscillation
-- Instability
-- Overshoot
-
-A balance must be found between:
-
-```text
-Responsiveness
-```
-
-and
-
-```text
-Stability
-```
-
 ---
 
 ## MATLAB Comparison
 
-Now simulate the closed-loop response using your actual Kp values from Experiment 3 and the motor model from Project 5.
-
-### Enter Your Parameters
+Simulate the closed-loop response using your actual Kp values from Experiment 3 and the motor model from Project 10.
 
 ```matlab
 K   = 1;
-tau = 0.5;       % your measured tau from Project 5 (s)
+tau = 0.5;       % your measured tau from Project 10 (s)
 
 G = tf(K, [tau, 1]);
 
-Kp_tested = [0.1, 0.25, 0.5, 1.0];   % your Experiment 3 values
+Kp_tested = [0.1, 0.25, 0.5, 1.0];
 labels    = {'Kp=0.1','Kp=0.25','Kp=0.5','Kp=1.0'};
 
 t = 0:0.01:5;
@@ -1034,41 +670,62 @@ legend('Location', 'southeast');
 - Which Kp gave the fastest response without saturation?
 - Does the simulated steady-state error match the formula $e_{ss} = 1/(1 + K_P K)$?
 - What would happen to the response if τ were larger (heavier motor load)?
-- The back-EMF feedback is a proxy for speed, not a true tachometer. How does winding resistance affect the accuracy of this feedback signal, and in which direction would it bias the steady-state error?
 
 ---
 
-## Engineering Applications
+## Troubleshooting
 
-Proportional control is used in:
+### Motor Doesn't Respond to Pot
 
-### Motor Speed Control
+Check:
 
-Basic regulation.
+✅ MOSFET wiring correct
 
----
+✅ Battery connected
 
-### Temperature Control
+✅ Shared GND between controller and motor supply
 
-Simple thermostats.
-
----
-
-### Position Control
-
-Actuator systems.
+✅ Flyback diode installed
 
 ---
 
-### Voltage Regulation
+### PWM Saturates Immediately
 
-Basic power electronics.
+Check:
+
+✅ Reduce Kp value
+
+✅ Check potentiometer reading in Serial Monitor
 
 ---
 
-### Robotics
+### Potentiometer Not Responding
 
-Basic servo control loops.
+Check:
+
+✅ Centre pin connected to A0 (Arduino) or REF_PIN (ESP32)
+
+✅ Controller VCC and GND connected to outer pins
+
+---
+
+### Troubleshooting Checklist
+
+✅ Motor circuit wired correctly (MOSFET + flyback diode)
+
+✅ Back-EMF divider connected to feedback ADC input
+
+✅ Shared GND between controller and battery
+
+✅ Potentiometer reading changes in Serial Monitor
+
+✅ Feedback reading changes with motor speed in Serial Monitor
+
+✅ PWM duty cycle visible on oscilloscope
+
+✅ Motor speed changes with potentiometer
+
+✅ Controller reacts to manual load disturbance
 
 ---
 
@@ -1078,23 +735,11 @@ Basic servo control loops.
 
 What is feedback?
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 2
 
 What is the error signal?
-
-Answer:
-
-```text
-____________________
-```
 
 ---
 
@@ -1102,23 +747,11 @@ ____________________
 
 Write the proportional controller equation.
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 4
 
 What happens when Kp increases?
-
-Answer:
-
-```text
-____________________
-```
 
 ---
 
@@ -1126,86 +759,11 @@ ____________________
 
 Why can a proportional controller still have steady-state error?
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 6
 
-Your simulation shows e_ss = 16.7% at Kp = 5. What would Kp need to be to reduce e_ss below 5%? Show your working using the formula $e_{ss} = 1/(1 + K_P K)$.
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-## Common Mistakes
-
-### Motor Doesn't Respond to Pot
-
-Check:
-
-- MOSFET wiring
-- Battery connected
-- Shared ground between controller and motor supply
-- Flyback diode installed
-
----
-
-### PWM Saturates Immediately
-
-Check:
-
-- Kp value (reduce it)
-- Potentiometer reading in Serial Monitor
-
----
-
-### Potentiometer Not Responding
-
-Check:
-
-- Centre pin connected to reference ADC input (A0 on Arduino, REF_PIN on ESP32)
-- Controller VCC and GND connected to outer pins
-
----
-
-### No PWM Visible on Oscilloscope
-
-Check:
-
-- Probe on MOSFET gate
-- Trigger setting
-- Controller code uploaded
-
----
-
-## Troubleshooting Checklist
-
-✅ Motor circuit wired correctly (MOSFET + flyback diode)
-
-✅ Back-EMF divider connected to feedback ADC input (A1 on Arduino or FBK_PIN on ESP32)
-
-✅ Shared ground between controller and battery
-
-✅ Potentiometer reading changes in Serial Monitor
-
-✅ Feedback reading changes with motor speed in Serial Monitor
-
-✅ PWM duty cycle visible on oscilloscope (OWON or DSO Nano)
-
-✅ Motor speed changes with potentiometer
-
-✅ Controller reacts to manual load disturbance
-
-✅ Kp value produces unsaturated PWM range
+Your simulation shows $e_{ss}$ = 16.7% at Kp = 5. What would Kp need to be to reduce $e_{ss}$ below 5%? Show your working using the formula $e_{ss} = 1/(1 + K_P K)$.
 
 ---
 
@@ -1229,17 +787,17 @@ In this project you learned:
 
 ✅ Steady-state error
 
-✅ Disturbance rejection (manual load test)
+✅ Disturbance rejection
 
 ✅ Controller behaviour
-
-These concepts are the foundation of all modern control systems.
 
 ---
 
 ## Next Project
 
-**13_PI_Controller.md**
+```text
+13_PI_Controller.md
+```
 
 Topics:
 

@@ -30,15 +30,7 @@ In this project you will learn:
 - How to tune a closed-loop converter
 - How control theory and power electronics work together
 
-This project combines:
-
-```text
-Power Electronics
-+
-Control Systems
-```
-
-to create a practical regulated power supply.
+This project combines power electronics and control systems to create a practical regulated power supply.
 
 ---
 
@@ -64,25 +56,9 @@ At the end of this project you should be able to:
 
 ## Introduction
 
-In Project 9 the Buck Converter operated in:
+In Project 08 the Buck Converter operated in open loop.
 
-```text
-Open Loop
-```
-
-The controller generated a fixed duty cycle.
-
-Example:
-
-```text
-Duty Cycle = 50%
-```
-
-The converter output depended entirely on:
-
-- Input voltage
-- Component values
-- Load conditions
+The controller generated a fixed duty cycle and the output depended entirely on input voltage, component values, and load conditions.
 
 No automatic correction occurred.
 
@@ -90,27 +66,13 @@ No automatic correction occurred.
 
 ## Problem with Open-Loop Operation
 
-Suppose:
+Suppose $V_{OUT} = 5\ \text{V}$ and the load increases.
 
-$$
-V_{OUT}=5V
-$$
-
-and the load increases.
-
-The voltage may fall to:
-
-$$
-4.5V
-$$
+The voltage may fall to $4.5\ \text{V}$.
 
 An open-loop controller does not detect the error.
 
-Therefore:
-
-```text
-No Correction Occurs
-```
+Therefore no correction occurs.
 
 ---
 
@@ -126,242 +88,51 @@ The controller then adjusts duty cycle automatically.
 
 ## Closed-Loop Block Diagram
 
-```mermaid
-graph LR
-
-R[Reference Voltage]
---> E[Error Calculation]
-
-E --> C[PI Controller]
-
-C --> P[Buck Converter]
-
-P --> Y[Output Voltage]
-
-Y --> F[Voltage Feedback]
-
-F --> E
+```text
+Reference Voltage → [−] → PI Controller → Buck Converter → Output Voltage
+                       ↑                                          │
+                       └──────────── Voltage Feedback ────────────┘
 ```
 
 ---
 
-## Reference Voltage
+## Voltage Divider Circuit
 
-The desired output voltage is called the:
+The controller ADC can only measure voltages within its supported range.
+
+A voltage divider scales the converter output to a safe level:
 
 ```text
-Reference
+Vout
+  │
+ 10 kΩ
+  │──── A0  (ADC input)
+ 10 kΩ
+  │
+ GND
 ```
 
-Symbol:
+For equal resistors:
 
 $$
-r(t)
+V_{A0} = \frac{V_{OUT}}{2}
 $$
-
-Example:
-
-$$
-r=5V
-$$
-
----
-
-## Measured Output Voltage
-
-The actual converter output is:
-
-$$
-y(t)
-$$
-
-Example:
-
-$$
-y=4.7V
-$$
-
----
-
-## Error Signal
-
-The controller calculates:
-
-$$
-e(t)=r(t)-y(t)
-$$
-
-Where:
-
-- $e(t)$ = Error
-- $r(t)$ = Reference
-- $y(t)$ = Measured Output
-
----
-
-## Example Error Calculation
-
-Given:
-
-$$
-r=5V
-$$
-
-and:
-
-$$
-y=4.7V
-$$
-
-Then:
-
-$$
-e=r-y
-$$
-
-$$
-e=5-4.7
-$$
-
-$$
-e=0.3V
-$$
-
----
-
-## Controller Response
-
-If:
-
-```text
-Output Voltage Too Low
-```
-
-the controller:
-
-```text
-Increases Duty Cycle
-```
-
----
-
-If:
-
-```text
-Output Voltage Too High
-```
-
-the controller:
-
-```text
-Reduces Duty Cycle
-```
-
----
-
-## Why PI Control Is Common
-
-Buck Converters are frequently regulated using:
-
-```text
-PI Controllers
-```
-
-because they:
-
-✅ Eliminate steady-state error
-
-✅ Provide good regulation
-
-✅ Are easy to implement
-
-✅ Work well in practical systems
 
 ---
 
 ## PI Controller Equation
 
 $$
-u(t)=K_Pe(t)+K_I\int e(t)\,dt
+u(t) = K_P e(t) + K_I \int e(t)\,dt
 $$
-
-Where:
-
-- $u(t)$ = Controller Output
-- $K_P$ = Proportional Gain
-- $K_I$ = Integral Gain
-- $e(t)$ = Error Signal
 
 ---
 
 ## Converter Control Strategy
 
 ```text
-Measure Output
-      ↓
-Calculate Error
-      ↓
-PI Controller
-      ↓
-Adjust Duty Cycle
-      ↓
-Correct Output Voltage
+Measure Output → Calculate Error → PI Controller → Adjust Duty Cycle → Correct Output Voltage
 ```
-
----
-
-## Measuring Converter Output Voltage
-
-Controller ADC inputs can only measure voltages within their supported range.
-
-```text
-0V to ADC full scale
-```
-
-A voltage divider is therefore required.
-
----
-
-## Voltage Divider Circuit
-
-```mermaid
-graph TD
-
-A[Vout]
---> B[10k Ohm]
-
-B --> C[A0]
-
-C --> D[10k Ohm]
-
-D --> E[GND]
-```
-
----
-
-## Divider Equation
-
-$$
-V_{A0}
-=
-V_{OUT}
-\cdot
-\frac{R_2}{R_1+R_2}
-$$
-
-For:
-
-$$
-R_1=R_2
-$$
-
-the divider becomes:
-
-$$
-V_{A0}
-=
-\frac{V_{OUT}}{2}
-$$
 
 ---
 
@@ -370,14 +141,6 @@ $$
 Before building the circuit, simulate the closed-loop PI voltage regulator applied to the Buck Converter plant.
 
 ### Buck Converter Plant Model
-
-The LC output filter of a Buck Converter is a second-order plant:
-
-$$
-G(s) = \frac{1}{LCs^2 + \frac{L}{R}s + 1}
-$$
-
-For a resistive load R and the voltage divider scaling the feedback by 0.5:
 
 ```matlab
 L   = 100e-6;      % 100 uH
@@ -421,35 +184,10 @@ title('Closed-Loop Buck Converter - PI Gain Comparison');
 legend('Location', 'southeast');
 ```
 
-### Simulate Disturbance Rejection
-
-```matlab
-Kp = 10; Ki = 1;
-C_pi  = tf([Kp, Ki], [1, 0]);
-T_cl  = feedback(C_pi * G * Vin, H);
-T_ol  = G * Vin * 0.5;              % open-loop at D=0.5
-
-% Disturbance: step load change modelled as output disturbance
-T_dist_cl = feedback(G * Vin, H * C_pi);   % disturbance to output
-T_dist_ol = G * Vin;                        % no correction
-
-t = 0:0.0001:0.5;
-[y_cl, ~] = step(T_dist_cl * 0.1, t);      % 0.1V disturbance step
-[y_ol_d, ~] = step(T_dist_ol * 0.1, t);
-
-figure; hold on;
-plot(t*1e3, y_ol_d, 'b--', 'LineWidth', 2, 'DisplayName', 'Open-loop');
-plot(t*1e3, y_cl,   'r',   'LineWidth', 2, 'DisplayName', 'Closed-loop PI');
-grid on;
-xlabel('Time (ms)'); ylabel('Voltage Deviation (V)');
-title('Disturbance Rejection - Open vs Closed Loop');
-legend('Location', 'northeast');
-```
-
 ### Prediction Table
 
 | Kp | Ki | Predicted behaviour | Predicted ess |
-|----|----|--------------------|--------------|
+|----|----|--------------------|--------------:|
 | 2 | 0.2 | | |
 | 10 | 1 | | |
 | 50 | 5 | | |
@@ -458,12 +196,12 @@ legend('Location', 'northeast');
 
 ## Components Required
 
-- Arduino Uno
-- ESP32 DevKit V1 (alternative controller)
-- Buck Converter from Project 9
-- 10 kΩ resistor
-- 10 kΩ resistor
-- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
+- Arduino Uno or ESP32 DevKit V1
+- Buck Converter from Project 08 (MOSFET, diode, inductor, capacitor)
+- 2 × 10 kΩ resistors (voltage divider)
+- Breadboard and jumper wires
+- OWON HDS272S Oscilloscope (recommended)
+- DSO Nano Oscilloscope (compatible)
 
 ---
 
@@ -471,20 +209,53 @@ legend('Location', 'northeast');
 
 ### Objective
 
-Read the converter output voltage using the controller ADC.
+Read the converter output voltage using the controller ADC and verify the voltage divider is working correctly.
 
 ---
 
-## Arduino Code
+### Step-by-Step Wiring
+
+Keep the Buck Converter from Project 08 intact.
+
+1. Insert the **first 10 kΩ resistor** so one leg connects to the **Vout node** and the other leg is in a new row. This is the top of the divider.
+2. Insert the **second 10 kΩ resistor** so one leg is in the same row as the bottom of the first resistor and the other leg connects to **GND**. This is the bottom of the divider.
+3. Connect a jumper wire from the **midpoint** (junction between the two resistors) to **Arduino A0** (or **ESP32 GPIO34**).
+
+The midpoint voltage will be:
+
+$$
+V_{A0} = \frac{V_{OUT}}{2}
+$$
+
+---
+
+### Wiring Checklist
+
+Before uploading:
+
+✅ Top resistor connected between Vout and divider midpoint
+
+✅ Bottom resistor connected between divider midpoint and GND
+
+✅ Divider midpoint connected to A0 (Arduino) or GPIO34 (ESP32)
+
+✅ Buck Converter circuit intact from Project 08
+
+---
+
+### Arduino Code
 
 ```cpp
 void setup()
 {
+    // Start serial communication to display the ADC reading.
     Serial.begin(9600);
 }
 
 void loop()
 {
+    // Read the voltage divider midpoint.
+    // This represents Vout / 2.
     int adc = analogRead(A0);
 
     Serial.println(adc);
@@ -493,10 +264,10 @@ void loop()
 }
 ```
 
-### ESP32 Equivalent
+### ESP32 Equivalent Code
 
 ```cpp
-const int FBK_PIN = 34;  // divider midpoint to ADC pin
+const int FBK_PIN = 34;
 
 void setup()
 {
@@ -505,7 +276,8 @@ void setup()
 
 void loop()
 {
-    int adc = analogRead(FBK_PIN);   // 0-4095 on 12-bit ADC
+    // analogRead() returns 0–4095 on ESP32 12-bit ADC.
+    int adc = analogRead(FBK_PIN);
 
     Serial.println(adc);
 
@@ -515,40 +287,22 @@ void loop()
 
 ---
 
-## Expected Behaviour
+### Observe
 
-The ADC value should vary with:
-
-- Output voltage
-- Duty cycle
-- Load conditions
+The ADC value should vary with output voltage and duty cycle.
 
 ---
 
-## Convert ADC Reading to Voltage
+### Convert ADC Reading to Voltage
 
-ADC range examples:
-
-```text
-0 to 1023 (Arduino Uno)
-0 to 4095 (ESP32)
-```
-
-represents:
-
-```text
-0V to 5V (Arduino Uno)
-0V to 3.3V (ESP32)
-```
-
-Measured ADC input voltage:
+For Arduino Uno:
 
 $$
-V_{A0}
-=
-\frac{ADC}{1023}
-\cdot
-5
+V_{A0} = \frac{ADC}{1023} \times 5\ \text{V}
+$$
+
+$$
+V_{OUT} = V_{A0} \times 2
 $$
 
 ---
@@ -557,16 +311,23 @@ $$
 
 ### Objective
 
-Automatically regulate output voltage.
+Automatically regulate the converter output voltage to a fixed reference using a PI controller.
 
 ---
 
-## Arduino Code
+### Circuit
+
+Same as Experiment 1 — voltage divider connected to A0.
+
+---
+
+### Arduino Code
 
 ```cpp
 const float dt        = 0.01;     // sample time (s) — matches delay(10)
-const float Vref      = 2.5;      // target output voltage at A0 (V)
-const float int_max   = 50.0;
+const float Vref      = 2.5;      // target voltage at divider midpoint (V)
+                                  // corresponds to Vout = 5.0 V
+const float int_max   = 50.0;     // anti-windup limit
 
 float Kp = 10.0;
 float Ki = 1.0;
@@ -574,20 +335,25 @@ float integral = 0;
 
 void setup()
 {
-    pinMode(9, OUTPUT);
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
     Serial.begin(9600);
 }
 
 void loop()
 {
+    // Read the voltage divider midpoint.
     int   adc      = analogRead(A0);
-    float Vfb      = (adc / 1023.0) * 5.0;   // voltage at divider midpoint
-    float Vout_est = Vfb * 2.0;               // actual Vout (divider x2)
-    float error    = Vref - Vfb;              // error in divider-scaled units
+    float Vfb      = (adc / 1023.0) * 5.0;   // voltage at divider midpoint (V)
+    float Vout_est = Vfb * 2.0;               // estimated converter output (V)
 
+    // Error in divider-scaled units.
+    float error = Vref - Vfb;
+
+    // Integral term with anti-windup.
     integral = integral + error * dt;
     integral = constrain(integral, -int_max, int_max);
 
+    // PI controller output → PWM duty cycle command.
     float control = Kp * error + Ki * integral;
     control = constrain(control, 0, 255);
 
@@ -601,13 +367,10 @@ void loop()
 }
 ```
 
-### ESP32 Equivalent (LEDC + ADC Feedback)
+### ESP32 Equivalent Code
 
 ```cpp
 const int PWM_PIN  = 18;
-const int PWM_CH   = 0;
-const int PWM_FREQ = 500;
-const int PWM_RES  = 8;
 const int FBK_PIN  = 34;
 
 const float dt      = 0.01;
@@ -620,15 +383,17 @@ float integral = 0;
 
 void setup()
 {
-    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+    // Configure LEDC channel 0: 500 Hz, 8-bit resolution.
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(PWM_PIN, 0);
     Serial.begin(115200);
 }
 
 void loop()
 {
     int   adc      = analogRead(FBK_PIN);
-    float Vfb      = (adc / 4095.0) * 3.3;   // voltage at divider midpoint
-    float Vout_est = Vfb * 2.0;              // estimated converter output
+    float Vfb      = (adc / 4095.0) * 3.3;   // voltage at divider midpoint (V)
+    float Vout_est = Vfb * 2.0;               // estimated converter output (V)
     float error    = Vref - Vfb;
 
     integral = integral + error * dt;
@@ -637,7 +402,7 @@ void loop()
     float control = Kp * error + Ki * integral;
     control = constrain(control, 0, 255);
 
-    ledcWrite(PWM_PIN, (int)control);
+    ledcWrite(0, (int)control);
 
     Serial.print("Vout: ");  Serial.print(Vout_est, 3);
     Serial.print("V  PWM: "); Serial.print((int)control);
@@ -647,41 +412,13 @@ void loop()
 }
 ```
 
-Note: if you change ADC or PWM resolution, rescale and retune Kp/Ki.
-
 ---
 
-## Understanding the Controller
+### Observe
 
-Reference:
+The Serial Monitor should show Vout converging toward the target value.
 
-$$
-r=2.5V
-$$
-
-Feedback:
-
-$$
-y
-$$
-
-Error:
-
-$$
-e=r-y
-$$
-
-Controller:
-
-$$
-u=K_Pe+K_I\int e(t)\,dt
-$$
-
-Controller Output:
-
-```text
-PWM Duty Cycle Command
-```
+The PWM duty cycle should adjust automatically to maintain regulation.
 
 ---
 
@@ -693,47 +430,24 @@ Observe how feedback corrects disturbances.
 
 ---
 
-## Procedure
+### Procedure
 
-Operate the converter normally.
+Operate the converter normally with the PI controller running.
 
 Then:
 
-```text
-Change the Load
-```
-
-or
-
-```text
-Change the Input Voltage Slightly
-```
+- Connect a small additional load resistor across the output, or
+- Briefly change the input voltage slightly.
 
 ---
 
-## Observation
+### Observe
 
 The output voltage will deviate briefly.
 
-The controller will then:
+The controller will then adjust the duty cycle and return the voltage toward the target value.
 
-```text
-Adjust Duty Cycle
-```
-
-and return the voltage toward the target value.
-
----
-
-## Disturbance Rejection
-
-The ability to recover from disturbances is called:
-
-```text
-Disturbance Rejection
-```
-
-This is one of the primary advantages of closed-loop control.
+This ability to recover from disturbances is called **disturbance rejection** — one of the primary advantages of closed-loop control.
 
 ---
 
@@ -745,61 +459,43 @@ Observe how controller gains affect system behaviour.
 
 ---
 
-## Test A
+### Test A
 
 ```cpp
 Kp = 2;
 Ki = 0.2;
 ```
 
-Expected:
-
-```text
-Slow Response
-```
+Expected: slow response.
 
 ---
 
-## Test B
+### Test B
 
 ```cpp
 Kp = 10;
 Ki = 1;
 ```
 
-Expected:
-
-```text
-Balanced Response
-```
+Expected: balanced response.
 
 ---
 
-## Test C
+### Test C
 
 ```cpp
 Kp = 50;
 Ki = 5;
 ```
 
-Expected:
-
-```text
-Very Aggressive Response
-```
-
-Possible:
-
-```text
-Oscillation
-```
+Expected: very aggressive response, possible oscillation.
 
 ---
 
-## Results Table
+### Results Table
 
 | Kp | Ki | Behaviour |
-|----|----|------------|
+|----|----|-----------|
 | 2 | 0.2 | |
 | 10 | 1 | |
 | 50 | 5 | |
@@ -810,65 +506,37 @@ Oscillation
 
 ### PWM Signal
 
-Probe Tip:
-
 ```text
-Gate Signal
+Probe Tip  ──────► MOSFET Gate
+Probe GND  ──────► GND
 ```
 
-Probe Ground:
-
-```text
-Ground
-```
-
-Observe the PWM duty cycle.
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 500 µs/div | 500 µs/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
 
 ---
 
-### Output Voltage
-
-Probe Tip:
+### Output Voltage Ripple
 
 ```text
-Vout
+Probe Tip  ──────► Vout node
+Probe GND  ──────► GND
 ```
 
-Probe Ground:
-
-```text
-Ground
-```
-
-Observe output voltage and ripple.
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 200 mV/div | 200 mV/div |
+| Horizontal scale | 500 µs/div | 500 µs/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | AC | AC |
 
 ---
 
-## Oscilloscope Settings (OWON Baseline)
-
-Recommended scope: OWON HDS272S.
-
-Compatible alternative: DSO Nano.
-
-PWM Measurement:
-
-```text
-2 V/div
-500 µs/div
-```
-
----
-
-Output Ripple Measurement:
-
-```text
-200 mV/div
-500 µs/div
-```
-
----
-
-## Observe
+### Observe
 
 As the controller regulates voltage:
 
@@ -878,74 +546,9 @@ As the controller regulates voltage:
 
 ---
 
-## Control Performance Metrics
-
-Several metrics are commonly used to evaluate controller performance.
-
----
-
-### Rise Time
-
-Time required to approach the target voltage.
-
----
-
-### Overshoot
-
-Amount by which the voltage exceeds the target value.
-
----
-
-### Settling Time
-
-Time required to remain within an acceptable error band.
-
----
-
-### Steady-State Error
-
-Final difference between:
-
-```text
-Reference Voltage
-```
-
-and
-
-```text
-Output Voltage
-```
-
----
-
-## Desired Response
-
-```text
-Voltage
-
-5V |         _______
-   |       /
-   |     /
-   |   /
-   | /
-0V +-----------------
-           Time
-```
-
-Characteristics:
-
-- Fast rise time
-- Low overshoot
-- Small settling time
-- Zero steady-state error
-
----
-
 ## MATLAB Comparison
 
-Now compare your measured steady-state output voltages against the simulated closed-loop responses.
-
-### Enter Your Measured Values
+Compare your measured steady-state output voltages against the simulated closed-loop responses.
 
 ```matlab
 L = 100e-6; C = 100e-6; R = 100; Vin = 5; H = 0.5;
@@ -977,57 +580,63 @@ grid on;
 xlabel('Time (ms)'); ylabel('Output Voltage (V)');
 title('Closed-Loop Buck - Simulation vs Measurement');
 legend('Location', 'southeast');
-
-% Print steady-state error for each case
-fprintf('%-14s %-14s %-14s\n', 'Gains', 'Sim Vout(V)', 'Meas Vout(V)');
-for i = 1:3
-    Kp = gain_sets(i,1); Ki = gain_sets(i,2);
-    C_pi = tf([Kp, Ki], [1, 0]);
-    T    = feedback(C_pi * G * Vin, H);
-    y_ss = dcgain(T);
-    fprintf('%-14s %-14.3f %-14.3f\n', labels{i}, y_ss, Vout_measured(i));
-end
 ```
 
 ### Reflection
 
 - Does the PI controller eliminate steady-state error in both simulation and measurement?
 - Which gain set gave the best balance of speed and stability on the real converter?
-- Why might the real converter oscillate at lower gains than the simulation predicts? (parasitic inductance, ADC noise, sample time effects)
+- Why might the real converter oscillate at lower gains than the simulation predicts?
 
 ---
 
-## Engineering Applications
+## Troubleshooting
 
-Closed-loop Buck Converters are widely used in:
+### Output Voltage Oscillates
 
-### Computer Power Supplies
+Check:
 
-Stable voltage rails.
+✅ Reduce Kp and Ki
 
----
-
-### Telecommunications Equipment
-
-Regulated DC supplies.
+✅ Check anti-windup limit in code
 
 ---
 
-### Industrial Electronics
+### No Feedback Reading
 
-Power conversion systems.
+Check:
 
----
+✅ Voltage divider wiring (top resistor to Vout, bottom to GND, midpoint to A0)
 
-### Electric Vehicles
-
-Battery management and auxiliary power.
+✅ ADC pin correct
 
 ---
 
-### Robotics
+### PWM Saturated
 
-Logic and actuator power regulation.
+Check:
+
+✅ Controller output constrain() limits
+
+✅ Reference voltage Vref matches divider ratio
+
+---
+
+### Troubleshooting Checklist
+
+✅ Voltage divider functioning (midpoint voltage ≈ Vout/2)
+
+✅ ADC value changes correctly with Vout
+
+✅ PWM signal present at MOSFET gate
+
+✅ PI controller running
+
+✅ Output responds to disturbances
+
+✅ Stable regulation achieved
+
+✅ Output voltage remains near target
 
 ---
 
@@ -1037,23 +646,11 @@ Logic and actuator power regulation.
 
 What is the purpose of voltage feedback?
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 2
 
 Write the PI controller equation.
-
-Answer:
-
-```text
-____________________
-```
 
 ---
 
@@ -1061,23 +658,11 @@ ____________________
 
 What is disturbance rejection?
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 4
 
 Why is a voltage divider required?
-
-Answer:
-
-```text
-____________________
-```
 
 ---
 
@@ -1085,80 +670,11 @@ ____________________
 
 What happens if the gains are too large?
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 6
 
-The voltage divider scales Vout by 0.5 before the ADC. The reference in the code is set to 2.5V. What actual output voltage is the controller regulating to, and what would you change in the code to regulate to 3.0V instead?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-## Common Mistakes
-
-### Output Voltage Oscillates
-
-Check:
-
-- Kp too high
-- Ki too high
-
----
-
-### No Feedback Reading
-
-Check:
-
-- Voltage divider wiring
-- ADC input
-
----
-
-### PWM Saturated
-
-Check:
-
-- Controller limits
-- Reference voltage
-
----
-
-### No Regulation
-
-Check:
-
-- Error calculation
-- Feedback polarity
-- Controller implementation
-
----
-
-## Troubleshooting Checklist
-
-✅ Voltage divider functioning
-
-✅ ADC value changes correctly
-
-✅ PWM signal present
-
-✅ PI controller running
-
-✅ Output responds to disturbances
-
-✅ Stable regulation achieved
-
-✅ Output voltage remains near target
+The voltage divider scales Vout by 0.5 before the ADC. The reference in the code is set to 2.5 V. What actual output voltage is the controller regulating to, and what would you change in the code to regulate to 3.0 V instead?
 
 ---
 
@@ -1182,13 +698,13 @@ In this project you learned:
 
 ✅ Practical voltage regulation
 
-This project brings together power electronics and control theory to create a practical regulated power supply.
-
 ---
 
 ## Next Project
 
-**09_Boost_Converter.md**
+```text
+09_Boost_Converter.md
+```
 
 Topics:
 

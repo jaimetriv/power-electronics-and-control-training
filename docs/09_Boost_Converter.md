@@ -57,13 +57,7 @@ At the end of this project you should be able to:
 
 ## Introduction
 
-A Boost Converter is a:
-
-```text
-Step-Up DC-DC Converter
-```
-
-It converts a lower DC voltage into a higher DC voltage.
+A Boost Converter is a step-up DC-DC converter.
 
 Examples:
 
@@ -75,45 +69,23 @@ Examples:
 24 V → 48 V
 ```
 
-Unlike a transformer:
-
-```text
-No AC Input Is Required
-```
-
-Voltage conversion is achieved using:
-
-- PWM
-- MOSFET switching
-- Inductor energy storage
+Voltage conversion is achieved using PWM, MOSFET switching, and inductor energy storage — no AC input is required.
 
 ---
 
-## Why Are Boost Converters Useful?
-
-Many systems require a voltage higher than the available battery or supply.
-
-Examples:
-
-- LED drivers
-- Portable electronics
-- Electric vehicles
-- Solar energy systems
-- Power supplies
-
----
-
-## Energy Conversion Concept
-
-A Boost Converter operates in two stages:
+## Circuit Diagram
 
 ```text
-Store Energy
-     ↓
-Release Energy
+5 V Supply
+    │
+   Inductor (100 µH)
+    │
+    ├──── Switch Node ──── Diode (1N5819) ──── Vout
+    │                      (cathode toward Vout)    │
+   MOSFET (IRLZ44N)                           100 µF capacitor
+    │                                               │
+   GND ─────────────────────────────────────────────┘
 ```
-
-The inductor stores energy and then releases it into the output circuit.
 
 ---
 
@@ -121,148 +93,36 @@ The inductor stores energy and then releases it into the output circuit.
 
 A Boost Converter contains:
 
-1. Inductor
-2. MOSFET
-3. Diode
-4. Capacitor
+1. Inductor — stores energy in a magnetic field
+2. MOSFET — PWM-controlled switch
+3. Diode — provides path for inductor current when MOSFET is OFF
+4. Capacitor — smooths the output voltage
 5. Load
-
----
-
-## Basic Circuit
-
-```mermaid
-graph LR
-
-VIN[Input Voltage]
-
-VIN --> L[Inductor]
-
-L --> SW[Switch Node]
-
-SW --> D[Diode]
-
-D --> VOUT[Output Voltage]
-
-VOUT --> C[Capacitor]
-
-C --> GND[Ground]
-
-SW --> M[MOSFET]
-
-M --> GND
-```
-
----
-
-## Role of the Inductor
-
-The inductor stores energy in a magnetic field.
-
-Stored energy:
-
-$$
-E=\frac{1}{2}LI^2
-$$
-
-Where:
-
-- $E$ = Energy (J)
-- $L$ = Inductance (H)
-- $I$ = Current (A)
-
-As current increases:
-
-```text
-Stored Energy Increases
-```
-
----
-
-## Role of the MOSFET
-
-The MOSFET acts as a PWM-controlled switch.
-
-The duty cycle determines:
-
-```text
-How Long Energy Is Stored
-```
-
-inside the inductor.
-
----
-
-## Role of the Diode
-
-The diode provides a path for inductor current when the MOSFET turns OFF.
-
-The diode also prevents:
-
-```text
-Reverse Current Flow
-```
-
-from the output back to the input.
-
----
-
-## Role of the Capacitor
-
-The capacitor smooths the output voltage.
-
-Stored energy:
-
-$$
-E=\frac{1}{2}CV^2
-$$
-
-The capacitor reduces ripple and supports the load between switching intervals.
 
 ---
 
 ## Operating Principle
 
-### Phase 1 - MOSFET ON
+### Phase 1 — MOSFET ON
 
 Current path:
 
 ```text
-Input
-  ↓
-Inductor
-  ↓
-MOSFET
-  ↓
-Ground
+Input → Inductor → MOSFET → GND
 ```
 
 During this phase:
 
 - Inductor current increases
 - Magnetic energy is stored
-- Diode is reverse biased
+- Diode is reverse biased (output capacitor supplies load)
 
----
+### Phase 2 — MOSFET OFF
 
-## Phase 2 - MOSFET OFF
-
-When the MOSFET switches OFF:
+When the MOSFET switches OFF, the inductor generates a voltage that forces current through:
 
 ```text
-Inductor Current Continues Flowing
-```
-
-The inductor generates a voltage that forces current through:
-
-```text
-Inductor
-  ↓
-Diode
-  ↓
-Output Capacitor
-  ↓
-Load
+Inductor → Diode → Output Capacitor → Load
 ```
 
 The output voltage becomes higher than the input voltage.
@@ -274,7 +134,7 @@ The output voltage becomes higher than the input voltage.
 Recall:
 
 $$
-V_L=L\frac{di}{dt}
+V_L = L\frac{di}{dt}
 $$
 
 An inductor resists sudden current change.
@@ -293,12 +153,8 @@ is possible.
 
 ## Ideal Boost Converter Equation
 
-For an ideal Boost Converter:
-
 $$
-V_{OUT}
-=
-\frac{V_{IN}}{1-D}
+V_{OUT} = \frac{V_{IN}}{1 - D}
 $$
 
 Where:
@@ -307,60 +163,20 @@ Where:
 - $V_{IN}$ = Input Voltage
 - $D$ = Duty Cycle
 
----
+### Example 1
 
-## Example 1
-
-Given:
+$V_{IN} = 5\ \text{V}$, $D = 0.5$:
 
 $$
-V_{IN}=5V
+V_{OUT} = \frac{5}{1 - 0.5} = 10\ \text{V}
 $$
 
-and:
+### Example 2
+
+$V_{IN} = 5\ \text{V}$, $D = 0.75$:
 
 $$
-D=0.5
-$$
-
-Then:
-
-$$
-V_{OUT}
-=
-\frac{5}{1-0.5}
-$$
-
-$$
-V_{OUT}=10V
-$$
-
----
-
-## Example 2
-
-Given:
-
-$$
-V_{IN}=5V
-$$
-
-and:
-
-$$
-D=0.75
-$$
-
-Then:
-
-$$
-V_{OUT}
-=
-\frac{5}{1-0.75}
-$$
-
-$$
-V_{OUT}=20V
+V_{OUT} = \frac{5}{1 - 0.75} = 20\ \text{V}
 $$
 
 ---
@@ -386,7 +202,7 @@ Before building the circuit, simulate the ideal Boost Converter characteristics 
 
 ```matlab
 Vin = 5;
-D   = 0:0.001:0.95;          % avoid D=1 (infinite gain)
+D   = 0:0.001:0.95;
 Vout_ideal = Vin ./ (1 - D);
 
 D_exp    = [0.25, 0.50, 0.75];
@@ -406,16 +222,14 @@ ylim([0 30]);
 
 ### Simulate Inductor Current Waveform
 
-In a Boost Converter the inductor current ramps up during MOSFET ON (energy storage) and ramps down during MOSFET OFF (energy transfer to output):
-
 ```matlab
 Vin  = 5;
 D    = 0.5;
-Vout = Vin / (1 - D);    % ideal
+Vout = Vin / (1 - D);
 L    = 100e-6;
 fsw  = 490;
 Ts   = 1 / fsw;
-Iavg = 0.05;             % assumed average inductor current (A)
+Iavg = 0.05;
 
 delta_iL = Vin * D * Ts / L;
 
@@ -435,278 +249,223 @@ yline(Iavg*1e3, 'r--', sprintf('I_{avg} = %.0f mA', Iavg*1e3));
 
 ### Prediction Table
 
-Record your predicted output voltages before measuring:
-
 | PWM Value | Duty Cycle | Predicted V\_{OUT} (V) |
 |-----------|------------|------------------------|
 | 64 | 25% | |
 | 128 | 50% | |
 | 192 | 75% | |
 
-> Note: At D = 75% the ideal equation predicts 20V from a 5V supply. Real output will be lower due to losses, but take care with your multimeter range.
+> Note: At D = 75% the ideal equation predicts 20 V from a 5 V supply. Real output will be lower due to losses, but take care with your multimeter range.
 
 ---
 
 ## Components Required
 
-Additional Components:
-
-- 100 µH Inductor
-- 1N5819 Schottky Diode
-- 100 µF Capacitor
 - IRLZ44N MOSFET
-
-Existing Equipment:
-
-- Arduino Uno
-- ESP32 DevKit V1 (alternative controller)
-- Breadboard
-- Jumper Wires
-- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
+- 1N5819 Schottky Diode
+- 100 µH Inductor
+- 100 µF Electrolytic Capacitor
+- 220 Ω gate resistor
+- Arduino Uno or ESP32 DevKit V1
+- Breadboard and jumper wires
+- OWON HDS272S Oscilloscope (recommended)
+- DSO Nano Oscilloscope (compatible)
 
 ---
 
 ## Safety Notice
 
-Begin with:
+Begin with a 5 V input supply and low power loads.
 
-```text
-5 V Input Supply
-```
-
-and low power loads.
-
-If using ESP32 gate drive (about 3.3V), use a logic-level MOSFET with low Rds(on) specified at low Vgs, or use a gate driver.
+If using ESP32 gate drive (~3.3 V), use a logic-level MOSFET with low $R_{DS(on)}$ specified at low $V_{GS}$, or use a gate driver.
 
 Do not connect sensitive electronics directly to an untested converter output.
 
 ---
 
-## Experimental Boost Converter
-
-```mermaid
-graph LR
-
-VIN[5 V]
-
-VIN --> L[Inductor 100 µH]
-
-L --> SW[Switch Node]
-
-SW --> D[Diode 1N5819]
-
-D --> VOUT[Vout]
-
-VOUT --> C[Capacitor 100 µF]
-
-C --> GND[Ground]
-
-SW --> M[MOSFET]
-
-M --> GND
-```
-
----
-
-## Experiment 1 - Generate PWM
+## Experiment 1 - Generate the Switching Signal
 
 ### Objective
 
-Observe the switching signal that drives the converter.
+Upload the PWM code and observe the gate switching signal on the oscilloscope before connecting the full converter circuit.
 
 ---
 
-## Arduino Code
+### Connections
+
+```text
+Probe Tip  ──────► Arduino Pin D9  (or ESP32 GPIO18)
+Probe GND  ──────► Arduino GND
+```
+
+---
+
+### Arduino Code
 
 ```cpp
 void setup()
 {
-    pinMode(9, OUTPUT);
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
 }
 
 void loop()
 {
-    analogWrite(9,128);
+    // Output 50% duty cycle PWM on pin 9.
+    // This is the switching signal that will drive the MOSFET gate.
+    analogWrite(9, 128);
 }
 ```
 
-### ESP32 Equivalent (LEDC PWM)
+### ESP32 Equivalent Code
 
 ```cpp
-const int PWM_PIN  = 18;
-const int PWM_CH   = 0;
-const int PWM_FREQ = 500;
-const int PWM_RES  = 8;
-
 void setup()
 {
-  ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+    // Configure LEDC channel 0: 500 Hz, 8-bit resolution.
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(18, 0);
 }
 
 void loop()
 {
-  ledcWrite(PWM_PIN, 128);
+    // Set duty cycle to 128/255 ≈ 50%.
+    ledcWrite(0, 128);
 }
 ```
 
 ---
 
-## Oscilloscope Connections
+### Oscilloscope Settings
 
-Probe Tip:
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 500 µs/div | 500 µs/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
+
+---
+
+### Expected Waveform
 
 ```text
-MOSFET Gate
-```
-
-Probe Ground:
-
-```text
-Ground
+5V  ─────      ─────
+         │    │
+         │    │
+0V  _____│____│_____
 ```
 
 ---
 
-## Oscilloscope Settings (OWON Baseline)
-
-Recommended scope: OWON HDS272S.
-
-Compatible alternative: DSO Nano.
-
-Vertical:
-
-```text
-2 V/div
-```
-
-Horizontal:
-
-```text
-500 µs/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
-
----
-
-## Expected Waveform
-
-```text
-V_S ────      ─────
-         │      │
-         │      │
-0V ______│______│______
-```
-
----
-
-## Measurements
+### Measurements
 
 | Parameter | Expected | Measured |
-|------------|-----------|-----------|
+|-----------|----------|---------|
 | Frequency | ~490 Hz | |
 | Duty Cycle | ~50% | |
-| Gate Voltage | ~V_S (about 5V Arduino or about 3.3V ESP32) | |
+| Gate Voltage | ~5 V (Arduino) / ~3.3 V (ESP32) | |
 
 ---
 
-## Experiment 2 - Duty Cycle Investigation
+## Experiment 2 - Build the Boost Converter and Vary Duty Cycle
 
 ### Objective
 
-Observe how duty cycle affects output voltage.
+Build the full converter circuit and observe how duty cycle controls output voltage.
 
 ---
 
-## Test A
+### Step-by-Step Wiring
 
-```cpp
-analogWrite(9,64);
-```
+1. Insert the **IRLZ44N MOSFET** into the breadboard. Identify Gate (G), Drain (D), and Source (S) from the pinout (see Project 04).
+2. Connect a jumper wire from **Arduino GND** to the **MOSFET Source** row.
+3. Insert the **220 Ω gate resistor** so one leg is in the **Gate** row and the other is in a new row.
+4. Connect a jumper wire from **Arduino pin D9** to the top of the gate resistor.
+5. Insert the **100 µH inductor** so one leg connects to the **5 V supply** and the other leg connects to the **MOSFET Drain** row. This junction is the switch node.
+6. Insert the **1N5819 diode** so its **anode** is in the switch node row and its **cathode (banded end)** is in a new row toward the output. This is the output diode.
+7. Insert the **100 µF capacitor** so its **positive leg** is in the same row as the diode cathode (Vout) and its **negative leg** is in the GND row.
+8. Connect the **oscilloscope probe tip** to the Vout node (diode cathode / capacitor positive).
+9. Connect the **oscilloscope probe ground** to Arduino GND.
 
-ESP32 equivalent duty command:
-
-```cpp
-ledcWrite(PWM_PIN, 64);
-```
-
-Expected Duty Cycle:
-
-```text
-25%
-```
-
-Measure:
+The signal path will be:
 
 ```text
-Output Voltage = __________
-```
-
----
-
-## Test B
-
-```cpp
-analogWrite(9,128);
-```
-
-ESP32 equivalent duty command:
-
-```cpp
-ledcWrite(PWM_PIN, 128);
-```
-
-Expected Duty Cycle:
-
-```text
-50%
-```
-
-Measure:
-
-```text
-Output Voltage = __________
+5V → Inductor → Switch Node → Diode (anode) → Diode (cathode) → Vout
+                     │
+                   MOSFET
+                     │
+                    GND
 ```
 
 ---
 
-## Test C
+### Wiring Checklist
+
+Before uploading:
+
+✅ MOSFET Source connected to GND
+
+✅ Inductor between 5V supply and MOSFET Drain (switch node)
+
+✅ Diode anode at switch node, cathode toward Vout
+
+✅ Capacitor positive leg at Vout, negative leg at GND
+
+✅ Gate resistor between D9 and MOSFET Gate
+
+✅ Oscilloscope probe tip at Vout, probe GND at Arduino GND
+
+---
+
+### Code
 
 ```cpp
-analogWrite(9,192);
-```
+void setup() {}
 
-ESP32 equivalent duty command:
+void loop()
+{
+    // Step through three duty cycles with a 3-second pause at each.
+    // Expected Vout = Vin / (1 - D) at each step.
 
-```cpp
-ledcWrite(PWM_PIN, 192);
-```
+    analogWrite(9, 64);    // ~25% duty cycle → Vout ≈ 6.7 V (ideal)
+    delay(3000);
 
-Expected Duty Cycle:
+    analogWrite(9, 128);   // ~50% duty cycle → Vout ≈ 10 V (ideal)
+    delay(3000);
 
-```text
-75%
-```
-
-Measure:
-
-```text
-Output Voltage = __________
+    analogWrite(9, 192);   // ~75% duty cycle → Vout ≈ 20 V (ideal)
+    delay(3000);
+}
 ```
 
 ---
 
-## Results Table
+### Oscilloscope Settings — Output Voltage
 
-| PWM Value | Duty Cycle | Output Voltage |
-|------------|------------|---------------|
-| 64 | 25% | |
-| 128 | 50% | |
-| 192 | 75% | |
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 1 s/div | 1 s/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
+
+---
+
+### Observe
+
+The output voltage should step upward as duty cycle increases.
+
+Measure the average DC output at each step with a multimeter.
+
+---
+
+### Results Table
+
+| PWM Value | Duty Cycle | Expected V\_{OUT} (ideal) | Measured V\_{OUT} |
+|-----------|------------|--------------------------|-------------------|
+| 64 | 25% | 6.7 V | |
+| 128 | 50% | 10 V | |
+| 192 | 75% | 20 V | |
 
 ---
 
@@ -714,149 +473,60 @@ Output Voltage = __________
 
 ### Objective
 
-Observe output voltage ripple.
+Observe output voltage ripple at the switching frequency.
 
 ---
 
-## Probe Location
-
-Probe Tip:
+### Connections
 
 ```text
-Vout
-```
-
-Probe Ground:
-
-```text
-Ground
+Probe Tip  ──────► Vout node
+Probe GND  ──────► Arduino GND
 ```
 
 ---
 
-## Oscilloscope Settings (OWON Baseline)
+### Oscilloscope Settings — Ripple
 
-Use the same scope setup approach as Experiment 1, then increase vertical sensitivity for ripple.
-
-Recommended scope: OWON HDS272S.
-
-Compatible alternative: DSO Nano.
-
-Vertical:
-
-```text
-200 mV/div
-```
-
-Horizontal:
-
-```text
-500 µs/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 200 mV/div | 200 mV/div |
+| Horizontal scale | 500 µs/div | 500 µs/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | AC | AC |
 
 ---
 
-## Expected Observation
+### Observe
 
-The output should contain:
-
-```text
-Average DC Voltage
-```
-
-plus:
-
-```text
-Small Ripple Voltage
-```
+The output should contain an average DC voltage plus a small ripple voltage.
 
 Ripple occurs because the capacitor continuously charges and discharges.
-
----
-
-## Reducing Ripple
-
-Ripple can often be reduced by:
-
-- Increasing capacitance
-- Increasing inductance
-- Increasing switching frequency
 
 ---
 
 ## Comparing Buck and Boost Converters
 
 | Property | Buck Converter | Boost Converter |
-|-----------|---------------|----------------|
+|----------|---------------|----------------|
 | Purpose | Step Down Voltage | Step Up Voltage |
 | Uses PWM | Yes | Yes |
 | Uses MOSFET | Yes | Yes |
 | Uses Inductor | Yes | Yes |
 | Uses Capacitor | Yes | Yes |
 | Output Voltage | Lower Than Input | Higher Than Input |
-
----
-
-## Relationship to Previous Projects
-
-### Project 1
-
-PWM controls duty cycle.
-
----
-
-### Project 2
-
-Capacitors smooth voltage.
-
----
-
-### Project 3
-
-Inductors store energy.
-
----
-
-### Project 4
-
-MOSFETs provide efficient switching.
-
----
-
-### Projects 6 to 8
-
-Controllers regulate converter output.
-
----
-
-### Project 9
-
-Buck Converters perform step-down conversion.
-
----
-
-### Project 10
-
-Closed-loop control automatically regulates voltage.
+| Equation | $V_{OUT} = D \cdot V_{IN}$ | $V_{OUT} = V_{IN}/(1-D)$ |
 
 ---
 
 ## MATLAB Comparison
 
-Now overlay your measured output voltages against the ideal Boost Converter curve and compare with the Buck Converter results from Project 9.
-
-### Enter Your Measured Values
+Overlay your measured output voltages against the ideal Boost Converter curve and compare with the Buck Converter results from Project 08.
 
 ```matlab
 Vin = 5;
 
-D_measured    = [0.25,  0.50,  0.75];   % duty cycles tested
+D_measured    = [0.25,  0.50,  0.75];
 Vout_measured = [0.00,  0.00,  0.00];   % replace with your measured voltages (V)
 
 D_ideal  = 0:0.001:0.95;
@@ -873,7 +543,6 @@ title('Boost Converter - Ideal vs Measured');
 legend('Location', 'northwest');
 ylim([0 25]);
 
-% Calculate conversion ratio error at each point
 fprintf('%-8s %-12s %-12s %-14s %-12s\n', ...
     'D', 'V_ideal(V)', 'V_meas(V)', 'Ratio_ideal', 'Ratio_meas');
 for i = 1:3
@@ -908,42 +577,62 @@ ylim([0 20]);
 ### Reflection
 
 - Is the measured Vout lower than ideal at all three duty cycles? Which duty cycle shows the largest absolute error?
-- The Boost conversion ratio M = Vout/Vin becomes very sensitive to D near D = 1. Why is this a practical problem for control?
-- How does the inductor current waveform shape differ between the Buck (Project 9) and Boost converters?
+- The Boost conversion ratio $M = V_{OUT}/V_{IN}$ becomes very sensitive to D near D = 1. Why is this a practical problem for control?
+- How does the inductor current waveform shape differ between the Buck (Project 08) and Boost converters?
 
 ---
 
-## Engineering Applications
+## Troubleshooting
 
-Boost Converters are used in:
+### Output Voltage Does Not Increase
 
-### LED Drivers
+Check:
 
-Generating higher output voltages.
+✅ Inductor connected between 5V supply and MOSFET Drain (not between Drain and GND)
 
----
+✅ Diode orientation (anode at switch node, cathode toward Vout)
 
-### Portable Electronics
-
-Battery voltage conversion.
+✅ MOSFET Source connected to GND
 
 ---
 
-### Electric Vehicles
+### Excessive Ripple
 
-Power conversion systems.
+Check:
+
+✅ Capacitor value (100 µF)
+
+✅ Capacitor polarity (positive leg to Vout)
+
+✅ Load not drawing excessive current
 
 ---
 
-### Solar Energy Systems
+### No PWM Observed
 
-Maximum power point applications.
+Check:
+
+✅ Gate resistor connected between D9 and MOSFET Gate
+
+✅ Code uploaded successfully
+
+✅ Probe tip on MOSFET Gate, probe GND on Arduino GND
 
 ---
 
-### Industrial Power Supplies
+### Troubleshooting Checklist
 
-Generating multiple voltage rails.
+✅ PWM present at MOSFET gate
+
+✅ Inductor connected correctly (between supply and switch node)
+
+✅ Diode orientation verified
+
+✅ Capacitor polarity correct
+
+✅ Output voltage measured
+
+✅ Duty cycle affects output voltage
 
 ---
 
@@ -953,35 +642,17 @@ Generating multiple voltage rails.
 
 Write the ideal Boost Converter equation.
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 2
 
 Why can the output voltage exceed the input voltage?
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 3
 
-What is the role of the diode?
-
-Answer:
-
-```text
-____________________
-```
+What is the role of the diode in a Boost Converter?
 
 ---
 
@@ -989,85 +660,17 @@ ____________________
 
 What stores energy in a Boost Converter?
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 5
 
 What happens when duty cycle increases?
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 6
 
-The ideal Boost equation predicts Vout = 20V at D = 0.75 with Vin = 5V. Your measured value was lower. Apart from component losses, explain why the nonlinear gain curve makes the Boost Converter harder to control at high duty cycles than the Buck Converter.
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-## Common Mistakes
-
-### Output Voltage Does Not Increase
-
-Check:
-
-- MOSFET wiring
-- Diode orientation
-- Inductor connections
-
----
-
-### Excessive Ripple
-
-Check:
-
-- Capacitor value
-- Capacitor polarity
-- Load conditions
-
----
-
-### No PWM Observed
-
-Check:
-
-- Controller sketch
-- Probe connection
-- Trigger settings
-
----
-
-## Troubleshooting Checklist
-
-✅ PWM present
-
-✅ MOSFET switching correctly
-
-✅ Inductor installed
-
-✅ Diode orientation verified
-
-✅ Capacitor polarity correct
-
-✅ Output voltage measured
-
-✅ Duty cycle affects output voltage
+The ideal Boost equation predicts Vout = 20 V at D = 0.75 with Vin = 5 V. Your measured value was lower. Apart from component losses, explain why the nonlinear gain curve makes the Boost Converter harder to control at high duty cycles than the Buck Converter.
 
 ---
 
@@ -1094,13 +697,13 @@ You have now studied the two most important non-isolated converter topologies:
 - Buck Converter
 - Boost Converter
 
-These converters form the foundation of many modern power electronic systems.
-
 ---
 
 ## Next Project
 
-**07_DC_Chopper_Converters.md**
+```text
+07_DC_Chopper_Converters.md
+```
 
 Topics:
 

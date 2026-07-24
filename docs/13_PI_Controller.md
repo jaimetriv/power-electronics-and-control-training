@@ -27,21 +27,7 @@ In this project you will learn:
 - How PI controllers improve accuracy
 - How PI controllers are used in industrial systems
 
-The PI controller is one of the most important controllers in engineering.
-
-Many practical systems use:
-
-```text
-PI Control
-```
-
-instead of:
-
-```text
-P Control
-```
-
-because it can eliminate steady-state error.
+The PI controller is one of the most important controllers in engineering because it can eliminate steady-state error.
 
 ---
 
@@ -67,69 +53,13 @@ At the end of this project you should be able to:
 
 ## Review of Proportional Control
 
-The proportional controller is:
-
 $$
-u(t)=K_Pe(t)
+u(t) = K_P e(t)
 $$
 
-Where:
+As the error becomes smaller, the correction also becomes smaller.
 
-- $u(t)$ = Controller Output
-- $K_P$ = Proportional Gain
-- $e(t)$ = Error Signal
-
----
-
-## The Limitation of P Control
-
-Suppose:
-
-$$
-r=100
-$$
-
-and eventually:
-
-$$
-y=95
-$$
-
-Then:
-
-$$
-e=r-y
-$$
-
-$$
-e=100-95
-$$
-
-$$
-e=5
-$$
-
-The controller still has an error.
-
-This remaining error is called:
-
-```text
-Steady-State Error
-```
-
----
-
-## Why Does Steady-State Error Occur?
-
-As the error becomes smaller:
-
-$$
-u=K_Pe
-$$
-
-also becomes smaller.
-
-Eventually the correction is no longer large enough to eliminate the remaining error.
+Eventually the correction is no longer large enough to eliminate the remaining error — this is steady-state error.
 
 ---
 
@@ -137,87 +67,22 @@ Eventually the correction is no longer large enough to eliminate the remaining e
 
 The solution is to accumulate error over time.
 
-This accumulated error is called:
-
-```text
-Integral Action
-```
-
----
-
-## The Integral Term
-
 The integral term is:
 
 $$
 \int e(t)\,dt
 $$
 
-This represents:
+This represents the total accumulated error.
 
-```text
-Total Accumulated Error
-```
-
----
-
-## Understanding Accumulated Error
-
-Imagine an error of:
-
-$$
-e=10
-$$
-
-that persists for a long time.
-
-Even though the error is small:
-
-```text
-The accumulated error becomes large.
-```
-
-The controller therefore continues increasing its output.
-
----
-
-## Everyday Analogy
-
-Imagine filling a bucket.
-
-The bucket records:
-
-```text
-How much water has been added
-```
-
-not merely:
-
-```text
-Current Flow Rate
-```
-
-Similarly, the integral term records:
-
-```text
-Accumulated Error
-```
-
-not just instantaneous error.
+Even a small persistent error will cause the integral to grow, eventually producing enough output to eliminate the error completely.
 
 ---
 
 ## PI Controller Equation
 
-A PI controller combines:
-
-- Proportional Action
-- Integral Action
-
-The controller equation is:
-
 $$
-u(t)=K_Pe(t)+K_I\int e(t)\,dt
+u(t) = K_P e(t) + K_I \int e(t)\,dt
 $$
 
 Where:
@@ -229,82 +94,32 @@ Where:
 
 ---
 
-## Effect of Each Term
-
-### Proportional Term
-
-Provides:
-
-```text
-Immediate Response
-```
-
-Equation:
-
-$$
-K_Pe(t)
-$$
-
----
-
-### Integral Term
-
-Provides:
-
-```text
-Long-Term Correction
-```
-
-Equation:
-
-$$
-K_I\int e(t)\,dt
-$$
-
----
-
-## Why PI Controllers Work
-
-Suppose a small error remains.
-
-The proportional term may become small.
-
-However:
-
-$$
-\int e(t)\,dt
-$$
-
-continues growing.
-
-Eventually the controller produces enough output to eliminate the error completely.
-
----
-
 ## PI Controller Block Diagram
 
-```mermaid
-graph LR
-
-R[Reference]
---> E[Error]
-
-E --> P[Proportional]
-
-E --> I[Integral]
-
-P --> S[Sum]
-
-I --> S
-
-S --> U[Controller Output]
-
-U --> PL[Plant]
-
-PL --> Y[Output]
-
-Y --> E
+```text
+Reference → [−] → Error → Kp ──────────────┐
+               ↑                             ├──→ Sum → Output → Plant → Output
+               │           Error → Ki/s ────┘                      │
+               └──────────────────────────────── Feedback ──────────┘
 ```
+
+---
+
+## Understanding Integral Windup
+
+If a large error persists for a long time, the integral value becomes very large.
+
+When conditions change the controller may overreact, causing overshoot, oscillation, or slow recovery.
+
+This is called **integral windup**.
+
+A simple solution is to limit the integral value:
+
+```cpp
+integral = constrain(integral, -1000, 1000);
+```
+
+This technique is called **anti-windup**.
 
 ---
 
@@ -312,26 +127,12 @@ Y --> E
 
 Before building the circuit, simulate the closed-loop PI response on the first-order motor model to predict how integral action eliminates steady-state error.
 
-### PI Closed-Loop Transfer Function
-
-The PI controller in the s-domain is:
-
-$$
-C(s) = K_P + \frac{K_I}{s}
-$$
-
-Applied to the first-order motor plant:
-
-$$
-G(s) = \frac{K}{\tau s + 1}
-$$
-
 ### Effect of Ki — Fixed Kp
 
 ```matlab
 K   = 1;
-tau = 0.5;        % your measured tau from Project 5
-Kp  = 0.5;        % fixed from Project 6
+tau = 0.5;        % your measured tau from Project 10
+Kp  = 0.5;
 
 G = tf(K, [tau, 1]);
 
@@ -342,7 +143,7 @@ t = 0:0.01:8;
 
 figure; hold on;
 for i = 1:5
-    C = tf([Kp, Ki_values(i)], [1, 0]);   % Kp + Ki/s
+    C = tf([Kp, Ki_values(i)], [1, 0]);
     T = feedback(C * G, 1);
     [y, ~] = step(T, t);
     plot(t, y, 'LineWidth', 2, 'DisplayName', labels{i});
@@ -351,36 +152,6 @@ yline(1.0, 'k--', 'Reference');
 grid on;
 xlabel('Time (s)'); ylabel('Normalised Output');
 title('PI Controller - Effect of K_I (Motor Plant)');
-legend('Location', 'southeast');
-```
-
-### P vs PI Comparison
-
-```matlab
-K   = 1;
-tau = 0.5;
-Kp  = 0.5;
-Ki  = 1.0;
-
-G    = tf(K, [tau, 1]);
-C_P  = tf(Kp, 1);
-C_PI = tf([Kp, Ki], [1, 0]);
-
-T_P  = feedback(C_P  * G, 1);
-T_PI = feedback(C_PI * G, 1);
-
-t = 0:0.01:8;
-[y_P,  ~] = step(T_P,  t);
-[y_PI, ~] = step(T_PI, t);
-
-figure; hold on;
-plot(t, y_P,  'b--', 'LineWidth', 2, 'DisplayName', ...
-    sprintf('P only  e_{ss}=%.1f%%', 100/(1+Kp*K)));
-plot(t, y_PI, 'r',   'LineWidth', 2, 'DisplayName', 'PI  e_{ss}=0%');
-yline(1.0, 'k--', 'Reference');
-grid on;
-xlabel('Time (s)'); ylabel('Normalised Output');
-title('P vs PI - Steady-State Error Elimination');
 legend('Location', 'southeast');
 ```
 
@@ -398,23 +169,19 @@ legend('Location', 'southeast');
 
 ## Components Required
 
-Same circuit as Project 6:
+Same circuit as Project 12:
 
-- Arduino Uno
-- ESP32 DevKit V1 (alternative controller)
-- Breadboard
+- Arduino Uno or ESP32 DevKit V1
+- Breadboard and jumper wires
 - Potentiometer (setpoint)
 - IRLZ44N MOSFET
 - DC Motor
 - Flyback diode (1N4001–1N4007)
-- 220 Ω resistor (gate resistor)
-- 2 × 10 kΩ resistors (back-EMF divider — already installed from Project 6)
-- Jumper wires
+- 220 Ω gate resistor
+- 2 × 10 kΩ resistors (back-EMF divider — already installed from Project 12)
 - External battery pack
-
-Equipment:
-
-- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
+- OWON HDS272S Oscilloscope (recommended)
+- DSO Nano Oscilloscope (compatible)
 
 ---
 
@@ -423,40 +190,53 @@ Equipment:
 ### Objective
 
 Implement a PI controller with back-EMF feedback closing the loop on the motor.
+
 The potentiometer sets the speed reference. The back-EMF divider provides the feedback signal.
 
 ---
 
-## Circuit
+### Circuit
 
-Same as Project 6 — back-EMF divider already in place:
+Same as Project 12 — back-EMF divider already in place:
 
 ```text
-Battery +
-    |
+Battery (+)
+    │
   Motor
-    |--- Flyback diode (cathode to Battery+)
-    |
-    +--- 10kΩ ---+--- A1  (back-EMF feedback)
-                 |
-               10kΩ
-                 |
-                GND
-  Drain
-  MOSFET (IRLZ44N)
+    │──── Flyback diode (cathode toward Battery+)
+    │
+    ├──── 10 kΩ ──── A1  (back-EMF feedback)
+                │
+              10 kΩ
+                │
+               GND
+
+  Drain (MOSFET IRLZ44N)
   Source
-    |
+    │
    GND
 
-PWM Output (Arduino Pin 9 or ESP32 GPIO18) --- 220Ω --- Gate
-Potentiometer centre pin --- A0
+PWM Output (Arduino Pin 9 or ESP32 GPIO18) ──── 220 Ω ──── Gate
+Potentiometer centre pin ──── A0
 ```
-
-For ESP32, map A0/A1 equivalents to available ADC pins (for example REF_PIN=GPIO34 and FBK_PIN=GPIO35).
 
 ---
 
-## Arduino Code
+### Wiring Checklist
+
+Before uploading:
+
+✅ Motor circuit wired correctly (same as Project 12)
+
+✅ Back-EMF divider connected to A1 (Arduino) or FBK_PIN (ESP32)
+
+✅ Potentiometer wiper connected to A0 (Arduino) or REF_PIN (ESP32)
+
+✅ Shared GND between controller and battery
+
+---
+
+### Arduino Code
 
 ```cpp
 float Kp = 0.5;
@@ -469,20 +249,26 @@ float integral = 0;
 
 void setup()
 {
+    // Configure pin 9 as PWM output for the MOSFET gate.
     pinMode(9, OUTPUT);
     Serial.begin(9600);
 }
 
 void loop()
 {
-    int reference = analogRead(A0);   // desired speed setpoint (0-1023)
-    int feedback  = analogRead(A1);   // back-EMF proxy (0-1023)
+    int reference = analogRead(A0);   // desired speed setpoint (0–1023)
+    int feedback  = analogRead(A1);   // back-EMF proxy (0–1023)
 
+    // Calculate error.
     float error = reference - feedback;
 
+    // Accumulate error over time (integral term).
     integral = integral + error * dt;
+
+    // Anti-windup: clamp integral to prevent excessive accumulation.
     integral = constrain(integral, -int_max, int_max);
 
+    // PI controller output.
     float output = Kp * error + Ki * integral;
     output = constrain(output, 0, 255);
 
@@ -498,36 +284,35 @@ void loop()
 }
 ```
 
-### ESP32 Equivalent (LEDC + ADC Feedback)
+### ESP32 Equivalent Code
 
 ```cpp
 float Kp = 0.5;
 float Ki = 1.0;
 
 const int PWM_PIN   = 18;
-const int PWM_CH    = 0;
-const int PWM_FREQ  = 500;
-const int PWM_RES   = 8;
-const int REF_PIN   = 34;   // potentiometer wiper
-const int FBK_PIN   = 35;   // back-EMF divider output
-
-const float dt      = 0.05;    // sample time (s)
-const float int_max = 500.0;   // anti-windup limit in scaled domain
+const int REF_PIN   = 34;
+const int FBK_PIN   = 35;
+const float dt      = 0.05;
+const float int_max = 500.0;
 
 float integral = 0;
 
 void setup()
 {
-    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+    // Configure LEDC channel 0: 500 Hz, 8-bit resolution.
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(PWM_PIN, 0);
     Serial.begin(115200);
 }
 
 void loop()
 {
-    int reference = analogRead(REF_PIN);   // 0-4095 on ESP32 ADC
-    int feedback  = analogRead(FBK_PIN);   // back-EMF proxy
+    int reference = analogRead(REF_PIN);   // 0–4095 on ESP32 ADC
+    int feedback  = analogRead(FBK_PIN);
 
-    float error = (reference - feedback) / 16.0; // scale to 8-bit PWM domain
+    // Scale 12-bit error to 8-bit PWM domain.
+    float error = (reference - feedback) / 16.0;
 
     integral = integral + error * dt;
     integral = constrain(integral, -int_max, int_max);
@@ -535,7 +320,7 @@ void loop()
     float output = Kp * error + Ki * integral;
     output = constrain(output, 0, 255);
 
-    ledcWrite(PWM_PIN, (int)output);
+    ledcWrite(0, (int)output);
 
     Serial.print("Ref: ");  Serial.print(reference);
     Serial.print("  Fbk: "); Serial.print(feedback);
@@ -547,11 +332,9 @@ void loop()
 }
 ```
 
-Note: if you change ADC resolution or PWM resolution, rescale the error path and retune Kp/Ki.
-
 ---
 
-## What Is Happening?
+### What Is Happening?
 
 The potentiometer sets the reference $r$.
 
@@ -571,28 +354,30 @@ With the loop closed, the integral term drives the error toward zero — you sho
 
 ---
 
+### Observe
+
+With the loop closed:
+
+1. Set a mid-range reference with the potentiometer. Observe the motor settle.
+2. Watch the Serial Monitor — the feedback reading should converge toward the reference.
+3. Gently load the motor shaft. Observe the integral term grow and the PWM increase to compensate.
+
+---
+
 ## Experiment 2 - Effect of Integral Gain
 
 ### Objective
 
-Observe the effect of changing:
+Observe the effect of changing $K_I$.
 
-$$
-K_I
-$$
+Use the same closed-loop code from Experiment 1. Change only the Ki value.
 
 ---
 
 ### Test A
 
 ```cpp
-Ki = 0;
-```
-
-Result:
-
-```text
-Pure P Controller
+Ki = 0;   // Pure P Controller
 ```
 
 Observation:
@@ -645,7 +430,7 @@ _______________________
 
 ---
 
-## Results Table
+### Results Table
 
 | Ki | Behaviour |
 |----|-----------|
@@ -664,39 +449,7 @@ Keep:
 Ki = 0.02;
 ```
 
-Change:
-
-```cpp
-Kp
-```
-
----
-
-### Test A
-
-```cpp
-Kp = 0.1;
-```
-
----
-
-### Test B
-
-```cpp
-Kp = 0.5;
-```
-
----
-
-### Test C
-
-```cpp
-Kp = 1.0;
-```
-
----
-
-## Results Table
+Change Kp through the following values and record the behaviour.
 
 | Kp | Behaviour |
 |----|-----------|
@@ -706,131 +459,27 @@ Kp = 1.0;
 
 ---
 
-## Understanding Integral Windup
-
-One common problem is:
-
-```text
-Integral Windup
-```
-
----
-
-## What Is Windup?
-
-Suppose:
-
-```text
-Large Error
-```
-
-persists for a long time.
-
-The integral value becomes very large.
-
-When conditions change the controller may overreact.
-
-Result:
-
-- Overshoot
-- Oscillation
-- Slow recovery
-
----
-
-## Example
-
-The integral term keeps growing:
-
-$$
-\int e(t)\,dt
-$$
-
-while the actuator is already at maximum output.
-
-The stored integral value becomes excessive.
-
----
-
-## Anti-Windup
-
-A simple solution is to limit the integral value.
-
-Example:
-
-```cpp
-integral = constrain(integral,-1000,1000);
-```
-
-This technique is called:
-
-```text
-Anti-Windup
-```
-
----
-
 ## Oscilloscope Exercise
 
 Observe the controller PWM output.
 
----
-
-## Probe Location
-
-Probe Tip:
-
 ```text
-MOSFET Gate PWM node (Arduino Pin 9 or ESP32 GPIO18)
+Probe Tip  ──────► MOSFET Gate (Arduino Pin 9 or ESP32 GPIO18)
+Probe GND  ──────► Arduino GND
 ```
 
-Probe Ground:
-
-```text
-GND
-```
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 500 µs/div | 500 µs/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
 
 ---
 
-## Oscilloscope Settings (OWON Baseline)
+### Observe
 
-Recommended scope: OWON HDS272S.
-
-Compatible alternative: DSO Nano.
-
-Vertical:
-
-```text
-2 V/div
-```
-
-Horizontal:
-
-```text
-500 us/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
-
----
-
-## Observation
-
-As:
-
-```text
-Reference Changes
-```
-
-observe how:
-
-```text
-PWM Duty Cycle Changes
-```
+As the reference changes, observe how the PWM duty cycle changes.
 
 Record observations:
 
@@ -843,7 +492,7 @@ __________________________________
 ## Comparing P and PI Control
 
 | Property | P Controller | PI Controller |
-|-----------|-------------|--------------|
+|----------|-------------|--------------|
 | Simple | Yes | Yes |
 | Fast Response | Good | Good |
 | Steady-State Error | Present | Eliminated |
@@ -854,15 +503,13 @@ __________________________________
 
 ## MATLAB Comparison
 
-Now simulate the closed-loop PI response using your actual Kp and Ki values from Experiments 2 and 3, and compare P vs PI directly.
-
-### Enter Your Parameters
+Simulate the closed-loop PI response using your actual Kp and Ki values from Experiments 2 and 3.
 
 ```matlab
 K   = 1;
-tau = 0.5;       % your measured tau from Project 5
-Kp  = 0.5;       % your Experiment 3 value
-Ki  = 1.0;       % your Experiment 2 value
+tau = 0.5;       % your measured tau from Project 10
+Kp  = 0.5;
+Ki  = 1.0;
 
 G    = tf(K, [tau, 1]);
 C_P  = tf(Kp, 1);
@@ -877,16 +524,14 @@ t = 0:0.01:8;
 
 figure; hold on;
 plot(t, y_P,  'b--', 'LineWidth', 2, 'DisplayName', ...
-    sprintf('P  Kp=%.2f  e_{ss}=%.1f%%', Kp, 100/(1+Kp*K)));
-plot(t, y_PI, 'r',   'LineWidth', 2, 'DisplayName', ...
-    sprintf('PI Kp=%.2f Ki=%.2f  e_{ss}=0%%', Kp, Ki));
+    sprintf('P only  e_{ss}=%.1f%%', 100/(1+Kp*K)));
+plot(t, y_PI, 'r',   'LineWidth', 2, 'DisplayName', 'PI  e_{ss}=0%');
 yline(1.0, 'k--', 'Reference');
 grid on;
 xlabel('Time (s)'); ylabel('Normalised Output');
-title('P vs PI - Motor Plant Comparison');
+title('P vs PI - Steady-State Error Elimination');
 legend('Location', 'southeast');
 
-% Print settling time and overshoot
 info_PI = stepinfo(T_PI);
 fprintf('PI Settling time: %.2fs\n', info_PI.SettlingTime);
 fprintf('PI Overshoot:     %.1f%%\n', info_PI.Overshoot);
@@ -897,41 +542,70 @@ fprintf('PI Overshoot:     %.1f%%\n', info_PI.Overshoot);
 - Does the PI simulation confirm zero steady-state error compared to P only?
 - At what Ki did overshoot first appear in your experiments?
 - How does the simulated settling time compare to what you observed on the motor?
-- With the loop closed via back-EMF, does the feedback reading converge to the reference in the Serial Monitor? If a residual offset remains, what physical effect could cause it?
 
 ---
 
-## Engineering Applications
+## Troubleshooting
 
-PI controllers are widely used in:
+### Motor Doesn't Respond
 
-### Motor Speed Control
+Check:
 
-Industrial drives.
+✅ MOSFET wiring correct
 
----
+✅ Battery connected
 
-### Power Supplies
+✅ Shared GND between controller and battery
 
-Voltage regulation.
-
----
-
-### Buck Converters
-
-Output voltage control.
+✅ Flyback diode installed
 
 ---
 
-### Boost Converters
+### Output Saturates Immediately
 
-Feedback regulation.
+Check:
+
+✅ Reduce both Kp and Ki
+
+✅ Check anti-windup limit in code
+
+✅ Check potentiometer reading in Serial Monitor
 
 ---
 
-### Process Control
+### Oscillation Appears
 
-Flow, pressure and temperature control.
+Reduce Ki or Kp.
+
+---
+
+### Integral Grows Without Bound
+
+Check:
+
+✅ Anti-windup `constrain()` is present in code
+
+✅ Sample time (delay) is consistent with dt constant
+
+---
+
+### Troubleshooting Checklist
+
+✅ Motor circuit wired correctly (same as Project 12)
+
+✅ Back-EMF divider connected to feedback ADC input
+
+✅ Shared GND between controller and battery
+
+✅ Potentiometer reading visible in Serial Monitor
+
+✅ Feedback reading changes with motor speed in Serial Monitor
+
+✅ PWM duty cycle visible on oscilloscope
+
+✅ Anti-windup limit in code
+
+✅ Integral drives feedback toward reference
 
 ---
 
@@ -941,23 +615,11 @@ Flow, pressure and temperature control.
 
 What is steady-state error?
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 2
 
 What does the integral term represent?
-
-Answer:
-
-```text
-____________________
-```
 
 ---
 
@@ -965,23 +627,11 @@ ____________________
 
 Write the PI controller equation.
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 4
 
 Why does integral action eliminate steady-state error?
-
-Answer:
-
-```text
-____________________
-```
 
 ---
 
@@ -989,93 +639,11 @@ ____________________
 
 What is integral windup?
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 6
 
 Your PI simulation shows overshoot at Ki = 5.0 but not at Ki = 1.0. Explain why increasing Ki too much causes overshoot, and how anti-windup helps.
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-## Common Mistakes
-
-### Motor Doesn't Respond
-
-Check:
-
-- MOSFET wiring
-- Battery connected
-- Shared ground
-- Flyback diode installed
-
----
-
-### Output Saturates Immediately
-
-Check:
-
-- Kp and Ki values (reduce both)
-- Anti-windup limit
-- Potentiometer reading in Serial Monitor
-
----
-
-### Oscillation Appears
-
-Reduce:
-
-```text
-Ki
-```
-
-or
-
-```text
-Kp
-```
-
----
-
-### Integral Grows Without Bound
-
-Check:
-
-- Anti-windup constrain() is present in code
-- Sample time (delay) is consistent
-
----
-
-## Troubleshooting Checklist
-
-✅ Motor circuit wired correctly (same as Project 6)
-
-✅ Back-EMF divider connected to feedback ADC input (A1 on Arduino or FBK_PIN on ESP32)
-
-✅ Shared ground between controller and battery
-
-✅ Potentiometer reading visible in Serial Monitor
-
-✅ Feedback reading changes with motor speed in Serial Monitor
-
-✅ PWM duty cycle visible on oscilloscope (OWON or DSO Nano)
-
-✅ Anti-windup limit in code
-
-✅ Motor speed changes with potentiometer
-
-✅ Integral drives feedback toward reference
 
 ---
 
@@ -1099,17 +667,13 @@ In this project you learned:
 
 ✅ PWM control through feedback
 
-PI controllers are among the most widely used controllers in engineering because they combine:
-
-- Simplicity
-- Good performance
-- Zero steady-state error
-
 ---
 
 ## Next Project
 
-**14_PID_Controller.md**
+```text
+14_PID_Controller.md
+```
 
 Topics:
 

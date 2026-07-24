@@ -38,10 +38,10 @@ This project introduces one of the most important circuits in electronics:
 
 ```text
 AC Power Supply
-        ↓
+      ↓
   Rectifier
-        ↓
-     DC Power
+      ↓
+   DC Power
 ```
 
 ---
@@ -83,9 +83,7 @@ Direct Current (DC)
 Therefore power conversion is required:
 
 ```text
-AC
-↓
-DC
+AC → DC
 ```
 
 This conversion process is called:
@@ -114,7 +112,7 @@ Voltage
 5V |--------------------
    |
 0V +--------------------
-           Time
+          Time
 ```
 
 ---
@@ -143,10 +141,8 @@ The voltage repeatedly becomes positive and negative.
 
 AC voltage repeats periodically.
 
-Examples:
-
 | Region | Frequency |
-|----------|----------|
+|--------|-----------|
 | Europe | 50 Hz |
 | North America | 60 Hz |
 
@@ -159,39 +155,28 @@ AC voltages are normally specified using the RMS value.
 For a sinewave:
 
 $$
-V_{RMS}
-=
-\frac{V_{PEAK}}{\sqrt{2}}
+V_{RMS} = \frac{V_{PEAK}}{\sqrt{2}}
 $$
 
----
-
-## Example
+### Example
 
 Given:
 
 $$
-V_{PEAK}=10V
+V_{PEAK} = 10\ \text{V}
 $$
 
 Then:
 
 $$
-V_{RMS}
-=
-\frac{10}{1.414}
-$$
-
-$$
-V_{RMS}
-\approx 7.07V
+V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 $$
 
 ---
 
 ## Review of Diodes
 
-A diode allows current flow in one direction.
+A diode allows current flow in one direction only.
 
 Symbol:
 
@@ -199,90 +184,45 @@ Symbol:
 ---->|----
 ```
 
----
+When forward biased: current flows.
 
-## Forward Bias
-
-When forward biased:
-
-```text
-Current Flows
-```
-
----
-
-## Reverse Bias
-
-When reverse biased:
-
-```text
-Current Is Blocked
-```
+When reverse biased: current is blocked.
 
 ---
 
 ## Why Diodes Can Rectify AC
 
-Because a diode blocks current in one direction, it can remove portions of an AC waveform.
-
-This converts:
+Because a diode blocks current in one direction, it removes portions of an AC waveform, converting:
 
 ```text
-Alternating Voltage
-```
-
-into:
-
-```text
-Pulsating DC Voltage
+Alternating Voltage  →  Pulsating DC Voltage
 ```
 
 ---
 
 ## Half-Wave Rectifier
 
-The simplest rectifier uses:
+The simplest rectifier uses one diode.
+
+### Circuit Diagram
 
 ```text
-One Diode
+AC Source
+    │
+   Diode (anode toward AC source)
+    │
+   Load resistor
+    │
+   GND
 ```
 
----
+### Half-Wave Operation
 
-## Circuit
+Positive half-cycle: the diode conducts and output voltage appears across the load.
 
-```mermaid
-graph LR
+Negative half-cycle: the diode blocks current and output voltage is approximately zero.
 
-A[AC Source]
---> B[Diode]
-
-B --> C[Load]
-
-C --> D[Ground]
-```
-
----
-
-## Half-Wave Operation
-
-### Positive Half-Cycle
-
-The diode conducts.
-
-Output voltage appears across the load.
-
----
-
-### Negative Half-Cycle
-
-The diode blocks current.
-
-Output voltage becomes approximately zero.
-
----
-
-## Half-Wave Output
+### Half-Wave Output
 
 Input:
 
@@ -308,8 +248,6 @@ Negative portions are removed.
 
 ## Limitations of Half-Wave Rectification
 
-Disadvantages:
-
 - Large ripple
 - Low efficiency
 - Lower average DC voltage
@@ -318,50 +256,9 @@ Disadvantages:
 
 ## Full-Wave Rectification
 
-A better approach uses both halves of the AC waveform.
+A better approach uses both halves of the AC waveform via a bridge rectifier containing four diodes.
 
-This is achieved using:
-
-```text
-Bridge Rectifier
-```
-
----
-
-## Bridge Rectifier
-
-A bridge rectifier contains:
-
-```text
-Four Diodes
-```
-
-arranged in a bridge configuration.
-
----
-
-## Simplified Block Diagram
-
-```mermaid
-graph LR
-
-A[AC Input]
---> B[Bridge Rectifier]
-
-B --> C[DC Output]
-```
-
----
-
-## Full-Wave Operation
-
-Negative half cycles are inverted.
-
-The output remains positive during both halves of the AC cycle.
-
----
-
-## Full-Wave Output
+### Full-Wave Output
 
 Input:
 
@@ -379,6 +276,8 @@ Output:
 ___/    \__/    \__/    \___
 ```
 
+Negative half-cycles are inverted, so the output remains positive throughout.
+
 ---
 
 ## Advantages of Full-Wave Rectification
@@ -389,7 +288,7 @@ ___/    \__/    \__/    \___
 
 ✅ Better efficiency
 
-✅ Better utilization of the AC source
+✅ Better utilisation of the AC source
 
 ---
 
@@ -397,40 +296,11 @@ ___/    \__/    \__/    \___
 
 The output of a bridge rectifier is not pure DC.
 
-A capacitor is added across the output.
+Adding a capacitor across the output reduces ripple.
 
----
+When the rectified voltage rises the capacitor charges.
 
-## Smoothing Capacitor Circuit
-
-```mermaid
-graph LR
-
-A[Bridge Rectifier]
---> B[DC Output]
-
-B --> C[100 µF Capacitor]
-
-B --> D[Load]
-```
-
----
-
-## How the Capacitor Works
-
-When the rectified voltage rises:
-
-```text
-Capacitor Charges
-```
-
-When the rectified voltage falls:
-
-```text
-Capacitor Discharges
-```
-
-The capacitor supplies energy to the load and helps keep the output voltage stable.
+When the rectified voltage falls the capacitor discharges into the load, keeping the output voltage more stable.
 
 ---
 
@@ -442,14 +312,11 @@ The capacitor supplies energy to the load and helps keep the output voltage stab
 ___/    \__/    \__/    \___
 ```
 
----
-
 ## Output With Capacitor
 
 ```text
-───────────────
-~~~~~~~~~~~~~~~
-───────────────
+────────────────────────────
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ```
 
 The average voltage becomes smoother.
@@ -460,32 +327,9 @@ The average voltage becomes smoother.
 
 Ripple voltage is the small AC variation remaining on a DC output.
 
-Ideal output:
+Ripple increases when load current increases or capacitance decreases.
 
-```text
-Perfect DC
-```
-
-Practical output:
-
-```text
-DC + Ripple
-```
-
----
-
-## Factors Affecting Ripple
-
-Ripple increases when:
-
-- Load current increases
-- Capacitance decreases
-
-Ripple decreases when:
-
-- Capacitance increases
-- Load current decreases
-- Ripple frequency increases
+Ripple decreases when capacitance increases, load current decreases, or ripple frequency increases.
 
 ---
 
@@ -506,7 +350,6 @@ v_hw       = max(v_ac, 0);           % half-wave
 v_fw       = abs(v_ac);              % full-wave
 
 % RC smoothing: simulate capacitor discharge between peaks
-% RC smoothing: inline (avoids nested function restriction in scripts)
 dt = t(2) - t(1);
 C1 = 100e-6; C2 = 470e-6;
 
@@ -555,7 +398,7 @@ fprintf('Full-wave average Vdc:   %.2f V\n', V_fw_avg);
 Set your signal generator to: **10 Vpeak, 50 Hz, sine wave**
 
 | Configuration | Predicted V\_{avg} (V) | Predicted ripple |
-|---------------|----------------------|------------------|
+|---------------|----------------------|-----------------|
 | Half-wave | | |
 | Full-wave | | |
 | Full-wave + 100 µF | | |
@@ -565,17 +408,13 @@ Set your signal generator to: **10 Vpeak, 50 Hz, sine wave**
 
 ## Components Required
 
-### Components to Purchase
-
 - 4 × 1N4001–1N4007 diodes
 - 100 µF electrolytic capacitor
 - 470 µF electrolytic capacitor
 - 1 kΩ load resistor
-
-### Equipment You Already Have
-
 - Signal generator (AC source — set to 10 Vpeak, 50 Hz, sine)
-- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
+- OWON HDS272S Oscilloscope (recommended)
+- DSO Nano Oscilloscope (compatible)
 - Multimeter
 - Breadboard and jumper wires
 
@@ -598,53 +437,31 @@ For laboratory work use only:
 
 ### Objective
 
-Observe an AC waveform.
+Observe and measure the AC waveform from the signal generator before any rectification.
 
 ---
 
-## Probe Connections
-
-Probe Tip:
+### Connections
 
 ```text
-AC Source
-```
-
-Probe Ground:
-
-```text
-Reference Ground
+Probe Tip  ──────► Signal generator output (+)
+Probe GND  ──────► Signal generator GND
 ```
 
 ---
 
-## Oscilloscope Settings (OWON Baseline)
+### Oscilloscope Settings
 
-Recommended scope: OWON HDS272S.
-
-Compatible alternative: DSO Nano.
-
-Vertical:
-
-```text
-2 V/div
-```
-
-Horizontal:
-
-```text
-5 ms/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 5 ms/div | 5 ms/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | AC | AC |
 
 ---
 
-## Expected Waveform
+### Expected Waveform
 
 ```text
       /\
@@ -656,7 +473,7 @@ Rising Edge
 
 ---
 
-## Record Measurements
+### Record Measurements
 
 | Parameter | Measured Value |
 |-----------|---------------|
@@ -670,17 +487,65 @@ Rising Edge
 
 ### Objective
 
-Observe half-wave rectification.
+Observe half-wave rectification and measure the average DC output.
 
 ---
 
-## Circuit
+### Circuit Diagram
 
-One diode and one load resistor.
+```text
+Signal Generator (+)
+    │
+   1N4007 diode (anode toward signal generator)
+    │
+    ├──── Probe Tip
+    │
+   1 kΩ load resistor
+    │
+Signal Generator GND ──── Probe GND
+```
 
 ---
 
-## Expected Output
+### Step-by-Step Wiring
+
+1. Insert the 1N4007 diode into the breadboard. The **anode** (unmarked end) connects toward the signal generator positive terminal. The **cathode** (banded end) connects toward the load.
+2. Connect a jumper wire from the **signal generator (+)** to the **diode anode** row.
+3. Insert the **1 kΩ resistor** so one leg is in the same row as the **diode cathode** and the other leg is in a new row.
+4. Connect a jumper wire from the **bottom of the resistor** to the **signal generator GND**.
+5. Connect the **oscilloscope probe tip** to the junction between the diode cathode and the resistor top.
+6. Connect the **oscilloscope probe ground** to the signal generator GND.
+
+---
+
+### Wiring Checklist
+
+Before applying power:
+
+✅ Diode anode connected toward signal generator (+)
+
+✅ Diode cathode connected toward load resistor
+
+✅ Load resistor connected between diode cathode and GND
+
+✅ Oscilloscope probe tip at diode cathode / resistor junction
+
+✅ Oscilloscope probe ground connected to signal generator GND
+
+---
+
+### Oscilloscope Settings
+
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 5 ms/div | 5 ms/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
+
+---
+
+### Expected Output
 
 ```text
       /\      /\
@@ -692,7 +557,7 @@ ______________________
 
 ---
 
-## Record Measurements
+### Record Measurements
 
 | Parameter | Measured Value |
 |-----------|---------------|
@@ -706,17 +571,86 @@ ______________________
 
 ### Objective
 
-Observe full-wave rectification.
+Observe full-wave rectification using a bridge of four diodes.
 
 ---
 
-## Circuit
+### Circuit Diagram
 
-Bridge rectifier plus load resistor.
+```text
+Signal Generator (+) ──── D1 anode
+Signal Generator (−) ──── D3 anode
+
+D1 cathode ──┬── D2 cathode ──── DC (+) output
+             │
+           Load (1 kΩ)
+             │
+D2 anode  ──┴── D4 anode  ──── DC (−) / GND
+
+D3 cathode ──── DC (+) output
+D4 cathode ──── DC (−) / GND
+```
+
+The standard bridge arrangement:
+
+```text
+        AC (+)
+           │
+      D1 ──┤── D3
+           │
+    DC(+) ─┤
+           │
+      D4 ──┤── D2
+           │
+        AC (−)
+```
 
 ---
 
-## Expected Output
+### Step-by-Step Wiring
+
+1. Insert all four 1N4007 diodes into the breadboard, each in a separate row.
+2. Connect the bridge as follows:
+   - **D1**: anode to AC(+), cathode to DC(+) rail
+   - **D2**: anode to AC(−), cathode to DC(+) rail
+   - **D3**: anode to DC(−) rail, cathode to AC(+)
+   - **D4**: anode to DC(−) rail, cathode to AC(−)
+3. Connect the **1 kΩ load resistor** between the DC(+) rail and the DC(−) rail.
+4. Connect the **signal generator (+)** to the AC(+) node and **(−)** to the AC(−) node.
+5. Connect the **oscilloscope probe tip** to the DC(+) rail and **probe ground** to the DC(−) rail.
+
+> Tip: The DC(−) rail is the common reference. Connect the signal generator GND and oscilloscope probe GND both to this point.
+
+---
+
+### Wiring Checklist
+
+Before applying power:
+
+✅ All four diodes oriented correctly (check anode/cathode markings)
+
+✅ DC(+) rail connected to both D1 and D2 cathodes
+
+✅ DC(−) rail connected to both D3 and D4 anodes
+
+✅ Load resistor between DC(+) and DC(−)
+
+✅ Oscilloscope probe tip at DC(+), probe GND at DC(−)
+
+---
+
+### Oscilloscope Settings
+
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 5 ms/div | 5 ms/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
+
+---
+
+### Expected Output
 
 ```text
      /\      /\      /\
@@ -726,7 +660,7 @@ ___/    \__/    \__/    \___
 
 ---
 
-## Record Measurements
+### Record Measurements
 
 | Parameter | Measured Value |
 |-----------|---------------|
@@ -736,146 +670,69 @@ ___/    \__/    \__/    \___
 
 ---
 
-## Why Is Full-Wave Rectification Better?
-
-Advantages:
-
-✅ Higher average voltage
-
-✅ Lower ripple
-
-✅ Better transformer utilisation
-
-✅ Improved efficiency
-
----
-
 ## Experiment 4 - Capacitor Smoothing
 
 ### Objective
 
-Reduce ripple voltage.
+Reduce ripple voltage by adding a smoothing capacitor across the bridge rectifier output.
 
 ---
 
-## Add Capacitor
+### Step-by-Step Wiring
 
-Connect:
+Keep the bridge rectifier from Experiment 3 intact.
 
-```text
-100 µF Capacitor
-```
-
-across the rectifier output.
+1. Insert the **100 µF electrolytic capacitor** so its **positive leg** connects to the DC(+) rail and its **negative leg** connects to the DC(−) rail.
+2. Verify capacitor polarity — the negative leg is marked with a stripe.
+3. Connect the **oscilloscope probe tip** to the DC(+) rail and **probe ground** to DC(−).
 
 ---
 
-## Observe
+### Wiring Checklist
 
-Compare:
+Before applying power:
 
-```text
-Without Capacitor
-```
+✅ Capacitor positive leg connected to DC(+) rail
 
-and
+✅ Capacitor negative leg connected to DC(−) rail
 
-```text
-With Capacitor
-```
+✅ Load resistor still connected in parallel with capacitor
+
+✅ Oscilloscope probe tip at DC(+)
 
 ---
 
-## Oscilloscope Measurement
+### Oscilloscope Settings — Ripple Measurement
 
-### Probe Connections
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 500 mV/div | 500 mV/div |
+| Horizontal scale | 5 ms/div | 5 ms/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | AC | AC |
 
-Probe Tip:
-
-```text
-DC Output
-```
-
-Probe Ground:
-
-```text
-Circuit Ground
-```
+> Switch to AC coupling to zoom in on the ripple while ignoring the DC offset.
 
 ---
 
-## Oscilloscope Settings (OWON Baseline)
+### Observe
 
-Recommended scope: OWON HDS272S.
+Compare the output with and without the capacitor.
 
-Compatible alternative: DSO Nano.
+With the capacitor the output should be much smoother.
 
-Vertical:
-
-```text
-500 mV/div
-```
-
-Horizontal:
-
-```text
-5 ms/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
+Then replace the 100 µF capacitor with the **470 µF** capacitor and observe the further reduction in ripple.
 
 ---
 
-## Record Observations
+### Results Table
 
-```text
-_____________________________________
-
-_____________________________________
-
-_____________________________________
-```
-
----
-
-## Results Table
-
-| Configuration | Ripple Voltage |
-|---------------|---------------|
-| Half-Wave | |
-| Full-Wave | |
-| Full-Wave + 100 µF Capacitor | |
-| Full-Wave + 470 µF Capacitor | |
-
----
-
-## Relationship to Previous Projects
-
-### Project 2
-
-Capacitor charging and discharging.
-
----
-
-### Project 3
-
-Energy storage concepts.
-
----
-
-### Project 9
-
-Output ripple in Buck Converters.
-
----
-
-### Project 11
-
-Energy transfer using inductors.
+| Configuration | Ripple Voltage (V) |
+|---------------|-------------------|
+| Half-wave | |
+| Full-wave | |
+| Full-wave + 100 µF | |
+| Full-wave + 470 µF | |
 
 ---
 
@@ -883,15 +740,12 @@ Energy transfer using inductors.
 
 Now overlay your measured waveform parameters against the simulated predictions.
 
-### Enter Your Measured Values
-
 ```matlab
 Vpeak = 10; f = 50; R = 1000;
 t = 0:0.0001:0.1;
 v_ac = Vpeak * sin(2*pi*f*t);
 v_fw = abs(v_ac);
 
-% Simulated configurations (inline RC smoothing)
 dt = t(2) - t(1);
 v_fw_100 = zeros(size(v_fw)); v_fw_100(1) = v_fw(1);
 v_fw_470 = zeros(size(v_fw)); v_fw_470(1) = v_fw(1);
@@ -901,13 +755,12 @@ for i = 2:length(t)
 end
 
 % Your measured values — replace zeros
-Vavg_measured  = [0.0, 0.0, 0.0, 0.0];   % (V) half-wave, FW, FW+100uF, FW+470uF
-ripple_measured = [0.0, 0.0, 0.0, 0.0];  % (V) peak-to-peak ripple
+Vavg_measured   = [0.0, 0.0, 0.0, 0.0];   % (V) half-wave, FW, FW+100uF, FW+470uF
+ripple_measured = [0.0, 0.0, 0.0, 0.0];   % (V) peak-to-peak ripple
 
 configs   = {max(v_ac,0), v_fw, v_fw_100, v_fw_470};
 labels    = {'Half-Wave','Full-Wave','FW+100\muF','FW+470\muF'};
 
-% Bar chart: simulated vs measured average voltage
 Vavg_sim = cellfun(@mean, configs);
 
 figure;
@@ -930,129 +783,23 @@ title('Ripple Voltage - Simulation vs Measurement');
 
 ### Reflection
 
-- Does increasing capacitance from 100µF to 470µF reduce ripple by the ratio you expected (470/100 ≈ 4.7×)?
+- Does increasing capacitance from 100 µF to 470 µF reduce ripple by the ratio you expected (470/100 ≈ 4.7×)?
 - The bridge rectifier uses two diodes in series per half-cycle. How does this affect the measured average voltage compared to the simulation which assumed ideal diodes?
 - How does the ripple frequency of the full-wave rectifier compare to the input frequency, and why?
 
 ---
 
-## Engineering Applications
-
-Rectifiers are used in:
-
-### Power Supplies
-
-AC-to-DC conversion.
-
----
-
-### Battery Chargers
-
-Charging DC batteries.
-
----
-
-### Industrial Drives
-
-Generating DC bus voltage.
-
----
-
-### Renewable Energy Systems
-
-Power conversion stages.
-
----
-
-### Consumer Electronics
-
-Phone chargers and adapters.
-
----
-
-## Knowledge Check
-
-### Question 1
-
-What is rectification?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 2
-
-What does a diode do?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 3
-
-Why is a bridge rectifier better than a half-wave rectifier?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 4
-
-What is ripple voltage?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 5
-
-Why is a smoothing capacitor used?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 6
-
-A full-wave rectifier with a 100µF capacitor produces 2V of ripple at 50Hz with a 1kΩ load. Estimate the ripple if the capacitor is replaced with 470µF, using the approximation V_ripple ≈ I_load / (f_ripple × C). Show your working.
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-## Common Mistakes
+## Troubleshooting
 
 ### No Output Voltage
 
 Check:
 
-- Diode polarity
-- Wiring connections
-- AC source
+✅ Diode polarity (banded end = cathode)
+
+✅ Signal generator connected and outputting
+
+✅ Load resistor connected
 
 ---
 
@@ -1060,9 +807,11 @@ Check:
 
 Check:
 
-- Capacitor value
-- Capacitor polarity
-- Load current
+✅ Capacitor value
+
+✅ Capacitor polarity (positive leg to DC(+))
+
+✅ Load current not too high
 
 ---
 
@@ -1070,15 +819,17 @@ Check:
 
 Check:
 
-- Oscilloscope trigger
-- Ground connection
-- Time scale
+✅ Oscilloscope trigger settings
+
+✅ Probe ground connected to DC(−) rail
+
+✅ Horizontal time scale appropriate for 50 Hz (5 ms/div shows two cycles)
 
 ---
 
-## Troubleshooting Checklist
+### Troubleshooting Checklist
 
-✅ AC source connected
+✅ Signal generator connected and set to 10 Vpeak, 50 Hz, sine
 
 ✅ Diodes oriented correctly
 
@@ -1088,9 +839,45 @@ Check:
 
 ✅ Oscilloscope triggering correctly
 
-✅ Ripple measured
+✅ Probe ground at DC(−) rail
 
-✅ Rectification verified
+---
+
+## Knowledge Check
+
+### Question 1
+
+What is rectification?
+
+---
+
+### Question 2
+
+What does a diode do?
+
+---
+
+### Question 3
+
+Why is a bridge rectifier better than a half-wave rectifier?
+
+---
+
+### Question 4
+
+What is ripple voltage?
+
+---
+
+### Question 5
+
+Why is a smoothing capacitor used?
+
+---
+
+### Question 6
+
+A full-wave rectifier with a 100 µF capacitor produces 2 V of ripple at 50 Hz with a 1 kΩ load. Estimate the ripple if the capacitor is replaced with 470 µF, using the approximation $V_{ripple} \approx I_{load} / (f_{ripple} \times C)$. Show your working.
 
 ---
 
@@ -1114,19 +901,13 @@ In this project you learned:
 
 ✅ Power supply fundamentals
 
-You have now studied:
-
-```text
-AC → DC Conversion
-```
-
-which is the first stage of many practical power electronic systems.
-
 ---
 
 ## Next Project
 
-**06_DC_AC_Inverters.md**
+```text
+06_DC_AC_Inverters.md
+```
 
 Topics:
 

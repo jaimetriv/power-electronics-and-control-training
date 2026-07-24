@@ -36,17 +36,7 @@ In this project you will learn:
 - Step response analysis
 - Experimental parameter estimation
 
-System identification provides the bridge between:
-
-```text
-Real Hardware
-```
-
-and:
-
-```text
-Control System Design
-```
+System identification provides the bridge between real hardware and control system design.
 
 ---
 
@@ -74,13 +64,7 @@ At the end of this project you should be able to:
 
 Control engineers rarely design controllers directly from hardware.
 
-Instead they first create a:
-
-```text
-Mathematical Model
-```
-
-of the system.
+Instead they first create a mathematical model of the system.
 
 The process of obtaining a model from measurements is called:
 
@@ -100,76 +84,25 @@ Models allow engineers to:
 - Improve performance
 - Reduce development time
 
-Without a model:
-
-```text
-Controller Design Becomes Difficult
-```
-
----
-
-## What Is a Dynamic System?
-
-A dynamic system changes over time.
-
-Examples:
-
-- RC circuits
-- RLC circuits
-- Electric motors
-- Buck converters
-- Temperature systems
-
 ---
 
 ## Input and Output
 
-A system receives:
-
-```text
-Input
-```
-
-and produces:
-
-```text
-Output
-```
+A system receives an input and produces an output.
 
 Example:
 
 ```text
-PWM Duty Cycle
-      ↓
-     Motor
-      ↓
- Motor Speed
+PWM Duty Cycle → Motor → Motor Speed
 ```
 
----
-
-## Black Box Representation
-
-```mermaid
-graph LR
-
-A[Input]
---> B[System]
-
-B --> C[Output]
-```
-
-The internal details may be unknown.
-
-System identification attempts to determine how the system behaves.
+System identification attempts to determine how the system behaves from input-output measurements.
 
 ---
 
 ## What Is a Step Input?
 
-A step input changes suddenly.
-
-Example:
+A step input changes suddenly:
 
 ```text
 0 V → 5 V
@@ -181,32 +114,14 @@ or:
 0% → 100% PWM
 ```
 
----
-
-## Why Use a Step Input?
-
 Step responses are easy to generate and contain valuable information about system dynamics.
-
----
-
-## First-Order Systems
-
-Many engineering systems can be approximated as first-order systems.
-
-Examples:
-
-- RC circuits
-- Thermal systems
-- Some motor systems
 
 ---
 
 ## First-Order Transfer Function
 
-A first-order transfer function is:
-
 $$
-G(s)=\frac{K}{\tau s+1}
+G(s) = \frac{K}{\tau s + 1}
 $$
 
 Where:
@@ -216,73 +131,15 @@ Where:
 
 ---
 
-## Time Constant
-
-The time constant describes how quickly a system responds.
-
-Symbol:
-
-$$
-\tau
-$$
-
-Units:
-
-```text
-Seconds
-```
-
----
-
-## First-Order Step Response
-
-A first-order system responds according to:
-
-$$
-y(t)
-=
-K\left(1-e^{-t/\tau}\right)
-$$
-
----
-
 ## Time Constant Rule
 
-At:
-
-$$
-t=\tau
-$$
-
-the output reaches approximately:
+At $t = \tau$ the output reaches approximately:
 
 $$
 63.2\%
 $$
 
 of its final value.
-
----
-
-## Example
-
-If the final value is:
-
-$$
-10V
-$$
-
-then at:
-
-$$
-t=\tau
-$$
-
-the output is:
-
-$$
-6.32V
-$$
 
 ---
 
@@ -304,47 +161,10 @@ Output
 
 ---
 
-## Reviewing RC Circuits
-
-Recall Project 2.
-
-The capacitor charging equation is:
-
-$$
-V_C(t)
-=
-V_S
-\left(
-1-e^{-t/(RC)}
-\right)
-$$
-
-The RC circuit is a first-order system.
-
----
-
-## Second-Order Systems
-
-Many systems exhibit oscillation.
-
-Examples:
-
-- RLC circuits
-- Mechanical systems
-- Motor drive systems
-- Closed-loop controllers
-
----
-
 ## Second-Order Transfer Function
 
-A common form is:
-
 $$
-G(s)
-=
-\frac{\omega_n^2}
-{s^2+2\zeta\omega_n s+\omega_n^2}
+G(s) = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}
 $$
 
 Where:
@@ -354,60 +174,19 @@ Where:
 
 ---
 
-## Damping Ratio
-
-The damping ratio determines the response shape.
-
----
-
-### Underdamped
-
-```text
-Oscillatory
-```
-
----
-
-### Critically Damped
-
-```text
-Fast Response
-Without Oscillation
-```
-
----
-
-### Overdamped
-
-```text
-Slow Response
-```
-
----
-
 ## Step Response Characteristics
-
-Important measurements include:
-
----
 
 ### Rise Time
 
 Time required to reach the target.
 
----
-
 ### Overshoot
 
 Amount exceeding the target value.
 
----
-
 ### Settling Time
 
-Time required to stabilize.
-
----
+Time required to stabilise.
 
 ### Steady-State Error
 
@@ -442,7 +221,7 @@ legend('Location', 'southeast');
 ### Second-Order: Effect of Damping Ratio
 
 ```matlab
-wn   = 5;    % natural frequency (rad/s)
+wn   = 5;
 zeta_values = [0.1, 0.3, 0.7, 1.0, 2.0];
 t = 0:0.001:4;
 
@@ -463,8 +242,6 @@ legend('Location', 'southeast');
 
 ### Curve Fitting Preview — How to Extract τ from Data
 
-This is the technique you will apply to your measurements:
-
 ```matlab
 % Simulate "measured" data with noise
 tau_true = 1.0; K_true = 5.0;
@@ -473,7 +250,7 @@ y_measured = K_true*(1 - exp(-t/tau_true)) + 0.05*randn(size(t));
 
 % Fit first-order model by minimising sum of squared errors
 cost = @(p) sum((p(1)*(1-exp(-t/p(2))) - y_measured).^2);
-p0   = [4.0, 0.5];                    % initial guess [K, tau]
+p0   = [4.0, 0.5];
 p_fit = fminsearch(cost, p0);
 
 K_fit   = p_fit(1);
@@ -496,29 +273,24 @@ fprintf('Fitted: K=%.2f  tau=%.2fs\n', K_fit, tau_fit);
 
 | System | Expected τ | Expected K | Response type |
 |--------|-----------|-----------|---------------|
-| RC (10kΩ, 100µF) | | | |
-| RC (10kΩ, 220µF) | | | |
-| RC (22kΩ, 100µF) | | | |
-| Motor (from Project 5) | | | |
+| RC (10 kΩ, 100 µF) | | | |
+| RC (10 kΩ, 220 µF) | | | |
+| RC (22 kΩ, 100 µF) | | | |
+| Motor (from Project 10) | | | |
 
 ---
 
 ## Components Required
 
-- Arduino Uno
-- ESP32 DevKit V1 (alternative controller)
-- Breadboard
+- Arduino Uno or ESP32 DevKit V1
+- Breadboard and jumper wires
 - 10 kΩ resistor
 - 22 kΩ resistor
 - 100 µF capacitor
-- 220 µF capacitor (needed for Experiment 2 Test B — add to shopping list if not already purchased)
-- DC motor + IRLZ44N MOSFET + flyback diode (from Project 5)
-- Jumper wires
-- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
-
-Optional (frequency response identification):
-
-- Signal generator
+- 220 µF capacitor
+- DC motor + IRLZ44N MOSFET + flyback diode (from Project 10)
+- OWON HDS272S Oscilloscope (recommended)
+- DSO Nano Oscilloscope (compatible)
 
 ---
 
@@ -526,143 +298,123 @@ Optional (frequency response identification):
 
 ### Objective
 
-Measure the time constant of an RC circuit.
+Apply a step input to an RC circuit and measure the time constant from the oscilloscope.
 
 ---
 
-## Circuit
+### Circuit Diagram
 
-Use:
-
-- 10 kΩ resistor
-- 100 µF capacitor
-
----
-
-## RC Time Constant
-
-Calculate:
-
-$$
-\tau=RC
-$$
-
-Substituting:
-
-$$
-\tau
-=
-10000 \times 100 \times 10^{-6}
-$$
-
-$$
-\tau=1s
-$$
+```text
+Arduino Pin D9  (or ESP32 GPIO18)
+    │
+   10 kΩ resistor
+    │
+    ├──── Vc ──── Probe Tip
+    │
+   100 µF capacitor  (positive leg up)
+    │
+   GND ──── Probe GND
+```
 
 ---
 
-## Arduino Step Input
+### Step-by-Step Wiring
+
+1. Insert the **10 kΩ resistor** across the breadboard so each leg is in a different row.
+2. Connect a jumper wire from **Arduino pin D9** to one leg of the resistor.
+3. Insert the **100 µF capacitor** so its **positive leg** is in the same row as the other resistor leg. This junction is $V_C$.
+4. Connect a jumper wire from the **capacitor negative leg** to any **GND** pin on the Arduino.
+5. Connect the **oscilloscope probe tip** to the $V_C$ junction.
+6. Connect the **oscilloscope probe ground** to Arduino GND.
+
+---
+
+### Wiring Checklist
+
+Before uploading:
+
+✅ Resistor leg in same row as Arduino D9 jumper
+
+✅ Capacitor positive leg in same row as other resistor leg
+
+✅ Capacitor negative leg connected to GND
+
+✅ Oscilloscope probe tip at Vc junction
+
+✅ Oscilloscope probe ground at Arduino GND
+
+---
+
+### Arduino Code
 
 ```cpp
 void setup()
 {
+    // Configure pin 9 as a digital output.
     pinMode(9, OUTPUT);
 
+    // Start LOW to ensure capacitor is discharged before the step.
     digitalWrite(9, LOW);
 
+    // Wait 2 seconds for capacitor to fully discharge.
     delay(2000);
 
+    // Apply the step: drive pin HIGH and hold there.
+    // The capacitor will now charge through the resistor.
     digitalWrite(9, HIGH);
 }
 
 void loop()
 {
+    // Nothing needed here — the step is applied once in setup().
 }
 ```
 
-### ESP32 Equivalent Step Input
+### ESP32 Equivalent Code
 
 ```cpp
-const int STEP_PIN = 18;
-
 void setup()
 {
-    pinMode(STEP_PIN, OUTPUT);
-
-    digitalWrite(STEP_PIN, LOW);
-
+    pinMode(18, OUTPUT);
+    digitalWrite(18, LOW);
     delay(2000);
-
-    digitalWrite(STEP_PIN, HIGH);
+    digitalWrite(18, HIGH);
 }
 
-void loop()
-{
-}
+void loop() {}
 ```
 
 ---
 
-## Oscilloscope Connections
+### Oscilloscope Settings
 
-Probe Tip:
-
-```text
-Capacitor Voltage
-```
-
-Probe Ground:
-
-```text
-GND
-```
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 1 V/div | 1 V/div |
+| Horizontal scale | 500 ms/div | 500 ms/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
 
 ---
 
-## Oscilloscope Settings (OWON Baseline)
-
-Recommended scope: OWON HDS272S.
-
-Compatible alternative: DSO Nano.
-
-Vertical:
-
-```text
-1 V/div
-```
-
-Horizontal:
-
-```text
-500 ms/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
-
----
-
-## Measurement Procedure
+### Measurement Procedure
 
 1. Apply the step input.
 2. Observe the capacitor charging curve.
 3. Record the final voltage.
 4. Calculate 63.2% of the final value.
-5. Measure the time required to reach that point.
+5. Measure the time required to reach that point — this is your measured τ.
 
 ---
 
-## Results Table
+### Results Table
 
 | Parameter | Value |
 |-----------|-------|
 | Final Voltage | |
 | 63.2% Voltage | |
 | Measured Time Constant | |
-| Calculated Time Constant | |
+| Calculated Time Constant (RC) | |
 
 ---
 
@@ -670,44 +422,43 @@ Rising Edge
 
 ### Objective
 
-Observe how component values affect system dynamics.
+Observe how component values affect the time constant.
 
 ---
 
-## Test A
+### Test A
 
 ```text
-10 kΩ
-100 µF
+R = 10 kΩ,  C = 100 µF  →  τ = 1.0 s
 ```
 
 ---
 
-## Test B
+### Test B
 
 ```text
-10 kΩ
-220 µF
+R = 10 kΩ,  C = 220 µF  →  τ = 2.2 s
 ```
 
 ---
 
-## Test C
+### Test C
 
 ```text
-22 kΩ
-100 µF
+R = 22 kΩ,  C = 100 µF  →  τ = 2.2 s
 ```
+
+For each test, adjust the oscilloscope horizontal scale to suit the new time constant.
 
 ---
 
-## Results Table
+### Results Table
 
-| Resistance | Capacitance | Time Constant |
-|------------|-------------|--------------|
-| 10 kΩ | 100 µF | |
-| 10 kΩ | 220 µF | |
-| 22 kΩ | 100 µF | |
+| Resistance | Capacitance | Theoretical τ | Measured τ |
+|------------|-------------|--------------|-----------|
+| 10 kΩ | 100 µF | 1.0 s | |
+| 10 kΩ | 220 µF | 2.2 s | |
+| 22 kΩ | 100 µF | 2.2 s | |
 
 ---
 
@@ -715,76 +466,38 @@ Observe how component values affect system dynamics.
 
 ### Objective
 
-Observe dynamic motor response.
+Apply a PWM step change to the motor and observe the first-order speed response.
 
 ---
 
-## Procedure
+### Circuit
 
-Apply a PWM step change:
-
-```text
-0% → 50%
-```
-
-Observe:
-
-```text
-Motor Response
-```
+Same as Project 10 (MOSFET motor driver with flyback diode).
 
 ---
 
-## Record
+### Procedure
 
-- Initial Speed
-- Final Speed
-- Rise Time
-- Settling Time
-
----
-
-## Model Validation
-
-Once a model is identified:
-
-```text
-Model Output
-```
-
-should be compared against:
-
-```text
-Measured Output
-```
+1. Upload the step code from Project 10 Experiment 4.
+2. Observe the motor speed response visually.
+3. Record the approximate rise time and settling time.
+4. Estimate τ as the time to reach 63.2% of final speed.
 
 ---
 
-## Why Validation Matters
+### Record
 
-A model is only useful if it accurately predicts real behaviour.
-
----
-
-## Identification Procedure Summary
-
-```text
-Apply Input
-      ↓
-Measure Output
-      ↓
-Determine Model
-      ↓
-Compare Results
-      ↓
-Refine Model
-```
+| Parameter | Value |
+|-----------|-------|
+| Approximate rise time | |
+| Approximate settling time | |
+| Estimated τ | |
 
 ---
 
 ## MATLAB Comparison
 
-Now fit first-order models to your measured RC and motor step responses and validate them.
+Fit first-order models to your measured RC and motor step responses and validate them.
 
 ### RC Circuit Model Fit
 
@@ -796,7 +509,6 @@ y_data = [0, 0.9, 1.6, 2.2, 2.7, 3.1, 3.7, 4.1, 4.6, 4.8, 5.0]; % replace (V)
 
 Vfinal = max(y_data);
 
-% Fit first-order model: y = K*(1 - exp(-t/tau))
 cost   = @(p) sum((p(1)*(1-exp(-t_data/p(2))) - y_data).^2);
 p_fit  = fminsearch(cost, [Vfinal, 0.5]);
 K_fit  = p_fit(1);
@@ -822,188 +534,25 @@ fprintf('Fitted      \\tau: %.3f s\n', tau_fit);
 fprintf('Error:            %.1f%%\n', 100*abs(tau_fit-tau_theory)/tau_theory);
 ```
 
-### Motor Step Response Model Fit
-
-```matlab
-% Enter your motor step response from Project 5 (or re-measure here)
-% Normalise speed: 0 = stopped, 1 = full speed
-t_motor = [0, 0.1, 0.2, 0.3, 0.5, 0.7, 1.0, 1.5, 2.0]; % replace (s)
-y_motor = [0, 0.3, 0.5, 0.6, 0.8, 0.9, 0.95, 0.99, 1.0]; % replace (normalised)
-
-cost_m  = @(p) sum((p(1)*(1-exp(-t_motor/p(2))) - y_motor).^2);
-p_motor = fminsearch(cost_m, [1.0, 0.3]);
-K_m     = p_motor(1);
-tau_m   = p_motor(2);
-
-t_m = 0:0.01:max(t_motor);
-y_m = K_m * (1 - exp(-t_m / tau_m));
-
-figure; hold on;
-scatter(t_motor, y_motor, 50, 'b', 'filled', 'DisplayName', 'Measured');
-plot(t_m, y_m, 'r', 'LineWidth', 2, 'DisplayName', ...
-    sprintf('Fit: K=%.2f, \\tau=%.3fs', K_m, tau_m));
-xline(tau_m, 'k--', sprintf('\\tau=%.3fs', tau_m));
-yline(0.632*K_m, 'k:', '63.2%');
-grid on;
-xlabel('Time (s)'); ylabel('Normalised Speed');
-title('Motor - First-Order Model Fit');
-legend('Location', 'southeast');
-
-fprintf('Motor model: G(s) = %.2f / (%.3f*s + 1)\n', K_m, tau_m);
-fprintf('Compare with Project 5 estimate: tau = ?\n');
-```
-
 ### Reflection
 
-- How close is your fitted RC τ to the theoretical value RC = 1.0s? What causes the difference?
+- How close is your fitted RC τ to the theoretical value RC = 1.0 s? What causes the difference?
 - Does the motor step response fit well to a first-order model, or do you see a delay or second-order behaviour?
-- How does the motor τ identified here compare to your informal estimate from Project 5?
+- How does the motor τ identified here compare to your informal estimate from Project 10?
 
 ---
 
-## Relationship to Previous Projects
-
-### Project 2
-
-RC circuit dynamics.
-
----
-
-### Project 3
-
-RLC circuit dynamics.
-
----
-
-### Projects 6 to 8
-
-Closed-loop controller behaviour.
-
----
-
-### Projects 9 to 13
-
-Power electronic system dynamics.
-
----
-
-## Engineering Applications
-
-System identification is used in:
-
-### Robotics
-
-Motion control models.
-
----
-
-### Aerospace
-
-Aircraft modelling.
-
----
-
-### Automotive Systems
-
-Engine and vehicle dynamics.
-
----
-
-### Industrial Automation
-
-Process modelling.
-
----
-
-### Power Electronics
-
-Converter modelling and control.
-
----
-
-## Knowledge Check
-
-### Question 1
-
-What is system identification?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 2
-
-What is a time constant?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 3
-
-What percentage of the final value is reached after one time constant?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 4
-
-What is a step input?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 5
-
-Why is model validation important?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 6
-
-Your curve fit gives τ = 1.12s for the RC circuit but the theoretical value is 1.0s. Name two physical reasons that could explain this, and explain how you would use the fitted model (rather than the theoretical one) in controller design.
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-## Common Mistakes
+## Troubleshooting
 
 ### Incorrect Time Constant
 
 Check:
 
-- Component values
-- Oscilloscope scaling
-- Trigger location
+✅ Component values (read resistor colour bands or measure with multimeter)
+
+✅ Oscilloscope horizontal scale appropriate for the time constant
+
+✅ Trigger location at the start of the step
 
 ---
 
@@ -1011,23 +560,15 @@ Check:
 
 Check:
 
-- Probe grounding
-- Trigger settings
-- Timebase settings
+✅ Probe ground connected to Arduino GND
+
+✅ Trigger settings stable
+
+✅ Timebase set to show the full charging curve
 
 ---
 
-### Model Does Not Match Data
-
-Check:
-
-- Assumptions
-- Measurement accuracy
-- System nonlinearities
-
----
-
-## Troubleshooting Checklist
+### Troubleshooting Checklist
 
 ✅ Step input applied correctly
 
@@ -1040,6 +581,44 @@ Check:
 ✅ Time constant measured
 
 ✅ Model compared with measurements
+
+---
+
+## Knowledge Check
+
+### Question 1
+
+What is system identification?
+
+---
+
+### Question 2
+
+What is a time constant?
+
+---
+
+### Question 3
+
+What percentage of the final value is reached after one time constant?
+
+---
+
+### Question 4
+
+What is a step input?
+
+---
+
+### Question 5
+
+Why is model validation important?
+
+---
+
+### Question 6
+
+Your curve fit gives τ = 1.12 s for the RC circuit but the theoretical value is 1.0 s. Name two physical reasons that could explain this, and explain how you would use the fitted model (rather than the theoretical one) in controller design.
 
 ---
 
@@ -1063,13 +642,13 @@ In this project you learned:
 
 ✅ Experimental parameter estimation
 
-You now have the foundation required to move from measuring system behaviour to designing controllers based on mathematical models.
-
 ---
 
 ## Next Project
 
-**16_Controller_Design.md**
+```text
+16_Controller_Design.md
+```
 
 Topics:
 
@@ -1077,5 +656,5 @@ Topics:
 - Model-Based Design
 - Stability
 - Controller Tuning
-- Performance Optimization
+- Performance Optimisation
 - Practical Control Engineering

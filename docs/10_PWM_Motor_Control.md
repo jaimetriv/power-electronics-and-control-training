@@ -25,17 +25,7 @@ In this project you will learn:
 - What a first-order dynamic system is
 - How to estimate motor time constants
 
-This project bridges the gap between:
-
-```text
-Electronics
-```
-
-and
-
-```text
-Control Systems
-```
+This project bridges the gap between electronics and control systems.
 
 The motor will become our first real-world dynamic plant.
 
@@ -65,91 +55,32 @@ At the end of this project you should be able to:
 
 ### What Is a DC Motor?
 
-A DC motor converts:
-
-```text
-Electrical Energy
-```
-
-into:
-
-```text
-Mechanical Energy
-```
+A DC motor converts electrical energy into mechanical energy.
 
 When voltage is applied:
 
-- Current flows through motor windings.
-- A magnetic field is created.
-- Torque is produced.
-- The shaft begins to rotate.
+- Current flows through motor windings
+- A magnetic field is created
+- Torque is produced
+- The shaft begins to rotate
 
 ---
 
 ## Simplified Motor Model
 
 ```text
-Voltage
-   |
-   ↓
-Current
-   |
-   ↓
-Torque
-   |
-   ↓
-Speed
+Voltage → Current → Torque → Speed
 ```
 
 ---
 
 ## Why Doesn't a Motor Reach Full Speed Instantly?
 
-Motors have:
+Motors have mass and inertia.
 
-```text
-Mass
-```
+Just like a car cannot instantly accelerate from 0 to 70 mph, a motor cannot instantly reach maximum speed.
 
-and
-
-```text
-Inertia
-```
-
-Just like a car cannot instantly accelerate from:
-
-```text
-0 mph
-```
-
-to
-
-```text
-70 mph
-```
-
-a motor cannot instantly reach maximum speed.
-
-Instead speed rises gradually.
-
----
-
-## Example Motor Response
-
-```text
-Speed
-
-100% |           ________
-     |         /
-     |       /
-     |     /
-     |   /
-   0 +---------------------
-            Time
-```
-
-Notice how the response resembles the RC charging curve from Project 2.
+Instead speed rises gradually, following a first-order exponential response similar to the RC circuit from Project 02.
 
 ---
 
@@ -158,7 +89,7 @@ Notice how the response resembles the RC charging curve from Project 2.
 A DC motor can often be approximated by:
 
 $$
-G(s)=\frac{K}{\tau s+1}
+G(s) = \frac{K}{\tau s + 1}
 $$
 
 Where:
@@ -166,48 +97,15 @@ Where:
 - $K$ = System Gain
 - $\tau$ = Motor Time Constant
 
-This is exactly the same form as the RC circuit studied previously.
-
 ---
 
 ## PWM Motor Control
 
-PWM controls the average voltage applied to the motor.
-
-Average voltage:
+PWM controls the average voltage applied to the motor:
 
 $$
-V_{AVG}=D \cdot V_S
+V_{AVG} = D \cdot V_S
 $$
-
-Where:
-
-- $D$ = Duty Cycle
-- $V_S$ = Supply Voltage
-
----
-
-## Example
-
-Given:
-
-$$
-D=0.5
-$$
-
-and:
-
-$$
-V_S
-$$
-
-Then:
-
-$$
-V_{AVG}=0.5V_S
-$$
-
-Examples: $V_{AVG}=2.5V$ for a 5.0V Arduino signal, or $V_{AVG}=1.65V$ for a 3.3V ESP32 signal.
 
 The motor receives less average voltage and therefore rotates more slowly.
 
@@ -215,23 +113,41 @@ The motor receives less average voltage and therefore rotates more slowly.
 
 ## Why Use PWM Instead of a Resistor?
 
-Resistor control wastes energy.
+Resistor control wastes energy as heat.
 
-PWM control is much more efficient.
+PWM control is much more efficient because the MOSFET is either fully ON or fully OFF, minimising power loss.
 
-The MOSFET is either:
+---
+
+## Why Is a Flyback Diode Needed?
+
+Motors are inductive loads.
+
+When current is interrupted, a high voltage spike can occur.
+
+The flyback diode provides a path for this spike, protecting the controller, MOSFET, and other electronics.
+
+---
+
+## Circuit Diagram
 
 ```text
-Fully ON
+Battery (+)
+    │
+  Motor
+    │──── Flyback diode (cathode toward Battery+, anode toward Drain)
+    │
+  Drain (MOSFET IRLZ44N)
+  Source
+    │
+   GND
+
+PWM Output (Arduino Pin 9 or ESP32 GPIO18)
+      │
+    220 Ω gate resistor
+      │
+    Gate
 ```
-
-or
-
-```text
-Fully OFF
-```
-
-which minimises power loss.
 
 ---
 
@@ -243,7 +159,7 @@ Before building the circuit, simulate the motor's first-order step response and 
 
 ```matlab
 K      = 1;
-tau_values = [0.2, 0.5, 1.0, 2.0];   % range of plausible motor time constants
+tau_values = [0.2, 0.5, 1.0, 2.0];
 labels = {'\tau=0.2s','\tau=0.5s','\tau=1.0s','\tau=2.0s'};
 
 t = 0:0.01:10;
@@ -261,27 +177,7 @@ title('First-Order Motor Model - Step Response');
 legend('Location', 'southeast');
 ```
 
-### PWM Average Voltage — Operating Points
-
-```matlab
-D    = 0:0.01:1;
-Vavg = 5 .* D;
-
-D_exp    = [0.25, 0.50, 0.75, 1.00];
-Vavg_exp = 5 .* D_exp;
-
-figure;
-plot(D, Vavg, 'b', 'LineWidth', 2); hold on;
-scatter(D_exp, Vavg_exp, 80, 'r', 'filled', 'DisplayName', 'Experiment points');
-grid on;
-xlabel('Duty Cycle'); ylabel('Average Motor Voltage (V)');
-title('Motor Voltage vs Duty Cycle');
-legend('Theory', 'Experiment points', 'Location', 'northwest');
-```
-
 ### Prediction Table
-
-Before running Experiment 4, estimate the motor time constant by looking at the simulation:
 
 | Parameter | Predicted value |
 |-----------|----------------|
@@ -293,105 +189,15 @@ Before running Experiment 4, estimate the motor time constant by looking at the 
 
 ## Required Components
 
-### Hardware
-
-- Arduino Uno
-- ESP32 DevKit V1 (alternative controller)
-- Breadboard
-- Jumper Wires
-- Logic-Level MOSFET (IRLZ44N recommended)
+- Arduino Uno or ESP32 DevKit V1
+- Breadboard and jumper wires
+- IRLZ44N MOSFET
 - DC Motor
-- Flyback Diode (1N4001-1N4007)
+- Flyback Diode (1N4001–1N4007)
+- 220 Ω gate resistor
 - External Battery Pack
-
-### Equipment
-
-- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
-
----
-
-## Important Safety Note
-
-Never connect a motor directly to a microcontroller output pin.
-
-Motors can draw significantly more current than the microcontroller can safely provide.
-
-Always use:
-
-```text
-MOSFET Driver Circuit
-```
-
----
-
-## Why Is a Flyback Diode Needed?
-
-Motors are inductive loads.
-
-When current is interrupted, a high voltage spike can occur.
-
-The flyback diode protects:
-
-- Controller
-- MOSFET
-- Other electronics
-
----
-
-## Motor Driver Circuit
-
-```mermaid
-graph TD
-
-A[Arduino Pin 9]
---> B[220 Ohm]
-
-A2[ESP32 GPIO18]
---> B
-
-B --> C[Gate]
-
-D[Motor]
---> C2[Drain]
-
-C2 --> E[MOSFET]
-
-E --> F[GND]
-
-G[Battery +]
---> D
-
-H[Flyback Diode]
---- D
-```
-
----
-
-## Simplified Wiring Diagram
-
-```text
-Battery +
-    |
-    |
-  Motor
-    |
-    |
- Drain
-
-MOSFET
-
-Source
-    |
-   GND
-
-PWM Output (Arduino Pin 9 or ESP32 GPIO18)
-      |
-    220Ω
-      |
-    Gate
-
-Flyback Diode Across Motor
-```
+- OWON HDS272S Oscilloscope (recommended)
+- DSO Nano Oscilloscope (compatible)
 
 ---
 
@@ -399,79 +205,103 @@ Flyback Diode Across Motor
 
 ### Objective
 
-Turn the motor fully ON and OFF.
+Turn the motor fully ON and OFF and observe the gradual speed response.
 
 ---
 
-## Arduino Code
+### Step-by-Step Wiring
+
+1. Insert the **IRLZ44N MOSFET** into the breadboard. Identify Gate (G), Drain (D), and Source (S).
+2. Connect a jumper wire from **Arduino GND** to the **MOSFET Source** row. Also connect the **battery negative** to this same GND row.
+3. Insert the **220 Ω gate resistor** so one leg is in the **Gate** row and the other is in a new row.
+4. Connect a jumper wire from **Arduino pin D9** to the top of the gate resistor.
+5. Connect one motor terminal to the **MOSFET Drain** row.
+6. Connect the other motor terminal to the **battery positive**.
+7. Insert the **flyback diode** across the motor terminals: **cathode (banded end)** toward the battery positive terminal, **anode** toward the MOSFET Drain. This protects against inductive voltage spikes.
+
+The current path when the MOSFET is ON:
+
+```text
+Battery (+) → Motor → Drain → Source → GND → Battery (−)
+```
+
+---
+
+### Wiring Checklist
+
+Before uploading:
+
+✅ MOSFET Source connected to GND (shared with battery negative)
+
+✅ Motor connected between battery positive and MOSFET Drain
+
+✅ Flyback diode across motor (cathode toward battery+, anode toward Drain)
+
+✅ Gate resistor between D9 and MOSFET Gate
+
+✅ Battery connected
+
+---
+
+### Arduino Code
 
 ```cpp
 void setup()
 {
+    // Configure pin 9 as a digital output to drive the MOSFET gate.
     pinMode(9, OUTPUT);
 }
 
 void loop()
 {
+    // Drive gate HIGH → MOSFET ON → motor runs at full speed.
     digitalWrite(9, HIGH);
+    delay(3000);              // Run for 3 seconds
 
-    delay(3000);
-
+    // Drive gate LOW → MOSFET OFF → motor decelerates.
     digitalWrite(9, LOW);
-
-    delay(3000);
+    delay(3000);              // Stop for 3 seconds
 }
 ```
 
-### ESP32 Equivalent
+### ESP32 Equivalent Code
 
 ```cpp
-const int PWM_PIN = 18;
-
 void setup()
 {
-    pinMode(PWM_PIN, OUTPUT);
+    // Configure GPIO18 as a digital output.
+    // Note: ESP32 outputs 3.3 V HIGH, sufficient for the IRLZ44N.
+    pinMode(18, OUTPUT);
 }
 
 void loop()
 {
-    digitalWrite(PWM_PIN, HIGH);
+    digitalWrite(18, HIGH);
     delay(3000);
-    digitalWrite(PWM_PIN, LOW);
+
+    digitalWrite(18, LOW);
     delay(3000);
 }
 ```
 
 ---
 
-## Observation
+### Observe
 
 Notice:
 
-- Motor accelerates gradually.
-- Motor decelerates gradually.
+- Motor accelerates gradually when switched ON.
+- Motor decelerates gradually when switched OFF.
 
-Unlike an LED:
+Unlike an LED, the response is not instantaneous.
+
+Record observations:
 
 ```text
-The response is not instantaneous.
-```
-
----
-
-## Questions
-
 Why does speed increase slowly?
-
-```text
 ________________________________
-```
-
----
 
 Why does speed decrease slowly?
-
-```text
 ________________________________
 ```
 
@@ -481,111 +311,91 @@ ________________________________
 
 ### Objective
 
-Control motor speed using PWM.
+Control motor speed using PWM and observe the gate waveform on the oscilloscope.
 
 ---
 
-## Arduino Code
+### Circuit
+
+Same as Experiment 1.
+
+---
+
+### Arduino Code
 
 ```cpp
 void setup()
 {
-    pinMode(9, OUTPUT);
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
 }
 
 void loop()
 {
-    analogWrite(9,128);
+    // Apply 50% duty cycle PWM to the MOSFET gate.
+    // The motor receives approximately 50% of the supply voltage on average.
+    analogWrite(9, 128);
 }
 ```
 
-### ESP32 Equivalent (LEDC PWM)
+### ESP32 Equivalent Code
 
 ```cpp
-const int PWM_PIN = 18;
-const int PWM_CH = 0;
-const int PWM_FREQ = 500;
-const int PWM_RES = 8;
-
 void setup()
 {
-    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+    // Configure LEDC channel 0: 500 Hz, 8-bit resolution.
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(18, 0);
 }
 
 void loop()
 {
-    ledcWrite(PWM_PIN, 128);
+    // Set duty cycle to 128/255 ≈ 50%.
+    ledcWrite(0, 128);
 }
 ```
 
 ---
 
-## Expected Result
+### Oscilloscope Settings — Gate Signal
+
+```text
+Probe Tip  ──────► MOSFET Gate
+Probe GND  ──────► Arduino GND (= MOSFET Source)
+```
+
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 500 µs/div | 500 µs/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
+
+---
+
+### Expected Waveform
+
+```text
+5V  ─────      ─────
+         │    │
+         │    │
+0V  _____│____│_____
+```
+
+---
+
+### Observe
 
 The motor should rotate at a lower speed than full power.
 
 ---
 
-## Oscilloscope Measurement
+### Measurements
 
-Probe Location:
-
-```text
-MOSFET Gate
-```
-
-Ground:
-
-```text
-Circuit Ground
-```
-
----
-
-## Oscilloscope Settings (OWON Baseline)
-
-Recommended scope: OWON HDS272S.
-
-Compatible alternative: DSO Nano.
-
-Vertical:
-
-```text
-2 V/div
-```
-
-Horizontal:
-
-```text
-500 us/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
-
----
-
-## Expected Waveform
-
-```text
-V_S ────      ─────
-         │      │
-         │      │
-0V ______│______│______
-```
-
----
-
-## Measurements
-
-| Measurement | Expected |
-|------------|----------|
-| Frequency | ~490Hz |
-| Gate Voltage | ~V_S (about 5V Arduino or about 3.3V ESP32) |
-| Duty Cycle | ~50% |
+| Measurement | Expected | Measured |
+|-------------|----------|---------|
+| Frequency | ~490 Hz | |
+| Gate Voltage | ~5 V (Arduino) / ~3.3 V (ESP32) | |
+| Duty Cycle | ~50% | |
 
 ---
 
@@ -593,118 +403,40 @@ V_S ────      ─────
 
 ### Objective
 
-Investigate the relationship between PWM and motor speed.
+Investigate the relationship between PWM duty cycle and motor speed.
 
 ---
 
-## Test 1
+### Code
 
 ```cpp
-analogWrite(9,64);
-```
+void setup() {}
 
-ESP32 equivalent duty command:
+void loop()
+{
+    // Step through four duty cycle levels with a 3-second pause at each.
+    // Motor speed increases with duty cycle.
 
-```cpp
-ledcWrite(PWM_PIN, 64);
-```
+    analogWrite(9, 64);    // ~25% → low speed
+    delay(3000);
 
-Expected:
+    analogWrite(9, 128);   // ~50% → medium speed
+    delay(3000);
 
-$$
-25\%
-$$
+    analogWrite(9, 192);   // ~75% → high speed
+    delay(3000);
 
-Motor speed:
-
-```text
-Low
-```
-
----
-
-## Test 2
-
-```cpp
-analogWrite(9,128);
-```
-
-ESP32 equivalent duty command:
-
-```cpp
-ledcWrite(PWM_PIN, 128);
-```
-
-Expected:
-
-$$
-50\%
-$$
-
-Motor speed:
-
-```text
-Medium
+    analogWrite(9, 255);   // 100% → maximum speed
+    delay(3000);
+}
 ```
 
 ---
 
-## Test 3
-
-```cpp
-analogWrite(9,192);
-```
-
-ESP32 equivalent duty command:
-
-```cpp
-ledcWrite(PWM_PIN, 192);
-```
-
-Expected:
-
-$$
-75\%
-$$
-
-Motor speed:
-
-```text
-High
-```
-
----
-
-## Test 4
-
-```cpp
-analogWrite(9,255);
-```
-
-ESP32 equivalent duty command:
-
-```cpp
-ledcWrite(PWM_PIN, 255);
-```
-
-Expected:
-
-$$
-100\%
-$$
-
-Motor speed:
-
-```text
-Maximum
-```
-
----
-
-## Results Table
+### Results Table
 
 | PWM Value | Duty Cycle | Relative Speed |
-|------------|------------|----------------|
+|-----------|------------|----------------|
 | 64 | 25% | |
 | 128 | 50% | |
 | 192 | 75% | |
@@ -716,61 +448,52 @@ Maximum
 
 ### Objective
 
-Observe motor dynamics.
-
-This experiment introduces:
-
-```text
-Control Theory
-```
+Observe the motor's first-order dynamic response to a step change in PWM, and estimate the motor time constant.
 
 ---
 
-## Arduino Code
+### Arduino Code
 
 ```cpp
 void setup()
 {
-    pinMode(9, OUTPUT);
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
 }
 
 void loop()
 {
-    analogWrite(9,255);
-
+    // Apply full PWM for 5 seconds (step ON) then remove for 5 seconds (step OFF).
+    // Observe the gradual speed rise and fall — this is the first-order response.
+    analogWrite(9, 255);   // Step to full speed
     delay(5000);
 
-    analogWrite(9,0);
-
+    analogWrite(9, 0);     // Step to zero
     delay(5000);
 }
 ```
 
-### ESP32 Equivalent (Step Test)
+### ESP32 Equivalent Code
 
 ```cpp
-const int PWM_PIN = 18;
-const int PWM_CH = 0;
-const int PWM_FREQ = 500;
-const int PWM_RES = 8;
-
 void setup()
 {
-    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(18, 0);
 }
 
 void loop()
 {
-    ledcWrite(PWM_PIN, 255);
+    ledcWrite(0, 255);
     delay(5000);
-    ledcWrite(PWM_PIN, 0);
+
+    ledcWrite(0, 0);
     delay(5000);
 }
 ```
 
 ---
 
-## Observation
+### Observe
 
 The motor speed should respond like:
 
@@ -788,83 +511,36 @@ Speed
 
 ---
 
-## Why?
+### Estimating the Time Constant
 
-The motor possesses:
+Observe the motor start and estimate the time required to reach approximately 63.2% of final speed.
 
-- Inertia
-- Mechanical friction
-- Electromagnetic dynamics
-
-These create a first-order response.
+This estimated time is approximately $\tau$, the motor time constant.
 
 ---
 
-## Estimating A Time Constant
+### Record Your Model Parameters
 
-Observe:
+| Parameter | Value |
+|-----------|-------|
+| Estimated τ (s) | |
+| Gain K | 1 (normalised) |
+| Transfer function G(s) | K / (τs + 1) |
 
-```text
-Motor Start
-```
-
-and estimate the time required to reach:
-
-$$
-63.2\%
-$$
-
-of final speed.
-
-This estimated time is approximately:
-
-$$
-\tau
-$$
-
-the motor time constant.
-
----
-
-## First-Order Comparison
-
-### RC Circuit
-
-$$
-\tau = RC
-$$
-
----
-
-### Motor System
-
-Motor time constant:
-
-$$
-\tau_m
-$$
-
-determined by:
-
-- Rotor inertia
-- Friction
-- Motor electrical properties
+> Keep this table. Projects 12, 13 and 14 will use this motor model as the plant for P, PI and PID controller design.
 
 ---
 
 ## MATLAB Comparison
 
-Now fit your measured step response to the first-order model using the time constant you estimated in Experiment 4.
-
-### Enter Your Measured Time Constant
+Fit your measured step response to the first-order model using the time constant you estimated in Experiment 4.
 
 ```matlab
 K            = 1;
-tau_measured = 0.5;      % replace with your estimated tau from Experiment 4 (s)
+tau_measured = 0.5;      % replace with your estimated tau (s)
 
 t = 0:0.01:5 * tau_measured * 3;
 
-% Sweep nearby tau values to bracket your measurement
 tau_theory_low  = tau_measured * 0.7;
 tau_theory_high = tau_measured * 1.3;
 
@@ -891,16 +567,6 @@ title('First-Order Motor Model - Measured \tau Fit');
 legend('Location', 'southeast');
 ```
 
-### Record Your Model Parameters
-
-| Parameter | Value |
-|-----------|-------|
-| Estimated τ (s) | |
-| Gain K | 1 (normalised) |
-| Transfer function G(s) | K / (τs + 1) |
-
-> Keep this table. Projects 6, 7 and 8 will use this motor model as the plant for P, PI and PID controller design.
-
 ### Reflection
 
 - Does the simulated curve match the shape you observed on the motor?
@@ -909,123 +575,19 @@ legend('Location', 'southeast');
 
 ---
 
-## Engineering Applications
-
-PWM motor control is used in:
-
-### Electric Vehicles
-
-Motor speed control.
-
----
-
-### Robotics
-
-Wheel speed control.
-
----
-
-### Drones
-
-Propeller speed control.
-
----
-
-### Industrial Automation
-
-Conveyors and actuators.
-
----
-
-### CNC Machines
-
-Position and speed control.
-
----
-
-## Knowledge Check
-
-### Question 1
-
-Why can't a motor reach full speed instantly?
-
-Answer:
-
-```text
-________________________
-```
-
----
-
-### Question 2
-
-What controls motor speed in this experiment?
-
-Answer:
-
-```text
-________________________
-```
-
----
-
-### Question 3
-
-Why is a flyback diode required?
-
-Answer:
-
-```text
-________________________
-```
-
----
-
-### Question 4
-
-Why is a MOSFET used?
-
-Answer:
-
-```text
-________________________
-```
-
----
-
-### Question 5
-
-Why can a motor often be modelled as a first-order system?
-
-Answer:
-
-```text
-________________________
-```
-
----
-
-### Question 6
-
-You estimated τ = 0.5s from the step response. How would you verify this estimate, and why does an accurate τ matter for designing the controller in Project 6?
-
-Answer:
-
-```text
-________________________
-```
-
----
-
-## Common Mistakes
+## Troubleshooting
 
 ### Motor Doesn't Spin
 
 Check:
 
-- Battery connected
-- MOSFET wiring
-- Ground connections
+✅ Battery connected and charged
+
+✅ MOSFET pinout correct (G, D, S identified)
+
+✅ Shared GND between Arduino and battery negative
+
+✅ Gate resistor connected between D9 and Gate
 
 ---
 
@@ -1033,8 +595,9 @@ Check:
 
 Check:
 
-- Shared power supply issues
-- Missing flyback diode
+✅ Flyback diode installed across motor terminals
+
+✅ Shared power supply issues (use separate battery for motor)
 
 ---
 
@@ -1042,9 +605,9 @@ Check:
 
 Check:
 
-- Logic-level MOSFET
-- Wiring
-- Motor current rating
+✅ Logic-level MOSFET (IRLZ44N, not IRFZ44N)
+
+✅ Motor current within MOSFET rating
 
 ---
 
@@ -1052,13 +615,17 @@ Check:
 
 Check:
 
-- Scope connections
-- Trigger settings
-- Horizontal scale
+✅ Probe tip on MOSFET Gate
+
+✅ Probe ground on Arduino GND (= MOSFET Source)
+
+✅ Trigger type set to Edge, Rising
+
+✅ Horizontal scale appropriate (500 µs/div for ~490 Hz)
 
 ---
 
-## Troubleshooting Checklist
+### Troubleshooting Checklist
 
 ✅ Flyback diode installed
 
@@ -1068,9 +635,45 @@ Check:
 
 ✅ Shared ground between controller and motor supply
 
-✅ Oscilloscope probing gate correctly (OWON or DSO Nano)
+✅ PWM observed on oscilloscope
 
-✅ PWM observed
+---
+
+## Knowledge Check
+
+### Question 1
+
+Why can't a motor reach full speed instantly?
+
+---
+
+### Question 2
+
+What controls motor speed in this experiment?
+
+---
+
+### Question 3
+
+Why is a flyback diode required?
+
+---
+
+### Question 4
+
+Why is a MOSFET used instead of connecting the motor directly to the controller pin?
+
+---
+
+### Question 5
+
+Why can a motor often be modelled as a first-order system?
+
+---
+
+### Question 6
+
+You estimated τ = 0.5 s from the step response. How would you verify this estimate, and why does an accurate τ matter for designing the controller in Project 12?
 
 ---
 
@@ -1096,19 +699,15 @@ In this project you learned:
 
 The motor is the first real plant we will control.
 
-In the next projects we will add:
-
-```text
-Feedback
-```
-
-and begin building true control systems.
+In the next projects we will add feedback and begin building true control systems.
 
 ---
 
 ## Next Project
 
-**12_P_Controller.md**
+```text
+12_P_Controller.md
+```
 
 Topics:
 
@@ -1116,6 +715,5 @@ Topics:
 - Error Signals
 - Open Loop vs Closed Loop Control
 - Proportional Control
-- BOE-Bot Line Following
 - Controller Gain
 - Stability

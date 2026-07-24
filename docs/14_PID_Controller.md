@@ -30,19 +30,6 @@ In this project you will learn:
 
 The PID controller is often considered the most important controller in classical control engineering.
 
-Many industrial systems are controlled using:
-
-```text
-PID Controllers
-```
-
-because they provide:
-
-- Fast response
-- Good stability
-- Small overshoot
-- Zero steady-state error
-
 ---
 
 ## Learning Outcomes
@@ -70,33 +57,24 @@ At the end of this project you should be able to:
 ### Proportional Controller
 
 $$
-u(t)=K_Pe(t)
+u(t) = K_P e(t)
 $$
 
-Provides immediate response.
-
----
+Provides immediate response. Has steady-state error.
 
 ### PI Controller
 
 $$
-u(t)=K_Pe(t)+K_I\int e(t)\,dt
+u(t) = K_P e(t) + K_I \int e(t)\,dt
 $$
 
-Advantages:
-
-- Eliminates steady-state error
-
-Limitation:
-
-- Can produce overshoot
-- Can increase oscillation
+Eliminates steady-state error. Can produce overshoot.
 
 ---
 
 ## Why Do We Need Derivative Action?
 
-Consider the following response:
+Consider a response that overshoots the target:
 
 ```text
 Output
@@ -110,54 +88,13 @@ Output
            Time
 ```
 
-The output exceeds the target.
-
-This is called:
-
-```text
-Overshoot
-```
-
----
-
-## Overshoot
-
-Overshoot occurs when the controller reacts too aggressively.
-
-A highly responsive controller may:
-
-- Reach the target quickly
-- Continue moving past the target
-
-Result:
-
-```text
-Oscillation
-```
-
-or
-
-```text
-Long settling time
-```
+The output exceeds the target — this is called **overshoot**.
 
 ---
 
 ## Derivative Action
 
-Derivative action predicts future behaviour.
-
-It monitors:
-
-```text
-How fast the error is changing
-```
-
-rather than simply how large the error is.
-
----
-
-## Derivative Term
+Derivative action monitors how fast the error is changing rather than simply how large the error is.
 
 The derivative term is:
 
@@ -165,38 +102,16 @@ $$
 \frac{de(t)}{dt}
 $$
 
-Where:
-
-- $e(t)$ = Error Signal
-
-This represents:
-
-```text
-Rate of Change of Error
-```
-
----
-
-## Intuition
-
-If the error is changing very rapidly:
-
-```text
-Derivative Action Increases
-```
-
-The controller applies a braking effect.
+If the error is changing very rapidly, derivative action applies a braking effect.
 
 ---
 
 ## Vehicle Analogy
 
-Imagine driving toward a red traffic light.
-
 A proportional controller behaves like:
 
 ```text
-Push accelerator based on distance.
+Push accelerator based on distance from target.
 ```
 
 A derivative controller behaves like:
@@ -211,85 +126,24 @@ The derivative term anticipates future behaviour.
 
 ## PID Controller Equation
 
-A PID controller combines:
-
-- Proportional Action
-- Integral Action
-- Derivative Action
-
-The controller equation is:
-
 $$
-u(t)=
-K_Pe(t)
-+
-K_I\int e(t)\,dt
-+
-K_D\frac{de(t)}{dt}
+u(t) = K_P e(t) + K_I \int e(t)\,dt + K_D \frac{de(t)}{dt}
 $$
 
 Where:
 
 - $u(t)$ = Controller Output
-- $K_P$ = Proportional Gain
-- $K_I$ = Integral Gain
-- $K_D$ = Derivative Gain
+- $K_P$ = Proportional Gain — immediate correction
+- $K_I$ = Integral Gain — eliminates steady-state error
+- $K_D$ = Derivative Gain — predictive damping, reduces overshoot
 - $e(t)$ = Error Signal
-
----
-
-## What Each Term Does
-
-### Proportional Action
-
-$$
-K_Pe(t)
-$$
-
-Provides:
-
-```text
-Immediate Correction
-```
-
----
-
-### Integral Action
-
-$$
-K_I\int e(t)\,dt
-$$
-
-Provides:
-
-```text
-Long-Term Correction
-```
-
-Eliminates steady-state error.
-
----
-
-### Derivative Action
-
-$$
-K_D\frac{de(t)}{dt}
-$$
-
-Provides:
-
-```text
-Predictive Damping
-```
-
-Reduces overshoot.
 
 ---
 
 ## Summary Table
 
 | Term | Purpose |
-|--------|---------|
+|------|---------|
 | P | React to Error |
 | I | Remove Steady-State Error |
 | D | Reduce Overshoot and Oscillation |
@@ -300,19 +154,11 @@ Reduces overshoot.
 
 Before building the circuit, simulate the closed-loop PID response on the motor plant to predict how derivative action reduces overshoot.
 
-### PID Transfer Function
-
-The PID controller in the s-domain is:
-
-$$
-C(s) = K_P + \frac{K_I}{s} + K_D s
-$$
-
 ### Effect of Kd — Fixed Kp and Ki
 
 ```matlab
 K   = 1;
-tau = 0.5;        % your measured tau from Project 5
+tau = 0.5;        % your measured tau from Project 10
 Kp  = 0.5;
 Ki  = 1.0;
 
@@ -337,41 +183,6 @@ title('PID Controller - Effect of K_D (Motor Plant)');
 legend('Location', 'northeast');
 ```
 
-### Simulate Experiment 3 Cases
-
-```matlab
-K   = 1;
-tau = 0.5;
-G   = tf(K, [tau, 1]);
-
-cases = [
-    2.0, 0.0, 0.0;   % Case 1: large Kp only
-    0.5, 0.5, 0.0;   % Case 2: PI
-    0.5, 0.5, 0.2;   % Case 3: PID
-];
-labels = {'Case 1: Kp=2 (P only)', ...
-          'Case 2: Kp=0.5 Ki=0.5 (PI)', ...
-          'Case 3: Kp=0.5 Ki=0.5 Kd=0.2 (PID)'};
-
-t = 0:0.01:8;
-
-figure; hold on;
-for i = 1:3
-    Kp = cases(i,1); Ki = cases(i,2); Kd = cases(i,3);
-    C  = tf([Kd, Kp, Ki], [1, 0]);
-    T  = feedback(C * G, 1);
-    [y, ~] = step(T, t);
-    info = stepinfo(T);
-    plot(t, y, 'LineWidth', 2, 'DisplayName', ...
-        sprintf('%s | OS=%.1f%% Ts=%.2fs', labels{i}, info.Overshoot, info.SettlingTime));
-end
-yline(1.0, 'k--', 'Reference');
-grid on;
-xlabel('Time (s)'); ylabel('Normalised Output');
-title('PID - Experiment 3 Cases');
-legend('Location', 'northeast');
-```
-
 ### Prediction Table
 
 | Case | Kp | Ki | Kd | Predicted overshoot | Predicted settling time |
@@ -384,22 +195,18 @@ legend('Location', 'northeast');
 
 ## Components Required
 
-Same circuit as Projects 6 and 7:
+Same circuit as Projects 12 and 13:
 
-- Arduino Uno
-- ESP32 DevKit V1 (alternative controller)
-- Breadboard
+- Arduino Uno or ESP32 DevKit V1
+- Breadboard and jumper wires
 - Potentiometer (setpoint)
 - IRLZ44N MOSFET
 - DC Motor
 - Flyback diode (1N4001–1N4007)
-- 220 Ω resistor (gate resistor)
-- Jumper wires
+- 220 Ω gate resistor
 - External battery pack
-
-Equipment:
-
-- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
+- OWON HDS272S Oscilloscope (recommended)
+- DSO Nano Oscilloscope (compatible)
 
 ---
 
@@ -408,70 +215,88 @@ Equipment:
 ### Objective
 
 Implement a full closed-loop PID controller driving the motor via MOSFET.
+
 The potentiometer sets the speed reference and back-EMF provides feedback.
 
-> Note: Back-EMF is a proxy for speed, not a perfect tachometer measurement. It is affected by winding resistance and load current, but it is sufficient to demonstrate true closed-loop PID behaviour and gain-tuning tradeoffs.
-
 ---
 
-## Circuit
+### Circuit
 
-Same as Projects 6 and 7:
+Same as Projects 12 and 13:
 
 ```text
-Battery +
-    |
+Battery (+)
+    │
   Motor
-    |--- Flyback diode (cathode to Battery+)
-        |
-        +--- 10kΩ ---+--- A1  (back-EMF feedback)
-                                 |
-                             10kΩ
-                                 |
-                                GND
-  Drain
-  MOSFET (IRLZ44N)
+    │──── Flyback diode (cathode toward Battery+)
+    │
+    ├──── 10 kΩ ──── A1  (back-EMF feedback)
+                │
+              10 kΩ
+                │
+               GND
+
+  Drain (MOSFET IRLZ44N)
   Source
-    |
+    │
    GND
 
-PWM Output (Arduino Pin 9 or ESP32 GPIO18) --- 220Ω --- Gate
-Potentiometer centre pin --- A0
+PWM Output (Arduino Pin 9 or ESP32 GPIO18) ──── 220 Ω ──── Gate
+Potentiometer centre pin ──── A0
 ```
-
-For ESP32, map A0/A1 equivalents to available ADC pins (for example REF_PIN=GPIO34 and FBK_PIN=GPIO35).
 
 ---
 
-## Arduino Code
+### Wiring Checklist
+
+Before uploading:
+
+✅ Motor circuit wired correctly (same as Projects 12 and 13)
+
+✅ Back-EMF divider connected to A1 (Arduino) or FBK_PIN (ESP32)
+
+✅ Potentiometer wiper connected to A0 (Arduino) or REF_PIN (ESP32)
+
+✅ Shared GND between controller and battery
+
+---
+
+### Arduino Code
 
 ```cpp
 float Kp = 0.5;
 float Ki = 1.0;
 float Kd = 0.1;
 
-const float dt           = 0.05;    // sample time (s) matches delay(50)
-const float integral_max = 500.0;
+const float dt           = 0.05;    // sample time (s) — matches delay(50)
+const float integral_max = 500.0;   // anti-windup limit
 
-float integral     = 0;
+float integral      = 0;
 float previousError = 0;
 
 void setup()
 {
+    // Configure pin 9 as PWM output for the MOSFET gate.
     pinMode(9, OUTPUT);
     Serial.begin(9600);
 }
 
 void loop()
 {
-    int reference = analogRead(A0);           // desired speed (0-1023)
-    int feedback  = analogRead(A1);           // back-EMF proxy (0-1023)
+    int reference = analogRead(A0);   // desired speed setpoint (0–1023)
+    int feedback  = analogRead(A1);   // back-EMF proxy (0–1023)
 
-    float error      = reference - feedback;
-    integral         = integral + error * dt;
-    integral         = constrain(integral, -integral_max, integral_max);
+    // Calculate error.
+    float error = reference - feedback;
+
+    // Integral term: accumulate error over time.
+    integral = integral + error * dt;
+    integral = constrain(integral, -integral_max, integral_max);
+
+    // Derivative term: rate of change of error.
     float derivative = (error - previousError) / dt;
 
+    // PID output.
     float output = Kp * error + Ki * integral + Kd * derivative;
     output = constrain(output, 0, 255);
 
@@ -484,12 +309,13 @@ void loop()
     Serial.print("  Der: "); Serial.print(derivative, 2);
     Serial.print("  PWM: "); Serial.println((int)output);
 
+    // Store error for next derivative calculation.
     previousError = error;
     delay(50);
 }
 ```
 
-### ESP32 Equivalent (LEDC + ADC Feedback)
+### ESP32 Equivalent Code
 
 ```cpp
 float Kp = 0.5;
@@ -497,12 +323,9 @@ float Ki = 1.0;
 float Kd = 0.1;
 
 const int PWM_PIN      = 18;
-const int PWM_CH       = 0;
-const int PWM_FREQ     = 500;
-const int PWM_RES      = 8;
-const int REF_PIN      = 34;   // potentiometer wiper
-const int FBK_PIN      = 35;   // back-EMF divider output
-const float dt         = 0.05; // sample time (s)
+const int REF_PIN      = 34;
+const int FBK_PIN      = 35;
+const float dt         = 0.05;
 const float integralMax = 500.0;
 
 float integral      = 0;
@@ -510,24 +333,29 @@ float previousError = 0;
 
 void setup()
 {
-    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+    // Configure LEDC channel 0: 500 Hz, 8-bit resolution.
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(PWM_PIN, 0);
     Serial.begin(115200);
 }
 
 void loop()
 {
-    int reference = analogRead(REF_PIN);      // 0-4095 on ESP32 ADC
-    int feedback  = analogRead(FBK_PIN);      // back-EMF proxy
+    int reference = analogRead(REF_PIN);   // 0–4095 on ESP32 ADC
+    int feedback  = analogRead(FBK_PIN);
 
-    float error      = (reference - feedback) / 16.0; // scale to 8-bit PWM domain
-    integral         = integral + error * dt;
-    integral         = constrain(integral, -integralMax, integralMax);
+    // Scale 12-bit error to 8-bit PWM domain.
+    float error = (reference - feedback) / 16.0;
+
+    integral = integral + error * dt;
+    integral = constrain(integral, -integralMax, integralMax);
+
     float derivative = (error - previousError) / dt;
 
     float output = Kp * error + Ki * integral + Kd * derivative;
     output = constrain(output, 0, 255);
 
-    ledcWrite(PWM_PIN, (int)output);
+    ledcWrite(0, (int)output);
 
     Serial.print("Ref: ");  Serial.print(reference);
     Serial.print("  Fbk: "); Serial.print(feedback);
@@ -541,11 +369,9 @@ void loop()
 }
 ```
 
-Note: if ADC or PWM resolution changes, rescale the error path and retune Kp/Ki/Kd.
-
 ---
 
-## What Is Happening?
+### What Is Happening?
 
 The potentiometer sets the reference $r$.
 
@@ -565,35 +391,13 @@ With the loop closed, you should observe feedback moving toward the reference in
 
 ---
 
-## Understanding the Code
+### Observe
 
-Proportional Term:
+With the loop closed:
 
-```cpp
-Kp * error
-```
-
-Reacts immediately.
-
----
-
-Integral Term:
-
-```cpp
-Ki * integral
-```
-
-Removes steady-state error.
-
----
-
-Derivative Term:
-
-```cpp
-Kd * derivative
-```
-
-Provides damping.
+1. Set a mid-range reference. Observe the motor settle.
+2. Watch the Serial Monitor — feedback should converge toward the reference.
+3. Gently load the motor shaft. Observe the derivative term spike briefly, then the integral term compensate.
 
 ---
 
@@ -603,18 +407,14 @@ Provides damping.
 
 Observe how changing Kd affects closed-loop behaviour (overshoot, damping and settling).
 
+Use the same closed-loop code from Experiment 1. Change only the Kd value.
+
 ---
 
 ### Test A
 
 ```cpp
-Kd = 0;
-```
-
-This becomes:
-
-```text
-PI Control
+Kd = 0;   // PI Control
 ```
 
 Observation:
@@ -667,7 +467,7 @@ ______________________
 
 ---
 
-## Results Table
+### Results Table
 
 | Kd | Behaviour |
 |----|-----------|
@@ -675,41 +475,6 @@ ______________________
 | 0.02 | |
 | 0.10 | |
 | 0.50 | |
-
----
-
-## Understanding Damping
-
-In Project 3 we studied:
-
-```text
-RLC Circuits
-```
-
-and:
-
-```text
-Damping Ratio
-```
-
-Derivative action behaves similarly.
-
-Increasing:
-
-$$
-K_D
-$$
-
-typically increases damping.
-
-This often reduces:
-
-- Overshoot
-- Oscillation
-
-and improves:
-
-- Stability
 
 ---
 
@@ -721,9 +486,7 @@ Investigate the effects of all three gains.
 
 ---
 
-## Case 1
-
-Large Kp
+### Case 1 — Large Kp Only
 
 ```cpp
 Kp = 2.0;
@@ -731,23 +494,11 @@ Ki = 0.0;
 Kd = 0.0;
 ```
 
-Expected:
-
-```text
-Very Responsive
-```
-
-Possible:
-
-```text
-Overshoot
-```
+Expected: very responsive, possible overshoot.
 
 ---
 
-## Case 2
-
-Large Ki
+### Case 2 — PI
 
 ```cpp
 Kp = 0.5;
@@ -755,23 +506,11 @@ Ki = 0.5;
 Kd = 0.0;
 ```
 
-Expected:
-
-```text
-Eliminates Error
-```
-
-Possible:
-
-```text
-Oscillation
-```
+Expected: eliminates error, possible oscillation.
 
 ---
 
-## Case 3
-
-Add Derivative
+### Case 3 — PID
 
 ```cpp
 Kp = 0.5;
@@ -779,43 +518,18 @@ Ki = 0.5;
 Kd = 0.2;
 ```
 
-Expected:
-
-```text
-Improved Stability
-```
+Expected: improved stability, reduced overshoot.
 
 ---
 
 ## Tuning Guidelines
 
-### If Response Is Too Slow
-
-Increase:
-
-$$
-K_P
-$$
-
----
-
-### If Steady-State Error Exists
-
-Increase:
-
-$$
-K_I
-$$
-
----
-
-### If Overshoot Is Excessive
-
-Increase:
-
-$$
-K_D
-$$
+| Symptom | Action |
+|---------|--------|
+| Response too slow | Increase Kp |
+| Steady-state error | Increase Ki |
+| Excessive overshoot | Increase Kd |
+| Oscillation | Reduce Kp or Ki |
 
 ---
 
@@ -823,51 +537,21 @@ $$
 
 Observe the PWM output while changing the reference and gains.
 
----
-
-## Probe Connections
-
-Probe Tip:
-
 ```text
-MOSFET Gate PWM node (Arduino Pin 9 or ESP32 GPIO18)
+Probe Tip  ──────► MOSFET Gate (Arduino Pin 9 or ESP32 GPIO18)
+Probe GND  ──────► Arduino GND
 ```
 
-Probe Ground:
-
-```text
-GND
-```
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 500 µs/div | 500 µs/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
 
 ---
 
-## Oscilloscope Settings (OWON Baseline)
-
-Recommended scope: OWON HDS272S.
-
-Compatible alternative: DSO Nano.
-
-Vertical:
-
-```text
-2 V/div
-```
-
-Horizontal:
-
-```text
-500 us/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
-
----
-
-## Observation
+### Observe
 
 Adjust gains and observe changes in PWM duty cycle.
 
@@ -879,73 +563,16 @@ __________________________________
 
 ---
 
-## Controller Performance Metrics
-
-When evaluating a controller we often examine:
-
----
-
-### Rise Time
-
-Time required to reach the target.
-
----
-
-### Overshoot
-
-Amount by which the output exceeds the target.
-
----
-
-### Settling Time
-
-Time required for oscillations to disappear.
-
----
-
-### Steady-State Error
-
-Remaining error after the system settles.
-
----
-
-## Desired Response
-
-A well-tuned PID controller typically produces:
-
-```text
-Output
-
-100 |        ________
-    |      /
-    |     /
-    |    /
-    |   /
-  0 +----------------
-          Time
-```
-
-Characteristics:
-
-- Fast response
-- Minimal overshoot
-- Small settling time
-- Zero steady-state error
-
----
-
 ## MATLAB Comparison
 
-Now simulate the closed-loop PID response using your actual gains from Experiments 2 and 3, and compare P, PI and PID directly.
-
-### Enter Your Parameters
+Simulate the closed-loop PID response using your actual gains from Experiments 2 and 3, and compare P, PI and PID directly.
 
 ```matlab
 K   = 1;
-tau = 0.5;       % your measured tau from Project 5
-Kp  = 0.5;       % your tuned value
-Ki  = 1.0;       % your tuned value
-Kd  = 0.1;       % your tuned value
+tau = 0.5;       % your measured tau from Project 10
+Kp  = 0.5;
+Ki  = 1.0;
+Kd  = 0.1;
 
 G    = tf(K, [tau, 1]);
 C_P  = tf(Kp, 1);
@@ -971,7 +598,6 @@ xlabel('Time (s)'); ylabel('Normalised Output');
 title('P vs PI vs PID - Motor Plant');
 legend('Location', 'northeast');
 
-% Print performance metrics
 controllers = {T_P, T_PI, T_PID};
 names       = {'P', 'PI', 'PID'};
 fprintf('%-6s %-12s %-12s %-12s\n', 'Type', 'RiseTime(s)', 'Overshoot(%)', 'SettlingTime(s)');
@@ -990,126 +616,11 @@ end
 
 ---
 
-## Typical Controller Applications
-
-PID controllers are widely used in:
-
-### Motor Control
-
-Speed and position control.
-
----
-
-### Robotics
-
-Motion systems.
-
----
-
-### Process Control
-
-Temperature, pressure and flow regulation.
-
----
-
-### Power Electronics
-
-Converter regulation.
-
----
-
-### Industrial Automation
-
-Closed-loop control systems.
-
----
-
-## Knowledge Check
-
-### Question 1
-
-What does derivative action measure?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 2
-
-Write the PID controller equation.
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 3
-
-What does the integral term do?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 4
-
-What does the derivative term do?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 5
-
-Which gain is primarily used to reduce overshoot?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 6
-
-Your MATLAB comparison shows PID settling time is shorter than PI but overshoot is also lower. Explain in terms of the derivative term why this is possible — how can the controller be both faster and less oscillatory?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-## Common Mistakes
+## Troubleshooting
 
 ### Excessive Oscillation
 
-Reduce:
-
-- Kp
-- Ki
-
-or increase:
-
-- Kd
+Reduce Kp or Ki, or increase Kd.
 
 ---
 
@@ -1123,10 +634,13 @@ Increase Kp carefully.
 
 Check:
 
-- MOSFET wiring
-- Battery connected
-- Shared ground
-- Flyback diode installed
+✅ MOSFET wiring correct
+
+✅ Battery connected
+
+✅ Shared GND between controller and battery
+
+✅ Flyback diode installed
 
 ---
 
@@ -1134,36 +648,77 @@ Check:
 
 Check:
 
-- Output constrain() limits
-- Anti-windup limit
-- Kp/Ki values
+✅ Output `constrain()` limits in code
+
+✅ Anti-windup limit
+
+✅ Kp/Ki values not too large
 
 ---
 
 ### Derivative Spike on Setpoint Change
 
 This is normal — the derivative term reacts to the sudden change in error.
+
 Reduce Kd or apply derivative on measurement only (advanced topic).
 
 ---
 
-## Troubleshooting Checklist
+### Troubleshooting Checklist
 
-✅ Motor circuit wired correctly (same as Projects 6 and 7)
+✅ Motor circuit wired correctly (same as Projects 12 and 13)
 
-✅ Shared ground between controller and battery
+✅ Shared GND between controller and battery
 
 ✅ Serial Monitor shows reference, feedback, error, integral, derivative and PWM
 
-✅ Feedback reading on feedback ADC input changes with motor speed (A1 on Arduino or FBK_PIN on ESP32)
+✅ Feedback reading changes with motor speed
 
-✅ PWM duty cycle visible on oscilloscope (OWON or DSO Nano)
+✅ PWM duty cycle visible on oscilloscope
 
 ✅ Anti-windup limit in code
 
 ✅ dt constant matches delay() value
 
 ✅ Motor speed changes with potentiometer
+
+---
+
+## Knowledge Check
+
+### Question 1
+
+What does derivative action measure?
+
+---
+
+### Question 2
+
+Write the PID controller equation.
+
+---
+
+### Question 3
+
+What does the integral term do?
+
+---
+
+### Question 4
+
+What does the derivative term do?
+
+---
+
+### Question 5
+
+Which gain is primarily used to reduce overshoot?
+
+---
+
+### Question 6
+
+Your MATLAB comparison shows PID settling time is shorter than PI but overshoot is also lower. Explain in terms of the derivative term why this is possible — how can the controller be both faster and less oscillatory?
 
 ---
 
@@ -1185,17 +740,15 @@ In this project you learned:
 
 ✅ Closed-loop performance metrics
 
-✅ Practical PID implementation
-
-✅ Practical closed-loop PID implementation with back-EMF feedback
-
-You now understand the most widely used controller in classical control engineering.
+✅ Practical PID implementation with back-EMF feedback
 
 ---
 
 ## Next Project
 
-**08_Buck_Converter.md**
+```text
+08_Buck_Converter.md
+```
 
 Topics:
 

@@ -217,7 +217,7 @@ Provides:
 
 power output.
 
-Maximum current is limited.
+Maximum current is limited. Do not draw more than approximately 200 mA from this pin.
 
 ---
 
@@ -265,6 +265,87 @@ The ESP32 requires an additional board package to be installed.
 
 ---
 
+## Connecting the ESP32 to Your Computer
+
+The ESP32 DevKit V1 connects via a **Micro-USB cable**.
+
+Plug:
+
+```text
+Micro-USB end  →  ESP32 DevKit V1
+USB-A end      →  Computer
+```
+
+The board is powered and programmed through the same cable.
+
+---
+
+## Connecting on Linux
+
+Linux includes the CP210x USB-to-serial driver by default. No manual driver installation is needed.
+
+### Step 1 - Confirm the Device Is Recognised
+
+After plugging in the ESP32, run:
+
+```bash
+ls /dev/ttyUSB*
+```
+
+You should see:
+
+```text
+/dev/ttyUSB0
+```
+
+If nothing appears, run:
+
+```bash
+dmesg | grep ttyUSB
+```
+
+You should see a line like:
+
+```text
+usb 1-1: cp210x converter now attached to ttyUSB0
+```
+
+If `ttyUSB0` still does not appear, try a different USB cable. Some cables are charge-only and carry no data.
+
+---
+
+### Step 2 - Add Your User to the dialout Group
+
+By default, Linux restricts access to serial ports. Add your user to the `dialout` group:
+
+```bash
+sudo usermod -aG dialout $USER
+```
+
+Then log out and back in for the change to take effect.
+
+Without this step, Arduino IDE will fail to upload with a permission error.
+
+---
+
+### Step 3 - Select the Port in Arduino IDE
+
+In Arduino IDE go to:
+
+```text
+Tools → Port
+```
+
+Select:
+
+```text
+/dev/ttyUSB0
+```
+
+On Linux the port appears as `/dev/ttyUSB0` rather than a COM port as on Windows.
+
+---
+
 ## Installing the ESP32 Board Package
 
 This tutorial is validated with the Arduino-ESP32 core available through Boards Manager.
@@ -277,11 +358,7 @@ Open Arduino IDE.
 Go to:
 
 ```text
-File
-
-→
-
-Preferences
+File → Preferences
 ```
 
 ---
@@ -307,15 +384,7 @@ https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32
 Go to:
 
 ```text
-Tools
-
-→
-
-Board
-
-→
-
-Boards Manager
+Tools → Board → Boards Manager
 ```
 
 Search for:
@@ -337,19 +406,7 @@ esp32 by Espressif Systems
 Select the board:
 
 ```text
-Tools
-
-→
-
-Board
-
-→
-
-ESP32 Arduino
-
-→
-
-DOIT ESP32 DevKit V1
+Tools → Board → ESP32 Arduino → DOIT ESP32 DevKit V1
 ```
 
 ---
@@ -359,11 +416,7 @@ DOIT ESP32 DevKit V1
 Select the correct COM port:
 
 ```text
-Tools
-
-→
-
-Port
+Tools → Port
 ```
 
 ---
@@ -449,24 +502,49 @@ until power is removed.
 
 ### Objective
 
-Flash the onboard LED.
+Flash the onboard LED to confirm the board package installation, USB connection, and upload process all work correctly before adding any external components.
 
 ---
 
-## Procedure
+### Procedure
 
-1. Connect ESP32 via USB.
-2. Open Arduino IDE.
-3. Select the correct board and port.
-4. Create a new sketch.
-5. Enter the Blink code.
-6. Upload to the board.
+1. Connect the ESP32 to your computer using the USB cable.
+2. Open the Arduino IDE.
+3. Go to **Tools → Board → ESP32 Arduino** and select **DOIT ESP32 DevKit V1**.
+4. Go to **Tools → Port** and select the COM port that appears when the ESP32 is connected. If you are unsure which port, disconnect the ESP32, note the list, reconnect, and the new entry is the correct port.
+5. Create a new sketch (**File → New**).
+6. Delete any default text and enter the Blink code below.
+7. Click **Upload** (right-arrow button). On some ESP32 boards you must hold the **BOOT** button during upload until the IDE shows *Connecting...* in the status bar.
+8. Wait for the status bar to show **Done uploading**.
 
 ---
 
-## Observe
+### Blink Code
 
-The LED should:
+```cpp
+void setup()
+{
+    // Configure GPIO2 as an output.
+    // The built-in LED is physically connected to GPIO2 on the ESP32 DevKit V1.
+    pinMode(2, OUTPUT);
+}
+
+void loop()
+{
+    digitalWrite(2, HIGH);   // Set GPIO2 HIGH → LED turns ON
+    delay(500);              // Wait 500 milliseconds (0.5 seconds)
+
+    digitalWrite(2, LOW);    // Set GPIO2 LOW  → LED turns OFF
+    delay(500);              // Wait 500 milliseconds
+    // loop() repeats from the top indefinitely
+}
+```
+
+---
+
+### Observe
+
+The small LED on the ESP32 board should flash:
 
 ```text
 ON for 0.5 seconds
@@ -476,119 +554,246 @@ OFF for 0.5 seconds
 
 repeatedly.
 
+If it does not flash, check the troubleshooting section at the end of this lab.
+
 ---
 
 ## Experiment 2 - External LED
 
-### Important
+### Objective
 
-Use a current-limiting resistor.
-
-The ESP32 GPIO pins operate at 3.3 V.
+Drive an external LED from a GPIO pin to confirm digital output wiring and the 3.3 V logic level.
 
 ### Components
 
 - LED
 - 220 Ω resistor
 - Breadboard
+- 2 jumper wires
 
 ---
 
-## Circuit
+### About the LED
+
+An LED has two legs of different lengths:
+
+```text
+Long leg  → Anode   (positive, +)
+Short leg → Cathode (negative, −)
+```
+
+Current must flow from the anode to the cathode for the LED to light up.
+
+---
+
+### Why Is a Resistor Needed?
+
+Without a resistor the LED would draw too much current and burn out immediately.
+
+A 220 Ω resistor limits the current to a safe level (approximately 15 mA from a 3.3 V supply).
+
+Resistors are not polarised; they can be connected either way around.
+
+---
+
+### Circuit Diagram
 
 ```text
 ESP32 GPIO18
     │
-   220Ω
+   220 Ω resistor
     │
-   LED
+   LED anode (long leg)
+   LED cathode (short leg)
     │
-   GND
+ESP32 GND pin
 ```
 
 ---
 
-## Code
+### Step-by-Step Wiring
+
+1. Push the 220 Ω resistor across the breadboard so each leg is in a different row.
+2. Connect a jumper wire from **ESP32 GPIO18** to one leg of the resistor.
+3. Insert the LED so its **long leg (anode)** sits in the same row as the other leg of the resistor.
+4. Connect a jumper wire from the **LED short leg (cathode)** row to any **GND** pin on the ESP32.
+
+The current path will be:
+
+```text
+GPIO18 → Resistor → LED anode → LED cathode → GND
+```
+
+> Tip: Always double-check that the LED legs are the correct way around before uploading code. If the LED is reversed, no damage occurs but it will not light.
+
+---
+
+### Code
 
 ```cpp
 void setup()
 {
+    // Configure GPIO18 as a digital output.
+    // GPIO18 is a safe general-purpose output pin on the ESP32 DevKit V1.
     pinMode(18, OUTPUT);
 }
 
 void loop()
 {
-    digitalWrite(18, HIGH);
-    delay(1000);
+    digitalWrite(18, HIGH);   // Pull GPIO18 to 3.3 V → current flows → LED ON
+    delay(1000);              // Wait 1 second (1000 milliseconds)
 
-    digitalWrite(18, LOW);
-    delay(1000);
+    digitalWrite(18, LOW);    // Pull GPIO18 to 0 V → no current → LED OFF
+    delay(1000);              // Wait 1 second
+    // Repeats indefinitely
 }
 ```
 
 ---
 
-## Digital Inputs
+### Wiring Checklist
 
-Digital inputs can detect:
+Before uploading:
 
-```text
-HIGH
+✅ Resistor leg in same breadboard row as ESP32 GPIO18 jumper
 
-LOW
-```
+✅ LED long leg (anode) in same row as other resistor leg
 
-signals.
+✅ LED short leg (cathode) connected to GND
+
+✅ GND jumper connects LED cathode row to any GND pin on ESP32
 
 ---
 
-## Input Voltage Levels
+### Observe
 
-For the ESP32:
+The external LED should flash:
 
 ```text
-HIGH = 3.3 V
+ON for 1 second
 
-LOW  = 0 V
+OFF for 1 second
 ```
 
-Never apply 5 V to an input pin.
+repeatedly.
 
 ---
 
 ## Experiment 3 - Push Button
 
-### Circuit
+### Objective
 
-```text
-GPIO4
- │
-Button
- │
-GND
-```
+Read a digital input using the ESP32's internal pull-up resistor and use the result to control the onboard LED.
 
-Use ESP32 internal pull-up for a robust digital input configuration.
+### Components
+
+- Tactile push button
+- Breadboard
+- 3 jumper wires
 
 ---
 
-## Code
+### About the Push Button
+
+The tactile push buttons have 4 legs.
+
+Internally, each pair of legs on the same side is already connected together. Pressing the button bridges the two sides.
+
+```text
+Left pair  ●───────────●  Right pair
+               (gap)
+           ← press bridges →
+```
+
+Use legs on opposite sides (one from each pair) as your two connection points.
+
+---
+
+### Why INPUT_PULLUP?
+
+Without a pull-up resistor the input pin would float (undefined voltage) when the button is not pressed, giving random readings.
+
+Using `INPUT_PULLUP` enables the ESP32's internal pull-up resistor, which keeps the pin at 3.3 V (HIGH) when the button is open.
+
+Pressing the button connects the pin directly to GND, pulling it LOW.
+
+This means the logic is **inverted**: button pressed = LOW, button released = HIGH.
+
+---
+
+### Circuit Diagram
+
+```text
+ESP32 GPIO4
+    │
+  Button leg A (one side)
+  Button leg B (other side)
+    │
+ESP32 GND pin
+```
+
+No external resistor is needed because INPUT_PULLUP handles it internally.
+
+---
+
+### Step-by-Step Wiring
+
+1. Insert the push button into the breadboard so its legs straddle the centre gap (one pair of legs on each side of the gap).
+2. Connect a jumper wire from **ESP32 GPIO4** to one button leg (either side).
+3. Connect a jumper wire from the **opposite side** button leg to any **GND** pin on the ESP32.
+4. The built-in LED on GPIO2 is used for output; no extra wiring needed.
+
+> Tip: If the button does not respond, rotate it 90 degrees. Some breadboard orientations connect legs that should be separated.
+
+---
+
+### Code
 
 ```cpp
 void setup()
 {
+    // INPUT_PULLUP keeps GPIO4 at HIGH (3.3 V) when the button is open.
+    // Pressing the button connects GPIO4 to GND, reading LOW.
     pinMode(4, INPUT_PULLUP);
 
+    // Configure the built-in LED pin as output.
     pinMode(2, OUTPUT);
 }
 
 void loop()
 {
-    int state = !digitalRead(4);   // button pressed -> LOW -> LED ON
+    // digitalRead(4) returns LOW (0) when button is pressed,
+    // HIGH (1) when released, because of the pull-up.
+    // The ! (NOT) operator inverts this so:
+    //   button pressed  → state = 1 → LED ON
+    //   button released → state = 0 → LED OFF
+    int state = !digitalRead(4);
 
+    // Write the result directly to the LED pin.
     digitalWrite(2, state);
 }
 ```
+
+---
+
+### Wiring Checklist
+
+Before uploading:
+
+✅ Button straddles the breadboard centre gap
+
+✅ GPIO4 jumper connects to one side of the button
+
+✅ GND jumper connects to the other side of the button
+
+✅ No external resistor needed (pull-up is internal)
+
+---
+
+### Observe
+
+- Press the button → onboard LED turns ON.
+- Release the button → onboard LED turns OFF.
 
 ---
 
@@ -621,8 +826,6 @@ into:
 
 digital counts.
 
-In practice, ADC behaviour depends on attenuation settings, reference calibration and chip-to-chip variation, so real readings can deviate from the ideal mapping.
-
 Resolution:
 
 ```text
@@ -650,11 +853,7 @@ approximately.
 The ESP32 ADC has known non-linearity near:
 
 ```text
-0 V
-
-and
-
-3.3 V
+0 V  and  3.3 V
 ```
 
 For best accuracy keep signals between:
@@ -667,74 +866,135 @@ For best accuracy keep signals between:
 
 ## Experiment 4 - Reading a Potentiometer
 
-### Circuit
+### Objective
 
-```text
-3.3V
- │
-Pot
- │──── GPIO34
- │
-GND
-```
+Read a continuously varying voltage from a potentiometer and display the raw ADC value in the Serial Monitor.
 
-Use GPIO34 which is input-only and ADC-capable.
+### Components
+
+- 10 kΩ potentiometer
+- Breadboard
+- 3 jumper wires
 
 ---
 
-## Code
+### About the Potentiometer
+
+A potentiometer has three pins:
+
+```text
+Left pin   → connect to 3.3V
+Centre pin → the wiper; voltage varies as you turn the knob
+Right pin  → connect to GND
+```
+
+Turning the knob moves the wiper between GND and 3.3 V.
+
+> Important: Use the **3.3 V** pin, not 5 V. Applying 5 V to a GPIO pin will damage the ESP32.
+
+> Tip: If your readings go in the wrong direction (high when turned left instead of right), simply swap the 3.3 V and GND connections.
+
+---
+
+### Circuit Diagram
+
+```text
+ESP32 3.3V
+    │
+  Left leg of potentiometer
+  Centre leg ──── GPIO34 (ESP32 analogue input)
+  Right leg
+    │
+ESP32 GND
+```
+
+GPIO34 is used because it is input-only and ADC-capable, making it a safe choice for analogue measurements.
+
+---
+
+### Step-by-Step Wiring
+
+1. Insert the potentiometer into the breadboard so all three legs are in separate rows.
+2. Connect a jumper wire from **ESP32 3.3V** to the **left outer leg**.
+3. Connect a jumper wire from the **centre leg** (the wiper) to **ESP32 GPIO34**.
+4. Connect a jumper wire from the **right outer leg** to **ESP32 GND**.
+
+The centre pin now produces a voltage between 0 V and 3.3 V as you turn the shaft.
+
+---
+
+### Code
 
 ```cpp
 void setup()
 {
+    // Start serial communication at 115200 baud.
+    // The ESP32 typically uses 115200 rather than the Arduino Uno's 9600.
     Serial.begin(115200);
 }
 
 void loop()
 {
+    // analogRead() samples the voltage on GPIO34 and converts it
+    // to a number from 0 (= 0 V) to 4095 (= 3.3 V).
     int value = analogRead(34);
 
+    // Print the reading followed by a newline character.
     Serial.println(value);
 
+    // Wait 100 ms before the next reading to avoid flooding
+    // the Serial Monitor with too many values per second.
     delay(100);
 }
 ```
 
 ---
 
-## Serial Monitor
+### Opening the Serial Monitor
 
-The Serial Monitor allows communication between:
+1. Upload the code.
+2. In the Arduino IDE go to **Tools → Serial Monitor** (or press Ctrl+Shift+M).
+3. Set the baud rate in the bottom-right of the Serial Monitor to **115200 baud**.
+4. Turn the potentiometer shaft and watch the numbers change between 0 and 4095.
 
-```text
-ESP32
+---
 
-and
+### Converting ADC Value to Voltage
 
-Computer
+To display the actual voltage instead of the raw count:
+
+```cpp
+float voltage = value * (3.3 / 4095.0);
+Serial.println(voltage);
 ```
 
 ---
 
-## Opening Serial Monitor
+### Wiring Checklist
 
-In Arduino IDE:
+Before uploading:
+
+✅ 3.3V jumper connects to one outer leg of potentiometer
+
+✅ GND jumper connects to the other outer leg
+
+✅ GPIO34 jumper connects to the centre (wiper) leg
+
+✅ Serial Monitor baud rate set to 115200
+
+---
+
+### Observe
+
+Turn the potentiometer shaft fully in each direction.
+
+The Serial Monitor should show values sweeping between approximately:
 
 ```text
-Tools
+0  (shaft at GND end)
 
-→
-
-Serial Monitor
+4095  (shaft at 3.3 V end)
 ```
-
-Select:
-
-```text
-115200 baud
-```
-
-The ESP32 typically uses 115200 baud rather than 9600.
 
 ---
 
@@ -816,97 +1076,118 @@ Higher resolution allows finer control.
 
 ## Experiment 5 - LED Brightness Control
 
+### Objective
+
+Control the brightness of an external LED using PWM to demonstrate the LEDC peripheral and smooth analogue-like output.
+
 ### Circuit
 
+**Important:** Use **GPIO18** with a 220 Ω resistor and LED, wired identically to Experiment 2.
+
 ```text
-GPIO18
- │
-220Ω
- │
-LED
- │
-GND
+ESP32 GPIO18
+    │
+   220 Ω resistor
+    │
+   LED anode (long leg)
+   LED cathode (short leg)
+    │
+ESP32 GND pin
 ```
+
+Refer to the step-by-step wiring and checklist in Experiment 2.
 
 ---
 
-## Code
+### Code
 
 ```cpp
 void setup()
 {
+    // Configure LEDC channel 0:
+    //   Frequency  = 5000 Hz
+    //   Resolution = 8-bit (duty cycle range: 0 to 255)
     ledcSetup(0, 5000, 8);
 
+    // Attach GPIO18 to LEDC channel 0.
+    // From this point, ledcWrite() controls the signal on GPIO18.
     ledcAttachPin(18, 0);
 }
 
 void loop()
 {
-    for(int i = 0; i <= 255; i++)
+    // Fade UP: increase duty cycle from 0% to 100%
+    // i goes from 0 (off) to 255 (fully on)
+    for (int i = 0; i <= 255; i++)
+    {
+        // ledcWrite sets the duty cycle on channel 0.
+        // Value 0   = 0%   duty cycle (LED off)
+        // Value 128 = ~50% duty cycle (half brightness)
+        // Value 255 = 100% duty cycle (full brightness)
+        ledcWrite(0, i);
+
+        delay(10);   // Wait 10 ms between steps for a smooth visible fade
+    }
+
+    // Fade DOWN: decrease duty cycle from 100% back to 0%
+    for (int i = 255; i >= 0; i--)
     {
         ledcWrite(0, i);
 
-        delay(10);
+        delay(10);   // Same step delay for symmetrical fade
     }
-
-    for(int i = 255; i >= 0; i--)
-    {
-        ledcWrite(0, i);
-
-        delay(10);
-    }
+    // loop() repeats, so the LED fades up and down continuously
 }
 ```
 
 ---
 
-## Understanding the Code
+### Wiring Checklist
 
-```cpp
-ledcSetup(0, 5000, 8);
-```
+Before uploading:
 
-- Channel: 0
-- Frequency: 5000 Hz
-- Resolution: 8-bit
+✅ 220 Ω resistor connected to GPIO18
 
----
+✅ LED long leg (anode) connected to other resistor leg
 
-```cpp
-ledcAttachPin(18, 0);
-```
-
-- GPIO18 assigned to channel 0
+✅ LED short leg (cathode) connected to GND
 
 ---
 
-```cpp
-ledcWrite(0, i);
-```
-
-- Channel 0 duty cycle set to value i
-
----
-
-## Observe
+### Observe
 
 The LED should:
 
 ```text
-Gradually Brighten
+Gradually Brighten  (fade up over ~2.5 seconds)
 
-Gradually Dim
+Gradually Dim       (fade down over ~2.5 seconds)
 ```
+
+continuously.
 
 ---
 
 ## Experiment 6 - Higher PWM Resolution
 
-Repeat Experiment 5 using 10-bit resolution.
+### Objective
+
+Repeat Experiment 5 using 10-bit resolution to observe the effect of finer duty cycle steps.
+
+### Circuit
+
+Same as Experiment 5.
+
+---
+
+### Code
 
 ```cpp
 void setup()
 {
+    // Configure LEDC channel 0:
+    //   Frequency  = 5000 Hz
+    //   Resolution = 10-bit (duty cycle range: 0 to 1023)
     ledcSetup(0, 5000, 10);
 
     ledcAttachPin(18, 0);
@@ -914,14 +1195,16 @@ void setup()
 
 void loop()
 {
-    for(int i = 0; i <= 1023; i++)
+    // Fade UP: 0 to 1023 (10-bit full range)
+    for (int i = 0; i <= 1023; i++)
     {
         ledcWrite(0, i);
 
-        delay(5);
+        delay(5);   // Shorter delay to keep total fade time similar
     }
 
-    for(int i = 1023; i >= 0; i--)
+    // Fade DOWN: 1023 back to 0
+    for (int i = 1023; i >= 0; i--)
     {
         ledcWrite(0, i);
 
@@ -932,7 +1215,7 @@ void loop()
 
 ---
 
-## Observe
+### Observe
 
 The transition should appear smoother because:
 
@@ -1019,11 +1302,11 @@ Check:
 
 Check:
 
-✅ GPIO number
+✅ GPIO number matches the code
 
-✅ Wiring
+✅ Wiring (LED polarity, resistor in series)
 
-✅ 3.3 V logic level
+✅ 3.3 V logic level — do not use 5 V components directly
 
 ✅ Upload completed successfully
 
@@ -1055,8 +1338,6 @@ Check:
 
 ## Laboratory Exercises
 
-Complete the following:
-
 ### Exercise 1
 
 Modify Blink to flash at:
@@ -1077,7 +1358,13 @@ Read a potentiometer on GPIO34 and print the value to the Serial Monitor.
 
 ### Exercise 3
 
-Map the potentiometer reading to a PWM duty cycle and control LED brightness.
+Map the potentiometer reading (0–4095) to a PWM duty cycle (0–255) and control LED brightness:
+
+```cpp
+int pot   = analogRead(34);
+int duty  = pot / 16;        // Scale 12-bit ADC to 8-bit PWM
+ledcWrite(0, duty);
+```
 
 ---
 

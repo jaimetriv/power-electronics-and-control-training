@@ -1,4 +1,4 @@
-# Project 2 - RC Circuits and Time Constants
+# Project 02 - RC Circuits and Time Constants
 
 ### Prerequisites
 
@@ -18,7 +18,7 @@ In this project you will learn:
 - How capacitors charge and discharge
 - What a time constant is
 - How to calculate a time constant
-- How to measure a time constant using an oscilloscope (OWON HDS272S or DSO Nano)
+- How to measure a time constant using the OWON HDS272S oscilloscope
 - What a first-order system is
 - How theory compares with real measurements
 
@@ -70,14 +70,7 @@ Capacitor symbol:
       ||
 ```
 
-Unlike a resistor:
-
-- A resistor dissipates energy.
-
-A capacitor:
-
-- Stores energy.
-- Releases energy later.
+Unlike a resistor which dissipates energy, a capacitor stores energy and releases it later.
 
 ---
 
@@ -99,34 +92,21 @@ Where:
 
 ## The RC Circuit
 
-An RC circuit contains:
-
-- One resistor
-- One capacitor
-
-Circuit:
+An RC circuit contains one resistor and one capacitor.
 
 ```text
 V_S
- |
- |
+ │
  R
- |
- +------ Vc
- |
+ │
+ ├──── Vc ──── Probe Tip
+ │
  C
- |
- |
-GND
+ │
+GND ──── Probe GND
 ```
 
-We will observe:
-
-$$
-V_C
-$$
-
-the voltage across the capacitor.
+We will observe $V_C$, the voltage across the capacitor.
 
 ---
 
@@ -134,44 +114,32 @@ the voltage across the capacitor.
 
 The resistor limits current.
 
-This causes the capacitor voltage to increase gradually.
-
-The capacitor therefore follows a smooth curve rather than an immediate jump.
+This causes the capacitor voltage to increase gradually, following a smooth exponential curve rather than an immediate jump.
 
 ---
 
 ## Capacitor Charging
 
-When power is applied:
-
-```text
-0V -> V_S
-```
-
-the capacitor voltage rises exponentially.
-
-Equation:
+When power is applied the capacitor voltage rises exponentially:
 
 $$
-V_C(t)=V_F\left(1-e^{-t/(RC)}\right)
+V_C(t) = V_F\left(1 - e^{-t/\tau}\right)
 $$
 
 Where:
 
 - $V_C(t)$ = Capacitor voltage at time $t$
 - $V_F$ = Final voltage
-- $R$ = Resistance
-- $C$ = Capacitance
-- $t$ = Time
+- $\tau = RC$ = Time constant
 
 ---
 
 ## Capacitor Discharging
 
-When the supply is disconnected:
+When the supply is removed the capacitor voltage falls exponentially:
 
 $$
-V_C(t)=V_0e^{-t/(RC)}
+V_C(t) = V_0 \, e^{-t/\tau}
 $$
 
 Where:
@@ -188,9 +156,7 @@ $$
 \tau = RC
 $$
 
-is called the:
-
-**Time Constant**
+is called the **Time Constant**.
 
 This is one of the most important equations in electronics and control engineering.
 
@@ -198,39 +164,27 @@ This is one of the most important equations in electronics and control engineeri
 
 ## Physical Meaning of Time Constant
 
-After:
-
-$$
-t = \tau
-$$
-
-the capacitor reaches:
+After one time constant ($t = \tau$) the capacitor reaches:
 
 $$
 63.2\%
 $$
 
-of its final value.
+of its final value during charging.
 
 ---
 
 ## Charging Table
 
 | Time | Charge Level |
-|--------|--------------|
+|------|--------------|
 | 1τ | 63.2% |
 | 2τ | 86.5% |
 | 3τ | 95.0% |
 | 4τ | 98.2% |
 | 5τ | 99.3% |
 
-After:
-
-$$
-5\tau
-$$
-
-the capacitor is considered fully charged.
+After $5\tau$ the capacitor is considered fully charged.
 
 ---
 
@@ -274,34 +228,6 @@ title('RC Discharging — R=10k\Omega, C=100\muF');
 ylim([0 1.1*Vs]);
 ```
 
-### Simulate All Component Combinations
-
-Compare how changing R and C affects the time constant:
-
-```matlab
-t = 0:0.001:2;
-
-combinations = [
-    10000, 100e-6;   % Experiment 1: baseline
-    10000,  10e-6;   % Experiment 3: smaller C
-     1000, 100e-6;   % Experiment 4: smaller R
-];
-labels = {'R=10k, C=100\muF (\tau=1.0s)', ...
-          'R=10k, C=10\muF (\tau=0.1s)', ...
-          'R=1k,  C=100\muF (\tau=0.1s)'};
-
-figure; hold on;
-for i = 1:3
-    tau_i = combinations(i,1) * combinations(i,2);
-    Vs = 5.0;   % use 5.0 for Arduino Uno, 3.3 for ESP32
-    plot(t, Vs*(1-exp(-t/tau_i)), 'LineWidth', 2, 'DisplayName', labels{i});
-end
-grid on;
-xlabel('Time (s)'); ylabel('Capacitor Voltage (V)');
-title('RC Charging — Component Comparison');
-legend('Location','southeast');
-```
-
 ### Prediction Table
 
 Record your predicted time constants before measuring:
@@ -316,13 +242,11 @@ Record your predicted time constants before measuring:
 
 ## Components Required
 
-From the SparkFun Inventor Kit:
-
 - Arduino Uno or ESP32 DevKit V1
 - Breadboard
 - Jumper wires
 - 10 kΩ resistor
-- 100 µF capacitor
+- 100 µF electrolytic capacitor
 
 Equipment:
 
@@ -331,43 +255,18 @@ Equipment:
 
 ---
 
-## Verify Component Values
-
-Before building the circuit:
-
-Resistor:
-
-```text
-10 kΩ
-```
-
-Capacitor:
-
-```text
-100 µF
-```
-
----
-
 ## Capacitor Polarity
 
-Electrolytic capacitors are polarized.
+Electrolytic capacitors are polarised.
 
-The negative lead is usually marked:
-
-```text
--------
--------
--------
-```
-
-on the body.
-
-Always connect:
+The negative lead is marked with a stripe on the body:
 
 ```text
-Negative Lead -> GND
+Long leg  → Positive (+)
+Short leg → Negative (−)  ← connect to GND
 ```
+
+Always connect the negative lead to GND. Reversing polarity can damage the capacitor.
 
 ---
 
@@ -376,148 +275,12 @@ Negative Lead -> GND
 Given:
 
 $$
-R = 10000 \Omega
-$$
-
-and:
-
-$$
-C = 100\mu F
-$$
-
-Convert capacitance:
-
-$$
-100\mu F = 100 \times 10^{-6}F
+R = 10\,000\ \Omega, \quad C = 100\ \mu\text{F} = 100 \times 10^{-6}\ \text{F}
 $$
 
 $$
-C = 0.0001F
+\tau = RC = 10\,000 \times 0.0001 = 1\ \text{s}
 $$
-
-Now calculate:
-
-$$
-\tau = RC
-$$
-
-$$
-\tau = 10000 \times 0.0001
-$$
-
-Result:
-
-$$
-\tau = 1s
-$$
-
----
-
-## Prediction
-
-After:
-
-$$
-1s
-$$
-
-the capacitor should reach:
-
-$$
-63.2\%
-$$
-
-of:
-
-$$
-V_S
-$$
-
-Examples:
-
-- Arduino Uno ($V_S=5.0V$): $V_C(\tau) \approx 3.16V$
-- ESP32 ($V_S=3.3V$): $V_C(\tau) \approx 2.09V$
-
----
-
-## Calculate Expected Voltage at One Time Constant
-
-Calculate:
-
-$$
-0.632 \times V_S
-$$
-
-Result:
-
-$$
-V_C(\tau) = 0.632V_S
-$$
-
-Prediction:
-
-After:
-
-$$
-1s
-$$
-
-the capacitor voltage should be approximately:
-
-$$
-0.632V_S
-$$
-
----
-
-## Circuit
-
-```mermaid
-graph TD
-
-A[Arduino Pin 9]
---> B[10k Ohm]
-
-B --> C[Vc]
-
-C --> D[100uF Capacitor]
-
-D --> E[GND]
-```
-
-ESP32 equivalent pin option: use GPIO18 instead of Arduino Pin 9.
-
----
-
-## Oscilloscope Connections
-
-Probe Tip:
-
-```text
-Vc
-```
-
-Probe Ground:
-
-```text
-GND
-```
-
----
-
-## Physical Connection Diagram
-
-```text
-Controller PWM pin (Arduino Pin 9 or ESP32 GPIO18)
-      |
-     10kΩ
-      |
-      o---- Vc ---- Probe Tip
-      |
-    100uF
-      |
-     GND ---------- Probe Ground
-```
 
 ---
 
@@ -525,27 +288,79 @@ Controller PWM pin (Arduino Pin 9 or ESP32 GPIO18)
 
 ### Objective
 
-Observe the capacitor charging and discharging.
+Observe the capacitor charging and discharging curves on the oscilloscope.
 
 ---
 
-## Arduino Code
+### Circuit Diagram
+
+```text
+Arduino Pin D9  (or ESP32 GPIO18)
+    │
+   10 kΩ resistor
+    │
+    ├──── Vc ──── Probe Tip
+    │
+   100 µF capacitor  (positive leg up)
+    │
+   GND ──── Probe GND
+```
+
+---
+
+### Step-by-Step Wiring
+
+1. Insert the 10 kΩ resistor across the breadboard so each leg is in a different row.
+2. Connect a jumper wire from **Arduino pin D9** to one leg of the resistor.
+3. Insert the **100 µF capacitor** so its **positive leg (long leg)** is in the same row as the other resistor leg. This junction is $V_C$.
+4. Connect a jumper wire from the **capacitor negative leg (short leg)** row to any **GND** pin on the Arduino.
+5. Connect the **oscilloscope probe tip** to the $V_C$ junction (same row as the positive capacitor leg and the lower resistor leg).
+6. Connect the **oscilloscope probe ground** to Arduino GND.
+
+The signal path will be:
+
+```text
+D9 → Resistor → Vc (probe here) → Capacitor → GND
+```
+
+---
+
+### Wiring Checklist
+
+Before uploading:
+
+✅ Resistor leg in same row as Arduino D9 jumper
+
+✅ Capacitor positive leg (long) in same row as other resistor leg
+
+✅ Capacitor negative leg (short) connected to GND
+
+✅ Oscilloscope probe tip connected to Vc junction
+
+✅ Oscilloscope probe ground connected to Arduino GND
+
+---
+
+### Arduino Code
 
 ```cpp
 void setup()
 {
+    // Configure pin 9 as a digital output.
     pinMode(9, OUTPUT);
 }
 
 void loop()
 {
+    // Set pin 9 HIGH for 3 seconds → capacitor charges toward V_S.
     digitalWrite(9, HIGH);
-
     delay(3000);
 
+    // Set pin 9 LOW for 3 seconds → capacitor discharges toward 0 V.
     digitalWrite(9, LOW);
-
     delay(3000);
+
+    // The capacitor charges and discharges continuously.
 }
 ```
 
@@ -554,114 +369,76 @@ void loop()
 ```cpp
 void setup()
 {
+    // Configure GPIO18 as a digital output.
     pinMode(18, OUTPUT);
 }
 
 void loop()
 {
     digitalWrite(18, HIGH);
-
     delay(3000);
 
     digitalWrite(18, LOW);
-
     delay(3000);
 }
 ```
 
 ---
 
-## What Does This Program Do?
+### Oscilloscope Settings
 
-Pin 9 stays:
-
-```text
-HIGH for 3 seconds
-```
-
-then:
-
-```text
-LOW for 3 seconds
-```
-
-The capacitor therefore:
-
-```text
-Charges
-```
-
-and then:
-
-```text
-Discharges
-```
-
-continuously.
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 1 V/div | 1 V/div |
+| Horizontal scale | 500 ms/div | 500 ms/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
 
 ---
 
-## DSO Nano Settings
-
-For OWON HDS272S users, use equivalent vertical/time scales and edge trigger settings.
-
-Vertical Scale:
+### Expected Charging Curve
 
 ```text
-1 V/div
+5V │          _______
+   │       ╱
+   │     ╱
+   │   ╱
+0V └─────────────────
+        Time →
 ```
 
-Horizontal Scale:
-
-```text
-500 ms/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
+Notice the fast initial rise that slows as the capacitor approaches $V_S$.
 
 ---
 
-## Expected Charging Curve
-
-You should observe something similar to:
+### Expected Discharging Curve
 
 ```text
-5V |
-   |          _______
-   |       /
-   |     /
-   |   /
-0V +-----------------
-        Time
+5V │╲
+   │  ╲
+   │    ╲
+   │      ╲______
+0V └─────────────────
+        Time →
 ```
 
-Notice:
-
-- Fast initial rise
-- Slower rise near the top
+Notice the fast initial drop that slows as the capacitor approaches 0 V.
 
 ---
 
-## Expected Discharging Curve
+### Observe
+
+Watch the oscilloscope display.
+
+You should see the voltage:
 
 ```text
-5V |
-   |\
-   | \
-   |  \
-   |   \______
-0V +-----------------
-        Time
+Rise slowly from 0 V toward V_S  (charging)
+
+Fall slowly from V_S toward 0 V  (discharging)
 ```
 
-Notice:
-
-- Fast initial drop
-- Slower drop near the bottom
+repeatedly.
 
 ---
 
@@ -669,182 +446,129 @@ Notice:
 
 ### Objective
 
-Verify the theoretical time constant.
+Verify the theoretical time constant by measuring the time for $V_C$ to reach $0.632 \times V_S$.
 
 ---
 
-## Step 1
+### Procedure
 
-Locate:
-
-$$
-V_C = 0.632V_S
-$$
-
-on the charging curve.
-
----
-
-## Step 2
-
-Measure the time required to reach this voltage.
+1. Observe the charging curve on the oscilloscope.
+2. Identify the voltage level at $0.632 \times V_S$:
+   - Arduino Uno ($V_S = 5.0\ \text{V}$): target $\approx 3.16\ \text{V}$
+   - ESP32 ($V_S = 3.3\ \text{V}$): target $\approx 2.09\ \text{V}$
+3. Measure the time from the start of charging to the point where $V_C$ reaches this voltage.
+4. Record the measured time — this is your measured $\tau$.
 
 ---
 
-## Prediction
+### Expected Result
 
 The measured time should be approximately:
 
 $$
-1s
+\tau \approx 1\ \text{s}
 $$
 
 ---
 
-## Results Table
+### Results Table
 
-| Parameter | Theory | Measurement |
-|------------|----------|-------------|
-| Resistance | 10kΩ | |
-| Capacitance | 100µF | |
-| Time Constant | 1.0s | |
-| Voltage at τ | 3.16V | |
+| Parameter | Theory | Measured |
+|-----------|--------|---------|
+| Resistance | 10 kΩ | |
+| Capacitance | 100 µF | |
+| Time Constant τ | 1.0 s | |
+| Voltage at τ | 3.16 V (Arduino) | |
 
 ---
 
 ## Experiment 3 - Change the Capacitor
 
-Replace:
+### Objective
 
-```text
-100 µF
-```
+Observe how reducing capacitance reduces the time constant.
 
-with:
-
-```text
-10 µF
-```
+Replace the 100 µF capacitor with a **10 µF** capacitor.
 
 ---
 
-## Calculate New Time Constant
-
-Convert:
+### Calculate New Time Constant
 
 $$
-10\mu F = 10 \times 10^{-6}F
-$$
-
-$$
-C = 0.00001F
-$$
-
-Calculate:
-
-$$
-\tau = RC
-$$
-
-$$
-\tau = 10000 \times 0.00001
-$$
-
-$$
-\tau = 0.1s
+\tau = RC = 10\,000 \times 10 \times 10^{-6} = 0.1\ \text{s}
 $$
 
 ---
 
-## Prediction
+### Oscilloscope Settings
 
-The charging curve should be much faster.
+Reduce the horizontal scale to suit the faster response:
+
+| Setting | Value |
+|---------|-------|
+| Horizontal scale | 50 ms/div |
 
 ---
 
-## Results Table
+### Observe
 
-| Capacitor | Time Constant |
-|------------|---------------|
-| 100µF | 1.0s |
-| 10µF | 0.1s |
+The charging curve should be much faster than in Experiment 1.
+
+---
+
+### Results Table
+
+| Capacitor | Theoretical τ | Measured τ |
+|-----------|--------------|-----------|
+| 100 µF | 1.0 s | |
+| 10 µF | 0.1 s | |
 
 ---
 
 ## Experiment 4 - Change the Resistor
 
-Replace:
+### Objective
 
-```text
-10 kΩ
-```
+Observe how reducing resistance reduces the time constant.
 
-with:
-
-```text
-1 kΩ
-```
-
-Return capacitor to:
-
-```text
-100 µF
-```
+Return the capacitor to **100 µF** and replace the 10 kΩ resistor with a **1 kΩ** resistor.
 
 ---
 
-## Calculate
+### Calculate New Time Constant
 
 $$
-\tau = RC
-$$
-
-$$
-\tau = 1000 \times 0.0001
-$$
-
-$$
-\tau = 0.1s
+\tau = RC = 1\,000 \times 100 \times 10^{-6} = 0.1\ \text{s}
 $$
 
 ---
 
-## Prediction
+### Observe
 
-The capacitor should charge much faster.
+The charging curve should again be much faster than in Experiment 1, confirming that both R and C control the time constant.
 
 ---
 
-## Results Table
+### Results Table
 
-| Resistor | Time Constant |
-|-----------|--------------|
-| 10kΩ | 1.0s |
-| 1kΩ | 0.1s |
+| Resistor | Theoretical τ | Measured τ |
+|----------|--------------|-----------|
+| 10 kΩ | 1.0 s | |
+| 1 kΩ | 0.1 s | |
 
 ---
 
 ## Understanding First-Order Systems
 
-An RC circuit is called a:
-
-**First-Order System**
-
-because it contains only:
-
-```text
-One energy storage element
-```
-
-The capacitor.
+An RC circuit is called a **First-Order System** because it contains only one energy storage element (the capacitor).
 
 Many real systems can be approximated by:
 
 $$
-G(s)=\frac{K}{\tau s + 1}
+G(s) = \frac{K}{\tau s + 1}
 $$
 
-where:
+Where:
 
 - $K$ = Gain
 - $\tau$ = Time constant
@@ -855,11 +579,7 @@ We will revisit this equation many times throughout the course.
 
 ## MATLAB Comparison
 
-Now overlay your measured time constant against the theoretical curve.
-
-### Enter Your Measured Time Constant
-
-From Experiment 2, record the time at which Vc reached $0.632V_S$:
+Overlay your measured time constant against the theoretical curve.
 
 ```matlab
 R = 10000;
@@ -893,37 +613,75 @@ legend('Location','southeast');
 
 ---
 
-## Engineering Applications
+## Troubleshooting
 
-RC circuits are used in:
+### Flat Line on Oscilloscope
 
-### Filters
+Check:
 
-Remove noise.
+✅ Probe tip connected to Vc junction (not to GND or the wrong row)
 
----
+✅ Probe ground connected to Arduino GND
 
-### Sensors
-
-Condition signals.
+✅ Code uploaded and Arduino powered
 
 ---
 
-### Timing Circuits
+### Capacitor Not Charging
 
-Create delays.
+Check:
 
----
+✅ Capacitor polarity (positive leg toward resistor, negative leg to GND)
 
-### Power Electronics
-
-Reduce voltage ripple.
+✅ Resistor in series between D9 and capacitor
 
 ---
 
-### Control Systems
+### Time Constant Not Matching Theory
 
-Model first-order dynamics.
+Check:
+
+✅ Actual resistor value (read colour bands or measure with multimeter)
+
+✅ Capacitor value marked on body
+
+✅ Horizontal scale appropriate for the time constant being measured
+
+---
+
+### Troubleshooting Checklist
+
+✅ Capacitor polarity correct
+
+✅ Probe connected to Vc
+
+✅ Probe ground connected to GND
+
+✅ Controller powered and sketch uploaded
+
+✅ Horizontal scale set to approximately 500 ms/div for τ = 1 s
+
+✅ Trigger enabled
+
+---
+
+## Laboratory Exercises
+
+### Exercise 1
+
+Calculate and measure the time constant for R = 4.7 kΩ and C = 100 µF. Compare your result to the theoretical value.
+
+---
+
+### Exercise 2
+
+Using R = 10 kΩ and C = 100 µF, calculate the voltage across the capacitor after 2τ and 3τ. Verify these values on the oscilloscope.
+
+---
+
+### Exercise 3
+
+Sketch the expected charging curve for τ = 0.5 s on paper, then build the circuit and compare your sketch to the oscilloscope trace.
 
 ---
 
@@ -933,47 +691,23 @@ Model first-order dynamics.
 
 What is a time constant?
 
-Answer:
-
-```text
-______________________
-```
-
 ---
 
 ### Question 2
 
-What voltage should the capacitor reach after one time constant when charging to 5V?
-
-Answer:
-
-```text
-______________________
-```
+What voltage should the capacitor reach after one time constant when charging to 5 V?
 
 ---
 
 ### Question 3
 
-What happens when capacitance increases?
-
-Answer:
-
-```text
-______________________
-```
+What happens to the time constant when capacitance increases?
 
 ---
 
 ### Question 4
 
-What happens when resistance increases?
-
-Answer:
-
-```text
-______________________
-```
+What happens to the time constant when resistance increases?
 
 ---
 
@@ -981,69 +715,11 @@ ______________________
 
 Why is an RC circuit considered a first-order system?
 
-Answer:
-
-```text
-______________________
-```
-
 ---
 
 ### Question 6
 
-Your MATLAB simulation predicted τ = 1.0s but you measured τ = 1.15s. Name two physical reasons that could explain this discrepancy.
-
-Answer:
-
-```text
-______________________
-```
-
----
-
-## Common Mistakes
-
-### Capacitor Connected Backwards
-
-Check polarity carefully.
-
----
-
-### Flat Line On Oscilloscope
-
-Check:
-
-- Probe location
-- Ground connection
-- Controller code (Arduino/ESP32)
-
----
-
-### Time Constant Not Matching
-
-Check:
-
-- Actual resistor value
-- Capacitor tolerance
-- Scope time scale
-
----
-
-## Troubleshooting Checklist
-
-✅ Capacitor polarity correct
-
-✅ Probe connected to Vc
-
-✅ Probe ground connected to GND
-
-✅ Controller powered (Arduino or ESP32)
-
-✅ Sketch uploaded
-
-✅ Scope set to approximately 500 ms/div (OWON or DSO Nano)
-
-✅ Trigger enabled
+Your MATLAB simulation predicted τ = 1.0 s but you measured τ = 1.15 s. Name two physical reasons that could explain this discrepancy.
 
 ---
 
@@ -1065,7 +741,7 @@ In this project you learned:
 
 ✅ First-order systems
 
-✅ Oscilloscope transient measurements (OWON or DSO Nano)
+✅ Oscilloscope transient measurements
 
 ✅ MATLAB modelling
 
@@ -1081,7 +757,9 @@ These concepts provide the foundation for:
 
 ## Next Project
 
-**03_RLC_Circuits.md**
+```text
+03_RLC_Circuits.md
+```
 
 Topics:
 

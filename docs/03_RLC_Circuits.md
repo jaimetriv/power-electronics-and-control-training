@@ -1,4 +1,4 @@
-# Project 3 - RLC Circuits, Resonance and Second-Order Systems
+# Project 03 - RLC Circuits, Resonance and Second-Order Systems
 
 ### Prerequisites
 
@@ -22,7 +22,7 @@ In this project you will learn:
 - What natural frequency is
 - What damping is
 - How second-order systems behave
-- How to measure oscillations using an oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
+- How to measure oscillations using the OWON HDS272S oscilloscope
 
 This project marks the transition from first-order systems to second-order systems.
 
@@ -70,9 +70,7 @@ Symbol:
 ----LLLL----
 ```
 
-Unlike a capacitor which resists changes in voltage:
-
-An inductor resists changes in current.
+Unlike a capacitor which resists changes in voltage, an inductor resists changes in current.
 
 ---
 
@@ -108,68 +106,42 @@ Where:
 
 ---
 
-## Building an RLC Circuit
+## The RLC Circuit
 
-An RLC circuit contains:
-
-- Resistor
-- Inductor
-- Capacitor
-
-Together:
+An RLC circuit contains a resistor, inductor, and capacitor.
 
 ```text
-R + L + C
-```
-
----
-
-## Circuit Diagram
-
-```text
-Vin
- |
+V_in
+ │
  R
- |
+ │
  L
- |
- +----- Vc
- |
+ │
+ ├──── Vc ──── Probe Tip
+ │
  C
- |
-GND
+ │
+GND ──── Probe GND
 ```
 
 ---
 
 ## What Makes RLC Circuits Different?
 
-In Project 2 the capacitor stored energy.
+In Project 02 the capacitor was the only energy storage element.
 
-Now we have:
+Now we have two:
 
 - Capacitor stores energy electrically
 - Inductor stores energy magnetically
 
-Energy can move back and forth between them.
-
-This causes oscillation.
+Energy can move back and forth between them, causing oscillation.
 
 ---
 
 ## Mechanical Analogy
 
-An RLC circuit behaves similarly to a:
-
-```text
-Mass
-Spring
-Damper
-```
-
-system.
-
-Equivalent model:
+An RLC circuit behaves similarly to a mass-spring-damper system:
 
 | Mechanical System | Electrical System |
 |-------------------|-------------------|
@@ -183,56 +155,15 @@ This analogy appears frequently in control engineering.
 
 ## Second-Order Systems
 
-An RC circuit is:
+An RC circuit is **First Order** because it has one energy storage element.
 
-```text
-First Order
-```
-
-because it has one energy storage element.
-
-An RLC circuit is:
-
-```text
-Second Order
-```
-
-because it has two energy storage elements:
-
-- Capacitor
-- Inductor
-
----
-
-## Governing Equation
-
-The series RLC circuit obeys:
-
-$$
-L\frac{d^2i}{dt^2}
-+
-R\frac{di}{dt}
-+
-\frac{1}{C}i
-=
-0
-$$
-
-You do not need to solve this equation.
-
-For now, it is enough to understand:
-
-- It describes oscillation.
-- It describes resonance.
-- It describes damping.
+An RLC circuit is **Second Order** because it has two energy storage elements: the capacitor and the inductor.
 
 ---
 
 ## Natural Frequency
 
-The most important property of an RLC circuit is its natural frequency.
-
-Natural frequency is:
+The most important property of an RLC circuit is its natural frequency:
 
 $$
 \omega_n = \frac{1}{\sqrt{LC}}
@@ -248,15 +179,9 @@ Where:
 
 ## Converting to Hertz
 
-To convert from radians per second to Hertz:
-
 $$
 f_n = \frac{\omega_n}{2\pi}
 $$
-
-Where:
-
-- $f_n$ = Frequency (Hz)
 
 ---
 
@@ -265,126 +190,51 @@ Where:
 Given:
 
 $$
-L = 100mH
+L = 100\ \text{mH} = 0.1\ \text{H}, \quad C = 100\ \text{nF} = 100 \times 10^{-9}\ \text{F}
 $$
 
 $$
-L = 0.1H
-$$
-
-and:
-
-$$
-C = 100nF
+\omega_n = \frac{1}{\sqrt{0.1 \times 100 \times 10^{-9}}} \approx 10\,000\ \text{rad/s}
 $$
 
 $$
-C = 100 \times 10^{-9}F
-$$
-
----
-
-Calculate:
-
-$$
-\omega_n = \frac{1}{\sqrt{0.1 \cdot 100\times10^{-9}}}
-$$
-
-Result:
-
-$$
-\omega_n \approx 10000 \text{ rad/s}
-$$
-
----
-
-Convert to Hertz:
-
-$$
-f_n = \frac{10000}{2\pi}
-$$
-
-Result:
-
-$$
-f_n \approx 1591Hz
+f_n = \frac{10\,000}{2\pi} \approx 1591\ \text{Hz}
 $$
 
 ---
 
 ## Damping
 
-The resistor removes energy from the system.
+The resistor removes energy from the system. This process is called **damping**.
 
-This process is called:
+More resistance → more damping → oscillation dies away faster.
 
-```text
-Damping
-```
-
-More resistance means:
-
-```text
-More damping
-```
-
-Less resistance means:
-
-```text
-Less damping
-```
+Less resistance → less damping → oscillation persists longer.
 
 ---
 
 ## Damping Ratio
 
-The damping ratio is:
-
 $$
 \zeta = \frac{R}{2}\sqrt{\frac{C}{L}}
 $$
 
-Where:
-
-- $\zeta$ = Damping Ratio
+Where $\zeta$ = Damping Ratio.
 
 ---
 
 ## Types of Response
 
-### Underdamped
+### Underdamped ($\zeta < 1$)
 
-$$
-\zeta < 1
-$$
-
-Characteristics:
-
-- Oscillation
-- Ringing
+- Oscillation and ringing
 - Overshoot
 
----
-
-### Critically Damped
-
-$$
-\zeta = 1
-$$
-
-Characteristics:
+### Critically Damped ($\zeta = 1$)
 
 - Fastest non-oscillatory response
 
----
-
-### Overdamped
-
-$$
-\zeta > 1
-$$
-
-Characteristics:
+### Overdamped ($\zeta > 1$)
 
 - No oscillation
 - Slow response
@@ -409,7 +259,7 @@ fprintf('Natural frequency: %.1f Hz\n', fn);
 fprintf('%-8s %-12s %s\n', 'R (Ohm)', 'zeta', 'Response type');
 for i = 1:3
     zeta = (R_values(i) / 2) * sqrt(C / L);
-    if zeta < 1,     rtype = 'Underdamped';
+    if zeta < 1,      rtype = 'Underdamped';
     elseif zeta == 1, rtype = 'Critically damped';
     else,             rtype = 'Overdamped'; end
     fprintf('%-8d %-12.4f %s\n', R_values(i), zeta, rtype);
@@ -446,7 +296,7 @@ legend('Location', 'northeast');
 Record your predictions before measuring:
 
 | R | Predicted ζ | Expected behaviour |
-|-------|------------|--------------------|
+|-------|------------|-------------------|
 | 47 Ω | | |
 | 100 Ω | | |
 | 470 Ω | | |
@@ -455,74 +305,17 @@ Record your predictions before measuring:
 
 ## Components Required
 
-Additional components:
-
-- 100 mH Inductor
-- 100 nF Capacitor
-- 100 Ω Resistor
-
-Existing tools:
-
-- Controller (Arduino Uno or ESP32 DevKit V1)
+- Arduino Uno or ESP32 DevKit V1
 - Breadboard
 - Jumper wires
-- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
+- 100 mH inductor
+- 100 nF capacitor
+- 100 Ω resistor (plus 47 Ω and 470 Ω for Experiments 3 and 4)
 
----
+Equipment:
 
-## Circuit
-
-```mermaid
-graph TD
-
-A[Arduino Pin 9]
---> B[100 Ohm]
-
-A2[ESP32 GPIO18]
---> B
-
-B --> C[100 mH Inductor]
-
-C --> D[Vc]
-
-D --> E[100 nF Capacitor]
-
-E --> F[GND]
-```
-
----
-
-## Probe Location
-
-Probe Tip:
-
-```text
-Vc
-```
-
-Probe Ground:
-
-```text
-GND
-```
-
----
-
-## Physical Layout
-
-```text
-PWM Output (Arduino Pin 9 or ESP32 GPIO18)
-      |
-    100Ω
-      |
-   100mH
-      |
-      o----- Vc ----- Probe Tip
-      |
-   100nF
-      |
-     GND ----- Probe Ground
-```
+- OWON HDS272S Oscilloscope (recommended)
+- DSO Nano Oscilloscope (compatible)
 
 ---
 
@@ -530,72 +323,130 @@ PWM Output (Arduino Pin 9 or ESP32 GPIO18)
 
 ### Objective
 
-Observe the oscillatory response of a second-order system.
+Observe the oscillatory (ringing) response of a second-order RLC circuit when excited by a square wave.
 
 ---
 
-## Arduino Code
+### Circuit Diagram
+
+```text
+Arduino Pin D9  (or ESP32 GPIO18)
+    │
+   100 Ω resistor
+    │
+   100 mH inductor
+    │
+    ├──── Vc ──── Probe Tip
+    │
+   100 nF capacitor
+    │
+   GND ──── Probe GND
+```
+
+---
+
+### Step-by-Step Wiring
+
+1. Insert the **100 Ω resistor** across the breadboard so each leg is in a different row.
+2. Connect a jumper wire from **Arduino pin D9** to one leg of the resistor.
+3. Insert the **100 mH inductor** so one leg is in the same row as the other resistor leg, and the other inductor leg is in a new row below.
+4. Insert the **100 nF capacitor** so its positive leg is in the same row as the lower inductor leg. This junction is $V_C$.
+5. Connect a jumper wire from the **capacitor negative leg** to any **GND** pin on the Arduino.
+6. Connect the **oscilloscope probe tip** to the $V_C$ junction.
+7. Connect the **oscilloscope probe ground** to Arduino GND.
+
+The signal path will be:
+
+```text
+D9 → Resistor → Inductor → Vc (probe here) → Capacitor → GND
+```
+
+---
+
+### Wiring Checklist
+
+Before uploading:
+
+✅ Resistor leg in same row as Arduino D9 jumper
+
+✅ Inductor leg in same row as other resistor leg
+
+✅ Capacitor positive leg in same row as lower inductor leg (this is Vc)
+
+✅ Capacitor negative leg connected to GND
+
+✅ Oscilloscope probe tip connected to Vc
+
+✅ Oscilloscope probe ground connected to Arduino GND
+
+---
+
+### Arduino Code
 
 ```cpp
 void setup()
 {
+    // Configure pin 9 as a digital output.
     pinMode(9, OUTPUT);
 }
 
 void loop()
 {
+    // Toggle pin 9 rapidly to produce a square wave.
+    // The fast transitions excite the natural dynamics of the RLC circuit,
+    // causing the capacitor voltage to ring at the natural frequency.
     digitalWrite(9, HIGH);
-    delayMicroseconds(500);
+    delayMicroseconds(500);   // HIGH for 500 µs
 
     digitalWrite(9, LOW);
+    delayMicroseconds(500);   // LOW for 500 µs
+}
+```
+
+### ESP32 Equivalent Code
+
+```cpp
+void setup()
+{
+    pinMode(18, OUTPUT);
+}
+
+void loop()
+{
+    digitalWrite(18, HIGH);
+    delayMicroseconds(500);
+
+    digitalWrite(18, LOW);
     delayMicroseconds(500);
 }
 ```
 
 ---
 
-## Why Use a Square Wave?
+### Why Use a Square Wave?
 
-A square wave contains fast transitions.
+A square wave contains fast voltage transitions.
 
-These transitions excite the natural dynamics of the RLC circuit.
+These transitions excite the natural dynamics of the RLC circuit, causing the capacitor voltage to oscillate at the natural frequency.
 
-This allows us to observe resonance.
-
-In hardware we use periodic square-wave excitation to repeatedly trigger ringing.
-In simulation we use a step response to isolate and study the intrinsic second-order dynamics.
+This allows us to observe resonance and ringing on the oscilloscope.
 
 ---
 
-## Oscilloscope Setup (OWON Baseline)
+### Oscilloscope Settings
 
-Recommended scope: OWON HDS272S.
-
-Compatible alternative: DSO Nano.
-
-Vertical:
-
-```text
-1 V/div
-```
-
-Horizontal:
-
-```text
-100 us/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 1 V/div | 1 V/div |
+| Horizontal scale | 100 µs/div | 100 µs/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
 
 ---
 
-## Expected Waveform
+### Expected Waveform
 
-Instead of a simple square wave you should observe:
+Instead of a simple square wave you should observe ringing on each transition:
 
 ```text
          /\_
@@ -604,34 +455,17 @@ Instead of a simple square wave you should observe:
 ______/         \____
 ```
 
-This oscillation is called:
-
-```text
-Ringing
-```
+This oscillation is called **ringing**.
 
 ---
 
-## Why Does Ringing Occur?
+### Observe
 
-Energy is exchanged between:
+Watch the oscilloscope display.
 
-```text
-Capacitor
-```
+You should see the capacitor voltage oscillate rapidly after each transition, then gradually settle.
 
-and
-
-```text
-Inductor
-```
-
-The resistor gradually removes energy.
-
-As energy decreases:
-
-- Oscillation decreases
-- Ringing fades away
+The oscillation frequency is the natural frequency of the RLC circuit.
 
 ---
 
@@ -639,129 +473,63 @@ As energy decreases:
 
 ### Objective
 
-Estimate the natural frequency.
+Estimate the natural frequency from the oscilloscope and compare it to the theoretical value.
 
 ---
 
-## Step 1
+### Procedure
 
-Zoom into the ringing waveform.
-
-Try:
-
-```text
-50 us/div
-```
-
-if necessary.
+1. Zoom into the ringing waveform. Try **50 µs/div** if the oscillation is hard to see at 100 µs/div.
+2. Measure the time for one complete oscillation cycle (from one peak to the next).
+3. Record the measured period.
+4. Calculate the frequency using $f = 1/T$.
 
 ---
 
-## Step 2
+### Expected Result
 
-Measure one oscillation period.
-
-Record:
-
-```text
-Measured Period =
-_____________
-```
-
----
-
-## Step 3
-
-Calculate frequency.
-
-Use:
+Theoretical natural frequency:
 
 $$
-f = \frac{1}{T}
-$$
-
-Example:
-
-If:
-
-$$
-T = 630\mu s
-$$
-
-Then:
-
-$$
-T = 0.00063s
-$$
-
-Result:
-
-$$
-f = \frac{1}{0.00063}
-$$
-
-$$
-f \approx 1587Hz
+f_n \approx 1591\ \text{Hz}
 $$
 
 ---
 
-## Compare with Theory
-
-Theoretical value:
-
-$$
-f_n \approx 1591Hz
-$$
-
-Measured value:
-
-```text
-_____________
-```
-
----
-
-## Results Table
+### Results Table
 
 | Parameter | Theory | Measured |
-|------------|---------|-----------|
-| L | 100mH | |
-| C | 100nF | |
-| fn | 1591Hz | |
-| Ringing Observed | Yes | |
+|-----------|--------|---------|
+| L | 100 mH | |
+| C | 100 nF | |
+| $f_n$ | 1591 Hz | |
+| Ringing observed | Yes | |
 
 ---
 
 ## Experiment 3 - Increase Damping
 
-Replace:
+### Objective
 
-```text
-100 Ω
-```
+Observe how increasing resistance increases damping and reduces ringing.
 
-with:
-
-```text
-470 Ω
-```
+Replace the **100 Ω** resistor with a **470 Ω** resistor. All other components remain the same.
 
 ---
 
-## Prediction
+### Prediction
 
 Higher resistance means:
 
-- More damping
+- Higher damping ratio $\zeta$
 - Less ringing
 - Faster energy dissipation
 
 ---
 
-## Observe
+### Observe
 
-Describe the waveform:
+Describe the waveform compared to Experiment 1:
 
 ```text
 _________________________________
@@ -769,44 +537,38 @@ _________________________________
 
 ---
 
-## Results Table
+### Results Table
 
-| Resistance | Ringing |
-|------------|----------|
-| 100Ω | |
-| 470Ω | |
+| Resistance | Ringing Observed |
+|------------|-----------------|
+| 100 Ω | |
+| 470 Ω | |
 
 ---
 
 ## Experiment 4 - Reduce Damping
 
-Replace:
+### Objective
 
-```text
-100 Ω
-```
+Observe how reducing resistance reduces damping and increases ringing.
 
-with:
-
-```text
-47 Ω
-```
+Replace the resistor with a **47 Ω** resistor.
 
 ---
 
-## Prediction
+### Prediction
 
 Lower resistance means:
 
-- Less damping
+- Lower damping ratio $\zeta$
 - More oscillation
-- Longer ringing
+- Longer ringing duration
 
 ---
 
-## Observe
+### Observe
 
-Describe the waveform:
+Describe the waveform compared to Experiments 1 and 3:
 
 ```text
 _________________________________
@@ -814,27 +576,19 @@ _________________________________
 
 ---
 
-## Results Table
+### Results Table
 
-| Resistance | Response |
-|------------|-----------|
-| 47Ω | |
-| 100Ω | |
-| 470Ω | |
+| Resistance | Damping | Response |
+|------------|---------|---------|
+| 47 Ω | Low | |
+| 100 Ω | Medium | |
+| 470 Ω | High | |
 
 ---
 
 ## Understanding Overshoot
 
-An underdamped system often exceeds its final value.
-
-This is called:
-
-```text
-Overshoot
-```
-
-Typical waveform:
+An underdamped system often exceeds its final value before settling. This is called **overshoot**.
 
 ```text
 Target
@@ -854,11 +608,7 @@ Overshoot is extremely important in:
 
 ## MATLAB Comparison
 
-Now overlay your measured resonant frequency against the theoretical simulation.
-
-### Enter Your Measured Period
-
-From Experiment 2, record the oscillation period you measured on the oscilloscope:
+Overlay your measured resonant frequency against the theoretical simulation.
 
 ```matlab
 L = 0.1;
@@ -873,14 +623,12 @@ fprintf('Theory  fn = %.1f Hz\n', f_theory);
 fprintf('Measured fn = %.1f Hz\n', f_measured);
 fprintf('Error = %.2f%%\n', 100 * abs(f_measured - f_theory) / f_theory);
 
-% Overlay simulated vs measured-frequency waveforms
 t = 0:1e-6:3e-3;
 
 num_t = [1/C]; den_t = [L, R, 1/C];
 G_theory = tf(num_t, den_t);
 [y_theory, ~] = step(G_theory, t);
 
-% Reconstruct waveform at measured frequency using same zeta
 wn_m = 2 * pi * f_measured;
 zeta = (R / 2) * sqrt(C / L);
 den_m = [1, 2*zeta*wn_m, wn_m^2];
@@ -898,64 +646,83 @@ title('RLC Step Response - Theory vs Measurement');
 legend('Location', 'northeast');
 ```
 
-### Pole Locations
-
-Inspect the poles to understand stability and oscillation:
-
-```matlab
-R = 100; L = 0.1; C = 100e-9;
-p = roots([L, R, 1/C]);
-fprintf('Poles: %.1f %+.1fi  and  %.1f %+.1fi\n', ...
-    real(p(1)), imag(p(1)), real(p(2)), imag(p(2)));
-pzmap(tf([1/C], [L, R, 1/C])); grid on;
-title('Pole-Zero Map');
-```
-
 ### Reflection
 
-- How close is your measured fn to the theoretical value?
+- How close is your measured $f_n$ to the theoretical value?
 - Are the poles real or complex? What does that tell you about the response?
-- What would happen to the poles if you increased R to 470Ω?
+- What would happen to the poles if you increased R to 470 Ω?
 
 ---
 
-## Engineering Applications
+## Troubleshooting
 
-RLC systems appear in:
+### No Ringing Visible
 
-### Radio Tuners
+Check:
 
-Frequency selection.
+✅ Inductor and capacitor values correct
 
----
+✅ Component order in series: Resistor → Inductor → Capacitor
 
-### Filters
+✅ Horizontal scale appropriate (try 100 µs/div or 50 µs/div)
 
-Signal processing.
-
----
-
-### Buck Converters
-
-Output filter dynamics.
+✅ Probe tip connected to Vc (between inductor and capacitor)
 
 ---
 
-### Boost Converters
+### Frequency Does Not Match Theory
 
-Energy transfer systems.
+Check:
 
----
+✅ Component values (inductors and capacitors have wide tolerances)
 
-### Motor Drives
-
-Current loop behaviour.
+✅ Horizontal scale calibration
 
 ---
 
-### Control Systems
+### Waveform Unstable
 
-Second-order system models.
+Adjust:
+
+✅ Trigger level to approximately half the signal amplitude
+
+✅ Horizontal scale to show 2–3 complete oscillation cycles
+
+---
+
+### Troubleshooting Checklist
+
+✅ Controller powered and code uploaded
+
+✅ Probe connected to Vc
+
+✅ Probe ground connected to GND
+
+✅ Correct component values and order
+
+✅ Oscilloscope triggering correctly
+
+✅ Appropriate time scale selected
+
+---
+
+## Laboratory Exercises
+
+### Exercise 1
+
+Calculate the natural frequency for L = 100 mH and C = 47 nF. Build the circuit and verify your prediction on the oscilloscope.
+
+---
+
+### Exercise 2
+
+With R = 100 Ω, L = 100 mH, C = 100 nF, calculate the damping ratio. Is the circuit underdamped, critically damped, or overdamped?
+
+---
+
+### Exercise 3
+
+Find the resistor value that produces critical damping ($\zeta = 1$) for L = 100 mH and C = 100 nF. Build the circuit and observe whether ringing disappears.
 
 ---
 
@@ -965,47 +732,23 @@ Second-order system models.
 
 What is resonance?
 
-Answer:
-
-```text
-__________________________
-```
-
 ---
 
 ### Question 2
 
 What is natural frequency?
 
-Answer:
-
-```text
-__________________________
-```
-
 ---
 
 ### Question 3
 
-What causes ringing?
-
-Answer:
-
-```text
-__________________________
-```
+What causes ringing in an RLC circuit?
 
 ---
 
 ### Question 4
 
-What happens when resistance increases?
-
-Answer:
-
-```text
-__________________________
-```
+What happens to the ringing when resistance increases?
 
 ---
 
@@ -1013,78 +756,11 @@ __________________________
 
 Why is an RLC circuit a second-order system?
 
-Answer:
-
-```text
-__________________________
-```
-
 ---
 
 ### Question 6
 
-Your MATLAB simulation predicted fn = 1591 Hz but you measured fn = 1520 Hz. Name two physical reasons that could explain this discrepancy.
-
-Answer:
-
-```text
-__________________________
-```
-
----
-
-## Common Mistakes
-
-### No Ringing Visible
-
-Check:
-
-- Inductor value
-- Capacitor value
-- Horizontal scale
-
----
-
-### Frequency Does Not Match Theory
-
-Check:
-
-- Component tolerances
-- Measurement accuracy
-
----
-
-### Unstable Display
-
-Adjust:
-
-```text
-Trigger Level
-```
-
-or
-
-```text
-Time Base
-```
-
----
-
-## Troubleshooting Checklist
-
-✅ Controller powered (Arduino or ESP32)
-
-✅ Code uploaded
-
-✅ Probe connected to Vc
-
-✅ Probe ground connected to GND
-
-✅ Correct component values
-
-✅ Oscilloscope triggering correctly (OWON or DSO Nano)
-
-✅ Appropriate time scale selected
+Your MATLAB simulation predicted $f_n$ = 1591 Hz but you measured $f_n$ = 1520 Hz. Name two physical reasons that could explain this discrepancy.
 
 ---
 
@@ -1094,7 +770,7 @@ In this project you learned:
 
 ✅ Inductor behaviour
 
-✅ Energy storage
+✅ Energy storage in magnetic fields
 
 ✅ Resonance
 
@@ -1126,7 +802,9 @@ These concepts form the foundation of:
 
 ## Next Project
 
-**04_MOSFET_Fundamentals.md**
+```text
+04_MOSFET_Fundamentals.md
+```
 
 Topics:
 

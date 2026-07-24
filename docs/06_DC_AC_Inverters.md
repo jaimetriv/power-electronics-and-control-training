@@ -74,13 +74,7 @@ At the end of this project you should be able to:
 An inverter converts:
 
 ```text
-Direct Current (DC)
-```
-
-into:
-
-```text
-Alternating Current (AC)
+Direct Current (DC)  →  Alternating Current (AC)
 ```
 
 Examples:
@@ -115,120 +109,7 @@ Many loads require AC power:
 Therefore:
 
 ```text
-DC Source
-     ↓
- Inverter
-     ↓
- AC Output
-```
-
----
-
-## Applications
-
-Inverters are used in:
-
-### Solar Energy Systems
-
-Converting solar-generated DC into AC.
-
----
-
-### Uninterruptible Power Supplies
-
-Providing backup AC power.
-
----
-
-### Electric Vehicles
-
-Driving AC traction motors.
-
----
-
-### Variable-Speed Drives
-
-Controlling industrial motors.
-
----
-
-### Renewable Energy Systems
-
-Grid-connected power conversion.
-
----
-
-## Review of AC Voltage
-
-AC voltage changes polarity over time.
-
-Example waveform:
-
-```text
-Voltage
-
- +V       /\
-         /  \
- 0V ----/----\----/----
-       /      \  /
- -V   /        \/
-```
-
-To create AC from DC we must repeatedly reverse the voltage polarity applied to the load.
-
----
-
-## Basic Inverter Principle
-
-Suppose a load is connected alternately to:
-
-```text
-+12 V
-```
-
-and
-
-```text
--12 V
-```
-
-The voltage applied to the load changes polarity and an AC waveform is produced.
-
----
-
-## Square-Wave Inverter
-
-The simplest inverter produces alternating positive and negative voltages.
-
----
-
-## Square-Wave Output
-
-```text
-+V  ________        ________
-           |        |
-           |        |
--V ________|________|________
-```
-
-The polarity reverses periodically, creating AC.
-
----
-
-## Output Frequency
-
-The switching frequency determines the output frequency.
-
-Examples:
-
-```text
-50 Hz
-```
-
-or
-
-```text
-60 Hz
+DC Source → Inverter → AC Output
 ```
 
 ---
@@ -239,73 +120,37 @@ An H-Bridge is the most common inverter topology.
 
 It uses four switches to reverse the voltage across a load.
 
----
-
-## Simplified H-Bridge
-
 ```text
       +V
 
     S1    S2
-     |    |
-     +----+
-     |LOAD|
-     +----+
-     |    |
+     │    │
+     +────+
+     │LOAD│
+     +────+
+     │    │
     S3    S4
 
       GND
 ```
 
----
-
-## Why Is It Called an H-Bridge?
-
-The arrangement resembles the letter:
-
-```text
-H
-```
+The arrangement resembles the letter H, hence the name.
 
 ---
 
-## State A
+## H-Bridge States
 
-Switches ON:
+### State A — S1 and S4 ON
 
-```text
-S1 and S4
-```
-
-Current flows:
-
-```text
-Left → Right
-```
+Current flows left to right through the load.
 
 Load voltage is positive.
 
----
+### State B — S2 and S3 ON
 
-## State B
-
-Switches ON:
-
-```text
-S2 and S3
-```
-
-Current flows:
-
-```text
-Right → Left
-```
+Current flows right to left through the load.
 
 Load voltage is negative.
-
----
-
-## AC Generation
 
 Alternating between State A and State B creates an AC output waveform.
 
@@ -313,25 +158,11 @@ Alternating between State A and State B creates an AC output waveform.
 
 ## Shoot-Through
 
-Never turn ON:
+Never turn ON S1 and S3 simultaneously.
 
-```text
-S1 and S3
-```
+Never turn ON S2 and S4 simultaneously.
 
-simultaneously.
-
-Never turn ON:
-
-```text
-S2 and S4
-```
-
-simultaneously.
-
-This creates a direct short circuit across the supply.
-
-This condition is called:
+This creates a direct short circuit across the supply, called:
 
 ```text
 Shoot-Through
@@ -341,102 +172,32 @@ Shoot-Through
 
 ## Dead Time
 
-Practical inverters introduce a small delay between switching transitions.
-
-This delay is called:
+Practical inverters introduce a small delay between switching transitions called:
 
 ```text
 Dead Time
 ```
 
-Dead time helps prevent:
-
-```text
-Shoot-Through
-```
-
-and protects the switching devices.
+Dead time prevents shoot-through and protects the switching devices.
 
 ---
 
-## MOSFET-Based Inverters
-
-Most modern inverters use:
+## Square-Wave Inverter Output
 
 ```text
-MOSFETs
++V  ________        ________
+           │        │
+           │        │
+-V ________|________|________
 ```
 
-or
-
-```text
-IGBTs
-```
-
-Advantages:
-
-✅ High efficiency
-
-✅ Fast switching
-
-✅ PWM capability
-
-✅ Good power handling
-
----
-
-## PWM Inverters
-
-Modern inverters rarely use pure square waves.
-
-Instead they use:
-
-```text
-Pulse Width Modulation
-```
-
----
-
-## Why Use PWM?
-
-PWM provides:
-
-- Better waveform quality
-- Improved efficiency
-- Reduced harmonic distortion
-- More precise output control
-
----
-
-## PWM Inverter Concept
-
-```text
-High-Frequency PWM
-          ↓
-      Filtering
-          ↓
-  AC Waveform
-```
+The polarity reverses periodically, creating AC.
 
 ---
 
 ## Sinusoidal PWM (SPWM)
 
-Most modern inverters use:
-
-```text
-Sinusoidal PWM
-```
-
-or:
-
-```text
-SPWM
-```
-
----
-
-## How SPWM Works
+Modern inverters use Sinusoidal PWM rather than pure square waves.
 
 A sinewave reference is compared against a high-frequency carrier waveform.
 
@@ -444,77 +205,11 @@ The resulting PWM pulses vary in width according to the sinewave.
 
 The average voltage follows a sinusoidal shape.
 
----
-
-## Conceptual SPWM Pattern
-
-```text
-| |
-| | | |
-| | | | | |
-| | | | | | |
-| | | | | |
-| | | |
-| |
-```
-
-The pulse widths increase and then decrease.
-
----
-
-## Filtered Output
-
 After passing through a filter:
 
 ```text
-SPWM
-   ↓
-Filter
-   ↓
-Approximate Sine Wave
+SPWM → Filter → Approximate Sine Wave
 ```
-
----
-
-## Inverter Types
-
-### Square-Wave Inverter
-
-Advantages:
-
-- Very simple
-- Low cost
-
-Disadvantages:
-
-- High harmonic distortion
-- Poor waveform quality
-
----
-
-### PWM Inverter
-
-Advantages:
-
-- Better waveform quality
-- Improved efficiency
-
-Disadvantages:
-
-- Increased complexity
-
----
-
-### Pure Sine Wave Inverter
-
-Advantages:
-
-- Excellent waveform quality
-- Suitable for sensitive electronics
-
-Disadvantages:
-
-- More complex design
 
 ---
 
@@ -537,10 +232,10 @@ v_square = sign(v_sine);
 
 % SPWM: compare sine reference against triangular carrier
 Ts_sw    = 1 / f_sw;
-carrier  = 2*abs(mod(t, Ts_sw)/Ts_sw - 0.5) - 0.5;  % triangular -0.5 to +0.5
-v_spwm   = sign(v_sine - carrier);                    % +1 or -1
+carrier  = 2*abs(mod(t, Ts_sw)/Ts_sw - 0.5) - 0.5;
+v_spwm   = sign(v_sine - carrier);
 
-% Simulate LC filter on SPWM output (simple first-order for illustration)
+% Simulate LC filter on SPWM output
 L = 1e-3; C = 10e-6;
 G_filt = tf(1, [L*C, 0, 1]);
 [v_filt, ~] = lsim(G_filt, v_spwm, t);
@@ -562,7 +257,7 @@ sgtitle('Inverter Waveform Comparison');
 ### Harmonic Spectrum — Square Wave vs Sine Wave
 
 ```matlab
-fs = 1/1e-5;          % sample rate
+fs = 1/1e-5;
 N  = length(t);
 
 F_sq   = abs(fft(v_square)) / N;
@@ -595,24 +290,21 @@ grid on; xlim([0 1000]);
 
 ## Components Required
 
-- Arduino Uno
-- ESP32 DevKit V1 (alternative controller)
+- Arduino Uno or ESP32 DevKit V1
 - Breadboard
 - Jumper wires
-- 2 × IRLZ44N MOSFETs (for half-bridge demonstration)
 - Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
 
 Optional:
 
-- IR2104 half-bridge gate driver (handles dead time automatically)
+- 2 × IRLZ44N MOSFETs (for half-bridge demonstration)
+- IR2104 half-bridge gate driver
 
 > Note: Full H-bridge experiments require 4 MOSFETs and gate driver ICs. This project demonstrates the waveform generation principles using single-ended PWM outputs.
 
 ---
 
 ## Safety Notice
-
-This project uses:
 
 ```text
 Low Voltage Demonstrations Only
@@ -626,135 +318,115 @@ Do not connect experimental circuits directly to mains wiring.
 
 ### Objective
 
-Generate a low-frequency inverter waveform.
+Generate a low-frequency square wave that represents the fundamental switching pattern of a square-wave inverter, and measure it on the oscilloscope.
 
 ---
 
-## Arduino Code
+### Connections
+
+```text
+Probe Tip  ──────► Arduino Pin D9  (or ESP32 GPIO18)
+Probe GND  ──────► Arduino GND
+```
+
+No breadboard components are needed for this experiment.
+
+---
+
+### Arduino Code
 
 ```cpp
 void setup()
 {
+    // Configure pin 9 as a digital output.
     pinMode(9, OUTPUT);
 }
 
 void loop()
 {
+    // Toggle pin 9 every 10 ms to produce a 50 Hz square wave.
+    // Period = 10 ms HIGH + 10 ms LOW = 20 ms → f = 1/0.02 = 50 Hz.
     digitalWrite(9, HIGH);
-
-    delay(10);
+    delay(10);              // HIGH for 10 ms
 
     digitalWrite(9, LOW);
-
-    delay(10);
+    delay(10);              // LOW for 10 ms
 }
 ```
 
-### ESP32 Equivalent (50 Hz Toggle)
+### ESP32 Equivalent Code
 
 ```cpp
-const int OUT_PIN = 18;
-
 void setup()
 {
-    pinMode(OUT_PIN, OUTPUT);
+    // Configure GPIO18 as a digital output.
+    pinMode(18, OUTPUT);
 }
 
 void loop()
 {
-    digitalWrite(OUT_PIN, HIGH);
+    // Same 50 Hz toggle as Arduino version.
+    digitalWrite(18, HIGH);
     delay(10);
-    digitalWrite(OUT_PIN, LOW);
+
+    digitalWrite(18, LOW);
     delay(10);
 }
 ```
 
 ---
 
-## Frequency Calculation
+### Frequency Calculation
 
 The period is:
 
 $$
-T = 20 \times 10^{-3}s
+T = 10\ \text{ms} + 10\ \text{ms} = 20\ \text{ms}
 $$
 
 Therefore:
 
 $$
-f=\frac{1}{T}
-$$
-
-$$
-f=\frac{1}{0.02}
-$$
-
-$$
-f=50Hz
+f = \frac{1}{T} = \frac{1}{0.02} = 50\ \text{Hz}
 $$
 
 ---
 
-## Oscilloscope Connections
+### Oscilloscope Settings
 
-Probe Tip:
-
-```text
-Output node (Arduino Pin 9 or ESP32 GPIO18)
-```
-
-Probe Ground:
-
-```text
-Controller ground
-```
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 5 ms/div | 5 ms/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
 
 ---
 
-## Oscilloscope Settings (OWON Baseline)
-
-Recommended scope: OWON HDS272S.
-
-Compatible alternative: DSO Nano.
-
-Vertical:
-
-```text
-2 V/div
-```
-
-Horizontal:
-
-```text
-5 ms/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
-
----
-
-## Expected Waveform
+### Expected Waveform
 
 ```text
 5V  ________        ________
-             |      |
-             |      |
+             │      │
+             │      │
 0V __________|______|________
 ```
 
 ---
 
-## Measurements
+### Observe
+
+The waveform should switch between 0 V and approximately 5 V (Arduino) or 3.3 V (ESP32) at 50 Hz.
+
+---
+
+### Measurements
 
 | Parameter | Expected | Measured |
-|-----------|----------|----------|
+|-----------|----------|---------|
 | Frequency | 50 Hz | |
 | Period | 20 ms | |
-| Peak Voltage | ~V_S (about 5V Arduino or about 3.3V ESP32) | |
+| Peak Voltage | ~5 V (Arduino) / ~3.3 V (ESP32) | |
 
 ---
 
@@ -762,101 +434,92 @@ Rising Edge
 
 ### Objective
 
-Observe high-frequency PWM operation.
+Observe high-frequency PWM operation as used in a PWM inverter carrier.
 
 ---
 
-## Arduino Code
+### Arduino Code
 
 ```cpp
 void setup()
 {
-    pinMode(9, OUTPUT);
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
 }
 
 void loop()
 {
-    analogWrite(9,128);
+    // Output 50% duty cycle PWM at approximately 490 Hz.
+    // This represents the high-frequency carrier used in a PWM inverter.
+    analogWrite(9, 128);
 }
 ```
 
-### ESP32 Equivalent (LEDC PWM)
+### ESP32 Equivalent Code
 
 ```cpp
-const int PWM_PIN  = 18;
-const int PWM_FREQ = 500;
-const int PWM_RES  = 8;
-
 void setup()
 {
-    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+    // Configure LEDC channel 0: 500 Hz, 8-bit resolution.
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(18, 0);
 }
 
 void loop()
 {
-    ledcWrite(PWM_PIN, 128);
+    // Set duty cycle to 128/255 ≈ 50%.
+    ledcWrite(0, 128);
 }
 ```
 
 ---
 
-## Expected Observation
+### Oscilloscope Settings
 
-A PWM waveform should be visible on the oscilloscope.
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 500 µs/div | 500 µs/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
 
-Typical frequency:
+---
 
-```text
-Approximately 490 Hz
-```
+### Observe
+
+A PWM waveform should be visible at approximately 490 Hz (Arduino) or 500 Hz (ESP32).
 
 ---
 
 ## Experiment 3 - Duty Cycle Investigation
 
-### Test A
+### Objective
+
+Observe how varying duty cycle changes the average voltage — the same principle used to control inverter output amplitude.
+
+---
+
+### Code
 
 ```cpp
-analogWrite(9,64);
-```
+void setup() {}
 
-Expected:
+void loop()
+{
+    // Step through three duty cycles with a 3-second pause at each.
+    analogWrite(9, 64);    // ~25% duty cycle
+    delay(3000);
 
-```text
-25% Duty Cycle
+    analogWrite(9, 128);   // ~50% duty cycle
+    delay(3000);
+
+    analogWrite(9, 192);   // ~75% duty cycle
+    delay(3000);
+}
 ```
 
 ---
 
-### Test B
-
-```cpp
-analogWrite(9,128);
-```
-
-Expected:
-
-```text
-50% Duty Cycle
-```
-
----
-
-### Test C
-
-```cpp
-analogWrite(9,192);
-```
-
-Expected:
-
-```text
-75% Duty Cycle
-```
-
----
-
-## Results Table
+### Results Table
 
 | PWM Value | Duty Cycle | Observation |
 |-----------|------------|-------------|
@@ -866,88 +529,65 @@ Expected:
 
 ---
 
-## Oscilloscope Exercise
-## Oscilloscope Exercise
-
-### Observe the Square Wave
-
-Measure:
-
-- Frequency
-- Period
-- Peak voltage
-
----
-
-### Observe the PWM Signal
-
-Measure:
-
-- PWM frequency
-- Duty cycle
-- Pulse width
-
----
-
 ## Experiment 4 - SPWM Generation
 
 ### Objective
 
-Generate a sinusoidal PWM pattern using a sine lookup table.
-
-The duty cycle varies each cycle to follow a sine wave shape.
+Generate a sinusoidal PWM pattern using a sine lookup table, demonstrating how a real inverter modulates its output.
 
 ---
 
-## Arduino Code
+### Arduino Code
 
 ```cpp
-// SPWM: 50Hz output, 490Hz PWM carrier
-// Duty cycle follows a half-sine lookup table
+// SPWM: 50 Hz output, ~490 Hz PWM carrier
+// The duty cycle follows a sine lookup table so the average voltage
+// at each step approximates a sine wave shape.
 
 const int N = 10;                    // steps per half cycle
-const int sine_table[N] = {         // half-sine, scaled 0-255
+const int sine_table[N] = {         // half-sine scaled to 0–255
     128, 203, 243, 255, 243,
     203, 128,  53,  13,   0
 };
 
 void setup()
 {
-    pinMode(9, OUTPUT);
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
 }
 
 void loop()
 {
     for (int i = 0; i < N; i++)
     {
+        // Set PWM duty cycle to the next sine table value.
+        // Each step lasts 2 ms → 10 steps × 2 ms = 20 ms period → 50 Hz output.
         analogWrite(9, sine_table[i]);
-        delay(2);                    // 2ms per step -> 20ms period -> 50Hz
+        delay(2);
     }
 }
 ```
 
-### ESP32 Equivalent (LEDC SPWM)
+### ESP32 Equivalent Code
 
 ```cpp
-const int PWM_PIN  = 18;
-const int PWM_FREQ = 500;
-const int PWM_RES  = 8;
 const int N = 10;
 const int sine_table[N] = {
     128, 203, 243, 255, 243,
-    203, 128, 53, 13, 0
+    203, 128,  53,  13,   0
 };
 
 void setup()
 {
-    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+    // Configure LEDC channel 0: 500 Hz carrier, 8-bit resolution.
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(18, 0);
 }
 
 void loop()
 {
     for (int i = 0; i < N; i++)
     {
-        ledcWrite(PWM_PIN, sine_table[i]);
+        ledcWrite(0, sine_table[i]);
         delay(2);
     }
 }
@@ -955,11 +595,9 @@ void loop()
 
 ---
 
-## What Is Happening?
+### What Is Happening?
 
-Each PWM cycle has a different duty cycle.
-
-The duty cycle follows the shape of a sine wave.
+Each PWM cycle has a different duty cycle following the shape of a sine wave.
 
 The average voltage at each step approximates:
 
@@ -971,33 +609,18 @@ After low-pass filtering this produces an approximate sine wave output.
 
 ---
 
-## Oscilloscope Settings (OWON Baseline)
+### Oscilloscope Settings
 
-Recommended scope: OWON HDS272S.
-
-Compatible alternative: DSO Nano.
-
-Vertical:
-
-```text
-2 V/div
-```
-
-Horizontal:
-
-```text
-2 ms/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 2 ms/div | 2 ms/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
 
 ---
 
-## Expected Observation
+### Expected Observation
 
 You should observe PWM pulses with varying width:
 
@@ -1011,10 +634,10 @@ This is the SPWM pattern.
 
 ---
 
-## Measurements
+### Measurements
 
 | Parameter | Expected | Measured |
-|-----------|----------|----------|
+|-----------|----------|---------|
 | PWM carrier frequency | ~490 Hz | |
 | Output period | ~20 ms | |
 | Output frequency | ~50 Hz | |
@@ -1023,75 +646,22 @@ This is the SPWM pattern.
 
 ---
 
-## Relationship to Previous Projects
-
-### Project 1
-
-PWM generation.
-
----
-
-### Project 4
-
-MOSFET switching.
-
----
-
-### Project 9
-
-Buck Converter operation.
-
----
-
-### Project 11
-
-Boost Converter operation.
-
----
-
-### Project 12
-
-AC-to-DC rectification.
-
----
-
-## Complete Power Conversion Map
-
-```text
-AC → DC
-Rectifier
-
-DC → DC
-Buck / Boost Converter
-
-DC → AC
-Inverter
-```
-
----
-
 ## MATLAB Comparison
 
-Now compare your measured square wave and SPWM waveforms against the simulated predictions.
-
-### Enter Your Measured Values
+Compare your measured square wave and SPWM waveforms against the simulated predictions.
 
 ```matlab
 f_measured   = 50.0;     % replace with your measured frequency from Experiment 1 (Hz)
-T_measured   = 1 / f_measured;
 Vpeak_meas   = 5.0;      % replace with your measured peak voltage (V)
 
 t = 0:1e-5:0.06;
 
-% Ideal 50Hz square wave
 v_ideal = Vpeak_meas * sign(sin(2*pi*50*t));
-
-% Reconstructed from measured frequency
 v_meas  = Vpeak_meas * sign(sin(2*pi*f_measured*t));
 
 figure; hold on;
 plot(t*1e3, v_ideal, 'b--', 'LineWidth', 2, ...
-    'DisplayName', sprintf('Ideal 50Hz square wave'));
+    'DisplayName', 'Ideal 50Hz square wave');
 plot(t*1e3, v_meas,  'r',   'LineWidth', 2, ...
     'DisplayName', sprintf('Measured f=%.1fHz', f_measured));
 grid on;
@@ -1107,10 +677,9 @@ fprintf('Frequency error:    %.2f%%\n', 100*abs(f_measured-50)/50);
 ### SPWM Duty Cycle Verification
 
 ```matlab
-% Theoretical SPWM duty cycles from the lookup table
 N = 10;
 i = 0:N-1;
-D_theory  = 0.5 * (1 + sin(2*pi*i/N));   % normalised 0-1
+D_theory  = 0.5 * (1 + sin(2*pi*i/N));
 D_arduino = [128, 203, 243, 255, 243, 203, 128, 53, 13, 0] / 255;
 
 figure; hold on;
@@ -1124,43 +693,59 @@ legend('Location', 'south');
 
 ### Reflection
 
-- Does your measured square wave frequency match 50 Hz? What causes any discrepancy? (controller `delay()` accuracy, loop overhead)
+- Does your measured square wave frequency match 50 Hz? What causes any discrepancy?
 - The SPWM lookup table uses only 10 steps per cycle. How would increasing to 20 steps improve the output waveform quality?
 - Why does the square wave have significant harmonic content at 150 Hz, 250 Hz, 350 Hz etc., while a pure sine wave does not?
 
 ---
 
-## Engineering Applications
+## Troubleshooting
 
-Inverters are used in:
+### Incorrect Frequency
 
-### Solar Inverters
+Check:
 
-Converting solar power into AC.
+✅ Delay values in code (each delay(10) contributes 10 ms)
 
----
-
-### Electric Vehicles
-
-Motor drive systems.
+✅ Frequency calculation: f = 1 / (2 × delay in seconds)
 
 ---
 
-### UPS Systems
+### PWM Not Visible
 
-Backup power.
+Check:
+
+✅ Probe tip on correct pin (D9 Arduino or GPIO18 ESP32)
+
+✅ Trigger type set to Edge, Rising
+
+✅ Horizontal scale appropriate (500 µs/div for ~490 Hz)
 
 ---
 
-### Industrial Drives
+### Waveform Unstable
 
-Variable-speed motor control.
+Check:
+
+✅ Trigger level set to approximately half the signal amplitude
+
+✅ Ground connection secure
 
 ---
 
-### Renewable Energy Systems
+### Troubleshooting Checklist
 
-Grid-connected power conversion.
+✅ Controller powered and sketch uploaded
+
+✅ Square wave frequency verified at 50 Hz
+
+✅ PWM waveform visible at ~490 Hz
+
+✅ Duty cycle changes correctly in Experiment 3
+
+✅ SPWM varying pulse widths visible in Experiment 4
+
+✅ Oscilloscope triggering correctly
 
 ---
 
@@ -1170,23 +755,11 @@ Grid-connected power conversion.
 
 What is an inverter?
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 2
 
 What is the purpose of an H-Bridge?
-
-Answer:
-
-```text
-____________________
-```
 
 ---
 
@@ -1194,23 +767,11 @@ ____________________
 
 Why is PWM used in modern inverters?
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 4
 
 What is SPWM?
-
-Answer:
-
-```text
-____________________
-```
 
 ---
 
@@ -1218,70 +779,11 @@ ____________________
 
 What is shoot-through?
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 6
 
 A square wave at 50 Hz contains harmonics at 150 Hz, 250 Hz, 350 Hz and so on. Explain why these odd harmonics are present and why they are absent in a pure sine wave. Why does this matter for motor drives?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-## Common Mistakes
-
-### Incorrect Frequency
-
-Check:
-
-- Delay values
-- Frequency calculations
-
----
-
-### PWM Not Visible
-
-Check:
-
-- Controller sketch
-- Probe location
-- Trigger settings
-
----
-
-### Unstable Display
-
-Check:
-
-- Trigger level
-- Time scale
-- Ground connection
-
----
-
-## Troubleshooting Checklist
-
-✅ Controller operating correctly
-
-✅ Square wave measured
-
-✅ Frequency verified
-
-✅ PWM measured
-
-✅ Duty cycle changes correctly
-
-✅ Oscilloscope triggering correctly
 
 ---
 
@@ -1295,8 +797,6 @@ In this project you learned:
 
 ✅ H-Bridge operation
 
-✅ MOSFET switching
-
 ✅ Square-wave generation
 
 ✅ PWM inverters
@@ -1304,8 +804,6 @@ In this project you learned:
 ✅ SPWM concepts
 
 ✅ Dead time and shoot-through protection
-
-✅ Practical inverter applications
 
 You have now studied all three major power conversion categories:
 
@@ -1317,18 +815,13 @@ DC → DC
 DC → AC
 ```
 
-These technologies form the foundation of:
-
-- Power Supplies
-- Motor Drives
-- Renewable Energy Systems
-- Industrial Power Electronics
-
 ---
 
 ## Next Project
 
-**11_System_Identification.md**
+```text
+11_System_Identification.md
+```
 
 Topics:
 

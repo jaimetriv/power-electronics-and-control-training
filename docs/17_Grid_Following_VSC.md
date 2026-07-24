@@ -30,7 +30,7 @@ Complete:
 In this project you will learn:
 
 - What a Grid-Following Converter is
-- Why synchronization is required
+- Why synchronisation is required
 - How a Phase Locked Loop (PLL) works
 - How current is injected into an AC system
 - How SPWM controls an inverter
@@ -44,27 +44,14 @@ This is the capstone project for the course.
 
 ## Safety Notice
 
-### Important
-
-This project:
-
 ```text
-MUST NOT
+MUST NOT be connected directly to mains power.
 ```
 
-be connected directly to mains power.
-
-All experiments must use:
-
-```text
-Low Voltage AC Sources
-```
-
-such as:
+All experiments must use low-voltage AC sources such as:
 
 - Function generators
 - Isolated AC laboratory supplies
-- Signal generators
 
 Recommended AC test voltage:
 
@@ -80,7 +67,7 @@ At the end of this project you should be able to:
 
 ✅ Explain Grid-Following Operation
 
-✅ Explain PLL Synchronization
+✅ Explain PLL Synchronisation
 
 ✅ Explain Current Injection
 
@@ -98,13 +85,7 @@ At the end of this project you should be able to:
 
 ## Introduction
 
-Most modern renewable energy systems use:
-
-```text
-Grid-Following
-```
-
-converters.
+Most modern renewable energy systems use Grid-Following converters.
 
 Examples:
 
@@ -127,23 +108,9 @@ The Grid Creates Voltage
 The Converter Injects Current
 ```
 
----
+The grid already establishes voltage magnitude, frequency, and phase angle.
 
-## Why Current Control?
-
-The grid already establishes:
-
-- Voltage magnitude
-- Frequency
-- Phase angle
-
-The inverter therefore controls:
-
-```text
-Current
-```
-
-rather than voltage.
+The inverter therefore controls current rather than voltage.
 
 ---
 
@@ -155,32 +122,10 @@ $$
 P = VI\cos(\phi)
 $$
 
-Where:
-
-- $V$ = Grid Voltage
-- $I$ = Grid Current
-- $\phi$ = Phase Difference
-
----
-
-## Power Flow Example
-
-If:
-
-```text
-Voltage and Current
-```
-
-are in phase:
+If voltage and current are in phase ($\phi = 0$):
 
 $$
-\phi=0
-$$
-
-then:
-
-$$
-P=VI
+P = VI
 $$
 
 Maximum real power is transferred.
@@ -191,20 +136,20 @@ Maximum real power is transferred.
 
 ```text
 Grid Voltage
-       ↓
-      PLL
-       ↓
- Grid Angle θ
-       ↓
- Current Controller
-       ↓
-     SPWM
-       ↓
-   Inverter
-       ↓
-    Filter
-       ↓
-      Grid
+      ↓
+     PLL
+      ↓
+Grid Angle θ
+      ↓
+Current Controller
+      ↓
+    SPWM
+      ↓
+  Inverter
+      ↓
+   Filter
+      ↓
+    Grid
 ```
 
 ---
@@ -214,31 +159,15 @@ Grid Voltage
 The laboratory setup consists of:
 
 ```text
-AC Source
-```
-
-+
-
-```text
-Measurement System
-```
-
-+
-
-```text
-Controller
-```
-
-+
-
-```text
-Inverter
-```
-
-+
-
-```text
-Filter
+AC Source (function generator)
+      +
+Measurement System (voltage divider + current sensor)
+      +
+Controller (ESP32 DevKit V1)
+      +
+Inverter (H-Bridge MOSFETs + gate driver)
+      +
+Filter (L filter inductor)
 ```
 
 ---
@@ -247,310 +176,115 @@ Filter
 
 ### Controller
 
-Recommended:
-
-- ESP32 DevKit V1
-
-Acceptable:
-
-- STM32 Nucleo
-- Arduino Mega
-
----
+- ESP32 DevKit V1 (recommended)
+- STM32 Nucleo (alternative)
+- Arduino Mega (alternative)
 
 ### Oscilloscope
 
 - OWON HDS272S (recommended)
 - DSO Nano (compatible)
-- Bench Oscilloscope (compatible)
 
----
+### Signal Generator (simulated grid)
 
-### Signal Generator
-
-Used as the simulated grid.
-
-Examples:
-
-- FY6900
-- JDS6600
-- Function Generator
-
----
+- FY6900, JDS6600, or any function generator
 
 ### Current Sensor
 
-Recommended:
-
-- ACS712
-- ACS758
-
----
+- ACS712 or ACS758
 
 ### Voltage Measurement
 
-Recommended:
-
-- Resistor Divider
-- Isolation Amplifier (Advanced)
-
----
+- Resistor divider
 
 ### Inverter Stage
 
-- MOSFET H-Bridge
-- MOSFET Driver
-
-Examples:
-
-- IR2104
-- IR2110
-
----
+- MOSFET H-Bridge (4 × IRLZ44N)
+- IR2104 or IR2110 gate driver
 
 ### Filter
 
-Recommended:
-
-```text
-L Filter
-```
-
-for first implementation.
-
-Typical:
-
-```text
-1 mH to 5 mH
-```
-
----
-
-## Hardware Purchasing Checklist
-
-### Essential
-
-- ESP32 Development Board
-- Function Generator
-- Current Sensor
-- MOSFET Driver
-- MOSFET H-Bridge
-- Inductor
-- Breadboard or Prototype PCB
-
----
-
-### Recommended
-
-- Differential Probe
-- External Power Supply
-- OWON HDS272S (or compatible bench oscilloscope)
+- L filter: 1 mH to 5 mH inductor
 
 ---
 
 ## System Schematic
 
 ```text
-Function Generator
+Function Generator (simulated grid)
         │
         ▼
- Grid Voltage
-
+  Grid Voltage
         │
- ┌──────┴──────┐
- │             │
- ▼             ▼
-
-PLL      Voltage Sensor
-
- │
- ▼
-
+   ┌────┴────┐
+   ▼         ▼
+  PLL    Voltage Sensor
+   │
+   ▼
 Current Controller
-
- │
- ▼
-
+   │
+   ▼
 SPWM Generator
-
- │
- ▼
-
+   │
+   ▼
 H-Bridge Inverter
-
- │
- ▼
-
+   │
+   ▼
 L Filter
-
- │
- ▼
-
+   │
+   ▼
 Current Sensor
-
- │
- ▼
-
+   │
+   ▼
 Simulated Grid
 ```
 
 ---
 
-## Concept of Synchronization
+## Concept of Synchronisation
 
-Before current can be injected:
+Before current can be injected, the grid position must be known.
 
-```text
-Grid Position
-```
-
-must be known.
-
----
-
-## Grid Voltage
-
-Assume:
+Grid voltage:
 
 $$
-v(t)=V_m\sin(\omega t)
+v(t) = V_m \sin(\omega t)
 $$
 
-The controller must determine:
-
-- Frequency
-- Phase
-- Zero Crossings
+The controller must determine frequency, phase, and zero crossings.
 
 ---
 
 ## Phase Locked Loop (PLL)
 
-A PLL estimates:
+A PLL estimates the grid angle:
 
 $$
-\theta
+\theta = \omega t
 $$
 
-where:
-
-$$
-\theta=\omega t
-$$
-
----
-
-## PLL Purpose
-
-The PLL continuously estimates:
+### Simplified PLL Block Diagram
 
 ```text
-Grid Angle
+Grid Voltage → Phase Detector → PI Controller → Frequency Estimate → Integrator → Grid Angle θ
 ```
-
-and:
-
-```text
-Grid Frequency
-```
-
----
-
-## Why Is The PLL Important?
-
-Without synchronization:
-
-```text
-Current Injection
-```
-
-will occur at the wrong phase angle.
-
-This can result in:
-
-- Poor power transfer
-- Instability
-- Excessive current
-
----
-
-## Simplified PLL Block Diagram
-
-```text
-Grid Voltage
-       ↓
- Phase Detector
-       ↓
- PI Controller
-       ↓
- Frequency Estimate
-       ↓
- Integrator
-       ↓
- Grid Angle θ
-```
-
----
-
-## Review of PI Controllers
-
-From earlier projects:
-
-$$
-u(t)
-=
-K_Pe(t)
-+
-K_I
-\int e(t)\,dt
-$$
 
 The PLL itself contains a PI controller.
 
----
-
-## Grid Angle
-
-The PLL produces:
-
-$$
-\theta
-$$
-
-This angle is used throughout the controller.
+Without synchronisation, current injection will occur at the wrong phase angle, resulting in poor power transfer, instability, or excessive current.
 
 ---
 
 ## Why Use dq Control?
 
-AC currents are sinusoidal.
+AC currents are sinusoidal and difficult to regulate directly.
 
-Sinusoids are difficult to regulate directly.
+The dq transform converts sinusoidal signals into approximately DC signals.
 
----
-
-## dq Transformation
-
-The dq transform converts:
-
-```text
-Sinusoidal Signals
-```
-
-into approximately:
-
-```text
-DC Signals
-```
-
----
-
-## Example
-
-Current:
+Example:
 
 $$
-i(t)=10\sin(\omega t)
+i(t) = 10\sin(\omega t)
 $$
 
 becomes approximately:
@@ -561,261 +295,23 @@ Id = 10
 Iq = 0
 ```
 
-which is easier to regulate.
-
----
-
-## Current Reference
-
-Example:
-
-```text
-Inject 1 A
-```
-
----
-
-## Current Error
-
-The current controller calculates:
-
-$$
-e
-=
-I_d^*
--
-I_d
-$$
-
-Where:
-
-- $I_d^*$ = Reference Current
-- $I_d$ = Measured Current
+which is easier to regulate with a PI controller.
 
 ---
 
 ## Current PI Controller
 
-The controller output is:
+The current controller calculates:
 
 $$
-u
-=
-K_Pe
-+
-K_I\int e\,dt
+e = I_d^* - I_d
 $$
 
----
-
-## SPWM Generation
-
-The controller output is converted into:
-
-```text
-Sinusoidal PWM
-```
-
-for the inverter.
-
----
-
-## Inverter Stage
-
-The inverter converts:
-
-```text
-DC
-```
-
-into:
-
-```text
-Controlled AC
-```
-
-using:
-
-- H-Bridge
-- MOSFETs
-- SPWM
-
----
-
-## Output Filter
-
-The inverter output is PWM.
-
-An inductor smooths the current.
-
----
-
-## Why Is The Filter Required?
-
-Without a filter:
-
-```text
-Large PWM Ripple
-```
-
-would be injected into the grid.
-
----
-
-## L Filter
-
-Simplified structure:
-
-```text
-Inverter
-    │
-    L
-    │
- Grid
-```
-
----
-
-## Current Measurement
-
-Current feedback is essential.
-
-Possible sensors:
-
-### ACS712
-
-Low cost.
-
----
-
-### ACS758
-
-Higher current capability.
-
----
-
-## Control Loop Summary
-
-```text
-Measure Grid Voltage
-           ↓
-          PLL
-           ↓
-      Angle θ
-           ↓
-     Current Error
-           ↓
-     PI Controller
-           ↓
-          SPWM
-           ↓
-       Inverter
-           ↓
-        Filter
-           ↓
- Inject Current
-```
-
----
-
-## Experiment 1 - PLL Observation
-
-### Objective
-
-Measure grid phase angle.
-
----
-
-## Procedure
-
-Generate:
-
-```text
-50 Hz Sine Wave
-```
-
-using the function generator.
-
-Observe:
-
-```text
-Zero Crossings
-```
-
-and:
-
-```text
-PLL Tracking
-```
-
----
-
-## Experiment 2 - SPWM Generation
-
-### Objective
-
-Create sinusoidal PWM.
-
----
-
-## Observe
-
-Measure:
-
-- PWM Frequency
-- Modulation Index
-- Duty Cycle Variation
-
----
-
-## Experiment 3 - Inverter Output
-
-### Objective
-
-Measure filtered inverter voltage.
-
----
-
-## Measurements
-
-Record:
-
-| Parameter | Value |
-|-----------|-------|
-| PWM Frequency | |
-| Grid Frequency | |
-| RMS Voltage | |
-| Peak Voltage | |
-
----
-
-## Experiment 4 - Current Control
-
-### Objective
-
-Regulate injected current.
-
----
-
-## Setpoint Tests
-
-```text
-0.5 A
-
-1.0 A
-
-1.5 A
-```
-
----
-
-## Results Table
-
-| Current Reference | Measured Current |
-|------------------|------------------|
-| 0.5 A | |
-| 1.0 A | |
-| 1.5 A | |
+and produces:
+
+$$
+u = K_P e + K_I \int e\,dt
+$$
 
 ---
 
@@ -847,8 +343,8 @@ grid on;
 
 % --- Subplot 2: SPWM carrier vs modulating signal ---
 subplot(3,1,2);
-carrier = 2*abs(mod(t, 1/f_pwm)/(1/f_pwm) - 0.5) - 0.5;  % triangle, no toolbox needed
-mod_sig = sin(theta);                      % modulating sine
+carrier = 2*abs(mod(t, 1/f_pwm)/(1/f_pwm) - 0.5) - 0.5;
+mod_sig = sin(theta);
 plot(t(1:500), carrier(1:500), 'k', t(1:500), mod_sig(1:500), 'r', 'LineWidth', 1);
 legend('Carrier','Modulating'); grid on;
 xlabel('Time (s)'); ylabel('Amplitude');
@@ -857,8 +353,8 @@ title(sprintf('SPWM  f_{pwm}=%d Hz', f_pwm));
 % --- Subplot 3: PI current controller closed-loop step response ---
 subplot(3,1,3);
 s   = tf('s');
-G_L = 1 / (L*s + R);          % L-filter plant
-C   = Kp_cc + Ki_cc/s;        % PI current controller
+G_L = 1 / (L*s + R);
+C   = Kp_cc + Ki_cc/s;
 T   = feedback(C*G_L, 1);
 [y, t2] = step(I_ref * T, 0:1e-5:0.05);
 plot(t2, y, 'b', 'LineWidth', 1.5); hold on;
@@ -877,24 +373,160 @@ Record the predicted current controller rise time and overshoot before running E
 
 ---
 
+## Experiment 1 - PLL Observation
+
+### Objective
+
+Measure the grid phase angle and verify PLL tracking.
+
+---
+
+### Procedure
+
+1. Set the function generator to output a **50 Hz sine wave** at **5 Vpeak**.
+2. Connect the function generator output to the controller ADC input through a voltage divider (to scale to 0–3.3 V for ESP32).
+3. Upload PLL code to the ESP32.
+4. Connect the oscilloscope probe to the function generator output.
+5. Observe zero crossings and verify the PLL is tracking the grid angle.
+
+---
+
+### Oscilloscope Settings
+
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 1 V/div | 1 V/div |
+| Horizontal scale | 5 ms/div | 5 ms/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | AC | AC |
+
+---
+
+### Observe
+
+The oscilloscope should show a stable 50 Hz sine wave.
+
+The Serial Monitor should show the estimated grid angle increasing from 0 to 2π and wrapping around.
+
+---
+
+## Experiment 2 - SPWM Generation
+
+### Objective
+
+Generate a sinusoidal PWM pattern synchronised to the grid angle.
+
+---
+
+### Procedure
+
+1. Upload SPWM generation code to the ESP32.
+2. Connect the oscilloscope probe to the PWM output pin.
+3. Set horizontal scale to **2 ms/div** to observe the varying pulse widths.
+
+---
+
+### Oscilloscope Settings
+
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 2 ms/div | 2 ms/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
+
+---
+
+### Observe
+
+Measure:
+
+- PWM carrier frequency
+- Modulation index (duty cycle variation)
+- Output period (~20 ms for 50 Hz)
+
+---
+
+## Experiment 3 - Inverter Output
+
+### Objective
+
+Measure the filtered inverter output voltage.
+
+---
+
+### Connections
+
+```text
+Probe Tip  ──────► Inverter output (after L filter)
+Probe GND  ──────► Circuit GND
+```
+
+---
+
+### Measurements
+
+| Parameter | Value |
+|-----------|-------|
+| PWM Frequency | |
+| Grid Frequency | |
+| RMS Voltage | |
+| Peak Voltage | |
+
+---
+
+## Experiment 4 - Current Control
+
+### Objective
+
+Regulate the injected current to a series of reference values and verify tracking.
+
+---
+
+### Setpoint Tests
+
+Test the following current references:
+
+```text
+0.5 A
+
+1.0 A
+
+1.5 A
+```
+
+For each setpoint, record the measured current from the ACS712 sensor.
+
+---
+
+### Results Table
+
+| Current Reference | Measured Current |
+|------------------|-----------------|
+| 0.5 A | |
+| 1.0 A | |
+| 1.5 A | |
+
+---
+
 ## MATLAB Comparison
 
 After completing the experiments, enter your measured current tracking data and compare against the simulated PI response.
 
 ```matlab
-% --- Enter your system parameters ---
+% Enter your system parameters
 L      = 1e-3;    % your filter inductance (H)
 R      = 1;       % estimated winding resistance (Ohm)
 Kp_cc  = 2;       % gains used in Experiment 4
 Ki_cc  = 50;
 I_ref  = 0.5;     % A
-f_grid = 50;      % Hz — from your signal generator
+f_grid = 50;      % Hz
 
-% --- Enter measured current step response (time in s, current in A) ---
+% Enter measured current step response (time in s, current in A)
 t_meas = [0, 0.002, 0.005, 0.010, 0.015, 0.020, 0.030, 0.040, 0.050]; % replace
 i_meas = [0, 0.15,  0.38,  0.52,  0.50,  0.50,  0.50,  0.50,  0.50];  % replace
 
-% --- Enter measured grid frequency from oscilloscope ---
+% Enter measured grid frequency from oscilloscope
 f_meas = 50.2;    % Hz — replace with your reading
 
 s   = tf('s');
@@ -919,22 +551,14 @@ ylabel('Frequency (Hz)'); grid on;
 title(sprintf('Grid Frequency Error: %.2f Hz  (%.3f %%)', ...
     abs(f_meas-f_grid), abs(f_meas-f_grid)/f_grid*100));
 
-% --- Metrics ---
 si = stepinfo(T);
 fprintf('Simulated rise time:    %.4f s\n', si.RiseTime);
 fprintf('Simulated overshoot:    %.1f %%\n', si.Overshoot);
 fprintf('Simulated settling time:%.4f s\n', si.SettlingTime);
 fprintf('Grid frequency error:   %.3f %%\n', abs(f_meas-f_grid)/f_grid*100);
-
-% Estimated measured settling time
-final = i_meas(end);
-within2 = find(abs(i_meas - final) <= 0.02*final, 1);
-if ~isempty(within2)
-    fprintf('Measured settling time:  %.4f s\n', t_meas(within2));
-end
 ```
 
-Reflection questions:
+### Reflection
 
 1. Does the simulated current rise time match the measured result? What physical effects (e.g. MOSFET dead-time, sensor delay) could explain any difference?
 2. How does the grid frequency error affect the PLL angle estimate over time?
@@ -942,123 +566,17 @@ Reflection questions:
 
 ---
 
-## Engineering Applications
-
-Grid-following VSCs are used in:
-
-### Solar Inverters
-
-Grid-connected photovoltaic systems.
-
----
-
-### Battery Storage
-
-Energy storage integration.
-
----
-
-### EV Chargers
-
-Bidirectional charging systems.
-
----
-
-### Renewable Energy Systems
-
-Grid support and power conversion.
-
----
-
-### HVDC Systems
-
-Large-scale power transmission.
-
----
-
-## Knowledge Check
-
-### Question 1
-
-What does a grid-following converter control?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 2
-
-Why is a PLL required?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 3
-
-Why is current control used instead of voltage control?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 4
-
-What is the purpose of the output filter?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 5
-
-Why is dq control useful?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 6
-
-During Experiment 4 your measured current settling time was longer than the MATLAB simulation predicted. List two physical causes and explain how you would update the plant model `G(s) = 1/(Ls + R)` to account for them.
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-## Common Mistakes
+## Troubleshooting
 
 ### PLL Not Locking
 
 Check:
 
-- Signal quality
-- Frequency measurement
-- PI gains
+✅ Signal generator connected and outputting 50 Hz sine wave
+
+✅ Voltage divider scaling signal to ADC range
+
+✅ PLL PI gains appropriate
 
 ---
 
@@ -1066,8 +584,9 @@ Check:
 
 Check:
 
-- Filter inductance
-- PWM frequency
+✅ Filter inductance value
+
+✅ PWM carrier frequency (higher frequency → less ripple)
 
 ---
 
@@ -1075,31 +594,23 @@ Check:
 
 Check:
 
-- Controller gains
-- Current sensor calibration
+✅ Current controller gains (reduce Kp_cc)
+
+✅ Current sensor calibration and offset
 
 ---
 
-### Poor Synchronization
+### Troubleshooting Checklist
 
-Check:
+✅ Grid signal available from function generator
 
-- Phase estimation
-- Sampling rate
+✅ PLL locked (angle tracking visible in Serial Monitor)
 
----
-
-## Troubleshooting Checklist
-
-✅ Grid signal available
-
-✅ PLL locked
-
-✅ SPWM operating
+✅ SPWM operating (varying pulse widths visible on oscilloscope)
 
 ✅ H-Bridge switching correctly
 
-✅ Filter installed
+✅ L filter installed
 
 ✅ Current sensor operating
 
@@ -1109,7 +620,45 @@ Check:
 
 ---
 
-## Final Course Summary
+## Knowledge Check
+
+### Question 1
+
+What does a grid-following converter control?
+
+---
+
+### Question 2
+
+Why is a PLL required?
+
+---
+
+### Question 3
+
+Why is current control used instead of voltage control?
+
+---
+
+### Question 4
+
+What is the purpose of the output filter?
+
+---
+
+### Question 5
+
+Why is dq control useful?
+
+---
+
+### Question 6
+
+During Experiment 4 your measured current settling time was longer than the MATLAB simulation predicted. List two physical causes and explain how you would update the plant model $G(s) = 1/(Ls + R)$ to account for them.
+
+---
+
+## Project Summary
 
 This project combines:
 

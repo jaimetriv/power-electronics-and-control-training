@@ -29,17 +29,9 @@ In this project you will learn:
 - The role of the capacitor
 - The role of the freewheel diode
 - How energy is transferred in switched-mode power supplies
-- How to measure converter waveforms using an oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
+- How to measure converter waveforms using the OWON HDS272S oscilloscope
 
-This project combines concepts from:
-
-- PWM
-- RC Circuits
-- RLC Circuits
-- MOSFET Switching
-- Control Theory
-
-and forms the foundation of modern power electronics.
+This project combines concepts from PWM, RC Circuits, RLC Circuits, MOSFET Switching, and Control Theory, and forms the foundation of modern power electronics.
 
 ---
 
@@ -67,13 +59,7 @@ At the end of this project you should be able to:
 
 ## Introduction
 
-A Buck Converter is a:
-
-```text
-DC-to-DC Converter
-```
-
-that reduces voltage.
+A Buck Converter is a DC-to-DC converter that reduces voltage.
 
 Examples:
 
@@ -85,21 +71,15 @@ Examples:
 48 V → 24 V
 ```
 
-Unlike resistor-based voltage reduction, a Buck Converter can operate with very high efficiency.
+Unlike resistor-based voltage reduction, a Buck Converter operates with very high efficiency.
 
 ---
 
 ## Why Not Use a Resistor?
 
-Suppose we want:
-
-```text
-12 V → 5 V
-```
-
 A resistor can reduce voltage, but energy is dissipated as heat.
 
-Power loss is:
+Power loss:
 
 $$
 P = V \cdot I
@@ -111,49 +91,27 @@ As current increases, the power loss also increases.
 
 ## Why Buck Converters Are Efficient
 
-Buck Converters use:
+Buck Converters use fast switching instead of continuous dissipation.
 
-```text
-Fast Switching
-```
-
-instead of:
-
-```text
-Continuous Dissipation
-```
-
-The MOSFET is usually either:
-
-```text
-Fully ON
-```
-
-or
-
-```text
-Fully OFF
-```
-
-which minimizes power loss.
+The MOSFET is usually either fully ON or fully OFF, which minimises power loss.
 
 ---
 
-## Basic Buck Converter
+## Circuit Diagram
 
-```mermaid
-graph LR
-
-VIN[Input Voltage]
---> SW[MOSFET]
-
-SW --> L[Inductor]
-
-L --> VOUT[Output Voltage]
-
-VOUT --> C[Capacitor]
-
-C --> GND[Ground]
+```text
+5 V Supply
+    │
+   MOSFET (IRLZ44N)
+    │
+   Inductor (100 µH)
+    │
+    ├──── Vout ──── Probe Tip
+    │         │
+   Diode    100 µF capacitor
+(1N5819)      │
+    │         │
+   GND ───────┴──── Probe GND
 ```
 
 ---
@@ -162,10 +120,10 @@ C --> GND[Ground]
 
 A basic Buck Converter contains:
 
-1. MOSFET
-2. Diode
-3. Inductor
-4. Capacitor
+1. MOSFET — high-speed electronic switch
+2. Diode — freewheel path for inductor current
+3. Inductor — stores energy in a magnetic field
+4. Capacitor — smooths the output voltage
 5. Load
 
 ---
@@ -174,72 +132,52 @@ A basic Buck Converter contains:
 
 The MOSFET acts as a high-speed electronic switch.
 
-The controller generates PWM.
-
-PWM controls:
-
-```text
-Average Energy Transfer
-```
-
-from input to output.
+The controller generates PWM which controls the average energy transfer from input to output.
 
 ---
 
 ## Role of the Inductor
 
-The inductor stores energy in a magnetic field.
-
-Stored energy:
+The inductor stores energy in a magnetic field:
 
 $$
 E = \frac{1}{2}LI^2
 $$
 
-When the MOSFET switches OFF, the inductor attempts to keep current flowing.
-
-This is one of the key principles behind Buck Converter operation.
+When the MOSFET switches OFF, the inductor attempts to keep current flowing — this is one of the key principles behind Buck Converter operation.
 
 ---
 
 ## Role of the Capacitor
 
-The capacitor smooths the output voltage.
-
-Stored energy:
+The capacitor smooths the output voltage:
 
 $$
 E = \frac{1}{2}CV^2
 $$
 
-The capacitor helps reduce output voltage ripple.
+The capacitor reduces output voltage ripple.
 
 ---
 
 ## Role of the Diode
 
-When the MOSFET turns OFF:
+When the MOSFET turns OFF, inductor current must continue flowing.
 
-```text
-Inductor Current Must Continue Flowing
-```
-
-The diode provides an alternative path for current.
-
-This path is called the:
+The diode provides an alternative path called the:
 
 ```text
 Freewheel Path
 ```
 
+A Schottky diode (1N5819) is preferred because its lower forward voltage drop improves efficiency.
+
 ---
 
 ## Ideal Buck Converter Equation
 
-The ideal Buck Converter voltage relationship is:
-
 $$
-V_{OUT}=D \cdot V_{IN}
+V_{OUT} = D \cdot V_{IN}
 $$
 
 Where:
@@ -248,57 +186,45 @@ Where:
 - $V_{IN}$ = Input Voltage
 - $D$ = Duty Cycle
 
----
+### Example 1
 
-## Example 1
-
-Given:
+$V_{IN} = 12\ \text{V}$, $D = 0.5$:
 
 $$
-V_{IN}=12V
+V_{OUT} = 0.5 \times 12 = 6\ \text{V}
 $$
 
-and:
+### Example 2
+
+$V_{IN} = 12\ \text{V}$, $D = 0.25$:
 
 $$
-D=0.5
-$$
-
-Then:
-
-$$
-V_{OUT}=0.5 \cdot 12
-$$
-
-$$
-V_{OUT}=6V
+V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 $$
 
 ---
 
-## Example 2
+## Operating Principle
 
-Given:
+### MOSFET ON
 
-$$
-V_{IN}=12V
-$$
+Current path:
 
-and:
+```text
+Input → MOSFET → Inductor → Output
+```
 
-$$
-D=0.25
-$$
+The inductor stores energy.
 
-Then:
+### MOSFET OFF
 
-$$
-V_{OUT}=0.25 \cdot 12
-$$
+Current path:
 
-$$
-V_{OUT}=3V
-$$
+```text
+Inductor → Diode → Output
+```
+
+Stored magnetic energy continues supplying current to the load.
 
 ---
 
@@ -306,10 +232,10 @@ $$
 
 Before building the circuit, simulate the ideal Buck Converter behaviour to predict what you will measure.
 
-### Vout vs Duty Cycle — 5V Supply
+### Vout vs Duty Cycle — 5 V Supply
 
 ```matlab
-Vin = 5;                          % introductory low-voltage test supply
+Vin = 5;
 D   = 0:0.01:1;
 Vout_ideal = D .* Vin;
 
@@ -327,18 +253,15 @@ legend('Ideal V_{OUT} = D \cdot V_{IN}', 'Experiment points', 'Location', 'north
 
 ### Simulate Inductor Current Waveform
 
-The inductor current ramps up during MOSFET ON and ramps down during MOSFET OFF:
-
 ```matlab
 Vin  = 5;
 D    = 0.5;
-Vout = D * Vin;          % ideal
-L    = 100e-6;           % 100 uH
-fsw  = 490;              % switching frequency (Hz)
+Vout = D * Vin;
+L    = 100e-6;
+fsw  = 490;
 Ts   = 1 / fsw;
-Iavg = 0.05;             % assumed average load current (A)
+Iavg = 0.05;
 
-% Current ripple
 delta_iL = (Vin - Vout) * D * Ts / L;
 
 t_on  = linspace(0,      D*Ts,    100);
@@ -358,8 +281,6 @@ yline(Iavg*1e3, 'r--', sprintf('I_{avg} = %.0f mA', Iavg*1e3));
 
 ### Prediction Table
 
-Record your predicted output voltages before measuring:
-
 | PWM Value | Duty Cycle | Predicted V\_{OUT} (V) |
 |-----------|------------|------------------------|
 | 64 | 25% | |
@@ -370,104 +291,25 @@ Record your predicted output voltages before measuring:
 
 ## Components Required
 
-### Additional Components
-
-Recommended:
-
-- 100 µH Inductor
-- 1N5819 Schottky Diode
-- 100 µF Electrolytic Capacitor
 - IRLZ44N MOSFET
-
----
-
-### Existing Equipment
-
-- Arduino Uno
-- ESP32 DevKit V1 (alternative controller)
-- Breadboard
-- Jumper Wires
-- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
+- 1N5819 Schottky Diode
+- 100 µH Inductor
+- 100 µF Electrolytic Capacitor
+- 220 Ω gate resistor
+- Arduino Uno or ESP32 DevKit V1
+- Breadboard and jumper wires
+- OWON HDS272S Oscilloscope (recommended)
+- DSO Nano Oscilloscope (compatible)
 
 ---
 
 ## Safety Notice
 
-For this introductory project use:
-
-```text
-5 V Arduino Supply
-```
-
-rather than:
-
-```text
-12 V Supply
-```
+For this introductory project use the 5 V Arduino supply rather than a 12 V supply.
 
 This reduces the risk of component damage while learning.
 
-If using ESP32 gate drive (about 3.3V), choose a logic-level MOSFET with low Rds(on) specified at low Vgs, or use a gate driver.
-
----
-
-## Experimental Buck Converter
-
-```mermaid
-graph LR
-
-VIN[5 V]
-
-VIN --> M[MOSFET]
-
-M --> L[Inductor 100 µH]
-
-L --> VOUT[Vout]
-
-VOUT --> C[Capacitor 100 µF]
-
-C --> GND[Ground]
-
-L --> D[Diode 1N5819]
-
-D --> GND
-```
-
----
-
-## Operating Principle
-
-### MOSFET ON
-
-Current path:
-
-```text
-Input
-  ↓
-MOSFET
-  ↓
-Inductor
-  ↓
-Output
-```
-
-The inductor stores energy.
-
----
-
-### MOSFET OFF
-
-Current path:
-
-```text
-Inductor
-   ↓
- Diode
-   ↓
- Output
-```
-
-Stored magnetic energy continues supplying current.
+If using ESP32 gate drive (~3.3 V), use a logic-level MOSFET with low $R_{DS(on)}$ specified at low $V_{GS}$, or use a gate driver.
 
 ---
 
@@ -475,207 +317,193 @@ Stored magnetic energy continues supplying current.
 
 ### Objective
 
-Observe the PWM waveform driving the converter.
+Upload the PWM code and observe the gate switching signal on the oscilloscope before connecting the full converter circuit.
 
 ---
 
-## Arduino Code
+### Connections
+
+```text
+Probe Tip  ──────► Arduino Pin D9  (or ESP32 GPIO18)
+Probe GND  ──────► Arduino GND
+```
+
+---
+
+### Arduino Code
 
 ```cpp
 void setup()
 {
-    pinMode(9, OUTPUT);
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
 }
 
 void loop()
 {
-    analogWrite(9,128);
+    // Output 50% duty cycle PWM on pin 9.
+    // This is the switching signal that will drive the MOSFET gate.
+    analogWrite(9, 128);
 }
 ```
 
-### ESP32 Equivalent (LEDC PWM)
+### ESP32 Equivalent Code
 
 ```cpp
-const int PWM_PIN  = 18;
-const int PWM_CH   = 0;
-const int PWM_FREQ = 500;
-const int PWM_RES  = 8;
-
 void setup()
 {
-  ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+    // Configure LEDC channel 0: 500 Hz, 8-bit resolution.
+    ledcSetup(0, 500, 8);
+    ledcAttachPin(18, 0);
 }
 
 void loop()
 {
-  ledcWrite(PWM_PIN, 128);
+    // Set duty cycle to 128/255 ≈ 50%.
+    ledcWrite(0, 128);
 }
 ```
 
 ---
 
-## Oscilloscope Measurement
+### Oscilloscope Settings
 
-Probe Tip:
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 500 µs/div | 500 µs/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
+
+---
+
+### Expected Waveform
 
 ```text
-MOSFET Gate
-```
-
-Probe Ground:
-
-```text
-Ground
+5V  ─────      ─────
+         │    │
+         │    │
+0V  _____│____│_____
 ```
 
 ---
 
-## Oscilloscope Settings (OWON Baseline)
-
-Recommended scope: OWON HDS272S.
-
-Compatible alternative: DSO Nano.
-
-Vertical:
-
-```text
-2 V/div
-```
-
-Horizontal:
-
-```text
-500 µs/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
-
----
-
-## Expected Waveform
-
-```text
-V_S ────      ─────
-         │      │
-         │      │
-0V ______│______│______
-```
-
----
-
-## Measurements
+### Measurements
 
 | Parameter | Expected | Measured |
-|------------|-----------|-----------|
+|-----------|----------|---------|
 | Frequency | ~490 Hz | |
 | Duty Cycle | ~50% | |
-| Gate Voltage | ~V_S (about 5V Arduino or about 3.3V ESP32) | |
+| Gate Voltage | ~5 V (Arduino) / ~3.3 V (ESP32) | |
 
 ---
 
-## Experiment 2 - Duty Cycle Versus Output Voltage
+## Experiment 2 - Build the Buck Converter and Vary Duty Cycle
 
 ### Objective
 
-Observe how duty cycle changes output voltage.
+Build the full converter circuit and observe how duty cycle controls output voltage.
 
 ---
 
-## Test A
+### Step-by-Step Wiring
 
-Upload:
+1. Insert the **IRLZ44N MOSFET** into the breadboard. Identify Gate (G), Drain (D), and Source (S) from the pinout (see Project 04).
+2. Connect a jumper wire from **Arduino GND** to the **MOSFET Source** row.
+3. Insert the **220 Ω gate resistor** so one leg is in the **Gate** row and the other is in a new row.
+4. Connect a jumper wire from **Arduino pin D9** to the top of the gate resistor.
+5. Connect a jumper wire from **Arduino 5V** to the **MOSFET Drain** row. This is the converter input.
+6. Insert the **100 µH inductor** so one leg is in the **MOSFET Drain** row and the other is in a new row below. This junction is the switch node.
+7. Insert the **1N5819 diode** so its **cathode (banded end)** is in the switch node row and its **anode** is in the GND row. This is the freewheel diode.
+8. Insert the **100 µF capacitor** so its **positive leg** is in the lower inductor leg row (Vout) and its **negative leg** is in the GND row.
+9. Connect a jumper wire from the **lower inductor leg** row to a load resistor (optional — the capacitor alone is sufficient for initial testing).
+10. Connect the **oscilloscope probe tip** to the Vout node (lower inductor leg / capacitor positive).
+11. Connect the **oscilloscope probe ground** to Arduino GND.
 
-```cpp
-analogWrite(9,64);
-```
-
-ESP32 equivalent duty command:
-
-```cpp
-ledcWrite(PWM_PIN, 64);
-```
-
-Expected Duty Cycle:
-
-```text
-25%
-```
-
-Measure:
+The signal path will be:
 
 ```text
-Output Voltage = __________
-```
-
----
-
-## Test B
-
-Upload:
-
-```cpp
-analogWrite(9,128);
-```
-
-ESP32 equivalent duty command:
-
-```cpp
-ledcWrite(PWM_PIN, 128);
-```
-
-Expected Duty Cycle:
-
-```text
-50%
-```
-
-Measure:
-
-```text
-Output Voltage = __________
+5V → MOSFET Drain → MOSFET Source (when ON)
+                  ↓
+             Switch Node
+                  │
+             Inductor
+                  │
+                Vout ──── Capacitor ──── GND
+                  │
+             Diode (cathode at switch node, anode at GND)
 ```
 
 ---
 
-## Test C
+### Wiring Checklist
 
-Upload:
+Before uploading:
+
+✅ MOSFET Source connected to GND
+
+✅ MOSFET Drain connected to 5V supply
+
+✅ Gate resistor between D9 and MOSFET Gate
+
+✅ Inductor between MOSFET Drain and Vout node
+
+✅ Diode cathode at switch node (MOSFET Drain side), anode at GND
+
+✅ Capacitor positive leg at Vout, negative leg at GND
+
+✅ Oscilloscope probe tip at Vout, probe GND at Arduino GND
+
+---
+
+### Code
 
 ```cpp
-analogWrite(9,192);
-```
+void setup() {}
 
-ESP32 equivalent duty command:
+void loop()
+{
+    // Step through three duty cycles with a 3-second pause at each.
+    // Expected Vout = D × Vin at each step.
 
-```cpp
-ledcWrite(PWM_PIN, 192);
-```
+    analogWrite(9, 64);    // ~25% duty cycle → Vout ≈ 1.25 V
+    delay(3000);
 
-Expected Duty Cycle:
+    analogWrite(9, 128);   // ~50% duty cycle → Vout ≈ 2.5 V
+    delay(3000);
 
-```text
-75%
-```
-
-Measure:
-
-```text
-Output Voltage = __________
+    analogWrite(9, 192);   // ~75% duty cycle → Vout ≈ 3.75 V
+    delay(3000);
+}
 ```
 
 ---
 
-## Results Table
+### Oscilloscope Settings — Output Voltage
 
-| PWM Value | Duty Cycle | Output Voltage |
-|------------|------------|---------------|
-| 64 | 25% | |
-| 128 | 50% | |
-| 192 | 75% | |
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 1 V/div | 1 V/div |
+| Horizontal scale | 1 s/div | 1 s/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
+
+---
+
+### Observe
+
+The output voltage should step between three levels as the code cycles through duty cycles.
+
+Measure the average DC output at each step with a multimeter or the oscilloscope DC measurement.
+
+---
+
+### Results Table
+
+| PWM Value | Duty Cycle | Expected V\_{OUT} | Measured V\_{OUT} |
+|-----------|------------|-------------------|-------------------|
+| 64 | 25% | 1.25 V | |
+| 128 | 50% | 2.5 V | |
+| 192 | 75% | 3.75 V | |
 
 ---
 
@@ -683,59 +511,37 @@ Output Voltage = __________
 
 ### Objective
 
-Measure output voltage ripple.
+Measure the output voltage ripple at the switching frequency.
 
 ---
 
-## Probe Location
-
-Probe Tip:
+### Connections
 
 ```text
-Vout
-```
-
-Probe Ground:
-
-```text
-Ground
+Probe Tip  ──────► Vout node
+Probe GND  ──────► Arduino GND
 ```
 
 ---
 
-## Oscilloscope Settings (OWON Baseline)
+### Oscilloscope Settings — Ripple
 
-Use the same scope setup approach as Experiment 1, then increase vertical sensitivity for ripple.
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 200 mV/div | 200 mV/div |
+| Horizontal scale | 500 µs/div | 500 µs/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | AC | AC |
 
-Recommended scope: OWON HDS272S.
-
-Compatible alternative: DSO Nano.
-
-Vertical:
-
-```text
-200 mV/div
-```
-
-Horizontal:
-
-```text
-500 µs/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
+> Switch to AC coupling to zoom in on the ripple while ignoring the DC offset.
 
 ---
 
-## Expected Observation
+### Expected Observation
 
 The output should not be perfectly DC.
 
-Instead you should observe:
+You should observe a small ripple at the switching frequency:
 
 ```text
 DC Output
@@ -744,39 +550,17 @@ Small Ripple
 ~~~~~~~~~
 ```
 
+---
+
+### Observe
+
 The ripple should be relatively small compared to the average output voltage.
 
----
-
-## Why Does Ripple Occur?
-
-The capacitor is repeatedly:
-
-```text
-Charging
-```
-
-and
-
-```text
-Discharging
-```
-
-between switching cycles.
-
-As a result:
-
-```text
-Small Voltage Variations
-```
-
-appear at the output.
+Record the peak-to-peak ripple voltage.
 
 ---
 
-## How Can Ripple Be Reduced?
-
-Ripple can generally be reduced by:
+### How Can Ripple Be Reduced?
 
 - Increasing capacitance
 - Increasing inductance
@@ -785,48 +569,14 @@ Ripple can generally be reduced by:
 
 ---
 
-## Relationship to Previous Projects
-
-### Project 1
-
-PWM controls duty cycle.
-
----
-
-### Project 2
-
-Capacitors store energy and smooth voltage.
-
----
-
-### Project 3
-
-Inductors store energy and resist sudden current changes.
-
----
-
-### Project 4
-
-MOSFETs switch efficiently.
-
----
-
-### Projects 6 to 8
-
-Controllers can later regulate the output automatically.
-
----
-
 ## MATLAB Comparison
 
-Now overlay your measured output voltages against the ideal theory line to quantify converter losses.
-
-### Enter Your Measured Values
+Overlay your measured output voltages against the ideal theory line.
 
 ```matlab
 Vin = 5;
 
-D_measured    = [0.25,  0.50,  0.75];   % duty cycles tested
+D_measured    = [0.25,  0.50,  0.75];
 Vout_measured = [0.00,  0.00,  0.00];   % replace with your measured voltages (V)
 
 D_ideal  = 0:0.01:1;
@@ -840,7 +590,6 @@ xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
 title('Buck Converter - Ideal vs Measured');
 legend('Location', 'northwest');
 
-% Calculate and print voltage drop at each operating point
 fprintf('%-8s %-12s %-12s %-12s\n', 'D', 'V_ideal(V)', 'V_meas(V)', 'Drop(V)');
 for i = 1:3
     V_ideal = D_measured(i) * Vin;
@@ -851,130 +600,25 @@ end
 
 ### Reflection
 
-- Is the measured Vout lower than the ideal prediction? Why? (MOSFET Vds(on), diode forward voltage drop, inductor DCR)
+- Is the measured Vout lower than the ideal prediction? Why? (MOSFET $V_{DS(on)}$, diode forward voltage drop, inductor DCR)
 - Is the voltage drop consistent across all three duty cycles, or does it change?
 - How would using a Schottky diode (lower forward voltage) improve the result compared to a standard 1N4007?
 
 ---
 
-## Engineering Applications
-
-Buck Converters are found in:
-
-### Laptop Power Systems
-
-Voltage regulation.
-
----
-
-### Mobile Devices
-
-Internal power conversion.
-
----
-
-### Automotive Electronics
-
-Battery voltage conversion.
-
----
-
-### Robotics
-
-Efficient motor and logic power supplies.
-
----
-
-### Industrial Equipment
-
-DC power regulation.
-
----
-
-## Knowledge Check
-
-### Question 1
-
-Write the ideal Buck Converter equation.
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 2
-
-What is the role of the inductor?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 3
-
-What is the role of the capacitor?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 4
-
-Why are Buck Converters efficient?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 5
-
-What causes output ripple?
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-### Question 6
-
-Your simulation predicted Vout = 2.5V at 50% duty cycle but you measured 2.1V. The MOSFET has Vds(on) = 0.1V and the 1N5819 has a forward voltage of 0.3V. Show how these account for the 0.4V discrepancy.
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-## Common Mistakes
+## Troubleshooting
 
 ### No Output Voltage
 
 Check:
 
-- MOSFET wiring
-- Diode polarity
-- Inductor connections
-- Ground connections
+✅ MOSFET pinout correct (G, D, S identified)
+
+✅ Diode polarity (cathode banded end toward switch node / 5V side)
+
+✅ Inductor connected between MOSFET Drain and Vout
+
+✅ Shared GND between Arduino and converter
 
 ---
 
@@ -982,24 +626,27 @@ Check:
 
 Check:
 
-- Capacitor value
-- Capacitor polarity
-- Load conditions
+✅ Capacitor value (100 µF)
+
+✅ Capacitor polarity (positive leg to Vout)
+
+✅ Load not drawing excessive current
 
 ---
 
-### No PWM Signal
+### No PWM Signal at Gate
 
 Check:
 
-- Controller sketch
-- Pin selection
-- Oscilloscope trigger
-- Probe connection
+✅ Gate resistor connected between D9 and MOSFET Gate
+
+✅ Code uploaded successfully
+
+✅ Probe tip on MOSFET Gate, probe GND on Arduino GND
 
 ---
 
-## Troubleshooting Checklist
+### Troubleshooting Checklist
 
 ✅ PWM present at MOSFET gate
 
@@ -1014,6 +661,44 @@ Check:
 ✅ Output ripple visible
 
 ✅ Duty cycle affects output voltage
+
+---
+
+## Knowledge Check
+
+### Question 1
+
+Write the ideal Buck Converter equation.
+
+---
+
+### Question 2
+
+What is the role of the inductor?
+
+---
+
+### Question 3
+
+What is the role of the capacitor?
+
+---
+
+### Question 4
+
+Why are Buck Converters efficient?
+
+---
+
+### Question 5
+
+What causes output ripple?
+
+---
+
+### Question 6
+
+Your simulation predicted Vout = 2.5 V at 50% duty cycle but you measured 2.1 V. The MOSFET has $V_{DS(on)}$ = 0.1 V and the 1N5819 has a forward voltage of 0.3 V. Show how these account for the 0.4 V discrepancy.
 
 ---
 
@@ -1037,13 +722,13 @@ In this project you learned:
 
 ✅ Practical switched-mode power electronics
 
-This project combines many concepts introduced throughout the earlier projects and serves as the foundation for regulated power supplies.
-
 ---
 
 ## Next Project
 
-**15_Closed_Loop_Buck.md**
+```text
+15_Closed_Loop_Buck.md
+```
 
 Topics:
 

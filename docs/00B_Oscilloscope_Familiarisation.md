@@ -1,56 +1,42 @@
-# Oscilloscope Familiarisation (OWON HDS272S + DSO Nano)
-
-### Prerequisites
-
-Before starting any project in this repository, spend some time becoming familiar with your oscilloscope.
-
-This guide uses the OWON HDS272S as the baseline scope.
-Equivalent measurements can be made with the DSO Nano.
-
-The oscilloscope will be one of the most important tools used throughout this course.
-
-We will repeatedly use it to:
-
-- Visualise signals
-- Verify calculations
-- Observe transient responses
-- Debug circuits
-- Validate MATLAB simulations
+# Project 00B - Oscilloscope Familiarisation
 
 ---
 
 ## Objective
 
-In this project you will learn:
+The objective of this project is to become familiar with the OWON HDS272S oscilloscope and to learn how to use it to measure and analyse electrical signals.
 
-- What an oscilloscope does
-- How to safely connect the DSO Nano
-- How to adjust voltage scale
-- How to adjust time scale
-- How to use triggering
-- How to measure voltage
-- How to measure frequency
-- How to measure PWM signals
+This project introduces the basic oscilloscope skills required for the remainder of the course, including:
 
-For OWON HDS272S users, this project also establishes the default setup workflow used in later labs.
+- Connecting the oscilloscope safely
+- Adjusting the vertical (voltage) scale
+- Adjusting the horizontal (time) scale
+- Using the trigger system
+- Measuring DC voltage
+- Measuring PWM waveforms
+- Measuring frequency and period
 
 ---
 
 ## Learning Outcomes
 
-At the end of this exercise you should be able to:
+At the end of this project you should be able to:
 
-✅ Connect the DSO Nano safely
+✅ Connect the OWON HDS272S safely to a circuit
 
-✅ Measure DC voltages
+✅ Adjust the vertical scale to suit the signal
 
-✅ Measure PWM waveforms
+✅ Adjust the horizontal scale to suit the signal
 
-✅ Adjust vertical scale
+✅ Use edge triggering to stabilise a waveform
 
-✅ Adjust horizontal scale
+✅ Measure DC voltage
 
-✅ Use the trigger system
+✅ Measure peak voltage of a PWM signal
+
+✅ Measure the period and frequency of a PWM signal
+
+✅ Identify duty cycle from a waveform
 
 ✅ Prepare the oscilloscope for future experiments
 
@@ -58,18 +44,18 @@ At the end of this exercise you should be able to:
 
 ## What Is An Oscilloscope?
 
-An oscilloscope displays:
+An oscilloscope displays how voltage changes over time:
 
 ```text
 Voltage
    ^
-   |
-   |
-   |
-   +-----------------> Time
+   |  ___       ___
+   | |   |     |   |
+   | |   |     |   |
+   +-+---+-----+---+-----> Time
 ```
 
-Unlike a multimeter, which provides a single number, an oscilloscope shows how voltage changes over time.
+Unlike a multimeter, which shows a single number, an oscilloscope shows the complete shape of a signal.
 
 ---
 
@@ -78,94 +64,91 @@ Unlike a multimeter, which provides a single number, an oscilloscope shows how v
 A multimeter can tell you:
 
 ```text
-Voltage = 2.5V
+Voltage = 2.5 V
 ```
 
-but it cannot easily tell you:
+but it cannot tell you:
 
 - Frequency
 - Duty cycle
-- Ringing
-- Oscillation
-- Ripple
+- Waveform shape
+- Ringing or oscillation
+- Ripple voltage
 - Transient response
 
-An oscilloscope can.
+An oscilloscope can show all of these.
+
+Throughout this course the oscilloscope will be used to:
+
+- Verify PWM signals
+- Observe RC and RLC circuit responses
+- Measure MOSFET switching behaviour
+- Inspect converter switch-node waveforms
+- Validate closed-loop control responses
 
 ---
 
-## About The OWON HDS272S and DSO Nano
+## About The OWON HDS272S
 
-The OWON HDS272S is the recommended baseline oscilloscope for this repository.
+The OWON HDS272S is a handheld digital oscilloscope and multimeter combined in a single instrument.
 
-It provides:
+```text
+ ┌─────────────────────┐
+ │  OWON HDS272S       │
+ │                     │
+ │  [  Display  ]      │
+ │                     │
+ │  CH1  CH2           │
+ │  [Menu] [Trigger]   │
+ │  [Scale] [Position] │
+ │                     │
+ │  CH1 ──●  CH2 ──●   │
+ └─────────────────────┘
+```
 
-✅ Higher bandwidth and sampling capability
+Key features relevant to this course:
 
-✅ Larger display and easier waveform inspection
-
-✅ Better triggering and measurement tools
-
-The DSO Nano remains useful as a portable fallback option.
-
----
-
-## About The DSO Nano
-
-The DSO Nano is a portable digital oscilloscope.
-
-It is ideal for:
-
-✅ Arduino projects
-
-✅ PWM measurements
-
-✅ RC circuits
-
-✅ RLC circuits
-
-✅ MOSFET switching
-
-✅ Basic power electronics
-
-✅ Educational use
+- Two input channels
+- Automatic measurements (frequency, period, duty cycle, Vpp)
+- Edge triggering with adjustable level
+- DC and AC coupling
+- Built-in multimeter
 
 ---
 
-## Limitations
+## About The DSO Nano V3
 
-The DSO Nano is not a high-end laboratory oscilloscope.
+The DSO Nano V3 is a compact single-channel fallback option.
 
-Limitations include:
-
-- Small display
-- Single channel
-- Limited bandwidth
-
-These limitations do not affect the experiments in this repository.
+All experiments in this project can be completed with either instrument. Where settings differ, both are noted.
 
 ---
 
 ## Understanding The Screen
 
-The display shows:
+The oscilloscope screen is a grid of squares called divisions:
+
+```text
++------+------+------+------+------+
+|      |      |      |      |      |
++------+------+------+------+------+
+|      |      |   *  |      |      |
++------+------+--*---+------+------+
+|      |      | *    |      |      |
++------+------+*-----+------+------+
+|      |     *|      |      |      |
++------+----*-+------+------+------+
+|      |  *   |      |      |      |
++------+------+------+------+------+
+```
+
+The vertical axis represents:
 
 ```text
 Voltage
-   ^
-   |
-   |
-   |
-   +-----------------> Time
 ```
 
-The vertical direction is:
-
-```text
-Voltage
-```
-
-The horizontal direction is:
+The horizontal axis represents:
 
 ```text
 Time
@@ -173,125 +156,82 @@ Time
 
 ---
 
-## Important Controls
+## Vertical Scale
 
-### Vertical Scale
-
-Vertical scale controls:
+The vertical scale sets how many volts each division represents:
 
 ```text
-Volts per Division
+Volts per Division (V/div)
 ```
 
-Examples:
+Common settings:
 
 ```text
 5 V/div
-
 2 V/div
-
 1 V/div
-
 500 mV/div
+200 mV/div
 ```
 
 ---
 
-## What Is A Division?
+## Vertical Scale Example
 
-The oscilloscope screen is divided into squares.
-
-Example:
-
-```text
-+----+----+----+----+
-|    |    |    |    |
-+----+----+----+----+
-|    |    |    |    |
-+----+----+----+----+
-```
-
-Each square is called a:
-
-```text
-Division
-```
-
----
-
-## Example
-
-Suppose:
+If the vertical scale is set to:
 
 ```text
 1 V/div
 ```
 
-and the waveform height is:
-
-```text
-5 divisions
-```
-
-Then:
+and the waveform spans 5 divisions from bottom to top, then:
 
 $$
-V = 5V
+V_{peak} = 5 \times 1 = 5 \text{ V}
 $$
 
 ---
 
 ## Horizontal Scale
 
-Horizontal scale controls:
+The horizontal scale sets how much time each division represents:
 
 ```text
-Time per Division
+Time per Division (s/div, ms/div, us/div)
 ```
 
-Examples:
+Common settings:
 
 ```text
 1 s/div
-
-500 ms/div
-
 100 ms/div
-
+10 ms/div
 1 ms/div
-
 500 us/div
-
 100 us/div
 ```
 
 ---
 
-## Example
+## Horizontal Scale Example
 
-Suppose:
+If the horizontal scale is set to:
 
 ```text
 1 ms/div
 ```
 
-and one cycle occupies:
-
-```text
-2 divisions
-```
-
-Then:
+and one complete cycle spans 2 divisions, then:
 
 $$
-T = 2ms
+T = 2 \times 1 \text{ ms} = 2 \text{ ms}
 $$
 
 ---
 
-## Frequency Review
+## Frequency and Period
 
-Frequency is:
+Frequency and period are related by:
 
 $$
 f = \frac{1}{T}
@@ -300,112 +240,61 @@ $$
 If:
 
 $$
-T = 2ms
+T = 2 \text{ ms} = 0.002 \text{ s}
 $$
 
 then:
 
 $$
-f = \frac{1}{0.002}
-$$
-
-$$
-f = 500Hz
+f = \frac{1}{0.002} = 500 \text{ Hz}
 $$
 
 ---
 
 ## Triggering
 
-Triggering stabilises the display.
+Without triggering the waveform scrolls continuously across the screen and is difficult to read.
 
-Without triggering:
-
-```text
-Waveform moves randomly
-```
-
-With triggering:
+Triggering tells the oscilloscope:
 
 ```text
-Waveform remains stable
+Start drawing the waveform when the signal crosses
+a defined voltage level in a defined direction.
 ```
+
+With triggering enabled the waveform appears stable and stationary.
 
 ---
 
-## Trigger Type
+## Trigger Settings
 
-For almost every project in this repository use:
-
-```text
-Edge Trigger
-```
-
----
-
-## Trigger Edge
-
-Use:
+For almost every experiment in this course use:
 
 ```text
-Rising Edge
+Trigger Type:  Edge
+Trigger Edge:  Rising
 ```
 
-for most experiments.
-
-This means the oscilloscope begins drawing the waveform when voltage increases.
+The trigger level should be set to approximately half the signal amplitude.
 
 ---
 
 ## Safe Oscilloscope Connections
 
-For Arduino projects:
+For all Arduino and ESP32 experiments:
 
-Always connect:
-
-```text
-Probe Ground
-```
-
-to:
+Always connect the probe ground clip to:
 
 ```text
-Arduino Ground
+Arduino GND  (or ESP32 GND)
 ```
 
----
-
-## Safe Connection
+Never connect the ground clip to a live signal or to a floating point.
 
 ```text
-Probe Tip
-     |
-     |
-Signal Point
-
-Probe Ground
-     |
-     |
-Arduino GND
+Probe Tip   ──────► Signal point to measure
+Probe GND   ──────► Arduino GND
 ```
-
----
-
-## Important Rule
-
-Never connect the ground clip to random points in a circuit.
-
-For the experiments in this repository:
-
-```text
-Ground Clip
-
-↓
-
-Arduino GND
-```
-
-Always.
 
 ---
 
@@ -413,384 +302,453 @@ Always.
 
 ### Objective
 
-Verify that the oscilloscope is operating correctly.
+Confirm the oscilloscope is working correctly before connecting it to any circuit.
 
 ---
 
-## Connections
+### Procedure
 
-Connect:
+1. Power on the OWON HDS272S.
+2. Connect the CH1 probe tip to the CH1 probe ground clip (short them together).
+3. Set the vertical scale to **1 V/div**.
+4. Set the horizontal scale to **1 ms/div**.
+5. Observe the display.
+
+---
+
+### Expected Result
+
+You should see a flat horizontal line at the centre of the screen:
 
 ```text
-Probe Tip -> GND
-
-Probe Ground -> GND
+-----------------------------------------
 ```
 
----
+This confirms the oscilloscope is reading 0 V correctly.
 
-## Expected Result
-
-You should see:
-
-```text
---------------------------
-```
-
-a flat horizontal line.
+If the line is not flat or not at zero, use the vertical position control to centre it.
 
 ---
 
-## Why?
-
-Ground is:
-
-$$
-0V
-$$
-
-and does not change with time.
-
----
-
-## Experiment 2 - Measure Arduino DC Voltage
+## Experiment 2 - Measure a DC Voltage
 
 ### Objective
 
-Measure a constant voltage.
+Measure a constant 5 V DC signal from the Arduino and confirm the oscilloscope reads the correct value.
 
 ---
 
-## Arduino Code
+### Arduino Code
 
 ```cpp
 void setup()
 {
+    // Configure pin 9 as a digital output.
     pinMode(9, OUTPUT);
 
+    // Set pin 9 permanently HIGH (5 V DC).
+    // This gives a constant voltage for the oscilloscope to measure.
     digitalWrite(9, HIGH);
 }
 
 void loop()
 {
+    // Nothing needed here; the pin stays HIGH indefinitely.
 }
 ```
 
 ---
 
-## Connections
-
-Probe Tip:
+### Connections
 
 ```text
-Pin 9
-```
-
-Ground:
-
-```text
-Arduino GND
+Probe Tip  ──────► Arduino Pin D9
+Probe GND  ──────► Arduino GND
 ```
 
 ---
 
-## DSO Nano Settings
+### Oscilloscope Settings
 
-For OWON HDS272S users, use equivalent vertical/time scales and edge trigger settings.
-
-Vertical:
-
-```text
-2V/div
-```
-
-Horizontal:
-
-```text
-100 ms/div
-```
-
-Important:
-
-- Ensure probe attenuation on the oscilloscope matches the probe switch (x1 or x10).
-- If the probe is set to x10 but the oscilloscope is set to x1, displayed voltage will be incorrect.
+| Setting | OWON HDS272S | DSO Nano V3 |
+|---------|--------------|-------------|
+| Channel | CH1 | CH1 |
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 100 ms/div | 100 ms/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
 
 ---
 
-## Expected Result
+### Expected Result
 
-You should observe a flat line.
+You should see a flat horizontal line approximately 2.5 divisions above the centre line:
 
-Voltage should be approximately:
+```text
+___________________________________________   ← 5 V line (2.5 div above centre at 2 V/div)
+
+
+- - - - - - - - - - - - - - - - - - - - - -  ← 0 V (centre)
+```
+
+The measured voltage should be approximately:
 
 $$
-5V
+V \approx 5 \text{ V}
 $$
 
 ---
 
-## Record Measurements
+### Probe Attenuation Note
 
-| Parameter | Value |
-|------------|--------|
-| Measured Voltage | |
+Check that the probe attenuation setting on the oscilloscope matches the switch on the probe body.
+
+- If the probe switch is set to **x1**, set the oscilloscope to **x1**.
+- If the probe switch is set to **x10**, set the oscilloscope to **x10**.
+
+A mismatch will cause the displayed voltage to be 10 times too high or too low.
 
 ---
 
-## Experiment 3 - Observe PWM
+### Record Measurements
+
+| Parameter | Expected | Measured |
+|-----------|----------|---------|
+| DC Voltage | 5 V | |
+
+---
+
+## Experiment 3 - Observe a PWM Signal
 
 ### Objective
 
-Observe a PWM signal.
+Observe a PWM waveform and measure its peak voltage, period, and frequency.
 
 ---
 
-## Arduino Code
+### Arduino Code
 
 ```cpp
 void setup()
 {
-    pinMode(9, OUTPUT);
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
 }
 
 void loop()
 {
-    analogWrite(9,128);
+    // Output a PWM signal on pin 9 with a duty cycle of approximately 50%.
+    // analogWrite() accepts values from 0 (0%) to 255 (100%).
+    // Value 128 gives approximately 50% duty cycle.
+    analogWrite(9, 128);
 }
 ```
 
 ---
 
-## Connections
-
-Probe Tip:
+### Connections
 
 ```text
-Pin 9
-```
-
-Ground:
-
-```text
-Arduino GND
+Probe Tip  ──────► Arduino Pin D9
+Probe GND  ──────► Arduino GND
 ```
 
 ---
 
-## DSO Nano Setup
+### Oscilloscope Settings
 
-Vertical:
-
-```text
-2V/div
-```
-
-Horizontal:
-
-```text
-500 us/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
+| Setting | OWON HDS272S | DSO Nano V3 |
+|---------|--------------|-------------|
+| Channel | CH1 | CH1 |
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 500 us/div | 500 us/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
 
 ---
 
-## Expected Waveform
+### Expected Waveform
 
 ```text
-5V ─────      ─────
-         │      │
-         │      │
-0V ______│______│______
+5V  ─────      ─────      ─────
+         │    │     │    │
+         │    │     │    │
+0V  _____│____│_____│____│_____
 ```
+
+The signal switches between 0 V and 5 V at approximately 490 Hz.
+
+At 50% duty cycle the ON time and OFF time are approximately equal.
 
 ---
 
-## Measurements
+### Measurements
 
-Measure:
+Measure the following from the waveform:
 
-### Peak Voltage
+#### Peak Voltage
+
+Count the number of vertical divisions from the 0 V baseline to the top of the waveform and multiply by the V/div setting.
 
 Expected:
 
 $$
-V_{PEAK} \approx 5V
+V_{peak} \approx 5 \text{ V}
 $$
 
 ---
 
-### Frequency
+#### Period
+
+Count the number of horizontal divisions for one complete cycle (from one rising edge to the next) and multiply by the time/div setting.
 
 Expected:
 
 $$
-f \approx 490Hz
-$$
-
-On Arduino Uno Pin 9, this value is typically around 490 Hz. Small variation is normal.
-
----
-
-### Period
-
-Expected:
-
-$$
-T \approx 2ms
+T \approx 2 \text{ ms}
 $$
 
 ---
 
-## Oscilloscope Measurement Worksheet
+#### Frequency
 
-| Measurement | Expected | Actual |
-|------------|-----------|---------|
-| Peak Voltage | 5V | |
-| Frequency | 490Hz | |
-| Period | 2ms | |
+Calculate from the measured period:
+
+$$
+f = \frac{1}{T} \approx \frac{1}{0.002} = 500 \text{ Hz}
+$$
+
+The actual Arduino Uno PWM frequency on pin 9 is approximately 490 Hz. Small variation is normal.
 
 ---
 
-## Understanding Scale Selection
+#### Duty Cycle
 
-### If Signal Is Too Small
+Measure the ON time (HIGH portion) and divide by the total period:
 
-Increase sensitivity:
+$$
+D = \frac{t_{ON}}{T} \approx 50\%
+$$
 
-```text
-2V/div
-↓
-1V/div
-↓
-500mV/div
+---
+
+### Measurement Worksheet
+
+| Measurement | Expected | Measured |
+|-------------|----------|---------|
+| Peak Voltage | 5 V | |
+| Period | 2 ms | |
+| Frequency | 490 Hz | |
+| Duty Cycle | 50% | |
+
+---
+
+## Experiment 4 - Vary the Duty Cycle
+
+### Objective
+
+Observe how changing the PWM duty cycle changes the waveform shape.
+
+---
+
+### Arduino Code
+
+```cpp
+void setup()
+{
+    Serial.begin(9600);
+}
+
+void loop()
+{
+    // Sweep duty cycle from 0% to 100% in steps.
+    // analogWrite() range: 0 (0%) to 255 (100%).
+    for (int duty = 0; duty <= 255; duty += 64)
+    {
+        analogWrite(9, duty);
+
+        // Print the current duty cycle percentage to the Serial Monitor.
+        float percent = duty * (100.0 / 255.0);
+        Serial.print("Duty cycle: ");
+        Serial.print(percent, 1);
+        Serial.println("%");
+
+        delay(3000);   // Hold each duty cycle for 3 seconds to observe on the oscilloscope
+    }
+}
 ```
 
 ---
 
-### If Signal Is Too Large
+### Procedure
 
-Decrease sensitivity:
+1. Upload the code.
+2. Connect the oscilloscope as in Experiment 3.
+3. Open the Serial Monitor at **9600 baud** to see which duty cycle is currently active.
+4. For each duty cycle step, observe the waveform and sketch or note the ON time versus OFF time.
+
+---
+
+### Expected Observations
+
+| analogWrite Value | Duty Cycle | Waveform |
+|-------------------|------------|---------|
+| 0 | 0% | Flat LOW (0 V) |
+| 64 | 25% | Short ON, long OFF |
+| 128 | 50% | Equal ON and OFF |
+| 192 | 75% | Long ON, short OFF |
+| 255 | 100% | Flat HIGH (5 V) |
+
+---
+
+## Adjusting The Scales
+
+### Signal Too Small (waveform barely visible)
+
+Increase sensitivity by reducing V/div:
 
 ```text
-500mV/div
-↓
-1V/div
-↓
-2V/div
-↓
-5V/div
+2 V/div  →  1 V/div  →  500 mV/div
 ```
 
 ---
 
-## Understanding Time Scale Selection
+### Signal Too Large (waveform clipped at top or bottom)
 
-### If Waveform Is Too Compressed
-
-Use:
+Decrease sensitivity by increasing V/div:
 
 ```text
-Larger Time Scale
-```
-
-Example:
-
-```text
-500us/div
-
-↓
-
-1ms/div
+500 mV/div  →  1 V/div  →  2 V/div  →  5 V/div
 ```
 
 ---
 
-### If Waveform Is Too Wide
+### Waveform Too Compressed (many cycles visible, hard to measure one)
 
-Use:
-
-```text
-Smaller Time Scale
-```
-
-Example:
+Increase time resolution by reducing time/div:
 
 ```text
-1ms/div
-
-↓
-
-500us/div
+1 ms/div  →  500 us/div  →  100 us/div
 ```
 
 ---
 
-## Common Measurements We Will Perform Later
+### Waveform Too Wide (less than one cycle visible)
 
-Throughout this repository the DSO Nano will be used to measure:
+Decrease time resolution by increasing time/div:
 
-### Project 1
-
-PWM Frequency
-
-PWM Duty Cycle
+```text
+100 us/div  →  500 us/div  →  1 ms/div
+```
 
 ---
 
-### Project 2
+## Troubleshooting
 
-RC Charging
+### No Signal Visible
 
-RC Discharging
+Check:
 
-Time Constants
+✅ Probe tip connected to the correct pin
 
----
+✅ Probe ground clip connected to Arduino GND
 
-### Project 3
+✅ Arduino powered and code uploaded
 
-Ringing
-
-Oscillation
-
-Natural Frequency
+✅ Correct pin used (PWM requires pins 3, 5, 6, 9, 10, or 11 on Arduino Uno)
 
 ---
 
-### Project 4
+### Waveform Unstable or Scrolling
 
-MOSFET Gate Signals
+Check:
 
-Switching Behaviour
+✅ Trigger enabled
 
----
+✅ Trigger type set to Edge
 
-### Project 5
-
-Motor PWM Drive Signals
+✅ Trigger level set to approximately half the signal amplitude (around 2.5 V for a 5 V signal)
 
 ---
 
-### Project 9
+### Incorrect Voltage Reading
 
-Buck Converter Ripple
+Check:
 
-Switch Node Waveforms
+✅ Vertical scale (V/div) is appropriate for the signal
+
+✅ Probe attenuation switch matches oscilloscope setting (x1 or x10)
+
+✅ Probe ground connected to Arduino GND
 
 ---
 
-### Project 10
+### Incorrect Frequency Reading
 
-Closed Loop Responses
+Check:
 
-Settling Time
+✅ Horizontal scale (time/div) is appropriate — at least one full cycle should be visible
 
-Transient Behaviour
+✅ Trigger is stable
+
+---
+
+### Troubleshooting Checklist
+
+✅ OWON HDS272S powered on
+
+✅ CH1 probe tip connected to signal
+
+✅ CH1 probe ground connected to Arduino GND
+
+✅ Trigger enabled with Edge, Rising
+
+✅ Vertical scale appropriate for signal amplitude
+
+✅ Horizontal scale appropriate for signal frequency
+
+✅ Probe attenuation matches oscilloscope setting
+
+---
+
+## Laboratory Exercises
+
+### Exercise 1
+
+Set the Arduino to output a constant HIGH on pin 9 and measure the DC voltage. Record the result and compare to the expected 5 V.
+
+---
+
+### Exercise 2
+
+Output a PWM signal with `analogWrite(9, 64)` (25% duty cycle). Measure the period, frequency, and duty cycle from the oscilloscope.
+
+---
+
+### Exercise 3
+
+Output a PWM signal with `analogWrite(9, 192)` (75% duty cycle). Sketch the waveform and label the ON time and OFF time.
+
+---
+
+### Exercise 4
+
+Change the horizontal scale while observing the 490 Hz PWM signal. Find the scale setting that shows exactly two complete cycles on screen.
+
+---
+
+### Exercise 5
+
+Connect the potentiometer from Project 00A to A0 and use the following code to vary the PWM duty cycle with the potentiometer. Observe the waveform change on the oscilloscope as you turn the knob.
+
+```cpp
+void loop()
+{
+    int pot = analogRead(A0);          // 0 to 1023
+    int duty = pot / 4;                // Scale to 0 to 255
+    analogWrite(9, duty);
+    delay(10);
+}
+```
 
 ---
 
@@ -798,149 +756,62 @@ Transient Behaviour
 
 ### Question 1
 
-What does the vertical axis represent?
-
-Answer:
-
-```text
-____________________
-```
+What does the vertical axis of an oscilloscope represent?
 
 ---
 
 ### Question 2
 
-What does the horizontal axis represent?
-
-Answer:
-
-```text
-____________________
-```
+What does the horizontal axis of an oscilloscope represent?
 
 ---
 
 ### Question 3
 
-What does 2 V/div mean?
-
-Answer:
-
-```text
-____________________
-```
+If the vertical scale is set to 2 V/div and a waveform spans 3 divisions, what is the peak voltage?
 
 ---
 
 ### Question 4
 
-Why is trigger important?
-
-Answer:
-
-```text
-____________________
-```
+If the horizontal scale is set to 500 us/div and one cycle spans 4 divisions, what is the period? What is the frequency?
 
 ---
 
 ### Question 5
 
-Where should the probe ground be connected?
-
-Answer:
-
-```text
-____________________
-```
+Why is triggering important when observing a repeating waveform?
 
 ---
 
-## Common Mistakes
+### Question 6
 
-### No Signal Visible
-
-Check:
-
-- Probe connection
-- Ground connection
-- Arduino powered
+Where should the probe ground clip always be connected in Arduino experiments?
 
 ---
 
-### Unstable Waveform
+## Project Summary
 
-Check:
+In this project you learned:
 
-- Trigger settings
-- Trigger level
+✅ What an oscilloscope measures and why it is important
 
----
+✅ How to connect the OWON HDS272S safely
 
-### Incorrect Voltage Measurement
+✅ How to adjust the vertical scale
 
-Check:
+✅ How to adjust the horizontal scale
 
-- Vertical scale
-- Probe connection
+✅ How to use edge triggering
 
----
+✅ How to measure DC voltage
 
-### Incorrect Frequency Measurement
+✅ How to measure PWM peak voltage, period, frequency, and duty cycle
 
-Check:
+✅ How to adjust scales to suit different signals
 
-- Horizontal scale
-- Trigger settings
-
----
-
-## Troubleshooting Checklist
-
-✅ Battery charged
-
-✅ Probe connected correctly
-
-✅ Ground connected to Arduino GND
-
-✅ Trigger enabled
-
-✅ Correct voltage scale selected
-
-✅ Correct time scale selected
-
----
-
-## Summary
-
-In this exercise you learned:
-
-✅ Oscilloscope basics
-
-✅ Voltage measurements
-
-✅ Frequency measurements
-
-✅ Period measurements
-
-✅ Triggering
-
-✅ Scale adjustment
-
-✅ PWM visualisation
-
-✅ Safe probing techniques
-
-You are now ready to begin the laboratory projects.
-
----
-
-## Next Step
-
-Proceed to:
+These skills will be used in every subsequent project in this course, beginning with:
 
 ```text
 01_PWM_Fundamentals.md
 ```
-
-and perform your first PWM experiment.

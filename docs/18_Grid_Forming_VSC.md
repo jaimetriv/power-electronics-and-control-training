@@ -44,28 +44,6 @@ This project serves as the capstone project for the course.
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Explain Grid-Forming operation
-
-✅ Generate AC voltage autonomously
-
-✅ Implement SPWM
-
-✅ Implement voltage feedback
-
-✅ Regulate output voltage
-
-✅ Explain droop control
-
-✅ Understand Virtual Synchronous Machines
-
-✅ Compare Grid-Following and Grid-Forming converters
-
----
-
 ## Safety Notice
 
 ```text
@@ -88,77 +66,42 @@ Recommended:
 
 ---
 
+## Learning Outcomes
+
+At the end of this project you should be able to:
+
+✅ Explain Grid-Forming operation
+
+✅ Generate AC voltage autonomously
+
+✅ Implement SPWM
+
+✅ Implement voltage feedback
+
+✅ Regulate output voltage
+
+✅ Explain droop control
+
+✅ Understand Virtual Synchronous Machines
+
+✅ Compare Grid-Following and Grid-Forming converters
+
+---
+
 ## Introduction
 
-Project 16 introduced:
+Project 17 introduced Grid-Following Converters.
 
-```text
-Grid-Following Converters
-```
+Those converters require an existing grid — they measure voltage and inject current.
 
-Those converters require an existing grid.
-
-They:
-
-```text
-Measure Voltage
-
-Inject Current
-```
-
----
-
-## What If No Grid Exists?
-
-Examples:
-
-- Microgrids
-- Battery Systems
-- Standalone Power Systems
-- Backup Generators
-
-There may be:
-
-```text
-No Existing Voltage Reference
-```
-
-The inverter must therefore create:
-
-```text
-Voltage
-
-Frequency
-
-Phase
-```
-
-itself.
-
----
-
-## Grid-Forming Concept
-
-A Grid-Forming converter behaves as an AC voltage source.
-
-Instead of:
-
-```text
-Current Control
-```
-
-it primarily performs:
-
-```text
-Voltage Control
-```
+A Grid-Forming converter instead creates its own voltage, frequency, and phase.
 
 ---
 
 ## Grid-Following versus Grid-Forming
 
 | Feature | Grid-Following | Grid-Forming |
-|----------|--------------|--------------|
+|---------|--------------|--------------|
 | PLL Required | Yes | No |
 | Existing Grid Required | Yes | No |
 | Controls Current | Yes | Usually |
@@ -169,54 +112,36 @@ Voltage Control
 
 ---
 
-## Black Start Capability
-
-A Grid-Forming converter can:
-
-```text
-Start a Dead Network
-```
-
-without requiring an external voltage source.
-
-This capability is known as:
-
-```text
-Black Start
-```
-
----
-
 ## Complete System Architecture
 
 ```text
-          Voltage Reference
-                  │
-                  ▼
-         Frequency Generator
-                  │
-                  ▼
-           PI Controller
-                  │
-                  ▼
-         Modulation Index
-                  │
-                  ▼
-                SPWM
-                  │
-                  ▼
-             H-Bridge
-                  │
-                  ▼
-             LC Filter
-                  │
-                  ▼
-                Load
-                  ▲
-                  │
-           Voltage Sensor
-                  │
-                  └────────── Feedback
+Voltage Reference
+        │
+        ▼
+Frequency Generator (internal oscillator)
+        │
+        ▼
+PI Voltage Controller
+        │
+        ▼
+Modulation Index
+        │
+        ▼
+SPWM Generator
+        │
+        ▼
+H-Bridge (4 × IRLZ44N + IR2104 driver)
+        │
+        ▼
+LC Filter
+        │
+        ▼
+Load
+        ▲
+        │
+Voltage Sensor (resistor divider → ADC)
+        │
+        └──────── Feedback
 ```
 
 ---
@@ -225,218 +150,59 @@ Black Start
 
 ### Controller
 
-Recommended:
-
 ```text
-ESP32 DevKit V1
+ESP32 DevKit V1  (recommended)
+STM32 Nucleo     (alternative)
+Arduino Mega     (alternative)
 ```
-
-Alternatives:
-
-```text
-STM32 Nucleo
-
-Arduino Mega
-```
-
----
 
 ### Inverter Stage
 
-### Gate Driver
-
-```text
-IR2104
-```
-
-Recommended.
-
-Alternative:
-
-```text
-IR2110
-```
-
----
-
-### MOSFETs
-
-```text
-4 × IRLZ44N
-```
-
----
+- 4 × IRLZ44N MOSFETs
+- IR2104 gate driver (recommended) or IR2110
 
 ### Sensors
 
-### Voltage Measurement
-
-```text
-Resistor Divider
-```
-
-### Current Measurement
-
-```text
-ACS712
-```
-
-or
-
-```text
-ACS758
-```
-
----
+- Voltage measurement: resistor divider
+- Current measurement: ACS712 or ACS758
 
 ### LC Filter
 
-### Inductor
-
-```text
-1 mH to 5 mH
-```
-
-### Capacitor
-
-```text
-1 µF Film Capacitor
-```
-
----
+- Inductor: 1 mH to 5 mH
+- Capacitor: 1 µF film capacitor
 
 ### Test Equipment
 
 - OWON HDS272S (recommended)
 - DSO Nano (compatible)
 - Multimeter
-- Bench Power Supply
+- 12 V bench power supply
 
 ---
 
 ## Complete Materials List
 
 ```text
-ESP32 DevKit
-
-IR2104 Driver
-
+ESP32 DevKit V1
+IR2104 Gate Driver
 4 × IRLZ44N MOSFETs
-
 ACS712 Current Sensor
-
 1 mH Inductor
-
 1 µF Film Capacitor
-
-470 µF Electrolytic Capacitor
-
-100 nF Ceramic Capacitor
-
+470 µF Electrolytic Capacitor (DC link)
+100 nF Ceramic Capacitor (DC link decoupling)
 12 V Bench Supply
-
-OWON HDS272S (DSO Nano compatible)
-
-Breadboard
-
-Jumper Wires
-
+OWON HDS272S (or DSO Nano)
+Breadboard and Jumper Wires
 Multimeter
 ```
-
----
-
-## Full System Schematic
-
-```text
-                    +12V DC Supply
-                           │
-                           │
-                    DC Link Capacitor
-                           │
-                           ▼
-
-                  ┌────────────────┐
-                  │   H-BRIDGE     │
-                  │ Q1 Q2 Q3 Q4    │
-                  └───────┬────────┘
-                          │
-
-                       SPWM
-                          ▲
-                          │
-
-                  ┌─────────────┐
-                  │    ESP32    │
-                  │             │
-                  │ PI Control  │
-                  │ Frequency   │
-                  │ Generator   │
-                  └─────┬───────┘
-                        │
-
-             ┌──────────┴──────────┐
-
-             ▼                     ▼
-
-      Voltage Sensor        Current Sensor
-
-             ▲                     ▲
-
-             └─────────┬───────────┘
-                       │
-
-                    LC Filter
-
-                       │
-
-                       ▼
-
-                      Load
-```
-
----
-
-## DC Link Circuit
-
-Every practical inverter requires a DC-link capacitor.
-
-```text
-          +12 V Supply
-
-                │
-
-           ┌────────┐
-
-           │ 470µF  │
-
-           │        │
-
-           └────────┘
-
-                │
-
-           H-Bridge
-```
-
-Recommended:
-
-```text
-470 µF Electrolytic
-
-+
-
-100 nF Ceramic
-```
-
-mounted near the MOSFET bridge.
 
 ---
 
 ## Full H-Bridge Schematic
 
 ```text
-              +Vdc
+              +Vdc (12 V)
                 │
           ┌─────┴─────┐
           │           │
@@ -457,47 +223,17 @@ mounted near the MOSFET bridge.
 
 ### Positive Half-Cycle
 
-Turn ON:
-
-```text
-Q1
-
-Q4
-```
+Turn ON Q1 and Q4.
 
 Current flows:
 
 ```text
-+Vdc
-
- ↓
-
-Q1
-
- ↓
-
-Load
-
- ↓
-
-Q4
-
- ↓
-
-GND
++Vdc → Q1 → Load → Q4 → GND
 ```
-
----
 
 ### Negative Half-Cycle
 
-Turn ON:
-
-```text
-Q2
-
-Q3
-```
+Turn ON Q2 and Q3.
 
 Current flows in the opposite direction.
 
@@ -505,37 +241,17 @@ Current flows in the opposite direction.
 
 ## Shoot-Through Warning
 
-Never enable:
+Never enable Q1 and Q3 simultaneously.
 
-```text
-Q1 and Q3
-```
+Never enable Q2 and Q4 simultaneously.
 
-or:
-
-```text
-Q2 and Q4
-```
-
-simultaneously.
-
-This creates:
-
-```text
-Direct Supply Short Circuit
-```
+This creates a direct supply short circuit.
 
 ---
 
 ## Dead Time
 
-A delay is inserted between switching events.
-
-This delay is called:
-
-```text
-Dead Time
-```
+A delay is inserted between switching events to prevent shoot-through.
 
 Typical values:
 
@@ -545,46 +261,16 @@ Typical values:
 
 ---
 
-## Example Dead-Time Logic
+## DC Link Circuit
+
+Every practical inverter requires a DC-link capacitor mounted near the MOSFET bridge:
 
 ```text
-Q1 OFF
-
-Wait
-
-Q4 OFF
-
-Wait
-
-Q2 ON
-
-Q3 ON
-```
-
----
-
-## MOSFET Driver Connections
-
-Example using an IR2104.
-
-```text
-             ESP32
-
-         PWM_H   PWM_L
-            │      │
-            ▼      ▼
-
-            IR2104
-
-          HO      LO
-
-           │       │
-
-           ▼       ▼
-
-          Q1      Q3
-
-          Q2      Q4
++12 V Supply
+      │
+ 470 µF Electrolytic  +  100 nF Ceramic  (in parallel)
+      │
+H-Bridge
 ```
 
 ---
@@ -593,41 +279,19 @@ Example using an IR2104.
 
 The H-Bridge output contains PWM ripple.
 
-An LC filter smooths the waveform.
+An LC filter smooths the waveform:
 
 ```text
-            H-Bridge
-
-                │
-
-                L
-
-                │
-
-                ●────── Load
-
-                │
-
-                C
-
-                │
-
-               GND
+H-Bridge
+    │
+    L (1 mH)
+    │
+    ├──── Load
+    │
+    C (1 µF)
+    │
+   GND
 ```
-
----
-
-## Why Use an LC Filter?
-
-Advantages:
-
-✅ Lower harmonic distortion
-
-✅ Reduced ripple
-
-✅ Better voltage quality
-
-✅ Improved sine-wave approximation
 
 ---
 
@@ -635,44 +299,16 @@ Advantages:
 
 The ESP32 must never measure the inverter voltage directly.
 
-Use a divider:
+Use a resistor divider to scale the output to the ADC range:
 
 ```text
 Output Voltage
-
       │
-
-     47 kΩ
-
-      │──── ADC
-
-     10 kΩ
-
+    47 kΩ
+      │──── ADC (ESP32 GPIO34)
+    10 kΩ
       │
-
      GND
-```
-
----
-
-## Current Measurement Circuit
-
-Place the ACS712 after the filter.
-
-```text
-          LC Filter
-
-               │
-
-               ▼
-
-            ACS712
-
-               │
-
-               ▼
-
-              Load
 ```
 
 ---
@@ -682,104 +318,58 @@ Place the ACS712 after the filter.
 The inverter generates:
 
 $$
-v^*(t)
-=
-V_m \sin(\omega t)
+v^*(t) = V_m \sin(\omega t)
 $$
 
 Where:
 
 - $V_m$ = Desired Peak Voltage
-- $\omega$ = Angular Frequency
+- $\omega = 2\pi f$ = Angular Frequency
+
+No PLL is required — the inverter generates its own electrical angle:
+
+$$
+\theta = \omega t
+$$
 
 ---
 
-## Example
+## Digital SPWM Implementation
 
-Desired output:
+```cpp
+// Update angle each sample period
+theta += omega * Ts;
 
-$$
-v^*(t)
-=
-5\sin(2\pi50t)
-$$
+// Wrap angle to keep within 0 to 2π
+if (theta > 2 * PI)
+{
+    theta -= 2 * PI;
+}
 
-Produces:
+// Generate sine reference
+float reference = sin(theta);
 
-```text
-50 Hz AC Reference
+// Convert to PWM duty cycle (0–255)
+int pwm = (int)(127 + 127 * reference);
+pwm = constrain(pwm, 0, 255);
 ```
 
----
+Where:
 
-## Internal Oscillator
-
-Unlike Grid-Following converters:
-
-```text
-No PLL Required
-```
-
-The inverter generates its own electrical angle.
-
----
-
-## Angle Generation
-
-$$
-\theta
-=
-\omega t
-$$
-
-where:
-
-$$
-\omega
-=
-2\pi f
-$$
-
-For:
-
-$$
-f=50Hz
-$$
-
----
-
-## Voltage Error
-
-The controller computes:
-
-$$
-e
-=
-V^*
--
-V
-$$
+- `theta` = Electrical Angle
+- `omega` = Angular Frequency ($2\pi \times 50$)
+- `Ts` = Sampling Time
+- `reference` = Sine Reference
+- `pwm` = PWM Duty Cycle
 
 ---
 
 ## Voltage Control Loop
 
 ```text
-Voltage Reference
-        ↓
-   Error Calculation
-        ↓
-    PI Controller
-        ↓
-  Modulation Index
-        ↓
-       SPWM
-        ↓
-     Inverter
-        ↓
-   Output Voltage
-        ↓
-      Feedback
+Voltage Reference → [−] → PI Controller → Modulation Index → SPWM → Inverter → Output Voltage
+                       ↑                                                               │
+                       └──────────────────── Voltage Sensor ──────────────────────────┘
 ```
 
 ---
@@ -787,254 +377,38 @@ Voltage Reference
 ## PI Voltage Controller
 
 $$
-u
-=
-K_Pe
-+
-K_I\int e\,dt
+u = K_P e + K_I \int e\,dt
 $$
 
----
-
-## Why Use PI Control?
-
-The PI controller:
-
-✅ Removes steady-state error
-
-✅ Improves regulation
-
-✅ Compensates for load changes
-
----
-
-## Modulation Index
-
-Symbol:
-
-$$
-m
-$$
-
-Range:
-
-```text
-0 to 1
-```
-
-Relationship:
-
-$$
-V_{OUT} \propto m
-$$
-
-As modulation index increases:
-
-```text
-Output Voltage Increases
-```
-
----
-
-## SPWM Implementation
-
-SPWM stands for:
-
-```text
-Sinusoidal Pulse Width Modulation
-```
-
----
-
-## SPWM Concept
-
-A sine-wave reference is compared with a high-frequency carrier.
-
----
-
-## Comparator Logic
-
-If:
-
-```text
-Reference > Carrier
-```
-
-PWM Output:
-
-```text
-HIGH
-```
-
-If:
-
-```text
-Reference < Carrier
-```
-
-PWM Output:
-
-```text
-LOW
-```
-
----
-
-## SPWM Hardware Flow
-
-```text
-50 Hz Reference
-       │
-       ▼
-
-   sin(theta)
-
-       │
-       ▼
-
-Compare With
-
-20 kHz Carrier
-
-       │
-       ▼
-
- PWM Pulses
-
-       │
-       ▼
-
- MOSFET Driver
-
-       │
-       ▼
-
-   H-Bridge
-```
-
----
-
-## Conceptual SPWM Pattern
-
-```text
-| |
-| | |
-| | | |
-| | | | |
-| | | | | |
-| | | | |
-| | | |
-```
-
----
-
-## Digital SPWM Implementation
-
-```cpp
-theta += omega * Ts;
-
-if(theta > 2 * PI)
-{
-    theta -= 2 * PI;
-}
-
-float reference = sin(theta);
-
-int pwm =
-    (int)(127 + 127 * reference);
-
-pwm = constrain(pwm,0,255);
-```
-
-Where:
-
-- `theta` = Electrical Angle
-- `omega` = Angular Frequency
-- `Ts` = Sampling Time
-- `reference` = Sine Reference
-- `pwm` = PWM Duty Cycle
-
----
-
-## Relationship Between PI and SPWM
-
-```text
-Voltage Error
-      ↓
-PI Controller
-      ↓
-Modulation Index
-      ↓
-SPWM Generator
-      ↓
-Gate Signals
-      ↓
-H-Bridge
-```
-
----
-
-## Frequency Regulation
-
-The converter maintains:
-
-$$
-f = 50Hz
-$$
-
-independently of load conditions.
+The PI controller removes steady-state error, improves regulation, and compensates for load changes.
 
 ---
 
 ## Droop Control
 
-Grid-Forming converters often emulate synchronous generators.
+Grid-Forming converters often emulate synchronous generators using droop control.
 
----
-
-## Active Power Droop
+### Active Power Droop
 
 $$
-f
-=
-f_0
--
-K_P(P-P_0)
+f = f_0 - K_P(P - P_0)
 $$
 
----
-
-## Reactive Power Droop
+### Reactive Power Droop
 
 $$
-V
-=
-V_0
--
-K_Q(Q-Q_0)
+V = V_0 - K_Q(Q - Q_0)
 $$
 
----
-
-## Why Use Droop Control?
-
-Droop allows:
-
-```text
-Multiple Inverters
-```
-
-to share loads automatically.
+Droop allows multiple inverters to share loads automatically without communication.
 
 ---
 
 ## Virtual Synchronous Machine (VSM)
 
-A Virtual Synchronous Machine emulates the behavior of a rotating generator using software.
+A Virtual Synchronous Machine emulates the behaviour of a rotating generator using software.
 
----
-
-## Benefits of VSM Control
+Benefits:
 
 ✅ Synthetic Inertia
 
@@ -1043,139 +417,6 @@ A Virtual Synchronous Machine emulates the behavior of a rotating generator usin
 ✅ Improved Dynamic Response
 
 ✅ Enhanced Microgrid Performance
-
----
-
-## Recommended Build Stages
-
-### Stage 1
-
-Generate a 50 Hz reference.
-
-Verify:
-
-```text
-Frequency
-
-Amplitude
-```
-
----
-
-### Stage 2
-
-Generate SPWM.
-
-Verify:
-
-```text
-PWM Frequency
-
-Duty Cycle Variation
-```
-
----
-
-### Stage 3
-
-Build and test the H-Bridge.
-
-Verify:
-
-```text
-Alternating Output Voltage
-```
-
----
-
-### Stage 4
-
-Install the LC Filter.
-
-Verify:
-
-```text
-Smooth AC Voltage
-```
-
----
-
-### Stage 5
-
-Implement Voltage Measurement.
-
-Verify ADC accuracy.
-
----
-
-### Stage 6
-
-Implement PI Voltage Control.
-
-Verify stable regulation.
-
----
-
-### Stage 7
-
-Implement Droop Control.
-
-Study power-sharing behavior.
-
----
-
-## Experiment 1 - Generate AC Voltage
-
-### Objective
-
-Generate a stable AC voltage waveform.
-
----
-
-## Measurements
-
-| Parameter | Measured |
-|------------|----------|
-| Frequency | |
-| RMS Voltage | |
-| Peak Voltage | |
-
----
-
-## Experiment 2 - Load Regulation
-
-### Test Loads
-
-```text
-100 Ω
-
-220 Ω
-
-470 Ω
-```
-
----
-
-## Results Table
-
-| Load | Output Voltage |
-|--------|---------------|
-| 100 Ω | |
-| 220 Ω | |
-| 470 Ω | |
-
----
-
-## Experiment 3 - PI Tuning
-
-Measure:
-
-- Overshoot
-- Settling Time
-- Voltage Error
-- Stability
-
-for different gain settings.
 
 ---
 
@@ -1246,19 +487,162 @@ Record the predicted rise time, overshoot, and LC natural frequency before proce
 
 ---
 
+## Recommended Build Stages
+
+### Stage 1
+
+Generate a 50 Hz reference signal.
+
+Verify frequency and amplitude on the oscilloscope.
+
+### Stage 2
+
+Generate SPWM.
+
+Verify PWM carrier frequency and varying duty cycle.
+
+### Stage 3
+
+Build and test the H-Bridge.
+
+Verify alternating output voltage.
+
+### Stage 4
+
+Install the LC Filter.
+
+Verify smooth AC voltage output.
+
+### Stage 5
+
+Implement voltage measurement.
+
+Verify ADC accuracy against multimeter reading.
+
+### Stage 6
+
+Implement PI voltage control.
+
+Verify stable regulation.
+
+### Stage 7
+
+Implement droop control.
+
+Study power-sharing behaviour.
+
+---
+
+## Experiment 1 - Generate AC Voltage
+
+### Objective
+
+Generate a stable 50 Hz AC voltage waveform from the inverter.
+
+---
+
+### Connections
+
+```text
+Probe Tip  ──────► Inverter output (after LC filter)
+Probe GND  ──────► Circuit GND
+```
+
+---
+
+### Oscilloscope Settings
+
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 5 ms/div | 5 ms/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | AC | AC |
+
+---
+
+### Measurements
+
+| Parameter | Measured |
+|-----------|---------|
+| Frequency | |
+| RMS Voltage | |
+| Peak Voltage | |
+
+---
+
+## Experiment 2 - Load Regulation
+
+### Objective
+
+Observe how output voltage changes with different load resistances, with and without the PI voltage controller.
+
+---
+
+### Test Loads
+
+```text
+100 Ω
+
+220 Ω
+
+470 Ω
+```
+
+For each load, measure the output voltage with the PI controller active.
+
+---
+
+### Results Table
+
+| Load | Output Voltage |
+|------|---------------|
+| 100 Ω | |
+| 220 Ω | |
+| 470 Ω | |
+
+---
+
+## Experiment 3 - PI Tuning
+
+### Objective
+
+Observe how PI gains affect voltage regulation quality.
+
+---
+
+### Procedure
+
+Step through the following gain sets and record the behaviour:
+
+| Kp | Ki | Behaviour |
+|----|----|-----------|
+| 1 | 10 | |
+| 3 | 100 | |
+| 10 | 500 | |
+
+Measure for each:
+
+- Overshoot
+- Settling time
+- Voltage regulation error
+- Stability
+
+---
+
 ## MATLAB Comparison
 
 After completing the experiments, enter your measured load regulation data and PI step response to compare against simulation.
 
 ```matlab
-% --- Enter your system parameters ---
-Vm     = 5;       % target peak voltage (V)
-L      = 1e-3;    % H
-C      = 1e-6;    % F
+% Enter your system parameters
+Vm     = 5;
+L      = 1e-3;
+C      = 1e-6;
 Kp_v   = 3;
 Ki_v   = 100;
 
-% --- Enter measured Vout for each load (Experiment 2) ---
+% Enter measured Vout for each load (Experiment 2)
 R_loads  = [100, 220, 470];          % Ohm
 V_meas   = [4.6, 4.85, 4.95];       % V peak — replace with your readings
 
@@ -1281,7 +665,7 @@ xlabel('Load Resistance (\Omega)'); ylabel('Output Voltage (V)');
 title('Load Regulation: Simulated vs Measured');
 yline(Vm, 'k--');
 
-% --- Enter measured PI step response (Experiment 3) ---
+% Enter measured PI step response (Experiment 3)
 t_meas = [0, 0.002, 0.005, 0.010, 0.015, 0.020, 0.030];  % s — replace
 v_meas = [0, 1.5,   4.2,   5.3,   5.1,   5.0,   5.0];    % V — replace
 
@@ -1299,7 +683,7 @@ legend('Simulated','Measured'); grid on;
 xlabel('Time (s)'); ylabel('Voltage (V)');
 title(sprintf('PI Voltage Step Response  Kp=%.0f Ki=%.0f', Kp_v, Ki_v));
 
-% --- Metrics ---
+% Metrics
 reg_pct = abs(V_meas - Vm) ./ Vm * 100;
 fprintf('\nVoltage regulation error:\n');
 for k = 1:numel(R_loads)
@@ -1308,7 +692,7 @@ for k = 1:numel(R_loads)
 end
 ```
 
-Reflection questions:
+### Reflection
 
 1. Does voltage regulation worsen at lower load resistance (higher current)? What physical effect causes this?
 2. How does the LC filter natural frequency relate to the PI controller bandwidth? What happens if the controller bandwidth exceeds the filter resonance?
@@ -1316,81 +700,45 @@ Reflection questions:
 
 ---
 
-## Knowledge Check
+## Troubleshooting
 
-### Question 1
+### SPWM Not Operating Correctly
 
-What is the primary difference between Grid-Following and Grid-Forming control?
+Check:
 
-Answer:
+✅ Angle increment `omega * Ts` correct for 50 Hz
 
-```text
-____________________
-```
+✅ PWM output pin configured correctly
 
----
-
-### Question 2
-
-Why is a PLL unnecessary in a Grid-Forming converter?
-
-Answer:
-
-```text
-____________________
-```
+✅ Oscilloscope showing varying pulse widths
 
 ---
 
-### Question 3
+### H-Bridge Not Switching
 
-What does the voltage controller regulate?
+Check:
 
-Answer:
+✅ Dead time implemented
 
-```text
-____________________
-```
+✅ Gate driver supply voltage correct
 
----
-
-### Question 4
-
-What is droop control?
-
-Answer:
-
-```text
-____________________
-```
+✅ MOSFET pinout correct (G, D, S)
 
 ---
 
-### Question 5
+### Output Voltage Unstable
 
-What is a Virtual Synchronous Machine?
+Check:
 
-Answer:
+✅ PI gains not too large
 
-```text
-____________________
-```
+✅ LC filter installed
 
----
-
-### Question 6
-
-Your MATLAB simulation predicted less than 1% voltage regulation error across all three loads, but the physical inverter showed 8% error at the 100 Ω load. Identify two physical causes and explain what change to the controller or hardware would reduce the error.
-
-Answer:
-
-```text
-____________________
-```
+✅ Voltage sensor calibrated
 
 ---
 
-## Troubleshooting Checklist
+### Troubleshooting Checklist
 
 ✅ SPWM operating correctly
 
@@ -1404,11 +752,49 @@ ____________________
 
 ✅ PI controller operating
 
-✅ Output frequency stable
+✅ Output frequency stable at 50 Hz
 
 ✅ Output voltage regulated
 
 ✅ Safe load connection verified
+
+---
+
+## Knowledge Check
+
+### Question 1
+
+What is the primary difference between Grid-Following and Grid-Forming control?
+
+---
+
+### Question 2
+
+Why is a PLL unnecessary in a Grid-Forming converter?
+
+---
+
+### Question 3
+
+What does the voltage controller regulate?
+
+---
+
+### Question 4
+
+What is droop control?
+
+---
+
+### Question 5
+
+What is a Virtual Synchronous Machine?
+
+---
+
+### Question 6
+
+Your MATLAB simulation predicted less than 1% voltage regulation error across all three loads, but the physical inverter showed 8% error at the 100 Ω load. Identify two physical causes and explain what change to the controller or hardware would reduce the error.
 
 ---
 

@@ -1,4 +1,4 @@
-# Project 4 - MOSFET Fundamentals and Electronic Switching
+# Project 04 - MOSFET Fundamentals and Electronic Switching
 
 ### Prerequisites
 
@@ -18,10 +18,10 @@ In this project you will learn:
 
 - What a MOSFET is
 - How a MOSFET works
-- How a microcontroller (Arduino or ESP32) controls a MOSFET
+- How a microcontroller controls a MOSFET
 - Why MOSFETs are used in power electronics
 - How PWM and MOSFETs work together
-- How to use an oscilloscope to measure switching signals (OWON HDS272S recommended, DSO Nano compatible)
+- How to measure switching signals with the OWON HDS272S oscilloscope
 - Why switching converters are efficient
 
 This project marks the beginning of:
@@ -63,34 +63,25 @@ MOSFET stands for:
 
 **Metal Oxide Semiconductor Field Effect Transistor**
 
-A MOSFET behaves like an electronic switch.
-
-Instead of using your finger to open and close a switch:
+A MOSFET behaves like an electronic switch controlled by voltage rather than by hand.
 
 ```text
-The controller drives the switch electronically.
+Small Control Signal  →  Large Power Control
 ```
 
 ---
 
 ## Why MOSFETs Are Important
 
-Imagine controlling:
+A microcontroller pin can safely supply only a small current (typically 20 mA).
 
-- A DC motor
-- An LED strip
-- A Buck Converter
-- A Power Supply
+Many loads require far more:
 
-All require more current than a microcontroller pin can safely provide.
+- DC motors: hundreds of milliamps to several amps
+- LED strips: hundreds of milliamps
+- Buck converters: several amps
 
-A MOSFET allows:
-
-```text
-Small Control Signal
-        ↓
-Large Power Control
-```
+A MOSFET allows the microcontroller to control these loads safely.
 
 ---
 
@@ -100,13 +91,11 @@ Simplified N-Channel MOSFET:
 
 ```text
        Drain
-         |
-         |
-         |
-Gate ----|
-         |
-         |
-         |
+         │
+         │
+Gate ────┤
+         │
+         │
        Source
 ```
 
@@ -114,29 +103,23 @@ Gate ----|
 
 ## MOSFET Terminals
 
-Every MOSFET has:
-
 ### Gate (G)
 
-Control terminal.
+Control terminal. Equivalent to the switch handle.
 
-Equivalent to:
-
-```text
-Switch Handle
-```
+Applying voltage here turns the MOSFET ON or OFF.
 
 ---
 
 ### Drain (D)
 
-Current enters here.
+Current enters here from the load.
 
 ---
 
 ### Source (S)
 
-Current exits here.
+Current exits here toward GND.
 
 ---
 
@@ -145,57 +128,42 @@ Current exits here.
 When:
 
 $$
-V_{GS}=0V
+V_{GS} = 0\ \text{V}
 $$
 
-MOSFET is:
-
-```text
-OFF
-```
+the MOSFET is **OFF** — no current flows from Drain to Source.
 
 ---
 
 When:
 
 $$
-V_{GS}>V_{TH}
+V_{GS} > V_{TH}
 $$
 
-and high enough for low $R_{DS(on)}$ at your gate-drive voltage, the MOSFET is:
-
-```text
-ON
-```
+and the gate voltage is high enough for low $R_{DS(on)}$, the MOSFET is **ON** — current flows freely from Drain to Source.
 
 Where:
 
 $$
-V_{GS}=V_G-V_S
+V_{GS} = V_G - V_S
 $$
 
 ---
 
 ## Logic Level MOSFETs
 
-For controller projects always use a:
+For microcontroller projects always use a **Logic Level MOSFET**.
 
-```text
-Logic Level MOSFET
-```
+These turn on fully with a 3.3 V or 5 V gate signal.
 
 Recommended:
 
 - IRLZ44N
 - IRLZ34N
 - IRL540N
-- AO3400
 
-Avoid:
-
-- IRFZ44N
-
-for beginner controller projects.
+Avoid the IRFZ44N for beginner microcontroller projects — it requires a higher gate voltage to turn on fully.
 
 ---
 
@@ -207,35 +175,30 @@ $$
 P = V \cdot I
 $$
 
-When the MOSFET is OFF:
+When the MOSFET is **OFF**: $I \approx 0$, therefore $P \approx 0$.
 
-$$
-I \approx 0
-$$
+When the MOSFET is **ON**: $V_{DS} \approx 0$, therefore $P \approx 0$.
 
-Therefore:
-
-$$
-P \approx 0
-$$
+This is why switching devices are far more efficient than linear regulators.
 
 ---
 
-When the MOSFET is ON:
+## IRLZ44N Pinout
 
-$$
-V \approx 0
-$$
+For the IRLZ44N in a TO-220 package, viewed from the front (marked side):
 
-Therefore:
+```text
+      _________
+     |         |
+     |         |
+     |_________|
 
-$$
-P \approx 0
-$$
+       │ │ │
 
----
+       G D S
+```
 
-This is why switching devices are efficient.
+Always verify with the datasheet before wiring.
 
 ---
 
@@ -268,31 +231,12 @@ xlabel('Time (ms)');
 sgtitle('MOSFET Gate PWM - 490 Hz');
 ```
 
-### Average Voltage vs Duty Cycle
-
-```matlab
-D    = 0:0.01:1;
-Vavg = 5 .* D;
-
-D_points    = [0.25, 0.50, 0.75, 1.00];
-Vavg_points = 5 .* D_points;
-
-figure;
-plot(D, Vavg, 'b', 'LineWidth', 2); hold on;
-scatter(D_points, Vavg_points, 80, 'r', 'filled', ...
-    'DisplayName', 'Experiment points');
-grid on;
-xlabel('Duty Cycle'); ylabel('Average Voltage (V)');
-title('MOSFET PWM - V_{AVG} vs Duty Cycle');
-legend('Theory', 'Experiment points', 'Location', 'northwest');
-```
-
 ### Prediction Table
 
 Record your predicted average voltages before measuring:
 
-| PWM Value | Duty Cycle | Predicted V\_{AVG} |
-|-----------|------------|--------------------|
+| PWM Value | Duty Cycle | Predicted $V_{AVG}$ |
+|-----------|------------|---------------------|
 | 64 | 25% | |
 | 128 | 50% | |
 | 192 | 75% | |
@@ -302,147 +246,56 @@ Record your predicted average voltages before measuring:
 
 ## Components Required
 
-### Purchase
-
-Recommended:
-
-```text
-IRLZ44N MOSFET
-```
-
----
-
-### Existing Components
-
-From SparkFun Inventor Kit:
-
-- Arduino Uno
-- ESP32 DevKit V1 (alternative controller)
+- IRLZ44N MOSFET
+- Arduino Uno or ESP32 DevKit V1
 - LED
-- 220 Ω resistor
+- 220 Ω resistor (for LED)
+- 220 Ω resistor (for gate)
 - Breadboard
 - Jumper wires
 
 Equipment:
 
-- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
-
----
-
-## Verify MOSFET Pinout
-
-For an IRLZ44N:
-
-Front View:
-
-```text
-      _________
-     |         |
-     |         |
-     |_________|
-
-       | | |
-
-       G D S
-```
-
-Always verify with the datasheet.
+- OWON HDS272S Oscilloscope (recommended)
+- DSO Nano Oscilloscope (compatible)
 
 ---
 
 ## Project Circuit
 
-We will use the MOSFET as an electronic switch to control an LED.
+The MOSFET is used as an electronic switch to control an LED.
+
+The microcontroller drives the MOSFET gate. The MOSFET switches the LED current.
 
 ---
 
 ## Circuit Diagram
 
-```mermaid
-graph TD
+```text
+5V
+ │
+220 Ω  (LED current-limiting resistor)
+ │
+LED anode (long leg)
+LED cathode (short leg)
+ │
+Drain  (MOSFET)
+Source (MOSFET) ──── GND
 
-A[Arduino Pin 9]
-
-A2[ESP32 GPIO18]
-
-A --> B[220 Ohm Gate Resistor]
-
-A2 --> B
-
-B --> C[Gate]
-
-D[Source]
---> E[GND]
-
-F[5V]
---> G[220 Ohm]
-
-G --> H[LED]
-
-H --> I[Drain]
+Gate (MOSFET)
+ │
+220 Ω  (gate resistor)
+ │
+Arduino Pin D9  (or ESP32 GPIO18)
 ```
 
 ---
 
-## Simplified Wiring Diagram
+## Why a Gate Resistor?
 
-```text
-PWM Output (Arduino Pin 9 or ESP32 GPIO18)
-      |
-     220Ω
-      |
-     Gate
+A small resistor (220 Ω) in series with the gate limits the current spike when the gate capacitance charges.
 
-     MOSFET
-
-Drain ---- LED ---- 220Ω ---- 5V
-
-Source ---------------- GND
-```
-
----
-
-## Understanding Current Flow
-
-### MOSFET OFF
-
-Gate:
-
-$$
-V_G = 0V
-$$
-
-Current:
-
-$$
-I = 0
-$$
-
-LED:
-
-```text
-OFF
-```
-
----
-
-### MOSFET ON
-
-Gate:
-
-$$
-V_G = V_S
-$$
-
-where $V_S$ is the controller output high level (typically about 5.0V for Arduino Uno or about 3.3V for ESP32).
-
-Current flows.
-
-LED:
-
-```text
-ON
-```
+This reduces ringing on the gate signal and protects the microcontroller pin.
 
 ---
 
@@ -450,54 +303,127 @@ ON
 
 ### Objective
 
-Switch an LED ON and OFF using a MOSFET.
+Switch an LED ON and OFF using a MOSFET controlled by the Arduino, and measure the gate voltage on the oscilloscope.
 
 ---
 
-## Arduino Code
+### Step-by-Step Wiring
+
+1. Insert the **IRLZ44N** into the breadboard with the three legs in separate rows. Identify Gate (G), Drain (D), and Source (S) from the pinout diagram above.
+2. Connect a jumper wire from **Arduino GND** to the **Source** leg row.
+3. Insert the **LED** so its **cathode (short leg)** is in the same row as the **Drain** leg.
+4. Insert the **220 Ω LED resistor** so one leg is in the same row as the **LED anode (long leg)** and the other leg is in a new row.
+5. Connect a jumper wire from the **top of the LED resistor** to the **Arduino 5V** pin.
+6. Insert the **220 Ω gate resistor** so one leg is in the same row as the **Gate** leg and the other leg is in a new row.
+7. Connect a jumper wire from the **top of the gate resistor** to **Arduino pin D9**.
+
+The current path when the MOSFET is ON will be:
+
+```text
+5V → LED resistor → LED → Drain → Source → GND
+```
+
+The control path will be:
+
+```text
+D9 → Gate resistor → Gate
+```
+
+---
+
+### Wiring Checklist
+
+Before uploading:
+
+✅ MOSFET Source connected to GND
+
+✅ LED cathode (short leg) connected to Drain
+
+✅ LED anode (long leg) connected to 220 Ω resistor
+
+✅ 220 Ω LED resistor connected to 5V
+
+✅ 220 Ω gate resistor between D9 and Gate
+
+✅ Shared GND between Arduino and MOSFET Source
+
+---
+
+### Arduino Code
 
 ```cpp
 void setup()
 {
+    // Configure pin 9 as a digital output to drive the MOSFET gate.
     pinMode(9, OUTPUT);
 }
 
 void loop()
 {
+    // Drive gate HIGH → MOSFET turns ON → current flows → LED ON.
     digitalWrite(9, HIGH);
+    delay(1000);              // Hold ON for 1 second
 
-    delay(1000);
-
+    // Drive gate LOW → MOSFET turns OFF → no current → LED OFF.
     digitalWrite(9, LOW);
-
-    delay(1000);
+    delay(1000);              // Hold OFF for 1 second
 }
 ```
 
-### ESP32 Equivalent
+### ESP32 Equivalent Code
 
 ```cpp
-const int PWM_PIN = 18;
-
 void setup()
 {
-    pinMode(PWM_PIN, OUTPUT);
+    // Configure GPIO18 as a digital output.
+    // Note: ESP32 outputs 3.3 V HIGH, which is sufficient for the IRLZ44N.
+    pinMode(18, OUTPUT);
 }
 
 void loop()
 {
-    digitalWrite(PWM_PIN, HIGH);
+    digitalWrite(18, HIGH);
     delay(1000);
-    digitalWrite(PWM_PIN, LOW);
+
+    digitalWrite(18, LOW);
     delay(1000);
 }
 ```
 
 ---
 
-## Expected Behaviour
+### Oscilloscope Settings — Gate Voltage
 
-The LED should:
+Connect the probe to the MOSFET Gate to observe the switching signal.
+
+```text
+Probe Tip  ──────► MOSFET Gate
+Probe GND  ──────► Arduino GND (= MOSFET Source)
+```
+
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 200 ms/div | 200 ms/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
+
+---
+
+### Expected Waveform
+
+```text
+5V  ────────
+            │
+            │
+0V  ________│________
+```
+
+---
+
+### Observe
+
+The LED should flash:
 
 ```text
 ON for 1 second
@@ -505,77 +431,16 @@ ON for 1 second
 OFF for 1 second
 ```
 
-continuously.
+On the oscilloscope you should see the gate voltage switching between 0 V and approximately 5 V (Arduino) or 3.3 V (ESP32).
 
 ---
 
-## Oscilloscope Measurement
-
-### Objective
-
-Measure the gate voltage.
-
----
-
-## Probe Location
-
-Probe Tip:
-
-```text
-Gate
-```
-
-Probe Ground:
-
-```text
-GND
-```
-
----
-
-## Oscilloscope Setup (OWON Baseline)
-
-Recommended scope: OWON HDS272S.
-
-Compatible alternative: DSO Nano.
-
-Vertical:
-
-```text
-2 V/div
-```
-
-Horizontal:
-
-```text
-200 ms/div
-```
-
-Trigger:
-
-```text
-Rising Edge
-```
-
----
-
-## Expected Waveform
-
-```text
-5V ────────
-           │
-           │
-0V ________│________
-```
-
----
-
-## Record Measurements
+### Record Measurements
 
 | Parameter | Expected | Measured |
-|------------|-----------|-----------|
-| Gate LOW | 0V | |
-| Gate HIGH | V_S (about 5V Arduino or about 3.3V ESP32) | |
+|-----------|----------|---------|
+| Gate LOW | 0 V | |
+| Gate HIGH | ~5 V (Arduino) or ~3.3 V (ESP32) | |
 
 ---
 
@@ -583,128 +448,93 @@ Rising Edge
 
 ### Objective
 
-Control the MOSFET using PWM.
+Apply a PWM signal to the MOSFET gate and observe the switching waveform on the oscilloscope.
 
 ---
 
-## Arduino Code
+### Circuit
+
+Same as Experiment 1.
+
+---
+
+### Arduino Code
 
 ```cpp
 void setup()
 {
-    pinMode(9, OUTPUT);
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
 }
 
 void loop()
 {
-    analogWrite(9,128);
+    // Apply 50% duty cycle PWM to the MOSFET gate.
+    // The MOSFET switches ON and OFF approximately 490 times per second.
+    // The LED receives approximately 50% of the available power.
+    analogWrite(9, 128);
 }
 ```
 
-### ESP32 Equivalent (LEDC PWM)
+### ESP32 Equivalent Code
 
 ```cpp
-const int PWM_PIN = 18;
-const int PWM_CH = 0;
-const int PWM_FREQ = 500;
-const int PWM_RES = 8;
-
 void setup()
 {
-    ledcAttach(PWM_PIN, PWM_FREQ, PWM_RES);
+    // Configure LEDC channel 0: 500 Hz, 8-bit resolution.
+    ledcSetup(0, 500, 8);
+
+    // Attach GPIO18 to channel 0.
+    ledcAttachPin(18, 0);
 }
 
 void loop()
 {
-    ledcWrite(PWM_PIN, 128);
+    // Set duty cycle to 128/255 ≈ 50%.
+    ledcWrite(0, 128);
 }
 ```
 
 ---
 
-## What Is Happening?
-
-The controller produces:
-
-$$
-50\%
-$$
-
-duty cycle PWM.
-
-The MOSFET switches:
+### Oscilloscope Settings — PWM Gate Signal
 
 ```text
-ON
-
-OFF
-
-ON
-
-OFF
+Probe Tip  ──────► MOSFET Gate
+Probe GND  ──────► Arduino GND
 ```
 
-approximately:
-
-$$
-490Hz (Arduino nominal, ESP32 configured value)
-$$
+| Setting | OWON HDS272S | DSO Nano |
+|---------|--------------|----------|
+| Vertical scale | 2 V/div | 2 V/div |
+| Horizontal scale | 500 µs/div | 500 µs/div |
+| Trigger | Edge, Rising | Edge, Rising |
+| Coupling | DC | DC |
 
 ---
 
-## Probe Location
-
-Measure:
+### Expected Waveform
 
 ```text
-Gate Voltage
-```
-
-again.
-
----
-
-## Oscilloscope Setup (OWON Baseline)
-
-Recommended scope: OWON HDS272S.
-
-Compatible alternative: DSO Nano.
-
-Vertical:
-
-```text
-2V/div
-```
-
-Horizontal:
-
-```text
-500 us/div
-```
-
-Trigger:
-
-```text
-Rising Edge
+5V  ─────      ─────
+         │    │
+         │    │
+0V  _____│____│_____
 ```
 
 ---
 
-## Expected Waveform
+### Observe
 
-```text
-V_S ────      ─────
-         │      │
-         │      │
-0V ______│______│______
-```
+The LED should appear at medium brightness (not flashing visibly — the switching is too fast for the eye to detect).
+
+On the oscilloscope you should see the PWM square wave on the gate.
 
 ---
 
-## Record Measurements
+### Record Measurements
 
 | Parameter | Measured |
-|------------|-----------|
+|-----------|---------|
 | Frequency | |
 | Duty Cycle | |
 | Peak Voltage | |
@@ -715,88 +545,60 @@ V_S ────      ─────
 
 ### Objective
 
-Use PWM to control LED brightness.
+Step through four duty cycle levels and observe the effect on LED brightness.
 
 ---
 
-### Case 1
+### Circuit
 
-Upload:
+Same as Experiments 1 and 2.
+
+---
+
+### Code
 
 ```cpp
-analogWrite(9,64);
+void setup()
+{
+    // No explicit pinMode needed; analogWrite() configures the pin automatically.
+}
+
+void loop()
+{
+    // Step through four duty cycle levels with a 2-second pause at each.
+
+    analogWrite(9, 64);    // ~25% duty cycle → LED dim
+    delay(2000);
+
+    analogWrite(9, 128);   // ~50% duty cycle → LED medium brightness
+    delay(2000);
+
+    analogWrite(9, 192);   // ~75% duty cycle → LED bright
+    delay(2000);
+
+    analogWrite(9, 255);   // 100% duty cycle → LED fully ON
+    delay(2000);
+}
 ```
-
-Expected:
-
-$$
-25\%
-$$
-
-duty cycle.
-
-LED should appear dim.
 
 ---
 
-### Case 2
+### Observe
 
-Upload:
+Watch the LED step through brightness levels:
 
-```cpp
-analogWrite(9,128);
+```text
+Dim  →  Medium  →  Bright  →  Fully ON
 ```
 
-Expected:
-
-$$
-50\%
-$$
-
-LED should appear moderately bright.
+For each step, also observe the gate waveform on the oscilloscope and note how the ON time changes.
 
 ---
 
-### Case 3
+### Results Table
 
-Upload:
-
-```cpp
-analogWrite(9,192);
-```
-
-Expected:
-
-$$
-75\%
-$$
-
-LED should appear bright.
-
----
-
-### Case 4
-
-Upload:
-
-```cpp
-analogWrite(9,255);
-```
-
-Expected:
-
-$$
-100\%
-$$
-
-LED should be fully ON.
-
----
-
-## Results Table
-
-| PWM Value | Duty Cycle | Brightness |
-|------------|------------|------------|
+| PWM Value | Duty Cycle | Observed Brightness |
+|-----------|------------|---------------------|
 | 64 | 25% | |
 | 128 | 50% | |
 | 192 | 75% | |
@@ -804,108 +606,39 @@ LED should be fully ON.
 
 ---
 
-## Why PWM Works
+### Why PWM Works
 
-Average voltage is:
-
-$$
-V_{AVG}=D \cdot V_S
-$$
-
-Where:
-
-- $D$ = Duty Cycle
-- $V_S$ = Supply Voltage
-
-Example:
+Average voltage delivered to the load:
 
 $$
-D=0.5
+V_{AVG} = D \cdot V_S
 $$
 
-and:
+At 50% duty cycle with a 5 V supply:
 
 $$
-V_S
+V_{AVG} = 0.5 \times 5 = 2.5\ \text{V}
 $$
 
-Then:
-
-$$
-V_{AVG}=0.5V_S
-$$
-
-Examples: $V_{AVG}=2.5V$ for a 5.0V Arduino signal, or $V_{AVG}=1.65V$ for a 3.3V ESP32 signal.
-
-The LED receives less average power.
-
----
-
-## Why a Microcontroller Needs a MOSFET
-
-Microcontroller output current is limited.
-
-Typical safe current per pin:
-
-```text
-20 mA
-```
-
-Many loads require:
-
-```text
-Hundreds of milliamps
-
-or
-
-Several amps
-```
-
-A MOSFET allows the controller to control these loads safely.
-
----
-
-## Practical Example
-
-Controller pin:
-
-```text
-5V
-
-20mA
-```
-
-controls
-
-```text
-12V
-
-2A
-```
-
-motor via MOSFET.
+The LED receives less average power and therefore appears dimmer.
 
 ---
 
 ## MATLAB Comparison
 
-Now compare your measured gate waveform against the ideal simulation.
-
-### Enter Your Measured Values
-
-From Experiment 2, record the frequency and duty cycle you measured on the oscilloscope:
+Compare your measured gate waveform against the ideal simulation.
 
 ```matlab
 Vs = 5;                      % use 5.0 for Arduino or 3.3 for ESP32
-f_theory  = 490;             % ideal Arduino PWM frequency (Hz)
+f_theory   = 490;            % ideal Arduino PWM frequency (Hz)
 f_measured = 490;            % replace with your measured frequency (Hz)
-D_measured = 0.50;           % replace with your measured duty cycle (0-1)
+D_measured = 0.50;           % replace with your measured duty cycle (0–1)
 
 Ts_t = 1 / f_theory;
 Ts_m = 1 / f_measured;
 t    = 0:1e-6:4*max(Ts_t, Ts_m);
 
-pwm_theory  = Vs * double(mod(t, Ts_t) < 0.50 * Ts_t);
+pwm_theory   = Vs * double(mod(t, Ts_t) < 0.50 * Ts_t);
 pwm_measured = Vs * double(mod(t, Ts_m) < D_measured * Ts_m);
 
 figure;
@@ -921,7 +654,7 @@ title('Gate Waveform - Theory vs Measurement');
 subplot(2,1,2);
 D_vals = [0.25, 0.50, 0.75, 1.00];
 Vavg_theory   = Vs .* D_vals;
-Vavg_measured = Vs .* D_measured;   % single measured point
+Vavg_measured = Vs .* D_measured;
 bar(D_vals*100, Vavg_theory, 0.4, 'b', 'DisplayName', 'Theory'); hold on;
 scatter(D_measured*100, Vavg_measured, 100, 'r', 'filled', ...
     'DisplayName', 'Measured');
@@ -933,50 +666,88 @@ legend('Location','northwest');
 ### Reflection
 
 - Does your measured frequency match 490 Hz?
-- Does your measured VAVG match the theoretical value D × V_S?
-- Why might the measured average voltage differ slightly from theory? (gate resistor drop, MOSFET on-state voltage, probe loading)
+- Does your measured $V_{AVG}$ match the theoretical value $D \times V_S$?
+- Why might the measured average voltage differ slightly from theory?
 
 ---
 
-## Engineering Applications
+## Troubleshooting
 
-MOSFETs are used in:
+### LED Never Turns ON
 
-### LED Drivers
+Check:
 
-Adjust brightness.
+✅ MOSFET pinout (Gate, Drain, Source in correct rows)
 
----
+✅ LED polarity (cathode to Drain, anode toward 5V)
 
-### DC Motor Drives
+✅ Gate resistor connected between D9 and Gate
 
-Adjust speed.
-
-Note: for inductive loads such as motors and solenoids, add a flyback diode across the load.
+✅ Source connected to GND
 
 ---
 
-### Buck Converters
+### MOSFET Gets Hot
 
-Step voltage down.
+Check:
 
----
+✅ Correct MOSFET type (IRLZ44N, not IRFZ44N)
 
-### Boost Converters
+✅ Source connected to GND (not floating)
 
-Step voltage up.
-
----
-
-### Inverters
-
-Convert DC to AC.
+✅ Load current within MOSFET rating
 
 ---
 
-### Solar Controllers
+### No PWM Visible on Oscilloscope
 
-Battery charging and regulation.
+Check:
+
+✅ Probe tip on MOSFET Gate
+
+✅ Probe ground on Arduino GND (same as MOSFET Source)
+
+✅ Trigger type set to Edge, Rising
+
+✅ Horizontal scale appropriate (500 µs/div for 490 Hz)
+
+---
+
+### Troubleshooting Checklist
+
+✅ MOSFET orientation correct (G, D, S identified)
+
+✅ Shared GND between controller and MOSFET Source
+
+✅ Gate resistor in series between D9 and Gate
+
+✅ LED resistor in series between 5V and LED anode
+
+✅ Probe on Gate, probe ground on GND
+
+✅ Correct trigger settings
+
+---
+
+## Laboratory Exercises
+
+### Exercise 1
+
+Replace the LED with a small DC motor (if available). Observe the gate waveform and note any difference compared to the resistive LED load.
+
+> Note: Add a flyback diode (e.g. 1N4007) across the motor terminals (cathode toward 5V) to protect the MOSFET from inductive voltage spikes.
+
+---
+
+### Exercise 2
+
+Connect a potentiometer to A0 and use its reading to control the MOSFET duty cycle in real time. Observe the gate waveform change on the oscilloscope as you turn the knob.
+
+---
+
+### Exercise 3
+
+Measure the gate waveform at 25%, 50%, and 75% duty cycle. Record the ON time and OFF time for each and verify that $D = T_{ON} / T$.
 
 ---
 
@@ -986,129 +757,35 @@ Battery charging and regulation.
 
 What does MOSFET stand for?
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 2
 
 What are the three MOSFET terminals?
 
-Answer:
-
-```text
-____________________
-```
-
 ---
 
 ### Question 3
 
-What controls the MOSFET?
-
-Answer:
-
-```text
-____________________
-```
+What controls whether the MOSFET is ON or OFF?
 
 ---
 
 ### Question 4
 
-Why are MOSFETs used in power electronics?
-
-Answer:
-
-```text
-____________________
-```
+Why are MOSFETs used in power electronics instead of linear transistors?
 
 ---
 
 ### Question 5
 
-Why can't a microcontroller pin drive large motors directly?
-
-Answer:
-
-```text
-____________________
-```
+Why can't a microcontroller pin drive a large motor directly?
 
 ---
 
 ### Question 6
 
-Your simulation predicted VAVG = 2.5V at 50% duty cycle but you measured 2.3V. Give two physical reasons that could explain this.
-
-Answer:
-
-```text
-____________________
-```
-
----
-
-## Common Mistakes
-
-### LED Never Turns ON
-
-Check:
-
-- MOSFET pinout
-- LED polarity
-- Wiring
-
----
-
-### MOSFET Gets Hot
-
-Check:
-
-- Correct MOSFET type
-- Correct wiring
-
-Use a logic-level MOSFET.
-
----
-
-### No PWM Visible
-
-Check:
-
-- Trigger settings
-- Probe location
-- Controller PWM code
-
----
-
-### Motor Does Not Switch Safely
-
-Check:
-
-- Flyback diode installed across inductive load
-- Diode polarity correct
-
----
-
-## Troubleshooting Checklist
-
-✅ MOSFET orientation correct
-
-✅ Shared ground between controller and MOSFET
-
-✅ Probe on Gate
-
-✅ Probe ground on GND
-
-✅ Correct trigger settings
-
-✅ Correct PWM signal measured
+Your simulation predicted $V_{AVG}$ = 2.5 V at 50% duty cycle but you measured 2.3 V. Give two physical reasons that could explain this.
 
 ---
 
@@ -1142,7 +819,9 @@ These ideas are the building blocks for:
 
 ## Next Project
 
-**10_PWM_Motor_Control.md**
+```text
+10_PWM_Motor_Control.md
+```
 
 Topics:
 
