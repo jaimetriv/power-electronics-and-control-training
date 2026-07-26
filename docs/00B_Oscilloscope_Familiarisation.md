@@ -22,12 +22,19 @@ This project introduces the basic oscilloscope skills required for the remainder
   
 At the end of this project you should be able to:
 ✅ Connect the OWON HDS272S safely to a circuit
+
 ✅ Adjust the vertical scale to suit the signal
+
 ✅ Adjust the horizontal scale to suit the signal
+
 ✅ Use edge triggering to stabilise a waveform
+
 ✅ Measure DC voltage
+
 ✅ Measure peak voltage of a PWM signal
+
 ✅ Measure the period and frequency of a PWM signal
+
 ✅ Identify duty cycle from a waveform
 
 ✅ Use the built-in signal generator  
@@ -1157,14 +1164,17 @@ Where should the probe ground clip always be connected in Arduino experiments?
   
 What is the purpose of CH1 in the low-pass filter experiment?
 
+---
 #### Question 8
   
 What is the purpose of CH2 in the low-pass filter experiment?
 
+---
 #### Question 9
   
 Why does the output voltage decrease as the frequency increases?
 
+---
 #### Question 10
   
 A 10 kΩ resistor and a 100 nF capacitor are connected as a low-pass filter.
@@ -1176,6 +1186,7 @@ The cutoff frequency is approximately:
 Would a 100 Hz signal be attenuated more or less than a 10 kHz signal?
 
 Explain your answer.
+
 ---
 
 ### Project Summary
