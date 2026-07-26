@@ -18,25 +18,25 @@ This project introduces the basic oscilloscope skills required for the remainder
 
 ---
 
-## Learning Outcomes
-
+### Learning Outcomes
+  
 At the end of this project you should be able to:
-
 ✅ Connect the OWON HDS272S safely to a circuit
-
 ✅ Adjust the vertical scale to suit the signal
-
 ✅ Adjust the horizontal scale to suit the signal
-
 ✅ Use edge triggering to stabilise a waveform
-
 ✅ Measure DC voltage
-
 ✅ Measure peak voltage of a PWM signal
-
 ✅ Measure the period and frequency of a PWM signal
-
 ✅ Identify duty cycle from a waveform
+
+✅ Use the built-in signal generator  
+
+✅ Measure input and output signals simultaneously  
+
+✅ Observe the behaviour of a simple low-pass filter  
+
+✅ Measure signal attenuation as frequency changes  
 
 ✅ Prepare the oscilloscope for future experiments
 
@@ -107,13 +107,16 @@ The OWON HDS272S is a handheld digital oscilloscope, multimeter, and signal gene
 ```
 
 Key features relevant to this course:
-
 - Two input channels
 - Automatic measurements (frequency, period, duty cycle, Vpp)
 - Edge triggering with adjustable level
 - DC and AC coupling
 - Built-in multimeter
 - Built-in signal generator (sine, square, triangle, sawtooth waveforms)
+
+The built-in signal generator can be used together with the oscilloscope channels to investigate how circuits respond to different signals.
+
+Throughout this course the signal generator will be used to inject known waveforms into circuits while simultaneously measuring both the input and output signals.
 
 ---
 
@@ -131,6 +134,10 @@ The signal generator can output:
 Frequency and amplitude are adjustable. The output is available on the dedicated generator terminal on the instrument.
 
 The signal generator will be used in later projects to provide a known test signal without needing an Arduino, for example when characterising RC and RLC circuit responses.
+
+The signal generator outputs one waveform at a time. Although it cannot generate multiple frequencies simultaneously, it can easily be adjusted to test different frequencies manually.
+
+This capability allows simple frequency-response experiments to be performed by observing how a circuit behaves as the signal frequency is changed.
 
 ---
 
@@ -617,6 +624,294 @@ void loop()
 | 255 | 100% | Flat HIGH (5 V) |
 
 ---
+### Experiment 5 - Observe a Low-Pass Filter
+
+#### Objective
+  
+Observe how frequency affects the output voltage of a simple RC low-pass filter.
+
+Learn how to:
+- Use the OWON HDS272S signal generator
+- Measure input and output signals simultaneously
+- Observe signal attenuation
+- Compare two waveforms using CH1 and CH2
+
+#### Components Required
+
+- 10 kΩ resistor
+- 100 nF capacitor
+- Breadboard
+- Jumper wires
+- OWON HDS272S
+
+#### RC Low-Pass Filter
+
+The following circuit passes low-frequency signals and attenuates high-frequency signals.
+
+#### Circuit
+
+```text
+                     10 kΩ
+
+VIN ----/\/\/\/\/\/\/\/\/\/\----+---- VOUT
+                                |
+                                |
+                              100 nF
+                                |
+                                |
+GND ----------------------------+---- GND
+```
+
+The output voltage is measured across the capacitor.
+
+The cutoff frequency is approximately:
+
+159 Hz
+
+#### Important Ground Connection
+
+All oscilloscope ground clips and the signal generator ground must be connected to the same circuit ground.
+
+```text
+Generator Ground
+        |
+        +------ GND
+
+CH1 Ground
+        |
+        +------ GND
+
+CH2 Ground
+        |
+        +------ GND
+```
+
+#### Signal Generator Setup
+
+Waveform:Sine
+
+Amplitude:2 Vpp
+
+Offset:0 V
+
+#### Connections
+
+Generator Output  ──────► VIN
+
+Generator Ground  ──────► GND
+
+CH1 Probe Tip     ──────► VIN
+
+CH1 Ground        ──────► GND
+
+CH2 Probe Tip     ──────► VOUT
+
+CH2 Ground        ──────► GND
+
+#### Complete Wiring Diagram
+
+```text
+                    CH2 Probe Tip
+                           |
+                           ▼
+
+                      +--- VOUT
+                      |
+                      |
+                    100 nF
+                      |
+                      |
+Generator GND --------+----------------+
+                                        |
+                                        |
+                                 CH1 Ground
+                                 CH2 Ground
+
+Generator Output
+       |
+       |
+       +---- VIN ----/\/\/\/\/\/\-----+
+                        10 kΩ          |
+                                       |
+                                 CH1 Probe Tip
+```
+
+#### Oscilloscope Settings
+
+<table>
+<tr>
+<th>
+Setting
+</th>
+<th>
+OWON HDS272S
+</th>
+</tr>
+<tr>
+<td>
+Channels
+</td>
+<td>
+CH1 and CH2
+</td>
+</tr>
+<tr>
+<td>
+Vertical Scale
+</td>
+<td>
+500 mV/div
+</td>
+</tr>
+<tr>
+<td>
+Horizontal Scale
+</td>
+<td>
+1 ms/div initially
+</td>
+</tr>
+<tr>
+<td>
+Trigger Source
+</td>
+<td>
+CH1
+</td>
+</tr>
+<tr>
+<td>
+Trigger
+</td>
+<td>
+Edge, Rising
+</td>
+</tr>
+<tr>
+<td>
+Coupling
+</td>
+<td>
+DC
+</td>
+</tr>
+</table>
+
+#### Procedure
+
+##### Test A
+
+Set the signal generator frequency to:
+
+100 Hz
+
+Measure:
+- Input Voltage (CH1)
+- Output Voltage (CH2)
+
+##### Test B
+
+Set the signal generator frequency to:
+
+500 Hz
+
+Measure:
+- Input Voltage (CH1)
+- Output Voltage (CH2)
+
+##### Test C
+
+Set the signal generator frequency to:
+
+1 kHz
+
+Measure:
+- Input Voltage (CH1)
+- Output Voltage (CH2)
+
+##### Test D
+
+Set the signal generator frequency to:
+
+10 kHz
+
+Measure:
+- Input Voltage (CH1)
+- Output Voltage (CH2)
+
+#### Expected Result
+
+At 100 Hz the input and output amplitudes should be similar.
+
+At 500 Hz the output amplitude should be slightly smaller than the input.
+
+At 1 kHz noticeable attenuation should be visible.
+
+At 10 kHz the output voltage should be much smaller than the input voltage.
+
+#### Record Measurements
+
+<table>
+<tr>
+<th>
+Frequency
+</th>
+<th>
+Input Voltage (Vpp)
+</th>
+<th>
+Output Voltage (Vpp)
+</th>
+<th>
+Observation
+</th>
+</tr>
+<tr>
+<td>
+100 Hz
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+500 Hz
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+1 kHz
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+10 kHz
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+</table>
+---
 
 ## Adjusting The Scales
 
@@ -685,6 +980,27 @@ Check:
 ✅ Trigger type set to Edge
 
 ✅ Trigger level set to approximately half the signal amplitude (around 2.5 V for a 5 V signal)
+
+---
+#### Input Signal Visible But Output Missing
+  
+Check:  
+  
+✅ Generator output connected to VIN
+  
+✅ Generator ground connected to circuit GND
+  
+✅ CH2 probe tip connected to VOUT
+  
+✅ CH2 probe ground connected to GND
+  
+✅ Resistor connected between VIN and VOUT
+  
+✅ Capacitor connected between VOUT and GND
+  
+✅ Signal generator enabled and outputting a sine wave
+  
+✅ Common ground shared between signal generator and oscilloscope
 
 ---
 
@@ -767,7 +1083,37 @@ void loop()
     delay(10);
 }
 ```
+---
+#### Exercise 6
+  
+Build the RC Low-Pass Filter from Experiment 5.
 
+Configure the OWON signal generator:
+
+Waveform:Sine
+
+Amplitude:2 Vpp
+
+Offset:0 V
+
+Measure the input voltage and output voltage at:
+
+- 100 Hz
+- 1 kHz
+- 10 kHz
+- 100 kHz
+
+Record the measurements and compare the input and output amplitudes.
+
+Determine experimentally whether the circuit behaves as a low-pass filter.
+
+Calculate:
+
+Output Ratio
+=
+VOUT / VIN
+
+for each test frequency.
 ---
 
 ## Knowledge Check
@@ -807,26 +1153,53 @@ Why is triggering important when observing a repeating waveform?
 Where should the probe ground clip always be connected in Arduino experiments?
 
 ---
+#### Question 7
+  
+What is the purpose of CH1 in the low-pass filter experiment?
 
-## Project Summary
+#### Question 8
+  
+What is the purpose of CH2 in the low-pass filter experiment?
 
+#### Question 9
+  
+Why does the output voltage decrease as the frequency increases?
+
+#### Question 10
+  
+A 10 kΩ resistor and a 100 nF capacitor are connected as a low-pass filter.
+
+The cutoff frequency is approximately:
+
+159 Hz
+
+Would a 100 Hz signal be attenuated more or less than a 10 kHz signal?
+
+Explain your answer.
+---
+
+### Project Summary
+  
 In this project you learned:
-
 ✅ What an oscilloscope measures and why it is important
-
 ✅ How to connect the OWON HDS272S safely
-
 ✅ How to adjust the vertical scale
-
 ✅ How to adjust the horizontal scale
-
 ✅ How to use edge triggering
-
 ✅ How to measure DC voltage
-
 ✅ How to measure PWM peak voltage, period, frequency, and duty cycle
 
-✅ How to adjust scales to suit different signals
+✅ How to use the built-in signal generator  
+
+✅ How to measure input and output signals simultaneously  
+
+✅ How to observe a simple low-pass filter  
+
+✅ How to compare two waveforms using CH1 and CH2  
+
+✅ How to observe signal attenuation as frequency changes  
+
+✅ How to adjust scales to suit different signals  
 
 These skills will be used in every subsequent project in this course, beginning with:
 
