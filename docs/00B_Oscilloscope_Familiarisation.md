@@ -90,7 +90,7 @@ Throughout this course the oscilloscope will be used to:
 
 ## About The OWON HDS272S
 
-The OWON HDS272S is a handheld digital oscilloscope and multimeter combined in a single instrument.
+The OWON HDS272S is a handheld digital oscilloscope, multimeter, and signal generator combined in a single instrument.
 
 ```text
  ┌─────────────────────┐
@@ -113,6 +113,24 @@ Key features relevant to this course:
 - Edge triggering with adjustable level
 - DC and AC coupling
 - Built-in multimeter
+- Built-in signal generator (sine, square, triangle, sawtooth waveforms)
+
+---
+
+## About The Signal Generator
+
+The OWON HDS272S includes a built-in signal generator accessible from the instrument menu.
+
+The signal generator can output:
+
+- Sine wave
+- Square wave
+- Triangle wave
+- Sawtooth wave
+
+Frequency and amplitude are adjustable. The output is available on the dedicated generator terminal on the instrument.
+
+The signal generator will be used in later projects to provide a known test signal without needing an Arduino, for example when characterising RC and RLC circuit responses.
 
 ---
 
