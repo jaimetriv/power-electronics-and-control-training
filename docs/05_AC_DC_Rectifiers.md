@@ -10,14 +10,6 @@ Complete:
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
 - 04_MOSFET_Fundamentals.md
-- 10_PWM_Motor_Control.md
-- 12_P_Controller.md
-- 13_PI_Controller.md
-- 14_PID_Controller.md
-- 08_Buck_Converter.md
-- 15_Closed_Loop_Buck.md
-- 09_Boost_Converter.md
-- 07_DC_Chopper_Converters.md
 
 ---
 
@@ -439,12 +431,19 @@ Observe and measure the AC waveform from the OWON HDS272S waveform generator bef
 
 ### Connections
 
+> Set the OWON HDS272S waveform generator to **10 Vpeak, 50 Hz, sine** before connecting.
+
+1. Insert the **CH1 probe BNC** into CH1 on the OWON HDS272S.
+2. Hook the **CH1 probe tip** to the **GEN OUT terminal** on the OWON HDS272S.
+3. Clip the **CH1 probe ground** to the **GEN GND terminal**.
+
 ```text
-OWON HDS272S waveform generator output (+) ──► Probe Tip
-OWON HDS272S waveform generator GND        ──► Probe GND
+CH1 socket  ◄──── BNC connector
+GEN OUT     ◄──── CH1 probe tip
+GEN GND     ◄──── CH1 probe ground
 ```
 
-> Set the OWON HDS272S waveform generator to: **10 Vpeak, 50 Hz, sine wave**.
+> Verifying the generator output before adding any circuit components avoids wiring errors.
 
 ---
 
@@ -505,14 +504,33 @@ OWON HDS272S waveform generator GND ──── Probe GND
 
 ---
 
+### Breadboard Layout
+
+```
+       a      b      c      d      e
+     ┌─────────────────────────────────────┐
+ 4   │ [●]   [ ]   [ ]   [ ]   [A]       │ ← GEN OUT → a4, Diode anode e4  (same row)
+ 5   │ [ ]   [ ]   [ ]   [ ]   [│]       │  1N4007 diode body
+ 6   │ [ ]   [ ]   [┐]   [ ]   [K]       │ ← Diode cathode e6 = Resistor top c6 = VOUT  (same row)
+ 7   │ [ ]   [ ]   [│]   [ ]   [ ]       │  1 kΩ resistor body
+ 8   │ [●]   [ ]   [┘]   [ ]   [ ]       │ ← GEN GND → a8, Resistor bottom c8  (same row)
+     └─────────────────────────────────────┘
+```
+
+`[A]` = anode (unmarked end); `[K]` = cathode (banded end). Current flows A → K.
+
+Row 6 is the **VOUT junction** (diode cathode e6 and resistor top c6 share the same row — no jumper needed).
+
+---
+
 ### Step-by-Step Wiring
 
-1. Insert the 1N4007 diode into the breadboard. The **anode** (unmarked end) connects toward the waveform generator positive terminal. The **cathode** (banded end) connects toward the load.
-2. Connect a jumper wire from the **OWON HDS272S waveform generator (+)** to the **diode anode** row.
-3. Insert the **1 kΩ resistor** so one leg is in the same row as the **diode cathode** and the other leg is in a new row.
-4. Connect a jumper wire from the **bottom of the resistor** to the **waveform generator GND**.
-5. Connect the **oscilloscope probe tip** to the junction between the diode cathode and the resistor top.
-6. Connect the **oscilloscope probe ground** to the waveform generator GND.
+1. Insert the **1N4007 diode** vertically: **anode** (unmarked end) in **row 4, column e**, **cathode** (banded end) in **row 6, column e**.
+2. Connect a jumper wire from the **OWON GEN OUT terminal** to **row 4, column a** (same row as diode anode).
+3. Insert the **1 kΩ resistor** vertically: one leg in **row 6, column c**, other in **row 8, column c**. Row 6 connects to the diode cathode (same row = VOUT junction).
+4. Connect a jumper wire from the **OWON GEN GND terminal** to **row 8, column a** (same row as resistor bottom).
+5. Hook the **CH1 probe tip** to any hole in **row 6** (VOUT junction).
+6. Clip the **CH1 probe ground** to **row 8** or directly to the GEN GND terminal.
 
 ---
 
@@ -526,9 +544,9 @@ Before applying power:
 
 ✅ Load resistor connected between diode cathode and GND
 
-✅ Oscilloscope probe tip at diode cathode / resistor junction
+✅ CH1 probe tip at row 6 (VOUT = diode cathode / resistor top junction)
 
-✅ Oscilloscope probe ground connected to signal generator GND
+✅ CH1 probe ground at row 8 or GEN GND terminal
 
 ---
 
@@ -615,7 +633,7 @@ The standard bridge arrangement:
    - **D4**: anode to DC(−) rail, cathode to AC(−)
 3. Connect the **1 kΩ load resistor** between the DC(+) rail and the DC(−) rail.
 4. Connect the **OWON HDS272S waveform generator (+)** to the AC(+) node and **(−)** to the AC(−) node.
-5. Connect the **oscilloscope probe tip** to the DC(+) rail and **probe ground** to the DC(−) rail.
+5. Hook the **CH1 probe tip** to the DC(+) rail. Clip the **CH1 probe ground** to the DC(−) rail.
 
 > Tip: The DC(−) rail is the common reference. Connect the waveform generator GND and oscilloscope probe GND both to this point.
 
@@ -633,7 +651,7 @@ Before applying power:
 
 ✅ Load resistor between DC(+) and DC(−)
 
-✅ Oscilloscope probe tip at DC(+), probe GND at DC(−)
+✅ CH1 probe tip at DC(+), CH1 probe ground at DC(−)
 
 ---
 
@@ -682,7 +700,7 @@ Keep the bridge rectifier from Experiment 3 intact.
 
 1. Insert the **100 µF electrolytic capacitor** so its **positive leg** connects to the DC(+) rail and its **negative leg** connects to the DC(−) rail.
 2. Verify capacitor polarity — the negative leg is marked with a stripe.
-3. Connect the **oscilloscope probe tip** to the DC(+) rail and **probe ground** to DC(−).
+3. Hook the **CH1 probe tip** to the DC(+) rail. Clip the **CH1 probe ground** to DC(−).
 
 ---
 
@@ -696,7 +714,7 @@ Before applying power:
 
 ✅ Load resistor still connected in parallel with capacitor
 
-✅ Oscilloscope probe tip at DC(+)
+✅ CH1 probe tip at DC(+), CH1 probe ground at DC(−)
 
 ---
 
