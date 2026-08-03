@@ -135,7 +135,7 @@ tau = R * C;
 
 t = 0:0.001:5;
 
-Vs = 3.3;   % ESP32 supply voltage (use 5.0 for Arduino Uno as backup)
+Vs = 3.3;   % ESP32 supply voltage
 Vc_charge = Vs * (1 - exp(-t / tau));
 Vc_discharge = Vs * exp(-t / tau);
 
@@ -210,27 +210,47 @@ Observe the capacitor charging and discharging curves on the oscilloscope.
 ### Circuit Diagram
 
 ```text
-ESP32 GPIO18  (or Arduino Pin 9 as backup)
+ESP32 GPIO18
     │
    10 kΩ resistor
     │
-    ├──── Vc ──── Probe Tip
+    ├──── Vc ──── CH1 probe tip
     │
    100 µF capacitor  (positive leg up)
     │
-   GND ──── Probe GND
+   GND ──── CH1 probe ground
 ```
+
+---
+
+### Breadboard Layout
+
+```
+       a      b      c      d      e
+     ┌─────────────────────────────────────┐
+ 5   │ [●]   [ ]   [┐]   [ ]   [ ]       │ ← GPIO18 → a5, Resistor top c5
+ 6   │ [ ]   [ ]   [│]   [ ]   [ ]       │
+ 7   │ [ ]   [ ]   [│]   [ ]   [ ]       │  10 kΩ resistor (c5–c8)
+ 8   │ [ ]   [ ]   [┘]   [ ]   [▲]       │ ← Vc junction: c8 = Cap+ e8  ← CH1 probe tip
+ 9   │ [ ]   [ ]   [ ]   [ ]    │         │  100 µF cap body
+10   │ [ ]   [ ]   [ ]   [ ]   [▼]       │ ← Cap− at e10 → GND
+     └─────────────────────────────────────┘
+```
+
+**Row 8 is the Vc junction.** All holes in row 8 are internally linked, so `c8` (resistor bottom) and `e8` (cap positive) are at the same voltage. Connect the CH1 probe tip here.
+
+> Electrolytic cap polarity: **long leg = positive (+)** in row 8; **short leg = negative (−)** in row 10.
 
 ---
 
 ### Step-by-Step Wiring
 
-1. Insert the 10 kΩ resistor across the breadboard so each leg is in a different row.
-2. Connect a jumper wire from **ESP32 GPIO18** (or **Arduino pin 9** as backup) to one leg of the resistor.
-3. Insert the **100 µF capacitor** so its **positive leg** is in the same row as the other resistor leg. This junction is $V_C$.
-4. Connect a jumper wire from the **capacitor negative leg** to any **GND** pin on the ESP32.
-5. Connect the **oscilloscope probe tip** to the $V_C$ junction.
-6. Connect the **oscilloscope probe ground** to ESP32 GND.
+1. Insert the **10 kΩ resistor** vertically: one leg in **row 5, column c**, other in **row 8, column c**.
+2. Connect a jumper wire from **ESP32 GPIO18** to **row 5, column a**.
+3. Insert the **100 µF electrolytic capacitor** vertically: **long leg (positive)** in **row 8, column e**, **short leg (negative)** in **row 10, column e**.
+4. Connect a jumper wire from **row 10, column e** to any **GND pin** on the ESP32.
+5. Hook the **CH1 probe tip** to any hole in **row 8** (the Vc junction).
+6. Clip the **CH1 probe ground** to any **GND pin** on the ESP32.
 
 ---
 
@@ -238,9 +258,9 @@ ESP32 GPIO18  (or Arduino Pin 9 as backup)
 
 Before uploading:
 
-✅ Resistor leg in same row as ESP32 GPIO18 (or Arduino pin 9 as backup) jumper
+✅ Resistor leg in same row as GPIO18 jumper (row 5)
 
-✅ Capacitor positive leg in same row as other resistor leg
+✅ Capacitor positive leg in same row as resistor bottom (row 8 = Vc)
 
 ✅ Capacitor negative leg connected to GND
 
@@ -271,24 +291,7 @@ void loop()
 }
 ```
 
-### Arduino Equivalent Code (backup)
-
-```cpp
-void setup()
-{
-    // Configure pin 9 as a digital output.
-    pinMode(9, OUTPUT);
-}
-
-void loop()
-{
-    digitalWrite(9, HIGH);
-    delay(3000);
-
-    digitalWrite(9, LOW);
-    delay(3000);
-}
-```
+> **Arduino Uno:** replace GPIO18 with pin 9 and use `pinMode(9, OUTPUT)` / `digitalWrite(9, ...)` instead of LEDC.
 
 ---
 
@@ -333,10 +336,8 @@ Verify the theoretical time constant by measuring the time for $V_C$ to reach $0
 ### Procedure
 
 1. Observe the charging curve on the oscilloscope.
-2. Identify the voltage level at $0.632 \times V_S$:
-   - ESP32 ($V_S = 3.3\ \text{V}$): target $\approx 2.09\ \text{V}$ (primary)
-   - Arduino Uno ($V_S = 5.0\ \text{V}$): target $\approx 3.16\ \text{V}$ (if using Arduino)
-3. Measure the time from the start of charging to that point.
+2. Identify the target voltage at $0.632 \times V_S = 0.632 \times 3.3 \approx 2.09\ \text{V}$.
+3. Measure the time from the start of charging to the point where $V_C$ reaches 2.09 V.
 
 ---
 
@@ -347,7 +348,7 @@ Verify the theoretical time constant by measuring the time for $V_C$ to reach $0
 | Resistance | 10 kΩ | |
 | Capacitance | 100 µF | |
 | Time Constant τ | 1.0 s | |
-| Voltage at τ | 2.09 V (ESP32) / 3.16 V (Arduino backup) | |
+| Voltage at τ | 2.09 V (= 0.632 × 3.3 V) | |
 
 ---
 
@@ -391,12 +392,236 @@ $$
 
 ---
 
+## From Time Domain to Frequency Domain
+
+The time constant and cutoff frequency describe the same RC circuit from two different angles:
+
+$$
+\tau = RC \qquad \Longleftrightarrow \qquad f_c = \frac{1}{2\pi RC} = \frac{1}{2\pi\tau}
+$$
+
+Experiments 1–4 used **10 kΩ + 100 µF** giving τ = 1 s and $f_c \approx 0.16$ Hz — far too slow to sweep with a signal generator.
+
+For Experiments 5 and 6, switch to **10 kΩ + 100 nF** (the 100 nF ceramic capacitor from the Beginner Parts Kit):
+
+$$
+\tau = 10000 \times 100 \times 10^{-9} = 1\ \text{ms} \qquad f_c = \frac{1}{2\pi \times 0.001} \approx 159\ \text{Hz}
+$$
+
+This places the cutoff inside the OWON signal generator’s practical range.
+
+---
+
+## Experiment 5 - Low-Pass Filter Frequency Response
+
+### Objective
+
+Measure the frequency response of an RC low-pass filter using the OWON signal generator.
+Verify that the measured cutoff frequency matches the calculated value $f_c \approx 159$ Hz.
+
+---
+
+### Components
+
+- 10 kΩ resistor
+- **100 nF ceramic capacitor** (non-polarised — the 100 nF from the Beginner Parts Kit, **not** the electrolytic used in Experiments 1–4)
+
+---
+
+### Circuit
+
+```text
+         10 kΩ
+VIN ─────┤R├─────┬──── VOUT (CH2 probe tip)
+                 │
+               100 nF
+                 │
+GND ─────────────┘──── probe ground
+```
+
+Output is across the capacitor. Low frequencies pass; high frequencies are attenuated.
+
+---
+
+### Breadboard Layout
+
+```
+       a      b      c      d      e
+     ┌─────────────────────────────────────┐
+ 5   │ [●]   [ ]   [┐]   [ ]   [ ]       │ ← GEN OUT → a5, Resistor top c5 (VIN)
+ 6   │ [ ]   [ ]    │    [ ]   [ ]       │  10 kΩ resistor body
+ 7   │ [ ]   [ ]   [┘]   [ ]   [┐]       │ ← Resistor bottom c7 = Cap top e7 = VOUT (same row)
+ 8   │ [ ]   [ ]   [ ]   [ ]   [┘]       │ ← Cap bottom e8 → GND
+     └─────────────────────────────────────┘
+```
+
+Row 7 is the VOUT junction (`c7` and `e7` are the same row — no jumper needed).
+
+---
+
+### Signal Generator and Probe Setup
+
+1. Configure the OWON signal generator: **Sine, 2 Vpp, 0 V offset**.
+2. Connect **GEN OUT** to row 5 (VIN). Connect **GEN GND** to the GND rail.
+3. **CH1 probe tip** → row 5 (VIN). CH1 ground → GND rail.
+4. **CH2 probe tip** → row 7 (VOUT). CH2 ground → GND rail.
+
+---
+
+### Procedure and Measurements
+
+Change the generator frequency for each row. Record CH1 Vpp (input) and CH2 Vpp (output).
+
+| Frequency | CH1 Vpp (VIN) | CH2 Vpp (VOUT) | Ratio VOUT/VIN |
+|-----------|--------------|---------------|----------------|
+| 10 Hz | | | |
+| 100 Hz | | | |
+| 159 Hz | | | |
+| 500 Hz | | | |
+| 1 kHz | | | |
+| 10 kHz | | | |
+
+At $f_c \approx 159$ Hz the ratio should be approximately **0.707** (−3 dB).
+
+---
+
+## Experiment 6 - High-Pass Filter
+
+### Objective
+
+Swap R and C to form a high-pass filter.
+Show that the same component values give the same cutoff frequency but opposite attenuation behaviour.
+
+---
+
+### Circuit
+
+Swap the positions of R and C. Output is now across the resistor:
+
+```text
+         100 nF
+VIN ─────┤C├─────┬──── VOUT (CH2 probe tip)
+                 │
+               10 kΩ
+                 │
+GND ─────────────┘──── probe ground
+```
+
+High frequencies pass; low frequencies are attenuated. Cutoff frequency is unchanged:
+
+$$
+f_c = \frac{1}{2\pi RC} \approx 159\ \text{Hz}
+$$
+
+---
+
+### Breadboard Layout
+
+```
+       a      b      c      d      e
+     ┌─────────────────────────────────────┐
+ 5   │ [●]   [ ]   [┐]   [ ]   [ ]       │ ← GEN OUT → a5, Cap top c5 (VIN)
+ 6   │ [ ]   [ ]   [┘]   [ ]   [┐]       │ ← Cap bottom c6 = Resistor top e6 = VOUT (same row)
+ 7   │ [ ]   [ ]   [ ]   [ ]    │         │  10 kΩ resistor body
+ 8   │ [ ]   [ ]   [ ]   [ ]   [┘]       │ ← Resistor bottom e8 → GND
+     └─────────────────────────────────────┘
+```
+
+Row 6 is the VOUT junction. Compare this layout to Experiment 5 — only R and C positions are swapped.
+
+---
+
+### Signal Generator and Probe Setup
+
+Same generator settings as Experiment 5.
+
+1. Connect **GEN OUT** to row 5 (VIN). Connect **GEN GND** to GND rail.
+2. **CH1 probe tip** → row 5 (VIN). CH1 ground → GND rail.
+3. **CH2 probe tip** → row 6 (VOUT). CH2 ground → GND rail.
+
+---
+
+### Procedure and Measurements
+
+| Frequency | CH1 Vpp (VIN) | CH2 Vpp (VOUT) | Ratio VOUT/VIN |
+|-----------|--------------|---------------|----------------|
+| 10 Hz | | | |
+| 100 Hz | | | |
+| 159 Hz | | | |
+| 500 Hz | | | |
+| 1 kHz | | | |
+| 10 kHz | | | |
+
+At $f_c \approx 159$ Hz the ratio should again be approximately **0.707**.
+
+---
+
+### LP vs HP Comparison
+
+| Frequency | LP Ratio (Exp 5) | HP Ratio (Exp 6) | Which filter passes? |
+|-----------|-----------------|-----------------|----------------------|
+| 10 Hz | | | |
+| 159 Hz | ≈0.707 | ≈0.707 | Both at cutoff |
+| 1 kHz | | | |
+| 10 kHz | | | |
+
+Below $f_c$: LP ratio → 1, HP ratio → 0. Above $f_c$: opposite.
+
+---
+
+## MATLAB Filter Frequency Response
+
+Use this script to plot the theoretical LP and HP frequency response and overlay your measured data points from Experiments 5 and 6.
+
+```matlab
+R = 10000;
+C = 100e-9;
+fc = 1 / (2 * pi * R * C);      % cutoff frequency (~159 Hz)
+
+% Transfer functions (Control System Toolbox)
+LP = tf([1/(R*C)], [1, 1/(R*C)]);
+HP = tf([1,    0], [1, 1/(R*C)]);
+
+f = logspace(1, 5, 400);         % 10 Hz to 100 kHz, log-spaced
+
+[mag_LP, ~] = bode(LP, 2*pi*f);
+[mag_HP, ~] = bode(HP, 2*pi*f);
+
+figure; hold on;
+semilogx(f, squeeze(mag_LP), 'b-', 'LineWidth', 2, 'DisplayName', 'LP theory');
+semilogx(f, squeeze(mag_HP), 'r-', 'LineWidth', 2, 'DisplayName', 'HP theory');
+xline(fc, 'k--', sprintf('f_c = %.0f Hz', fc), 'LabelVerticalAlignment', 'bottom');
+yline(0.707, 'k:', '0.707  (-3 dB)');
+xlabel('Frequency (Hz)'); ylabel('|V_{OUT}/V_{IN}|');
+title(sprintf('RC Filter Frequency Response — R=%dk\\Omega, C=%dnF', R/1e3, C*1e9));
+legend('Location', 'west'); grid on;
+ylim([0 1.1]); xlim([10 1e5]);
+
+% --- Replace NaN values with your measured ratios from the tables ---
+f_pts   = [10,  100,  159,  500,  1000, 10000];
+LP_meas = [NaN, NaN, NaN, NaN, NaN, NaN];   % VOUT/VIN from Experiment 5
+HP_meas = [NaN, NaN, NaN, NaN, NaN, NaN];   % VOUT/VIN from Experiment 6
+
+scatter(f_pts, LP_meas, 80, 'b', 'filled', 'DisplayName', 'LP measured');
+scatter(f_pts, HP_meas, 80, 'r', 'filled', 'DisplayName', 'HP measured');
+legend('Location', 'west');
+```
+
+### What to observe
+
+- Your measured LP points should lie on the blue curve; HP points on the red curve.
+- At 159 Hz both curves cross at 0.707 — your measurements should confirm this.
+- The LP slope above $f_c$ is −20 dB/decade; the HP slope below $f_c$ is +20 dB/decade.
+- Any systematic offset between theory and measurement is usually caused by component tolerance (resistors ±1–5%, capacitors ±10–20%).
+
+---
+
 ## MATLAB Comparison
 
 ```matlab
 R = 10000;
 C = 100e-6;
-Vs = 3.3;                   % ESP32 (use 5.0 for Arduino Uno backup)
+Vs = 3.3;                   % ESP32 supply voltage
 tau_theory = R * C;
 tau_measured = 1.0;          % replace with your measured value (s)
 
@@ -441,7 +666,7 @@ Check:
 
 ✅ Probe ground connected to GND
 
-✅ ESP32 (or Arduino backup) powered and sketch uploaded
+✅ ESP32 powered and sketch uploaded
 
 ✅ Horizontal scale set to approximately 500 ms/div for τ = 1 s
 
@@ -508,6 +733,12 @@ In this project you learned:
 ✅ Oscilloscope transient measurements
 
 ✅ MATLAB modelling
+
+✅ RC low-pass filter frequency response
+
+✅ RC high-pass filter
+
+✅ Cutoff frequency measurement and verification
 
 ---
 

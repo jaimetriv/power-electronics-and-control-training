@@ -186,16 +186,14 @@ $$
 
 ---
 
-## PWM on ESP32 and Arduino Uno
+## PWM on ESP32
 
-On ESP32, PWM is generated with the LEDC peripheral (see Project 00C for setup details).
+PWM is generated using the **LEDC peripheral** (see Project 00C for full setup details).
 
-On Arduino Uno, the function `analogWrite()` generates PWM.
-
-Valid values for both:
+Valid duty cycle values (8-bit):
 
 ```text
-0 → 255  (8-bit)
+0 → 255
 ```
 
 | PWM Value | Approximate Duty Cycle |
@@ -206,12 +204,13 @@ Valid values for both:
 | 192 | 75% |
 | 255 | 100% |
 
-Controller pin options for this experiment:
+Controller pin for this experiment:
 
 ```text
-ESP32:       GPIO18
-Arduino Uno: Pin 9
+ESP32: GPIO18
 ```
+
+> **Arduino Uno:** use pin D9 with `analogWrite(9, value)` instead of the LEDC functions.
 
 ---
 
@@ -309,12 +308,17 @@ Generate a 50% duty cycle PWM signal and observe it on the oscilloscope.
 
 ### Connections
 
+1. Insert the CH1 probe BNC connector into **CH1** on the OWON HDS272S.
+2. Clip the **ground clip** to any **GND pin** on the ESP32.
+3. Hook the **probe tip** directly onto **ESP32 GPIO18**.
+
 ```text
-Probe Tip  ──────► ESP32 GPIO18  (or Arduino Pin D9)
-Probe GND  ──────► ESP32 GND
+CH1 socket    ◄──── BNC connector
+ESP32 GND     ◄──── Ground clip
+ESP32 GPIO18  ◄──── Probe tip
 ```
 
-No breadboard components are needed for this experiment.
+No breadboard components are needed. The probe connects directly to the pin.
 
 ---
 
@@ -337,21 +341,7 @@ void loop()
 }
 ```
 
-### Arduino Equivalent Code
-
-```cpp
-void setup()
-{
-    // No explicit pinMode needed; analogWrite() configures the pin automatically.
-}
-
-void loop()
-{
-    // Output a PWM signal on pin 9 with approximately 50% duty cycle.
-    // analogWrite() accepts values from 0 (0%) to 255 (100%).
-    analogWrite(9, 128);
-}
-```
+> **Arduino Uno:** replace the LEDC setup with `analogWrite(9, 128)` on pin D9.
 
 ---
 
@@ -407,7 +397,13 @@ Observe how duty cycle affects the PWM waveform shape.
 
 ### Connections
 
-Same as Experiment 1.
+Same physical connections as Experiment 1:
+
+1. BNC connector into **CH1** on the OWON HDS272S.
+2. Ground clip to any **GND pin** on the ESP32.
+3. Probe tip onto **ESP32 GPIO18**.
+
+The duty cycle steps every 3 seconds. Watch the ON-time change at each step.
 
 ---
 
@@ -435,21 +431,7 @@ void loop()
 }
 ```
 
-### Arduino Equivalent Code
-
-```cpp
-void loop()
-{
-    analogWrite(9, 64);
-    delay(3000);
-
-    analogWrite(9, 128);
-    delay(3000);
-
-    analogWrite(9, 192);
-    delay(3000);
-}
-```
+> **Arduino Uno:** replace `ledcWrite(0, value)` with `analogWrite(9, value)` on pin D9.
 
 ---
 
@@ -481,7 +463,7 @@ Use PWM to control LED brightness and observe the relationship between duty cycl
 ### Circuit Diagram
 
 ```text
-ESP32 GPIO18  (or Arduino Pin D9)
+ESP32 GPIO18
     │
    220 Ω resistor
     │
@@ -493,12 +475,45 @@ ESP32 GND
 
 ---
 
+### Breadboard Layout
+
+```
+  ESP32 DevKit V1              BREADBOARD (top view, rows 1–12)
+  ┌────────────┐
+  │            │               Columns
+  │            │         a      b      c      d      e
+  │    GPIO18  ●────┐  ┌─────────────────────────────────────┐
+  │            │    │  │ 1   [ ]   [ ]   [ ]   [ ]   [ ]     │
+  │            │    │  │ 2   [ ]   [ ]   [ ]   [ ]   [ ]     │
+  │            │    │  │ 3   [ ]   [ ]   [ ]   [ ]   [ ]     │
+  │            │    │  │ 4   [ ]   [ ]   [ ]   [ ]   [ ]     │
+  │            │    └─→│ 5   [●]   [ ]   [┐]   [ ]   [ ]    │ GPIO18 → a5, Resistor top c5
+  │            │       │ 6   [ ]   [ ]   [│]   [ ]   [ ]    │
+  │            │       │ 7   [ ]   [ ]   [│]   [ ]   [ ]    │ 220 Ω resistor (c5–c8)
+  │            │       │ 8   [ ]   [ ]   [┘]   [ ]   [▲]   │ Resistor bottom c8, LED+ e8
+  │            │       │ 9   [ ]   [ ]   [ ]   [ ]   [│]   │
+  │            │       │10   [ ]   [ ]   [ ]   [ ]   [▼]   │ LED cathode at e10
+  │        GND ●────┐  │11   [ ]   [ ]   [ ]   [ ]   [ ]   │
+  │            │    │  └─────────────────────────────────────┘
+  └────────────┘    │                                │
+                    │                                │ GND wire
+                    └────────────────────────────────┘
+```
+
+> **Arduino Uno:** replace GPIO18 with pin D9. Breadboard layout is identical.
+
+Row connections (all holes in a row are internally linked):
+- Row 5: `a5` (GPIO18 wire) and `c5` (resistor top) → both at the PWM output node
+- Row 8: `c8` (resistor bottom) and `e8` (LED anode) → both at the LED input node
+
+---
+
 ### Step-by-Step Wiring
 
-1. Push the 220 Ω resistor across the breadboard so each leg is in a different row.
-2. Connect a jumper wire from **ESP32 GPIO18** to one leg of the resistor.
-3. Insert the LED so its **long leg (anode)** sits in the same row as the other resistor leg.
-4. Connect a jumper wire from the **LED short leg (cathode)** row to any **GND** pin on the ESP32.
+1. Insert the **220 Ω resistor** vertically: one leg in **row 5, column c**, other in **row 8, column c**.
+2. Connect a jumper wire from **ESP32 GPIO18** to **row 5, column a**.
+3. Insert the LED so its **long leg (anode)** is in **row 8, column e** and its **short leg (cathode)** is in **row 10, column e**.
+4. Connect a jumper wire from **row 10, column e** to any **GND pin** on the ESP32.
 
 The current path will be:
 
@@ -516,9 +531,9 @@ Before uploading:
 
 ✅ LED long leg (anode) in same row as other resistor leg
 
-✅ LED short leg (cathode) connected to GND
+✅ LED short leg (cathode) at row 10, connected to GND
 
-✅ PWM-capable pin used (GPIO18 on ESP32)
+✅ PWM-capable GPIO used (GPIO18)
 
 ---
 
@@ -644,13 +659,13 @@ legend('Theory', 'Measured', 'Location', 'northwest')
 
 Check:
 
-✅ Probe tip connected to GPIO18 (ESP32) or D9 (Arduino)
+✅ Probe tip connected to GPIO18
 
 ✅ Probe ground connected to GND
 
 ✅ Code uploaded successfully
 
-✅ ledcSetup() and ledcAttachPin() called in setup() (ESP32)
+✅ ledcSetup() and ledcAttachPin() called in setup()
 
 ---
 

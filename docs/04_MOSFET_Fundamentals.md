@@ -209,10 +209,10 @@ Before building the circuit, simulate the gate waveform and average voltage to p
 ### Simulate Gate PWM Waveforms
 
 ```matlab
-f  = 490;                    % Arduino PWM frequency (Hz)
+f  = 500;                    % LEDC PWM frequency (Hz)
 Ts = 1 / f;
 duty_cycles = [0.25, 0.50, 0.75, 1.00];
-Vs = 5;
+Vs = 3.3;
 
 t = 0:1e-6:4*Ts;
 
@@ -228,7 +228,7 @@ for i = 1:4
     title(sprintf('D = %d%%', D*100));
 end
 xlabel('Time (ms)');
-sgtitle('MOSFET Gate PWM - 490 Hz');
+sgtitle('MOSFET Gate PWM - 500 Hz');
 ```
 
 ### Prediction Table
@@ -247,7 +247,7 @@ Record your predicted average voltages before measuring:
 ## Components Required
 
 - IRLZ44N MOSFET
-- ESP32 DevKit V1 (or Arduino Uno as backup)
+- ESP32 DevKit V1
 - LED
 - 220 Ω resistor (for LED)
 - 220 Ω resistor (for gate)
@@ -272,7 +272,7 @@ The microcontroller drives the MOSFET gate. The MOSFET switches the LED current.
 ## Circuit Diagram
 
 ```text
-ESP32 3.3V  (or Arduino 5V as backup)
+ESP32 3.3V
  │
 220 Ω  (LED current-limiting resistor)
  │
@@ -286,7 +286,7 @@ Gate (MOSFET)
  │
 220 Ω  (gate resistor)
  │
-ESP32 GPIO18  (or Arduino Pin 9 as backup)
+ESP32 GPIO18
 ```
 
 ---
@@ -303,30 +303,62 @@ This reduces ringing on the gate signal and protects the microcontroller pin.
 
 ### Objective
 
-Switch an LED ON and OFF using a MOSFET controlled by the Arduino, and measure the gate voltage on the oscilloscope.
+Switch an LED ON and OFF using a MOSFET controlled by the ESP32, and measure the gate voltage on the oscilloscope.
 
 ---
 
 ### Step-by-Step Wiring
 
-1. Insert the **IRLZ44N** into the breadboard with the three legs in separate rows. Identify Gate (G), Drain (D), and Source (S) from the pinout diagram above.
-2. Connect a jumper wire from **ESP32 GND** (or **Arduino GND** as backup) to the **Source** leg row.
-3. Insert the **LED** so its **cathode (short leg)** is in the same row as the **Drain** leg.
-4. Insert the **220 Ω LED resistor** so one leg is in the same row as the **LED anode (long leg)** and the other leg is in a new row.
-5. Connect a jumper wire from the **top of the LED resistor** to the **ESP32 3.3V** pin (or **Arduino 5V** as backup).
-6. Insert the **220 Ω gate resistor** so one leg is in the same row as the **Gate** leg and the other leg is in a new row.
-7. Connect a jumper wire from the **top of the gate resistor** to **ESP32 GPIO18** (or **Arduino pin 9** as backup).
+Before inserting components, verify the MOSFET orientation using the pinout diagram above. The three legs must be identified correctly or the circuit will not work.
 
-The current path when the MOSFET is ON will be:
+---
 
-```text
-3.3V → LED resistor → LED → Drain → Source → GND
+### Breadboard Layout
+
+```
+       a      b      c      d      e
+     ┌─────────────────────────────────────┐
+ 2   │ [●]   [ ]   [┐]   [ ]   [ ]       │ ← 3.3V → a2, LED res top c2  (same row)
+ 3   │ [ ]   [ ]   [│]   [ ]   [ ]       │  220Ω LED resistor
+ 4   │ [●]   [┐]   [│]   [ ]   [ ]       │ ← GPIO18 → a4, Gate res top b4  (same row)
+ 5   │ [ ]   [│]   [┘]   [ ]   [▲]       │ ← LED res bottom c5 = LED anode e5  (same row)
+ 6   │ [ ]   [│]   [ ]   [ ]   [│]       │  220Ω gate res (b4–b7), LED body (e5–e8)
+ 7   │ [ ]   [┘]   [ ]   [●]   [│]       │ ← Gate res bottom b7 = MOSFET Gate d7  (same row)
+ 8   │ [ ]   [ ]   [ ]   [●]   [▼]       │ ← MOSFET Drain d8 = LED cathode e8  (same row)
+ 9   │ [●]   [ ]   [ ]   [●]   [ ]       │ ← GND → a9 = MOSFET Source d9  (same row)
+     └─────────────────────────────────────┘
 ```
 
-The control path will be:
+Row connections (all holes in the same row are internally linked):
+- Row 2: `a2` (3.3V wire) and `c2` (LED res top) — LED current path starts
+- Row 4: `a4` (GPIO18 wire) and `b4` (gate res top) — control path starts
+- Row 5: `c5` (LED res bottom) and `e5` (LED anode) — no jumper wire needed
+- Row 7: `b7` (gate res bottom) and `d7` (MOSFET Gate) — no jumper wire needed
+- Row 8: `d8` (MOSFET Drain) and `e8` (LED cathode) — no jumper wire needed
+- Row 9: `a9` (GND wire) and `d9` (MOSFET Source) — Source grounded
+
+---
+
+### Step-by-Step Wiring
+
+1. Insert the **IRLZ44N** into the breadboard: **Gate** at **row 7, column d**, **Drain** at **row 8, column d**, **Source** at **row 9, column d**. The three legs are consecutive — verify the G-D-S order from the pinout before inserting.
+2. Connect a jumper wire from **ESP32 GND** to **row 9, column a** (same row as MOSFET Source).
+3. Insert the **220 Ω LED resistor** vertically: one leg in **row 2, column c**, other in **row 5, column c**.
+4. Connect a jumper wire from **ESP32 3.3V** to **row 2, column a** (same row as LED resistor top).
+5. Insert the **LED**: **long leg (anode)** in **row 5, column e** (same row as LED resistor bottom), **short leg (cathode)** in **row 8, column e** (same row as MOSFET Drain).
+6. Insert the **220 Ω gate resistor** vertically: one leg in **row 4, column b**, other in **row 7, column b** (same row as MOSFET Gate).
+7. Connect a jumper wire from **ESP32 GPIO18** to **row 4, column a** (same row as gate resistor top).
+
+Current path when MOSFET is ON:
 
 ```text
-GPIO18 → Gate resistor → Gate
+3.3V (a2) → LED res (c2–c5) → LED (e5–e8) → Drain (d8) → Source (d9) → GND (a9)
+```
+
+Control path:
+
+```text
+GPIO18 (a4) → Gate res (b4–b7) → Gate (d7)
 ```
 
 ---
@@ -335,17 +367,19 @@ GPIO18 → Gate resistor → Gate
 
 Before uploading:
 
-✅ MOSFET Source connected to GND
+✅ MOSFET Gate at row 7, Drain at row 8, Source at row 9 (column d) — verify G-D-S order
 
-✅ LED cathode (short leg) connected to Drain
+✅ MOSFET Source (row 9, col d) in same row as GND wire (row 9, col a)
 
-✅ LED anode (long leg) connected to 220 Ω resistor
+✅ LED cathode (short leg, row 8, col e) in same row as MOSFET Drain (row 8, col d)
 
-✅ 220 Ω LED resistor connected to ESP32 3.3V (or Arduino 5V as backup)
+✅ LED anode (long leg, row 5, col e) in same row as LED resistor bottom (row 5, col c)
 
-✅ 220 Ω gate resistor between GPIO18 (or D9 as backup) and Gate
+✅ 3.3V wire at row 2, col a — same row as LED resistor top (row 2, col c)
 
-✅ Shared GND between ESP32 and MOSFET Source
+✅ GPIO18 wire at row 4, col a — same row as gate resistor top (row 4, col b)
+
+✅ Gate resistor bottom (row 7, col b) in same row as MOSFET Gate (row 7, col d)
 
 ---
 
@@ -371,37 +405,15 @@ void loop()
 }
 ```
 
-### Arduino Equivalent Code (backup)
-
-```cpp
-void setup()
-{
-    // Configure pin 9 as a digital output to drive the MOSFET gate.
-    pinMode(9, OUTPUT);
-}
-
-void loop()
-{
-    // Drive gate HIGH → MOSFET turns ON → current flows → LED ON.
-    digitalWrite(9, HIGH);
-    delay(1000);
-
-    // Drive gate LOW → MOSFET turns OFF → no current → LED OFF.
-    digitalWrite(9, LOW);
-    delay(1000);
-}
-```
+> **Arduino Uno:** replace GPIO18 with pin 9 and use `pinMode(9, OUTPUT)` / `digitalWrite(9, ...)`.
 
 ---
 
 ### Oscilloscope Settings — Gate Voltage
 
-Connect the probe to the MOSFET Gate to observe the switching signal.
-
-```text
-Probe Tip  ──────► MOSFET Gate
-Probe GND  ──────► ESP32 GND (= MOSFET Source)
-```
+1. Insert the **CH1 probe BNC** into CH1 on the OWON HDS272S.
+2. Hook the **CH1 probe tip** to the **MOSFET Gate** (row 7, col d).
+3. Clip the **CH1 probe ground** to any **GND pin** on the ESP32.
 
 | Setting | OWON HDS272S | DSO Nano |
 |---------|--------------|----------|
@@ -433,7 +445,7 @@ ON for 1 second
 OFF for 1 second
 ```
 
-On the oscilloscope you should see the gate voltage switching between 0 V and approximately 3.3 V (ESP32) or 5 V (Arduino backup).
+On the oscilloscope you should see the gate voltage switching between 0 V and approximately 3.3 V.
 
 ---
 
@@ -442,7 +454,7 @@ On the oscilloscope you should see the gate voltage switching between 0 V and ap
 | Parameter | Expected | Measured |
 |-----------|----------|---------|
 | Gate LOW | 0 V | |
-| Gate HIGH | ~3.3 V (ESP32) or ~5 V (Arduino backup) | |
+| Gate HIGH | ~3.3 V | |
 
 ---
 
@@ -481,29 +493,15 @@ void loop()
 }
 ```
 
-### Arduino Equivalent Code (backup)
-
-```cpp
-void setup()
-{
-    // No explicit pinMode needed; analogWrite() configures the pin automatically.
-}
-
-void loop()
-{
-    // Apply 50% duty cycle PWM to the MOSFET gate.
-    analogWrite(9, 128);
-}
-```
+> **Arduino Uno:** replace `ledcWrite(0, 128)` with `analogWrite(9, 128)` on pin 9.
 
 ---
 
 ### Oscilloscope Settings — PWM Gate Signal
 
-```text
-Probe Tip  ──────► MOSFET Gate
-Probe GND  ──────► ESP32 GND
-```
+1. Insert the **CH1 probe BNC** into CH1 on the OWON HDS272S.
+2. Hook the **CH1 probe tip** to the **MOSFET Gate** (row 7, col d).
+3. Clip the **CH1 probe ground** to any **GND pin** on the ESP32.
 
 | Setting | OWON HDS272S | DSO Nano |
 |---------|--------------|----------|
@@ -585,29 +583,7 @@ void loop()
 }
 ```
 
-### Arduino Equivalent Code (backup)
-
-```cpp
-void setup()
-{
-    // No explicit pinMode needed; analogWrite() configures the pin automatically.
-}
-
-void loop()
-{
-    analogWrite(9, 64);
-    delay(2000);
-
-    analogWrite(9, 128);
-    delay(2000);
-
-    analogWrite(9, 192);
-    delay(2000);
-
-    analogWrite(9, 255);
-    delay(2000);
-}
-```
+> **Arduino Uno:** replace `ledcWrite(0, value)` with `analogWrite(9, value)` on pin 9.
 
 ---
 
@@ -657,8 +633,8 @@ The LED receives less average power and therefore appears dimmer.
 Compare your measured gate waveform against the ideal simulation.
 
 ```matlab
-Vs = 3.3;                    % ESP32 supply (use 5.0 for Arduino backup)
-f_theory   = 490;            % ideal Arduino PWM frequency (Hz)
+Vs = 3.3;                    % ESP32 supply voltage
+f_theory   = 500;            % LEDC PWM frequency (Hz)
 f_measured = 490;            % replace with your measured frequency (Hz)
 D_measured = 0.50;           % replace with your measured duty cycle (0–1)
 
@@ -693,9 +669,67 @@ legend('Location','northwest');
 
 ### Reflection
 
-- Does your measured frequency match 490 Hz?
+- Does your measured frequency match 500 Hz?
 - Does your measured $V_{AVG}$ match the theoretical value $D \times V_S$?
 - Why might the measured average voltage differ slightly from theory?
+
+---
+
+## MATLAB PWM Harmonic Analysis
+
+A PWM signal is not a pure sinusoid. It contains the fundamental frequency plus a series of harmonics at integer multiples of $f_0$. This script computes and plots the spectrum using both FFT and the exact Fourier series formula.
+
+```matlab
+f0  = 500;              % fundamental PWM frequency (Hz)
+Vs  = 3.3;              % ESP32 gate voltage (V)
+fs  = f0 * 500;         % 500 samples per cycle
+
+D_vals = [0.25, 0.50, 0.75];
+
+figure;
+for k = 1:3
+    D = D_vals(k);
+
+    % --- FFT of simulated waveform ---
+    N = 20 * round(fs / f0);                    % 20 complete cycles
+    t = (0:N-1) / fs;
+    pwm = Vs * double(mod(t, 1/f0) < D/f0);
+
+    Y = fft(pwm) / N;
+    P = 2 * abs(Y);
+    P(1) = abs(Y(1));                           % DC term not doubled
+
+    harm_bins = round((0:10) * f0 * N / fs) + 1;  % bin index for each harmonic
+    fft_amps  = P(harm_bins);
+
+    % --- Analytical Fourier series (exact) ---
+    %   DC:         Vs * D
+    %   nth harmonic: |(2*Vs / (n*pi)) * sin(n*pi*D)|
+    n = 1:10;
+    anal_amps = [Vs*D, abs((2*Vs ./ (n*pi)) .* sin(n*pi*D))];
+
+    % --- Plot ---
+    subplot(3, 1, k);
+    b = bar(0:10, [fft_amps; anal_amps]', 'grouped');
+    b(1).FaceColor = [0.2 0.5 0.8];  b(1).DisplayName = 'FFT';
+    b(2).FaceColor = [0.9 0.3 0.2];  b(2).DisplayName = 'Fourier series (exact)';
+    xlabel('Harmonic  (0 = DC,  1 = f_0,  2 = 2f_0, ...)');
+    ylabel('Amplitude (V)');
+    title(sprintf('D = %d%%   DC = %.2f V   Fundamental = %.2f V', ...
+                   D*100, Vs*D, anal_amps(2)));
+    legend('Location', 'northeast');
+    grid on;  xticks(0:10);  xlim([-0.5, 10.5]);
+end
+sgtitle(sprintf('PWM Harmonic Spectrum  |  f_0 = %d Hz,  V_S = %.1f V', f0, Vs));
+```
+
+### Key observations
+
+- **D = 50%:** only odd harmonics exist ($f_0$, $3f_0$, $5f_0$, ...). Even harmonics cancel because the pulse is symmetric.
+- **D = 25% and 75%:** even harmonics appear. Note how 25% and 75% are mirror images.
+- **Amplitude decreases** with harmonic number but never reaches zero — a square wave always has infinite harmonic content.
+- **DC component** ($V_{AVG} = V_S \cdot D$) is the only part doing useful work at the load. All harmonics cause heating, EMI, and noise.
+- **This is why LC filters are essential** in Buck and Boost converters — to block the switching harmonics and deliver clean DC to the load.
 
 ---
 
@@ -709,7 +743,7 @@ Check:
 
 ✅ LED polarity (cathode to Drain, anode toward ESP32 3.3V)
 
-✅ Gate resistor connected between GPIO18 (or D9 as backup) and Gate
+✅ Gate resistor connected between GPIO18 and Gate
 
 ✅ Source connected to GND
 
@@ -737,7 +771,7 @@ Check:
 
 ✅ Trigger type set to Edge, Rising
 
-✅ Horizontal scale appropriate (500 µs/div for 490 Hz)
+✅ Horizontal scale appropriate (500 µs/div for 500 Hz)
 
 ---
 
@@ -747,9 +781,9 @@ Check:
 
 ✅ Shared GND between controller and MOSFET Source
 
-✅ Gate resistor in series between GPIO18 (or D9 as backup) and Gate
+✅ Gate resistor in series between GPIO18 and Gate
 
-✅ LED resistor in series between ESP32 3.3V (or Arduino 5V as backup) and LED anode
+✅ LED resistor in series between ESP32 3.3V and LED anode
 
 ✅ Probe on Gate, probe ground on GND
 

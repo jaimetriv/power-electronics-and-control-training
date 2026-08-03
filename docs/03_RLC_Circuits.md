@@ -117,11 +117,11 @@ V_in
  │
  L
  │
- ├──── Vc ──── Probe Tip
+ ├──── Vc ──── CH1 probe tip
  │
  C
  │
-GND ──── Probe GND
+GND ──── CH1 probe ground
 ```
 
 ---
@@ -268,6 +268,8 @@ end
 
 ### Simulate Step Responses
 
+> **Toolbox required:** `tf()` and `step()` require the MATLAB **Control System Toolbox**.
+
 ```matlab
 L = 0.1;
 C = 100e-9;
@@ -305,7 +307,7 @@ Record your predictions before measuring:
 
 ## Components Required
 
-- ESP32 DevKit V1 (or Arduino Uno as backup)
+- ESP32 DevKit V1
 - Breadboard
 - Jumper wires
 - 100 mH inductor
@@ -330,35 +332,59 @@ Observe the oscillatory (ringing) response of a second-order RLC circuit when ex
 ### Circuit Diagram
 
 ```text
-ESP32 GPIO18  (or Arduino Pin 9 as backup)
+ESP32 GPIO18
     │
    100 Ω resistor
     │
    100 mH inductor
     │
-    ├──── Vc ──── Probe Tip
+    ├──── Vc ──── CH1 probe tip
     │
    100 nF capacitor
     │
-   GND ──── Probe GND
+   GND ──── CH1 probe ground
 ```
+
+---
+
+### Breadboard Layout
+
+```
+       a      b      c      d      e
+     ┌─────────────────────────────────────┐
+ 4   │ [●]   [ ]   [┐]   [ ]   [ ]       │ ← GPIO18 → a4, Resistor top c4
+ 5   │ [ ]   [ ]   [┘]   [ ]   [┐]       │ ← R bottom c5 = L top e5  (same row = connected)
+ 6   │ [ ]   [ ]   [ ]   [ ]   [│]       │
+ 7   │ [ ]   [ ]   [ ]   [ ]   [│]       │  100 mH inductor (e5–e9)
+ 8   │ [ ]   [ ]   [ ]   [ ]   [│]       │
+ 9   │ [ ]   [ ]   [▲]   [ ]   [┘]       │ ← Vc: L bottom e9 = Cap+ c9  (same row = connected)
+10   │ [ ]   [ ]   [│]   [ ]   [ ]       │  100 nF cap body (c9–c11)
+11   │ [ ]   [ ]   [▼]   [ ]   [ ]       │ ← Cap− c11 → GND
+     └─────────────────────────────────────┘
+```
+
+**Row 9 is the Vc junction** — L bottom (e9) and cap positive (c9) are in the same row so they are automatically connected. Connect the CH1 probe tip here.
+
+Row connections (same row = internally linked on the breadboard):
+- Row 5: `c5` (resistor bottom) and `e5` (inductor top) are connected → no jumper wire needed
+- Row 9: `e9` (inductor bottom) and `c9` (cap positive) are connected → Vc junction
 
 ---
 
 ### Step-by-Step Wiring
 
-1. Insert the **100 Ω resistor** across the breadboard so each leg is in a different row.
-2. Connect a jumper wire from **ESP32 GPIO18** (or **Arduino pin 9** as backup) to one leg of the resistor.
-3. Insert the **100 mH inductor** so one leg is in the same row as the other resistor leg, and the other inductor leg is in a new row below.
-4. Insert the **100 nF capacitor** so its positive leg is in the same row as the lower inductor leg. This junction is $V_C$.
-5. Connect a jumper wire from the **capacitor negative leg** to any **GND** pin on the ESP32.
-6. Connect the **oscilloscope probe tip** to the $V_C$ junction.
-7. Connect the **oscilloscope probe ground** to ESP32 GND.
+1. Insert the **100 Ω resistor** vertically: one leg in **row 4, column c**, other in **row 5, column c**.
+2. Connect a jumper wire from **ESP32 GPIO18** to **row 4, column a**.
+3. Insert the **100 mH inductor** vertically: one end in **row 5, column e**, other end in **row 9, column e**. Row 5 is already connected to the resistor bottom (same row — no extra jumper needed).
+4. Insert the **100 nF capacitor** vertically: **positive lead** in **row 9, column c**, **negative lead** in **row 11, column c**. Row 9 is the Vc junction (connected to the inductor bottom via the row).
+5. Connect a jumper wire from **row 11, column c** (cap negative) to any **GND pin** on the ESP32.
+6. Hook the **CH1 probe tip** to any hole in **row 9** (Vc junction).
+7. Clip the **CH1 probe ground** to any **GND pin** on the ESP32.
 
-The signal path will be:
+The signal path is:
 
 ```text
-GPIO18 → Resistor → Inductor → Vc (probe here) → Capacitor → GND
+GPIO18 → Resistor (rows 4–5) → Inductor (rows 5–9) → Vc (row 9, probe here) → Capacitor (rows 9–11) → GND
 ```
 
 ---
@@ -367,17 +393,19 @@ GPIO18 → Resistor → Inductor → Vc (probe here) → Capacitor → GND
 
 Before uploading:
 
-✅ Resistor leg in same row as ESP32 GPIO18 (or Arduino pin 9 as backup) jumper
+✅ GPIO18 jumper at row 4, column a
 
-✅ Inductor leg in same row as other resistor leg
+✅ Resistor in column c, rows 4–5
 
-✅ Capacitor positive leg in same row as lower inductor leg (this is Vc)
+✅ Inductor in column e, rows 5–9 (top leg in same row as resistor bottom)
+
+✅ Capacitor positive lead in row 9, column c (same row as inductor bottom = Vc)
 
 ✅ Capacitor negative leg connected to GND
 
-✅ Oscilloscope probe tip connected to Vc
+✅ CH1 probe tip at row 9 (Vc)
 
-✅ Oscilloscope probe ground connected to ESP32 (or Arduino backup) GND
+✅ CH1 probe ground at ESP32 GND
 
 ---
 
@@ -403,24 +431,7 @@ void loop()
 }
 ```
 
-### Arduino Equivalent Code (backup)
-
-```cpp
-void setup()
-{
-    // Configure pin 9 as a digital output.
-    pinMode(9, OUTPUT);
-}
-
-void loop()
-{
-    digitalWrite(9, HIGH);
-    delayMicroseconds(500);
-
-    digitalWrite(9, LOW);
-    delayMicroseconds(500);
-}
-```
+> **Arduino Uno:** replace GPIO18 with pin 9 and use `pinMode(9, OUTPUT)` / `digitalWrite(9, ...)` instead of LEDC.
 
 ---
 
