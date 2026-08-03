@@ -109,10 +109,37 @@ Typical ESP32 DevKit V1:
 
 ## Main Features
 
-### Microcontroller
+### Microcontroller Module
 
 ```text
 ESP32-WROOM-32
+```
+
+The WROOM-32 module contains the silicon chip:
+
+```text
+ESP32-D0WD-v3  (revision 3.1)
+```
+
+---
+
+### CPU Cores
+
+```text
+Dual Xtensa LX6 at 240 MHz
++ ULP (Ultra-Low Power) co-processor
+```
+
+The two main cores run application code.
+The ULP co-processor can run simple tasks while the main cores are in deep sleep,
+which is useful for low-power sensing applications.
+
+---
+
+### Crystal Frequency
+
+```text
+40 MHz external crystal
 ```
 
 ---
@@ -120,10 +147,8 @@ ESP32-WROOM-32
 ### Clock Frequency
 
 ```text
-240 MHz
+240 MHz (CPU)
 ```
-
-Dual-core architecture.
 
 ---
 
@@ -850,17 +875,20 @@ approximately.
 
 ## ADC Note
 
-The ESP32 ADC has known non-linearity near:
+The ESP32 ADC has known non-linearity near the rail voltages.
 
-```text
-0 V  and  3.3 V
-```
-
-For best accuracy keep signals between:
+For best accuracy keep input signals between:
 
 ```text
 0.1 V and 3.1 V
 ```
+
+Your chip (ESP32-D0WD-v3 revision 3.1) has **ADC Vref calibration data stored in eFuse**.
+This means the Arduino ESP32 core can apply factory calibration automatically,
+giving better voltage accuracy than older uncalibrated ESP32 chips.
+
+For raw ADC counts (`analogRead()`), calibration reduces offset errors.
+For converted voltages, use `analogReadMilliVolts()` to get calibration-corrected millivolt readings.
 
 ---
 
@@ -1082,20 +1110,69 @@ Control the brightness of an external LED using PWM to demonstrate the LEDC peri
 
 ### Circuit
 
-**Important:** Use **GPIO18** with a 220 Ω resistor and LED, wired identically to Experiment 2.
+**Important:** Use **GPIO18**. This is a PWM-capable output pin and is used for all ESP32 PWM experiments in this course.
 
-```text
-ESP32 GPIO18
-    │
-   220 Ω resistor
-    │
-   LED anode (long leg)
-   LED cathode (short leg)
-    │
-ESP32 GND pin
+---
+
+### Breadboard Diagram
+
+```
+  ESP32 DevKit V1              BREADBOARD (top view, rows 1–12)
+  ┌────────────┐
+  │            │               Columns
+  │            │         a      b      c      d      e
+  │    GPIO18  ●────┐  ┌─────────────────────────────────────┐
+  │            │    │  │ 1   [ ]   [ ]   [ ]   [ ]   [ ]     │
+  │            │    │  │ 2   [ ]   [ ]   [ ]   [ ]   [ ]     │
+  │            │    │  │ 3   [ ]   [ ]   [ ]   [ ]   [ ]     │
+  │            │    │  │ 4   [ ]   [ ]   [ ]   [ ]   [ ]     │
+  │            │    └─→│ 5   [●]   [ ]   [┐]   [ ]   [ ]    │ GPIO18 wire → a5
+  │            │       │ 6   [ ]   [ ]   [│]   [ ]   [ ]    │
+  │            │       │ 7   [ ]   [ ]   [│]   [ ]   [ ]    │ 220 Ω resistor (c5–c8)
+  │            │       │ 8   [ ]   [ ]   [┘]   [ ]   [▲]   │ resistor bottom c8, LED+ e8
+  │            │       │ 9   [ ]   [ ]   [ ]   [ ]   [│]   │
+  │            │       │10   [ ]   [ ]   [ ]   [ ]   [▼]   │ LED cathode at e10
+  │        GND ●────┐  │11   [ ]   [ ]   [ ]   [ ]   [ ]   │
+  │            │    │  └─────────────────────────────────────┘
+  └────────────┘    │                                │
+                    │                                │ GND wire
+                    └────────────────────────────────┘
 ```
 
-Refer to the step-by-step wiring and checklist in Experiment 2.
+### How the rows connect internally
+
+```
+Row 5:  a5 ─── b5 ─── c5 ─── d5 ─── e5   (all connected inside the breadboard)
+         ↑              ↑
+    GPIO18 wire    Resistor top leg
+    plugs here     plugs here → no extra wire needed between them
+```
+
+```
+Row 8:  a8 ─── b8 ─── c8 ─── d8 ─── e8   (all connected inside the breadboard)
+                        ↑               ↑
+               Resistor bottom leg   LED anode (long leg)
+               plugs here            plugs here → no extra wire needed
+```
+
+### Step-by-Step Wiring
+
+1. Insert the **220 Ω resistor** vertically so one leg is in **row 5, column c** and the other in **row 8, column c**.
+2. Connect a jumper wire from **ESP32 GPIO18** to **row 5, column a**.
+3. Insert the **LED** so the **long leg (anode, +)** is in **row 8, column e** and the **short leg (cathode, −)** is in **row 10, column e**.
+4. Connect a jumper wire from **row 10, column e** to any **GND pin** on the ESP32.
+
+### Wiring Checklist
+
+Before uploading:
+
+✅ 220 Ω resistor vertical in column c, rows 5–8
+
+✅ GPIO18 jumper wire to row 5, column a
+
+✅ LED long leg (anode) at row 8, column e (same row as resistor bottom)
+
+✅ LED short leg (cathode) at row 10, column e connected to GND
 
 ---
 

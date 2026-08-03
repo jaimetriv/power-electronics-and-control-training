@@ -330,6 +330,38 @@ Probe GND   ──────► Arduino GND
 
 ---
 
+## How to Connect the Oscilloscope Probe
+
+Before every experiment, connect the probe in this order:
+
+### Step 1 — BNC Connector
+
+Insert the BNC connector (the thick end of the probe cable) into the **CH1** input socket on the OWON HDS272S.
+
+Align the two bayonet pins with the slots, push in firmly, and rotate a quarter-turn clockwise until you feel a click.
+
+### Step 2 — Ground Clip
+
+Clip the short lead with the **black alligator clip** to any **GND pin** on the Arduino.
+
+> The oscilloscope ground and the probe ground are connected through the instrument chassis. Connecting the ground clip to any point other than GND will short that point to ground and can damage your circuit.
+
+### Step 3 — Probe Tip
+
+Touch the retractable metal hook at the tip to the signal you want to measure.
+
+To hook onto an Arduino pin, retract the protective tip cover to expose the hook and hook it directly over the header pin.
+
+```text
+OWON CH1 socket  ◄──── BNC connector (push and twist)
+Arduino GND pin  ◄──── Ground clip (black alligator clip)
+Signal pin       ◄──── Probe tip (metal hook)
+```
+
+> Once the ground clip is attached to GND you can safely move the probe tip between any pins without disconnecting anything.
+
+---
+
 ## Experiment 1 - Ground Verification
 
 ### Objective
@@ -393,10 +425,17 @@ void loop()
 
 ### Connections
 
+1. Insert the CH1 probe BNC connector into **CH1** on the OWON HDS272S and twist to lock.
+2. Clip the **ground clip** to any **GND pin** on the Arduino.
+3. Hook the **probe tip** onto **Arduino pin D9**.
+
 ```text
-Probe Tip  ──────► Arduino Pin D9
-Probe GND  ──────► Arduino GND
+CH1 socket    ◄──── BNC connector
+Arduino GND   ◄──── Ground clip
+Arduino D9    ◄──── Probe tip
 ```
+
+> You are measuring the voltage on D9 relative to GND. D9 is set permanently HIGH by the code, so you expect to see a flat 5 V line.
 
 ---
 
@@ -479,10 +518,19 @@ void loop()
 
 ### Connections
 
+Same physical connections as Experiment 2:
+
+1. BNC connector into **CH1** on the OWON HDS272S.
+2. Ground clip onto any **Arduino GND pin**.
+3. Probe tip onto **Arduino pin D9**.
+
 ```text
-Probe Tip  ──────► Arduino Pin D9
-Probe GND  ──────► Arduino GND
+CH1 socket    ◄──── BNC connector
+Arduino GND   ◄──── Ground clip
+Arduino D9    ◄──── Probe tip
 ```
+
+> The horizontal scale is much shorter here (500 µs/div vs 100 ms/div in Experiment 2) because the PWM switching period is about 2 ms, which is invisible at 100 ms/div.
 
 ---
 
@@ -611,12 +659,22 @@ void loop()
 
 ---
 
+### Connections
+
+Same physical connections as Experiments 2 and 3:
+
+1. BNC connector into **CH1** on the OWON HDS272S.
+2. Ground clip onto any **Arduino GND pin**.
+3. Probe tip onto **Arduino pin D9**.
+
+---
+
 ### Procedure
 
 1. Upload the code.
-2. Connect the oscilloscope as in Experiment 3.
-3. Open the Serial Monitor at **9600 baud** to see which duty cycle is currently active.
-4. For each duty cycle step, observe the waveform and sketch or note the ON time versus OFF time.
+2. Connect the oscilloscope probe as described above.
+3. Open the Serial Monitor at **9600 baud** to confirm which duty cycle step is currently active.
+4. For each step, observe the waveform and note the ON time versus OFF time ratio.
 
 ---
 
@@ -631,293 +689,244 @@ void loop()
 | 255 | 100% | Flat HIGH (5 V) |
 
 ---
-### Experiment 5 - Observe a Low-Pass Filter
 
-#### Objective
-  
-Observe how frequency affects the output voltage of a simple RC low-pass filter.
+## Experiment 5 - RC Low-Pass Filter with Signal Generator
 
-Learn how to:
-- Use the OWON HDS272S signal generator
-- Measure input and output signals simultaneously
-- Observe signal attenuation
-- Compare two waveforms using CH1 and CH2
+### Objective
 
-#### Components Required
+Observe how an RC low-pass filter attenuates signals as frequency increases.
+Learn to configure the OWON HDS272S built-in signal generator and measure
+input and output simultaneously with both oscilloscope channels.
 
-- 10 kΩ resistor
-- 100 nF capacitor
+---
+
+### Background
+
+An RC low-pass filter passes low frequencies and attenuates high frequencies.
+The cutoff (−3 dB) frequency is:
+
+$$
+f_c = \frac{1}{2 \pi R C}
+$$
+
+For this circuit:
+
+$$
+f_c = \frac{1}{2 \pi \times 10000 \times 100 \times 10^{-9}} \approx 159 \text{ Hz}
+$$
+
+Below $f_c$ the output amplitude is close to the input.
+Above $f_c$ the output is attenuated and phase-shifted.
+
+This concept appears throughout the course in:
+
+- Output ripple filtering in Buck and Boost converters
+- L-filter design in inverter output stages
+- Bandwidth and phase margin in closed-loop control
+
+---
+
+### About the OWON Signal Generator
+
+The OWON HDS272S generates **one waveform at one frequency at a time**.
+It cannot inject multiple frequencies simultaneously.
+
+For this experiment you change the frequency manually between tests.
+This is called a **manual frequency sweep** and is the standard technique
+for measuring frequency response in a practical lab.
+
+---
+
+### Components Required
+
+- 10 kΩ resistor (from SparkFun kit)
+- 100 nF capacitor (from SparkFun Beginner Parts Kit)
 - Breadboard
 - Jumper wires
 - OWON HDS272S
+- BNC-to-jumper cable or BNC-to-alligator leads for the generator output
 
-#### RC Low-Pass Filter
+---
 
-The following circuit passes low-frequency signals and attenuates high-frequency signals.
-
-#### Circuit
-
-```text
-                     10 kΩ
-
-VIN ----/\/\/\/\/\/\/\/\/\/\----+---- VOUT
-                                |
-                                |
-                              100 nF
-                                |
-                                |
-GND ----------------------------+---- GND
-```
-
-The output voltage is measured across the capacitor.
-
-The cutoff frequency is approximately:
-
-159 Hz
-
-#### Important Ground Connection
-
-All oscilloscope ground clips and the signal generator ground must be connected to the same circuit ground.
+### Circuit
 
 ```text
-Generator Ground
-        |
-        +------ GND
-
-CH1 Ground
-        |
-        +------ GND
-
-CH2 Ground
-        |
-        +------ GND
+         10 kΩ
+VIN ─────┤R├─────┬──── VOUT
+                 │
+               100 nF
+                 │
+GND ─────────────┴──── GND
 ```
 
-#### Signal Generator Setup
+Output is measured across the capacitor. Cutoff frequency ≈ 159 Hz.
 
-Waveform:Sine
+---
 
-Amplitude:2 Vpp
+### Breadboard Layout
 
-Offset:0 V
+```
+       a      b      c      d      e
+     ┌─────────────────────────────────────┐
+ 5   │ [●]   [ ]   [┐]   [ ]   [ ]       │ ← GEN OUT → a5 (VIN), Resistor top c5
+ 6   │ [ ]   [ ]   [│]   [ ]   [ ]       │
+ 7   │ [ ]   [ ]   [│]   [ ]   [ ]       │  10 kΩ resistor (c5 to c8)
+ 8   │ [ ]   [ ]   [┘]   [ ]   [●]       │ ← Resistor bottom c8, Cap top e8 = VOUT
+ 9   │ [ ]   [ ]   [ ]   [ ]   [│]       │
+10   │ [ ]   [ ]   [ ]   [ ]   [│]       │  100 nF capacitor (e8 to e11)
+11   │ [ ]   [ ]   [ ]   [ ]   [●]       │ ← Cap bottom e11 → GND rail
+     └─────────────────────────────────────┘
+```
 
-#### Connections
+Row connections (all holes in the same row are internally linked):
 
-Generator Output  ──────► VIN
+- Row 5: `a5` (GEN OUT wire) and `c5` (resistor top) are at **VIN**.
+- Row 8: `c8` (resistor bottom) and `e8` (capacitor top) are at **VOUT**.
 
-Generator Ground  ──────► GND
+---
 
-CH1 Probe Tip     ──────► VIN
+### Signal Generator Setup
 
-CH1 Ground        ──────► GND
+Follow these steps on the OWON HDS272S:
 
-CH2 Probe Tip     ──────► VOUT
+1. Press the **[GEN]** button (or navigate **Menu → Generator**) to enter signal generator mode.
+2. Select **Waveform → Sine**.
+3. Set **Amplitude → 2 Vpp**.
+4. Set **Offset → 0 V**.
+5. Set **Frequency → 100 Hz** (starting point for Test A).
+6. **Enable the output** so the GEN OUT terminal becomes active.
+7. The signal appears on the **GEN OUT** BNC terminal on the instrument body.
 
-CH2 Ground        ──────► GND
+> Between tests only the frequency changes. Waveform, amplitude, and offset stay fixed.
 
-#### Complete Wiring Diagram
+---
+
+### Important Ground Connection
+
+All ground connections must share the same GND rail on the breadboard:
 
 ```text
-                    CH2 Probe Tip
-                           |
-                           ▼
-
-                      +--- VOUT
-                      |
-                      |
-                    100 nF
-                      |
-                      |
-Generator GND --------+----------------+
-                                        |
-                                        |
-                                 CH1 Ground
-                                 CH2 Ground
-
-Generator Output
-       |
-       |
-       +---- VIN ----/\/\/\/\/\/\-----+
-                        10 kΩ          |
-                                       |
-                                 CH1 Probe Tip
+OWON GEN GND terminal  →  GND rail
+CH1 ground clip        →  GND rail
+CH2 ground clip        →  GND rail
 ```
 
-#### Oscilloscope Settings
+Separate ground loops cause measurement errors.
 
-<table>
-<tr>
-<th>
-Setting
-</th>
-<th>
-OWON HDS272S
-</th>
-</tr>
-<tr>
-<td>
-Channels
-</td>
-<td>
-CH1 and CH2
-</td>
-</tr>
-<tr>
-<td>
-Vertical Scale
-</td>
-<td>
-500 mV/div
-</td>
-</tr>
-<tr>
-<td>
-Horizontal Scale
-</td>
-<td>
-1 ms/div initially
-</td>
-</tr>
-<tr>
-<td>
-Trigger Source
-</td>
-<td>
-CH1
-</td>
-</tr>
-<tr>
-<td>
-Trigger
-</td>
-<td>
-Edge, Rising
-</td>
-</tr>
-<tr>
-<td>
-Coupling
-</td>
-<td>
-DC
-</td>
-</tr>
-</table>
+---
 
-#### Procedure
+### Step-by-Step Wiring
 
-##### Test A
+1. Insert the **10 kΩ resistor** vertically: one leg in **row 5, column c**, other in **row 8, column c**.
+2. Insert the **100 nF capacitor** vertically: one leg in **row 8, column e**, other in **row 11, column e**. Ceramic capacitors are not polarised — either leg at top.
+3. Connect a jumper from **row 11, column e** to the **GND rail**.
+4. Connect the **OWON GEN OUT** terminal to **row 5, column a** using a BNC-to-jumper cable. This is VIN.
+5. Connect the **OWON GEN GND** terminal to the **GND rail**.
+6. Insert **CH1 probe BNC** into CH1. Clip the CH1 ground to the **GND rail**. Hook the CH1 probe tip to **row 5, column a** (VIN).
+7. Insert **CH2 probe BNC** into CH2. Clip the CH2 ground to the **GND rail**. Hook the CH2 probe tip to **row 8, column e** (VOUT, across the capacitor).
 
-Set the signal generator frequency to:
+### Wiring Checklist
 
-100 Hz
+✅ Resistor vertical in column c, rows 5–8
 
-Measure:
-- Input Voltage (CH1)
-- Output Voltage (CH2)
+✅ Capacitor vertical in column e, rows 8–11
 
-##### Test B
+✅ Cap bottom (row 11, column e) connected to GND rail
 
-Set the signal generator frequency to:
+✅ GEN OUT connected to row 5, column a (VIN)
 
-500 Hz
+✅ GEN GND, CH1 ground clip, CH2 ground clip — all on the same GND rail
 
-Measure:
-- Input Voltage (CH1)
-- Output Voltage (CH2)
+✅ CH1 probe tip at row 5 (VIN)
 
-##### Test C
+✅ CH2 probe tip at row 8, column e (VOUT)
 
-Set the signal generator frequency to:
+---
 
-1 kHz
+### Oscilloscope Settings
 
-Measure:
-- Input Voltage (CH1)
-- Output Voltage (CH2)
+| Setting | Value |
+|---------|-------|
+| Channels active | CH1 and CH2 |
+| CH1 vertical scale | 500 mV/div |
+| CH2 vertical scale | 500 mV/div |
+| Horizontal scale | Adjust per test — see table below |
+| Trigger source | CH1 |
+| Trigger type | Edge, Rising |
+| Coupling | DC |
 
-##### Test D
+Suggested horizontal scale per test:
 
-Set the signal generator frequency to:
+| Test Frequency | Horizontal Scale |
+|----------------|-----------------|
+| 100 Hz | 2 ms/div |
+| 500 Hz | 500 µs/div |
+| 1 kHz | 200 µs/div |
+| 10 kHz | 20 µs/div |
 
-10 kHz
+---
 
-Measure:
-- Input Voltage (CH1)
-- Output Voltage (CH2)
+### Procedure
 
-#### Expected Result
+#### Test A — 100 Hz (below cutoff)
 
-At 100 Hz the input and output amplitudes should be similar.
+1. Set the OWON signal generator to **100 Hz**.
+2. Set horizontal scale to **2 ms/div**.
+3. Observe both CH1 and CH2. Use the oscilloscope Vpp auto-measurement or count divisions.
 
-At 500 Hz the output amplitude should be slightly smaller than the input.
+Expected: CH1 ≈ CH2 — little attenuation well below $f_c$.
 
-At 1 kHz noticeable attenuation should be visible.
+#### Test B — 500 Hz (near cutoff)
 
-At 10 kHz the output voltage should be much smaller than the input voltage.
+1. Change generator frequency to **500 Hz**.
+2. Adjust horizontal scale to **500 µs/div**.
+3. Record CH1 and CH2 Vpp.
 
-#### Record Measurements
+Expected: CH2 slightly smaller than CH1. A phase shift between the waveforms is also visible.
 
-<table>
-<tr>
-<th>
-Frequency
-</th>
-<th>
-Input Voltage (Vpp)
-</th>
-<th>
-Output Voltage (Vpp)
-</th>
-<th>
-Observation
-</th>
-</tr>
-<tr>
-<td>
-100 Hz
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-500 Hz
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-1 kHz
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-10 kHz
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-</table>
+#### Test C — 1 kHz (above cutoff)
+
+1. Change generator frequency to **1 kHz**.
+2. Adjust horizontal scale to **200 µs/div**.
+3. Record CH1 and CH2 Vpp.
+
+Expected: Noticeable attenuation — CH2 amplitude clearly smaller than CH1.
+
+#### Test D — 10 kHz (well above cutoff)
+
+1. Change generator frequency to **10 kHz**.
+2. Adjust horizontal scale to **20 µs/div**.
+3. Record CH1 and CH2 Vpp.
+
+Expected: CH2 significantly smaller than CH1.
+
+---
+
+### Expected Results
+
+| Frequency | Expected observation |
+|-----------|---------------------|
+| 100 Hz | CH1 ≈ CH2 — signal passes with minimal attenuation |
+| 500 Hz | CH2 slightly smaller — near-cutoff region |
+| 1 kHz | CH2 noticeably smaller — above cutoff |
+| 10 kHz | CH2 much smaller — well above cutoff |
+
+---
+
+### Record Measurements
+
+| Frequency | CH1 Vpp (input) | CH2 Vpp (output) | Ratio V_OUT / V_IN |
+|-----------|----------------|-----------------|-------------------|
+| 100 Hz | | | |
+| 500 Hz | | | |
+| 1 kHz | | | |
+| 10 kHz | | | |
+
+At the cutoff frequency the ratio should be approximately:
+
+$$
+\frac{V_{OUT}}{V_{IN}} \approx 0.707 \quad (-3 \text{ dB})
+$$
 ---
 
 ## Adjusting The Scales
