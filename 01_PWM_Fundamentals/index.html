@@ -757,10 +757,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#pwm-on-esp32-and-arduino-uno" class="md-nav__link">
+  <a href="#pwm-on-esp32" class="md-nav__link">
     <span class="md-ellipsis">
       
-        PWM on ESP32 and Arduino Uno
+        PWM on ESP32
       
     </span>
   </a>
@@ -891,17 +891,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#arduino-equivalent-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Arduino Equivalent Code
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#why-128" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -996,17 +985,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#arduino-equivalent-code_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Arduino Equivalent Code
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#results-table" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1068,6 +1046,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#breadboard-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Breadboard Layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#step-by-step-wiring" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1101,7 +1090,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#arduino-equivalent-code_2" class="md-nav__link">
+  <a href="#arduino-equivalent-code" class="md-nav__link">
     <span class="md-ellipsis">
       
         Arduino Equivalent Code
@@ -2251,10 +2240,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#pwm-on-esp32-and-arduino-uno" class="md-nav__link">
+  <a href="#pwm-on-esp32" class="md-nav__link">
     <span class="md-ellipsis">
       
-        PWM on ESP32 and Arduino Uno
+        PWM on ESP32
       
     </span>
   </a>
@@ -2385,17 +2374,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#arduino-equivalent-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Arduino Equivalent Code
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#why-128" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2490,17 +2468,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#arduino-equivalent-code_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Arduino Equivalent Code
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#results-table" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2562,6 +2529,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#breadboard-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Breadboard Layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#step-by-step-wiring" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2595,7 +2573,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#arduino-equivalent-code_2" class="md-nav__link">
+  <a href="#arduino-equivalent-code" class="md-nav__link">
     <span class="md-ellipsis">
       
         Arduino Equivalent Code
@@ -3007,11 +2985,10 @@ V_{AVG} = D \cdot V_S
 V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 \]</div>
 <hr />
-<h2 id="pwm-on-esp32-and-arduino-uno">PWM on ESP32 and Arduino Uno<a class="headerlink" href="#pwm-on-esp32-and-arduino-uno" title="Permanent link">&para;</a></h2>
-<p>On ESP32, PWM is generated with the LEDC peripheral (see Project 00C for setup details).</p>
-<p>On Arduino Uno, the function <code>analogWrite()</code> generates PWM.</p>
-<p>Valid values for both:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>0 → 255  (8-bit)
+<h2 id="pwm-on-esp32">PWM on ESP32<a class="headerlink" href="#pwm-on-esp32" title="Permanent link">&para;</a></h2>
+<p>PWM is generated using the <strong>LEDC peripheral</strong> (see Project 00C for full setup details).</p>
+<p>Valid duty cycle values (8-bit):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>0 → 255
 </code></pre></div>
 <table>
 <thead>
@@ -3043,10 +3020,12 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 </tr>
 </tbody>
 </table>
-<p>Controller pin options for this experiment:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ESP32:       GPIO18
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Arduino Uno: Pin 9
+<p>Controller pin for this experiment:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ESP32: GPIO18
 </code></pre></div>
+<blockquote>
+<p><strong>Arduino Uno:</strong> use pin D9 with <code>analogWrite(9, value)</code> instead of the LEDC functions.</p>
+</blockquote>
 <hr />
 <h2 id="matlab-simulation">MATLAB Simulation<a class="headerlink" href="#matlab-simulation" title="Permanent link">&para;</a></h2>
 <p>Before building the circuit, simulate a PWM waveform in MATLAB to predict what you will observe on the oscilloscope.</p>
@@ -3143,10 +3122,16 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 <p>Generate a 50% duty cycle PWM signal and observe it on the oscilloscope.</p>
 <hr />
 <h3 id="connections">Connections<a class="headerlink" href="#connections" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Probe Tip  ──────► ESP32 GPIO18  (or Arduino Pin D9)
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Probe GND  ──────► ESP32 GND
+<ol>
+<li>Insert the CH1 probe BNC connector into <strong>CH1</strong> on the OWON HDS272S.</li>
+<li>Clip the <strong>ground clip</strong> to any <strong>GND pin</strong> on the ESP32.</li>
+<li>Hook the <strong>probe tip</strong> directly onto <strong>ESP32 GPIO18</strong>.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>CH1 socket    ◄──── BNC connector
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>ESP32 GND     ◄──── Ground clip
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>ESP32 GPIO18  ◄──── Probe tip
 </code></pre></div>
-<p>No breadboard components are needed for this experiment.</p>
+<p>No breadboard components are needed. The probe connects directly to the pin.</p>
 <hr />
 <h3 id="esp32-code">ESP32 Code<a class="headerlink" href="#esp32-code" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
@@ -3164,19 +3149,9 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 <a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span>
 <a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="arduino-equivalent-code">Arduino Equivalent Code<a class="headerlink" href="#arduino-equivalent-code" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="p">{</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="c1">// No explicit pinMode needed; analogWrite() configures the pin automatically.</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="p">}</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
-<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="p">{</span>
-<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">    </span><span class="c1">// Output a PWM signal on pin 9 with approximately 50% duty cycle.</span>
-<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">    </span><span class="c1">// analogWrite() accepts values from 0 (0%) to 255 (100%).</span>
-<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span>
-<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="p">}</span>
-</code></pre></div>
+<blockquote>
+<p><strong>Arduino Uno:</strong> replace the LEDC setup with <code>analogWrite(9, 128)</code> on pin D9.</p>
+</blockquote>
 <hr />
 <h3 id="why-128">Why 128?<a class="headerlink" href="#why-128" title="Permanent link">&para;</a></h3>
 <p>The PWM range is 0 to 255. Therefore:</p>
@@ -3218,10 +3193,10 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 </table>
 <hr />
 <h3 id="expected-waveform">Expected Waveform<a class="headerlink" href="#expected-waveform" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>3.3V  ─────      ─────
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>           │    │
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>           │    │
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>0V    _____│____│_____
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>3.3V  ─────      ─────
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>           │    │
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>           │    │
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>0V    _____│____│_____
 </code></pre></div>
 <hr />
 <h3 id="measurements">Measurements<a class="headerlink" href="#measurements" title="Permanent link">&para;</a></h3>
@@ -3257,42 +3232,38 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 <p>Observe how duty cycle affects the PWM waveform shape.</p>
 <hr />
 <h3 id="connections_1">Connections<a class="headerlink" href="#connections_1" title="Permanent link">&para;</a></h3>
-<p>Same as Experiment 1.</p>
+<p>Same physical connections as Experiment 1:</p>
+<ol>
+<li>BNC connector into <strong>CH1</strong> on the OWON HDS272S.</li>
+<li>Ground clip to any <strong>GND pin</strong> on the ESP32.</li>
+<li>Probe tip onto <strong>ESP32 GPIO18</strong>.</li>
+</ol>
+<p>The duty cycle steps every 3 seconds. Watch the ON-time change at each step.</p>
 <hr />
 <h3 id="code">Code<a class="headerlink" href="#code" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="p">{</span>
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="n">ledcSetup</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
-<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">    </span><span class="n">ledcAttachPin</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
-<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="p">}</span>
-<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>
-<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
-<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="p">{</span>
-<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">    </span><span class="c1">// Step through three duty cycles with a 3-second pause at each.</span>
-<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>
-<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">);</span><span class="w">    </span><span class="c1">// ~25% duty cycle: short ON, long OFF</span>
-<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
-<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>
-<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~50% duty cycle: equal ON and OFF</span>
-<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
-<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>
-<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">192</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~75% duty cycle: long ON, short OFF</span>
-<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
-<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="p">{</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="n">ledcSetup</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">    </span><span class="n">ledcAttachPin</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="p">}</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="p">{</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">    </span><span class="c1">// Step through three duty cycles with a 3-second pause at each.</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">);</span><span class="w">    </span><span class="c1">// ~25% duty cycle: short ON, long OFF</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~50% duty cycle: equal ON and OFF</span>
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">192</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~75% duty cycle: long ON, short OFF</span>
+<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="arduino-equivalent-code_1">Arduino Equivalent Code<a class="headerlink" href="#arduino-equivalent-code_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="p">{</span>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">);</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
-<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
-<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span>
-<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
-<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>
-<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">192</span><span class="p">);</span>
-<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
-<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="p">}</span>
-</code></pre></div>
+<blockquote>
+<p><strong>Arduino Uno:</strong> replace <code>ledcWrite(0, value)</code> with <code>analogWrite(9, value)</code> on pin D9.</p>
+</blockquote>
 <hr />
 <h3 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h3>
 <table>
@@ -3334,81 +3305,110 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 </ul>
 <hr />
 <h3 id="circuit-diagram">Circuit Diagram<a class="headerlink" href="#circuit-diagram" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>ESP32 GPIO18  (or Arduino Pin D9)
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    │
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>   220 Ω resistor
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>    │
-<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>   LED anode (long leg)
-<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>   LED cathode (short leg)
-<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>    │
-<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>ESP32 GND
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ESP32 GPIO18
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    │
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>   220 Ω resistor
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>    │
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>   LED anode (long leg)
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>   LED cathode (short leg)
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>    │
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>ESP32 GND
 </code></pre></div>
+<hr />
+<h3 id="breadboard-layout">Breadboard Layout<a class="headerlink" href="#breadboard-layout" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>  ESP32 DevKit V1              BREADBOARD (top view, rows 1–12)
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>  ┌────────────┐
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>  │            │               Columns
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>  │            │         a      b      c      d      e
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>  │    GPIO18  ●────┐  ┌─────────────────────────────────────┐
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>  │            │    │  │ 1   [ ]   [ ]   [ ]   [ ]   [ ]     │
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>  │            │    │  │ 2   [ ]   [ ]   [ ]   [ ]   [ ]     │
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>  │            │    │  │ 3   [ ]   [ ]   [ ]   [ ]   [ ]     │
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>  │            │    │  │ 4   [ ]   [ ]   [ ]   [ ]   [ ]     │
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>  │            │    └─→│ 5   [●]   [ ]   [┐]   [ ]   [ ]    │ GPIO18 → a5, Resistor top c5
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>  │            │       │ 6   [ ]   [ ]   [│]   [ ]   [ ]    │
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>  │            │       │ 7   [ ]   [ ]   [│]   [ ]   [ ]    │ 220 Ω resistor (c5–c8)
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>  │            │       │ 8   [ ]   [ ]   [┘]   [ ]   [▲]   │ Resistor bottom c8, LED+ e8
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>  │            │       │ 9   [ ]   [ ]   [ ]   [ ]   [│]   │
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>  │            │       │10   [ ]   [ ]   [ ]   [ ]   [▼]   │ LED cathode at e10
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>  │        GND ●────┐  │11   [ ]   [ ]   [ ]   [ ]   [ ]   │
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>  │            │    │  └─────────────────────────────────────┘
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>  └────────────┘    │                                │
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>                    │                                │ GND wire
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>                    └────────────────────────────────┘
+</code></pre></div>
+<blockquote>
+<p><strong>Arduino Uno:</strong> replace GPIO18 with pin D9. Breadboard layout is identical.</p>
+</blockquote>
+<p>Row connections (all holes in a row are internally linked):
+- Row 5: <code>a5</code> (GPIO18 wire) and <code>c5</code> (resistor top) → both at the PWM output node
+- Row 8: <code>c8</code> (resistor bottom) and <code>e8</code> (LED anode) → both at the LED input node</p>
 <hr />
 <h3 id="step-by-step-wiring">Step-by-Step Wiring<a class="headerlink" href="#step-by-step-wiring" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Push the 220 Ω resistor across the breadboard so each leg is in a different row.</li>
-<li>Connect a jumper wire from <strong>ESP32 GPIO18</strong> to one leg of the resistor.</li>
-<li>Insert the LED so its <strong>long leg (anode)</strong> sits in the same row as the other resistor leg.</li>
-<li>Connect a jumper wire from the <strong>LED short leg (cathode)</strong> row to any <strong>GND</strong> pin on the ESP32.</li>
+<li>Insert the <strong>220 Ω resistor</strong> vertically: one leg in <strong>row 5, column c</strong>, other in <strong>row 8, column c</strong>.</li>
+<li>Connect a jumper wire from <strong>ESP32 GPIO18</strong> to <strong>row 5, column a</strong>.</li>
+<li>Insert the LED so its <strong>long leg (anode)</strong> is in <strong>row 8, column e</strong> and its <strong>short leg (cathode)</strong> is in <strong>row 10, column e</strong>.</li>
+<li>Connect a jumper wire from <strong>row 10, column e</strong> to any <strong>GND pin</strong> on the ESP32.</li>
 </ol>
 <p>The current path will be:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>GPIO18 → Resistor → LED anode → LED cathode → GND
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>GPIO18 → Resistor → LED anode → LED cathode → GND
 </code></pre></div>
 <hr />
 <h3 id="wiring-checklist">Wiring Checklist<a class="headerlink" href="#wiring-checklist" title="Permanent link">&para;</a></h3>
 <p>Before uploading:</p>
 <p>✅ Resistor leg in same breadboard row as ESP32 GPIO18 jumper</p>
 <p>✅ LED long leg (anode) in same row as other resistor leg</p>
-<p>✅ LED short leg (cathode) connected to GND</p>
-<p>✅ PWM-capable pin used (GPIO18 on ESP32)</p>
+<p>✅ LED short leg (cathode) at row 10, connected to GND</p>
+<p>✅ PWM-capable GPIO used (GPIO18)</p>
 <hr />
 <h3 id="code_1">Code<a class="headerlink" href="#code_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="p">{</span>
-<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="c1">// Configure LEDC channel 0: 500 Hz, 8-bit resolution.</span>
-<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">    </span><span class="n">ledcSetup</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
-<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">    </span><span class="n">ledcAttachPin</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
-<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="p">}</span>
-<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>
-<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
-<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="p">{</span>
-<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="w">    </span><span class="c1">// Step through four brightness levels with a 2-second pause at each.</span>
-<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>
-<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">);</span><span class="w">    </span><span class="c1">// ~25% duty cycle → dim</span>
-<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
-<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>
-<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~50% duty cycle → medium brightness</span>
-<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
-<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>
-<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">192</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~75% duty cycle → bright</span>
-<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
-<a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>
-<a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">);</span><span class="w">   </span><span class="c1">// 100% duty cycle → fully on</span>
-<a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
-<a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="p">{</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">    </span><span class="c1">// Configure LEDC channel 0: 500 Hz, 8-bit resolution.</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">    </span><span class="n">ledcSetup</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">    </span><span class="n">ledcAttachPin</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="p">}</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="p">{</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="w">    </span><span class="c1">// Step through four brightness levels with a 2-second pause at each.</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">);</span><span class="w">    </span><span class="c1">// ~25% duty cycle → dim</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~50% duty cycle → medium brightness</span>
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">192</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~75% duty cycle → bright</span>
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>
+<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">);</span><span class="w">   </span><span class="c1">// 100% duty cycle → fully on</span>
+<a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="arduino-equivalent-code_2">Arduino Equivalent Code<a class="headerlink" href="#arduino-equivalent-code_2" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
-<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
-<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
-<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="p">{</span>
-<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">);</span>
-<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
-<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>
-<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span>
-<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
-<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>
-<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">192</span><span class="p">);</span>
-<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
-<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>
-<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">);</span>
-<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
-<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a><span class="p">}</span>
+<h3 id="arduino-equivalent-code">Arduino Equivalent Code<a class="headerlink" href="#arduino-equivalent-code" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="p">{</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">);</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">192</span><span class="p">);</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">);</span>
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="p">}</span>
 </code></pre></div>
 <hr />
 <h3 id="observe">Observe<a class="headerlink" href="#observe" title="Permanent link">&para;</a></h3>
 <p>Watch the LED as the code cycles through each brightness level:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Dim  →  Medium  →  Bright  →  Fully ON
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Dim  →  Medium  →  Bright  →  Fully ON
 </code></pre></div>
 <hr />
 <h3 id="results-table_1">Results Table<a class="headerlink" href="#results-table_1" title="Permanent link">&para;</a></h3>
@@ -3451,37 +3451,37 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 <p>A higher duty cycle means more ON time, more delivered energy, and higher perceived brightness.</p>
 <hr />
 <h2 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">D</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
-<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
-<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="n">Vavg_theory</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">3.3</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">D</span><span class="p">;</span>
-<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>
-<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="nb">plot</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="n">Vavg_theory</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
-<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>
-<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="nb">grid</span><span class="w"> </span><span class="n">on</span>
-<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="nb">hold</span><span class="w"> </span><span class="n">on</span>
-<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>
-<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Duty Cycle&#39;</span><span class="p">)</span>
-<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Average Voltage (V)&#39;</span><span class="p">)</span>
-<a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;PWM Average Voltage - Theory vs Measurement&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">D</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="n">Vavg_theory</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">3.3</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">D</span><span class="p">;</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="nb">plot</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="n">Vavg_theory</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="nb">grid</span><span class="w"> </span><span class="n">on</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="nb">hold</span><span class="w"> </span><span class="n">on</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Duty Cycle&#39;</span><span class="p">)</span>
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Average Voltage (V)&#39;</span><span class="p">)</span>
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;PWM Average Voltage - Theory vs Measurement&#39;</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="overlay-your-measurements">Overlay Your Measurements<a class="headerlink" href="#overlay-your-measurements" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="n">D_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.50</span><span class="p">,</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span><span class="w"> </span><span class="mf">1.00</span><span class="p">];</span>
-<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="n">Vavg_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.00</span><span class="p">];</span><span class="w">   </span><span class="c">% replace with your values</span>
-<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
-<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="nb">plot</span><span class="p">(</span><span class="n">D_measured</span><span class="p">,</span><span class="w"> </span><span class="n">Vavg_measured</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;ro&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="w">    </span><span class="s">&#39;MarkerSize&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="w">    </span><span class="s">&#39;MarkerFaceColor&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">)</span>
-<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>
-<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Theory&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Measured&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;northwest&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">D_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.50</span><span class="p">,</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span><span class="w"> </span><span class="mf">1.00</span><span class="p">];</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="n">Vavg_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.00</span><span class="p">];</span><span class="w">   </span><span class="c">% replace with your values</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="nb">plot</span><span class="p">(</span><span class="n">D_measured</span><span class="p">,</span><span class="w"> </span><span class="n">Vavg_measured</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;ro&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">    </span><span class="s">&#39;MarkerSize&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="w">    </span><span class="s">&#39;MarkerFaceColor&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Theory&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Measured&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;northwest&#39;</span><span class="p">)</span>
 </code></pre></div>
 <hr />
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="no-signal-visible">No Signal Visible<a class="headerlink" href="#no-signal-visible" title="Permanent link">&para;</a></h3>
 <p>Check:</p>
-<p>✅ Probe tip connected to GPIO18 (ESP32) or D9 (Arduino)</p>
+<p>✅ Probe tip connected to GPIO18</p>
 <p>✅ Probe ground connected to GND</p>
 <p>✅ Code uploaded successfully</p>
-<p>✅ ledcSetup() and ledcAttachPin() called in setup() (ESP32)</p>
+<p>✅ ledcSetup() and ledcAttachPin() called in setup()</p>
 <hr />
 <h3 id="led-does-not-light">LED Does Not Light<a class="headerlink" href="#led-does-not-light" title="Permanent link">&para;</a></h3>
 <p>Check:</p>
@@ -3535,7 +3535,7 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 <p>✅ LED brightness control</p>
 <hr />
 <h2 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>02_RC_Circuits.md
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>02_RC_Circuits.md
 </code></pre></div>
 <p>Topics:</p>
 <ul>
