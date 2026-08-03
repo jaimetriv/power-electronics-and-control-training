@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../08_Buck_Converter/">
+        <link rel="prev" href="../05_DC_Chopper_Converters/">
       
       
-        <link rel="next" href="../10_PWM_Motor_Control/">
+        <link rel="next" href="../07_Boost_Converter/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Boost Converter - Power Electronics and Control Training</title>
+        <title>Buck Converter - Power Electronics and Control Training</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#project-09-boost-converter-fundamentals" class="md-skip">
+        <a href="#project-08-buck-converter-fundamentals" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Boost Converter
+              Buck Converter
             
           </span>
         </div>
@@ -692,63 +692,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../05_AC_DC_Rectifiers/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    AC-DC Rectifiers
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../06_DC_AC_Inverters/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    DC-AC Inverters
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../07_DC_Chopper_Converters/" class="md-nav__link">
+      <a href="../05_DC_Chopper_Converters/" class="md-nav__link">
         
   
   
@@ -756,34 +700,6 @@
     
   
     DC Chopper Converters
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../08_Buck_Converter/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Buck Converter
   
 
     
@@ -820,7 +736,7 @@
   <span class="md-ellipsis">
     
   
-    Boost Converter
+    Buck Converter
   
 
     
@@ -838,7 +754,7 @@
   <span class="md-ellipsis">
     
   
-    Boost Converter
+    Buck Converter
   
 
     
@@ -908,6 +824,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#why-not-use-a-resistor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Not Use a Resistor?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-buck-converters-are-efficient" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Buck Converters Are Efficient
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#circuit-diagram" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -930,49 +868,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#operating-principle" class="md-nav__link">
+  <a href="#role-of-the-mosfet" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Operating Principle
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Operating Principle">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#phase-1-mosfet-on" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Phase 1 — MOSFET ON
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#phase-2-mosfet-off" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Phase 2 — MOSFET OFF
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#why-can-output-voltage-exceed-input-voltage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why Can Output Voltage Exceed Input Voltage?
+        Role of the MOSFET
       
     </span>
   </a>
@@ -980,15 +879,48 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ideal-boost-converter-equation" class="md-nav__link">
+  <a href="#role-of-the-inductor" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ideal Boost Converter Equation
+        Role of the Inductor
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Ideal Boost Converter Equation">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#role-of-the-capacitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Role of the Capacitor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#role-of-the-diode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Role of the Diode
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ideal-buck-converter-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ideal Buck Converter Equation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ideal Buck Converter Equation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1019,13 +951,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#important-practical-note" class="md-nav__link">
+  <a href="#operating-principle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Important Practical Note
+        Operating Principle
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Operating Principle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mosfet-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MOSFET ON
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mosfet-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MOSFET OFF
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1042,10 +1002,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vout-vs-duty-cycle-nonlinear-gain" class="md-nav__link">
+  <a href="#vout-vs-duty-cycle-5-v-supply" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Vout vs Duty Cycle — Nonlinear Gain
+        Vout vs Duty Cycle — 5 V Supply
       
     </span>
   </a>
@@ -1147,17 +1107,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#arduino-equivalent-code-backup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Arduino Equivalent Code (backup)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#oscilloscope-settings" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1196,15 +1145,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#experiment-2-build-the-boost-converter-and-vary-duty-cycle" class="md-nav__link">
+  <a href="#experiment-2-build-the-buck-converter-and-vary-duty-cycle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Experiment 2 - Build the Boost Converter and Vary Duty Cycle
+        Experiment 2 - Build the Buck Converter and Vary Duty Cycle
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Experiment 2 - Build the Boost Converter and Vary Duty Cycle">
+    <nav class="md-nav" aria-label="Experiment 2 - Build the Buck Converter and Vary Duty Cycle">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1252,17 +1201,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#arduino-equivalent-code-backup_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Arduino Equivalent Code (backup)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#oscilloscope-settings-output-voltage" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1301,15 +1239,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#experiment-3-measure-output-ripple" class="md-nav__link">
+  <a href="#experiment-3-observe-output-ripple" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Experiment 3 - Measure Output Ripple
+        Experiment 3 - Observe Output Ripple
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Experiment 3 - Measure Output Ripple">
+    <nav class="md-nav" aria-label="Experiment 3 - Observe Output Ripple">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1346,6 +1284,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#expected-observation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected Observation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#observe_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1356,19 +1305,19 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#comparing-buck-and-boost-converters" class="md-nav__link">
+          <li class="md-nav__item">
+  <a href="#how-can-ripple-be-reduced" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Comparing Buck and Boost Converters
+        How Can Ripple Be Reduced?
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1383,17 +1332,6 @@
   
     <nav class="md-nav" aria-label="MATLAB Comparison">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#buck-vs-boost-comparison" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Buck vs Boost Comparison
-      
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#reflection" class="md-nav__link">
@@ -1424,10 +1362,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#output-voltage-does-not-increase" class="md-nav__link">
+  <a href="#no-output-voltage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Output Voltage Does Not Increase
+        No Output Voltage
       
     </span>
   </a>
@@ -1446,10 +1384,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#no-pwm-observed" class="md-nav__link">
+  <a href="#no-pwm-signal-at-gate" class="md-nav__link">
     <span class="md-ellipsis">
       
-        No PWM Observed
+        No PWM Signal at Gate
       
     </span>
   </a>
@@ -1593,7 +1531,35 @@
   
   
     <li class="md-nav__item">
-      <a href="../10_PWM_Motor_Control/" class="md-nav__link">
+      <a href="../07_Boost_Converter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boost Converter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08_PWM_Motor_Control/" class="md-nav__link">
         
   
   
@@ -1601,6 +1567,62 @@
     
   
     PWM Motor Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_AC_DC_Rectifiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AC-DC Rectifiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_DC_AC_Inverters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DC-AC Inverters
   
 
     
@@ -2038,6 +2060,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#why-not-use-a-resistor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Not Use a Resistor?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-buck-converters-are-efficient" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Buck Converters Are Efficient
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#circuit-diagram" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2060,49 +2104,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#operating-principle" class="md-nav__link">
+  <a href="#role-of-the-mosfet" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Operating Principle
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Operating Principle">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#phase-1-mosfet-on" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Phase 1 — MOSFET ON
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#phase-2-mosfet-off" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Phase 2 — MOSFET OFF
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#why-can-output-voltage-exceed-input-voltage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why Can Output Voltage Exceed Input Voltage?
+        Role of the MOSFET
       
     </span>
   </a>
@@ -2110,15 +2115,48 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ideal-boost-converter-equation" class="md-nav__link">
+  <a href="#role-of-the-inductor" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ideal Boost Converter Equation
+        Role of the Inductor
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Ideal Boost Converter Equation">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#role-of-the-capacitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Role of the Capacitor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#role-of-the-diode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Role of the Diode
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ideal-buck-converter-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ideal Buck Converter Equation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ideal Buck Converter Equation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2149,13 +2187,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#important-practical-note" class="md-nav__link">
+  <a href="#operating-principle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Important Practical Note
+        Operating Principle
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Operating Principle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mosfet-on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MOSFET ON
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mosfet-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MOSFET OFF
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2172,10 +2238,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vout-vs-duty-cycle-nonlinear-gain" class="md-nav__link">
+  <a href="#vout-vs-duty-cycle-5-v-supply" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Vout vs Duty Cycle — Nonlinear Gain
+        Vout vs Duty Cycle — 5 V Supply
       
     </span>
   </a>
@@ -2277,17 +2343,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#arduino-equivalent-code-backup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Arduino Equivalent Code (backup)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#oscilloscope-settings" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2326,15 +2381,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#experiment-2-build-the-boost-converter-and-vary-duty-cycle" class="md-nav__link">
+  <a href="#experiment-2-build-the-buck-converter-and-vary-duty-cycle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Experiment 2 - Build the Boost Converter and Vary Duty Cycle
+        Experiment 2 - Build the Buck Converter and Vary Duty Cycle
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Experiment 2 - Build the Boost Converter and Vary Duty Cycle">
+    <nav class="md-nav" aria-label="Experiment 2 - Build the Buck Converter and Vary Duty Cycle">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2382,17 +2437,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#arduino-equivalent-code-backup_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Arduino Equivalent Code (backup)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#oscilloscope-settings-output-voltage" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2431,15 +2475,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#experiment-3-measure-output-ripple" class="md-nav__link">
+  <a href="#experiment-3-observe-output-ripple" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Experiment 3 - Measure Output Ripple
+        Experiment 3 - Observe Output Ripple
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Experiment 3 - Measure Output Ripple">
+    <nav class="md-nav" aria-label="Experiment 3 - Observe Output Ripple">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2476,6 +2520,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#expected-observation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expected Observation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#observe_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2486,19 +2541,19 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#comparing-buck-and-boost-converters" class="md-nav__link">
+          <li class="md-nav__item">
+  <a href="#how-can-ripple-be-reduced" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Comparing Buck and Boost Converters
+        How Can Ripple Be Reduced?
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2513,17 +2568,6 @@
   
     <nav class="md-nav" aria-label="MATLAB Comparison">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#buck-vs-boost-comparison" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Buck vs Boost Comparison
-      
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#reflection" class="md-nav__link">
@@ -2554,10 +2598,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#output-voltage-does-not-increase" class="md-nav__link">
+  <a href="#no-output-voltage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Output Voltage Does Not Increase
+        No Output Voltage
       
     </span>
   </a>
@@ -2576,10 +2620,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#no-pwm-observed" class="md-nav__link">
+  <a href="#no-pwm-signal-at-gate" class="md-nav__link">
     <span class="md-ellipsis">
       
-        No PWM Observed
+        No PWM Signal at Gate
       
     </span>
   </a>
@@ -2727,7 +2771,7 @@
   
 
 
-<h1 id="project-09-boost-converter-fundamentals">Project 09 - Boost Converter Fundamentals<a class="headerlink" href="#project-09-boost-converter-fundamentals" title="Permanent link">&para;</a></h1>
+<h1 id="project-08-buck-converter-fundamentals">Project 08 - Buck Converter Fundamentals<a class="headerlink" href="#project-08-buck-converter-fundamentals" title="Permanent link">&para;</a></h1>
 <h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
 <p>Complete:</p>
 <ul>
@@ -2737,102 +2781,111 @@
 <li>02_RC_Circuits.md</li>
 <li>03_RLC_Circuits.md</li>
 <li>04_MOSFET_Fundamentals.md</li>
-<li>10_PWM_Motor_Control.md</li>
-<li>12_P_Controller.md</li>
-<li>13_PI_Controller.md</li>
-<li>14_PID_Controller.md</li>
-<li>08_Buck_Converter.md</li>
-<li>15_Closed_Loop_Buck.md</li>
+<li>05_DC_Chopper_Converters.md</li>
 </ul>
 <hr />
 <h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
 <p>In this project you will learn:</p>
 <ul>
-<li>What a Boost Converter is</li>
-<li>How a Boost Converter increases voltage</li>
-<li>How inductors store and transfer energy</li>
-<li>Why the output voltage can exceed the input voltage</li>
-<li>How duty cycle controls output voltage</li>
-<li>How to measure switching waveforms</li>
-<li>How Boost Converters compare to Buck Converters</li>
+<li>What a Buck Converter is</li>
+<li>How a Buck Converter reduces voltage</li>
+<li>How PWM controls output voltage</li>
+<li>The role of the MOSFET</li>
+<li>The role of the inductor</li>
+<li>The role of the capacitor</li>
+<li>The role of the freewheel diode</li>
+<li>How energy is transferred in switched-mode power supplies</li>
+<li>How to measure converter waveforms using the OWON HDS272S oscilloscope</li>
 </ul>
-<p>This project introduces the second major non-isolated DC-DC converter topology.</p>
+<p>This project combines concepts from PWM, RC Circuits, RLC Circuits, MOSFET Switching, and Control Theory, and forms the foundation of modern power electronics.</p>
 <hr />
 <h2 id="learning-outcomes">Learning Outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
 <p>At the end of this project you should be able to:</p>
-<p>✅ Explain Boost Converter operation</p>
+<p>✅ Explain Buck Converter operation</p>
 <p>✅ Explain inductor energy storage</p>
+<p>✅ Explain capacitor filtering</p>
 <p>✅ Calculate ideal output voltage</p>
-<p>✅ Understand duty cycle effects</p>
 <p>✅ Measure PWM switching signals</p>
 <p>✅ Measure output ripple</p>
-<p>✅ Compare Buck and Boost Converters</p>
+<p>✅ Understand duty-cycle control</p>
+<p>✅ Relate converter operation to previous projects</p>
 <hr />
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>A Boost Converter is a step-up DC-DC converter.</p>
+<p>A Buck Converter is a DC-to-DC converter that reduces voltage.</p>
 <p>Examples:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>5 V → 12 V
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>12 V → 5 V
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>12 V → 24 V
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>24 V → 12 V
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>24 V → 48 V
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>48 V → 24 V
 </code></pre></div>
-<p>Voltage conversion is achieved using PWM, MOSFET switching, and inductor energy storage — no AC input is required.</p>
+<p>Unlike resistor-based voltage reduction, a Buck Converter operates with very high efficiency.</p>
+<hr />
+<h2 id="why-not-use-a-resistor">Why Not Use a Resistor?<a class="headerlink" href="#why-not-use-a-resistor" title="Permanent link">&para;</a></h2>
+<p>A resistor can reduce voltage, but energy is dissipated as heat.</p>
+<p>Power loss:</p>
+<div class="arithmatex">\[
+P = V \cdot I
+\]</div>
+<p>As current increases, the power loss also increases.</p>
+<hr />
+<h2 id="why-buck-converters-are-efficient">Why Buck Converters Are Efficient<a class="headerlink" href="#why-buck-converters-are-efficient" title="Permanent link">&para;</a></h2>
+<p>Buck Converters use fast switching instead of continuous dissipation.</p>
+<p>The MOSFET is usually either fully ON or fully OFF, which minimises power loss.</p>
 <hr />
 <h2 id="circuit-diagram">Circuit Diagram<a class="headerlink" href="#circuit-diagram" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>5 V Supply
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    │
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>   Inductor (100 µH)
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>   MOSFET (IRLZ44N)
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    │
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    ├──── Switch Node ──── Diode (1N5819) ──── Vout
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    │                      (cathode toward Vout)    │
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>   MOSFET (IRLZ44N)                           100 µF capacitor
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    │                                               │
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>   GND ─────────────────────────────────────────────┘
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>   Inductor (100 µH)
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    │
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    ├──── Vout ──── Probe Tip
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    │         │
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>   Diode    100 µF capacitor
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>(1N5819)      │
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    │         │
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>   GND ───────┴──── Probe GND
 </code></pre></div>
 <hr />
 <h2 id="main-components">Main Components<a class="headerlink" href="#main-components" title="Permanent link">&para;</a></h2>
-<p>A Boost Converter contains:</p>
+<p>A basic Buck Converter contains:</p>
 <ol>
+<li>MOSFET — high-speed electronic switch</li>
+<li>Diode — freewheel path for inductor current</li>
 <li>Inductor — stores energy in a magnetic field</li>
-<li>MOSFET — PWM-controlled switch</li>
-<li>Diode — provides path for inductor current when MOSFET is OFF</li>
 <li>Capacitor — smooths the output voltage</li>
 <li>Load</li>
 </ol>
 <hr />
-<h2 id="operating-principle">Operating Principle<a class="headerlink" href="#operating-principle" title="Permanent link">&para;</a></h2>
-<h3 id="phase-1-mosfet-on">Phase 1 — MOSFET ON<a class="headerlink" href="#phase-1-mosfet-on" title="Permanent link">&para;</a></h3>
-<p>Current path:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Input → Inductor → MOSFET → GND
-</code></pre></div>
-<p>During this phase:</p>
-<ul>
-<li>Inductor current increases</li>
-<li>Magnetic energy is stored</li>
-<li>Diode is reverse biased (output capacitor supplies load)</li>
-</ul>
-<h3 id="phase-2-mosfet-off">Phase 2 — MOSFET OFF<a class="headerlink" href="#phase-2-mosfet-off" title="Permanent link">&para;</a></h3>
-<p>When the MOSFET switches OFF, the inductor generates a voltage that forces current through:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Inductor → Diode → Output Capacitor → Load
-</code></pre></div>
-<p>The output voltage becomes higher than the input voltage.</p>
+<h2 id="role-of-the-mosfet">Role of the MOSFET<a class="headerlink" href="#role-of-the-mosfet" title="Permanent link">&para;</a></h2>
+<p>The MOSFET acts as a high-speed electronic switch.</p>
+<p>The controller generates PWM which controls the average energy transfer from input to output.</p>
 <hr />
-<h2 id="why-can-output-voltage-exceed-input-voltage">Why Can Output Voltage Exceed Input Voltage?<a class="headerlink" href="#why-can-output-voltage-exceed-input-voltage" title="Permanent link">&para;</a></h2>
-<p>Recall:</p>
+<h2 id="role-of-the-inductor">Role of the Inductor<a class="headerlink" href="#role-of-the-inductor" title="Permanent link">&para;</a></h2>
+<p>The inductor stores energy in a magnetic field:</p>
 <div class="arithmatex">\[
-V_L = L\frac{di}{dt}
+E = \frac{1}{2}LI^2
 \]</div>
-<p>An inductor resists sudden current change.</p>
-<p>When the MOSFET turns OFF, the inductor produces a voltage that adds to the supply voltage.</p>
-<p>Therefore:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Output Voltage &gt; Input Voltage
-</code></pre></div>
-<p>is possible.</p>
+<p>When the MOSFET switches OFF, the inductor attempts to keep current flowing — this is one of the key principles behind Buck Converter operation.</p>
 <hr />
-<h2 id="ideal-boost-converter-equation">Ideal Boost Converter Equation<a class="headerlink" href="#ideal-boost-converter-equation" title="Permanent link">&para;</a></h2>
+<h2 id="role-of-the-capacitor">Role of the Capacitor<a class="headerlink" href="#role-of-the-capacitor" title="Permanent link">&para;</a></h2>
+<p>The capacitor smooths the output voltage:</p>
 <div class="arithmatex">\[
-V_{OUT} = \frac{V_{IN}}{1 - D}
+E = \frac{1}{2}CV^2
+\]</div>
+<p>The capacitor reduces output voltage ripple.</p>
+<hr />
+<h2 id="role-of-the-diode">Role of the Diode<a class="headerlink" href="#role-of-the-diode" title="Permanent link">&para;</a></h2>
+<p>When the MOSFET turns OFF, inductor current must continue flowing.</p>
+<p>The diode provides an alternative path called the:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Freewheel Path
+</code></pre></div>
+<p>A Schottky diode (1N5819) is preferred because its lower forward voltage drop improves efficiency.</p>
+<hr />
+<h2 id="ideal-buck-converter-equation">Ideal Buck Converter Equation<a class="headerlink" href="#ideal-buck-converter-equation" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[
+V_{OUT} = D \cdot V_{IN}
 \]</div>
 <p>Where:</p>
 <ul>
@@ -2841,70 +2894,70 @@ V_{OUT} = \frac{V_{IN}}{1 - D}
 <li><span class="arithmatex">\(D\)</span> = Duty Cycle</li>
 </ul>
 <h3 id="example-1">Example 1<a class="headerlink" href="#example-1" title="Permanent link">&para;</a></h3>
-<p><span class="arithmatex">\(V_{IN} = 5\ \text{V}\)</span>, <span class="arithmatex">\(D = 0.5\)</span>:</p>
+<p><span class="arithmatex">\(V_{IN} = 12\ \text{V}\)</span>, <span class="arithmatex">\(D = 0.5\)</span>:</p>
 <div class="arithmatex">\[
-V_{OUT} = \frac{5}{1 - 0.5} = 10\ \text{V}
+V_{OUT} = 0.5 \times 12 = 6\ \text{V}
 \]</div>
 <h3 id="example-2">Example 2<a class="headerlink" href="#example-2" title="Permanent link">&para;</a></h3>
-<p><span class="arithmatex">\(V_{IN} = 5\ \text{V}\)</span>, <span class="arithmatex">\(D = 0.75\)</span>:</p>
+<p><span class="arithmatex">\(V_{IN} = 12\ \text{V}\)</span>, <span class="arithmatex">\(D = 0.25\)</span>:</p>
 <div class="arithmatex">\[
-V_{OUT} = \frac{5}{1 - 0.75} = 20\ \text{V}
+V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 \]</div>
 <hr />
-<h2 id="important-practical-note">Important Practical Note<a class="headerlink" href="#important-practical-note" title="Permanent link">&para;</a></h2>
-<p>Real converters are not ideal.</p>
-<p>Actual output voltage is lower because of:</p>
-<ul>
-<li>Diode voltage drop</li>
-<li>MOSFET losses</li>
-<li>Inductor resistance</li>
-<li>Switching losses</li>
-</ul>
+<h2 id="operating-principle">Operating Principle<a class="headerlink" href="#operating-principle" title="Permanent link">&para;</a></h2>
+<h3 id="mosfet-on">MOSFET ON<a class="headerlink" href="#mosfet-on" title="Permanent link">&para;</a></h3>
+<p>Current path:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Input → MOSFET → Inductor → Output
+</code></pre></div>
+<p>The inductor stores energy.</p>
+<h3 id="mosfet-off">MOSFET OFF<a class="headerlink" href="#mosfet-off" title="Permanent link">&para;</a></h3>
+<p>Current path:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Inductor → Diode → Output
+</code></pre></div>
+<p>Stored magnetic energy continues supplying current to the load.</p>
 <hr />
 <h2 id="matlab-simulation">MATLAB Simulation<a class="headerlink" href="#matlab-simulation" title="Permanent link">&para;</a></h2>
-<p>Before building the circuit, simulate the ideal Boost Converter characteristics to predict what you will measure.</p>
-<h3 id="vout-vs-duty-cycle-nonlinear-gain">Vout vs Duty Cycle — Nonlinear Gain<a class="headerlink" href="#vout-vs-duty-cycle-nonlinear-gain" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">Vin</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">D</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.001</span><span class="p">:</span><span class="mf">0.95</span><span class="p">;</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">Vout_ideal</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vin</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">D</span><span class="p">);</span>
+<p>Before building the circuit, simulate the ideal Buck Converter behaviour to predict what you will measure.</p>
+<h3 id="vout-vs-duty-cycle-5-v-supply">Vout vs Duty Cycle — 5 V Supply<a class="headerlink" href="#vout-vs-duty-cycle-5-v-supply" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">Vin</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">3.3</span><span class="p">;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">D</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">Vout_ideal</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">Vin</span><span class="p">;</span>
 <a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
 <a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">D_exp</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.50</span><span class="p">,</span><span class="w"> </span><span class="mf">0.75</span><span class="p">];</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">Vout_exp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vin</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">D_exp</span><span class="p">);</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">Vout_exp</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">D_exp</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">Vin</span><span class="p">;</span>
 <a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
 <a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="nb">figure</span><span class="p">;</span>
 <a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="nb">plot</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="n">Vout_ideal</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
 <a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="nb">scatter</span><span class="p">(</span><span class="n">D_exp</span><span class="p">,</span><span class="w"> </span><span class="n">Vout_exp</span><span class="p">,</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;filled&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Experiment points&#39;</span><span class="p">);</span>
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="nb">xline</span><span class="p">(</span><span class="mf">0.75</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Max safe D for 5V in / 20V out&#39;</span><span class="p">);</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="nb">yline</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k:&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;20V practical limit&#39;</span><span class="p">);</span>
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Duty Cycle&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Output Voltage (V)&#39;</span><span class="p">);</span>
-<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Ideal Boost Converter - V_{IN} = 5V&#39;</span><span class="p">);</span>
-<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Ideal V_{OUT}&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Experiment points&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;northwest&#39;</span><span class="p">);</span>
-<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="nb">ylim</span><span class="p">([</span><span class="mi">0</span><span class="w"> </span><span class="mi">30</span><span class="p">]);</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Duty Cycle&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Output Voltage (V)&#39;</span><span class="p">);</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Ideal Buck Converter - V_{IN} = 5V&#39;</span><span class="p">);</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Ideal V_{OUT} = D \cdot V_{IN}&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Experiment points&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;northwest&#39;</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="simulate-inductor-current-waveform">Simulate Inductor Current Waveform<a class="headerlink" href="#simulate-inductor-current-waveform" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">Vin</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">Vin</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mf">3.3</span><span class="p">;</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">D</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">Vout</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vin</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">D</span><span class="p">);</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">Vout</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Vin</span><span class="p">;</span>
 <a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">L</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="mf">100e-6</span><span class="p">;</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">fsw</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mi">490</span><span class="p">;</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">fsw</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mi">500</span><span class="p">;</span>
 <a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">Ts</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">fsw</span><span class="p">;</span>
 <a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">Iavg</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">0.05</span><span class="p">;</span>
 <a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
-<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="n">delta_iL</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vin</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ts</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">L</span><span class="p">;</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="n">delta_iL</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="n">Vin</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Vout</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ts</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">L</span><span class="p">;</span>
 <a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
-<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">t_on</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w">    </span><span class="n">D</span><span class="o">*</span><span class="n">Ts</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">);</span>
-<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="n">t_off</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">linspace</span><span class="p">(</span><span class="n">D</span><span class="o">*</span><span class="n">Ts</span><span class="p">,</span><span class="w"> </span><span class="n">Ts</span><span class="p">,</span><span class="w">   </span><span class="mi">100</span><span class="p">);</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">t_on</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w">      </span><span class="n">D</span><span class="o">*</span><span class="n">Ts</span><span class="p">,</span><span class="w">    </span><span class="mi">100</span><span class="p">);</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="n">t_off</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">linspace</span><span class="p">(</span><span class="n">D</span><span class="o">*</span><span class="n">Ts</span><span class="p">,</span><span class="w">   </span><span class="n">Ts</span><span class="p">,</span><span class="w">      </span><span class="mi">100</span><span class="p">);</span>
 <a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>
-<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="n">iL_on</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="n">Iavg</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">delta_iL</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Vin</span><span class="o">/</span><span class="n">L</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">t_on</span><span class="p">;</span>
-<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="n">iL_off</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="n">Iavg</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">delta_iL</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">Vout</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Vin</span><span class="p">)</span><span class="o">/</span><span class="n">L</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="p">(</span><span class="n">t_off</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">D</span><span class="o">*</span><span class="n">Ts</span><span class="p">);</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="n">iL_on</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="n">Iavg</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">delta_iL</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">Vin</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Vout</span><span class="p">)</span><span class="o">/</span><span class="n">L</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">t_on</span><span class="p">;</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="n">iL_off</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="n">Iavg</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">delta_iL</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Vout</span><span class="o">/</span><span class="n">L</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="p">(</span><span class="n">t_off</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">D</span><span class="o">*</span><span class="n">Ts</span><span class="p">);</span>
 <a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>
 <a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="nb">figure</span><span class="p">;</span>
 <a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="nb">plot</span><span class="p">([</span><span class="n">t_on</span><span class="p">,</span><span class="w"> </span><span class="n">t_off</span><span class="p">]</span><span class="o">*</span><span class="mf">1e3</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">iL_on</span><span class="p">,</span><span class="w"> </span><span class="n">iL_off</span><span class="p">]</span><span class="o">*</span><span class="mf">1e3</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
 <a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
 <a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (ms)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Inductor Current (mA)&#39;</span><span class="p">);</span>
-<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="nb">title</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;Boost Inductor Current - D=%.0f%%, L=%d\muH&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="o">*</span><span class="mf">1e6</span><span class="p">));</span>
-<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="nb">yline</span><span class="p">(</span><span class="n">Iavg</span><span class="o">*</span><span class="mf">1e3</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r--&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;I_{avg} = %.0f mA&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Iavg</span><span class="o">*</span><span class="mf">1e3</span><span class="p">));</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="nb">title</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;Inductor Current Ripple - D=%.0f%%, L=%d\muH, f_{sw}=%dHz&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="w">    </span><span class="n">D</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="o">*</span><span class="mf">1e6</span><span class="p">,</span><span class="w"> </span><span class="n">fsw</span><span class="p">));</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="nb">yline</span><span class="p">(</span><span class="n">Iavg</span><span class="o">*</span><span class="mf">1e3</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r--&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;I_{avg} = %.0f mA&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Iavg</span><span class="o">*</span><span class="mf">1e3</span><span class="p">));</span>
 </code></pre></div>
 <h3 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h3>
 <table>
@@ -2933,9 +2986,6 @@ V_{OUT} = \frac{5}{1 - 0.75} = 20\ \text{V}
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p>Note: At D = 75% the ideal equation predicts 20 V from a 5 V supply. Real output will be lower due to losses, but take care with your multimeter range.</p>
-</blockquote>
 <hr />
 <h2 id="components-required">Components Required<a class="headerlink" href="#components-required" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2944,25 +2994,32 @@ V_{OUT} = \frac{5}{1 - 0.75} = 20\ \text{V}
 <li>100 µH Inductor</li>
 <li>100 µF Electrolytic Capacitor</li>
 <li>220 Ω gate resistor</li>
-<li>ESP32 DevKit V1 (or Arduino Uno as backup)</li>
+<li>ESP32 DevKit V1</li>
 <li>Breadboard and jumper wires</li>
 <li>OWON HDS272S Oscilloscope (recommended)</li>
 <li>DSO Nano Oscilloscope (compatible)</li>
 </ul>
 <hr />
 <h2 id="safety-notice">Safety Notice<a class="headerlink" href="#safety-notice" title="Permanent link">&para;</a></h2>
-<p>Begin with a 5 V input supply and low power loads.</p>
+<p>For this introductory project use the <strong>ESP32 3.3 V supply</strong> rather than an external 12 V supply.</p>
+<p>This reduces the risk of component damage while learning.</p>
 <p>If using ESP32 gate drive (~3.3 V), use a logic-level MOSFET with low <span class="arithmatex">\(R_{DS(on)}\)</span> specified at low <span class="arithmatex">\(V_{GS}\)</span>, or use a gate driver.</p>
-<p>Do not connect sensitive electronics directly to an untested converter output.</p>
 <hr />
 <h2 id="experiment-1-generate-the-switching-signal">Experiment 1 - Generate the Switching Signal<a class="headerlink" href="#experiment-1-generate-the-switching-signal" title="Permanent link">&para;</a></h2>
 <h3 id="objective_1">Objective<a class="headerlink" href="#objective_1" title="Permanent link">&para;</a></h3>
 <p>Upload the PWM code and observe the gate switching signal on the oscilloscope before connecting the full converter circuit.</p>
 <hr />
 <h3 id="connections">Connections<a class="headerlink" href="#connections" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Probe Tip  ──────► ESP32 GPIO18  (or Arduino Pin 9 as backup)
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Probe GND  ──────► ESP32 GND
+<ol>
+<li>Insert the <strong>CH1 probe BNC</strong> into CH1 on the OWON HDS272S.</li>
+<li>Hook the <strong>CH1 probe tip</strong> onto <strong>ESP32 GPIO18</strong>.</li>
+<li>Clip the <strong>CH1 probe ground</strong> to any <strong>GND pin</strong> on the ESP32.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>CH1 socket    ◄──── BNC connector
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>ESP32 GND     ◄──── CH1 probe ground
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>ESP32 GPIO18  ◄──── CH1 probe tip
 </code></pre></div>
+<p>No breadboard components needed — verify the gate signal before building the full converter.</p>
 <hr />
 <h3 id="esp32-code">ESP32 Code<a class="headerlink" href="#esp32-code" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
@@ -2979,19 +3036,9 @@ V_{OUT} = \frac{5}{1 - 0.75} = 20\ \text{V}
 <a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span>
 <a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="arduino-equivalent-code-backup">Arduino Equivalent Code (backup)<a class="headerlink" href="#arduino-equivalent-code-backup" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="p">{</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="c1">// No explicit pinMode needed; analogWrite() configures the pin automatically.</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="p">}</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="p">{</span>
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="c1">// Output 50% duty cycle PWM on pin 9.</span>
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="c1">// This is the switching signal that will drive the MOSFET gate.</span>
-<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span>
-<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="p">}</span>
-</code></pre></div>
+<blockquote>
+<p><strong>Arduino Uno:</strong> replace <code>ledcWrite(0, 128)</code> with <code>analogWrite(9, 128)</code> on pin 9.</p>
+</blockquote>
 <hr />
 <h3 id="oscilloscope-settings">Oscilloscope Settings<a class="headerlink" href="#oscilloscope-settings" title="Permanent link">&para;</a></h3>
 <table>
@@ -3027,10 +3074,10 @@ V_{OUT} = \frac{5}{1 - 0.75} = 20\ \text{V}
 </table>
 <hr />
 <h3 id="expected-waveform">Expected Waveform<a class="headerlink" href="#expected-waveform" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>3.3V  ─────      ─────
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>           │    │
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>           │    │
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>0V    _____│____│_____
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>3.3V  ─────      ─────
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>           │    │
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>           │    │
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>0V    _____│____│_____
 </code></pre></div>
 <hr />
 <h3 id="measurements">Measurements<a class="headerlink" href="#measurements" title="Permanent link">&para;</a></h3>
@@ -3045,7 +3092,7 @@ V_{OUT} = \frac{5}{1 - 0.75} = 20\ \text{V}
 <tbody>
 <tr>
 <td>Frequency</td>
-<td>~500 Hz (ESP32) / ~490 Hz (Arduino backup)</td>
+<td>~500 Hz</td>
 <td></td>
 </tr>
 <tr>
@@ -3055,82 +3102,77 @@ V_{OUT} = \frac{5}{1 - 0.75} = 20\ \text{V}
 </tr>
 <tr>
 <td>Gate Voltage</td>
-<td>~3.3 V (ESP32) / ~5 V (Arduino backup)</td>
+<td>~3.3 V</td>
 <td></td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="experiment-2-build-the-boost-converter-and-vary-duty-cycle">Experiment 2 - Build the Boost Converter and Vary Duty Cycle<a class="headerlink" href="#experiment-2-build-the-boost-converter-and-vary-duty-cycle" title="Permanent link">&para;</a></h2>
+<h2 id="experiment-2-build-the-buck-converter-and-vary-duty-cycle">Experiment 2 - Build the Buck Converter and Vary Duty Cycle<a class="headerlink" href="#experiment-2-build-the-buck-converter-and-vary-duty-cycle" title="Permanent link">&para;</a></h2>
 <h3 id="objective_2">Objective<a class="headerlink" href="#objective_2" title="Permanent link">&para;</a></h3>
 <p>Build the full converter circuit and observe how duty cycle controls output voltage.</p>
 <hr />
 <h3 id="step-by-step-wiring">Step-by-Step Wiring<a class="headerlink" href="#step-by-step-wiring" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Insert the <strong>IRLZ44N MOSFET</strong> into the breadboard. Identify Gate (G), Drain (D), and Source (S) from the pinout (see Project 04).</li>
-<li>Connect a jumper wire from <strong>ESP32 GND</strong> (or <strong>Arduino GND</strong> as backup) to the <strong>MOSFET Source</strong> row.</li>
+<li>Connect a jumper wire from <strong>ESP32 GND</strong> to the <strong>MOSFET Source</strong> row.</li>
 <li>Insert the <strong>220 Ω gate resistor</strong> so one leg is in the <strong>Gate</strong> row and the other is in a new row.</li>
-<li>Connect a jumper wire from <strong>ESP32 GPIO18</strong> (or <strong>Arduino pin 9</strong> as backup) to the top of the gate resistor.</li>
-<li>Insert the <strong>100 µH inductor</strong> so one leg connects to the <strong>3.3V supply</strong> (or <strong>5V supply</strong> as backup for Arduino) and the other leg connects to the <strong>MOSFET Drain</strong> row. This junction is the switch node.</li>
-<li>Insert the <strong>1N5819 diode</strong> so its <strong>anode</strong> is in the switch node row and its <strong>cathode (banded end)</strong> is in a new row toward the output. This is the output diode.</li>
-<li>Insert the <strong>100 µF capacitor</strong> so its <strong>positive leg</strong> is in the same row as the diode cathode (Vout) and its <strong>negative leg</strong> is in the GND row.</li>
-<li>Connect the <strong>oscilloscope probe tip</strong> to the Vout node (diode cathode / capacitor positive).</li>
-<li>Connect the <strong>oscilloscope probe ground</strong> to ESP32 (or Arduino) GND.</li>
+<li>Connect a jumper wire from <strong>ESP32 GPIO18</strong> to the top of the gate resistor.</li>
+<li>Connect a jumper wire from <strong>ESP32 3.3V</strong> to the <strong>MOSFET Drain</strong> row. This is the converter input.</li>
+<li>Insert the <strong>100 µH inductor</strong> so one leg is in the <strong>MOSFET Drain</strong> row and the other is in a new row below. This junction is the switch node.</li>
+<li>Insert the <strong>1N5819 diode</strong> so its <strong>cathode (banded end)</strong> is in the switch node row and its <strong>anode</strong> is in the GND row. This is the freewheel diode.</li>
+<li>Insert the <strong>100 µF capacitor</strong> so its <strong>positive leg</strong> is in the lower inductor leg row (Vout) and its <strong>negative leg</strong> is in the GND row.</li>
+<li>Connect a jumper wire from the <strong>lower inductor leg</strong> row to a load resistor (optional — the capacitor alone is sufficient for initial testing).</li>
+<li>Hook the <strong>CH1 probe tip</strong> to the Vout node (lower inductor leg / capacitor positive).</li>
+<li>Clip the <strong>CH1 probe ground</strong> to any <strong>GND pin</strong> on the ESP32.</li>
 </ol>
 <p>The signal path will be:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>5V → Inductor → Switch Node → Diode (anode) → Diode (cathode) → Vout
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>                     │
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>                   MOSFET
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>                     │
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>                    GND
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>5V → MOSFET Drain → MOSFET Source (when ON)
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>                  ↓
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>             Switch Node
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>                  │
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>             Inductor
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>                  │
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>                Vout ──── Capacitor ──── GND
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>                  │
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>             Diode (cathode at switch node, anode at GND)
 </code></pre></div>
 <hr />
 <h3 id="wiring-checklist">Wiring Checklist<a class="headerlink" href="#wiring-checklist" title="Permanent link">&para;</a></h3>
 <p>Before uploading:</p>
 <p>✅ MOSFET Source connected to GND</p>
-<p>✅ Inductor between 5V supply and MOSFET Drain (switch node)</p>
-<p>✅ Diode anode at switch node, cathode toward Vout</p>
+<p>✅ MOSFET Drain connected to 5V supply</p>
+<p>✅ Gate resistor between GPIO18 and MOSFET Gate</p>
+<p>✅ Inductor between MOSFET Drain and Vout node</p>
+<p>✅ Diode cathode at switch node (MOSFET Drain side), anode at GND</p>
 <p>✅ Capacitor positive leg at Vout, negative leg at GND</p>
-<p>✅ Gate resistor between GPIO18 (or D9 as backup) and MOSFET Gate</p>
-<p>✅ Oscilloscope probe tip at Vout, probe GND at ESP32 (or Arduino backup) GND</p>
+<p>✅ CH1 probe tip at Vout, CH1 probe ground at ESP32 GND</p>
 <hr />
 <h3 id="esp32-code_1">ESP32 Code<a class="headerlink" href="#esp32-code_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="p">{</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="n">ledcSetup</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="n">ledcAttachPin</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="p">}</span>
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
-<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
-<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="p">{</span>
-<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">    </span><span class="c1">// Step through three duty cycles with a 3-second pause at each.</span>
-<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">    </span><span class="c1">// Expected Vout = Vin / (1 - D) at each step.</span>
-<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>
-<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">);</span><span class="w">    </span><span class="c1">// ~25% duty cycle → Vout ≈ 4.4 V (ideal)</span>
-<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
-<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>
-<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~50% duty cycle → Vout ≈ 6.6 V (ideal)</span>
-<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
-<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>
-<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">192</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~75% duty cycle → Vout ≈ 13.2 V (ideal)</span>
-<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
-<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="p">{</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="n">ledcSetup</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="n">ledcAttachPin</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="p">}</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="p">{</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span><span class="c1">// Step through three duty cycles with a 3-second pause at each.</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">    </span><span class="c1">// Expected Vout = D × Vin at each step.</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">);</span><span class="w">    </span><span class="c1">// ~25% duty cycle → Vout ≈ 0.83 V</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~50% duty cycle → Vout ≈ 1.65 V</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">192</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~75% duty cycle → Vout ≈ 2.48 V</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="arduino-equivalent-code-backup_1">Arduino Equivalent Code (backup)<a class="headerlink" href="#arduino-equivalent-code-backup_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="p">{</span>
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">);</span><span class="w">    </span><span class="c1">// ~25% duty cycle → Vout ≈ 6.7 V (ideal)</span>
-<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
-<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
-<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~50% duty cycle → Vout ≈ 10 V (ideal)</span>
-<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
-<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
-<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">    </span><span class="n">analogWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">192</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~75% duty cycle → Vout ≈ 20 V (ideal)</span>
-<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
-<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="p">}</span>
-</code></pre></div>
+<blockquote>
+<p><strong>Arduino Uno:</strong> replace <code>ledcWrite(0, value)</code> with <code>analogWrite(9, value)</code> on pin 9.</p>
+</blockquote>
 <hr />
 <h3 id="oscilloscope-settings-output-voltage">Oscilloscope Settings — Output Voltage<a class="headerlink" href="#oscilloscope-settings-output-voltage" title="Permanent link">&para;</a></h3>
 <table>
@@ -3144,8 +3186,8 @@ V_{OUT} = \frac{5}{1 - 0.75} = 20\ \text{V}
 <tbody>
 <tr>
 <td>Vertical scale</td>
-<td>2 V/div</td>
-<td>2 V/div</td>
+<td>1 V/div</td>
+<td>1 V/div</td>
 </tr>
 <tr>
 <td>Horizontal scale</td>
@@ -3166,8 +3208,8 @@ V_{OUT} = \frac{5}{1 - 0.75} = 20\ \text{V}
 </table>
 <hr />
 <h3 id="observe">Observe<a class="headerlink" href="#observe" title="Permanent link">&para;</a></h3>
-<p>The output voltage should step upward as duty cycle increases.</p>
-<p>Measure the average DC output at each step with a multimeter.</p>
+<p>The output voltage should step between three levels as the code cycles through duty cycles.</p>
+<p>Measure the average DC output at each step with a multimeter or the oscilloscope DC measurement.</p>
 <hr />
 <h3 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h3>
 <table>
@@ -3175,7 +3217,7 @@ V_{OUT} = \frac{5}{1 - 0.75} = 20\ \text{V}
 <tr>
 <th>PWM Value</th>
 <th>Duty Cycle</th>
-<th>Expected V_{OUT} (ideal)</th>
+<th>Expected V_{OUT}</th>
 <th>Measured V_{OUT}</th>
 </tr>
 </thead>
@@ -3183,32 +3225,36 @@ V_{OUT} = \frac{5}{1 - 0.75} = 20\ \text{V}
 <tr>
 <td>64</td>
 <td>25%</td>
-<td>6.7 V</td>
+<td>0.83 V</td>
 <td></td>
 </tr>
 <tr>
 <td>128</td>
 <td>50%</td>
-<td>10 V</td>
+<td>1.65 V</td>
 <td></td>
 </tr>
 <tr>
 <td>192</td>
 <td>75%</td>
-<td>20 V</td>
+<td>2.48 V</td>
 <td></td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="experiment-3-measure-output-ripple">Experiment 3 - Measure Output Ripple<a class="headerlink" href="#experiment-3-measure-output-ripple" title="Permanent link">&para;</a></h2>
+<h2 id="experiment-3-observe-output-ripple">Experiment 3 - Observe Output Ripple<a class="headerlink" href="#experiment-3-observe-output-ripple" title="Permanent link">&para;</a></h2>
 <h3 id="objective_3">Objective<a class="headerlink" href="#objective_3" title="Permanent link">&para;</a></h3>
-<p>Observe output voltage ripple at the switching frequency.</p>
+<p>Measure the output voltage ripple at the switching frequency.</p>
 <hr />
 <h3 id="connections_1">Connections<a class="headerlink" href="#connections_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Probe Tip  ──────► Vout node
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>Probe GND  ──────► ESP32 GND
-</code></pre></div>
+<ol>
+<li>Hook the <strong>CH1 probe tip</strong> to the <strong>Vout node</strong> (lower inductor leg / capacitor positive).</li>
+<li>Clip the <strong>CH1 probe ground</strong> to any <strong>GND pin</strong> on the ESP32.</li>
+</ol>
+<blockquote>
+<p>Use AC coupling to isolate the ripple from the DC offset.</p>
+</blockquote>
 <hr />
 <h3 id="oscilloscope-settings-ripple">Oscilloscope Settings — Ripple<a class="headerlink" href="#oscilloscope-settings-ripple" title="Permanent link">&para;</a></h3>
 <table>
@@ -3242,120 +3288,70 @@ V_{OUT} = \frac{5}{1 - 0.75} = 20\ \text{V}
 </tr>
 </tbody>
 </table>
+<blockquote>
+<p>Switch to AC coupling to zoom in on the ripple while ignoring the DC offset.</p>
+</blockquote>
+<hr />
+<h3 id="expected-observation">Expected Observation<a class="headerlink" href="#expected-observation" title="Permanent link">&para;</a></h3>
+<p>The output should not be perfectly DC.</p>
+<p>You should observe a small ripple at the switching frequency:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>DC Output
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>~~~~~~~~~
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Small Ripple
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>~~~~~~~~~
+</code></pre></div>
 <hr />
 <h3 id="observe_1">Observe<a class="headerlink" href="#observe_1" title="Permanent link">&para;</a></h3>
-<p>The output should contain an average DC voltage plus a small ripple voltage.</p>
-<p>Ripple occurs because the capacitor continuously charges and discharges.</p>
+<p>The ripple should be relatively small compared to the average output voltage.</p>
+<p>Record the peak-to-peak ripple voltage.</p>
 <hr />
-<h2 id="comparing-buck-and-boost-converters">Comparing Buck and Boost Converters<a class="headerlink" href="#comparing-buck-and-boost-converters" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Property</th>
-<th>Buck Converter</th>
-<th>Boost Converter</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Purpose</td>
-<td>Step Down Voltage</td>
-<td>Step Up Voltage</td>
-</tr>
-<tr>
-<td>Uses PWM</td>
-<td>Yes</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>Uses MOSFET</td>
-<td>Yes</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>Uses Inductor</td>
-<td>Yes</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>Uses Capacitor</td>
-<td>Yes</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>Output Voltage</td>
-<td>Lower Than Input</td>
-<td>Higher Than Input</td>
-</tr>
-<tr>
-<td>Equation</td>
-<td><span class="arithmatex">\(V_{OUT} = D \cdot V_{IN}\)</span></td>
-<td><span class="arithmatex">\(V_{OUT} = V_{IN}/(1-D)\)</span></td>
-</tr>
-</tbody>
-</table>
+<h3 id="how-can-ripple-be-reduced">How Can Ripple Be Reduced?<a class="headerlink" href="#how-can-ripple-be-reduced" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Increasing capacitance</li>
+<li>Increasing inductance</li>
+<li>Increasing switching frequency</li>
+<li>Reducing load current variations</li>
+</ul>
 <hr />
 <h2 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h2>
-<p>Overlay your measured output voltages against the ideal Boost Converter curve and compare with the Buck Converter results from Project 08.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">Vin</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">D_measured</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="w">  </span><span class="mf">0.50</span><span class="p">,</span><span class="w">  </span><span class="mf">0.75</span><span class="p">];</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="n">Vout_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.00</span><span class="p">,</span><span class="w">  </span><span class="mf">0.00</span><span class="p">,</span><span class="w">  </span><span class="mf">0.00</span><span class="p">];</span><span class="w">   </span><span class="c">% replace with your measured voltages (V)</span>
-<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
-<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="n">D_ideal</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.001</span><span class="p">:</span><span class="mf">0.95</span><span class="p">;</span>
-<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="n">Vout_ideal</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vin</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">D_ideal</span><span class="p">);</span>
-<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>
-<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="nb">plot</span><span class="p">(</span><span class="n">D_ideal</span><span class="p">,</span><span class="w"> </span><span class="n">Vout_ideal</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">    </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Ideal: V_{OUT} = V_{IN}/(1-D)&#39;</span><span class="p">);</span>
-<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="nb">scatter</span><span class="p">(</span><span class="n">D_measured</span><span class="p">,</span><span class="w"> </span><span class="n">Vout_measured</span><span class="p">,</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;filled&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">    </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Measured&#39;</span><span class="p">);</span>
-<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Duty Cycle&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Output Voltage (V)&#39;</span><span class="p">);</span>
-<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Boost Converter - Ideal vs Measured&#39;</span><span class="p">);</span>
-<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;northwest&#39;</span><span class="p">);</span>
-<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="nb">ylim</span><span class="p">([</span><span class="mi">0</span><span class="w"> </span><span class="mi">25</span><span class="p">]);</span>
-<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>
-<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;%-8s %-12s %-12s %-14s %-12s\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="w">    </span><span class="s">&#39;D&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;V_ideal(V)&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;V_meas(V)&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Ratio_ideal&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Ratio_meas&#39;</span><span class="p">);</span>
-<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a><span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span>
-<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="w">    </span><span class="n">V_ideal</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">Vin</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">D_measured</span><span class="p">(</span><span class="nb">i</span><span class="p">));</span>
-<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a><span class="w">    </span><span class="n">M_ideal</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">V_ideal</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Vin</span><span class="p">;</span>
-<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a><span class="w">    </span><span class="n">M_meas</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="n">Vout_measured</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Vin</span><span class="p">;</span>
-<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a><span class="w">    </span><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;%-8.2f %-12.2f %-12.2f %-14.2f %-12.2f\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a><span class="w">        </span><span class="n">D_measured</span><span class="p">(</span><span class="nb">i</span><span class="p">),</span><span class="w"> </span><span class="n">V_ideal</span><span class="p">,</span><span class="w"> </span><span class="n">Vout_measured</span><span class="p">(</span><span class="nb">i</span><span class="p">),</span><span class="w"> </span><span class="n">M_ideal</span><span class="p">,</span><span class="w"> </span><span class="n">M_meas</span><span class="p">);</span>
-<a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a><span class="k">end</span>
-</code></pre></div>
-<h3 id="buck-vs-boost-comparison">Buck vs Boost Comparison<a class="headerlink" href="#buck-vs-boost-comparison" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">Vin</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="n">D</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.001</span><span class="p">:</span><span class="mf">0.95</span><span class="p">;</span>
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="n">Vout_buck</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">Vin</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">D</span><span class="p">;</span>
-<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="n">Vout_boost</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vin</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">D</span><span class="p">);</span>
-<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
-<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="nb">plot</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="n">Vout_buck</span><span class="p">,</span><span class="w">  </span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Buck: D \cdot V_{IN}&#39;</span><span class="p">);</span>
-<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="nb">plot</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="n">Vout_boost</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Boost: V_{IN}/(1-D)&#39;</span><span class="p">);</span>
-<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="nb">yline</span><span class="p">(</span><span class="n">Vin</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;V_{IN} = %.0fV&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Vin</span><span class="p">));</span>
-<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Duty Cycle&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Output Voltage (V)&#39;</span><span class="p">);</span>
-<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Buck vs Boost - Voltage Conversion&#39;</span><span class="p">);</span>
-<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;north&#39;</span><span class="p">);</span>
-<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="nb">ylim</span><span class="p">([</span><span class="mi">0</span><span class="w"> </span><span class="mi">20</span><span class="p">]);</span>
+<p>Overlay your measured output voltages against the ideal theory line.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">Vin</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">3.3</span><span class="p">;</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">D_measured</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="w">  </span><span class="mf">0.50</span><span class="p">,</span><span class="w">  </span><span class="mf">0.75</span><span class="p">];</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="n">Vout_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.00</span><span class="p">,</span><span class="w">  </span><span class="mf">0.00</span><span class="p">,</span><span class="w">  </span><span class="mf">0.00</span><span class="p">];</span><span class="w">   </span><span class="c">% replace with your measured voltages (V)</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="n">D_ideal</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="n">Vout_ideal</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">D_ideal</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">Vin</span><span class="p">;</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="nb">plot</span><span class="p">(</span><span class="n">D_ideal</span><span class="p">,</span><span class="w"> </span><span class="n">Vout_ideal</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Ideal: V_{OUT} = D \cdot V_{IN}&#39;</span><span class="p">);</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="nb">scatter</span><span class="p">(</span><span class="n">D_measured</span><span class="p">,</span><span class="w"> </span><span class="n">Vout_measured</span><span class="p">,</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;filled&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Measured&#39;</span><span class="p">);</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Duty Cycle&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Output Voltage (V)&#39;</span><span class="p">);</span>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Buck Converter - Ideal vs Measured&#39;</span><span class="p">);</span>
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;northwest&#39;</span><span class="p">);</span>
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;%-8s %-12s %-12s %-12s\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;D&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;V_ideal(V)&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;V_meas(V)&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Drop(V)&#39;</span><span class="p">);</span>
+<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span>
+<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="w">    </span><span class="n">V_ideal</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">D_measured</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Vin</span><span class="p">;</span>
+<a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="w">    </span><span class="n">drop</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="n">V_ideal</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Vout_measured</span><span class="p">(</span><span class="nb">i</span><span class="p">);</span>
+<a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a><span class="w">    </span><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;%-8.2f %-12.3f %-12.3f %-12.3f\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">D_measured</span><span class="p">(</span><span class="nb">i</span><span class="p">),</span><span class="w"> </span><span class="n">V_ideal</span><span class="p">,</span><span class="w"> </span><span class="n">Vout_measured</span><span class="p">(</span><span class="nb">i</span><span class="p">),</span><span class="w"> </span><span class="n">drop</span><span class="p">);</span>
+<a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a><span class="k">end</span>
 </code></pre></div>
 <h3 id="reflection">Reflection<a class="headerlink" href="#reflection" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Is the measured Vout lower than ideal at all three duty cycles? Which duty cycle shows the largest absolute error?</li>
-<li>The Boost conversion ratio <span class="arithmatex">\(M = V_{OUT}/V_{IN}\)</span> becomes very sensitive to D near D = 1. Why is this a practical problem for control?</li>
-<li>How does the inductor current waveform shape differ between the Buck (Project 08) and Boost converters?</li>
+<li>Is the measured Vout lower than the ideal prediction? Why? (MOSFET <span class="arithmatex">\(V_{DS(on)}\)</span>, diode forward voltage drop, inductor DCR)</li>
+<li>Is the voltage drop consistent across all three duty cycles, or does it change?</li>
+<li>How would using a Schottky diode (lower forward voltage) improve the result compared to a standard 1N4007?</li>
 </ul>
 <hr />
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
-<h3 id="output-voltage-does-not-increase">Output Voltage Does Not Increase<a class="headerlink" href="#output-voltage-does-not-increase" title="Permanent link">&para;</a></h3>
+<h3 id="no-output-voltage">No Output Voltage<a class="headerlink" href="#no-output-voltage" title="Permanent link">&para;</a></h3>
 <p>Check:</p>
-<p>✅ Inductor connected between 5V supply and MOSFET Drain (not between Drain and GND)</p>
-<p>✅ Diode orientation (anode at switch node, cathode toward Vout)</p>
-<p>✅ MOSFET Source connected to GND</p>
+<p>✅ MOSFET pinout correct (G, D, S identified)</p>
+<p>✅ Diode polarity (cathode banded end toward switch node / 5V side)</p>
+<p>✅ Inductor connected between MOSFET Drain and Vout</p>
+<p>✅ Shared GND between ESP32 and converter</p>
 <hr />
 <h3 id="excessive-ripple">Excessive Ripple<a class="headerlink" href="#excessive-ripple" title="Permanent link">&para;</a></h3>
 <p>Check:</p>
@@ -3363,65 +3359,54 @@ V_{OUT} = \frac{5}{1 - 0.75} = 20\ \text{V}
 <p>✅ Capacitor polarity (positive leg to Vout)</p>
 <p>✅ Load not drawing excessive current</p>
 <hr />
-<h3 id="no-pwm-observed">No PWM Observed<a class="headerlink" href="#no-pwm-observed" title="Permanent link">&para;</a></h3>
+<h3 id="no-pwm-signal-at-gate">No PWM Signal at Gate<a class="headerlink" href="#no-pwm-signal-at-gate" title="Permanent link">&para;</a></h3>
 <p>Check:</p>
-<p>✅ Gate resistor connected between GPIO18 (or D9 as backup) and MOSFET Gate</p>
+<p>✅ Gate resistor connected between GPIO18 and MOSFET Gate</p>
 <p>✅ Code uploaded successfully</p>
-<p>✅ Probe tip on MOSFET Gate, probe GND on ESP32 (or Arduino backup) GND</p>
+<p>✅ CH1 probe tip on MOSFET Gate, CH1 probe ground on ESP32 GND</p>
 <hr />
 <h3 id="troubleshooting-checklist">Troubleshooting Checklist<a class="headerlink" href="#troubleshooting-checklist" title="Permanent link">&para;</a></h3>
 <p>✅ PWM present at MOSFET gate</p>
-<p>✅ Inductor connected correctly (between supply and switch node)</p>
-<p>✅ Diode orientation verified</p>
-<p>✅ Capacitor polarity correct</p>
+<p>✅ Diode polarity verified</p>
+<p>✅ Inductor connected correctly</p>
+<p>✅ Capacitor polarity verified</p>
 <p>✅ Output voltage measured</p>
+<p>✅ Output ripple visible</p>
 <p>✅ Duty cycle affects output voltage</p>
 <hr />
 <h2 id="knowledge-check">Knowledge Check<a class="headerlink" href="#knowledge-check" title="Permanent link">&para;</a></h2>
 <h3 id="question-1">Question 1<a class="headerlink" href="#question-1" title="Permanent link">&para;</a></h3>
-<p>Write the ideal Boost Converter equation.</p>
+<p>Write the ideal Buck Converter equation.</p>
 <hr />
 <h3 id="question-2">Question 2<a class="headerlink" href="#question-2" title="Permanent link">&para;</a></h3>
-<p>Why can the output voltage exceed the input voltage?</p>
+<p>What is the role of the inductor?</p>
 <hr />
 <h3 id="question-3">Question 3<a class="headerlink" href="#question-3" title="Permanent link">&para;</a></h3>
-<p>What is the role of the diode in a Boost Converter?</p>
+<p>What is the role of the capacitor?</p>
 <hr />
 <h3 id="question-4">Question 4<a class="headerlink" href="#question-4" title="Permanent link">&para;</a></h3>
-<p>What stores energy in a Boost Converter?</p>
+<p>Why are Buck Converters efficient?</p>
 <hr />
 <h3 id="question-5">Question 5<a class="headerlink" href="#question-5" title="Permanent link">&para;</a></h3>
-<p>What happens when duty cycle increases?</p>
+<p>What causes output ripple?</p>
 <hr />
 <h3 id="question-6">Question 6<a class="headerlink" href="#question-6" title="Permanent link">&para;</a></h3>
-<p>The ideal Boost equation predicts Vout = 20 V at D = 0.75 with Vin = 5 V. Your measured value was lower. Apart from component losses, explain why the nonlinear gain curve makes the Boost Converter harder to control at high duty cycles than the Buck Converter.</p>
+<p>Your simulation predicted Vout = 2.5 V at 50% duty cycle but you measured 2.1 V. The MOSFET has <span class="arithmatex">\(V_{DS(on)}\)</span> = 0.1 V and the 1N5819 has a forward voltage of 0.3 V. Show how these account for the 0.4 V discrepancy.</p>
 <hr />
 <h2 id="project-summary">Project Summary<a class="headerlink" href="#project-summary" title="Permanent link">&para;</a></h2>
 <p>In this project you learned:</p>
-<p>✅ Boost Converter operation</p>
-<p>✅ Step-up voltage conversion</p>
+<p>✅ Buck Converter fundamentals</p>
+<p>✅ PWM voltage control</p>
+<p>✅ MOSFET switching</p>
 <p>✅ Inductor energy storage</p>
-<p>✅ PWM-controlled energy transfer</p>
-<p>✅ Diode operation</p>
+<p>✅ Capacitor filtering</p>
 <p>✅ Output ripple</p>
-<p>✅ Practical DC-DC conversion</p>
-<p>You have now studied the two most important non-isolated converter topologies:</p>
-<ul>
-<li>Buck Converter</li>
-<li>Boost Converter</li>
-</ul>
+<p>✅ Converter efficiency</p>
+<p>✅ Practical switched-mode power electronics</p>
 <hr />
 <h2 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>07_DC_Chopper_Converters.md
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>07_Boost_Converter.md
 </code></pre></div>
-<p>Topics:</p>
-<ul>
-<li>Chopper Converter Fundamentals</li>
-<li>DC Motor Drives</li>
-<li>Average Voltage Control</li>
-<li>Quadrant Operation</li>
-<li>Buck and Boost Chopper Relationships</li>
-</ul>
 
 
 
