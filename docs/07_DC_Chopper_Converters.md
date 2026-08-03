@@ -10,13 +10,8 @@ Complete:
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
 - 04_MOSFET_Fundamentals.md
-- 10_PWM_Motor_Control.md
-- 12_P_Controller.md
-- 13_PI_Controller.md
-- 14_PID_Controller.md
-- 08_Buck_Converter.md
-- 15_Closed_Loop_Buck.md
-- 09_Boost_Converter.md
+- 05_AC_DC_Rectifiers.md
+- 06_DC_AC_Inverters.md
 
 ---
 
@@ -191,7 +186,7 @@ Before building the circuit, simulate the chopper waveforms and unified converte
 ### Unified Chopper Comparison
 
 ```matlab
-Vin = 5;
+Vin = 3.3;
 D   = 0:0.001:0.95;
 
 Vout_typeA = Vin .* D;              % Type A: step-down (Buck)
@@ -213,8 +208,8 @@ ylim([0 20]);
 ### Simulate Chopper Waveform at Each Duty Cycle
 
 ```matlab
-Vin = 5;
-fsw = 490;
+Vin = 3.3;
+fsw = 500;
 Ts  = 1 / fsw;
 duty_cycles = [0.25, 0.50, 0.75];
 t = 0:1e-6:4*Ts;
@@ -231,7 +226,7 @@ for i = 1:3
     title(sprintf('D = %d%%  \rightarrow  V_{AVG} = %.2fV', D*100, Vin*D));
 end
 xlabel('Time (ms)');
-sgtitle('Chopper Waveforms - 490 Hz, V_{IN}=5V');
+sgtitle('Chopper Waveforms - 500 Hz, V_{IN}=3.3V');
 ```
 
 ### Prediction Table
@@ -246,10 +241,12 @@ sgtitle('Chopper Waveforms - 490 Hz, V_{IN}=5V');
 
 ## Components Required
 
-- ESP32 DevKit V1 (or Arduino Uno as backup)
+- ESP32 DevKit V1
 - Breadboard
 - Jumper wires
 - Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
+
+## Experiment 1 - Observe the Chopper Waveform
 
 ### Objective
 
@@ -259,9 +256,14 @@ Observe the chopper switching waveform and measure its average voltage at 50% du
 
 ### Connections
 
+1. Insert the **CH1 probe BNC** into CH1 on the OWON HDS272S.
+2. Hook the **CH1 probe tip** onto **ESP32 GPIO18**.
+3. Clip the **CH1 probe ground** to any **GND pin** on the ESP32.
+
 ```text
-Probe Tip  ──────► ESP32 GPIO18  (or Arduino Pin 9 as backup)
-Probe GND  ──────► ESP32 GND
+CH1 socket    ◄──── BNC connector
+ESP32 GND     ◄──── CH1 probe ground
+ESP32 GPIO18  ◄──── CH1 probe tip
 ```
 
 No breadboard components are needed for this experiment.
@@ -286,21 +288,7 @@ void loop()
 }
 ```
 
-### Arduino Equivalent Code (backup)
-
-```cpp
-void setup()
-{
-    // No explicit pinMode needed; analogWrite() configures the pin automatically.
-}
-
-void loop()
-{
-    // Output 50% duty cycle PWM — this is the chopper switching signal.
-    // Average voltage = 0.5 × V_S ≈ 2.5 V from a 5 V supply.
-    analogWrite(9, 128);
-}
-```
+> **Arduino Uno:** replace `ledcWrite(0, 128)` with `analogWrite(9, 128)` on pin 9.
 
 ---
 
@@ -328,7 +316,7 @@ void loop()
 
 ### Observe
 
-The waveform should switch between 0 V and approximately 3.3 V (ESP32) or 5 V (Arduino backup) at ~500 Hz with equal ON and OFF times.
+The waveform should switch between 0 V and approximately 3.3 V at ~500 Hz with equal ON and OFF times.
 
 ---
 
@@ -336,9 +324,9 @@ The waveform should switch between 0 V and approximately 3.3 V (ESP32) or 5 V (A
 
 | Parameter | Expected | Measured |
 |-----------|----------|---------|
-| Frequency | ~500 Hz (ESP32) / ~490 Hz (Arduino backup) | |
+| Frequency | ~500 Hz | |
 | Duty Cycle | ~50% | |
-| Peak Voltage | ~3.3 V (ESP32) / ~5 V (Arduino backup) | |
+| Peak Voltage | ~3.3 V | |
 
 ---
 
@@ -375,23 +363,7 @@ void loop()
 }
 ```
 
-### Arduino Equivalent Code (backup)
-
-```cpp
-void setup() {}
-
-void loop()
-{
-    analogWrite(9, 64);    // ~25% duty cycle → V_AVG ≈ 1.25 V
-    delay(3000);
-
-    analogWrite(9, 128);   // ~50% duty cycle → V_AVG ≈ 2.5 V
-    delay(3000);
-
-    analogWrite(9, 192);   // ~75% duty cycle → V_AVG ≈ 3.75 V
-    delay(3000);
-}
-```
+> **Arduino Uno:** replace `ledcWrite(0, value)` with `analogWrite(9, value)` on pin 9.
 
 ---
 
@@ -410,7 +382,7 @@ void loop()
 Overlay your measured average voltages against the ideal chopper theory.
 
 ```matlab
-Vin = 5;
+Vin = 3.3;
 
 D_measured    = [0.25,  0.50,  0.75];   % measured duty cycles
 Vavg_measured = [0.00,  0.00,  0.00];   % replace with measured average voltages (V)
@@ -440,7 +412,7 @@ end
 ### Consolidation Plot — All Three Topologies
 
 ```matlab
-Vin = 5;
+Vin = 3.3;
 D   = 0:0.001:0.95;
 
 figure; hold on;
@@ -470,11 +442,11 @@ ylim([0 20]);
 
 Check:
 
-✅ Probe tip on correct pin (GPIO18 ESP32 or D9 Arduino backup)
+✅ Probe tip on GPIO18
 
 ✅ Trigger type set to Edge, Rising
 
-✅ Horizontal scale appropriate (500 µs/div for ~490 Hz)
+✅ Horizontal scale appropriate (500 µs/div for ~500 Hz)
 
 ---
 
@@ -565,13 +537,13 @@ In this project you learned:
 ## Next Project
 
 ```text
-05_AC_DC_Rectifiers.md
+08_Buck_Converter.md
 ```
 
 Topics:
 
-- AC and DC Fundamentals
-- Half-Wave Rectification
-- Bridge Rectifiers
-- Capacitor Smoothing
+- Buck Converter Fundamentals
+- MOSFET Switching
+- Inductor Energy Storage
+- Output Voltage Control
 - Ripple Voltage

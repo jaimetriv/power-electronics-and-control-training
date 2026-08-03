@@ -10,16 +10,12 @@ Complete:
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
 - 04_MOSFET_Fundamentals.md
-- 10_PWM_Motor_Control.md
-- 12_P_Controller.md
-- 13_PI_Controller.md
-- 14_PID_Controller.md
-- 08_Buck_Converter.md
-- 15_Closed_Loop_Buck.md
-- 09_Boost_Converter.md
-- 07_DC_Chopper_Converters.md
 - 05_AC_DC_Rectifiers.md
 - 06_DC_AC_Inverters.md
+- 07_DC_Chopper_Converters.md
+- 08_Buck_Converter.md
+- 09_Boost_Converter.md
+- 10_PWM_Motor_Control.md
 
 ---
 
@@ -282,7 +278,7 @@ fprintf('Fitted: K=%.2f  tau=%.2fs\n', K_fit, tau_fit);
 
 ## Components Required
 
-- ESP32 DevKit V1 (or Arduino Uno as backup)
+- ESP32 DevKit V1
 - Breadboard and jumper wires
 - 10 kΩ resistor
 - 22 kΩ resistor
@@ -305,15 +301,15 @@ Apply a step input to an RC circuit and measure the time constant from the oscil
 ### Circuit Diagram
 
 ```text
-ESP32 GPIO18  (or Arduino Pin D9 as backup)
+ESP32 GPIO18
     │
    10 kΩ resistor
     │
-    ├──── Vc ──── Probe Tip
+    ├──── Vc ──── CH1 probe tip
     │
    100 µF capacitor  (positive leg up)
     │
-   GND ──── Probe GND
+   GND ──── CH1 probe ground
 ```
 
 ---
@@ -321,11 +317,11 @@ ESP32 GPIO18  (or Arduino Pin D9 as backup)
 ### Step-by-Step Wiring
 
 1. Insert the **10 kΩ resistor** across the breadboard so each leg is in a different row.
-2. Connect a jumper wire from **ESP32 GPIO18** (or **Arduino pin D9** as backup) to one leg of the resistor.
+2. Connect a jumper wire from **ESP32 GPIO18** to one leg of the resistor.
 3. Insert the **100 µF capacitor** so its **positive leg** is in the same row as the other resistor leg. This junction is $V_C$.
 4. Connect a jumper wire from the **capacitor negative leg** to any **GND** pin on the ESP32.
-5. Connect the **oscilloscope probe tip** to the $V_C$ junction.
-6. Connect the **oscilloscope probe ground** to ESP32 GND.
+5. Hook the **CH1 probe tip** to the $V_C$ junction.
+6. Clip the **CH1 probe ground** to any **GND pin** on the ESP32.
 
 ---
 
@@ -333,15 +329,15 @@ ESP32 GPIO18  (or Arduino Pin D9 as backup)
 
 Before uploading:
 
-✅ Resistor leg in same row as ESP32 GPIO18 (or Arduino D9 as backup) jumper
+✅ Resistor leg in same row as GPIO18 jumper
 
 ✅ Capacitor positive leg in same row as other resistor leg
 
 ✅ Capacitor negative leg connected to GND
 
-✅ Oscilloscope probe tip at Vc junction
+✅ CH1 probe tip at Vc junction
 
-✅ Oscilloscope probe ground at ESP32 GND
+✅ CH1 probe ground at ESP32 GND
 
 ---
 
@@ -359,29 +355,7 @@ void setup()
 void loop() {}
 ```
 
-### Arduino Equivalent Code (backup)
-
-```cpp
-void setup()
-{
-    // Configure pin 9 as a digital output.
-    pinMode(9, OUTPUT);
-
-    // Start LOW to ensure capacitor is discharged before the step.
-    digitalWrite(9, LOW);
-
-    // Wait 2 seconds for capacitor to fully discharge.
-    delay(2000);
-
-    // Apply the step: drive pin HIGH and hold there.
-    digitalWrite(9, HIGH);
-}
-
-void loop()
-{
-    // Nothing needed here — the step is applied once in setup().
-}
-```
+> **Arduino Uno:** replace GPIO18 with pin 9 and use `pinMode(9, OUTPUT)` / `digitalWrite(9, HIGH)`.
 
 ---
 
@@ -559,7 +533,7 @@ Check:
 
 Check:
 
-✅ Probe ground connected to Arduino GND
+✅ CH1 probe ground connected to ESP32 GND
 
 ✅ Trigger settings stable
 
@@ -646,14 +620,14 @@ In this project you learned:
 ## Next Project
 
 ```text
-16_Controller_Design.md
+12_P_Controller.md
 ```
 
 Topics:
 
-- Controller Design Process
-- Model-Based Design
+- Feedback Control
+- Error Signals
+- Open Loop vs Closed Loop
+- Proportional Controller Gain
 - Stability
-- Controller Tuning
-- Performance Optimisation
-- Practical Control Engineering
+- Performance Tuning

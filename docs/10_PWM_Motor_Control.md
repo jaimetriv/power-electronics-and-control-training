@@ -142,7 +142,7 @@ Battery (+)
     │
    GND
 
-PWM Output (Arduino Pin 9 or ESP32 GPIO18)
+PWM Output (ESP32 GPIO18)
       │
     220 Ω gate resistor
       │
@@ -189,7 +189,7 @@ legend('Location', 'southeast');
 
 ## Required Components
 
-- ESP32 DevKit V1 (or Arduino Uno as backup)
+- ESP32 DevKit V1
 - Breadboard and jumper wires
 - IRLZ44N MOSFET
 - DC Motor
@@ -212,9 +212,9 @@ Turn the motor fully ON and OFF and observe the gradual speed response.
 ### Step-by-Step Wiring
 
 1. Insert the **IRLZ44N MOSFET** into the breadboard. Identify Gate (G), Drain (D), and Source (S).
-2. Connect a jumper wire from **ESP32 GND** (or **Arduino GND** as backup) to the **MOSFET Source** row. Also connect the **battery negative** to this same GND row.
+2. Connect a jumper wire from **ESP32 GND** to the **MOSFET Source** row. Also connect the **battery negative** to this same GND row.
 3. Insert the **220 Ω gate resistor** so one leg is in the **Gate** row and the other is in a new row.
-4. Connect a jumper wire from **ESP32 GPIO18** (or **Arduino pin D9** as backup) to the top of the gate resistor.
+4. Connect a jumper wire from **ESP32 GPIO18** to the top of the gate resistor.
 5. Connect one motor terminal to the **MOSFET Drain** row.
 6. Connect the other motor terminal to the **battery positive**.
 7. Insert the **flyback diode** across the motor terminals: **cathode (banded end)** toward the battery positive terminal, **anode** toward the MOSFET Drain. This protects against inductive voltage spikes.
@@ -237,7 +237,7 @@ Before uploading:
 
 ✅ Flyback diode across motor (cathode toward battery+, anode toward Drain)
 
-✅ Gate resistor between GPIO18 (or D9 as backup) and MOSFET Gate
+✅ Gate resistor between GPIO18 and MOSFET Gate
 
 ✅ Battery connected
 
@@ -265,24 +265,7 @@ void loop()
 }
 ```
 
-### Arduino Equivalent Code (backup)
-
-```cpp
-void setup()
-{
-    // Configure pin 9 as a digital output to drive the MOSFET gate.
-    pinMode(9, OUTPUT);
-}
-
-void loop()
-{
-    digitalWrite(9, HIGH);
-    delay(3000);
-
-    digitalWrite(9, LOW);
-    delay(3000);
-}
-```
+> **Arduino Uno:** replace GPIO18 with pin 9 and use `pinMode(9, OUTPUT)` / `digitalWrite(9, ...)`.
 
 ---
 
@@ -338,29 +321,14 @@ void loop()
 }
 ```
 
-### Arduino Equivalent Code (backup)
-
-```cpp
-void setup()
-{
-    // No explicit pinMode needed; analogWrite() configures the pin automatically.
-}
-
-void loop()
-{
-    // Apply 50% duty cycle PWM to the MOSFET gate.
-    analogWrite(9, 128);
-}
-```
+> **Arduino Uno:** replace `ledcWrite(0, 128)` with `analogWrite(9, 128)` on pin 9.
 
 ---
 
 ### Oscilloscope Settings — Gate Signal
 
-```text
-Probe Tip  ──────► MOSFET Gate
-Probe GND  ──────► ESP32 GND (= MOSFET Source)
-```
+1. Hook the **CH1 probe tip** to the **MOSFET Gate**.
+2. Clip the **CH1 probe ground** to any **GND pin** on the ESP32 (= MOSFET Source).
 
 | Setting | OWON HDS272S | DSO Nano |
 |---------|--------------|----------|
@@ -374,10 +342,10 @@ Probe GND  ──────► ESP32 GND (= MOSFET Source)
 ### Expected Waveform
 
 ```text
-5V  ─────      ─────
-         │    │
-         │    │
-0V  _____│____│_____
+3.3V  ─────      ─────
+           │    │
+           │    │
+0V    _____│____│_____
 ```
 
 ---
@@ -392,8 +360,8 @@ The motor should rotate at a lower speed than full power.
 
 | Measurement | Expected | Measured |
 |-------------|----------|---------|
-| Frequency | ~500 Hz (ESP32) / ~490 Hz (Arduino backup) | |
-| Gate Voltage | ~3.3 V (ESP32) / ~5 V (Arduino backup) | |
+| Frequency | ~500 Hz | |
+| Gate Voltage | ~3.3 V | |
 | Duty Cycle | ~50% | |
 
 ---
@@ -431,26 +399,7 @@ void loop()
 }
 ```
 
-### Arduino Equivalent Code (backup)
-
-```cpp
-void setup() {}
-
-void loop()
-{
-    analogWrite(9, 64);
-    delay(3000);
-
-    analogWrite(9, 128);
-    delay(3000);
-
-    analogWrite(9, 192);
-    delay(3000);
-
-    analogWrite(9, 255);
-    delay(3000);
-}
-```
+> **Arduino Uno:** replace `ledcWrite(0, value)` with `analogWrite(9, value)` on pin 9.
 
 ---
 
@@ -473,42 +422,27 @@ Observe the motor's first-order dynamic response to a step change in PWM, and es
 
 ---
 
-### Arduino Code (backup for Experiment 4)
+### ESP32 Code
 
 ```cpp
 void setup()
 {
-    // No explicit pinMode needed; analogWrite() configures the pin automatically.
-}
-
-void loop()
-{
-    analogWrite(9, 255);   // Step to full speed
-    delay(5000);
-
-    analogWrite(9, 0);     // Step to zero
-    delay(5000);
-}
-```
-
-### Arduino Equivalent Code (backup)
-
-```cpp
-void setup()
-{
+    // Configure LEDC channel 0: 500 Hz, 8-bit resolution.
     ledcSetup(0, 500, 8);
     ledcAttachPin(18, 0);
 }
 
 void loop()
 {
-    ledcWrite(0, 255);
+    ledcWrite(0, 255);   // Step to full speed
     delay(5000);
 
-    ledcWrite(0, 0);
+    ledcWrite(0, 0);     // Step to zero
     delay(5000);
 }
 ```
+
+> **Arduino Uno:** replace `ledcWrite(0, value)` with `analogWrite(9, value)` on pin 9.
 
 ---
 
@@ -604,9 +538,9 @@ Check:
 
 ✅ MOSFET pinout correct (G, D, S identified)
 
-✅ Shared GND between Arduino and battery negative
+✅ Shared GND between ESP32 and battery negative
 
-✅ Gate resistor connected between GPIO18 (or D9 as backup) and Gate
+✅ Gate resistor connected between GPIO18 and Gate
 
 ---
 

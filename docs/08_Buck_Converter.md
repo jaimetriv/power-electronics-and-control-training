@@ -10,10 +10,9 @@ Complete:
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
 - 04_MOSFET_Fundamentals.md
-- 10_PWM_Motor_Control.md
-- 12_P_Controller.md
-- 13_PI_Controller.md
-- 14_PID_Controller.md
+- 05_AC_DC_Rectifiers.md
+- 06_DC_AC_Inverters.md
+- 07_DC_Chopper_Converters.md
 
 ---
 
@@ -235,7 +234,7 @@ Before building the circuit, simulate the ideal Buck Converter behaviour to pred
 ### Vout vs Duty Cycle — 5 V Supply
 
 ```matlab
-Vin = 5;
+Vin = 3.3;
 D   = 0:0.01:1;
 Vout_ideal = D .* Vin;
 
@@ -254,11 +253,11 @@ legend('Ideal V_{OUT} = D \cdot V_{IN}', 'Experiment points', 'Location', 'north
 ### Simulate Inductor Current Waveform
 
 ```matlab
-Vin  = 5;
+Vin  = 3.3;
 D    = 0.5;
 Vout = D * Vin;
 L    = 100e-6;
-fsw  = 490;
+fsw  = 500;
 Ts   = 1 / fsw;
 Iavg = 0.05;
 
@@ -296,7 +295,7 @@ yline(Iavg*1e3, 'r--', sprintf('I_{avg} = %.0f mA', Iavg*1e3));
 - 100 µH Inductor
 - 100 µF Electrolytic Capacitor
 - 220 Ω gate resistor
-- ESP32 DevKit V1 (or Arduino Uno as backup)
+- ESP32 DevKit V1
 - Breadboard and jumper wires
 - OWON HDS272S Oscilloscope (recommended)
 - DSO Nano Oscilloscope (compatible)
@@ -305,7 +304,7 @@ yline(Iavg*1e3, 'r--', sprintf('I_{avg} = %.0f mA', Iavg*1e3));
 
 ## Safety Notice
 
-For this introductory project use the 3.3 V ESP32 supply (or 5 V Arduino supply) rather than a 12 V supply.
+For this introductory project use the **ESP32 3.3 V supply** rather than an external 12 V supply.
 
 This reduces the risk of component damage while learning.
 
@@ -323,10 +322,17 @@ Upload the PWM code and observe the gate switching signal on the oscilloscope be
 
 ### Connections
 
+1. Insert the **CH1 probe BNC** into CH1 on the OWON HDS272S.
+2. Hook the **CH1 probe tip** onto **ESP32 GPIO18**.
+3. Clip the **CH1 probe ground** to any **GND pin** on the ESP32.
+
 ```text
-Probe Tip  ──────► ESP32 GPIO18  (or Arduino Pin 9 as backup)
-Probe GND  ──────► ESP32 GND
+CH1 socket    ◄──── BNC connector
+ESP32 GND     ◄──── CH1 probe ground
+ESP32 GPIO18  ◄──── CH1 probe tip
 ```
+
+No breadboard components needed — verify the gate signal before building the full converter.
 
 ---
 
@@ -348,21 +354,7 @@ void loop()
 }
 ```
 
-### Arduino Equivalent Code (backup)
-
-```cpp
-void setup()
-{
-    // No explicit pinMode needed; analogWrite() configures the pin automatically.
-}
-
-void loop()
-{
-    // Output 50% duty cycle PWM on pin 9.
-    // This is the switching signal that will drive the MOSFET gate.
-    analogWrite(9, 128);
-}
-```
+> **Arduino Uno:** replace `ledcWrite(0, 128)` with `analogWrite(9, 128)` on pin 9.
 
 ---
 
@@ -392,9 +384,9 @@ void loop()
 
 | Parameter | Expected | Measured |
 |-----------|----------|---------|
-| Frequency | ~500 Hz (ESP32) / ~490 Hz (Arduino backup) | |
+| Frequency | ~500 Hz | |
 | Duty Cycle | ~50% | |
-| Gate Voltage | ~3.3 V (ESP32) / ~5 V (Arduino backup) | |
+| Gate Voltage | ~3.3 V | |
 
 ---
 
@@ -409,16 +401,16 @@ Build the full converter circuit and observe how duty cycle controls output volt
 ### Step-by-Step Wiring
 
 1. Insert the **IRLZ44N MOSFET** into the breadboard. Identify Gate (G), Drain (D), and Source (S) from the pinout (see Project 04).
-2. Connect a jumper wire from **ESP32 GND** (or **Arduino GND** as backup) to the **MOSFET Source** row.
+2. Connect a jumper wire from **ESP32 GND** to the **MOSFET Source** row.
 3. Insert the **220 Ω gate resistor** so one leg is in the **Gate** row and the other is in a new row.
-4. Connect a jumper wire from **ESP32 GPIO18** (or **Arduino pin 9** as backup) to the top of the gate resistor.
-5. Connect a jumper wire from **ESP32 3.3V** (or **Arduino 5V** as backup) to the **MOSFET Drain** row. This is the converter input.
+4. Connect a jumper wire from **ESP32 GPIO18** to the top of the gate resistor.
+5. Connect a jumper wire from **ESP32 3.3V** to the **MOSFET Drain** row. This is the converter input.
 6. Insert the **100 µH inductor** so one leg is in the **MOSFET Drain** row and the other is in a new row below. This junction is the switch node.
 7. Insert the **1N5819 diode** so its **cathode (banded end)** is in the switch node row and its **anode** is in the GND row. This is the freewheel diode.
 8. Insert the **100 µF capacitor** so its **positive leg** is in the lower inductor leg row (Vout) and its **negative leg** is in the GND row.
 9. Connect a jumper wire from the **lower inductor leg** row to a load resistor (optional — the capacitor alone is sufficient for initial testing).
-10. Connect the **oscilloscope probe tip** to the Vout node (lower inductor leg / capacitor positive).
-11. Connect the **oscilloscope probe ground** to ESP32 (or Arduino) GND.
+10. Hook the **CH1 probe tip** to the Vout node (lower inductor leg / capacitor positive).
+11. Clip the **CH1 probe ground** to any **GND pin** on the ESP32.
 
 The signal path will be:
 
@@ -444,7 +436,7 @@ Before uploading:
 
 ✅ MOSFET Drain connected to 5V supply
 
-✅ Gate resistor between GPIO18 (or D9 as backup) and MOSFET Gate
+✅ Gate resistor between GPIO18 and MOSFET Gate
 
 ✅ Inductor between MOSFET Drain and Vout node
 
@@ -452,7 +444,7 @@ Before uploading:
 
 ✅ Capacitor positive leg at Vout, negative leg at GND
 
-✅ Oscilloscope probe tip at Vout, probe GND at ESP32 (or Arduino backup) GND
+✅ CH1 probe tip at Vout, CH1 probe ground at ESP32 GND
 
 ---
 
@@ -481,23 +473,7 @@ void loop()
 }
 ```
 
-### Arduino Equivalent Code (backup)
-
-```cpp
-void setup() {}
-
-void loop()
-{
-    analogWrite(9, 64);    // ~25% duty cycle → Vout ≈ 1.25 V
-    delay(3000);
-
-    analogWrite(9, 128);   // ~50% duty cycle → Vout ≈ 2.5 V
-    delay(3000);
-
-    analogWrite(9, 192);   // ~75% duty cycle → Vout ≈ 3.75 V
-    delay(3000);
-}
-```
+> **Arduino Uno:** replace `ledcWrite(0, value)` with `analogWrite(9, value)` on pin 9.
 
 ---
 
@@ -524,9 +500,9 @@ Measure the average DC output at each step with a multimeter or the oscilloscope
 
 | PWM Value | Duty Cycle | Expected V\_{OUT} | Measured V\_{OUT} |
 |-----------|------------|-------------------|-------------------|
-| 64 | 25% | 1.25 V | |
-| 128 | 50% | 2.5 V | |
-| 192 | 75% | 3.75 V | |
+| 64 | 25% | 0.83 V | |
+| 128 | 50% | 1.65 V | |
+| 192 | 75% | 2.48 V | |
 
 ---
 
@@ -540,10 +516,10 @@ Measure the output voltage ripple at the switching frequency.
 
 ### Connections
 
-```text
-Probe Tip  ──────► Vout node
-Probe GND  ──────► ESP32 (or Arduino) GND
-```
+1. Hook the **CH1 probe tip** to the **Vout node** (lower inductor leg / capacitor positive).
+2. Clip the **CH1 probe ground** to any **GND pin** on the ESP32.
+
+> Use AC coupling to isolate the ripple from the DC offset.
 
 ---
 
@@ -597,7 +573,7 @@ Record the peak-to-peak ripple voltage.
 Overlay your measured output voltages against the ideal theory line.
 
 ```matlab
-Vin = 5;
+Vin = 3.3;
 
 D_measured    = [0.25,  0.50,  0.75];
 Vout_measured = [0.00,  0.00,  0.00];   % replace with your measured voltages (V)
@@ -641,7 +617,7 @@ Check:
 
 ✅ Inductor connected between MOSFET Drain and Vout
 
-✅ Shared GND between ESP32 (or Arduino) and converter
+✅ Shared GND between ESP32 and converter
 
 ---
 
@@ -661,11 +637,11 @@ Check:
 
 Check:
 
-✅ Gate resistor connected between GPIO18 (or D9 as backup) and MOSFET Gate
+✅ Gate resistor connected between GPIO18 and MOSFET Gate
 
 ✅ Code uploaded successfully
 
-✅ Probe tip on MOSFET Gate, probe GND on ESP32 (or Arduino backup) GND
+✅ CH1 probe tip on MOSFET Gate, CH1 probe ground on ESP32 GND
 
 ---
 
