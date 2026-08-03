@@ -10,9 +10,7 @@ Complete:
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
 - 04_MOSFET_Fundamentals.md
-- 05_AC_DC_Rectifiers.md
-- 06_DC_AC_Inverters.md
-- 07_DC_Chopper_Converters.md
+- 05_DC_Chopper_Converters.md
 
 ---
 
@@ -726,14 +724,5 @@ In this project you learned:
 ## Next Project
 
 ```text
-15_Closed_Loop_Buck.md
+07_Boost_Converter.md
 ```
-
-Topics:
-
-- Voltage Feedback
-- PI Regulation
-- Closed-Loop Control
-- Converter Dynamics
-- Stability
-- Disturbance Rejection

@@ -10,7 +10,7 @@ Complete:
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
 - 04_MOSFET_Fundamentals.md
-- 10_PWM_Motor_Control.md
+- 08_PWM_Motor_Control.md
 - 12_P_Controller.md
 
 ---

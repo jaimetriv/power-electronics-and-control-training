@@ -46,25 +46,31 @@ C --> D[RLC Circuits]
 
 D --> E[MOSFET Fundamentals]
 
-E --> F[Control Systems]
+E --> F[DC Chopper Converters]
 
 F --> G[Buck Converter]
 
-G --> H[Closed Loop Buck]
+G --> H[Boost Converter]
 
-H --> I[Boost Converter]
+H --> I[PWM Motor Control]
 
-I --> J[DC Chopper Converters]
+I --> J[AC-DC Rectifiers]
 
-J --> K[Rectifiers]
+J --> K[DC-AC Inverters]
 
-K --> L[Inverters]
+K --> L[System Identification]
 
-L --> M[System Identification]
+L --> M[P Controller]
 
-M --> N[Controller Design]
+M --> N[PI Controller]
 
-N --> O[Grid Following VSC]
+N --> O[PID Controller]
 
-O --> P[Grid Forming VSC]
+O --> P[Closed Loop Buck]
+
+P --> Q[Controller Design]
+
+Q --> R[Grid Following VSC]
+
+R --> S[Grid Forming VSC]
 ```

@@ -10,8 +10,6 @@ Complete:
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
 - 04_MOSFET_Fundamentals.md
-- 05_AC_DC_Rectifiers.md
-- 06_DC_AC_Inverters.md
 
 ---
 
@@ -537,7 +535,7 @@ In this project you learned:
 ## Next Project
 
 ```text
-08_Buck_Converter.md
+06_Buck_Converter.md
 ```
 
 Topics:

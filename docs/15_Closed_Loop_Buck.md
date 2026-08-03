@@ -10,11 +10,11 @@ Complete:
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
 - 04_MOSFET_Fundamentals.md
-- 10_PWM_Motor_Control.md
+- 08_PWM_Motor_Control.md
 - 12_P_Controller.md
 - 13_PI_Controller.md
 - 14_PID_Controller.md
-- 08_Buck_Converter.md
+- 06_Buck_Converter.md
 
 ---
 
@@ -708,7 +708,7 @@ In this project you learned:
 ## Next Project
 
 ```text
-09_Boost_Converter.md
+07_Boost_Converter.md
 ```
 
 Topics:

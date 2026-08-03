@@ -75,12 +75,12 @@ nav:
       - MOSFET Fundamentals: 04_MOSFET_Fundamentals.md
 
   - Power Conversion:
-      - AC-DC Rectifiers: 05_AC_DC_Rectifiers.md
-      - DC-AC Inverters: 06_DC_AC_Inverters.md
-      - DC Chopper Converters: 07_DC_Chopper_Converters.md
-      - Buck Converter: 08_Buck_Converter.md
-      - Boost Converter: 09_Boost_Converter.md
-      - PWM Motor Control: 10_PWM_Motor_Control.md
+      - DC Chopper Converters: 05_DC_Chopper_Converters.md
+      - Buck Converter: 06_Buck_Converter.md
+      - Boost Converter: 07_Boost_Converter.md
+      - PWM Motor Control: 08_PWM_Motor_Control.md
+      - AC-DC Rectifiers: 09_AC_DC_Rectifiers.md
+      - DC-AC Inverters: 10_DC_AC_Inverters.md
 
   - Control Systems:
       - System Identification: 11_System_Identification.md

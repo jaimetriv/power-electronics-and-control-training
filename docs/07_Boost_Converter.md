@@ -10,10 +10,8 @@ Complete:
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
 - 04_MOSFET_Fundamentals.md
-- 05_AC_DC_Rectifiers.md
-- 06_DC_AC_Inverters.md
-- 07_DC_Chopper_Converters.md
-- 08_Buck_Converter.md
+- 05_DC_Chopper_Converters.md
+- 06_Buck_Converter.md
 
 ---
 
@@ -700,13 +698,6 @@ You have now studied the two most important non-isolated converter topologies:
 ## Next Project
 
 ```text
-07_DC_Chopper_Converters.md
+08_PWM_Motor_Control.md
 ```
 
-Topics:
-
-- Chopper Converter Fundamentals
-- DC Motor Drives
-- Average Voltage Control
-- Quadrant Operation
-- Buck and Boost Chopper Relationships

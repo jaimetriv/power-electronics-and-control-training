@@ -882,7 +882,7 @@ These ideas are the building blocks for:
 ## Next Project
 
 ```text
-10_PWM_Motor_Control.md
+05_DC_Chopper_Converters.md
 ```
 
 Topics:
