@@ -202,34 +202,103 @@ Always verify with the datasheet before wiring.
 
 ---
 
-## MATLAB Simulation
+## Simulink Simulation
 
-Before building the circuit, simulate the gate waveform and average voltage to predict what you will observe.
+Before building the circuit, build a Simulink model to predict the gate waveform and average voltage at each duty cycle.
 
-### Simulate Gate PWM Waveforms
+This model is signal-only — no Simscape physical network is needed because the gate signal is a digital PWM waveform, not a passive circuit.
 
-```matlab
-f  = 500;                    % LEDC PWM frequency (Hz)
-Ts = 1 / f;
-duty_cycles = [0.25, 0.50, 0.75, 1.00];
-Vs = 3.3;
+---
 
-t = 0:1e-6:4*Ts;
+### Step 1 — Create a New Simulink Model
 
-figure;
-for i = 1:4
-    D = duty_cycles(i);
-    pwm = Vs * double(mod(t, Ts) < D * Ts);
-    subplot(4,1,i);
-    plot(t * 1e3, pwm, 'b', 'LineWidth', 1.5);
-    yline(Vs * D, 'r--', sprintf('V_{AVG}=%.2fV', Vs*D));
-    ylim([-0.5 6]); grid on;
-    ylabel('V (V)');
-    title(sprintf('D = %d%%', D*100));
-end
-xlabel('Time (ms)');
-sgtitle('MOSFET Gate PWM - 500 Hz');
-```
+1. In MATLAB, go to **Home** tab → click **Simulink**.
+2. Click **Blank Model**.
+3. Go to **File → Save** and name the file `MOSFET_Gate_PWM`.
+
+---
+
+### Step 2 — Add Blocks
+
+Open the **Library Browser** and drag the following blocks onto the canvas:
+
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| Pulse Generator | Simulink → Sources | 1 |
+| Scope | Simulink → Sinks | 1 |
+
+---
+
+### Step 3 — Configure the Pulse Generator
+
+Double-click the **Pulse Generator** block and set:
+
+| Parameter | Value |
+|-----------|-------|
+| Amplitude | `3.3` |
+| Period | `0.002` |
+| Pulse Width | `50` (percent) |
+| Phase delay | `0` |
+
+This produces a 0–3.3 V square wave at 500 Hz with 50% duty cycle, matching the ESP32 LEDC output.
+
+---
+
+### Step 4 — Wire the Model
+
+Connect the **Pulse Generator** output to the **Scope** input.
+
+---
+
+### Step 5 — Simulation Settings
+
+Go to **Modeling → Model Settings** (or press **Ctrl+E**).
+
+Under **Solver**:
+
+| Setting | Value |
+|---------|-------|
+| Stop time | `0.008` |
+| Type | Fixed-step |
+| Solver | `discrete (no continuous states)` |
+| Fixed-step size | `1e-6` |
+
+Click **OK**.
+
+---
+
+### Step 6 — Run and Observe
+
+Click **Run**. Open the Scope.
+
+You should see a 0–3.3 V square wave at 500 Hz with equal ON and OFF times.
+
+---
+
+### Step 7 — Vary the Duty Cycle
+
+Change the **Pulse Width** parameter in the Pulse Generator and re-run for each duty cycle:
+
+| Pulse Width (%) | Duty Cycle | Expected $V_{AVG}$ |
+|-----------------|------------|--------------------|
+| 25 | 25% | 0.83 V |
+| 50 | 50% | 1.65 V |
+| 75 | 75% | 2.48 V |
+| 100 | 100% | 3.30 V |
+
+Observe how the ON time grows relative to the period as duty cycle increases.
+
+---
+
+### Wiring Checklist
+
+✅ Pulse Generator output connected to Scope input
+
+✅ Amplitude = 3.3, Period = 0.002, Phase delay = 0
+
+✅ Stop time = 0.008, Fixed-step solver, step size = 1e-6
+
+---
 
 ### Prediction Table
 

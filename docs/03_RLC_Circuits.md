@@ -241,57 +241,201 @@ Where $\zeta$ = Damping Ratio.
 
 ---
 
-## MATLAB Simulation
+## Simscape Simulation
 
-Before building the circuit, simulate the step response for each resistor value to predict what you will observe on the oscilloscope.
+Before building the circuit, build a Simscape model to predict the step response for each resistor value.
 
-### Calculate Damping Ratios
+### Model Overview
 
-```matlab
-L = 0.1;
-C = 100e-9;
-wn = 1 / sqrt(L * C);
-fn = wn / (2 * pi);
+One model covers all three experiments. You change the resistor value between runs.
 
-R_values = [47, 100, 470];
+---
 
-fprintf('Natural frequency: %.1f Hz\n', fn);
-fprintf('%-8s %-12s %s\n', 'R (Ohm)', 'zeta', 'Response type');
-for i = 1:3
-    zeta = (R_values(i) / 2) * sqrt(C / L);
-    if zeta < 1,      rtype = 'Underdamped';
-    elseif zeta == 1, rtype = 'Critically damped';
-    else,             rtype = 'Overdamped'; end
-    fprintf('%-8d %-12.4f %s\n', R_values(i), zeta, rtype);
-end
+### Step 1 — Create a New Simulink Model
+
+1. In MATLAB, go to **Home** tab → click **Simulink**.
+2. Click **Blank Model**.
+3. Go to **File → Save** and name the file `RLC_Step_Response`.
+
+---
+
+### Step 2 — Open the Library Browser
+
+In the Simulink toolbar click **Library Browser** (book icon).
+
+You will use blocks from two libraries:
+
+- **Simscape → Foundation Library → Electrical → Electrical Sources**
+- **Simscape → Foundation Library → Electrical → Electrical Elements**
+- **Simscape → Foundation Library → Electrical → Electrical Sensors**
+- **Simscape → Utilities**
+- **Simulink → Sources**
+- **Simulink → Sinks**
+
+---
+
+### Step 3 — Add Blocks
+
+Drag the following blocks onto the canvas:
+
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| Pulse Generator | Simulink → Sources | 1 |
+| Controlled Voltage Source | Simscape → Foundation Library → Electrical → Electrical Sources | 1 |
+| Resistor | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
+| Inductor | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
+| Capacitor | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
+| Voltage Sensor | Simscape → Foundation Library → Electrical → Electrical Sensors | 1 |
+| Electrical Reference | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
+| PS-Simulink Converter | Simscape → Utilities | 1 |
+| Scope | Simulink → Sinks | 1 |
+| Solver Configuration | Simscape → Utilities | 1 |
+
+---
+
+### Step 4 — Configure the Pulse Generator
+
+Double-click the **Pulse Generator** block and set:
+
+| Parameter | Value |
+|-----------|-------|
+| Amplitude | `1` |
+| Period | `0.006` |
+| Pulse Width | `50` (percent) |
+| Phase delay | `0` |
+
+This produces a 0–1 V square wave at ~167 Hz with a 3 ms ON time — long enough for the ringing to fully settle before the next transition.
+
+---
+
+### Step 5 — Configure the Resistor
+
+Double-click the **Resistor** block and set:
+
+| Parameter | Value |
+|-----------|-------|
+| Resistance | `100` |
+
+You will change this value to 47 and 470 for Experiments 3 and 4.
+
+---
+
+### Step 6 — Configure the Inductor
+
+Double-click the **Inductor** block and set:
+
+| Parameter | Value |
+|-----------|-------|
+| Inductance | `0.1` |
+
+---
+
+### Step 7 — Configure the Capacitor
+
+Double-click the **Capacitor** block and set:
+
+| Parameter | Value |
+|-----------|-------|
+| Capacitance | `100e-9` |
+
+---
+
+### Step 8 — Wire the Circuit
+
+Connect the blocks in this order:
+
+```text
+Pulse Generator  →  Controlled Voltage Source (input port)
+
+Controlled Voltage Source (+)  →  Resistor (left port)
+Resistor (right port)          →  Inductor (left port)
+Inductor (right port)          →  Capacitor (p port)
+Capacitor (n port)             →  Electrical Reference
+Controlled Voltage Source (−)  →  Electrical Reference
+
+Capacitor (p port)  →  Voltage Sensor (+ port)
+Voltage Sensor (− port)  →  Electrical Reference
+
+Voltage Sensor (V port)  →  PS-Simulink Converter (input)
+PS-Simulink Converter (output)  →  Scope
 ```
 
-### Simulate Step Responses
+> The Electrical Reference block is the circuit ground. Wire the negative terminal of the Controlled Voltage Source, the negative terminal of the Voltage Sensor, and the bottom of the Capacitor all to the same Electrical Reference node.
 
-> **Toolbox required:** `tf()` and `step()` require the MATLAB **Control System Toolbox**.
+> The Voltage Sensor measures the voltage across the Capacitor. Its `+` port connects to the junction between the Inductor and Capacitor (`p` port of Capacitor). Its `−` port connects to Electrical Reference.
 
-```matlab
-L = 0.1;
-C = 100e-9;
-R_values = [47, 100, 470];
-labels   = {'R=47\Omega', 'R=100\Omega', 'R=470\Omega'};
+---
 
-t = 0:1e-6:3e-3;
+### Step 9 — Connect the Solver Configuration
 
-figure; hold on;
-for i = 1:3
-    R = R_values(i);
-    num = [1/C];
-    den = [L, R, 1/C];
-    G = tf(num, den);
-    [y, ~] = step(G, t);
-    plot(t * 1e3, y, 'LineWidth', 2, 'DisplayName', labels{i});
-end
-grid on;
-xlabel('Time (ms)'); ylabel('Capacitor Voltage (V)');
-title('RLC Step Response - Damping Comparison');
-legend('Location', 'northeast');
-```
+Drag the **Solver Configuration** block onto the canvas.
+
+Connect its single port to any wire in the Simscape (physical) network — for example, to the wire between the Inductor and Capacitor.
+
+This block is required for every Simscape model. It does not affect the signal path.
+
+---
+
+### Step 10 — Simulation Settings
+
+In the Simulink toolbar go to **Modeling → Model Settings** (or press **Ctrl+E**).
+
+Under **Solver**:
+
+| Setting | Value |
+|---------|-------|
+| Stop time | `0.018` |
+| Type | Variable-step |
+| Solver | `ode23t` |
+| Max step size | `1e-6` |
+
+This gives three complete pulse cycles (3 × 6 ms), enough to see the ringing settle on each transition.
+
+Click **OK**.
+
+---
+
+### Step 11 — Run the Simulation
+
+Click the **Run** button (green triangle).
+
+Double-click the **Scope** to open it.
+
+You should see the capacitor voltage oscillate and ring after each transition, then settle. The ringing frequency should be approximately 1591 Hz.
+
+---
+
+### Step 12 — Repeat for Each Resistor Value
+
+Change the **Resistor** value and re-run for each experiment:
+
+| Experiment | R value | Expected response |
+|------------|---------|------------------|
+| Experiment 1 & 2 | 100 Ω | Moderate ringing, ~5–10 cycles visible |
+| Experiment 3 | 470 Ω | Little or no ringing, fast decay |
+| Experiment 4 | 47 Ω | Strong ringing, many cycles visible |
+
+---
+
+### Wiring Checklist
+
+✅ Pulse Generator output connected to Controlled Voltage Source input port
+
+✅ Series path: Controlled Voltage Source (+) → Resistor → Inductor → Capacitor (p) → Electrical Reference
+
+✅ Controlled Voltage Source (−) connected to Electrical Reference
+
+✅ Voltage Sensor (+) at junction between Inductor and Capacitor (p port)
+
+✅ Voltage Sensor (−) connected to Electrical Reference
+
+✅ Voltage Sensor output (V) → PS-Simulink Converter → Scope
+
+✅ Solver Configuration block connected to the physical network
+
+✅ Stop time = 0.018, Solver = ode23t, Max step = 1e-6
+
+---
 
 ### Prediction Table
 

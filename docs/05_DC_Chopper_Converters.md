@@ -1,4 +1,4 @@
-# Project 07 - DC Chopper Converters and DC Motor Drives
+# Project 05 - DC Chopper Converters and DC Motor Drives
 
 ### Prerequisites
 
@@ -177,60 +177,151 @@ Motor speed is approximately proportional to average voltage.
 
 ---
 
-## MATLAB Simulation
+## Simulink Simulation
 
-Before building the circuit, simulate the chopper waveforms and unified converter comparison.
+Before building the circuit, build a Simulink model to predict the chopper waveform and average output voltage at each duty cycle.
 
-### Unified Chopper Comparison
+This model is signal-only — no Simscape physical network is needed. The chopper output is a PWM waveform; the load averaging is conceptual at this stage.
+
+---
+
+### Step 1 — Create a New Simulink Model
+
+1. In MATLAB, go to **Home** tab → click **Simulink**.
+2. Click **Blank Model**.
+3. Go to **File → Save** and name the file `DC_Chopper`.
+
+---
+
+### Step 2 — Add Blocks
+
+Open the **Library Browser** and drag the following blocks onto the canvas:
+
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| Pulse Generator | Simulink → Sources | 1 |
+| Gain | Simulink → Math Operations | 1 |
+| Scope | Simulink → Sinks | 1 |
+
+The Gain block will scale the 0–1 pulse to 0–$V_{IN}$.
+
+---
+
+### Step 3 — Configure the Pulse Generator
+
+Double-click the **Pulse Generator** block and set:
+
+| Parameter | Value |
+|-----------|-------|
+| Amplitude | `1` |
+| Period | `0.002` |
+| Pulse Width | `50` (percent) |
+| Phase delay | `0` |
+
+This produces a normalised 0–1 pulse at 500 Hz with 50% duty cycle.
+
+---
+
+### Step 4 — Configure the Gain Block
+
+Double-click the **Gain** block and set:
+
+| Parameter | Value |
+|-----------|-------|
+| Gain | `3.3` |
+
+This scales the pulse to 0–3.3 V, matching the ESP32 GPIO output.
+
+---
+
+### Step 5 — Wire the Model
+
+Connect:
+
+```text
+Pulse Generator → Gain → Scope
+```
+
+---
+
+### Step 6 — Simulation Settings
+
+Go to **Modeling → Model Settings** (or press **Ctrl+E**).
+
+Under **Solver**:
+
+| Setting | Value |
+|---------|-------|
+| Stop time | `0.008` |
+| Type | Fixed-step |
+| Solver | `discrete (no continuous states)` |
+| Fixed-step size | `1e-6` |
+
+Click **OK**.
+
+---
+
+### Step 7 — Run and Observe
+
+Click **Run**. Open the Scope.
+
+You should see a 0–3.3 V square wave at 500 Hz with equal ON and OFF times. The average value is $0.5 \times 3.3 = 1.65$ V.
+
+---
+
+### Step 8 — Vary the Duty Cycle
+
+Change the **Pulse Width** parameter in the Pulse Generator and re-run for each duty cycle:
+
+| Pulse Width (%) | Duty Cycle | Expected $V_{AVG}$ |
+|-----------------|------------|--------------------|
+| 25 | 25% | 0.83 V |
+| 50 | 50% | 1.65 V |
+| 75 | 75% | 2.48 V |
+
+Observe how the ON time grows and the average voltage rises proportionally.
+
+---
+
+### Step 9 — Unified Converter Comparison (MATLAB Script)
+
+Run this script in the MATLAB Command Window to plot the Type A (Buck) and Type B (Boost) output voltage curves together, showing where the chopper motor drive sits:
 
 ```matlab
 Vin = 3.3;
 D   = 0:0.001:0.95;
 
-Vout_typeA = Vin .* D;              % Type A: step-down (Buck)
-Vout_typeB = Vin ./ (1 - D);        % Type B: step-up (Boost)
-Vavg_motor = Vin .* D;              % Chopper motor drive (same as Type A)
-
 figure; hold on;
-plot(D, Vout_typeA, 'b',  'LineWidth', 2, 'DisplayName', 'Type A (Buck)  V_{OUT}=D\cdotV_{IN}');
-plot(D, Vout_typeB, 'r',  'LineWidth', 2, 'DisplayName', 'Type B (Boost) V_{OUT}=V_{IN}/(1-D)');
-plot(D, Vavg_motor, 'g--','LineWidth', 1.5,'DisplayName', 'Motor Drive    V_{AVG}=D\cdotV_S');
-yline(Vin, 'k:', sprintf('V_{IN} = %.0fV', Vin));
+plot(D, Vin.*D,       'b',  'LineWidth', 2, 'DisplayName', 'Type A (Buck)  V_{OUT}=D\cdotV_{IN}');
+plot(D, Vin./(1-D),   'r',  'LineWidth', 2, 'DisplayName', 'Type B (Boost) V_{OUT}=V_{IN}/(1-D)');
+yline(Vin, 'k:', sprintf('V_{IN} = %.1fV', Vin));
 grid on;
 xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
-title('DC Chopper Converters - Unified Comparison (V_{IN}=5V)');
+title('DC Chopper Converters - Unified Comparison');
 legend('Location', 'northwest');
 ylim([0 20]);
 ```
 
-### Simulate Chopper Waveform at Each Duty Cycle
+Note that the Type A (Buck) curve and the motor chopper $V_{AVG} = D \cdot V_S$ are identical — a motor chopper and a Buck converter share the same voltage-control law.
 
-```matlab
-Vin = 3.3;
-fsw = 500;
-Ts  = 1 / fsw;
-duty_cycles = [0.25, 0.50, 0.75];
-t = 0:1e-6:4*Ts;
+---
 
-figure;
-for i = 1:3
-    D   = duty_cycles(i);
-    pwm = Vin * double(mod(t, Ts) < D * Ts);
-    subplot(3,1,i);
-    plot(t*1e3, pwm, 'b', 'LineWidth', 1.5); hold on;
-    yline(Vin*D, 'r--', sprintf('V_{AVG}=%.2fV', Vin*D));
-    ylim([-0.5, 6]); grid on;
-    ylabel('V (V)');
-    title(sprintf('D = %d%%  \rightarrow  V_{AVG} = %.2fV', D*100, Vin*D));
-end
-xlabel('Time (ms)');
-sgtitle('Chopper Waveforms - 500 Hz, V_{IN}=3.3V');
-```
+### Wiring Checklist
+
+✅ Pulse Generator output → Gain → Scope
+
+✅ Amplitude = 1, Period = 0.002, Phase delay = 0
+
+✅ Gain = 3.3
+
+✅ Stop time = 0.008, Fixed-step solver, step size = 1e-6
+
+---
 
 ### Prediction Table
 
-| PWM Value | Duty Cycle | Predicted V\_{AVG} (V) | Motor speed |
-|-----------|------------|------------------------|-------------|
+| PWM Value | Duty Cycle | Predicted $V_{AVG}$ (V) | Motor speed |
+|-----------|------------|-------------------------|-------------|
 | 64 | 25% | | |
 | 128 | 50% | | |
 | 192 | 75% | | |

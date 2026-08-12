@@ -126,46 +126,325 @@ After one time constant ($t = \tau$) the capacitor reaches **63.2%** of its fina
 
 ---
 
-## MATLAB Simulation
+## Simulink/Simscape Simulation
 
-```matlab
-R = 10000;
-C = 100e-6;
-tau = R * C;
+Build these two models before the hardware experiments. The first predicts the charging and discharging waveforms for Experiments 1–4. The second predicts the filter frequency response for Experiments 5–6.
 
-t = 0:0.001:5;
+---
 
-Vs = 3.3;   % ESP32 supply voltage
-Vc_charge = Vs * (1 - exp(-t / tau));
-Vc_discharge = Vs * exp(-t / tau);
+## Model 1 — RC Charging and Discharging (Experiments 1–4)
 
-figure;
-subplot(2,1,1);
-plot(t, Vc_charge, 'b', 'LineWidth', 2);
-yline(0.632*Vs, 'r--', sprintf('63.2%% = %.2fV', 0.632*Vs));
-xline(tau, 'k--', sprintf('\\tau = %.1fs', tau));
-grid on;
-xlabel('Time (s)'); ylabel('Voltage (V)');
-title('RC Charging — R=10k\Omega, C=100\muF');
-ylim([0 1.1*Vs]);
+### Model Overview
 
-subplot(2,1,2);
-plot(t, Vc_discharge, 'r', 'LineWidth', 2);
-yline(0.368*Vs, 'b--', sprintf('36.8%% = %.2fV', 0.368*Vs));
-xline(tau, 'k--', sprintf('\\tau = %.1fs', tau));
-grid on;
-xlabel('Time (s)'); ylabel('Voltage (V)');
-title('RC Discharging — R=10k\Omega, C=100\muF');
-ylim([0 1.1*Vs]);
-```
+A Simscape Electrical RC circuit driven by a pulsing voltage source. A Voltage Sensor measures $V_C$ and feeds a Scope.
+
+---
+
+### Components Required
+
+| Component | Library Path |
+|---|---|
+| Controlled Voltage Source | Simscape > Electrical > Sources |
+| Resistor | Simscape > Electrical > Passives |
+| Capacitor | Simscape > Electrical > Passives |
+| Voltage Sensor | Simscape > Electrical > Sensors & Transducers |
+| Electrical Reference | Simscape > Electrical > Utilities |
+| Solver Configuration | Simscape > Utilities |
+| Pulse Generator | Simulink > Sources |
+| Scope | Simulink > Sinks |
+| PS-Simulink Converter | Simscape > Utilities |
+
+---
+
+### Build Instructions
+
+**1. Create a new Simulink model**
+
+In MATLAB: Home > New > Simulink Model. Save as `RC_Circuits.slx`.
+
+---
+
+**2. Add and configure the Pulse Generator**
+
+- Drag a **Pulse Generator** block onto the canvas.
+- Double-click and set:
+  - Amplitude: `3.3`
+  - Period: `6` s
+  - Pulse Width: `50` % (3 s HIGH, 3 s LOW)
+  - Phase delay: `0`
+- This replicates the ESP32 GPIO toggling every 3 s.
+
+---
+
+**3. Add the Controlled Voltage Source**
+
+- Drag a **Controlled Voltage Source** onto the canvas.
+- Connect the output of the **Pulse Generator** to the input port of the Controlled Voltage Source.
+- The `+` terminal faces upward (top of circuit).
+
+---
+
+**4. Add the Resistor**
+
+- Drag a **Resistor** onto the canvas.
+- Double-click and set Resistance: `10000` Ω.
+- Connect the `+` terminal of the Voltage Source to one terminal of the Resistor.
+
+---
+
+**5. Add the Capacitor**
+
+- Drag a **Capacitor** onto the canvas.
+- Double-click and set:
+  - Capacitance: `100e-6` F
+  - Initial voltage: `0` V
+- Connect the free terminal of the Resistor to the `+` terminal of the Capacitor.
+- This junction is $V_C$.
+
+---
+
+**6. Add Electrical References**
+
+- Drag two **Electrical Reference** blocks onto the canvas.
+- Connect one to the `−` terminal of the Voltage Source.
+- Connect the other to the `−` terminal of the Capacitor.
+- These define the circuit ground.
+
+---
+
+**7. Add the Voltage Sensor**
+
+- Drag a **Voltage Sensor** onto the canvas.
+- Connect its `+` terminal to the $V_C$ node (junction between Resistor and Capacitor `+`).
+- Connect its `−` terminal to an Electrical Reference (ground).
+
+---
+
+**8. Add the PS-Simulink Converter**
+
+- Drag a **PS-Simulink Converter** onto the canvas.
+- Connect the output port of the Voltage Sensor to the input of the PS-Simulink Converter.
+- This converts the Simscape physical signal to a Simulink signal for the Scope.
+
+---
+
+**9. Add the Scope**
+
+- Drag a **Scope** onto the canvas.
+- Connect the output of the PS-Simulink Converter to the Scope input.
+
+---
+
+**10. Add the Solver Configuration**
+
+- Drag a **Solver Configuration** block onto the canvas.
+- Connect it to any Simscape node (e.g. the $V_C$ node).
+- This block is required for every Simscape model.
+
+---
+
+### Wiring Checklist
+
+✅ Pulse Generator output → Controlled Voltage Source input
+
+✅ Voltage Source `+` → Resistor → Capacitor `+` (series chain)
+
+✅ Voltage Source `−` → Electrical Reference
+
+✅ Capacitor `−` → Electrical Reference
+
+✅ Voltage Sensor `+` at $V_C$ node, `−` at Electrical Reference
+
+✅ PS-Simulink Converter between Voltage Sensor output and Scope
+
+✅ Solver Configuration connected to the Simscape network
+
+---
+
+### Simulation Settings
+
+Open **Model Settings** (Ctrl+E) and set:
+
+| Setting | Value |
+|---|---|
+| Stop time | `12` s (two full charge/discharge cycles) |
+| Solver | `ode23t` |
+| Max step size | `0.01` |
+
+---
+
+### Run and Observe
+
+Click **Run** (Ctrl+T). Open the Scope.
+
+Expected waveform:
+
+- $V_C$ rises from 0 V toward 3.3 V exponentially during each HIGH phase
+- $V_C$ falls back toward 0 V exponentially during each LOW phase
+- At exactly 1 s into each charging phase: $V_C \approx 2.09$ V (63.2% of 3.3 V)
+- At exactly 1 s into each discharging phase: $V_C \approx 1.21$ V (36.8% of 3.3 V)
+
+---
+
+### Vary Component Values
+
+To predict Experiments 3 and 4, change the Resistor and Capacitor values in the model:
+
+| Experiment | R | C | Expected τ | Stop time | Max step size |
+|---|---|---|---|---|---|
+| 1 & 2 | 10 kΩ | 100 µF | 1.0 s | `12` s | `0.01` |
+| 3 | 10 kΩ | 10 µF | 0.1 s | `1.2` s | `0.001` |
+| 4 | 1 kΩ | 100 µF | 0.1 s | `1.2` s | `0.001` |
+
+---
 
 ### Prediction Table
 
-| R | C | Predicted τ |
-|--------|--------|-------------|
-| 10 kΩ | 100 µF | |
-| 10 kΩ | 10 µF | |
-| 1 kΩ | 100 µF | |
+| R | C | Predicted τ | $V_C$ at 1τ (V) |
+|---|---|---|---|
+| 10 kΩ | 100 µF | | |
+| 10 kΩ | 10 µF | | |
+| 1 kΩ | 100 µF | | |
+
+---
+
+## Model 2 — RC Filter Frequency Response (Experiments 5–6)
+
+### Model Overview
+
+A Simscape Electrical RC circuit driven by a sine wave source. Two Voltage Sensors measure $V_{IN}$ and $V_{OUT}$ simultaneously, feeding a two-channel Scope. Running the simulation at multiple frequencies maps out the filter response.
+
+---
+
+### Components Required
+
+| Component | Library Path |
+|---|---|
+| Controlled Voltage Source | Simscape > Electrical > Sources |
+| Resistor | Simscape > Electrical > Passives |
+| Capacitor | Simscape > Electrical > Passives |
+| Voltage Sensor (×2) | Simscape > Electrical > Sensors & Transducers |
+| Electrical Reference | Simscape > Electrical > Utilities |
+| Solver Configuration | Simscape > Utilities |
+| Sine Wave | Simulink > Sources |
+| Scope | Simulink > Sinks |
+| PS-Simulink Converter (×2) | Simscape > Utilities |
+
+---
+
+### Build Instructions
+
+**1. Reuse `RC_Circuits.slx` or create a new model**
+
+Add a second subsystem or save a copy as `RC_Filter.slx`.
+
+---
+
+**2. Add and configure the Sine Wave block**
+
+- Drag a **Sine Wave** block onto the canvas.
+- Double-click and set:
+  - Amplitude: `1`
+  - Frequency: `2*pi*159` rad/s (= 159 Hz, the cutoff frequency)
+  - Phase: `0`
+  - Sample time: `0`
+- Connect its output to the Controlled Voltage Source input.
+
+---
+
+**3. Build the low-pass RC circuit**
+
+- Add a **Resistor** (10 000 Ω) and a **Capacitor** (100e-9 F).
+- Connect: Voltage Source `+` → Resistor → Capacitor `+` → Electrical Reference.
+- The junction between Resistor and Capacitor is $V_{OUT}$.
+- Connect Voltage Source `−` to Electrical Reference.
+
+---
+
+**4. Add Voltage Sensors for $V_{IN}$ and $V_{OUT}$**
+
+- Place **Voltage Sensor 1** across the Voltage Source (`+` at source `+` terminal, `−` at ground). This measures $V_{IN}$.
+- Place **Voltage Sensor 2** across the Capacitor (`+` at $V_{OUT}$ node, `−` at ground). This measures $V_{OUT}$.
+
+---
+
+**5. Add two PS-Simulink Converters and a two-channel Scope**
+
+- Connect Voltage Sensor 1 output → PS-Simulink Converter 1 → Scope channel 1.
+- Connect Voltage Sensor 2 output → PS-Simulink Converter 2 → Scope channel 2.
+- Double-click the Scope, go to **File > Number of Input Ports** and set to `2`.
+- Label channel 1 `VIN` and channel 2 `VOUT`.
+
+---
+
+**6. Add Solver Configuration**
+
+- Connect a **Solver Configuration** block to any Simscape node.
+
+---
+
+### Wiring Checklist
+
+✅ Sine Wave → Controlled Voltage Source input
+
+✅ Voltage Source `+` → Resistor → Capacitor `+` → Electrical Reference (LP circuit)
+
+✅ Voltage Sensor 1 across Voltage Source (measures $V_{IN}$)
+
+✅ Voltage Sensor 2 across Capacitor (measures $V_{OUT}$)
+
+✅ Two PS-Simulink Converters feeding a two-channel Scope
+
+✅ Solver Configuration connected to the network
+
+---
+
+### Simulation Settings
+
+| Setting | Value |
+|---|---|
+| Stop time | `0.1` s (covers several cycles at 159 Hz) |
+| Solver | `ode23t` |
+| Max step size | `1e-5` |
+
+---
+
+### Run at Multiple Frequencies
+
+Change the Sine Wave **Frequency** parameter for each row of the measurement table and re-run. Read the peak amplitude of each channel from the Scope.
+
+| Frequency (Hz) | Sine Wave Frequency (rad/s) | Expected $V_{OUT}/V_{IN}$ |
+|---|---|---|
+| 10 | `2*pi*10` | ≈ 1.00 |
+| 100 | `2*pi*100` | ≈ 0.85 |
+| 159 | `2*pi*159` | ≈ 0.707 |
+| 500 | `2*pi*500` | ≈ 0.30 |
+| 1000 | `2*pi*1000` | ≈ 0.16 |
+| 10000 | `2*pi*10000` | ≈ 0.016 |
+
+---
+
+### Simulate the High-Pass Filter
+
+To simulate Experiment 6, swap the Resistor and Capacitor positions in the model:
+
+- Voltage Source `+` → Capacitor → Resistor `+` → Electrical Reference
+- Move Voltage Sensor 2 to measure across the Resistor instead of the Capacitor
+
+Re-run at the same frequencies. The ratio should now increase with frequency instead of decreasing.
+
+---
+
+### Prediction Table
+
+| Frequency (Hz) | LP $V_{OUT}/V_{IN}$ (simulated) | HP $V_{OUT}/V_{IN}$ (simulated) |
+|---|---|---|
+| 10 | | |
+| 100 | | |
+| 159 | | |
+| 500 | | |
+| 1000 | | |
+| 10000 | | |
 
 ---
 
