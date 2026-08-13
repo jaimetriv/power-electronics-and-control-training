@@ -1,4 +1,4 @@
-# Project 06 - DC-AC Inverters and AC Generation
+# Project 10 - DC-AC Inverters and AC Generation
 
 ### Prerequisites
 

@@ -230,19 +230,19 @@ File:
 
 ## Project 5
 
-### PWM Motor Control
+### DC Chopper Converters
 
 Concepts:
 
-- DC Motors
-- First-Order Systems
-- Motor Time Constants
-- Open Loop Speed Control
+- Chopper Operation
+- Average Voltage Control
+- Buck and Boost Relationships
+- DC Motor Drives
 
 File:
 
 ```text
-10_PWM_Motor_Control.md
+05_DC_Chopper_Converters.md
 ```
 
 ---
@@ -706,7 +706,19 @@ After completing all projects you should be capable of:
 
 04_MOSFET_Fundamentals.md
 
-10_PWM_Motor_Control.md
+05_DC_Chopper_Converters.md
+
+06_Buck_Converter.md
+
+07_Boost_Converter.md
+
+08_PWM_Motor_Control.md
+
+09_AC_DC_Rectifiers.md
+
+10_DC_AC_Inverters.md
+
+11_System_Identification.md
 
 12_P_Controller.md
 
@@ -714,19 +726,7 @@ After completing all projects you should be capable of:
 
 14_PID_Controller.md
 
-08_Buck_Converter.md
-
 15_Closed_Loop_Buck.md
-
-09_Boost_Converter.md
-
-07_DC_Chopper_Converters.md
-
-05_AC_DC_Rectifiers.md
-
-06_DC_AC_Inverters.md
-
-11_System_Identification.md
 
 16_Controller_Design.md
 

@@ -10,6 +10,9 @@ Complete:
 - 02_RC_Circuits.md
 - 03_RLC_Circuits.md
 - 04_MOSFET_Fundamentals.md
+- 05_DC_Chopper_Converters.md
+- 06_Buck_Converter.md
+- 07_Boost_Converter.md
 
 ---
 

@@ -244,7 +244,7 @@ plot(D, Vout_ideal, 'b', 'LineWidth', 2); hold on;
 scatter(D_exp, Vout_exp, 80, 'r', 'filled', 'DisplayName', 'Experiment points');
 grid on;
 xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
-title('Ideal Buck Converter - V_{IN} = 5V');
+title('Ideal Buck Converter - V_{IN} = 3.3V');
 legend('Ideal V_{OUT} = D \cdot V_{IN}', 'Experiment points', 'Location', 'northwest');
 ```
 

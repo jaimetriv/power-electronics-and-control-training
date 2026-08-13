@@ -161,18 +161,18 @@ Where:
 
 ### Example 1
 
-$V_{IN} = 5\ \text{V}$, $D = 0.5$:
+$V_{IN} = 3.3\ \text{V}$, $D = 0.5$:
 
 $$
-V_{OUT} = \frac{5}{1 - 0.5} = 10\ \text{V}
+V_{OUT} = \frac{3.3}{1 - 0.5} = 6.6\ \text{V}
 $$
 
 ### Example 2
 
-$V_{IN} = 5\ \text{V}$, $D = 0.75$:
+$V_{IN} = 3.3\ \text{V}$, $D = 0.75$:
 
 $$
-V_{OUT} = \frac{5}{1 - 0.75} = 20\ \text{V}
+V_{OUT} = \frac{3.3}{1 - 0.75} = 13.2\ \text{V}
 $$
 
 ---
@@ -211,7 +211,7 @@ xline(0.75, 'r--', 'Max safe D for 5V in / 20V out');
 yline(20, 'k:', '20V practical limit');
 grid on;
 xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
-title('Ideal Boost Converter - V_{IN} = 5V');
+title('Ideal Boost Converter - V_{IN} = 3.3V');
 legend('Ideal V_{OUT}', 'Experiment points', 'Location', 'northwest');
 ylim([0 30]);
 ```
@@ -251,7 +251,7 @@ yline(Iavg*1e3, 'r--', sprintf('I_{avg} = %.0f mA', Iavg*1e3));
 | 128 | 50% | |
 | 192 | 75% | |
 
-> Note: At D = 75% the ideal equation predicts 20 V from a 5 V supply. Real output will be lower due to losses, but take care with your multimeter range.
+> Note: At D = 75% the ideal equation predicts 13.2 V from a 3.3 V supply. Real output will be lower due to losses, but take care with your multimeter range.
 
 ---
 

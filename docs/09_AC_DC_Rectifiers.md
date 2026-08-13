@@ -1,4 +1,4 @@
-# Project 05 - AC-DC Rectifiers and Power Supplies
+# Project 09 - AC-DC Rectifiers and Power Supplies
 
 ### Prerequisites
 
