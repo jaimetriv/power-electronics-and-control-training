@@ -278,54 +278,137 @@ Increase Kd if overshoot or oscillation is excessive.
 
 ---
 
-## MATLAB Simulation
+## Simulink Simulation
 
 Before building, use the motor model identified in Project 11 to predict how P, PI, and PID controllers will perform.
 
-```matlab
-% Motor model from Project 11 (replace with your identified values)
-K  = 1.0;
-tau = 0.5;
+This is a signal-only model — no Simscape electrical components are needed.
 
-s = tf('s');
-G = K / (tau*s + 1);
+---
 
-% Controller gains
-Kp = 3;   Ki = 4;   Kd = 0.05;
+### Step 1 — Create a new Simulink model
 
-Cp   = Kp;
-Cpi  = Kp + Ki/s;
-Cpid = Kp + Ki/s + Kd*s;
+1. In MATLAB, click **Home → New → Simulink Model**.
+2. Save as `controller_design.slx`.
 
-Tp   = feedback(Cp*G,   1);
-Tpi  = feedback(Cpi*G,  1);
-Tpid = feedback(Cpid*G, 1);
+---
 
-t = 0:0.01:3;
+### Step 2 — Add blocks
 
-% Step responses
-figure;
-subplot(2,1,1);
-[yp,  ~] = step(Tp,   t);
-[ypi, ~] = step(Tpi,  t);
-[ypid,~] = step(Tpid, t);
-plot(t, yp, 'b', t, ypi, 'r', t, ypid, 'g', 'LineWidth', 1.5);
-yline(1, 'k--');
-legend('P','PI','PID'); grid on;
-xlabel('Time (s)'); ylabel('Output');
-title(sprintf('Closed-Loop Step Response  K=%.2f  \\tau=%.2fs', K, tau));
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| Step | Simulink → Sources | 1 |
+| Sum | Simulink → Math Operations | 3 |
+| Gain | Simulink → Math Operations | 3 |
+| Integrator | Simulink → Continuous | 1 |
+| Derivative | Simulink → Continuous | 1 |
+| Transfer Fcn | Simulink → Continuous | 3 |
+| Scope | Simulink → Sinks | 1 |
 
-% Pole-zero map
-subplot(2,1,2);
-pzmap(Tp, Tpi, Tpid); grid on;
-legend('P','PI','PID');
-title('Pole-Zero Map');
+---
 
-% Print stepinfo metrics
-fprintf('\n--- P Controller ---\n');   disp(stepinfo(Tp));
-fprintf('--- PI Controller ---\n');  disp(stepinfo(Tpi));
-fprintf('--- PID Controller ---\n'); disp(stepinfo(Tpid));
+### Step 3 — Set block parameters
+
+Step block:
+
+| Parameter | Value |
+|-----------|-------|
+| Step time | `0` s |
+| Initial value | `0` |
+| Final value | `1` |
+
+All three Transfer Fcn blocks (motor plant `K/(τs+1)`):
+
+| Parameter | Value |
+|-----------|-------|
+| Numerator | `[1]` |
+| Denominator | `[0.5, 1]` |
+
+> Replace `0.5` with your measured τ from Project 11.
+
+Gain blocks:
+
+| Block | Gain | Purpose |
+|-------|------|---------|
+| Kp | `3` | Proportional |
+| Ki | `4` | Integral |
+| Kd | `0.05` | Derivative |
+
+All three Sum blocks (error junctions): signs `+-`
+
+---
+
+### Step 4 — Build three parallel closed loops
+
+Build one closed loop per controller type, each fed from the same Step block:
+
+**P loop:**
+
+```text
+Step → SumP (+−) → Kp Gain → Plant P → Scope input 1
+Plant P output → SumP (−) input
 ```
+
+**PI loop:**
+
+```text
+Step → SumPI (+−) → [Kp Gain + Ki Gain → Integrator] → Sum(++) → Plant PI → Scope input 2
+Plant PI output → SumPI (−) input
+```
+
+**PID loop:**
+
+```text
+Step → SumPID (+−) → [Kp + Ki→Integrator + Kd→Derivative] → Sum(+++) → Plant PID → Scope input 3
+Plant PID output → SumPID (−) input
+```
+
+> Each loop has its own Sum (error junction), its own plant Transfer Fcn, and its own feedback wire. The Step output is branched to all three error junctions.
+
+---
+
+### Step 5 — Configure the Scope
+
+1. Double-click the Scope.
+2. Click the **gear icon (Properties)**.
+3. On the **Inputs** tab set **Number of input ports** to `3`.
+4. On the **Display** tab set **Layout** to `3×1`.
+
+---
+
+### Step 6 — Wiring checklist
+
+✅ Step output branched to all three error Sum blocks
+
+✅ Each loop has its own Transfer Fcn with denominator `[0.5, 1]`
+
+✅ Each Transfer Fcn output fed back to its own error Sum (−) input
+
+✅ P loop: Kp Gain only between error Sum and plant
+
+✅ PI loop: Kp + Ki→Integrator combined in a `++` Sum before plant
+
+✅ PID loop: Kp + Ki→Integrator + Kd→Derivative combined in a `+++` Sum before plant
+
+✅ All three plant outputs connected to Scope inputs 1–3
+
+---
+
+### Step 7 — Configure simulation settings
+
+1. Open **Modeling → Model Settings**.
+2. Set **Solver** to `ode45`.
+3. Set **Stop time** to `3` s.
+
+---
+
+### Step 8 — Run and observe
+
+Click **Run**. The three-panel Scope should show:
+
+- Panel 1 (P): fast response, steady-state error present
+- Panel 2 (PI): error eliminated, possible overshoot
+- Panel 3 (PID): reduced overshoot compared to PI, good settling
 
 Record the predicted rise time, overshoot, and settling time for each controller before proceeding to the experiments.
 
@@ -575,6 +658,23 @@ What is the purpose of controller tuning?
 ### Question 6
 
 Your MATLAB simulation predicted zero steady-state error and 8% overshoot with a PI controller, but the physical motor showed 20% overshoot and a small residual error. List two physical effects that could explain each discrepancy, and describe how you would update the model to reduce the gap.
+
+---
+
+## Next Project
+
+```text
+17_Grid_Following_VSC.md
+```
+
+Topics:
+
+- Voltage Source Converters
+- Grid Synchronisation
+- Phase-Locked Loops
+- Current Control
+- Active and Reactive Power
+- Grid-Following Operation
 
 ---
 

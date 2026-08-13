@@ -56,7 +56,7 @@ At the end of this project you should be able to:
 
 ## Introduction
 
-In Project 08 the Buck Converter operated in open loop.
+In Project 06 the Buck Converter operated in open loop.
 
 The controller generated a fixed duty cycle and the output depended entirely on input voltage, component values, and load conditions.
 
@@ -136,58 +136,213 @@ Measure Output → Calculate Error → PI Controller → Adjust Duty Cycle → C
 
 ---
 
-## MATLAB Simulation
+## Simulink / Simscape Simulation
 
 Before building the circuit, simulate the closed-loop PI voltage regulator applied to the Buck Converter plant.
 
-### Buck Converter Plant Model
+You will build two models:
 
-```matlab
-L   = 100e-6;      % 100 uH
-C   = 100e-6;      % 100 uF
-R   = 100;         % assumed load resistance (Ohm)
-Vin = 5;           % supply voltage
+- **Model 1** — Open-loop Simscape Buck Converter (plant characterisation)
+- **Model 2** — Closed-loop PI regulator (signal-only Simulink using the identified plant transfer function)
 
-% Open-loop plant (LC filter)
-G = tf(1, [L*C, L/R, 1]);
+---
 
-% Voltage divider scales feedback by 0.5
-H = 0.5;
+### Model 1 — Open-Loop Buck Converter (Simscape)
 
-t = 0:0.0001:0.5;
+This model reuses the Buck Converter from Project 06. If you still have that model, open it and add a Voltage Sensor across the output capacitor. Otherwise build it fresh using the steps below.
 
-figure;
-[y_ol, ~] = step(Vin * G, t);
-plot(t*1e3, y_ol, 'k--', 'LineWidth', 2, 'DisplayName', 'Open-loop');
-hold on;
+#### Step 1 — Create a new Simulink model
+
+1. In MATLAB, click **Home → New → Simulink Model**.
+2. Save as `buck_open_loop.slx`.
+
+#### Step 2 — Add blocks
+
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| Controlled Voltage Source | Simscape → Electrical → Sources | 1 |
+| Ideal Switch | Simscape → Electrical → Switches & Breakers | 1 |
+| Diode | Simscape → Electrical → Semiconductors & Converters | 1 |
+| Inductor | Simscape → Electrical → Passives | 1 |
+| Capacitor | Simscape → Electrical → Passives | 1 |
+| Resistor | Simscape → Electrical → Passives | 1 |
+| Voltage Sensor | Simscape → Electrical → Sensors | 1 |
+| Electrical Reference | Simscape → Electrical → Electrical Elements | 1 |
+| Pulse Generator | Simulink → Sources | 1 |
+| PS-Simulink Converter | Simscape → Utilities | 1 |
+| Scope | Simulink → Sinks | 1 |
+| Solver Configuration | Simscape → Utilities | 1 |
+
+#### Step 3 — Set block parameters
+
+Controlled Voltage Source: `3.3` V (connect a Constant block set to `3.3` to its control input)
+
+Pulse Generator (switch drive):
+
+| Parameter | Value |
+|-----------|-------|
+| Amplitude | `1` |
+| Period | `0.002` s (500 Hz) |
+| Pulse width | `50` % |
+| Phase delay | `0` |
+
+Inductor: `100e-6` H
+
+Capacitor: `100e-6` F
+
+Resistor (load): `100` Ω
+
+Diode: Forward voltage `0.7` V, On resistance `0.01` Ω
+
+#### Step 4 — Wire the Buck circuit
+
+```text
+Voltage Source (+) → Ideal Switch (p)
+Ideal Switch (n) → Inductor (p)  [switch node]
+Switch node → Diode (cathode)
+Diode (anode) → Electrical Reference (GND)
+Inductor (n) → Capacitor (p) → Resistor (p)  [Vout node]
+Capacitor (n) → Resistor (n) → Electrical Reference
+Voltage Source (−) → Electrical Reference
 ```
 
-### Closed-Loop PI Response — Three Gain Sets
+Connect Voltage Sensor across the output:
 
-```matlab
-gain_sets = [2, 0.2; 10, 1.0; 50, 5.0];
-labels    = {'Kp=2  Ki=0.2', 'Kp=10 Ki=1', 'Kp=50 Ki=5'};
-
-for i = 1:3
-    Kp = gain_sets(i,1);
-    Ki = gain_sets(i,2);
-    C_pi = tf([Kp, Ki], [1, 0]);
-    T    = feedback(C_pi * G * Vin, H);
-    [y, ~] = step(T, t);
-    plot(t*1e3, y, 'LineWidth', 2, 'DisplayName', labels{i});
-end
-
-yline(2.5, 'r:', 'Reference 2.5V');
-grid on;
-xlabel('Time (ms)'); ylabel('Output Voltage (V)');
-title('Closed-Loop Buck Converter - PI Gain Comparison');
-legend('Location', 'southeast');
+```text
+Voltage Sensor (+) → Vout node
+Voltage Sensor (−) → Electrical Reference
 ```
+
+Connect Pulse Generator → Ideal Switch control input.
+
+Connect Solver Configuration to any node.
+
+Connect: `Voltage Sensor (V) → PS-Simulink Converter → Scope`
+
+#### Step 5 — Configure simulation settings
+
+1. Open **Modeling → Model Settings**.
+2. Set **Solver** to `ode23t`.
+3. Set **Stop time** to `0.05` s.
+4. Set **Max step size** to `1e-5`.
+
+#### Step 6 — Run and observe
+
+Click **Run**. The Scope should show Vout rising and settling to approximately:
+
+$$
+V_{OUT} = D \times V_{IN} = 0.5 \times 3.3 = 1.65\ \text{V}
+$$
+
+with switching ripple visible.
+
+---
+
+### Model 2 — Closed-Loop PI Regulator (Simulink)
+
+This model uses the LC filter transfer function as the plant and closes the loop with a PI controller in signal-only Simulink.
+
+#### Step 1 — Create a new Simulink model
+
+1. In MATLAB, click **Home → New → Simulink Model**.
+2. Save as `buck_closed_loop_pi.slx`.
+
+#### Step 2 — Add blocks
+
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| Step | Simulink → Sources | 1 |
+| Sum | Simulink → Math Operations | 2 |
+| Gain | Simulink → Math Operations | 3 |
+| Integrator | Simulink → Continuous | 1 |
+| Transfer Fcn | Simulink → Continuous | 1 |
+| Scope | Simulink → Sinks | 1 |
+
+#### Step 3 — Set block parameters
+
+Step block (reference voltage):
+
+| Parameter | Value |
+|-----------|-------|
+| Step time | `0` s |
+| Initial value | `0` |
+| Final value | `1.65` |
+
+Sum block 1 (error junction): signs `+-`
+
+Gain block 1 (Kp): `10`
+
+Gain block 2 (Ki): `1.0`
+
+Sum block 2 (PI sum): signs `++`
+
+Gain block 3 (Vin × plant scaling): `3.3`
+
+Transfer Fcn (LC filter plant `1/(LCs² + (L/R)s + 1)`):
+
+| Parameter | Value |
+|-----------|-------|
+| Numerator | `[1]` |
+| Denominator | `[1e-8, 1e-3, 1]` |
+
+> Denominator = `[L×C, L/R, 1]` = `[100e-6×100e-6, 100e-6/100, 1]` = `[1e-8, 1e-3, 1]`
+
+#### Step 4 — Wire the closed-loop
+
+```text
+Step → Sum1 (+) input
+Sum1 output → Kp Gain → Sum2 (+) input 1
+Sum1 output → Ki Gain → Integrator → Sum2 (+) input 2
+Sum2 output → Vin Gain → Transfer Fcn → Scope
+Transfer Fcn output → Sum1 (−) input   [feedback path]
+```
+
+#### Step 5 — Wiring checklist
+
+✅ Step output connected to Sum1 (+) input
+
+✅ Sum1 output branched to Kp Gain and Ki Gain
+
+✅ Ki Gain → Integrator → Sum2 input 2
+
+✅ Kp Gain → Sum2 input 1
+
+✅ Sum2 → Vin Gain → Transfer Fcn → Scope
+
+✅ Transfer Fcn output fed back to Sum1 (−) input
+
+✅ Sum1 signs `+-`, Sum2 signs `++`
+
+#### Step 6 — Configure simulation settings
+
+1. Open **Modeling → Model Settings**.
+2. Set **Solver** to `ode45`.
+3. Set **Stop time** to `0.5` s.
+
+#### Step 7 — Run for each gain set
+
+| Kp | Ki | Expected behaviour |
+|----|----|--------------------|
+| `2` | `0.2` | Slow response, minimal overshoot |
+| `10` | `1.0` | Balanced response |
+| `50` | `5.0` | Fast, possible overshoot |
+
+Change Kp and Ki Gain block values for each run.
+
+#### Step 8 — Wiring checklist before each run
+
+✅ Kp and Ki Gain block values updated
+
+✅ Feedback wire still connected to Sum1 (−) input
+
+✅ Scope showing Transfer Fcn output
+
+---
 
 ### Prediction Table
 
-| Kp | Ki | Predicted behaviour | Predicted ess |
-|----|----|--------------------|--------------:|
+| Kp | Ki | Predicted behaviour | Predicted e\_{ss} |
+|----|----|--------------------|-----------------:|
 | 2 | 0.2 | | |
 | 10 | 1 | | |
 | 50 | 5 | | |
@@ -708,7 +863,7 @@ In this project you learned:
 ## Next Project
 
 ```text
-07_Boost_Converter.md
+16_Controller_Design.md
 ```
 
 Topics:

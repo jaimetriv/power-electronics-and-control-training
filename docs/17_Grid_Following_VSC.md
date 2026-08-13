@@ -315,61 +315,171 @@ $$
 
 ---
 
-## MATLAB Simulation
+## Simulink Simulation
 
-Before building, simulate three key subsystems: PLL angle tracking, SPWM generation, and the PI current controller on an L-filter plant.
+Before building, simulate three key subsystems in Simulink: PLL angle tracking, SPWM generation, and the PI current controller on the L-filter plant.
 
-```matlab
-f_grid = 50;          % Hz
-Vm     = 5;           % V peak (signal generator level)
-L      = 1e-3;        % filter inductance (H)
-R      = 1;           % winding resistance (Ohm)
-I_ref  = 0.5;         % current reference (A)
-Kp_cc  = 2;           % current controller Kp
-Ki_cc  = 50;          % current controller Ki
-f_pwm  = 10000;       % PWM carrier frequency (Hz)
+All three are signal-only models — no Simscape electrical components are needed.
 
-t = 0:1e-5:0.1;
-theta = 2*pi*f_grid*t;
-v_grid = Vm * sin(theta);
+---
 
-% --- Subplot 1: PLL angle tracking ---
-figure;
-subplot(3,1,1);
-plot(t, theta - 2*pi*floor(theta/(2*pi)), 'b', 'LineWidth', 1.5);
-xlabel('Time (s)'); ylabel('\theta (rad)');
-title(sprintf('PLL Angle Tracking  f_{grid}=%d Hz', f_grid));
-grid on;
+### Model 1 — PLL Angle Tracking and SPWM
 
-% --- Subplot 2: SPWM carrier vs modulating signal ---
-subplot(3,1,2);
-carrier = 2*abs(mod(t, 1/f_pwm)/(1/f_pwm) - 0.5) - 0.5;
-mod_sig = sin(theta);
-plot(t(1:500), carrier(1:500), 'k', t(1:500), mod_sig(1:500), 'r', 'LineWidth', 1);
-legend('Carrier','Modulating'); grid on;
-xlabel('Time (s)'); ylabel('Amplitude');
-title(sprintf('SPWM  f_{pwm}=%d Hz', f_pwm));
+#### Step 1 — Create a new Simulink model
 
-% --- Subplot 3: PI current controller closed-loop step response ---
-subplot(3,1,3);
-s   = tf('s');
-G_L = 1 / (L*s + R);
-C   = Kp_cc + Ki_cc/s;
-T   = feedback(C*G_L, 1);
-[y, t2] = step(I_ref * T, 0:1e-5:0.05);
-plot(t2, y, 'b', 'LineWidth', 1.5); hold on;
-yline(I_ref, 'k--');
-xlabel('Time (s)'); ylabel('Current (A)');
-title(sprintf('PI Current Controller  Kp=%.1f Ki=%.0f  L=%.0fmH', Kp_cc, Ki_cc, L*1e3));
-grid on;
+1. In MATLAB, click **Home → New → Simulink Model**.
+2. Save as `gfl_pll_spwm.slx`.
 
-si = stepinfo(T);
-fprintf('Rise time:     %.4f s\n', si.RiseTime);
-fprintf('Overshoot:     %.1f %%\n', si.Overshoot);
-fprintf('Settling time: %.4f s\n', si.SettlingTime);
+#### Step 2 — Add blocks
+
+| Block | Library path | Quantity | Label |
+|-------|-------------|----------|-------|
+| Sine Wave | Simulink → Sources | 2 | `Grid Voltage`, `SPWM Carrier` |
+| Relational Operator | Simulink → Logic and Bit Operations | 1 | `SPWM` |
+| Scope | Simulink → Sinks | 1 | |
+
+#### Step 3 — Set Sine Wave (Grid Voltage) parameters
+
+| Parameter | Value |
+|-----------|-------|
+| Amplitude | `5` |
+| Frequency (rad/s) | `2*pi*50` |
+| Phase (rad) | `0` |
+
+#### Step 4 — Set Sine Wave (SPWM Carrier) parameters
+
+| Parameter | Value |
+|-----------|-------|
+| Amplitude | `1` |
+| Frequency (rad/s) | `2*pi*10000` |
+| Phase (rad) | `pi/2` |
+
+#### Step 5 — Set Relational Operator parameters
+
+| Parameter | Value |
+|-----------|-------|
+| Operator | `>` |
+| Output data type | `double` |
+
+#### Step 6 — Wire the model
+
+```text
+Grid Voltage → Scope input 1   [grid waveform]
+Grid Voltage → Relational Operator input 1
+SPWM Carrier → Relational Operator input 2
+Relational Operator output → Scope input 2   [SPWM pattern]
 ```
 
-Record the predicted current controller rise time and overshoot before running Experiment 4.
+#### Step 7 — Configure the Scope
+
+Set **Number of input ports** to `2`, **Layout** to `2×1`.
+
+#### Step 8 — Configure simulation settings
+
+| Parameter | Value |
+|-----------|-------|
+| Solver | `ode45` |
+| Stop time | `0.1` s |
+| Max step size | `1e-5` |
+
+#### Step 9 — Run and observe
+
+- Panel 1: 50 Hz sine wave (simulated grid)
+- Panel 2: SPWM pattern with varying pulse widths — narrow at zero crossings, wide at peaks
+
+---
+
+### Model 2 — PI Current Controller
+
+#### Step 1 — Create a new Simulink model
+
+1. In MATLAB, click **Home → New → Simulink Model**.
+2. Save as `gfl_current_control.slx`.
+
+#### Step 2 — Add blocks
+
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| Step | Simulink → Sources | 1 |
+| Sum | Simulink → Math Operations | 2 |
+| Gain | Simulink → Math Operations | 2 |
+| Integrator | Simulink → Continuous | 1 |
+| Transfer Fcn | Simulink → Continuous | 1 |
+| Scope | Simulink → Sinks | 1 |
+
+#### Step 3 — Set block parameters
+
+Step block (current reference):
+
+| Parameter | Value |
+|-----------|-------|
+| Step time | `0` s |
+| Final value | `0.5` |
+
+Gain block 1 (Kp): `2`
+
+Gain block 2 (Ki): `50`
+
+Sum block 1 (error junction): signs `+-`
+
+Sum block 2 (PI sum): signs `++`
+
+Transfer Fcn (L-filter plant `1/(Ls+R)`):
+
+| Parameter | Value |
+|-----------|-------|
+| Numerator | `[1]` |
+| Denominator | `[0.001, 1]` |
+
+> Denominator = `[L, R]` = `[1e-3, 1]`
+
+#### Step 4 — Wire the closed-loop
+
+```text
+Step → Sum1 (+) input
+Sum1 output → Kp Gain → Sum2 (+) input 1
+Sum1 output → Ki Gain → Integrator → Sum2 (+) input 2
+Sum2 output → Transfer Fcn → Scope
+Transfer Fcn output → Sum1 (−) input
+```
+
+#### Step 5 — Wiring checklist
+
+✅ Step output to Sum1 (+)
+
+✅ Sum1 output branched to Kp Gain and Ki Gain
+
+✅ Ki Gain → Integrator → Sum2 input 2
+
+✅ Kp Gain → Sum2 input 1
+
+✅ Sum2 → Transfer Fcn → Scope
+
+✅ Transfer Fcn output fed back to Sum1 (−)
+
+#### Step 6 — Configure simulation settings
+
+| Parameter | Value |
+|-----------|-------|
+| Solver | `ode45` |
+| Stop time | `0.05` s |
+
+#### Step 7 — Run and observe
+
+The Scope should show the current rising from 0 to 0.5 A with fast settling.
+
+Record the predicted rise time and overshoot before running Experiment 4.
+
+---
+
+### Prediction Table
+
+| Parameter | Predicted value |
+|-----------|-----------------|
+| Current controller rise time | |
+| Current controller overshoot (%) | |
+| SPWM carrier frequency (Hz) | 10 000 |
+| Grid frequency (Hz) | 50 |
 
 ---
 
@@ -655,6 +765,25 @@ Why is dq control useful?
 ### Question 6
 
 During Experiment 4 your measured current settling time was longer than the MATLAB simulation predicted. List two physical causes and explain how you would update the plant model $G(s) = 1/(Ls + R)$ to account for them.
+
+---
+
+---
+
+## Next Project
+
+```text
+18_Grid_Forming_VSC.md
+```
+
+Topics:
+
+- Grid-Forming Operation
+- Autonomous AC Generation
+- Voltage Regulation
+- Droop Control
+- Virtual Synchronous Machines
+- Microgrid Fundamentals
 
 ---
 

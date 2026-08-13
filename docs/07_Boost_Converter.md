@@ -1,4 +1,4 @@
-# Project 09 - Boost Converter Fundamentals
+# Project 07 - Boost Converter Fundamentals
 
 ### Prerequisites
 
@@ -72,7 +72,7 @@ Voltage conversion is achieved using PWM, MOSFET switching, and inductor energy 
 ## Circuit Diagram
 
 ```text
-5 V Supply
+3.3 V Supply
     │
    Inductor (100 µH)
     │
@@ -190,68 +190,231 @@ Actual output voltage is lower because of:
 
 ---
 
-## MATLAB Simulation
+## Simscape Simulation
 
-Before building the circuit, simulate the ideal Boost Converter characteristics to predict what you will measure.
+Before building the circuit, build a Simscape model to predict the output voltage and inductor current waveforms at each duty cycle.
 
-### Vout vs Duty Cycle — Nonlinear Gain
+---
 
-```matlab
-Vin = 3.3;
-D   = 0:0.001:0.95;
-Vout_ideal = Vin ./ (1 - D);
+### Step 1 — Create a New Simulink Model
 
-D_exp    = [0.25, 0.50, 0.75];
-Vout_exp = Vin ./ (1 - D_exp);
+1. In MATLAB, go to **Home** tab → click **Simulink**.
+2. Click **Blank Model**.
+3. Go to **File → Save** and name the file `Boost_Converter`.
 
-figure;
-plot(D, Vout_ideal, 'b', 'LineWidth', 2); hold on;
-scatter(D_exp, Vout_exp, 80, 'r', 'filled', 'DisplayName', 'Experiment points');
-xline(0.75, 'r--', 'Max safe D for 5V in / 20V out');
-yline(20, 'k:', '20V practical limit');
-grid on;
-xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
-title('Ideal Boost Converter - V_{IN} = 3.3V');
-legend('Ideal V_{OUT}', 'Experiment points', 'Location', 'northwest');
-ylim([0 30]);
+---
+
+### Step 2 — Open the Library Browser
+
+In the Simulink toolbar click **Library Browser** (book icon).
+
+You will use blocks from:
+
+- **Simscape → Foundation Library → Electrical → Electrical Sources**
+- **Simscape → Foundation Library → Electrical → Electrical Elements**
+- **Simscape → Foundation Library → Electrical → Electrical Sensors**
+- **Simscape → Utilities**
+- **Simulink → Sources**
+- **Simulink → Sinks**
+
+---
+
+### Step 3 — Add Blocks
+
+Drag the following blocks onto the canvas:
+
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| Pulse Generator | Simulink → Sources | 1 |
+| Controlled Voltage Source | Simscape → Foundation Library → Electrical → Electrical Sources | 1 |
+| Inductor | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
+| Ideal Switch | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
+| Diode | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
+| Capacitor | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
+| Resistor | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
+| Voltage Sensor | Simscape → Foundation Library → Electrical → Electrical Sensors | 1 |
+| Current Sensor | Simscape → Foundation Library → Electrical → Electrical Sensors | 1 |
+| Electrical Reference | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
+| PS-Simulink Converter | Simscape → Utilities | 2 |
+| Scope | Simulink → Sinks | 1 |
+| Solver Configuration | Simscape → Utilities | 1 |
+
+---
+
+### Step 4 — Configure the Pulse Generator
+
+Double-click the **Pulse Generator** and set:
+
+| Parameter | Value |
+|-----------|-------|
+| Amplitude | `1` |
+| Period | `0.002` |
+| Pulse Width | `50` (percent) |
+| Phase delay | `0` |
+
+This produces a 0–1 control signal at 500 Hz, 50% duty cycle.
+
+---
+
+### Step 5 — Configure the Controlled Voltage Source
+
+This represents the 3.3 V ESP32 supply. Set it to a fixed DC source — the switching is handled by the Ideal Switch, not the voltage source.
+
+Double-click and set:
+
+| Parameter | Value |
+|-----------|-------|
+| Constant voltage | `3.3` |
+
+Connect the Controlled Voltage Source input port to a **Constant** block (Simulink → Sources) set to `1`, so it outputs a steady 3.3 V.
+
+---
+
+### Step 6 — Configure the Inductor
+
+Double-click the **Inductor** and set:
+
+| Parameter | Value |
+|-----------|-------|
+| Inductance | `100e-6` |
+
+---
+
+### Step 7 — Configure the Capacitor
+
+Double-click the **Capacitor** and set:
+
+| Parameter | Value |
+|-----------|-------|
+| Capacitance | `100e-6` |
+
+---
+
+### Step 8 — Configure the Load Resistor
+
+Double-click the **Resistor** and set:
+
+| Parameter | Value |
+|-----------|-------|
+| Resistance | `470` |
+
+A higher load resistance is used here than in the Buck lab because the Boost output voltage is higher — 470 Ω keeps load current at a safe level.
+
+---
+
+### Step 9 — Wire the Circuit
+
+The Boost topology differs from the Buck — the inductor is on the input side and the switch connects the switch node to GND:
+
+```text
+Constant (1) → Controlled Voltage Source (input port)
+
+Controlled Voltage Source (+) → Current Sensor (+ port)
+Current Sensor (− port)       → Inductor (left port)        [input node]
+Inductor (right port)         → Ideal Switch (left port)    [switch node]
+Inductor (right port)         → Diode (+ port)              [switch node]
+Ideal Switch (right port)     → Electrical Reference
+Controlled Voltage Source (−) → Electrical Reference
+
+Diode (− port) → Capacitor (p port)    [Vout node]
+Diode (− port) → Resistor (left port)  [Vout node]
+Capacitor (n port)  → Electrical Reference
+Resistor (right port) → Electrical Reference
+
+Voltage Sensor (+ port) → Vout node
+Voltage Sensor (− port) → Electrical Reference
 ```
 
-### Simulate Inductor Current Waveform
+> Connect the **Pulse Generator** output to the **control port** of the Ideal Switch (the signal input on top of the block). When the pulse is HIGH the switch closes, shorting the switch node to GND and storing energy in the inductor. When the pulse is LOW the switch opens and the inductor forces current through the diode to charge the output capacitor.
 
-```matlab
-Vin  = 3.3;
-D    = 0.5;
-Vout = Vin / (1 - D);
-L    = 100e-6;
-fsw  = 500;
-Ts   = 1 / fsw;
-Iavg = 0.05;
+> The Current Sensor is placed in series on the input side (between the voltage source and the inductor) to measure inductor current.
 
-delta_iL = Vin * D * Ts / L;
+---
 
-t_on  = linspace(0,    D*Ts, 100);
-t_off = linspace(D*Ts, Ts,   100);
+### Step 10 — Connect the PS-Simulink Converters and Scope
 
-iL_on  = (Iavg - delta_iL/2) + Vin/L .* t_on;
-iL_off = (Iavg + delta_iL/2) - (Vout - Vin)/L .* (t_off - D*Ts);
+1. Connect **Voltage Sensor** output (V port) → **PS-Simulink Converter 1** → **Scope channel 1** (Vout).
+2. Connect **Current Sensor** output (I port) → **PS-Simulink Converter 2** → **Scope channel 2** (inductor current).
+3. Open the Scope, click the **gear icon (Properties)**, go to the **Inputs** tab and set the number of input ports to `2`.
 
-figure;
-plot([t_on, t_off]*1e3, [iL_on, iL_off]*1e3, 'b', 'LineWidth', 2);
-grid on;
-xlabel('Time (ms)'); ylabel('Inductor Current (mA)');
-title(sprintf('Boost Inductor Current - D=%.0f%%, L=%d\muH', D*100, L*1e6));
-yline(Iavg*1e3, 'r--', sprintf('I_{avg} = %.0f mA', Iavg*1e3));
-```
+---
+
+### Step 11 — Connect the Solver Configuration
+
+Drag the **Solver Configuration** block onto the canvas and connect its port to any wire in the Simscape network (e.g. the Vout node).
+
+---
+
+### Step 12 — Simulation Settings
+
+Go to **Modeling → Model Settings** (or press **Ctrl+E**).
+
+Under **Solver**:
+
+| Setting | Value |
+|---------|-------|
+| Stop time | `0.04` |
+| Type | Variable-step |
+| Solver | `ode23t` |
+| Max step size | `1e-6` |
+
+Click **OK**.
+
+---
+
+### Step 13 — Run and Observe
+
+Click **Run**. Open the Scope.
+
+Channel 1 (Vout) should rise above 3.3 V and settle toward $V_{IN}/(1-D)$. At 50% duty cycle expect approximately 6.6 V.
+
+Channel 2 (inductor current) should show a triangular ripple waveform — note the slope is steeper during the ON phase (energy storing) than the OFF phase (energy releasing), which is the opposite shape to the Buck converter.
+
+---
+
+### Step 14 — Vary the Duty Cycle
+
+Change the **Pulse Width** in the Pulse Generator and re-run for each experiment point:
+
+| Pulse Width (%) | Duty Cycle | Expected $V_{OUT}$ |
+|-----------------|------------|--------------------|
+| 25 | 25% | 4.4 V |
+| 50 | 50% | 6.6 V |
+| 75 | 75% | 13.2 V |
+
+---
+
+### Wiring Checklist
+
+✅ Pulse Generator output → Ideal Switch control port
+
+✅ Constant (1) → Controlled Voltage Source input
+
+✅ Series input path: Voltage Source (+) → Current Sensor → Inductor → switch node
+
+✅ Ideal Switch: left port at switch node, right port at Electrical Reference
+
+✅ Diode: (+) at switch node, (−) at Vout node
+
+✅ Capacitor and Resistor both from Vout node to Electrical Reference
+
+✅ Voltage Sensor across Vout node and Electrical Reference
+
+✅ Both PS-Simulink Converters feeding a two-channel Scope
+
+✅ Solver Configuration connected to the physical network
+
+✅ Stop time = 0.04, Solver = ode23t, Max step = 1e-6
+
+---
 
 ### Prediction Table
 
-| PWM Value | Duty Cycle | Predicted V\_{OUT} (V) |
-|-----------|------------|------------------------|
+| PWM Value | Duty Cycle | Predicted $V_{OUT}$ (V) |
+|-----------|------------|-------------------------|
 | 64 | 25% | |
 | 128 | 50% | |
 | 192 | 75% | |
-
-> Note: At D = 75% the ideal equation predicts 13.2 V from a 3.3 V supply. Real output will be lower due to losses, but take care with your multimeter range.
 
 ---
 
@@ -271,7 +434,7 @@ yline(Iavg*1e3, 'r--', sprintf('I_{avg} = %.0f mA', Iavg*1e3));
 
 ## Safety Notice
 
-Begin with a 5 V input supply and low power loads.
+Begin with the **ESP32 3.3 V supply** as the converter input.
 
 If using ESP32 gate drive (~3.3 V), use a logic-level MOSFET with low $R_{DS(on)}$ specified at low $V_{GS}$, or use a gate driver.
 
@@ -365,26 +528,56 @@ Build the full converter circuit and observe how duty cycle controls output volt
 
 ---
 
+### Breadboard Layout
+
+```
+       a      b      c      d      e
+     ┌─────────────────────────────────────┐
+ 2   │ [●]   [ ]   [ ]   [ ]   [ ]       │ ← 3.3V → a2
+ 3   │ [ ]   [ ]   [ ]   [●]   [ ]       │ ← MOSFET Gate d3
+ 4   │ [ ]   [┐]   [ ]   [●]   [ ]       │ ← Gate res top b4, MOSFET Drain d4
+ 5   │ [●]   [┘]   [ ]   [●]   [ ]       │ ← GPIO18 → a5, Gate res bottom b5 (jumper b5→d3), MOSFET Source d5
+ 6   │ [●]   [ ]   [ ]   [ ]   [ ]       │ ← GND → a6 = MOSFET Source row (jumper a6→d5)
+ 7   │ [ ]   [ ]   [ ]   [ ]   [┐]       │ ← Inductor top e7 = 3.3V input (jumper a2→e7)
+ 8   │ [ ]   [ ]   [ ]   [ ]   [│]       │  100 µH inductor body
+ 9   │ [ ]   [ ]   [A]   [ ]   [┘]       │ ← Inductor bottom e9 = switch node = Diode anode c9  (same row)
+10   │ [ ]   [ ]   [│]   [ ]   [ ]       │  1N5819 diode body
+11   │ [ ]   [ ]   [K]   [ ]   [▲]       │ ← Diode cathode c11 = Cap+ e11 = Vout  (same row)
+12   │ [ ]   [ ]   [ ]   [ ]   [│]       │  100 µF cap body
+13   │ [●]   [ ]   [ ]   [ ]   [▼]       │ ← GND → a13, Cap− e13 → GND
+     └─────────────────────────────────────┘
+```
+
+`[A]` = diode anode (unmarked end); `[K]` = diode cathode (banded end).
+
+Row connections (same row = internally linked):
+- Row 9: `e9` (inductor bottom) and `c9` (diode anode) — this is the switch node
+- Row 11: `c11` (diode cathode) and `e11` (cap positive) — this is the Vout node
+
+---
+
 ### Step-by-Step Wiring
 
-1. Insert the **IRLZ44N MOSFET** into the breadboard. Identify Gate (G), Drain (D), and Source (S) from the pinout (see Project 04).
-2. Connect a jumper wire from **ESP32 GND** to the **MOSFET Source** row.
-3. Insert the **220 Ω gate resistor** so one leg is in the **Gate** row and the other is in a new row.
-4. Connect a jumper wire from **ESP32 GPIO18** to the top of the gate resistor.
-5. Insert the **100 µH inductor** so one leg connects to the **ESP32 3.3V supply** and the other leg connects to the **MOSFET Drain** row. This junction is the switch node.
-6. Insert the **1N5819 diode** so its **anode** is in the switch node row and its **cathode (banded end)** is in a new row toward the output. This is the output diode.
-7. Insert the **100 µF capacitor** so its **positive leg** is in the same row as the diode cathode (Vout) and its **negative leg** is in the GND row.
-8. Hook the **CH1 probe tip** to the Vout node (diode cathode / capacitor positive).
-9. Clip the **CH1 probe ground** to any **GND pin** on the ESP32.
+1. Insert the **IRLZ44N MOSFET**: **Gate** at **row 3, col d**, **Drain** at **row 4, col d**, **Source** at **row 5, col d**. Verify G-D-S order from the pinout (Project 04).
+2. Connect a jumper wire from **ESP32 GND** to **row 6, col a**, then a short jumper from **row 6, col a** to **row 5, col d** (MOSFET Source).
+3. Insert the **220 Ω gate resistor**: one leg in **row 4, col b**, other in **row 5, col b**. Connect **row 5, col b** to **row 3, col d** (MOSFET Gate) with a short jumper.
+4. Connect a jumper wire from **ESP32 GPIO18** to **row 5, col a** (same row as gate resistor bottom).
+5. Insert the **100 µH inductor**: one leg in **row 7, col e**, other in **row 9, col e** (switch node). Connect **row 2, col a** (3.3V) to **row 7, col e** (inductor top) with a jumper.
+6. Connect a short jumper from **row 4, col d** (MOSFET Drain) to **row 9, col e** (switch node) — the MOSFET Drain connects to the switch node.
+7. Insert the **1N5819 diode**: **anode** (unmarked end) in **row 9, col c** (switch node, same row as inductor bottom), **cathode** (banded end) in **row 11, col c** (Vout).
+8. Insert the **100 µF capacitor**: **positive leg** in **row 11, col e** (same row as diode cathode = Vout), **negative leg** in **row 13, col e**.
+9. Connect a jumper wire from **row 13, col e** to **row 13, col a** (GND).
+10. Hook the **CH1 probe tip** to **row 11** (Vout junction). Clip the **CH1 probe ground** to any **GND pin** on the ESP32.
 
 The signal path will be:
 
 ```text
-5V → Inductor → Switch Node → Diode (anode) → Diode (cathode) → Vout
-                     │
-                   MOSFET
-                     │
-                    GND
+3.3V → Inductor → Switch Node → Diode (anode) → Diode (cathode) → Vout
+                       │
+                   MOSFET Drain
+                   MOSFET Source
+                       │
+                      GND
 ```
 
 ---
@@ -395,7 +588,7 @@ Before uploading:
 
 ✅ MOSFET Source connected to GND
 
-✅ Inductor between 5V supply and MOSFET Drain (switch node)
+✅ Inductor between 3.3V supply and switch node (MOSFET Drain)
 
 ✅ Diode anode at switch node, cathode toward Vout
 
@@ -517,7 +710,7 @@ Ripple occurs because the capacitor continuously charges and discharges.
 
 ## MATLAB Comparison
 
-Overlay your measured output voltages against the ideal Boost Converter curve and compare with the Buck Converter results from Project 08.
+Overlay your measured output voltages against the ideal Boost Converter curve and compare with the Buck Converter results from Project 06.
 
 ```matlab
 Vin = 3.3;
@@ -574,7 +767,7 @@ ylim([0 20]);
 
 - Is the measured Vout lower than ideal at all three duty cycles? Which duty cycle shows the largest absolute error?
 - The Boost conversion ratio $M = V_{OUT}/V_{IN}$ becomes very sensitive to D near D = 1. Why is this a practical problem for control?
-- How does the inductor current waveform shape differ between the Buck (Project 08) and Boost converters?
+- How does the inductor current waveform shape differ between the Buck (Project 06) and Boost converters?
 
 ---
 
@@ -666,7 +859,7 @@ What happens when duty cycle increases?
 
 ### Question 6
 
-The ideal Boost equation predicts Vout = 20 V at D = 0.75 with Vin = 5 V. Your measured value was lower. Apart from component losses, explain why the nonlinear gain curve makes the Boost Converter harder to control at high duty cycles than the Buck Converter.
+The ideal Boost equation predicts Vout = 13.2 V at D = 0.75 with Vin = 3.3 V. Your measured value was lower. Apart from component losses, explain why the nonlinear gain curve makes the Boost Converter harder to control at high duty cycles than the Buck Converter.
 
 ---
 

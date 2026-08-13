@@ -329,72 +329,276 @@ Ripple decreases when capacitance increases, load current decreases, or ripple f
 
 ---
 
-## MATLAB Simulation
+## Simulink / Simscape Simulation
 
-Before building the circuit, simulate all four rectifier configurations to predict the waveforms you will observe on the oscilloscope.
+Before building the circuit, simulate all four rectifier configurations in Simscape to predict the waveforms you will observe on the oscilloscope.
 
-### Simulate All Four Configurations
+You will build two models:
 
-```matlab
-Vpeak = 10;          % set to match your signal generator output (V)
-f     = 50;          % frequency (Hz)
-R     = 1000;        % load resistance (Ohm)
-t     = 0:0.0001:0.1;
+- **Model 1** — Half-wave rectifier (one diode)
+- **Model 2** — Bridge rectifier with optional smoothing capacitor
 
-v_ac       = Vpeak * sin(2*pi*f*t);
-v_hw       = max(v_ac, 0);           % half-wave
-v_fw       = abs(v_ac);              % full-wave
+---
 
-% RC smoothing: simulate capacitor discharge between peaks
-dt = t(2) - t(1);
-C1 = 100e-6; C2 = 470e-6;
+### Model 1 — Half-Wave Rectifier
 
-v_fw_100 = zeros(size(v_fw)); v_fw_100(1) = v_fw(1);
-v_fw_470 = zeros(size(v_fw)); v_fw_470(1) = v_fw(1);
-for i = 2:length(t)
-    v_fw_100(i) = max(v_fw(i), v_fw_100(i-1) * exp(-dt / (R*C1)));
-    v_fw_470(i) = max(v_fw(i), v_fw_470(i-1) * exp(-dt / (R*C2)));
-end
+#### Step 1 — Create a new Simulink model
 
-configs = {v_hw, v_fw, v_fw_100, v_fw_470};
-titles  = {'Half-Wave', 'Full-Wave (no cap)', ...
-           'Full-Wave + 100\muF', 'Full-Wave + 470\muF'};
+1. In MATLAB, click **Home → New → Simulink Model**.
+2. Save as `half_wave_rectifier.slx`.
 
-figure;
-for i = 1:4
-    subplot(4,1,i);
-    plot(t*1e3, configs{i}, 'b', 'LineWidth', 1.5); hold on;
-    yline(mean(configs{i}), 'r--', sprintf('V_{avg}=%.2fV', mean(configs{i})));
-    ripple = max(configs{i}) - min(configs{i});
-    grid on; ylim([-1, Vpeak+2]);
-    ylabel('V (V)');
-    title(sprintf('%s  |  Ripple=%.2fV', titles{i}, ripple));
-end
-xlabel('Time (ms)');
-sgtitle(sprintf('Rectifier Configurations - V_{peak}=%.0fV, f=%dHz', Vpeak, f));
+#### Step 2 — Add blocks
+
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| AC Voltage Source | Simscape → Electrical → Sources | 1 |
+| Diode | Simscape → Electrical → Semiconductors & Converters | 1 |
+| Resistor | Simscape → Electrical → Passives | 1 |
+| Voltage Sensor | Simscape → Electrical → Sensors | 1 |
+| Electrical Reference | Simscape → Electrical → Electrical Elements | 1 |
+| PS-Simulink Converter | Simscape → Utilities | 1 |
+| Scope | Simulink → Sinks | 1 |
+| Solver Configuration | Simscape → Utilities | 1 |
+
+#### Step 3 — Set AC Voltage Source parameters
+
+Double-click the AC Voltage Source block:
+
+| Parameter | Value |
+|-----------|-------|
+| Peak amplitude | `10` V |
+| Phase shift | `0` deg |
+| Frequency | `50` Hz |
+| DC offset | `0` V |
+
+#### Step 4 — Set Diode parameters
+
+Double-click the Diode block:
+
+| Parameter | Value |
+|-----------|-------|
+| Forward voltage | `0.7` V |
+| On resistance | `0.01` Ω |
+
+#### Step 5 — Set Resistor parameter
+
+| Parameter | Value |
+|-----------|-------|
+| Resistance | `1000` Ω |
+
+#### Step 6 — Wire the half-wave circuit
+
+Connect in series:
+
+```text
+AC Voltage Source (+) → Diode (+) → Diode (−) → Resistor (p)
+Resistor (n) → AC Voltage Source (−) → Electrical Reference
 ```
 
-### Calculate Theoretical Values
+Connect the Voltage Sensor across the Resistor:
+
+```text
+Voltage Sensor (+) → Resistor (p)
+Voltage Sensor (−) → Resistor (n)
+```
+
+Connect the Solver Configuration to any node.
+
+Connect: `Voltage Sensor (V) → PS-Simulink Converter → Scope`
+
+#### Step 7 — Wiring checklist
+
+✅ AC Voltage Source (+) to Diode anode (+)
+
+✅ Diode cathode (−) to Resistor (p)
+
+✅ Resistor (n) to AC Voltage Source (−) and Electrical Reference
+
+✅ Voltage Sensor across Resistor
+
+✅ Solver Configuration connected to any node
+
+✅ PS-Simulink Converter between Voltage Sensor output and Scope
+
+#### Step 8 — Configure simulation settings
+
+1. Open **Modeling → Model Settings**.
+2. Set **Solver** to `ode23t`.
+3. Set **Stop time** to `0.1` s.
+4. Set **Max step size** to `1e-4`.
+
+#### Step 9 — Run and observe
+
+Click **Run**. The Scope should show:
+
+```text
+      /\      /\
+     /  \    /  \
+____/    \__/    \____
+```
+
+Only positive half-cycles appear. Negative half-cycles are blocked by the diode.
+
+---
+
+### Model 2 — Bridge Rectifier with Smoothing Capacitor
+
+#### Step 1 — Create a new Simulink model
+
+1. In MATLAB, click **Home → New → Simulink Model**.
+2. Save as `bridge_rectifier.slx`.
+
+#### Step 2 — Add blocks
+
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| AC Voltage Source | Simscape → Electrical → Sources | 1 |
+| Diode | Simscape → Electrical → Semiconductors & Converters | 4 |
+| Resistor | Simscape → Electrical → Passives | 1 |
+| Capacitor | Simscape → Electrical → Passives | 1 |
+| Voltage Sensor | Simscape → Electrical → Sensors | 1 |
+| Electrical Reference | Simscape → Electrical → Electrical Elements | 1 |
+| PS-Simulink Converter | Simscape → Utilities | 1 |
+| Scope | Simulink → Sinks | 1 |
+| Solver Configuration | Simscape → Utilities | 1 |
+
+#### Step 3 — Set block parameters
+
+AC Voltage Source:
+
+| Parameter | Value |
+|-----------|-------|
+| Peak amplitude | `10` V |
+| Frequency | `50` Hz |
+| Phase shift | `0` deg |
+| DC offset | `0` V |
+
+All four Diodes:
+
+| Parameter | Value |
+|-----------|-------|
+| Forward voltage | `0.7` V |
+| On resistance | `0.01` Ω |
+
+Resistor: `1000` Ω
+
+Capacitor: `100e-6` F (change to `470e-6` for the second test)
+
+#### Step 4 — Wire the bridge circuit
+
+Label four nodes for clarity: **AC+**, **AC−**, **DC+**, **DC−**.
+
+```text
+AC Voltage Source (+) → AC+ node
+AC Voltage Source (−) → AC− node
+
+D1: anode → AC+,  cathode → DC+
+D2: anode → AC−,  cathode → DC+
+D3: anode → DC−,  cathode → AC+
+D4: anode → DC−,  cathode → AC−
+
+Resistor (p) → DC+
+Resistor (n) → DC−
+
+Capacitor (p) → DC+
+Capacitor (n) → DC−
+
+Electrical Reference → DC−
+```
+
+Connect the Voltage Sensor across the load:
+
+```text
+Voltage Sensor (+) → DC+
+Voltage Sensor (−) → DC−
+```
+
+Connect the Solver Configuration to any node.
+
+Connect: `Voltage Sensor (V) → PS-Simulink Converter → Scope`
+
+#### Step 5 — Wiring checklist
+
+✅ D1 anode at AC+, cathode at DC+
+
+✅ D2 anode at AC−, cathode at DC+
+
+✅ D3 anode at DC−, cathode at AC+
+
+✅ D4 anode at DC−, cathode at AC−
+
+✅ Resistor between DC+ and DC−
+
+✅ Capacitor between DC+ and DC− (observe polarity: p → DC+)
+
+✅ Electrical Reference at DC−
+
+✅ Voltage Sensor across DC+ / DC−
+
+✅ Solver Configuration connected to any node
+
+#### Step 6 — Configure simulation settings
+
+1. Open **Modeling → Model Settings**.
+2. Set **Solver** to `ode23t`.
+3. Set **Stop time** to `0.1` s.
+4. Set **Max step size** to `1e-4`.
+
+#### Step 7 — Run: full-wave without capacitor
+
+Set Capacitor value to a very small value (`1e-9` F) to effectively remove it, then run.
+
+Expected output:
+
+```text
+     /\      /\      /\
+    /  \    /  \    /  \
+___/    \__/    \__/    \___
+```
+
+Both half-cycles appear, rectified to positive. Ripple frequency = 100 Hz (twice the input).
+
+#### Step 8 — Run: full-wave with 100 µF capacitor
+
+Set Capacitor to `100e-6` F and run.
+
+Expected output: smoother waveform with reduced ripple.
+
+#### Step 9 — Run: full-wave with 470 µF capacitor
+
+Set Capacitor to `470e-6` F and run.
+
+Expected output: further reduced ripple compared to 100 µF.
+
+---
+
+### Prediction Table
+
+Run the MATLAB script below to calculate theoretical values, then complete the table before doing the hardware experiments.
 
 ```matlab
 Vpeak = 10;
 Vf    = 0.7;          % diode forward voltage drop
+f     = 50;
+R     = 1000;
 
-V_hw_avg  = (Vpeak - Vf) / pi;
-V_fw_avg  = 2*(Vpeak - 2*Vf) / pi;   % bridge: two diodes in series
-V_rms_ac  = Vpeak / sqrt(2);
+V_hw_avg = (Vpeak - Vf) / pi;
+V_fw_avg = 2*(Vpeak - 2*Vf) / pi;   % bridge: two diodes in series
 
-fprintf('AC RMS voltage:          %.2f V\n', V_rms_ac);
-fprintf('Half-wave average Vdc:   %.2f V\n', V_hw_avg);
-fprintf('Full-wave average Vdc:   %.2f V\n', V_fw_avg);
+C1 = 100e-6; C2 = 470e-6;
+Vripple_100 = (Vpeak - 2*Vf) / (2*f*R*C1);
+Vripple_470 = (Vpeak - 2*Vf) / (2*f*R*C2);
+
+fprintf('Half-wave Vavg:          %.2f V\n', V_hw_avg);
+fprintf('Full-wave Vavg:          %.2f V\n', V_fw_avg);
+fprintf('Ripple with 100 uF:      %.2f V\n', Vripple_100);
+fprintf('Ripple with 470 uF:      %.2f V\n', Vripple_470);
 ```
-
-### Prediction Table
 
 Set the OWON HDS272S waveform generator to: **10 Vpeak, 50 Hz, sine wave**
 
-| Configuration | Predicted V\_{avg} (V) | Predicted ripple |
-|---------------|----------------------|-----------------|
+| Configuration | Predicted V\_{avg} (V) | Predicted ripple (V) |
+|---------------|----------------------|---------------------|
 | Half-wave | | |
 | Full-wave | | |
 | Full-wave + 100 µF | | |
@@ -928,7 +1132,7 @@ In this project you learned:
 ## Next Project
 
 ```text
-06_DC_AC_Inverters.md
+10_DC_AC_Inverters.md
 ```
 
 

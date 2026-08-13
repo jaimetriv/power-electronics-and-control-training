@@ -420,70 +420,171 @@ Benefits:
 
 ---
 
-## MATLAB Simulation
+## Simulink Simulation
 
-Before building, simulate the LC filter response, the PI voltage controller, and the droop characteristic to predict hardware behaviour.
+Before building, simulate the LC filter response, the PI voltage controller step response, and the droop characteristic in Simulink.
 
-```matlab
-% System parameters
-Vm     = 5;       % desired peak output voltage (V)
-f_grid = 50;      % Hz
-L      = 1e-3;    % filter inductance (H)
-C      = 1e-6;    % filter capacitance (F)
-R_load = 220;     % load resistance (Ohm)
-Kp_v   = 3;       % voltage controller Kp
-Ki_v   = 100;     % voltage controller Ki
+All three are signal-only models — no Simscape electrical components are needed.
 
-s = tf('s');
+---
 
-% LC filter plant (voltage across C with load)
-G_lc = R_load / (L*C*R_load*s^2 + L*s + R_load);
+### Model 1 — PI Voltage Controller
 
-% PI voltage controller
-C_pi = Kp_v + Ki_v/s;
-T_v  = feedback(C_pi * G_lc, 1);
+#### Step 1 — Create a new Simulink model
 
-t = 0:1e-5:0.05;
+1. In MATLAB, click **Home → New → Simulink Model**.
+2. Save as `gfm_voltage_control.slx`.
 
-figure;
+#### Step 2 — Add blocks
 
-% --- Subplot 1: LC filter Bode plot ---
-subplot(3,1,1);
-bode(G_lc); grid on;
-title(sprintf('LC Filter Bode  L=%.0fmH  C=%.0f\muF  R_{load}=%.0f\Omega', ...
-    L*1e3, C*1e6, R_load));
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| Step | Simulink → Sources | 1 |
+| Sum | Simulink → Math Operations | 2 |
+| Gain | Simulink → Math Operations | 2 |
+| Integrator | Simulink → Continuous | 1 |
+| Transfer Fcn | Simulink → Continuous | 1 |
+| Scope | Simulink → Sinks | 1 |
 
-% --- Subplot 2: PI voltage controller step response ---
-subplot(3,1,2);
-[y, ~] = step(Vm * T_v, t);
-plot(t, y, 'b', 'LineWidth', 1.5); hold on;
-yline(Vm, 'k--');
-xlabel('Time (s)'); ylabel('Voltage (V)');
-title(sprintf('PI Voltage Controller  Kp=%.0f Ki=%.0f', Kp_v, Ki_v));
-grid on;
+#### Step 3 — Set block parameters
 
-si = stepinfo(T_v);
-fprintf('Rise time:     %.4f s\n', si.RiseTime);
-fprintf('Overshoot:     %.1f %%\n', si.Overshoot);
-fprintf('Settling time: %.4f s\n', si.SettlingTime);
+Step block (voltage reference):
 
-% --- Subplot 3: frequency droop for two inverters ---
-subplot(3,1,3);
-P = 0:0.1:10;
-f0 = 50;  Kd1 = 0.1;  Kd2 = 0.2;
-plot(P, f0 - Kd1*P, 'b', P, f0 - Kd2*P, 'r--', 'LineWidth', 1.5);
-legend(sprintf('Inverter 1  K_d=%.1f', Kd1), sprintf('Inverter 2  K_d=%.1f', Kd2));
-xlabel('Active Power (W)'); ylabel('Frequency (Hz)');
-title('Frequency Droop Characteristic'); grid on;
+| Parameter | Value |
+|-----------|-------|
+| Step time | `0` s |
+| Final value | `5` |
 
-% Natural frequency and damping of LC filter
-wn = 1/sqrt(L*C);
-zeta = 1/(2*R_load) * sqrt(L/C);
-fprintf('\nLC filter natural frequency: %.1f Hz\n', wn/(2*pi));
-fprintf('LC filter damping ratio:     %.3f\n', zeta);
+Gain block 1 (Kp): `3`
+
+Gain block 2 (Ki): `100`
+
+Sum block 1 (error junction): signs `+-`
+
+Sum block 2 (PI sum): signs `++`
+
+Transfer Fcn (LC filter with load `R/(LCRs² + Ls + R)`):
+
+| Parameter | Value |
+|-----------|-------|
+| Numerator | `[220]` |
+| Denominator | `[2.2e-7, 1e-3, 220]` |
+
+> Numerator = R\_load = 220. Denominator = `[L×C×R, L, R]` = `[1e-3×1e-6×220, 1e-3, 220]` = `[2.2e-7, 1e-3, 220]`
+
+#### Step 4 — Wire the closed-loop
+
+```text
+Step → Sum1 (+) input
+Sum1 output → Kp Gain → Sum2 (+) input 1
+Sum1 output → Ki Gain → Integrator → Sum2 (+) input 2
+Sum2 output → Transfer Fcn → Scope
+Transfer Fcn output → Sum1 (−) input
 ```
 
-Record the predicted rise time, overshoot, and LC natural frequency before proceeding to the experiments.
+#### Step 5 — Wiring checklist
+
+✅ Step output to Sum1 (+)
+
+✅ Sum1 output branched to Kp Gain and Ki Gain
+
+✅ Ki Gain → Integrator → Sum2 input 2
+
+✅ Kp Gain → Sum2 input 1
+
+✅ Sum2 → Transfer Fcn → Scope
+
+✅ Transfer Fcn output fed back to Sum1 (−)
+
+#### Step 6 — Configure simulation settings
+
+| Parameter | Value |
+|-----------|-------|
+| Solver | `ode45` |
+| Stop time | `0.05` s |
+
+#### Step 7 — Run for each gain set
+
+| Kp | Ki | Expected behaviour |
+|----|----|--------------------|
+| `1` | `10` | Slow, minimal overshoot |
+| `3` | `100` | Balanced |
+| `10` | `500` | Fast, possible overshoot |
+
+Change Kp and Ki Gain block values for each run.
+
+---
+
+### Model 2 — Droop Characteristic
+
+#### Step 1 — Create a new Simulink model
+
+1. In MATLAB, click **Home → New → Simulink Model**.
+2. Save as `gfm_droop.slx`.
+
+#### Step 2 — Add blocks
+
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| Constant | Simulink → Sources | 3 |
+| Gain | Simulink → Math Operations | 2 |
+| Sum | Simulink → Math Operations | 2 |
+| Scope | Simulink → Sinks | 1 |
+
+#### Step 3 — Set block parameters
+
+| Block | Value | Purpose |
+|-------|-------|---------|
+| Constant 1 | `50` | Nominal frequency f₀ |
+| Constant 2 | `0.1` | Droop coefficient Kd1 |
+| Constant 3 | `0.2` | Droop coefficient Kd2 |
+| Gain 1 | `5` | Active power P (W) |
+| Gain 2 | `5` | Active power P (W) |
+
+#### Step 4 — Wire the droop model
+
+```text
+Constant 1 (f0=50) → Sum1 (+) input 1
+Gain 1 (P) → Constant 2 (Kd1) → Sum1 (−) input
+Sum1 output → Scope input 1   [Inverter 1 frequency]
+
+Constant 1 (f0=50) → Sum2 (+) input 1
+Gain 2 (P) → Constant 3 (Kd2) → Sum2 (−) input
+Sum2 output → Scope input 2   [Inverter 2 frequency]
+```
+
+> This is a static calculation — the Scope shows the steady-state frequency for each inverter at the given power level.
+
+#### Step 5 — Configure the Scope
+
+Set **Number of input ports** to `2`.
+
+#### Step 6 — Configure simulation settings
+
+| Parameter | Value |
+|-----------|-------|
+| Solver | `ode45` |
+| Stop time | `1` s |
+
+#### Step 7 — Run and observe
+
+Both Scope channels should show constant values below 50 Hz.
+
+Inverter 2 (Kd = 0.2) will show a lower frequency than Inverter 1 (Kd = 0.1) at the same power level, demonstrating that higher droop coefficient → greater frequency deviation per watt.
+
+---
+
+### Prediction Table
+
+Record before proceeding to the experiments:
+
+| Parameter | Predicted value |
+|-----------|-----------------|
+| PI voltage controller rise time | |
+| PI voltage controller overshoot (%) | |
+| LC filter natural frequency (Hz) | |
+| Inverter 1 frequency at P = 5 W (Hz) | |
+| Inverter 2 frequency at P = 5 W (Hz) | |
 
 ---
 

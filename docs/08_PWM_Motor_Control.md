@@ -1,4 +1,4 @@
-# Project 10 - PWM Motor Control and First-Order System Dynamics
+# Project 08 - PWM Motor Control and First-Order System Dynamics
 
 ### Prerequisites
 
@@ -154,31 +154,121 @@ PWM Output (ESP32 GPIO18)
 
 ---
 
-## MATLAB Simulation
+## Simulink Simulation
 
-Before building the circuit, simulate the motor's first-order step response and PWM voltage to predict what you will observe.
+Before building the circuit, build a Simulink model to predict the first-order step response shape for different time constants. This builds intuition for what you will observe on the motor in Experiment 4.
 
-### First-Order Step Response — Effect of Time Constant
+This model is signal-only — the motor is represented as a transfer function block, not a physical Simscape circuit.
 
-```matlab
-K      = 1;
-tau_values = [0.2, 0.5, 1.0, 2.0];
-labels = {'\tau=0.2s','\tau=0.5s','\tau=1.0s','\tau=2.0s'};
+---
 
-t = 0:0.01:10;
+### Step 1 — Create a New Simulink Model
 
-figure; hold on;
-for i = 1:4
-    G = tf(K, [tau_values(i), 1]);
-    [y, ~] = step(G, t);
-    plot(t, y, 'LineWidth', 2, 'DisplayName', labels{i});
-end
-yline(0.632, 'k--', '63.2%');
-grid on;
-xlabel('Time (s)'); ylabel('Normalised Speed');
-title('First-Order Motor Model - Step Response');
-legend('Location', 'southeast');
+1. In MATLAB, go to **Home** tab → click **Simulink**.
+2. Click **Blank Model**.
+3. Go to **File → Save** and name the file `Motor_First_Order`.
+
+---
+
+### Step 2 — Add Blocks
+
+Open the **Library Browser** and drag the following blocks onto the canvas:
+
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| Step | Simulink → Sources | 1 |
+| Transfer Fcn | Simulink → Continuous | 1 |
+| Scope | Simulink → Sinks | 1 |
+
+---
+
+### Step 3 — Configure the Step Block
+
+Double-click the **Step** block and set:
+
+| Parameter | Value |
+|-----------|-------|
+| Step time | `0` |
+| Initial value | `0` |
+| Final value | `1` |
+
+This produces a unit step at t = 0, representing a sudden PWM command to the motor.
+
+---
+
+### Step 4 — Configure the Transfer Fcn Block
+
+Double-click the **Transfer Fcn** block and set:
+
+| Parameter | Value |
+|-----------|-------|
+| Numerator coefficients | `[1]` |
+| Denominator coefficients | `[0.5, 1]` |
+
+This represents $G(s) = \frac{1}{0.5s + 1}$, a first-order system with $\tau = 0.5$ s and $K = 1$.
+
+---
+
+### Step 5 — Wire the Model
+
+Connect:
+
+```text
+Step → Transfer Fcn → Scope
 ```
+
+---
+
+### Step 6 — Simulation Settings
+
+Go to **Modeling → Model Settings** (or press **Ctrl+E**).
+
+Under **Solver**:
+
+| Setting | Value |
+|---------|-------|
+| Stop time | `5` |
+| Type | Variable-step |
+| Solver | `ode45` |
+
+Click **OK**.
+
+---
+
+### Step 7 — Run and Observe
+
+Click **Run**. Open the Scope.
+
+You should see the output rise from 0 and settle toward 1, following an exponential curve. At $t = 0.5$ s (one time constant) the output should reach approximately 0.632.
+
+---
+
+### Step 8 — Vary the Time Constant
+
+Change the denominator of the Transfer Fcn to explore how $\tau$ affects the response speed:
+
+| Denominator | $\tau$ | Response |
+|-------------|--------|----------|
+| `[0.2, 1]` | 0.2 s | Fast — settles quickly |
+| `[0.5, 1]` | 0.5 s | Medium |
+| `[1.0, 1]` | 1.0 s | Slow |
+| `[2.0, 1]` | 2.0 s | Very slow — takes ~10 s to settle |
+
+For each run, note the time at which the output crosses 0.632 — this is always equal to $\tau$.
+
+---
+
+### Wiring Checklist
+
+✅ Step block output connected to Transfer Fcn input
+
+✅ Transfer Fcn output connected to Scope
+
+✅ Step time = 0, Final value = 1
+
+✅ Stop time = 5, Solver = ode45
+
+---
 
 ### Prediction Table
 
@@ -212,15 +302,41 @@ Turn the motor fully ON and OFF and observe the gradual speed response.
 
 ---
 
+### Breadboard Layout
+
+```
+       a      b      c      d      e
+     ┌─────────────────────────────────────┐
+ 2   │ [●]   [ ]   [ ]   [ ]   [ ]       │ ← Battery (+) → a2
+ 3   │ [ ]   [ ]   [ ]   [●]   [ ]       │ ← MOSFET Gate d3
+ 4   │ [ ]   [┐]   [ ]   [●]   [ ]       │ ← Gate res top b4, MOSFET Drain d4
+ 5   │ [●]   [┘]   [ ]   [●]   [ ]       │ ← GPIO18 → a5, Gate res bottom b5 (jumper b5→d3), MOSFET Source d5
+ 6   │ [●]   [ ]   [ ]   [ ]   [ ]       │ ← GND → a6 (jumper a6→d5 for MOSFET Source; also battery −)
+ 7   │ [ ]   [ ]   [M1]  [ ]   [ ]       │ ← Motor terminal 1 at c7 = MOSFET Drain row (jumper c7→d4)
+ 8   │ [ ]   [ ]   [M2]  [ ]   [ ]       │ ← Motor terminal 2 at c8 = Battery (+) row (jumper c8→a2)
+ 9   │ [ ]   [ ]   [A]   [ ]   [ ]       │ ← Flyback diode anode c9 = Motor terminal 1 row (jumper c9→c7)
+10   │ [ ]   [ ]   [K]   [ ]   [ ]       │ ← Flyback diode cathode c10 = Battery (+) row (jumper c10→a2)
+     └─────────────────────────────────────┘
+```
+
+`[M1]`/`[M2]` = motor terminals (either orientation). `[A]` = diode anode; `[K]` = diode cathode (banded end).
+
+Row connections:
+- Row 4: gate resistor top and MOSFET Drain — connect with a jumper to the motor terminal 1 row
+- Row 2: battery positive rail — connects to motor terminal 2 and flyback diode cathode
+- Row 6: shared GND — ESP32 GND, battery negative, and MOSFET Source all meet here
+
+---
+
 ### Step-by-Step Wiring
 
-1. Insert the **IRLZ44N MOSFET** into the breadboard. Identify Gate (G), Drain (D), and Source (S).
-2. Connect a jumper wire from **ESP32 GND** to the **MOSFET Source** row. Also connect the **battery negative** to this same GND row.
-3. Insert the **220 Ω gate resistor** so one leg is in the **Gate** row and the other is in a new row.
-4. Connect a jumper wire from **ESP32 GPIO18** to the top of the gate resistor.
-5. Connect one motor terminal to the **MOSFET Drain** row.
-6. Connect the other motor terminal to the **battery positive**.
-7. Insert the **flyback diode** across the motor terminals: **cathode (banded end)** toward the battery positive terminal, **anode** toward the MOSFET Drain. This protects against inductive voltage spikes.
+1. Insert the **IRLZ44N MOSFET**: **Gate** at **row 3, col d**, **Drain** at **row 4, col d**, **Source** at **row 5, col d**. Verify G-D-S order from the pinout (Project 04).
+2. Connect a jumper wire from **ESP32 GND** to **row 6, col a**. Connect **row 6, col a** to **row 5, col d** (MOSFET Source). Connect **battery negative** to **row 6, col a** as well.
+3. Insert the **220 Ω gate resistor**: one leg in **row 4, col b**, other in **row 5, col b**. Connect **row 5, col b** to **row 3, col d** (MOSFET Gate) with a short jumper.
+4. Connect a jumper wire from **ESP32 GPIO18** to **row 5, col a**.
+5. Connect **motor terminal 1** to **row 7, col c**. Connect **row 7, col c** to **row 4, col d** (MOSFET Drain) with a jumper.
+6. Connect **motor terminal 2** to **row 8, col c**. Connect **row 8, col c** to **row 2, col a** (battery positive) with a jumper.
+7. Insert the **flyback diode**: **anode** (unmarked end) in **row 9, col c**, **cathode** (banded end) in **row 10, col c**. Connect **row 9** to motor terminal 1 row and **row 10** to battery positive row with short jumpers.
 
 The current path when the MOSFET is ON:
 
@@ -483,7 +599,7 @@ This estimated time is approximately $\tau$, the motor time constant.
 | Gain K | 1 (normalised) |
 | Transfer function G(s) | K / (τs + 1) |
 
-> Keep this table. Projects 12, 13 and 14 will use this motor model as the plant for P, PI and PID controller design.
+> Keep this table. Projects 11, 12, 13 and 14 will use this motor model as the plant for System Identification and P, PI and PID controller design.
 
 ---
 
@@ -662,14 +778,14 @@ In the next projects we will add feedback and begin building true control system
 ## Next Project
 
 ```text
-12_P_Controller.md
+09_AC_DC_Rectifiers.md
 ```
 
 Topics:
 
-- Feedback
-- Error Signals
-- Open Loop vs Closed Loop Control
-- Proportional Control
-- Controller Gain
-- Stability
+- AC and DC Voltages
+- Diode Rectification
+- Half-Wave Rectifiers
+- Bridge Rectifiers
+- Capacitor Smoothing
+- Ripple Voltage

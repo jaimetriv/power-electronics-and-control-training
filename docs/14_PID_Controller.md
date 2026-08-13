@@ -150,38 +150,156 @@ Where:
 
 ---
 
-## MATLAB Simulation
+## Simulink Simulation
 
-Before building the circuit, simulate the closed-loop PID response on the motor plant to predict how derivative action reduces overshoot.
+Before building the circuit, simulate the closed-loop PID controller applied to the first-order motor model from Project 08.
 
-### Effect of Kd — Fixed Kp and Ki
+This is a signal-only model — no Simscape electrical components are needed.
 
-```matlab
-K   = 1;
-tau = 0.5;        % your measured tau from Project 10
-Kp  = 0.5;
-Ki  = 1.0;
+---
 
-G = tf(K, [tau, 1]);
+### Step 1 — Create a new Simulink model
 
-Kd_values = [0, 0.05, 0.10, 0.20, 0.50];
-labels    = {'Kd=0 (PI)','Kd=0.05','Kd=0.10','Kd=0.20','Kd=0.50'};
+1. In MATLAB, click **Home → New → Simulink Model**.
+2. Save as `pid_controller.slx`.
 
-t = 0:0.01:8;
+---
 
-figure; hold on;
-for i = 1:5
-    C = tf([Kd_values(i), Kp, Ki], [1, 0]);
-    T = feedback(C * G, 1);
-    [y, ~] = step(T, t);
-    plot(t, y, 'LineWidth', 2, 'DisplayName', labels{i});
-end
-yline(1.0, 'k--', 'Reference');
-grid on;
-xlabel('Time (s)'); ylabel('Normalised Output');
-title('PID Controller - Effect of K_D (Motor Plant)');
-legend('Location', 'northeast');
+### Step 2 — Add blocks
+
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| Step | Simulink → Sources | 1 |
+| Sum | Simulink → Math Operations | 2 |
+| Gain | Simulink → Math Operations | 3 |
+| Integrator | Simulink → Continuous | 1 |
+| Derivative | Simulink → Continuous | 1 |
+| Transfer Fcn | Simulink → Continuous | 1 |
+| Scope | Simulink → Sinks | 1 |
+
+---
+
+### Step 3 — Set block parameters
+
+Step block:
+
+| Parameter | Value |
+|-----------|-------|
+| Step time | `0` s |
+| Initial value | `0` |
+| Final value | `1` |
+
+Sum block 1 (error junction):
+
+| Parameter | Value |
+|-----------|-------|
+| List of signs | `+-` |
+
+Gain block 1 (Kp):
+
+| Parameter | Value |
+|-----------|-------|
+| Gain | `0.5` |
+
+Gain block 2 (Ki):
+
+| Parameter | Value |
+|-----------|-------|
+| Gain | `1.0` |
+
+Gain block 3 (Kd):
+
+| Parameter | Value |
+|-----------|-------|
+| Gain | `0` |
+
+> Start with Kd = 0 (PI only). You will increase this for each test run.
+
+Sum block 2 (PID sum):
+
+| Parameter | Value |
+|-----------|-------|
+| List of signs | `+++` |
+
+Transfer Fcn (motor plant `K/(τs+1)`):
+
+| Parameter | Value |
+|-----------|-------|
+| Numerator | `[1]` |
+| Denominator | `[0.5, 1]` |
+
+> Replace `0.5` with your measured τ from Project 08 / Project 11.
+
+---
+
+### Step 4 — Wire the PID closed-loop
+
+```text
+Step → Sum1 (+) input
+Sum1 output → Kp Gain → Sum2 (+) input 1
+Sum1 output → Ki Gain → Integrator → Sum2 (+) input 2
+Sum1 output → Kd Gain → Derivative → Sum2 (+) input 3
+Sum2 output → Transfer Fcn → Scope
+Transfer Fcn output → Sum1 (−) input   [feedback path]
 ```
+
+---
+
+### Step 5 — Wiring checklist
+
+✅ Step output connected to Sum1 positive (+) input
+
+✅ Sum1 output branched to Kp Gain, Ki Gain, and Kd Gain inputs
+
+✅ Kp Gain output connected to Sum2 input 1
+
+✅ Ki Gain output connected to Integrator, Integrator output to Sum2 input 2
+
+✅ Kd Gain output connected to Derivative, Derivative output to Sum2 input 3
+
+✅ Sum2 output connected to Transfer Fcn input
+
+✅ Transfer Fcn output connected to Scope
+
+✅ Transfer Fcn output also connected back to Sum1 negative (−) input
+
+✅ Sum1 signs set to `+-`, Sum2 signs set to `+++`
+
+---
+
+### Step 6 — Configure simulation settings
+
+1. Open **Modeling → Model Settings**.
+2. Set **Solver** to `ode45`.
+3. Set **Stop time** to `8` s.
+
+---
+
+### Step 7 — Run for each Kd value (fixed Kp = 0.5, Ki = 1.0)
+
+Change the Kd Gain block value, run, and note the response each time:
+
+| Kp | Ki | Kd | Expected behaviour |
+|----|----|----|--------------------|
+| 0.5 | 1.0 | `0` | PI only — possible overshoot |
+| 0.5 | 1.0 | `0.05` | Slight damping improvement |
+| 0.5 | 1.0 | `0.10` | Reduced overshoot |
+| 0.5 | 1.0 | `0.20` | Well damped |
+| 0.5 | 1.0 | `0.50` | Heavily damped, slower rise |
+
+---
+
+### Step 8 — Wiring checklist before each run
+
+✅ Kd Gain block value updated
+
+✅ Kp and Ki Gain blocks unchanged
+
+✅ Feedback wire still connected to Sum1 (−) input
+
+✅ Scope showing Transfer Fcn output
+
+---
 
 ### Prediction Table
 
@@ -565,7 +683,7 @@ Simulate the closed-loop PID response using your actual gains from Experiments 2
 
 ```matlab
 K   = 1;
-tau = 0.5;       % your measured tau from Project 10
+tau = 0.5;       % your measured tau from Project 08 / Project 11 (s)
 Kp  = 0.5;
 Ki  = 1.0;
 Kd  = 0.1;
@@ -743,7 +861,7 @@ In this project you learned:
 ## Next Project
 
 ```text
-06_Buck_Converter.md
+15_Controller_Design.md
 ```
 
 Topics:

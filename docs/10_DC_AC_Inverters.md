@@ -209,70 +209,182 @@ SPWM → Filter → Approximate Sine Wave
 
 ---
 
-## MATLAB Simulation
+## Simulink Simulation
 
-Before building the circuit, simulate the three inverter waveform types and compare their harmonic content.
+Before building the circuit, simulate the three inverter waveform types in Simulink to predict the waveforms you will observe on the oscilloscope.
 
-### Square Wave, SPWM and Filtered Output
+This is a signal-only model — no Simscape electrical components are needed.
 
-```matlab
-f_out = 50;           % output frequency (Hz)
-f_sw  = 2000;         % SPWM carrier frequency (Hz)
-t     = 0:1e-5:0.06;
+You will build one model with four signal paths displayed on a single Scope.
 
-% Ideal sine wave reference
-v_sine = sin(2*pi*f_out*t);
+---
 
-% Square wave inverter output
-v_square = sign(v_sine);
+### Step 1 — Create a new Simulink model
 
-% SPWM: compare sine reference against triangular carrier
-Ts_sw    = 1 / f_sw;
-carrier  = 2*abs(mod(t, Ts_sw)/Ts_sw - 0.5) - 0.5;
-v_spwm   = sign(v_sine - carrier);
+1. In MATLAB, click **Home → New → Simulink Model**.
+2. Save as `inverter_waveforms.slx`.
 
-% Simulate LC filter on SPWM output
-L = 1e-3; C = 10e-6;
-G_filt = tf(1, [L*C, 0, 1]);
-[v_filt, ~] = lsim(G_filt, v_spwm, t);
+---
 
-figure;
-subplot(4,1,1); plot(t*1e3, v_sine,   'b', 'LineWidth',1.5); grid on;
-ylabel('V'); title('Reference Sine Wave (50 Hz)');
-subplot(4,1,2); plot(t*1e3, v_square, 'r', 'LineWidth',1.5); grid on;
-ylabel('V'); title('Square Wave Inverter Output');
-subplot(4,1,3); plot(t*1e3, v_spwm,   'g', 'LineWidth',1); grid on;
-ylabel('V'); title(sprintf('SPWM Output (f_{sw}=%d Hz)', f_sw));
-subplot(4,1,4); plot(t*1e3, v_filt,   'm', 'LineWidth',2); hold on;
-plot(t*1e3, v_sine, 'b--', 'LineWidth',1); grid on;
-ylabel('V'); title('Filtered SPWM \approx Sine Wave');
-xlabel('Time (ms)');
-sgtitle('Inverter Waveform Comparison');
+### Step 2 — Add blocks
+
+| Block | Library path | Quantity | Label |
+|-------|-------------|----------|-------|
+| Sine Wave | Simulink → Sources | 2 | `Sine Reference`, `Triangular Carrier` |
+| Sign | Simulink → Math Operations | 1 | `Square Wave` |
+| Relational Operator | Simulink → Logic and Bit Operations | 1 | `SPWM` |
+| Transfer Fcn | Simulink → Continuous | 1 | `LC Filter` |
+| Scope | Simulink → Sinks | 1 | |
+
+---
+
+### Step 3 — Set Sine Wave (Sine Reference) parameters
+
+Double-click the `Sine Reference` block:
+
+| Parameter | Value |
+|-----------|-------|
+| Amplitude | `1` |
+| Frequency (rad/s) | `2*pi*50` |
+| Phase (rad) | `0` |
+| Sample time | `0` |
+
+---
+
+### Step 4 — Set Sine Wave (Triangular Carrier) parameters
+
+Double-click the `Triangular Carrier` block:
+
+| Parameter | Value |
+|-----------|-------|
+| Amplitude | `1` |
+| Frequency (rad/s) | `2*pi*2000` |
+| Phase (rad) | `pi/2` |
+| Sample time | `0` |
+
+> Setting phase to `pi/2` makes the carrier a triangular-like waveform starting at its peak, which is the standard SPWM carrier shape.
+
+---
+
+### Step 5 — Set Relational Operator parameters
+
+Double-click the `SPWM` Relational Operator block:
+
+| Parameter | Value |
+|-----------|-------|
+| Operator | `>` |
+| Output data type | `double` |
+
+---
+
+### Step 6 — Set Transfer Fcn (LC Filter) parameters
+
+Double-click the `LC Filter` block:
+
+| Parameter | Value |
+|-----------|-------|
+| Numerator | `[1]` |
+| Denominator | `[1e-8, 0, 1]` |
+
+> This represents an LC low-pass filter with L = 1 mH, C = 10 µF: denominator = `[L*C, 0, 1]` = `[1e-8, 0, 1]`.
+
+---
+
+### Step 7 — Wire the model
+
+**Square wave path:**
+
+```text
+Sine Reference → Sign → Scope input 1
 ```
 
-### Harmonic Spectrum — Square Wave vs Sine Wave
+**SPWM path:**
 
-```matlab
-fs = 1/1e-5;
-N  = length(t);
-
-F_sq   = abs(fft(v_square)) / N;
-F_sine = abs(fft(v_sine))   / N;
-freqs  = (0:N-1) * fs / N;
-
-figure;
-subplot(2,1,1);
-stem(freqs(1:500), F_sq(1:500)*2, 'r', 'filled', 'MarkerSize', 3);
-xlabel('Frequency (Hz)'); ylabel('Amplitude');
-title('Square Wave - Harmonic Spectrum');
-grid on; xlim([0 1000]);
-
-subplot(2,1,2);
-stem(freqs(1:500), F_sine(1:500)*2, 'b', 'filled', 'MarkerSize', 3);
-xlabel('Frequency (Hz)'); ylabel('Amplitude');
-title('Sine Wave - Harmonic Spectrum');
-grid on; xlim([0 1000]);
+```text
+Sine Reference → Relational Operator input 1
+Triangular Carrier → Relational Operator input 2
+Relational Operator output → Scope input 2
 ```
+
+**Filtered SPWM path:**
+
+```text
+Relational Operator output → LC Filter → Scope input 3
+```
+
+**Sine reference (for comparison):**
+
+```text
+Sine Reference → Scope input 4
+```
+
+---
+
+### Step 8 — Configure the Scope
+
+1. Double-click the Scope block.
+2. Click the **gear icon (Properties)**.
+3. On the **Inputs** tab set **Number of input ports** to `4`.
+4. On the **Display** tab set **Layout** to `4×1`.
+
+---
+
+### Step 9 — Wiring checklist
+
+✅ Sine Reference output connected to Sign block input
+
+✅ Sine Reference output connected to Relational Operator input 1
+
+✅ Triangular Carrier output connected to Relational Operator input 2
+
+✅ Relational Operator output connected to Scope input 2 and LC Filter input
+
+✅ LC Filter output connected to Scope input 3
+
+✅ Sine Reference connected to Scope input 4
+
+✅ Sign output connected to Scope input 1
+
+---
+
+### Step 10 — Configure simulation settings
+
+1. Open **Modeling → Model Settings**.
+2. Set **Solver** to `ode45`.
+3. Set **Stop time** to `0.06` s.
+4. Set **Max step size** to `1e-5`.
+
+---
+
+### Step 11 — Run and observe
+
+Click **Run**. The four-panel Scope should show:
+
+**Panel 1 — Square wave:**
+
+```text
++1  ________        ________
+            │        │
+-1          │________│
+```
+
+**Panel 2 — SPWM (unfiltered):**
+
+```text
+| |   | |     | |       | |     | |   | |
+```
+
+Pulse widths vary sinusoidally — narrow at the edges, wide in the middle.
+
+**Panel 3 — Filtered SPWM:**
+
+Approximate sine wave — the LC filter removes the high-frequency switching content.
+
+**Panel 4 — Sine reference:**
+
+Clean 50 Hz sine wave for comparison.
+
+---
 
 ### Prediction Table
 

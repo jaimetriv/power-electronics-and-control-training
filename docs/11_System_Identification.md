@@ -190,53 +190,165 @@ Final difference between reference and output.
 
 ---
 
-## MATLAB Simulation
+## Simulink Simulation
 
-Before measuring, simulate first-order and second-order step responses across parameter ranges to build intuition for what you will observe.
+Before measuring, simulate first-order and second-order step responses in Simulink to build intuition for what you will observe.
 
-### First-Order: Effect of Time Constant
+You will build two models:
 
-```matlab
-tau_values = [0.2, 0.5, 1.0, 2.0];
-K = 1;
-t = 0:0.01:8;
+- **Model 1** — First-order step response, four time constants
+- **Model 2** — Second-order step response, five damping ratios
 
-figure; hold on;
-for i = 1:4
-    y = K * (1 - exp(-t / tau_values(i)));
-    plot(t, y, 'LineWidth', 2, ...
-        'DisplayName', sprintf('\\tau = %.1fs', tau_values(i)));
-end
-yline(0.632, 'k--', '63.2%');
-grid on;
-xlabel('Time (s)'); ylabel('Normalised Output');
-title('First-Order Step Response - Effect of \tau');
-legend('Location', 'southeast');
-```
+A MATLAB curve-fit script is also provided to preview how τ is extracted from noisy data.
 
-### Second-Order: Effect of Damping Ratio
+---
 
-```matlab
-wn   = 5;
-zeta_values = [0.1, 0.3, 0.7, 1.0, 2.0];
-t = 0:0.001:4;
+### Model 1 — First-Order Step Response
 
-figure; hold on;
-for i = 1:5
-    z = zeta_values(i);
-    G = tf(wn^2, [1, 2*z*wn, wn^2]);
-    [y, ~] = step(G, t);
-    plot(t, y, 'LineWidth', 2, ...
-        'DisplayName', sprintf('\\zeta = %.1f', z));
-end
-yline(1.0, 'k--', 'Final value');
-grid on;
-xlabel('Time (s)'); ylabel('Output');
-title('Second-Order Step Response - Effect of \zeta');
-legend('Location', 'southeast');
-```
+#### Step 1 — Create a new Simulink model
+
+1. In MATLAB, click **Home → New → Simulink Model**.
+2. Save as `first_order_step.slx`.
+
+#### Step 2 — Add blocks
+
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| Step | Simulink → Sources | 1 |
+| Transfer Fcn | Simulink → Continuous | 4 |
+| Scope | Simulink → Sinks | 1 |
+
+#### Step 3 — Set Step block parameters
+
+| Parameter | Value |
+|-----------|-------|
+| Step time | `0` s |
+| Initial value | `0` |
+| Final value | `1` |
+
+#### Step 4 — Set Transfer Fcn parameters
+
+Each Transfer Fcn represents `K / (τs + 1)` with K = 1. Set the four blocks as follows:
+
+| Block | Numerator | Denominator | τ (s) |
+|-------|-----------|-------------|-------|
+| TF1 | `[1]` | `[0.2, 1]` | 0.2 |
+| TF2 | `[1]` | `[0.5, 1]` | 0.5 |
+| TF3 | `[1]` | `[1.0, 1]` | 1.0 |
+| TF4 | `[1]` | `[2.0, 1]` | 2.0 |
+
+#### Step 5 — Wire the model
+
+Connect the Step output to the input of all four Transfer Fcn blocks (branch the signal).
+
+Connect all four Transfer Fcn outputs to the Scope.
+
+#### Step 6 — Configure the Scope
+
+1. Double-click the Scope.
+2. Click the **gear icon (Properties)**.
+3. On the **Inputs** tab set **Number of input ports** to `4`.
+
+#### Step 7 — Wiring checklist
+
+✅ Step output branched to all four Transfer Fcn inputs
+
+✅ All four Transfer Fcn outputs connected to Scope inputs 1–4
+
+✅ Denominator coefficients match `[τ, 1]` for each block
+
+#### Step 8 — Configure simulation settings
+
+1. Open **Modeling → Model Settings**.
+2. Set **Solver** to `ode45`.
+3. Set **Stop time** to `8` s.
+
+#### Step 9 — Run and observe
+
+Click **Run**. The Scope should show four exponential rise curves.
+
+Smaller τ → faster rise. Larger τ → slower rise.
+
+At t = τ each curve should reach approximately 63.2% of its final value.
+
+---
+
+### Model 2 — Second-Order Step Response
+
+#### Step 1 — Create a new Simulink model
+
+1. In MATLAB, click **Home → New → Simulink Model**.
+2. Save as `second_order_step.slx`.
+
+#### Step 2 — Add blocks
+
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| Step | Simulink → Sources | 1 |
+| Transfer Fcn | Simulink → Continuous | 5 |
+| Scope | Simulink → Sinks | 1 |
+
+#### Step 3 — Set Step block parameters
+
+| Parameter | Value |
+|-----------|-------|
+| Step time | `0` s |
+| Initial value | `0` |
+| Final value | `1` |
+
+#### Step 4 — Set Transfer Fcn parameters
+
+Each block represents `ωn² / (s² + 2ζωn·s + ωn²)` with ωn = 5 rad/s.
+
+| Block | Numerator | Denominator | ζ |
+|-------|-----------|-------------|---|
+| TF1 | `[25]` | `[1, 1, 25]` | 0.1 |
+| TF2 | `[25]` | `[1, 3, 25]` | 0.3 |
+| TF3 | `[25]` | `[1, 7, 25]` | 0.7 |
+| TF4 | `[25]` | `[1, 10, 25]` | 1.0 |
+| TF5 | `[25]` | `[1, 20, 25]` | 2.0 |
+
+> Denominator = `[1, 2*ζ*ωn, ωn²]`. For ζ=0.1: `[1, 2×0.1×5, 25]` = `[1, 1, 25]`.
+
+#### Step 5 — Wire the model
+
+Connect the Step output to all five Transfer Fcn inputs.
+
+Connect all five Transfer Fcn outputs to the Scope.
+
+#### Step 6 — Configure the Scope
+
+Set **Number of input ports** to `5`.
+
+#### Step 7 — Wiring checklist
+
+✅ Step output branched to all five Transfer Fcn inputs
+
+✅ All five Transfer Fcn outputs connected to Scope inputs 1–5
+
+✅ Denominator coefficients match `[1, 2*ζ*5, 25]` for each block
+
+#### Step 8 — Configure simulation settings
+
+1. Open **Modeling → Model Settings**.
+2. Set **Solver** to `ode45`.
+3. Set **Stop time** to `4` s.
+
+#### Step 9 — Run and observe
+
+Click **Run**. The Scope should show:
+
+- ζ = 0.1: large overshoot, oscillatory
+- ζ = 0.3: moderate overshoot
+- ζ = 0.7: slight overshoot, near-optimal
+- ζ = 1.0: critically damped, no overshoot
+- ζ = 2.0: overdamped, slow rise
+
+---
 
 ### Curve Fitting Preview — How to Extract τ from Data
+
+This step uses a MATLAB script (not Simulink) because it requires `fminsearch` for numerical optimisation.
 
 ```matlab
 % Simulate "measured" data with noise
@@ -245,13 +357,11 @@ t = 0:0.05:6;
 y_measured = K_true*(1 - exp(-t/tau_true)) + 0.05*randn(size(t));
 
 % Fit first-order model by minimising sum of squared errors
-cost = @(p) sum((p(1)*(1-exp(-t/p(2))) - y_measured).^2);
-p0   = [4.0, 0.5];
-p_fit = fminsearch(cost, p0);
+cost  = @(p) sum((p(1)*(1-exp(-t/p(2))) - y_measured).^2);
+p_fit = fminsearch(cost, [4.0, 0.5]);
 
-K_fit   = p_fit(1);
-tau_fit = p_fit(2);
-y_fit   = K_fit * (1 - exp(-t / tau_fit));
+K_fit = p_fit(1); tau_fit = p_fit(2);
+y_fit = K_fit * (1 - exp(-t / tau_fit));
 
 figure; hold on;
 scatter(t, y_measured, 30, 'b', 'DisplayName', 'Measured (with noise)');
@@ -261,9 +371,11 @@ grid on;
 xlabel('Time (s)'); ylabel('Output');
 title('First-Order Curve Fit - fminsearch');
 legend('Location', 'southeast');
-fprintf('True:  K=%.2f  tau=%.2fs\n', K_true, tau_true);
+fprintf('True:   K=%.2f  tau=%.2fs\n', K_true, tau_true);
 fprintf('Fitted: K=%.2f  tau=%.2fs\n', K_fit, tau_fit);
 ```
+
+---
 
 ### Prediction Table
 
@@ -272,7 +384,7 @@ fprintf('Fitted: K=%.2f  tau=%.2fs\n', K_fit, tau_fit);
 | RC (10 kΩ, 100 µF) | | | |
 | RC (10 kΩ, 220 µF) | | | |
 | RC (22 kΩ, 100 µF) | | | |
-| Motor (from Project 10) | | | |
+| Motor (from Project 08) | | | |
 
 ---
 

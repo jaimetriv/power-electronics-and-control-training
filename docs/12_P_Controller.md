@@ -199,52 +199,137 @@ The controller gets close to the target but does not completely eliminate the er
 
 ---
 
-## MATLAB Simulation
+## Simulink Simulation
 
-Before building the circuit, simulate the closed-loop P controller applied to the first-order motor model from Project 10.
+Before building the circuit, simulate the closed-loop P controller applied to the first-order motor model from Project 08.
 
-### Closed-Loop Step Response — Effect of Kp
+This is a signal-only model — no Simscape electrical components are needed.
 
-```matlab
-% Use the motor model identified in Project 10
-K   = 1;
-tau = 0.5;          % replace with your measured tau from Project 10
+---
 
-G = tf(K, [tau, 1]);
+### Step 1 — Create a new Simulink model
 
-Kp_values = [0.5, 1.0, 2.0, 5.0, 10.0];
-labels    = {'Kp=0.5','Kp=1','Kp=2','Kp=5','Kp=10'};
+1. In MATLAB, click **Home → New → Simulink Model**.
+2. Save as `p_controller.slx`.
 
-t = 0:0.01:5;
+---
 
-figure; hold on;
-for i = 1:5
-    T = feedback(Kp_values(i) * G, 1);
-    [y, ~] = step(T, t);
-    plot(t, y, 'LineWidth', 2, 'DisplayName', labels{i});
-end
-yline(1.0, 'k--', 'Reference');
-grid on;
-xlabel('Time (s)'); ylabel('Normalised Output');
-title('P Controller - Closed-Loop Step Response');
-legend('Location', 'southeast');
+### Step 2 — Add blocks
+
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| Step | Simulink → Sources | 1 |
+| Sum | Simulink → Math Operations | 1 |
+| Gain | Simulink → Math Operations | 1 |
+| Transfer Fcn | Simulink → Continuous | 1 |
+| Scope | Simulink → Sinks | 1 |
+
+---
+
+### Step 3 — Set block parameters
+
+Step block:
+
+| Parameter | Value |
+|-----------|-------|
+| Step time | `0` s |
+| Initial value | `0` |
+| Final value | `1` |
+
+Sum block:
+
+| Parameter | Value |
+|-----------|-------|
+| List of signs | `+-` |
+
+Gain block (Kp):
+
+| Parameter | Value |
+|-----------|-------|
+| Gain | `0.5` |
+
+> You will change this value for each test run.
+
+Transfer Fcn (motor plant `K/(τs+1)`):
+
+| Parameter | Value |
+|-----------|-------|
+| Numerator | `[1]` |
+| Denominator | `[0.5, 1]` |
+
+> Replace `0.5` with your measured τ from Project 08 / Project 11.
+
+---
+
+### Step 4 — Wire the closed-loop
+
+```text
+Step → Sum (+) input
+Sum output → Gain (Kp) → Transfer Fcn → Scope
+Transfer Fcn output → Sum (−) input   [feedback path]
 ```
 
-### Steady-State Error vs Kp
+The feedback wire runs from the Transfer Fcn output back to the negative (−) input of the Sum block.
 
-```matlab
-Kp_range = 0.1:0.1:20;
-K = 1;
-ess = 1 ./ (1 + Kp_range .* K);
+---
 
-figure;
-plot(Kp_range, ess * 100, 'b', 'LineWidth', 2);
-grid on;
-xlabel('Kp'); ylabel('Steady-State Error (%)');
-title('P Controller - Steady-State Error vs Gain');
-```
+### Step 5 — Wiring checklist
+
+✅ Step output connected to Sum positive (+) input
+
+✅ Sum output connected to Gain input
+
+✅ Gain output connected to Transfer Fcn input
+
+✅ Transfer Fcn output connected to Scope
+
+✅ Transfer Fcn output also connected back to Sum negative (−) input
+
+✅ Sum block signs set to `+-`
+
+---
+
+### Step 6 — Configure simulation settings
+
+1. Open **Modeling → Model Settings**.
+2. Set **Solver** to `ode45`.
+3. Set **Stop time** to `5` s.
+
+---
+
+### Step 7 — Run for each Kp value
+
+Change the Gain block value, run, and note the response each time:
+
+| Kp | Gain block value | Expected behaviour |
+|----|-----------------|--------------------|
+| 0.5 | `0.5` | Slow, large steady-state error |
+| 1.0 | `1.0` | Moderate response |
+| 2.0 | `2.0` | Faster, less error |
+| 5.0 | `5.0` | Fast, small error |
+| 10.0 | `10.0` | Very fast, minimal error |
+
+For each run, read the steady-state output value from the Scope and calculate:
+
+$$
+e_{ss} = 1 - y_{final}
+$$
+
+---
+
+### Step 8 — Wiring checklist before each run
+
+✅ Gain block value updated
+
+✅ Feedback wire still connected to Sum (−) input
+
+✅ Scope showing Transfer Fcn output
+
+---
 
 ### Prediction Table
+
+Complete before hardware experiments:
 
 | Kp | Predicted e\_{ss} (%) | Expected behaviour |
 |----|----------------------|--------------------|
@@ -253,6 +338,8 @@ title('P Controller - Steady-State Error vs Gain');
 | 2.0 | | |
 | 5.0 | | |
 | 10.0 | | |
+
+> Theoretical formula: $e_{ss} = \frac{1}{1 + K_P K} \times 100\%$ where K = 1.
 
 ---
 
@@ -641,7 +728,7 @@ Simulate the closed-loop response using your actual Kp values from Experiment 3 
 
 ```matlab
 K   = 1;
-tau = 0.5;       % your measured tau from Project 10 (s)
+tau = 0.5;       % your measured tau from Project 08 / Project 11 (s)
 
 G = tf(K, [tau, 1]);
 

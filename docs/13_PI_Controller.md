@@ -124,37 +124,148 @@ This technique is called **anti-windup**.
 
 ---
 
-## MATLAB Simulation
+## Simulink Simulation
 
-Before building the circuit, simulate the closed-loop PI response on the first-order motor model to predict how integral action eliminates steady-state error.
+Before building the circuit, simulate the closed-loop PI controller applied to the first-order motor model from Project 08.
 
-### Effect of Ki — Fixed Kp
+This is a signal-only model — no Simscape electrical components are needed.
 
-```matlab
-K   = 1;
-tau = 0.5;        % your measured tau from Project 10
-Kp  = 0.5;
+---
 
-G = tf(K, [tau, 1]);
+### Step 1 — Create a new Simulink model
 
-Ki_values = [0, 0.5, 1.0, 2.0, 5.0];
-labels    = {'Ki=0 (P only)','Ki=0.5','Ki=1.0','Ki=2.0','Ki=5.0'};
+1. In MATLAB, click **Home → New → Simulink Model**.
+2. Save as `pi_controller.slx`.
 
-t = 0:0.01:8;
+---
 
-figure; hold on;
-for i = 1:5
-    C = tf([Kp, Ki_values(i)], [1, 0]);
-    T = feedback(C * G, 1);
-    [y, ~] = step(T, t);
-    plot(t, y, 'LineWidth', 2, 'DisplayName', labels{i});
-end
-yline(1.0, 'k--', 'Reference');
-grid on;
-xlabel('Time (s)'); ylabel('Normalised Output');
-title('PI Controller - Effect of K_I (Motor Plant)');
-legend('Location', 'southeast');
+### Step 2 — Add blocks
+
+| Block | Library path | Quantity |
+|-------|-------------|----------|
+| Step | Simulink → Sources | 1 |
+| Sum | Simulink → Math Operations | 2 |
+| Gain | Simulink → Math Operations | 2 |
+| Integrator | Simulink → Continuous | 1 |
+| Transfer Fcn | Simulink → Continuous | 1 |
+| Scope | Simulink → Sinks | 1 |
+
+---
+
+### Step 3 — Set block parameters
+
+Step block:
+
+| Parameter | Value |
+|-----------|-------|
+| Step time | `0` s |
+| Initial value | `0` |
+| Final value | `1` |
+
+Sum block 1 (error junction — reference minus feedback):
+
+| Parameter | Value |
+|-----------|-------|
+| List of signs | `+-` |
+
+Gain block 1 (Kp):
+
+| Parameter | Value |
+|-----------|-------|
+| Gain | `0.5` |
+
+Gain block 2 (Ki):
+
+| Parameter | Value |
+|-----------|-------|
+| Gain | `1.0` |
+
+Sum block 2 (PI sum — proportional plus integral):
+
+| Parameter | Value |
+|-----------|-------|
+| List of signs | `++` |
+
+Transfer Fcn (motor plant `K/(τs+1)`):
+
+| Parameter | Value |
+|-----------|-------|
+| Numerator | `[1]` |
+| Denominator | `[0.5, 1]` |
+
+> Replace `0.5` with your measured τ from Project 08 / Project 11.
+
+---
+
+### Step 4 — Wire the PI closed-loop
+
+```text
+Step → Sum1 (+) input
+Sum1 output → Kp Gain → Sum2 (+) input 1
+Sum1 output → Ki Gain → Integrator → Sum2 (+) input 2
+Sum2 output → Transfer Fcn → Scope
+Transfer Fcn output → Sum1 (−) input   [feedback path]
 ```
+
+---
+
+### Step 5 — Wiring checklist
+
+✅ Step output connected to Sum1 positive (+) input
+
+✅ Sum1 output branched to both Kp Gain and Ki Gain inputs
+
+✅ Kp Gain output connected to Sum2 input 1
+
+✅ Ki Gain output connected to Integrator input
+
+✅ Integrator output connected to Sum2 input 2
+
+✅ Sum2 output connected to Transfer Fcn input
+
+✅ Transfer Fcn output connected to Scope
+
+✅ Transfer Fcn output also connected back to Sum1 negative (−) input
+
+✅ Sum1 signs set to `+-`, Sum2 signs set to `++`
+
+---
+
+### Step 6 — Configure simulation settings
+
+1. Open **Modeling → Model Settings**.
+2. Set **Solver** to `ode45`.
+3. Set **Stop time** to `8` s.
+
+---
+
+### Step 7 — Run for each Ki value (fixed Kp = 0.5)
+
+Change the Ki Gain block value, run, and note the response each time:
+
+| Kp | Ki | Expected behaviour |
+|----|----|--------------------|
+| 0.5 | `0` | P only — steady-state error present |
+| 0.5 | `0.5` | Slow integral action, error reducing |
+| 0.5 | `1.0` | Faster convergence to reference |
+| 0.5 | `2.0` | Fast, possible small overshoot |
+| 0.5 | `5.0` | Fast convergence, likely overshoot |
+
+For each run, confirm the output reaches 1.0 (zero steady-state error) for all Ki > 0.
+
+---
+
+### Step 8 — Wiring checklist before each run
+
+✅ Ki Gain block value updated
+
+✅ Kp Gain block still set to `0.5`
+
+✅ Feedback wire still connected to Sum1 (−) input
+
+✅ Scope showing Transfer Fcn output
+
+---
 
 ### Prediction Table
 
@@ -534,7 +645,7 @@ Simulate the closed-loop PI response using your actual Kp and Ki values from Exp
 
 ```matlab
 K   = 1;
-tau = 0.5;       % your measured tau from Project 10
+tau = 0.5;       % your measured tau from Project 08 / Project 11 (s)
 Kp  = 0.5;
 Ki  = 1.0;
 
