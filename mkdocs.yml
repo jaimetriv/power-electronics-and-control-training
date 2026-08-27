@@ -57,6 +57,10 @@ extra_javascript:
   - javascripts/mathjax.js
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
   - https://unpkg.com/mermaid@11/dist/mermaid.min
+  - javascripts/results.js
+
+extra_css:
+  - stylesheets/results.css
 
 nav:
 

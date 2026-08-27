@@ -244,12 +244,17 @@ title('Simulated PWM Waveform - 500 Hz, 50% Duty Cycle')
 
 Before measuring, record your predictions:
 
-| Parameter | Predicted Value |
-|-----------|----------------|
-| Frequency | |
-| Period | |
-| Duty Cycle | |
-| Peak Voltage | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Predicted Value</th></tr></thead>
+  <tbody>
+    <tr><td>Frequency</td><td><input class="result-input" id="lab01-sim-freq" placeholder="e.g. 500 Hz"></td></tr>
+    <tr><td>Period</td><td><input class="result-input" id="lab01-sim-period" placeholder="e.g. 2 ms"></td></tr>
+    <tr><td>Duty Cycle</td><td><input class="result-input" id="lab01-sim-duty" placeholder="e.g. 50%"></td></tr>
+    <tr><td>Peak Voltage</td><td><input class="result-input" id="lab01-sim-vpeak" placeholder="e.g. 3.3 V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -379,11 +384,16 @@ $$
 
 ### Measurements
 
-| Parameter | Expected | Measured |
-|-----------|----------|---------|
-| Frequency | 500 Hz | |
-| Period | 2 ms | |
-| Peak Voltage | ~3.3 V | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Frequency</td><td>500 Hz</td><td><input class="result-input" id="lab01-exp1-freq" placeholder="Hz"></td></tr>
+    <tr><td>Period</td><td>2 ms</td><td><input class="result-input" id="lab01-exp1-period" placeholder="ms"></td></tr>
+    <tr><td>Peak Voltage</td><td>~3.3 V</td><td><input class="result-input" id="lab01-exp1-vpeak" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -437,11 +447,16 @@ void loop()
 
 ### Results Table
 
-| PWM Value | Expected Duty Cycle | Measured Duty Cycle |
-|-----------|---------------------|---------------------|
-| 64 | 25% | |
-| 128 | 50% | |
-| 192 | 75% | |
+<div class="result-block">
+<table>
+  <thead><tr><th>PWM Value</th><th>Expected Duty Cycle</th><th>Measured Duty Cycle</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab01-exp2-d25" placeholder="%"></td></tr>
+    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab01-exp2-d50" placeholder="%"></td></tr>
+    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab01-exp2-d75" placeholder="%"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -600,12 +615,17 @@ Dim  →  Medium  →  Bright  →  Fully ON
 
 ### Results Table
 
-| PWM Value | Duty Cycle | Observed Brightness |
-|-----------|------------|---------------------|
-| 64 | 25% | |
-| 128 | 50% | |
-| 192 | 75% | |
-| 255 | 100% | |
+<div class="result-block">
+<table>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Observed Brightness</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab01-exp3-b25" placeholder="e.g. Dim"></td></tr>
+    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab01-exp3-b50" placeholder="e.g. Medium"></td></tr>
+    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab01-exp3-b75" placeholder="e.g. Bright"></td></tr>
+    <tr><td>255</td><td>100%</td><td><input class="result-input" id="lab01-exp3-b100" placeholder="e.g. Fully on"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -639,6 +659,18 @@ title('PWM Average Voltage - Theory vs Measurement')
 ```
 
 ### Overlay Your Measurements
+
+<div class="result-block">
+<table>
+  <thead><tr><th>Duty Cycle</th><th>Measured V<sub>avg</sub> (V)</th></tr></thead>
+  <tbody>
+    <tr><td>25%</td><td><input class="result-input" id="lab01-comp-vavg25" placeholder="V"></td></tr>
+    <tr><td>50%</td><td><input class="result-input" id="lab01-comp-vavg50" placeholder="V"></td></tr>
+    <tr><td>75%</td><td><input class="result-input" id="lab01-comp-vavg75" placeholder="V"></td></tr>
+    <tr><td>100%</td><td><input class="result-input" id="lab01-comp-vavg100" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ```matlab
 D_measured = [0.25, 0.50, 0.75, 1.00];
@@ -746,6 +778,13 @@ Why does PWM control LED brightness even though the signal only switches between
 ### Question 5
 
 Your MATLAB simulation predicted a frequency of 500 Hz but you measured 502 Hz on the oscilloscope. What could explain this difference?
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab01">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab01">✕ Clear All Results</button>
+</div>
 
 ---
 

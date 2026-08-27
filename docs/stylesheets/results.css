@@ -1,0 +1,86 @@
+/* Result input fields */
+.result-input {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid var(--md-default-fg-color--lighter, #ccc);
+    border-radius: 4px;
+    background: var(--md-default-bg-color, #fff);
+    color: var(--md-default-fg-color, #000);
+    font-size: 0.85rem;
+    box-sizing: border-box;
+}
+
+.result-input:focus {
+    outline: none;
+    border-color: var(--md-primary-fg-color, #1976d2);
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+/* Observation textareas */
+.result-textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--md-default-fg-color--lighter, #ccc);
+    border-radius: 4px;
+    background: var(--md-default-bg-color, #fff);
+    color: var(--md-default-fg-color, #000);
+    font-size: 0.85rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 80px;
+    box-sizing: border-box;
+}
+
+.result-textarea:focus {
+    outline: none;
+    border-color: var(--md-primary-fg-color, #1976d2);
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+/* Result block wrapper */
+.result-block {
+    margin: 1rem 0;
+}
+
+/* Action buttons row */
+.result-actions {
+    display: flex;
+    gap: 10px;
+    margin: 1.5rem 0 0.5rem 0;
+}
+
+.result-export-btn,
+.result-clear-btn {
+    padding: 7px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.result-export-btn {
+    background: var(--md-primary-fg-color, #1976d2);
+    color: #fff;
+}
+
+.result-export-btn:hover {
+    opacity: 0.88;
+}
+
+.result-clear-btn {
+    background: transparent;
+    border: 1px solid var(--md-default-fg-color--lighter, #ccc);
+    color: var(--md-default-fg-color, #000);
+}
+
+.result-clear-btn:hover {
+    background: var(--md-default-fg-color--lightest, #f5f5f5);
+}
+
+/* Saved indicator — subtle green tint on filled inputs */
+.result-input:not(:placeholder-shown),
+.result-textarea:not(:placeholder-shown) {
+    border-color: #4caf50;
+    background: rgba(76, 175, 80, 0.04);
+}
