@@ -53,6 +53,8 @@
       
     
     
+      <link rel="stylesheet" href="../stylesheets/results.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -3050,32 +3052,18 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 </code></pre></div>
 <h3 id="predict">Predict<a class="headerlink" href="#predict" title="Permanent link">&para;</a></h3>
 <p>Before measuring, record your predictions:</p>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Predicted Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Frequency</td>
-<td></td>
-</tr>
-<tr>
-<td>Period</td>
-<td></td>
-</tr>
-<tr>
-<td>Duty Cycle</td>
-<td></td>
-</tr>
-<tr>
-<td>Peak Voltage</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Parameter</th><th>Predicted Value</th></tr></thead>
+  <tbody>
+    <tr><td>Frequency</td><td><input class="result-input" id="lab01-sim-freq" placeholder="e.g. 500 Hz"></td></tr>
+    <tr><td>Period</td><td><input class="result-input" id="lab01-sim-period" placeholder="e.g. 2 ms"></td></tr>
+    <tr><td>Duty Cycle</td><td><input class="result-input" id="lab01-sim-duty" placeholder="e.g. 50%"></td></tr>
+    <tr><td>Peak Voltage</td><td><input class="result-input" id="lab01-sim-vpeak" placeholder="e.g. 3.3 V"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h3 id="simulate-multiple-duty-cycles">Simulate Multiple Duty Cycles<a class="headerlink" href="#simulate-multiple-duty-cycles" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">fs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">500</span><span class="p">;</span>
@@ -3200,32 +3188,17 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 </code></pre></div>
 <hr />
 <h3 id="measurements">Measurements<a class="headerlink" href="#measurements" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Expected</th>
-<th>Measured</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Frequency</td>
-<td>500 Hz</td>
-<td></td>
-</tr>
-<tr>
-<td>Period</td>
-<td>2 ms</td>
-<td></td>
-</tr>
-<tr>
-<td>Peak Voltage</td>
-<td>~3.3 V</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Frequency</td><td>500 Hz</td><td><input class="result-input" id="lab01-exp1-freq" placeholder="Hz"></td></tr>
+    <tr><td>Period</td><td>2 ms</td><td><input class="result-input" id="lab01-exp1-period" placeholder="ms"></td></tr>
+    <tr><td>Peak Voltage</td><td>~3.3 V</td><td><input class="result-input" id="lab01-exp1-vpeak" placeholder="V"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-2-duty-cycle-investigation">Experiment 2 - Duty Cycle Investigation<a class="headerlink" href="#experiment-2-duty-cycle-investigation" title="Permanent link">&para;</a></h2>
 <h3 id="objective_2">Objective<a class="headerlink" href="#objective_2" title="Permanent link">&para;</a></h3>
@@ -3266,32 +3239,17 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 </blockquote>
 <hr />
 <h3 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>PWM Value</th>
-<th>Expected Duty Cycle</th>
-<th>Measured Duty Cycle</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>64</td>
-<td>25%</td>
-<td></td>
-</tr>
-<tr>
-<td>128</td>
-<td>50%</td>
-<td></td>
-</tr>
-<tr>
-<td>192</td>
-<td>75%</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>PWM Value</th><th>Expected Duty Cycle</th><th>Measured Duty Cycle</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab01-exp2-d25" placeholder="%"></td></tr>
+    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab01-exp2-d50" placeholder="%"></td></tr>
+    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab01-exp2-d75" placeholder="%"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-3-led-brightness-control">Experiment 3 - LED Brightness Control<a class="headerlink" href="#experiment-3-led-brightness-control" title="Permanent link">&para;</a></h2>
 <h3 id="objective_3">Objective<a class="headerlink" href="#objective_3" title="Permanent link">&para;</a></h3>
@@ -3412,37 +3370,18 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 </code></pre></div>
 <hr />
 <h3 id="results-table_1">Results Table<a class="headerlink" href="#results-table_1" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>PWM Value</th>
-<th>Duty Cycle</th>
-<th>Observed Brightness</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>64</td>
-<td>25%</td>
-<td></td>
-</tr>
-<tr>
-<td>128</td>
-<td>50%</td>
-<td></td>
-</tr>
-<tr>
-<td>192</td>
-<td>75%</td>
-<td></td>
-</tr>
-<tr>
-<td>255</td>
-<td>100%</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Observed Brightness</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab01-exp3-b25" placeholder="e.g. Dim"></td></tr>
+    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab01-exp3-b50" placeholder="e.g. Medium"></td></tr>
+    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab01-exp3-b75" placeholder="e.g. Bright"></td></tr>
+    <tr><td>255</td><td>100%</td><td><input class="result-input" id="lab01-exp3-b100" placeholder="e.g. Fully on"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h3 id="why-does-brightness-change">Why Does Brightness Change?<a class="headerlink" href="#why-does-brightness-change" title="Permanent link">&para;</a></h3>
 <p>The LED is switching ON and OFF approximately 500 times per second.</p>
@@ -3465,6 +3404,18 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 <a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;PWM Average Voltage - Theory vs Measurement&#39;</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="overlay-your-measurements">Overlay Your Measurements<a class="headerlink" href="#overlay-your-measurements" title="Permanent link">&para;</a></h3>
+<div class="result-block">
+<table>
+  <thead><tr><th>Duty Cycle</th><th>Measured V<sub>avg</sub> (V)</th></tr></thead>
+  <tbody>
+    <tr><td>25%</td><td><input class="result-input" id="lab01-comp-vavg25" placeholder="V"></td></tr>
+    <tr><td>50%</td><td><input class="result-input" id="lab01-comp-vavg50" placeholder="V"></td></tr>
+    <tr><td>75%</td><td><input class="result-input" id="lab01-comp-vavg75" placeholder="V"></td></tr>
+    <tr><td>100%</td><td><input class="result-input" id="lab01-comp-vavg100" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
+
 <div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">D_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.50</span><span class="p">,</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span><span class="w"> </span><span class="mf">1.00</span><span class="p">];</span>
 <a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="n">Vavg_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.00</span><span class="p">];</span><span class="w">   </span><span class="c">% replace with your values</span>
 <a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
@@ -3522,6 +3473,12 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 <hr />
 <h3 id="question-5">Question 5<a class="headerlink" href="#question-5" title="Permanent link">&para;</a></h3>
 <p>Your MATLAB simulation predicted a frequency of 500 Hz but you measured 502 Hz on the oscilloscope. What could explain this difference?</p>
+<hr />
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab01">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab01">✕ Clear All Results</button>
+</div>
+
 <hr />
 <h2 id="project-summary">Project Summary<a class="headerlink" href="#project-summary" title="Permanent link">&para;</a></h2>
 <p>In this project you learned:</p>
@@ -3611,6 +3568,8 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
         <script src="https://unpkg.com/mermaid@11/dist/mermaid.min"></script>
+      
+        <script src="../javascripts/results.js"></script>
       
     
   </body>
