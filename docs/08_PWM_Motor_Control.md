@@ -272,11 +272,16 @@ For each run, note the time at which the output crosses 0.632 — this is always
 
 ### Prediction Table
 
-| Parameter | Predicted value |
-|-----------|----------------|
-| Motor time constant τ (s) | |
-| Speed at 1τ (% of max) | 63.2% |
-| Approximate settling time (5τ) | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Predicted value</th></tr></thead>
+  <tbody>
+    <tr><td>Motor time constant τ (s)</td><td><input class="result-input" id="lab08-sim-tau" placeholder="s"></td></tr>
+    <tr><td>Speed at 1τ (% of max)</td><td>63.2%</td></tr>
+    <tr><td>Approximate settling time (5τ)</td><td><input class="result-input" id="lab08-sim-settle" placeholder="s"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -397,15 +402,12 @@ Notice:
 
 Unlike an LED, the response is not instantaneous.
 
-Record observations:
-
-```text
-Why does speed increase slowly?
-________________________________
-
-Why does speed decrease slowly?
-________________________________
-```
+<div class="result-block">
+  <label><strong>Why does speed increase slowly?</strong></label>
+  <textarea class="result-textarea" id="lab08-exp1-obs-accel" placeholder="Your explanation..."></textarea>
+  <label><strong>Why does speed decrease slowly?</strong></label>
+  <textarea class="result-textarea" id="lab08-exp1-obs-decel" placeholder="Your explanation..."></textarea>
+</div>
 
 ---
 
@@ -477,11 +479,16 @@ The motor should rotate at a lower speed than full power.
 
 ### Measurements
 
-| Measurement | Expected | Measured |
-|-------------|----------|---------|
-| Frequency | ~500 Hz | |
-| Gate Voltage | ~3.3 V | |
-| Duty Cycle | ~50% | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Measurement</th><th>Expected</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Frequency</td><td>~500 Hz</td><td><input class="result-input" id="lab08-exp2-freq" placeholder="Hz"></td></tr>
+    <tr><td>Gate Voltage</td><td>~3.3 V</td><td><input class="result-input" id="lab08-exp2-vgate" placeholder="V"></td></tr>
+    <tr><td>Duty Cycle</td><td>~50%</td><td><input class="result-input" id="lab08-exp2-duty" placeholder="%"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -524,12 +531,17 @@ void loop()
 
 ### Results Table
 
-| PWM Value | Duty Cycle | Relative Speed |
-|-----------|------------|----------------|
-| 64 | 25% | |
-| 128 | 50% | |
-| 192 | 75% | |
-| 255 | 100% | |
+<div class="result-block">
+<table>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Relative Speed</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab08-exp3-spd25" placeholder="e.g. Slow"></td></tr>
+    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab08-exp3-spd50" placeholder="e.g. Medium"></td></tr>
+    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab08-exp3-spd75" placeholder="e.g. Fast"></td></tr>
+    <tr><td>255</td><td>100%</td><td><input class="result-input" id="lab08-exp3-spd100" placeholder="e.g. Maximum"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -593,11 +605,16 @@ This estimated time is approximately $\tau$, the motor time constant.
 
 ### Record Your Model Parameters
 
-| Parameter | Value |
-|-----------|-------|
-| Estimated τ (s) | |
-| Gain K | 1 (normalised) |
-| Transfer function G(s) | K / (τs + 1) |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>Estimated τ (s)</td><td><input class="result-input" id="lab08-exp4-tau" placeholder="s"></td></tr>
+    <tr><td>Gain K</td><td>1 (normalised)</td></tr>
+    <tr><td>Transfer function G(s)</td><td>K / (τs + 1)</td></tr>
+  </tbody>
+</table>
+</div>
 
 > Keep this table. Projects 11, 12, 13 and 14 will use this motor model as the plant for System Identification and P, PI and PID controller design.
 
@@ -746,6 +763,13 @@ Why can a motor often be modelled as a first-order system?
 ### Question 6
 
 You estimated τ = 0.5 s from the step response. How would you verify this estimate, and why does an accurate τ matter for designing the controller in Project 12?
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab08">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab08">✕ Clear All Results</button>
+</div>
 
 ---
 

@@ -300,11 +300,16 @@ To predict Experiments 3 and 4, change the Resistor and Capacitor values in the 
 
 ### Prediction Table
 
-| R | C | Predicted τ | $V_C$ at 1τ (V) |
-|---|---|---|---|
-| 10 kΩ | 100 µF | | |
-| 10 kΩ | 10 µF | | |
-| 1 kΩ | 100 µF | | |
+<div class="result-block">
+<table>
+  <thead><tr><th>R</th><th>C</th><th>Predicted τ</th><th>V<sub>C</sub> at 1τ (V)</th></tr></thead>
+  <tbody>
+    <tr><td>10 kΩ</td><td>100 µF</td><td><input class="result-input" id="lab02-sim1-tau1" placeholder="s"></td><td><input class="result-input" id="lab02-sim1-vc1" placeholder="V"></td></tr>
+    <tr><td>10 kΩ</td><td>10 µF</td><td><input class="result-input" id="lab02-sim1-tau2" placeholder="s"></td><td><input class="result-input" id="lab02-sim1-vc2" placeholder="V"></td></tr>
+    <tr><td>1 kΩ</td><td>100 µF</td><td><input class="result-input" id="lab02-sim1-tau3" placeholder="s"></td><td><input class="result-input" id="lab02-sim1-vc3" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -437,14 +442,19 @@ Re-run at the same frequencies. The ratio should now increase with frequency ins
 
 ### Prediction Table
 
-| Frequency (Hz) | LP $V_{OUT}/V_{IN}$ (simulated) | HP $V_{OUT}/V_{IN}$ (simulated) |
-|---|---|---|
-| 10 | | |
-| 100 | | |
-| 159 | | |
-| 500 | | |
-| 1000 | | |
-| 10000 | | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Frequency (Hz)</th><th>LP V<sub>OUT</sub>/V<sub>IN</sub> (simulated)</th><th>HP V<sub>OUT</sub>/V<sub>IN</sub> (simulated)</th></tr></thead>
+  <tbody>
+    <tr><td>10</td><td><input class="result-input" id="lab02-sim2-lp10" placeholder="ratio"></td><td><input class="result-input" id="lab02-sim2-hp10" placeholder="ratio"></td></tr>
+    <tr><td>100</td><td><input class="result-input" id="lab02-sim2-lp100" placeholder="ratio"></td><td><input class="result-input" id="lab02-sim2-hp100" placeholder="ratio"></td></tr>
+    <tr><td>159</td><td><input class="result-input" id="lab02-sim2-lp159" placeholder="ratio"></td><td><input class="result-input" id="lab02-sim2-hp159" placeholder="ratio"></td></tr>
+    <tr><td>500</td><td><input class="result-input" id="lab02-sim2-lp500" placeholder="ratio"></td><td><input class="result-input" id="lab02-sim2-hp500" placeholder="ratio"></td></tr>
+    <tr><td>1000</td><td><input class="result-input" id="lab02-sim2-lp1k" placeholder="ratio"></td><td><input class="result-input" id="lab02-sim2-hp1k" placeholder="ratio"></td></tr>
+    <tr><td>10000</td><td><input class="result-input" id="lab02-sim2-lp10k" placeholder="ratio"></td><td><input class="result-input" id="lab02-sim2-hp10k" placeholder="ratio"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -622,12 +632,17 @@ Verify the theoretical time constant by measuring the time for $V_C$ to reach $0
 
 ### Results Table
 
-| Parameter | Theory | Measured |
-|-----------|--------|---------|
-| Resistance | 10 kΩ | |
-| Capacitance | 100 µF | |
-| Time Constant τ | 1.0 s | |
-| Voltage at τ | 2.09 V (= 0.632 × 3.3 V) | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Theory</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Resistance</td><td>10 kΩ</td><td><input class="result-input" id="lab02-exp2-r" placeholder="kΩ"></td></tr>
+    <tr><td>Capacitance</td><td>100 µF</td><td><input class="result-input" id="lab02-exp2-c" placeholder="µF"></td></tr>
+    <tr><td>Time Constant τ</td><td>1.0 s</td><td><input class="result-input" id="lab02-exp2-tau" placeholder="s"></td></tr>
+    <tr><td>Voltage at τ</td><td>2.09 V</td><td><input class="result-input" id="lab02-exp2-vtau" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -645,10 +660,15 @@ Adjust the horizontal scale to **50 ms/div**.
 
 ### Results Table
 
-| Capacitor | Theoretical τ | Measured τ |
-|-----------|--------------|-----------|
-| 100 µF | 1.0 s | |
-| 10 µF | 0.1 s | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Capacitor</th><th>Theoretical τ</th><th>Measured τ</th></tr></thead>
+  <tbody>
+    <tr><td>100 µF</td><td>1.0 s</td><td><input class="result-input" id="lab02-exp3-tau100" placeholder="s"></td></tr>
+    <tr><td>10 µF</td><td>0.1 s</td><td><input class="result-input" id="lab02-exp3-tau10" placeholder="s"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -664,10 +684,15 @@ $$
 
 ### Results Table
 
-| Resistor | Theoretical τ | Measured τ |
-|----------|--------------|-----------|
-| 10 kΩ | 1.0 s | |
-| 1 kΩ | 0.1 s | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Resistor</th><th>Theoretical τ</th><th>Measured τ</th></tr></thead>
+  <tbody>
+    <tr><td>10 kΩ</td><td>1.0 s</td><td><input class="result-input" id="lab02-exp4-tau10k" placeholder="s"></td></tr>
+    <tr><td>1 kΩ</td><td>0.1 s</td><td><input class="result-input" id="lab02-exp4-tau1k" placeholder="s"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -751,14 +776,19 @@ Row 7 is the VOUT junction (`c7` and `e7` are the same row — no jumper needed)
 
 Change the generator frequency for each row. Record CH1 Vpp (input) and CH2 Vpp (output).
 
-| Frequency | CH1 Vpp (VIN) | CH2 Vpp (VOUT) | Ratio VOUT/VIN |
-|-----------|--------------|---------------|----------------|
-| 10 Hz | | | |
-| 100 Hz | | | |
-| 159 Hz | | | |
-| 500 Hz | | | |
-| 1 kHz | | | |
-| 10 kHz | | | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Frequency</th><th>CH1 Vpp (V<sub>IN</sub>)</th><th>CH2 Vpp (V<sub>OUT</sub>)</th><th>Ratio V<sub>OUT</sub>/V<sub>IN</sub></th></tr></thead>
+  <tbody>
+    <tr><td>10 Hz</td><td><input class="result-input" id="lab02-exp5-vin10" placeholder="V"></td><td><input class="result-input" id="lab02-exp5-vout10" placeholder="V"></td><td><input class="result-input" id="lab02-exp5-ratio10" placeholder=""></td></tr>
+    <tr><td>100 Hz</td><td><input class="result-input" id="lab02-exp5-vin100" placeholder="V"></td><td><input class="result-input" id="lab02-exp5-vout100" placeholder="V"></td><td><input class="result-input" id="lab02-exp5-ratio100" placeholder=""></td></tr>
+    <tr><td>159 Hz</td><td><input class="result-input" id="lab02-exp5-vin159" placeholder="V"></td><td><input class="result-input" id="lab02-exp5-vout159" placeholder="V"></td><td><input class="result-input" id="lab02-exp5-ratio159" placeholder=""></td></tr>
+    <tr><td>500 Hz</td><td><input class="result-input" id="lab02-exp5-vin500" placeholder="V"></td><td><input class="result-input" id="lab02-exp5-vout500" placeholder="V"></td><td><input class="result-input" id="lab02-exp5-ratio500" placeholder=""></td></tr>
+    <tr><td>1 kHz</td><td><input class="result-input" id="lab02-exp5-vin1k" placeholder="V"></td><td><input class="result-input" id="lab02-exp5-vout1k" placeholder="V"></td><td><input class="result-input" id="lab02-exp5-ratio1k" placeholder=""></td></tr>
+    <tr><td>10 kHz</td><td><input class="result-input" id="lab02-exp5-vin10k" placeholder="V"></td><td><input class="result-input" id="lab02-exp5-vout10k" placeholder="V"></td><td><input class="result-input" id="lab02-exp5-ratio10k" placeholder=""></td></tr>
+  </tbody>
+</table>
+</div>
 
 At $f_c \approx 159$ Hz the ratio should be approximately **0.707** (−3 dB).
 
@@ -822,14 +852,19 @@ Same generator settings as Experiment 5.
 
 ### Procedure and Measurements
 
-| Frequency | CH1 Vpp (VIN) | CH2 Vpp (VOUT) | Ratio VOUT/VIN |
-|-----------|--------------|---------------|----------------|
-| 10 Hz | | | |
-| 100 Hz | | | |
-| 159 Hz | | | |
-| 500 Hz | | | |
-| 1 kHz | | | |
-| 10 kHz | | | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Frequency</th><th>CH1 Vpp (V<sub>IN</sub>)</th><th>CH2 Vpp (V<sub>OUT</sub>)</th><th>Ratio V<sub>OUT</sub>/V<sub>IN</sub></th></tr></thead>
+  <tbody>
+    <tr><td>10 Hz</td><td><input class="result-input" id="lab02-exp6-vin10" placeholder="V"></td><td><input class="result-input" id="lab02-exp6-vout10" placeholder="V"></td><td><input class="result-input" id="lab02-exp6-ratio10" placeholder=""></td></tr>
+    <tr><td>100 Hz</td><td><input class="result-input" id="lab02-exp6-vin100" placeholder="V"></td><td><input class="result-input" id="lab02-exp6-vout100" placeholder="V"></td><td><input class="result-input" id="lab02-exp6-ratio100" placeholder=""></td></tr>
+    <tr><td>159 Hz</td><td><input class="result-input" id="lab02-exp6-vin159" placeholder="V"></td><td><input class="result-input" id="lab02-exp6-vout159" placeholder="V"></td><td><input class="result-input" id="lab02-exp6-ratio159" placeholder=""></td></tr>
+    <tr><td>500 Hz</td><td><input class="result-input" id="lab02-exp6-vin500" placeholder="V"></td><td><input class="result-input" id="lab02-exp6-vout500" placeholder="V"></td><td><input class="result-input" id="lab02-exp6-ratio500" placeholder=""></td></tr>
+    <tr><td>1 kHz</td><td><input class="result-input" id="lab02-exp6-vin1k" placeholder="V"></td><td><input class="result-input" id="lab02-exp6-vout1k" placeholder="V"></td><td><input class="result-input" id="lab02-exp6-ratio1k" placeholder=""></td></tr>
+    <tr><td>10 kHz</td><td><input class="result-input" id="lab02-exp6-vin10k" placeholder="V"></td><td><input class="result-input" id="lab02-exp6-vout10k" placeholder="V"></td><td><input class="result-input" id="lab02-exp6-ratio10k" placeholder=""></td></tr>
+  </tbody>
+</table>
+</div>
 
 At $f_c \approx 159$ Hz the ratio should again be approximately **0.707**.
 
@@ -837,12 +872,17 @@ At $f_c \approx 159$ Hz the ratio should again be approximately **0.707**.
 
 ### LP vs HP Comparison
 
-| Frequency | LP Ratio (Exp 5) | HP Ratio (Exp 6) | Which filter passes? |
-|-----------|-----------------|-----------------|----------------------|
-| 10 Hz | | | |
-| 159 Hz | ≈0.707 | ≈0.707 | Both at cutoff |
-| 1 kHz | | | |
-| 10 kHz | | | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Frequency</th><th>LP Ratio (Exp 5)</th><th>HP Ratio (Exp 6)</th><th>Which filter passes?</th></tr></thead>
+  <tbody>
+    <tr><td>10 Hz</td><td><input class="result-input" id="lab02-comp-lp10" placeholder=""></td><td><input class="result-input" id="lab02-comp-hp10" placeholder=""></td><td><input class="result-input" id="lab02-comp-which10" placeholder=""></td></tr>
+    <tr><td>159 Hz</td><td>≈0.707</td><td>≈0.707</td><td>Both at cutoff</td></tr>
+    <tr><td>1 kHz</td><td><input class="result-input" id="lab02-comp-lp1k" placeholder=""></td><td><input class="result-input" id="lab02-comp-hp1k" placeholder=""></td><td><input class="result-input" id="lab02-comp-which1k" placeholder=""></td></tr>
+    <tr><td>10 kHz</td><td><input class="result-input" id="lab02-comp-lp10k" placeholder=""></td><td><input class="result-input" id="lab02-comp-hp10k" placeholder=""></td><td><input class="result-input" id="lab02-comp-which10k" placeholder=""></td></tr>
+  </tbody>
+</table>
+</div>
 
 Below $f_c$: LP ratio → 1, HP ratio → 0. Above $f_c$: opposite.
 
@@ -988,6 +1028,13 @@ Why is an RC circuit considered a first-order system?
 ### Question 6
 
 Your MATLAB simulation predicted τ = 1.0 s but you measured τ = 1.15 s. Name two physical reasons that could explain this discrepancy.
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab02">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab02">✕ Clear All Results</button>
+</div>
 
 ---
 

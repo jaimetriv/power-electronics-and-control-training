@@ -410,11 +410,16 @@ Change the **Pulse Width** in the Pulse Generator and re-run for each experiment
 
 ### Prediction Table
 
-| PWM Value | Duty Cycle | Predicted $V_{OUT}$ (V) |
-|-----------|------------|-------------------------|
-| 64 | 25% | |
-| 128 | 50% | |
-| 192 | 75% | |
+<div class="result-block">
+<table>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Predicted V<sub>OUT</sub> (V)</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab07-sim-vout25" placeholder="V"></td></tr>
+    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab07-sim-vout50" placeholder="V"></td></tr>
+    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab07-sim-vout75" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -512,11 +517,16 @@ void loop()
 
 ### Measurements
 
-| Parameter | Expected | Measured |
-|-----------|----------|---------|
-| Frequency | ~500 Hz | |
-| Duty Cycle | ~50% | |
-| Gate Voltage | ~3.3 V | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Frequency</td><td>~500 Hz</td><td><input class="result-input" id="lab07-exp1-freq" placeholder="Hz"></td></tr>
+    <tr><td>Duty Cycle</td><td>~50%</td><td><input class="result-input" id="lab07-exp1-duty" placeholder="%"></td></tr>
+    <tr><td>Gate Voltage</td><td>~3.3 V</td><td><input class="result-input" id="lab07-exp1-vgate" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -650,11 +660,16 @@ Measure the average DC output at each step with a multimeter.
 
 ### Results Table
 
-| PWM Value | Duty Cycle | Expected V\_{OUT} (ideal) | Measured V\_{OUT} |
-|-----------|------------|--------------------------|-------------------|
-| 64 | 25% | 4.4 V | |
-| 128 | 50% | 6.6 V | |
-| 192 | 75% | 13.2 V | |
+<div class="result-block">
+<table>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Expected V<sub>OUT</sub> (ideal)</th><th>Measured V<sub>OUT</sub> (V)</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td>4.4 V</td><td><input class="result-input" id="lab07-exp2-vout25" placeholder="V"></td></tr>
+    <tr><td>128</td><td>50%</td><td>6.6 V</td><td><input class="result-input" id="lab07-exp2-vout50" placeholder="V"></td></tr>
+    <tr><td>192</td><td>75%</td><td>13.2 V</td><td><input class="result-input" id="lab07-exp2-vout75" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -691,6 +706,16 @@ Observe output voltage ripple at the switching frequency.
 The output should contain an average DC voltage plus a small ripple voltage.
 
 Ripple occurs because the capacitor continuously charges and discharges.
+
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Peak-to-peak ripple (V)</td><td><input class="result-input" id="lab07-exp3-ripple" placeholder="V"></td></tr>
+    <tr><td>Ripple frequency (Hz)</td><td><input class="result-input" id="lab07-exp3-freq" placeholder="Hz"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -860,6 +885,13 @@ What happens when duty cycle increases?
 ### Question 6
 
 The ideal Boost equation predicts Vout = 13.2 V at D = 0.75 with Vin = 3.3 V. Your measured value was lower. Apart from component losses, explain why the nonlinear gain curve makes the Boost Converter harder to control at high duty cycles than the Buck Converter.
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab07">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab07">✕ Clear All Results</button>
+</div>
 
 ---
 

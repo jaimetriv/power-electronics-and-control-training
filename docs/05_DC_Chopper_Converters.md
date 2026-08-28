@@ -320,11 +320,16 @@ Note that the Type A (Buck) curve and the motor chopper $V_{AVG} = D \cdot V_S$ 
 
 ### Prediction Table
 
-| PWM Value | Duty Cycle | Predicted $V_{AVG}$ (V) | Motor speed |
-|-----------|------------|-------------------------|-------------|
-| 64 | 25% | | |
-| 128 | 50% | | |
-| 192 | 75% | | |
+<div class="result-block">
+<table>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Predicted V<sub>AVG</sub> (V)</th><th>Motor speed</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab05-sim-vavg25" placeholder="V"></td><td><input class="result-input" id="lab05-sim-spd25" placeholder="e.g. Slow"></td></tr>
+    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab05-sim-vavg50" placeholder="V"></td><td><input class="result-input" id="lab05-sim-spd50" placeholder="e.g. Medium"></td></tr>
+    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab05-sim-vavg75" placeholder="V"></td><td><input class="result-input" id="lab05-sim-spd75" placeholder="e.g. Fast"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -411,11 +416,16 @@ The waveform should switch between 0 V and approximately 3.3 V at ~500 Hz with e
 
 ### Measurements
 
-| Parameter | Expected | Measured |
-|-----------|----------|---------|
-| Frequency | ~500 Hz | |
-| Duty Cycle | ~50% | |
-| Peak Voltage | ~3.3 V | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Frequency</td><td>~500 Hz</td><td><input class="result-input" id="lab05-exp1-freq" placeholder="Hz"></td></tr>
+    <tr><td>Duty Cycle</td><td>~50%</td><td><input class="result-input" id="lab05-exp1-duty" placeholder="%"></td></tr>
+    <tr><td>Peak Voltage</td><td>~3.3 V</td><td><input class="result-input" id="lab05-exp1-vpeak" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -458,11 +468,16 @@ void loop()
 
 ### Results Table
 
-| PWM Value | Duty Cycle | Measured V\_{AVG} |
-|-----------|------------|------------------|
-| 64 | 25% | |
-| 128 | 50% | |
-| 192 | 75% | |
+<div class="result-block">
+<table>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Measured V<sub>AVG</sub> (V)</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab05-exp2-vavg25" placeholder="V"></td></tr>
+    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab05-exp2-vavg50" placeholder="V"></td></tr>
+    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab05-exp2-vavg75" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -600,6 +615,13 @@ Why are chopper converters efficient?
 ### Question 6
 
 A DC motor drive and a Buck Converter both use the equation $V_{AVG} = D \times V_S$. Explain one key circuit difference between them that makes the Buck Converter suitable for powering sensitive electronics while the basic motor chopper is not.
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab05">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab05">✕ Clear All Results</button>
+</div>
 
 ---
 

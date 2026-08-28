@@ -445,11 +445,16 @@ Change the **Pulse Width** in the Pulse Generator and re-run for each experiment
 
 ### Prediction Table
 
-| PWM Value | Duty Cycle | Predicted $V_{OUT}$ (V) |
-|-----------|------------|-------------------------|
-| 64 | 25% | |
-| 128 | 50% | |
-| 192 | 75% | |
+<div class="result-block">
+<table>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Predicted V<sub>OUT</sub> (V)</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab06-sim-vout25" placeholder="V"></td></tr>
+    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab06-sim-vout50" placeholder="V"></td></tr>
+    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab06-sim-vout75" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -545,11 +550,16 @@ void loop()
 
 ### Measurements
 
-| Parameter | Expected | Measured |
-|-----------|----------|---------|
-| Frequency | ~500 Hz | |
-| Duty Cycle | ~50% | |
-| Gate Voltage | ~3.3 V | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Frequency</td><td>~500 Hz</td><td><input class="result-input" id="lab06-exp1-freq" placeholder="Hz"></td></tr>
+    <tr><td>Duty Cycle</td><td>~50%</td><td><input class="result-input" id="lab06-exp1-duty" placeholder="%"></td></tr>
+    <tr><td>Gate Voltage</td><td>~3.3 V</td><td><input class="result-input" id="lab06-exp1-vgate" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -684,11 +694,16 @@ Measure the average DC output at each step with a multimeter or the oscilloscope
 
 ### Results Table
 
-| PWM Value | Duty Cycle | Expected V\_{OUT} | Measured V\_{OUT} |
-|-----------|------------|-------------------|-------------------|
-| 64 | 25% | 0.83 V | |
-| 128 | 50% | 1.65 V | |
-| 192 | 75% | 2.48 V | |
+<div class="result-block">
+<table>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Expected V<sub>OUT</sub> (V)</th><th>Measured V<sub>OUT</sub> (V)</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td>0.83 V</td><td><input class="result-input" id="lab06-exp2-vout25" placeholder="V"></td></tr>
+    <tr><td>128</td><td>50%</td><td>1.65 V</td><td><input class="result-input" id="lab06-exp2-vout50" placeholder="V"></td></tr>
+    <tr><td>192</td><td>75%</td><td>2.48 V</td><td><input class="result-input" id="lab06-exp2-vout75" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -742,6 +757,16 @@ Small Ripple
 The ripple should be relatively small compared to the average output voltage.
 
 Record the peak-to-peak ripple voltage.
+
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Peak-to-peak ripple (V)</td><td><input class="result-input" id="lab06-exp3-ripple" placeholder="V"></td></tr>
+    <tr><td>Ripple frequency (Hz)</td><td><input class="result-input" id="lab06-exp3-freq" placeholder="Hz"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -884,6 +909,13 @@ What causes output ripple?
 ### Question 6
 
 Your simulation predicted Vout = 2.5 V at 50% duty cycle but you measured 2.1 V. The MOSFET has $V_{DS(on)}$ = 0.1 V and the 1N5819 has a forward voltage of 0.3 V. Show how these account for the 0.4 V discrepancy.
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab06">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab06">✕ Clear All Results</button>
+</div>
 
 ---
 

@@ -441,11 +441,16 @@ Change the **Resistor** value and re-run for each experiment:
 
 Record your predictions before measuring:
 
-| R | Predicted ζ | Expected behaviour |
-|-------|------------|-------------------|
-| 47 Ω | | |
-| 100 Ω | | |
-| 470 Ω | | |
+<div class="result-block">
+<table>
+  <thead><tr><th>R</th><th>Predicted ζ</th><th>Expected behaviour</th></tr></thead>
+  <tbody>
+    <tr><td>47 Ω</td><td><input class="result-input" id="lab03-sim-zeta47" placeholder=""></td><td><input class="result-input" id="lab03-sim-beh47" placeholder="e.g. Strong ringing"></td></tr>
+    <tr><td>100 Ω</td><td><input class="result-input" id="lab03-sim-zeta100" placeholder=""></td><td><input class="result-input" id="lab03-sim-beh100" placeholder="e.g. Moderate ringing"></td></tr>
+    <tr><td>470 Ω</td><td><input class="result-input" id="lab03-sim-zeta470" placeholder=""></td><td><input class="result-input" id="lab03-sim-beh470" placeholder="e.g. Little ringing"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -654,12 +659,17 @@ $$
 
 ### Results Table
 
-| Parameter | Theory | Measured |
-|-----------|--------|---------|
-| L | 100 mH | |
-| C | 100 nF | |
-| $f_n$ | 1591 Hz | |
-| Ringing observed | Yes | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Theory</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>L</td><td>100 mH</td><td><input class="result-input" id="lab03-exp2-L" placeholder="mH"></td></tr>
+    <tr><td>C</td><td>100 nF</td><td><input class="result-input" id="lab03-exp2-C" placeholder="nF"></td></tr>
+    <tr><td>f<sub>n</sub></td><td>1591 Hz</td><td><input class="result-input" id="lab03-exp2-fn" placeholder="Hz"></td></tr>
+    <tr><td>Ringing observed</td><td>Yes</td><td><input class="result-input" id="lab03-exp2-ring" placeholder="Yes / No"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -687,18 +697,21 @@ Higher resistance means:
 
 Describe the waveform compared to Experiment 1:
 
-```text
-_________________________________
-```
-
----
+<div class="result-block">
+  <textarea class="result-textarea" id="lab03-exp3-obs" placeholder="Describe what you observe compared to Experiment 1..."></textarea>
+</div>
 
 ### Results Table
 
-| Resistance | Ringing Observed |
-|------------|-----------------|
-| 100 Ω | |
-| 470 Ω | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Resistance</th><th>Ringing Observed</th></tr></thead>
+  <tbody>
+    <tr><td>100 Ω</td><td><input class="result-input" id="lab03-exp3-ring100" placeholder="e.g. Moderate"></td></tr>
+    <tr><td>470 Ω</td><td><input class="result-input" id="lab03-exp3-ring470" placeholder="e.g. Little / None"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -726,19 +739,22 @@ Lower resistance means:
 
 Describe the waveform compared to Experiments 1 and 3:
 
-```text
-_________________________________
-```
-
----
+<div class="result-block">
+  <textarea class="result-textarea" id="lab03-exp4-obs" placeholder="Describe what you observe compared to Experiments 1 and 3..."></textarea>
+</div>
 
 ### Results Table
 
-| Resistance | Damping | Response |
-|------------|---------|---------|
-| 47 Ω | Low | |
-| 100 Ω | Medium | |
-| 470 Ω | High | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Resistance</th><th>Damping</th><th>Response</th></tr></thead>
+  <tbody>
+    <tr><td>47 Ω</td><td>Low</td><td><input class="result-input" id="lab03-exp4-resp47" placeholder="e.g. Strong ringing"></td></tr>
+    <tr><td>100 Ω</td><td>Medium</td><td><input class="result-input" id="lab03-exp4-resp100" placeholder="e.g. Moderate ringing"></td></tr>
+    <tr><td>470 Ω</td><td>High</td><td><input class="result-input" id="lab03-exp4-resp470" placeholder="e.g. Overdamped"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -915,6 +931,15 @@ Why is an RLC circuit a second-order system?
 ### Question 6
 
 Your MATLAB simulation predicted $f_n$ = 1591 Hz but you measured $f_n$ = 1520 Hz. Name two physical reasons that could explain this discrepancy.
+
+---
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab03">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab03">✕ Clear All Results</button>
+</div>
 
 ---
 

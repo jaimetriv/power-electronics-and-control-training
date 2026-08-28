@@ -304,12 +304,17 @@ Observe how the ON time grows relative to the period as duty cycle increases.
 
 Record your predicted average voltages before measuring:
 
-| PWM Value | Duty Cycle | Predicted $V_{AVG}$ |
-|-----------|------------|---------------------|
-| 64 | 25% | |
-| 128 | 50% | |
-| 192 | 75% | |
-| 255 | 100% | |
+<div class="result-block">
+<table>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Predicted V<sub>AVG</sub> (V)</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab04-sim-vavg25" placeholder="V"></td></tr>
+    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab04-sim-vavg50" placeholder="V"></td></tr>
+    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab04-sim-vavg75" placeholder="V"></td></tr>
+    <tr><td>255</td><td>100%</td><td><input class="result-input" id="lab04-sim-vavg100" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -520,10 +525,15 @@ On the oscilloscope you should see the gate voltage switching between 0 V and ap
 
 ### Record Measurements
 
-| Parameter | Expected | Measured |
-|-----------|----------|---------|
-| Gate LOW | 0 V | |
-| Gate HIGH | ~3.3 V | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Gate LOW</td><td>0 V</td><td><input class="result-input" id="lab04-exp1-vlow" placeholder="V"></td></tr>
+    <tr><td>Gate HIGH</td><td>~3.3 V</td><td><input class="result-input" id="lab04-exp1-vhigh" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -602,11 +612,16 @@ On the oscilloscope you should see the PWM square wave on the gate.
 
 ### Record Measurements
 
-| Parameter | Measured |
-|-----------|---------|
-| Frequency | |
-| Duty Cycle | |
-| Peak Voltage | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Frequency</td><td><input class="result-input" id="lab04-exp2-freq" placeholder="Hz"></td></tr>
+    <tr><td>Duty Cycle</td><td><input class="result-input" id="lab04-exp2-duty" placeholder="%"></td></tr>
+    <tr><td>Peak Voltage</td><td><input class="result-input" id="lab04-exp2-vpeak" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -670,12 +685,17 @@ For each step, also observe the gate waveform on the oscilloscope and note how t
 
 ### Results Table
 
-| PWM Value | Duty Cycle | Observed Brightness |
-|-----------|------------|---------------------|
-| 64 | 25% | |
-| 128 | 50% | |
-| 192 | 75% | |
-| 255 | 100% | |
+<div class="result-block">
+<table>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Observed Brightness</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab04-exp3-b25" placeholder="e.g. Dim"></td></tr>
+    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab04-exp3-b50" placeholder="e.g. Medium"></td></tr>
+    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab04-exp3-b75" placeholder="e.g. Bright"></td></tr>
+    <tr><td>255</td><td>100%</td><td><input class="result-input" id="lab04-exp3-b100" placeholder="e.g. Fully on"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -917,6 +937,13 @@ Why can't a microcontroller pin drive a large motor directly?
 ### Question 6
 
 Your simulation predicted $V_{AVG}$ = 2.5 V at 50% duty cycle but you measured 2.3 V. Give two physical reasons that could explain this.
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab04">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab04">✕ Clear All Results</button>
+</div>
 
 ---
 
