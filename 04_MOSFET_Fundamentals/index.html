@@ -3404,37 +3404,18 @@ P = V \cdot I
 <hr />
 <h3 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h3>
 <p>Record your predicted average voltages before measuring:</p>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>PWM Value</th>
-<th>Duty Cycle</th>
-<th>Predicted <span class="arithmatex">\(V_{AVG}\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>64</td>
-<td>25%</td>
-<td></td>
-</tr>
-<tr>
-<td>128</td>
-<td>50%</td>
-<td></td>
-</tr>
-<tr>
-<td>192</td>
-<td>75%</td>
-<td></td>
-</tr>
-<tr>
-<td>255</td>
-<td>100%</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Predicted V<sub>AVG</sub> (V)</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab04-sim-vavg25" placeholder="V"></td></tr>
+    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab04-sim-vavg50" placeholder="V"></td></tr>
+    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab04-sim-vavg75" placeholder="V"></td></tr>
+    <tr><td>255</td><td>100%</td><td><input class="result-input" id="lab04-sim-vavg100" placeholder="V"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="components-required">Components Required<a class="headerlink" href="#components-required" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3610,27 +3591,16 @@ P = V \cdot I
 <p>On the oscilloscope you should see the gate voltage switching between 0 V and approximately 3.3 V.</p>
 <hr />
 <h3 id="record-measurements">Record Measurements<a class="headerlink" href="#record-measurements" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Expected</th>
-<th>Measured</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Gate LOW</td>
-<td>0 V</td>
-<td></td>
-</tr>
-<tr>
-<td>Gate HIGH</td>
-<td>~3.3 V</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Gate LOW</td><td>0 V</td><td><input class="result-input" id="lab04-exp1-vlow" placeholder="V"></td></tr>
+    <tr><td>Gate HIGH</td><td>~3.3 V</td><td><input class="result-input" id="lab04-exp1-vhigh" placeholder="V"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-2-pwm-controlled-mosfet">Experiment 2 - PWM Controlled MOSFET<a class="headerlink" href="#experiment-2-pwm-controlled-mosfet" title="Permanent link">&para;</a></h2>
 <h3 id="objective_2">Objective<a class="headerlink" href="#objective_2" title="Permanent link">&para;</a></h3>
@@ -3711,28 +3681,17 @@ P = V \cdot I
 <p>On the oscilloscope you should see the PWM square wave on the gate.</p>
 <hr />
 <h3 id="record-measurements_1">Record Measurements<a class="headerlink" href="#record-measurements_1" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Measured</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Frequency</td>
-<td></td>
-</tr>
-<tr>
-<td>Duty Cycle</td>
-<td></td>
-</tr>
-<tr>
-<td>Peak Voltage</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Parameter</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Frequency</td><td><input class="result-input" id="lab04-exp2-freq" placeholder="Hz"></td></tr>
+    <tr><td>Duty Cycle</td><td><input class="result-input" id="lab04-exp2-duty" placeholder="%"></td></tr>
+    <tr><td>Peak Voltage</td><td><input class="result-input" id="lab04-exp2-vpeak" placeholder="V"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-3-led-brightness-control">Experiment 3 - LED Brightness Control<a class="headerlink" href="#experiment-3-led-brightness-control" title="Permanent link">&para;</a></h2>
 <h3 id="objective_3">Objective<a class="headerlink" href="#objective_3" title="Permanent link">&para;</a></h3>
@@ -3777,37 +3736,18 @@ P = V \cdot I
 <p>For each step, also observe the gate waveform on the oscilloscope and note how the ON time changes.</p>
 <hr />
 <h3 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>PWM Value</th>
-<th>Duty Cycle</th>
-<th>Observed Brightness</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>64</td>
-<td>25%</td>
-<td></td>
-</tr>
-<tr>
-<td>128</td>
-<td>50%</td>
-<td></td>
-</tr>
-<tr>
-<td>192</td>
-<td>75%</td>
-<td></td>
-</tr>
-<tr>
-<td>255</td>
-<td>100%</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Observed Brightness</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab04-exp3-b25" placeholder="e.g. Dim"></td></tr>
+    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab04-exp3-b50" placeholder="e.g. Medium"></td></tr>
+    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab04-exp3-b75" placeholder="e.g. Bright"></td></tr>
+    <tr><td>255</td><td>100%</td><td><input class="result-input" id="lab04-exp3-b100" placeholder="e.g. Fully on"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h3 id="why-pwm-works">Why PWM Works<a class="headerlink" href="#why-pwm-works" title="Permanent link">&para;</a></h3>
 <p>Average voltage delivered to the load:</p>
@@ -3975,6 +3915,12 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 <hr />
 <h3 id="question-6">Question 6<a class="headerlink" href="#question-6" title="Permanent link">&para;</a></h3>
 <p>Your simulation predicted <span class="arithmatex">\(V_{AVG}\)</span> = 2.5 V at 50% duty cycle but you measured 2.3 V. Give two physical reasons that could explain this.</p>
+<hr />
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab04">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab04">✕ Clear All Results</button>
+</div>
+
 <hr />
 <h2 id="project-summary">Project Summary<a class="headerlink" href="#project-summary" title="Permanent link">&para;</a></h2>
 <p>In this project you learned:</p>

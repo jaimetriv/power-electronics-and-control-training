@@ -3542,32 +3542,17 @@ V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 <p>✅ Stop time = 0.04, Solver = ode23t, Max step = 1e-6</p>
 <hr />
 <h3 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>PWM Value</th>
-<th>Duty Cycle</th>
-<th>Predicted <span class="arithmatex">\(V_{OUT}\)</span> (V)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>64</td>
-<td>25%</td>
-<td></td>
-</tr>
-<tr>
-<td>128</td>
-<td>50%</td>
-<td></td>
-</tr>
-<tr>
-<td>192</td>
-<td>75%</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Predicted V<sub>OUT</sub> (V)</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab06-sim-vout25" placeholder="V"></td></tr>
+    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab06-sim-vout50" placeholder="V"></td></tr>
+    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab06-sim-vout75" placeholder="V"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="components-required">Components Required<a class="headerlink" href="#components-required" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3662,32 +3647,17 @@ V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 </code></pre></div>
 <hr />
 <h3 id="measurements">Measurements<a class="headerlink" href="#measurements" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Expected</th>
-<th>Measured</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Frequency</td>
-<td>~500 Hz</td>
-<td></td>
-</tr>
-<tr>
-<td>Duty Cycle</td>
-<td>~50%</td>
-<td></td>
-</tr>
-<tr>
-<td>Gate Voltage</td>
-<td>~3.3 V</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Frequency</td><td>~500 Hz</td><td><input class="result-input" id="lab06-exp1-freq" placeholder="Hz"></td></tr>
+    <tr><td>Duty Cycle</td><td>~50%</td><td><input class="result-input" id="lab06-exp1-duty" placeholder="%"></td></tr>
+    <tr><td>Gate Voltage</td><td>~3.3 V</td><td><input class="result-input" id="lab06-exp1-vgate" placeholder="V"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-2-build-the-buck-converter-and-vary-duty-cycle">Experiment 2 - Build the Buck Converter and Vary Duty Cycle<a class="headerlink" href="#experiment-2-build-the-buck-converter-and-vary-duty-cycle" title="Permanent link">&para;</a></h2>
 <h3 id="objective_2">Objective<a class="headerlink" href="#objective_2" title="Permanent link">&para;</a></h3>
@@ -3810,36 +3780,17 @@ V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 <p>Measure the average DC output at each step with a multimeter or the oscilloscope DC measurement.</p>
 <hr />
 <h3 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>PWM Value</th>
-<th>Duty Cycle</th>
-<th>Expected V_{OUT}</th>
-<th>Measured V_{OUT}</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>64</td>
-<td>25%</td>
-<td>0.83 V</td>
-<td></td>
-</tr>
-<tr>
-<td>128</td>
-<td>50%</td>
-<td>1.65 V</td>
-<td></td>
-</tr>
-<tr>
-<td>192</td>
-<td>75%</td>
-<td>2.48 V</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Expected V<sub>OUT</sub> (V)</th><th>Measured V<sub>OUT</sub> (V)</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td>0.83 V</td><td><input class="result-input" id="lab06-exp2-vout25" placeholder="V"></td></tr>
+    <tr><td>128</td><td>50%</td><td>1.65 V</td><td><input class="result-input" id="lab06-exp2-vout50" placeholder="V"></td></tr>
+    <tr><td>192</td><td>75%</td><td>2.48 V</td><td><input class="result-input" id="lab06-exp2-vout75" placeholder="V"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-3-observe-output-ripple">Experiment 3 - Observe Output Ripple<a class="headerlink" href="#experiment-3-observe-output-ripple" title="Permanent link">&para;</a></h2>
 <h3 id="objective_3">Objective<a class="headerlink" href="#objective_3" title="Permanent link">&para;</a></h3>
@@ -3902,6 +3853,16 @@ V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 <h3 id="observe_1">Observe<a class="headerlink" href="#observe_1" title="Permanent link">&para;</a></h3>
 <p>The ripple should be relatively small compared to the average output voltage.</p>
 <p>Record the peak-to-peak ripple voltage.</p>
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Peak-to-peak ripple (V)</td><td><input class="result-input" id="lab06-exp3-ripple" placeholder="V"></td></tr>
+    <tr><td>Ripple frequency (Hz)</td><td><input class="result-input" id="lab06-exp3-freq" placeholder="Hz"></td></tr>
+  </tbody>
+</table>
+</div>
+
 <hr />
 <h3 id="how-can-ripple-be-reduced">How Can Ripple Be Reduced?<a class="headerlink" href="#how-can-ripple-be-reduced" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3990,6 +3951,12 @@ V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 <hr />
 <h3 id="question-6">Question 6<a class="headerlink" href="#question-6" title="Permanent link">&para;</a></h3>
 <p>Your simulation predicted Vout = 2.5 V at 50% duty cycle but you measured 2.1 V. The MOSFET has <span class="arithmatex">\(V_{DS(on)}\)</span> = 0.1 V and the 1N5819 has a forward voltage of 0.3 V. Show how these account for the 0.4 V discrepancy.</p>
+<hr />
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab06">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab06">✕ Clear All Results</button>
+</div>
+
 <hr />
 <h2 id="project-summary">Project Summary<a class="headerlink" href="#project-summary" title="Permanent link">&para;</a></h2>
 <p>In this project you learned:</p>

@@ -3741,32 +3741,17 @@ f_n = \frac{10\,000}{2\pi} \approx 1591\ \text{Hz}
 <hr />
 <h3 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h3>
 <p>Record your predictions before measuring:</p>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>R</th>
-<th>Predicted ζ</th>
-<th>Expected behaviour</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>47 Ω</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>100 Ω</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>470 Ω</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>R</th><th>Predicted ζ</th><th>Expected behaviour</th></tr></thead>
+  <tbody>
+    <tr><td>47 Ω</td><td><input class="result-input" id="lab03-sim-zeta47" placeholder=""></td><td><input class="result-input" id="lab03-sim-beh47" placeholder="e.g. Strong ringing"></td></tr>
+    <tr><td>100 Ω</td><td><input class="result-input" id="lab03-sim-zeta100" placeholder=""></td><td><input class="result-input" id="lab03-sim-beh100" placeholder="e.g. Moderate ringing"></td></tr>
+    <tr><td>470 Ω</td><td><input class="result-input" id="lab03-sim-zeta470" placeholder=""></td><td><input class="result-input" id="lab03-sim-beh470" placeholder="e.g. Little ringing"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="components-required">Components Required<a class="headerlink" href="#components-required" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3937,37 +3922,18 @@ f_n \approx 1591\ \text{Hz}
 \]</div>
 <hr />
 <h3 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Theory</th>
-<th>Measured</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>L</td>
-<td>100 mH</td>
-<td></td>
-</tr>
-<tr>
-<td>C</td>
-<td>100 nF</td>
-<td></td>
-</tr>
-<tr>
-<td><span class="arithmatex">\(f_n\)</span></td>
-<td>1591 Hz</td>
-<td></td>
-</tr>
-<tr>
-<td>Ringing observed</td>
-<td>Yes</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Parameter</th><th>Theory</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>L</td><td>100 mH</td><td><input class="result-input" id="lab03-exp2-L" placeholder="mH"></td></tr>
+    <tr><td>C</td><td>100 nF</td><td><input class="result-input" id="lab03-exp2-C" placeholder="nF"></td></tr>
+    <tr><td>f<sub>n</sub></td><td>1591 Hz</td><td><input class="result-input" id="lab03-exp2-fn" placeholder="Hz"></td></tr>
+    <tr><td>Ringing observed</td><td>Yes</td><td><input class="result-input" id="lab03-exp2-ring" placeholder="Yes / No"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-3-increase-damping">Experiment 3 - Increase Damping<a class="headerlink" href="#experiment-3-increase-damping" title="Permanent link">&para;</a></h2>
 <h3 id="objective_3">Objective<a class="headerlink" href="#objective_3" title="Permanent link">&para;</a></h3>
@@ -3984,28 +3950,21 @@ f_n \approx 1591\ \text{Hz}
 <hr />
 <h3 id="observe_1">Observe<a class="headerlink" href="#observe_1" title="Permanent link">&para;</a></h3>
 <p>Describe the waveform compared to Experiment 1:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>_________________________________
-</code></pre></div>
-<hr />
+<div class="result-block">
+  <textarea class="result-textarea" id="lab03-exp3-obs" placeholder="Describe what you observe compared to Experiment 1..."></textarea>
+</div>
+
 <h3 id="results-table_1">Results Table<a class="headerlink" href="#results-table_1" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Resistance</th>
-<th>Ringing Observed</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>100 Ω</td>
-<td></td>
-</tr>
-<tr>
-<td>470 Ω</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Resistance</th><th>Ringing Observed</th></tr></thead>
+  <tbody>
+    <tr><td>100 Ω</td><td><input class="result-input" id="lab03-exp3-ring100" placeholder="e.g. Moderate"></td></tr>
+    <tr><td>470 Ω</td><td><input class="result-input" id="lab03-exp3-ring470" placeholder="e.g. Little / None"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-4-reduce-damping">Experiment 4 - Reduce Damping<a class="headerlink" href="#experiment-4-reduce-damping" title="Permanent link">&para;</a></h2>
 <h3 id="objective_4">Objective<a class="headerlink" href="#objective_4" title="Permanent link">&para;</a></h3>
@@ -4022,44 +3981,30 @@ f_n \approx 1591\ \text{Hz}
 <hr />
 <h3 id="observe_2">Observe<a class="headerlink" href="#observe_2" title="Permanent link">&para;</a></h3>
 <p>Describe the waveform compared to Experiments 1 and 3:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>_________________________________
-</code></pre></div>
-<hr />
+<div class="result-block">
+  <textarea class="result-textarea" id="lab03-exp4-obs" placeholder="Describe what you observe compared to Experiments 1 and 3..."></textarea>
+</div>
+
 <h3 id="results-table_2">Results Table<a class="headerlink" href="#results-table_2" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Resistance</th>
-<th>Damping</th>
-<th>Response</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>47 Ω</td>
-<td>Low</td>
-<td></td>
-</tr>
-<tr>
-<td>100 Ω</td>
-<td>Medium</td>
-<td></td>
-</tr>
-<tr>
-<td>470 Ω</td>
-<td>High</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Resistance</th><th>Damping</th><th>Response</th></tr></thead>
+  <tbody>
+    <tr><td>47 Ω</td><td>Low</td><td><input class="result-input" id="lab03-exp4-resp47" placeholder="e.g. Strong ringing"></td></tr>
+    <tr><td>100 Ω</td><td>Medium</td><td><input class="result-input" id="lab03-exp4-resp100" placeholder="e.g. Moderate ringing"></td></tr>
+    <tr><td>470 Ω</td><td>High</td><td><input class="result-input" id="lab03-exp4-resp470" placeholder="e.g. Overdamped"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="understanding-overshoot">Understanding Overshoot<a class="headerlink" href="#understanding-overshoot" title="Permanent link">&para;</a></h2>
 <p>An underdamped system often exceeds its final value before settling. This is called <strong>overshoot</strong>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Target
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>-------
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>       /\_
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>      /   \__
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>_____/       \____
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Target
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>-------
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>       /\_
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>      /   \__
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>_____/       \____
 </code></pre></div>
 <p>Overshoot is extremely important in:</p>
 <ul>
@@ -4070,39 +4015,39 @@ f_n \approx 1591\ \text{Hz}
 <hr />
 <h2 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h2>
 <p>Overlay your measured resonant frequency against the theoretical simulation.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">L</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">C</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">100e-9</span><span class="p">;</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">R</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="n">T_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">630e-6</span><span class="p">;</span><span class="w">         </span><span class="c">% replace with your measured period (s)</span>
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="n">f_measured</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">T_measured</span><span class="p">;</span>
-<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="n">f_theory</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">sqrt</span><span class="p">(</span><span class="n">L</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">C</span><span class="p">));</span>
-<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
-<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Theory  fn = %.1f Hz\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">f_theory</span><span class="p">);</span>
-<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Measured fn = %.1f Hz\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">f_measured</span><span class="p">);</span>
-<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Error = %.2f%%\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">f_measured</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">f_theory</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">f_theory</span><span class="p">);</span>
-<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>
-<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="n">t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">1e-6</span><span class="p">:</span><span class="mf">3e-3</span><span class="p">;</span>
-<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>
-<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="n">num_t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="n">C</span><span class="p">];</span><span class="w"> </span><span class="n">den_t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="n">C</span><span class="p">];</span>
-<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="n">G_theory</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="n">num_t</span><span class="p">,</span><span class="w"> </span><span class="n">den_t</span><span class="p">);</span>
-<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="p">[</span><span class="n">y_theory</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">G_theory</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
-<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>
-<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="n">wn_m</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">f_measured</span><span class="p">;</span>
-<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="n">zeta</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="n">R</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">sqrt</span><span class="p">(</span><span class="n">C</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">L</span><span class="p">);</span>
-<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="n">den_m</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">zeta</span><span class="o">*</span><span class="n">wn_m</span><span class="p">,</span><span class="w"> </span><span class="n">wn_m</span><span class="o">^</span><span class="mi">2</span><span class="p">];</span>
-<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="n">G_meas</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">([</span><span class="n">wn_m</span><span class="o">^</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">den_m</span><span class="p">);</span>
-<a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="p">[</span><span class="n">y_meas</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">G_meas</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
-<a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a>
-<a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1e3</span><span class="p">,</span><span class="w"> </span><span class="n">y_theory</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="w">    </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;Theory  fn=%.0fHz&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">f_theory</span><span class="p">));</span>
-<a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1e3</span><span class="p">,</span><span class="w"> </span><span class="n">y_meas</span><span class="p">,</span><span class="w">   </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w">   </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="w">    </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;Measured fn=%.0fHz&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">f_measured</span><span class="p">));</span>
-<a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (ms)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Voltage (V)&#39;</span><span class="p">);</span>
-<a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;RLC Step Response - Theory vs Measurement&#39;</span><span class="p">);</span>
-<a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;northeast&#39;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">L</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">C</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">100e-9</span><span class="p">;</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">R</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">T_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">630e-6</span><span class="p">;</span><span class="w">         </span><span class="c">% replace with your measured period (s)</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="n">f_measured</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">T_measured</span><span class="p">;</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">f_theory</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">sqrt</span><span class="p">(</span><span class="n">L</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">C</span><span class="p">));</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Theory  fn = %.1f Hz\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">f_theory</span><span class="p">);</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Measured fn = %.1f Hz\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">f_measured</span><span class="p">);</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Error = %.2f%%\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">f_measured</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">f_theory</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">f_theory</span><span class="p">);</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="n">t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">1e-6</span><span class="p">:</span><span class="mf">3e-3</span><span class="p">;</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="n">num_t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="n">C</span><span class="p">];</span><span class="w"> </span><span class="n">den_t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="n">C</span><span class="p">];</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="n">G_theory</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="n">num_t</span><span class="p">,</span><span class="w"> </span><span class="n">den_t</span><span class="p">);</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="p">[</span><span class="n">y_theory</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">G_theory</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="n">wn_m</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">f_measured</span><span class="p">;</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="n">zeta</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="n">R</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">sqrt</span><span class="p">(</span><span class="n">C</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">L</span><span class="p">);</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="n">den_m</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">zeta</span><span class="o">*</span><span class="n">wn_m</span><span class="p">,</span><span class="w"> </span><span class="n">wn_m</span><span class="o">^</span><span class="mi">2</span><span class="p">];</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="n">G_meas</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">([</span><span class="n">wn_m</span><span class="o">^</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">den_m</span><span class="p">);</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="p">[</span><span class="n">y_meas</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">G_meas</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1e3</span><span class="p">,</span><span class="w"> </span><span class="n">y_theory</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a><span class="w">    </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;Theory  fn=%.0fHz&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">f_theory</span><span class="p">));</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1e3</span><span class="p">,</span><span class="w"> </span><span class="n">y_meas</span><span class="p">,</span><span class="w">   </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w">   </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a><span class="w">    </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;Measured fn=%.0fHz&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">f_measured</span><span class="p">));</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (ms)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Voltage (V)&#39;</span><span class="p">);</span>
+<a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;RLC Step Response - Theory vs Measurement&#39;</span><span class="p">);</span>
+<a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;northeast&#39;</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="reflection">Reflection<a class="headerlink" href="#reflection" title="Permanent link">&para;</a></h3>
 <ul>
@@ -4165,6 +4110,13 @@ f_n \approx 1591\ \text{Hz}
 <h3 id="question-6">Question 6<a class="headerlink" href="#question-6" title="Permanent link">&para;</a></h3>
 <p>Your MATLAB simulation predicted <span class="arithmatex">\(f_n\)</span> = 1591 Hz but you measured <span class="arithmatex">\(f_n\)</span> = 1520 Hz. Name two physical reasons that could explain this discrepancy.</p>
 <hr />
+<hr />
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab03">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab03">✕ Clear All Results</button>
+</div>
+
+<hr />
 <h2 id="project-summary">Project Summary<a class="headerlink" href="#project-summary" title="Permanent link">&para;</a></h2>
 <p>In this project you learned:</p>
 <p>✅ Inductor behaviour</p>
@@ -4189,7 +4141,7 @@ f_n \approx 1591\ \text{Hz}
 </ul>
 <hr />
 <h2 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>04_MOSFET_Fundamentals.md
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>04_MOSFET_Fundamentals.md
 </code></pre></div>
 <p>Topics:</p>
 <ul>

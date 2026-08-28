@@ -2944,36 +2944,17 @@ V_{AVG} = D \cdot V_S
 <p>✅ Stop time = 0.008, Fixed-step solver, step size = 1e-6</p>
 <hr />
 <h3 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>PWM Value</th>
-<th>Duty Cycle</th>
-<th>Predicted <span class="arithmatex">\(V_{AVG}\)</span> (V)</th>
-<th>Motor speed</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>64</td>
-<td>25%</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>128</td>
-<td>50%</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>192</td>
-<td>75%</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Predicted V<sub>AVG</sub> (V)</th><th>Motor speed</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab05-sim-vavg25" placeholder="V"></td><td><input class="result-input" id="lab05-sim-spd25" placeholder="e.g. Slow"></td></tr>
+    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab05-sim-vavg50" placeholder="V"></td><td><input class="result-input" id="lab05-sim-spd50" placeholder="e.g. Medium"></td></tr>
+    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab05-sim-vavg75" placeholder="V"></td><td><input class="result-input" id="lab05-sim-spd75" placeholder="e.g. Fast"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="components-required">Components Required<a class="headerlink" href="#components-required" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3061,32 +3042,17 @@ V_{AVG} = D \cdot V_S
 <p>The waveform should switch between 0 V and approximately 3.3 V at ~500 Hz with equal ON and OFF times.</p>
 <hr />
 <h3 id="measurements">Measurements<a class="headerlink" href="#measurements" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Expected</th>
-<th>Measured</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Frequency</td>
-<td>~500 Hz</td>
-<td></td>
-</tr>
-<tr>
-<td>Duty Cycle</td>
-<td>~50%</td>
-<td></td>
-</tr>
-<tr>
-<td>Peak Voltage</td>
-<td>~3.3 V</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Frequency</td><td>~500 Hz</td><td><input class="result-input" id="lab05-exp1-freq" placeholder="Hz"></td></tr>
+    <tr><td>Duty Cycle</td><td>~50%</td><td><input class="result-input" id="lab05-exp1-duty" placeholder="%"></td></tr>
+    <tr><td>Peak Voltage</td><td>~3.3 V</td><td><input class="result-input" id="lab05-exp1-vpeak" placeholder="V"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-2-duty-cycle-investigation">Experiment 2 - Duty Cycle Investigation<a class="headerlink" href="#experiment-2-duty-cycle-investigation" title="Permanent link">&para;</a></h2>
 <h3 id="objective_2">Objective<a class="headerlink" href="#objective_2" title="Permanent link">&para;</a></h3>
@@ -3119,32 +3085,17 @@ V_{AVG} = D \cdot V_S
 </blockquote>
 <hr />
 <h3 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>PWM Value</th>
-<th>Duty Cycle</th>
-<th>Measured V_{AVG}</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>64</td>
-<td>25%</td>
-<td></td>
-</tr>
-<tr>
-<td>128</td>
-<td>50%</td>
-<td></td>
-</tr>
-<tr>
-<td>192</td>
-<td>75%</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Measured V<sub>AVG</sub> (V)</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab05-exp2-vavg25" placeholder="V"></td></tr>
+    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab05-exp2-vavg50" placeholder="V"></td></tr>
+    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab05-exp2-vavg75" placeholder="V"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h2>
 <p>Overlay your measured average voltages against the ideal chopper theory.</p>
@@ -3235,6 +3186,12 @@ V_{AVG} = D \cdot V_S
 <hr />
 <h3 id="question-6">Question 6<a class="headerlink" href="#question-6" title="Permanent link">&para;</a></h3>
 <p>A DC motor drive and a Buck Converter both use the equation <span class="arithmatex">\(V_{AVG} = D \times V_S\)</span>. Explain one key circuit difference between them that makes the Buck Converter suitable for powering sensitive electronics while the basic motor chopper is not.</p>
+<hr />
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab05">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab05">✕ Clear All Results</button>
+</div>
+
 <hr />
 <h2 id="project-summary">Project Summary<a class="headerlink" href="#project-summary" title="Permanent link">&para;</a></h2>
 <p>In this project you learned:</p>
