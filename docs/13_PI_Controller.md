@@ -269,13 +269,18 @@ For each run, confirm the output reaches 1.0 (zero steady-state error) for all K
 
 ### Prediction Table
 
-| Kp | Ki | Predicted e\_{ss} | Expected overshoot? |
-|----|----|------------------|---------------------|
-| 0.5 | 0 | | |
-| 0.5 | 0.5 | | |
-| 0.5 | 1.0 | | |
-| 0.5 | 2.0 | | |
-| 0.5 | 5.0 | | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Kp</th><th>Ki</th><th>Predicted e<sub>ss</sub></th><th>Expected overshoot?</th></tr></thead>
+  <tbody>
+    <tr><td>0.5</td><td>0</td><td><input class="result-input" id="lab13-sim-ess-ki0" placeholder=""></td><td><input class="result-input" id="lab13-sim-os-ki0" placeholder="Yes / No"></td></tr>
+    <tr><td>0.5</td><td>0.5</td><td><input class="result-input" id="lab13-sim-ess-ki05" placeholder=""></td><td><input class="result-input" id="lab13-sim-os-ki05" placeholder="Yes / No"></td></tr>
+    <tr><td>0.5</td><td>1.0</td><td><input class="result-input" id="lab13-sim-ess-ki10" placeholder=""></td><td><input class="result-input" id="lab13-sim-os-ki10" placeholder="Yes / No"></td></tr>
+    <tr><td>0.5</td><td>2.0</td><td><input class="result-input" id="lab13-sim-ess-ki20" placeholder=""></td><td><input class="result-input" id="lab13-sim-os-ki20" placeholder="Yes / No"></td></tr>
+    <tr><td>0.5</td><td>5.0</td><td><input class="result-input" id="lab13-sim-ess-ki50" placeholder=""></td><td><input class="result-input" id="lab13-sim-os-ki50" placeholder="Yes / No"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -518,11 +523,9 @@ Use the same closed-loop code from Experiment 1. Change only the Ki value.
 Ki = 0;   // Pure P Controller
 ```
 
-Observation:
-
-```text
-_______________________
-```
+<div class="result-block">
+  <textarea class="result-textarea" id="lab13-exp2-obsA" placeholder="Observation for Ki = 0..."></textarea>
+</div>
 
 ---
 
@@ -532,11 +535,9 @@ _______________________
 Ki = 0.01;
 ```
 
-Observation:
-
-```text
-_______________________
-```
+<div class="result-block">
+  <textarea class="result-textarea" id="lab13-exp2-obsB" placeholder="Observation for Ki = 0.01..."></textarea>
+</div>
 
 ---
 
@@ -546,11 +547,9 @@ _______________________
 Ki = 0.05;
 ```
 
-Observation:
-
-```text
-_______________________
-```
+<div class="result-block">
+  <textarea class="result-textarea" id="lab13-exp2-obsC" placeholder="Observation for Ki = 0.05..."></textarea>
+</div>
 
 ---
 
@@ -560,22 +559,25 @@ _______________________
 Ki = 0.1;
 ```
 
-Observation:
-
-```text
-_______________________
-```
+<div class="result-block">
+  <textarea class="result-textarea" id="lab13-exp2-obsD" placeholder="Observation for Ki = 0.1..."></textarea>
+</div>
 
 ---
 
 ### Results Table
 
-| Ki | Behaviour |
-|----|-----------|
-| 0 | |
-| 0.01 | |
-| 0.05 | |
-| 0.10 | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Ki</th><th>Behaviour</th></tr></thead>
+  <tbody>
+    <tr><td>0</td><td><input class="result-input" id="lab13-exp2-beh-ki0" placeholder=""></td></tr>
+    <tr><td>0.01</td><td><input class="result-input" id="lab13-exp2-beh-ki001" placeholder=""></td></tr>
+    <tr><td>0.05</td><td><input class="result-input" id="lab13-exp2-beh-ki005" placeholder=""></td></tr>
+    <tr><td>0.10</td><td><input class="result-input" id="lab13-exp2-beh-ki010" placeholder=""></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -589,11 +591,16 @@ Ki = 0.02;
 
 Change Kp through the following values and record the behaviour.
 
-| Kp | Behaviour |
-|----|-----------|
-| 0.1 | |
-| 0.5 | |
-| 1.0 | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Kp</th><th>Behaviour</th></tr></thead>
+  <tbody>
+    <tr><td>0.1</td><td><input class="result-input" id="lab13-exp3-beh-kp01" placeholder=""></td></tr>
+    <tr><td>0.5</td><td><input class="result-input" id="lab13-exp3-beh-kp05" placeholder=""></td></tr>
+    <tr><td>1.0</td><td><input class="result-input" id="lab13-exp3-beh-kp10" placeholder=""></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -619,11 +626,9 @@ Probe GND  ──────► GND
 
 As the reference changes, observe how the PWM duty cycle changes.
 
-Record observations:
-
-```text
-__________________________________
-```
+<div class="result-block">
+  <textarea class="result-textarea" id="lab13-osc-obs" placeholder="Record your oscilloscope observations..."></textarea>
+</div>
 
 ---
 
@@ -744,6 +749,13 @@ Check:
 ✅ Anti-windup limit in code
 
 ✅ Integral drives feedback toward reference
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab13">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab13">✕ Clear All Results</button>
+</div>
 
 ---
 

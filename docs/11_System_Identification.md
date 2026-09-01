@@ -379,12 +379,17 @@ fprintf('Fitted: K=%.2f  tau=%.2fs\n', K_fit, tau_fit);
 
 ### Prediction Table
 
-| System | Expected τ | Expected K | Response type |
-|--------|-----------|-----------|---------------|
-| RC (10 kΩ, 100 µF) | | | |
-| RC (10 kΩ, 220 µF) | | | |
-| RC (22 kΩ, 100 µF) | | | |
-| Motor (from Project 08) | | | |
+<div class="result-block">
+<table>
+  <thead><tr><th>System</th><th>Expected τ</th><th>Expected K</th><th>Response type</th></tr></thead>
+  <tbody>
+    <tr><td>RC (10 kΩ, 100 µF)</td><td><input class="result-input" id="lab11-sim-tau-rc1" placeholder="s"></td><td><input class="result-input" id="lab11-sim-k-rc1" placeholder=""></td><td><input class="result-input" id="lab11-sim-type-rc1" placeholder=""></td></tr>
+    <tr><td>RC (10 kΩ, 220 µF)</td><td><input class="result-input" id="lab11-sim-tau-rc2" placeholder="s"></td><td><input class="result-input" id="lab11-sim-k-rc2" placeholder=""></td><td><input class="result-input" id="lab11-sim-type-rc2" placeholder=""></td></tr>
+    <tr><td>RC (22 kΩ, 100 µF)</td><td><input class="result-input" id="lab11-sim-tau-rc3" placeholder="s"></td><td><input class="result-input" id="lab11-sim-k-rc3" placeholder=""></td><td><input class="result-input" id="lab11-sim-type-rc3" placeholder=""></td></tr>
+    <tr><td>Motor (from Project 08)</td><td><input class="result-input" id="lab11-sim-tau-mot" placeholder="s"></td><td><input class="result-input" id="lab11-sim-k-mot" placeholder=""></td><td><input class="result-input" id="lab11-sim-type-mot" placeholder=""></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -494,12 +499,17 @@ void loop() {}
 
 ### Results Table
 
-| Parameter | Value |
-|-----------|-------|
-| Final Voltage | |
-| 63.2% Voltage | |
-| Measured Time Constant | |
-| Calculated Time Constant (RC) | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>Final Voltage</td><td><input class="result-input" id="lab11-exp1-vfinal" placeholder="V"></td></tr>
+    <tr><td>63.2% Voltage</td><td><input class="result-input" id="lab11-exp1-v632" placeholder="V"></td></tr>
+    <tr><td>Measured Time Constant</td><td><input class="result-input" id="lab11-exp1-tau-meas" placeholder="s"></td></tr>
+    <tr><td>Calculated Time Constant (RC)</td><td><input class="result-input" id="lab11-exp1-tau-calc" placeholder="s"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -539,11 +549,16 @@ For each test, adjust the oscilloscope horizontal scale to suit the new time con
 
 ### Results Table
 
-| Resistance | Capacitance | Theoretical τ | Measured τ |
-|------------|-------------|--------------|-----------|
-| 10 kΩ | 100 µF | 1.0 s | |
-| 10 kΩ | 220 µF | 2.2 s | |
-| 22 kΩ | 100 µF | 2.2 s | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Resistance</th><th>Capacitance</th><th>Theoretical τ</th><th>Measured τ</th></tr></thead>
+  <tbody>
+    <tr><td>10 kΩ</td><td>100 µF</td><td>1.0 s</td><td><input class="result-input" id="lab11-exp2-tau-rc1" placeholder="s"></td></tr>
+    <tr><td>10 kΩ</td><td>220 µF</td><td>2.2 s</td><td><input class="result-input" id="lab11-exp2-tau-rc2" placeholder="s"></td></tr>
+    <tr><td>22 kΩ</td><td>100 µF</td><td>2.2 s</td><td><input class="result-input" id="lab11-exp2-tau-rc3" placeholder="s"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -572,11 +587,16 @@ Same as Project 10 (MOSFET motor driver with flyback diode).
 
 ### Record
 
-| Parameter | Value |
-|-----------|-------|
-| Approximate rise time | |
-| Approximate settling time | |
-| Estimated τ | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>Approximate rise time</td><td><input class="result-input" id="lab11-exp3-rise" placeholder="s"></td></tr>
+    <tr><td>Approximate settling time</td><td><input class="result-input" id="lab11-exp3-settle" placeholder="s"></td></tr>
+    <tr><td>Estimated τ</td><td><input class="result-input" id="lab11-exp3-tau" placeholder="s"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -627,9 +647,14 @@ fprintf('Error:            %.1f%%\n', 100*abs(tau_fit-tau_theory)/tau_theory);
 
 ---
 
-## Troubleshooting
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab11">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab11">✕ Clear All Results</button>
+</div>
 
-### Incorrect Time Constant
+---
+
+## Troubleshooting
 
 Check:
 

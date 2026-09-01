@@ -474,12 +474,17 @@ Record the predicted rise time and overshoot before running Experiment 4.
 
 ### Prediction Table
 
-| Parameter | Predicted value |
-|-----------|-----------------|
-| Current controller rise time | |
-| Current controller overshoot (%) | |
-| SPWM carrier frequency (Hz) | 10 000 |
-| Grid frequency (Hz) | 50 |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Predicted value</th></tr></thead>
+  <tbody>
+    <tr><td>Current controller rise time</td><td><input class="result-input" id="lab17-sim-rise" placeholder="s"></td></tr>
+    <tr><td>Current controller overshoot (%)</td><td><input class="result-input" id="lab17-sim-os" placeholder="%"></td></tr>
+    <tr><td>SPWM carrier frequency (Hz)</td><td>10 000</td></tr>
+    <tr><td>Grid frequency (Hz)</td><td>50</td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -576,12 +581,17 @@ Probe GND  ──────► Circuit GND
 
 ### Measurements
 
-| Parameter | Value |
-|-----------|-------|
-| PWM Frequency | |
-| Grid Frequency | |
-| RMS Voltage | |
-| Peak Voltage | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>PWM Frequency</td><td><input class="result-input" id="lab17-exp3-pwmfreq" placeholder="Hz"></td></tr>
+    <tr><td>Grid Frequency</td><td><input class="result-input" id="lab17-exp3-gridfreq" placeholder="Hz"></td></tr>
+    <tr><td>RMS Voltage</td><td><input class="result-input" id="lab17-exp3-vrms" placeholder="V"></td></tr>
+    <tr><td>Peak Voltage</td><td><input class="result-input" id="lab17-exp3-vpeak" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -611,11 +621,16 @@ For each setpoint, record the measured current from the ACS712 sensor.
 
 ### Results Table
 
-| Current Reference | Measured Current |
-|------------------|-----------------|
-| 0.5 A | |
-| 1.0 A | |
-| 1.5 A | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Current Reference</th><th>Measured Current</th></tr></thead>
+  <tbody>
+    <tr><td>0.5 A</td><td><input class="result-input" id="lab17-exp4-i05" placeholder="A"></td></tr>
+    <tr><td>1.0 A</td><td><input class="result-input" id="lab17-exp4-i10" placeholder="A"></td></tr>
+    <tr><td>1.5 A</td><td><input class="result-input" id="lab17-exp4-i15" placeholder="A"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -727,6 +742,13 @@ Check:
 ✅ Current tracking reference
 
 ✅ Stable system operation
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab17">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab17">✕ Clear All Results</button>
+</div>
 
 ---
 

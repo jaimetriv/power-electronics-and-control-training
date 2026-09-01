@@ -331,13 +331,18 @@ $$
 
 Complete before hardware experiments:
 
-| Kp | Predicted e\_{ss} (%) | Expected behaviour |
-|----|----------------------|--------------------|
-| 0.5 | | |
-| 1.0 | | |
-| 2.0 | | |
-| 5.0 | | |
-| 10.0 | | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Kp</th><th>Predicted e<sub>ss</sub> (%)</th><th>Expected behaviour</th></tr></thead>
+  <tbody>
+    <tr><td>0.5</td><td><input class="result-input" id="lab12-sim-ess05" placeholder="%"></td><td><input class="result-input" id="lab12-sim-beh05" placeholder=""></td></tr>
+    <tr><td>1.0</td><td><input class="result-input" id="lab12-sim-ess10" placeholder="%"></td><td><input class="result-input" id="lab12-sim-beh10" placeholder=""></td></tr>
+    <tr><td>2.0</td><td><input class="result-input" id="lab12-sim-ess20" placeholder="%"></td><td><input class="result-input" id="lab12-sim-beh20" placeholder=""></td></tr>
+    <tr><td>5.0</td><td><input class="result-input" id="lab12-sim-ess50" placeholder="%"></td><td><input class="result-input" id="lab12-sim-beh50" placeholder=""></td></tr>
+    <tr><td>10.0</td><td><input class="result-input" id="lab12-sim-ess100" placeholder="%"></td><td><input class="result-input" id="lab12-sim-beh100" placeholder=""></td></tr>
+  </tbody>
+</table>
+</div>
 
 > Theoretical formula: $e_{ss} = \frac{1}{1 + K_P K} \times 100\%$ where K = 1.
 
@@ -609,9 +614,9 @@ With the loop closed:
 
 Record observations:
 
-```text
-____________________________________
-```
+<div class="result-block">
+  <textarea class="result-textarea" id="lab12-exp2-obs" placeholder="Record your observations of closed-loop behaviour and disturbance rejection..."></textarea>
+</div>
 
 ---
 
@@ -631,11 +636,9 @@ Use the same closed-loop code from Experiment 2. Change only the Kp value at the
 Kp = 0.1;
 ```
 
-Observation:
-
-```text
-______________________
-```
+<div class="result-block">
+  <textarea class="result-textarea" id="lab12-exp3-obsA" placeholder="Observation for Kp = 0.1..."></textarea>
+</div>
 
 ---
 
@@ -645,11 +648,9 @@ ______________________
 Kp = 0.25;
 ```
 
-Observation:
-
-```text
-______________________
-```
+<div class="result-block">
+  <textarea class="result-textarea" id="lab12-exp3-obsB" placeholder="Observation for Kp = 0.25..."></textarea>
+</div>
 
 ---
 
@@ -659,11 +660,9 @@ ______________________
 Kp = 0.5;
 ```
 
-Observation:
-
-```text
-______________________
-```
+<div class="result-block">
+  <textarea class="result-textarea" id="lab12-exp3-obsC" placeholder="Observation for Kp = 0.5..."></textarea>
+</div>
 
 ---
 
@@ -673,22 +672,25 @@ ______________________
 Kp = 1.0;
 ```
 
-Observation:
-
-```text
-______________________
-```
+<div class="result-block">
+  <textarea class="result-textarea" id="lab12-exp3-obsD" placeholder="Observation for Kp = 1.0..."></textarea>
+</div>
 
 ---
 
 ### Results Table
 
-| Kp | Motor behaviour | PWM saturates? |
-|----|----------------|----------------|
-| 0.1 | | |
-| 0.25 | | |
-| 0.5 | | |
-| 1.0 | | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Kp</th><th>Motor behaviour</th><th>PWM saturates?</th></tr></thead>
+  <tbody>
+    <tr><td>0.1</td><td><input class="result-input" id="lab12-exp3-beh01" placeholder=""></td><td><input class="result-input" id="lab12-exp3-sat01" placeholder="Yes / No"></td></tr>
+    <tr><td>0.25</td><td><input class="result-input" id="lab12-exp3-beh025" placeholder=""></td><td><input class="result-input" id="lab12-exp3-sat025" placeholder="Yes / No"></td></tr>
+    <tr><td>0.5</td><td><input class="result-input" id="lab12-exp3-beh05" placeholder=""></td><td><input class="result-input" id="lab12-exp3-sat05" placeholder="Yes / No"></td></tr>
+    <tr><td>1.0</td><td><input class="result-input" id="lab12-exp3-beh10" placeholder=""></td><td><input class="result-input" id="lab12-exp3-sat10" placeholder="Yes / No"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 

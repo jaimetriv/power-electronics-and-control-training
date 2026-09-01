@@ -576,15 +576,18 @@ Inverter 2 (Kd = 0.2) will show a lower frequency than Inverter 1 (Kd = 0.1) at 
 
 ### Prediction Table
 
-Record before proceeding to the experiments:
-
-| Parameter | Predicted value |
-|-----------|-----------------|
-| PI voltage controller rise time | |
-| PI voltage controller overshoot (%) | |
-| LC filter natural frequency (Hz) | |
-| Inverter 1 frequency at P = 5 W (Hz) | |
-| Inverter 2 frequency at P = 5 W (Hz) | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Predicted value</th></tr></thead>
+  <tbody>
+    <tr><td>PI voltage controller rise time</td><td><input class="result-input" id="lab18-sim-rise" placeholder="s"></td></tr>
+    <tr><td>PI voltage controller overshoot (%)</td><td><input class="result-input" id="lab18-sim-os" placeholder="%"></td></tr>
+    <tr><td>LC filter natural frequency (Hz)</td><td><input class="result-input" id="lab18-sim-fn" placeholder="Hz"></td></tr>
+    <tr><td>Inverter 1 frequency at P = 5 W (Hz)</td><td><input class="result-input" id="lab18-sim-f1" placeholder="Hz"></td></tr>
+    <tr><td>Inverter 2 frequency at P = 5 W (Hz)</td><td><input class="result-input" id="lab18-sim-f2" placeholder="Hz"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -664,11 +667,16 @@ Probe GND  ──────► Circuit GND
 
 ### Measurements
 
-| Parameter | Measured |
-|-----------|---------|
-| Frequency | |
-| RMS Voltage | |
-| Peak Voltage | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Frequency</td><td><input class="result-input" id="lab18-exp1-freq" placeholder="Hz"></td></tr>
+    <tr><td>RMS Voltage</td><td><input class="result-input" id="lab18-exp1-vrms" placeholder="V"></td></tr>
+    <tr><td>Peak Voltage</td><td><input class="result-input" id="lab18-exp1-vpeak" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -696,11 +704,16 @@ For each load, measure the output voltage with the PI controller active.
 
 ### Results Table
 
-| Load | Output Voltage |
-|------|---------------|
-| 100 Ω | |
-| 220 Ω | |
-| 470 Ω | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Load</th><th>Output Voltage</th></tr></thead>
+  <tbody>
+    <tr><td>100 Ω</td><td><input class="result-input" id="lab18-exp2-v100" placeholder="V"></td></tr>
+    <tr><td>220 Ω</td><td><input class="result-input" id="lab18-exp2-v220" placeholder="V"></td></tr>
+    <tr><td>470 Ω</td><td><input class="result-input" id="lab18-exp2-v470" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -716,11 +729,16 @@ Observe how PI gains affect voltage regulation quality.
 
 Step through the following gain sets and record the behaviour:
 
-| Kp | Ki | Behaviour |
-|----|----|-----------|
-| 1 | 10 | |
-| 3 | 100 | |
-| 10 | 500 | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Kp</th><th>Ki</th><th>Behaviour</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>10</td><td><input class="result-input" id="lab18-exp3-beh1" placeholder=""></td></tr>
+    <tr><td>3</td><td>100</td><td><input class="result-input" id="lab18-exp3-beh2" placeholder=""></td></tr>
+    <tr><td>10</td><td>500</td><td><input class="result-input" id="lab18-exp3-beh3" placeholder=""></td></tr>
+  </tbody>
+</table>
+</div>
 
 Measure for each:
 
@@ -858,6 +876,13 @@ Check:
 ✅ Output voltage regulated
 
 ✅ Safe load connection verified
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab18">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab18">✕ Clear All Results</button>
+</div>
 
 ---
 

@@ -303,11 +303,16 @@ Change the Kd Gain block value, run, and note the response each time:
 
 ### Prediction Table
 
-| Case | Kp | Ki | Kd | Predicted overshoot | Predicted settling time |
-|------|----|----|----|--------------------|-----------------------|
-| 1 | 2.0 | 0 | 0 | | |
-| 2 | 0.5 | 0.5 | 0 | | |
-| 3 | 0.5 | 0.5 | 0.2 | | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Case</th><th>Kp</th><th>Ki</th><th>Kd</th><th>Predicted overshoot</th><th>Predicted settling time</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>2.0</td><td>0</td><td>0</td><td><input class="result-input" id="lab14-sim-os1" placeholder="%"></td><td><input class="result-input" id="lab14-sim-ts1" placeholder="s"></td></tr>
+    <tr><td>2</td><td>0.5</td><td>0.5</td><td>0</td><td><input class="result-input" id="lab14-sim-os2" placeholder="%"></td><td><input class="result-input" id="lab14-sim-ts2" placeholder="s"></td></tr>
+    <tr><td>3</td><td>0.5</td><td>0.5</td><td>0.2</td><td><input class="result-input" id="lab14-sim-os3" placeholder="%"></td><td><input class="result-input" id="lab14-sim-ts3" placeholder="s"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -531,11 +536,9 @@ Use the same closed-loop code from Experiment 1. Change only the Kd value.
 Kd = 0;   // PI Control
 ```
 
-Observation:
-
-```text
-______________________
-```
+<div class="result-block">
+  <textarea class="result-textarea" id="lab14-exp2-obsA" placeholder="Observation for Kd = 0..."></textarea>
+</div>
 
 ---
 
@@ -545,11 +548,9 @@ ______________________
 Kd = 0.02;
 ```
 
-Observation:
-
-```text
-______________________
-```
+<div class="result-block">
+  <textarea class="result-textarea" id="lab14-exp2-obsB" placeholder="Observation for Kd = 0.02..."></textarea>
+</div>
 
 ---
 
@@ -559,11 +560,9 @@ ______________________
 Kd = 0.10;
 ```
 
-Observation:
-
-```text
-______________________
-```
+<div class="result-block">
+  <textarea class="result-textarea" id="lab14-exp2-obsC" placeholder="Observation for Kd = 0.10..."></textarea>
+</div>
 
 ---
 
@@ -573,22 +572,25 @@ ______________________
 Kd = 0.50;
 ```
 
-Observation:
-
-```text
-______________________
-```
+<div class="result-block">
+  <textarea class="result-textarea" id="lab14-exp2-obsD" placeholder="Observation for Kd = 0.50..."></textarea>
+</div>
 
 ---
 
 ### Results Table
 
-| Kd | Behaviour |
-|----|-----------|
-| 0 | |
-| 0.02 | |
-| 0.10 | |
-| 0.50 | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Kd</th><th>Behaviour</th></tr></thead>
+  <tbody>
+    <tr><td>0</td><td><input class="result-input" id="lab14-exp2-beh-kd0" placeholder=""></td></tr>
+    <tr><td>0.02</td><td><input class="result-input" id="lab14-exp2-beh-kd002" placeholder=""></td></tr>
+    <tr><td>0.10</td><td><input class="result-input" id="lab14-exp2-beh-kd010" placeholder=""></td></tr>
+    <tr><td>0.50</td><td><input class="result-input" id="lab14-exp2-beh-kd050" placeholder=""></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -669,11 +671,9 @@ Probe GND  ──────► GND
 
 Adjust gains and observe changes in PWM duty cycle.
 
-Record:
-
-```text
-__________________________________
-```
+<div class="result-block">
+  <textarea class="result-textarea" id="lab14-osc-obs" placeholder="Record your oscilloscope observations..."></textarea>
+</div>
 
 ---
 
@@ -795,6 +795,13 @@ Reduce Kd or apply derivative on measurement only (advanced topic).
 ✅ dt constant matches delay() value
 
 ✅ Motor speed changes with potentiometer
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab14">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab14">✕ Clear All Results</button>
+</div>
 
 ---
 

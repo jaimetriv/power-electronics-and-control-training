@@ -341,11 +341,16 @@ Change Kp and Ki Gain block values for each run.
 
 ### Prediction Table
 
-| Kp | Ki | Predicted behaviour | Predicted e\_{ss} |
-|----|----|--------------------|-----------------:|
-| 2 | 0.2 | | |
-| 10 | 1 | | |
-| 50 | 5 | | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Kp</th><th>Ki</th><th>Predicted behaviour</th><th>Predicted e<sub>ss</sub></th></tr></thead>
+  <tbody>
+    <tr><td>2</td><td>0.2</td><td><input class="result-input" id="lab15-sim-beh1" placeholder=""></td><td><input class="result-input" id="lab15-sim-ess1" placeholder=""></td></tr>
+    <tr><td>10</td><td>1</td><td><input class="result-input" id="lab15-sim-beh2" placeholder=""></td><td><input class="result-input" id="lab15-sim-ess2" placeholder=""></td></tr>
+    <tr><td>50</td><td>5</td><td><input class="result-input" id="lab15-sim-beh3" placeholder=""></td><td><input class="result-input" id="lab15-sim-ess3" placeholder=""></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -654,11 +659,16 @@ Expected: very aggressive response, possible oscillation.
 
 ### Results Table
 
-| Kp | Ki | Behaviour |
-|----|----|-----------|
-| 2 | 0.2 | |
-| 10 | 1 | |
-| 50 | 5 | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Kp</th><th>Ki</th><th>Behaviour</th></tr></thead>
+  <tbody>
+    <tr><td>2</td><td>0.2</td><td><input class="result-input" id="lab15-exp4-beh1" placeholder=""></td></tr>
+    <tr><td>10</td><td>1</td><td><input class="result-input" id="lab15-exp4-beh2" placeholder=""></td></tr>
+    <tr><td>50</td><td>5</td><td><input class="result-input" id="lab15-exp4-beh3" placeholder=""></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -797,6 +807,13 @@ Check:
 ✅ Stable regulation achieved
 
 ✅ Output voltage remains near target
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab15">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab15">✕ Clear All Results</button>
+</div>
 
 ---
 

@@ -388,11 +388,16 @@ Clean 50 Hz sine wave for comparison.
 
 ### Prediction Table
 
-| Waveform | Fundamental (Hz) | Harmonic content | Suitable for sensitive loads? |
-|----------|-----------------|-----------------|------------------------------|
-| Square wave | | | |
-| SPWM (unfiltered) | | | |
-| SPWM (filtered) | | | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Waveform</th><th>Fundamental (Hz)</th><th>Harmonic content</th><th>Suitable for sensitive loads?</th></tr></thead>
+  <tbody>
+    <tr><td>Square wave</td><td><input class="result-input" id="lab10-sim-fund-sq" placeholder="Hz"></td><td><input class="result-input" id="lab10-sim-harm-sq" placeholder=""></td><td><input class="result-input" id="lab10-sim-suit-sq" placeholder="Yes / No"></td></tr>
+    <tr><td>SPWM (unfiltered)</td><td><input class="result-input" id="lab10-sim-fund-spwm" placeholder="Hz"></td><td><input class="result-input" id="lab10-sim-harm-spwm" placeholder=""></td><td><input class="result-input" id="lab10-sim-suit-spwm" placeholder="Yes / No"></td></tr>
+    <tr><td>SPWM (filtered)</td><td><input class="result-input" id="lab10-sim-fund-filt" placeholder="Hz"></td><td><input class="result-input" id="lab10-sim-harm-filt" placeholder=""></td><td><input class="result-input" id="lab10-sim-suit-filt" placeholder="Yes / No"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -517,11 +522,16 @@ The waveform should switch between 0 V and approximately 3.3 V at 50 Hz.
 
 ### Measurements
 
-| Parameter | Expected | Measured |
-|-----------|----------|---------|
-| Frequency | 50 Hz | |
-| Period | 20 ms | |
-| Peak Voltage | ~3.3 V | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Frequency</td><td>50 Hz</td><td><input class="result-input" id="lab10-exp1-freq" placeholder="Hz"></td></tr>
+    <tr><td>Period</td><td>20 ms</td><td><input class="result-input" id="lab10-exp1-period" placeholder="ms"></td></tr>
+    <tr><td>Peak Voltage</td><td>~3.3 V</td><td><input class="result-input" id="lab10-exp1-vpeak" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -609,11 +619,16 @@ void loop()
 
 ### Results Table
 
-| PWM Value | Duty Cycle | Observation |
-|-----------|------------|-------------|
-| 64 | 25% | |
-| 128 | 50% | |
-| 192 | 75% | |
+<div class="result-block">
+<table>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Observation</th></tr></thead>
+  <tbody>
+    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab10-exp3-obs25" placeholder=""></td></tr>
+    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab10-exp3-obs50" placeholder=""></td></tr>
+    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab10-exp3-obs75" placeholder=""></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -696,13 +711,18 @@ This is the SPWM pattern.
 
 ### Measurements
 
-| Parameter | Expected | Measured |
-|-----------|----------|---------|
-| PWM carrier frequency | ~500 Hz | |
-| Output period | ~20 ms | |
-| Output frequency | ~50 Hz | |
-| Min duty cycle | ~0% | |
-| Max duty cycle | ~100% | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>PWM carrier frequency</td><td>~500 Hz</td><td><input class="result-input" id="lab10-exp4-carrier" placeholder="Hz"></td></tr>
+    <tr><td>Output period</td><td>~20 ms</td><td><input class="result-input" id="lab10-exp4-period" placeholder="ms"></td></tr>
+    <tr><td>Output frequency</td><td>~50 Hz</td><td><input class="result-input" id="lab10-exp4-freq" placeholder="Hz"></td></tr>
+    <tr><td>Min duty cycle</td><td>~0%</td><td><input class="result-input" id="lab10-exp4-dmin" placeholder="%"></td></tr>
+    <tr><td>Max duty cycle</td><td>~100%</td><td><input class="result-input" id="lab10-exp4-dmax" placeholder="%"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -759,9 +779,14 @@ legend('Location', 'south');
 
 ---
 
-## Troubleshooting
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab10">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab10">✕ Clear All Results</button>
+</div>
 
-### Incorrect Frequency
+---
+
+## Troubleshooting
 
 Check:
 

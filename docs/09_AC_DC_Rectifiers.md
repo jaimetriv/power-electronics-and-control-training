@@ -597,12 +597,17 @@ fprintf('Ripple with 470 uF:      %.2f V\n', Vripple_470);
 
 Set the OWON HDS272S waveform generator to: **10 Vpeak, 50 Hz, sine wave**
 
-| Configuration | Predicted V\_{avg} (V) | Predicted ripple (V) |
-|---------------|----------------------|---------------------|
-| Half-wave | | |
-| Full-wave | | |
-| Full-wave + 100 µF | | |
-| Full-wave + 470 µF | | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Configuration</th><th>Predicted V<sub>avg</sub> (V)</th><th>Predicted ripple (V)</th></tr></thead>
+  <tbody>
+    <tr><td>Half-wave</td><td><input class="result-input" id="lab09-sim-vavg-hw" placeholder="V"></td><td><input class="result-input" id="lab09-sim-ripple-hw" placeholder="V"></td></tr>
+    <tr><td>Full-wave</td><td><input class="result-input" id="lab09-sim-vavg-fw" placeholder="V"></td><td><input class="result-input" id="lab09-sim-ripple-fw" placeholder="V"></td></tr>
+    <tr><td>Full-wave + 100 µF</td><td><input class="result-input" id="lab09-sim-vavg-fw100" placeholder="V"></td><td><input class="result-input" id="lab09-sim-ripple-fw100" placeholder="V"></td></tr>
+    <tr><td>Full-wave + 470 µF</td><td><input class="result-input" id="lab09-sim-vavg-fw470" placeholder="V"></td><td><input class="result-input" id="lab09-sim-ripple-fw470" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -680,11 +685,16 @@ GEN GND     ◄──── CH1 probe ground
 
 ### Record Measurements
 
-| Parameter | Measured Value |
-|-----------|---------------|
-| Frequency | |
-| Peak Voltage | |
-| RMS Voltage | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Measured Value</th></tr></thead>
+  <tbody>
+    <tr><td>Frequency</td><td><input class="result-input" id="lab09-exp1-freq" placeholder="Hz"></td></tr>
+    <tr><td>Peak Voltage</td><td><input class="result-input" id="lab09-exp1-vpeak" placeholder="V"></td></tr>
+    <tr><td>RMS Voltage</td><td><input class="result-input" id="lab09-exp1-vrms" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -783,11 +793,16 @@ ______________________
 
 ### Record Measurements
 
-| Parameter | Measured Value |
-|-----------|---------------|
-| Peak Voltage | |
-| Average Voltage | |
-| Frequency | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Measured Value</th></tr></thead>
+  <tbody>
+    <tr><td>Peak Voltage</td><td><input class="result-input" id="lab09-exp2-vpeak" placeholder="V"></td></tr>
+    <tr><td>Average Voltage</td><td><input class="result-input" id="lab09-exp2-vavg" placeholder="V"></td></tr>
+    <tr><td>Frequency</td><td><input class="result-input" id="lab09-exp2-freq" placeholder="Hz"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -886,11 +901,16 @@ ___/    \__/    \__/    \___
 
 ### Record Measurements
 
-| Parameter | Measured Value |
-|-----------|---------------|
-| Peak Voltage | |
-| Average Voltage | |
-| Ripple Frequency | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Measured Value</th></tr></thead>
+  <tbody>
+    <tr><td>Peak Voltage</td><td><input class="result-input" id="lab09-exp3-vpeak" placeholder="V"></td></tr>
+    <tr><td>Average Voltage</td><td><input class="result-input" id="lab09-exp3-vavg" placeholder="V"></td></tr>
+    <tr><td>Ripple Frequency</td><td><input class="result-input" id="lab09-exp3-freq" placeholder="Hz"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -951,12 +971,17 @@ Then replace the 100 µF capacitor with the **470 µF** capacitor and observe th
 
 ### Results Table
 
-| Configuration | Ripple Voltage (V) |
-|---------------|-------------------|
-| Half-wave | |
-| Full-wave | |
-| Full-wave + 100 µF | |
-| Full-wave + 470 µF | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Configuration</th><th>Ripple Voltage (V)</th></tr></thead>
+  <tbody>
+    <tr><td>Half-wave</td><td><input class="result-input" id="lab09-exp4-ripple-hw" placeholder="V"></td></tr>
+    <tr><td>Full-wave</td><td><input class="result-input" id="lab09-exp4-ripple-fw" placeholder="V"></td></tr>
+    <tr><td>Full-wave + 100 µF</td><td><input class="result-input" id="lab09-exp4-ripple-fw100" placeholder="V"></td></tr>
+    <tr><td>Full-wave + 470 µF</td><td><input class="result-input" id="lab09-exp4-ripple-fw470" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -1066,6 +1091,13 @@ Check:
 ✅ Oscilloscope triggering correctly
 
 ✅ Probe ground at DC(−) rail
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab09">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab09">✕ Clear All Results</button>
+</div>
 
 ---
 

@@ -486,12 +486,17 @@ Observe: settling time, damping, overshoot.
 
 ### Results Table
 
-| Kp | Ki | Kd | Behaviour |
-|----|----|----|-----------| 
-| 1.0 | 0.0 | 0.0 | |
-| 5.0 | 0.0 | 0.0 | |
-| 5.0 | 0.5 | 0.0 | |
-| 5.0 | 0.5 | 0.1 | |
+<div class="result-block">
+<table>
+  <thead><tr><th>Kp</th><th>Ki</th><th>Kd</th><th>Behaviour</th></tr></thead>
+  <tbody>
+    <tr><td>1.0</td><td>0.0</td><td>0.0</td><td><input class="result-input" id="lab16-exp1-beh1" placeholder=""></td></tr>
+    <tr><td>5.0</td><td>0.0</td><td>0.0</td><td><input class="result-input" id="lab16-exp1-beh2" placeholder=""></td></tr>
+    <tr><td>5.0</td><td>0.5</td><td>0.0</td><td><input class="result-input" id="lab16-exp1-beh3" placeholder=""></td></tr>
+    <tr><td>5.0</td><td>0.5</td><td>0.1</td><td><input class="result-input" id="lab16-exp1-beh4" placeholder=""></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 
@@ -525,11 +530,9 @@ Does the controller:
 - Oscillate?
 - Eliminate error?
 
-Record observations:
-
-```text
-____________________________________
-```
+<div class="result-block">
+  <textarea class="result-textarea" id="lab16-exp2-obs" placeholder="Record your disturbance rejection observations..."></textarea>
+</div>
 
 ---
 
@@ -620,6 +623,13 @@ Ensure `constrain()` and anti-windup are in the code.
 ✅ Saturation handled
 
 ✅ Desired performance achieved
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab16">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab16">✕ Clear All Results</button>
+</div>
 
 ---
 
