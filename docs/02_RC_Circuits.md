@@ -114,6 +114,92 @@ After one time constant ($t = \tau$) the capacitor reaches **63.2%** of its fina
 
 ---
 
+## RC Circuit Differential Equation
+
+Applying Kirchhoff's Voltage Law around the series RC loop:
+
+$$
+V_S = V_R + V_C = iR + V_C
+$$
+
+Since $i = C\dfrac{dV_C}{dt}$:
+
+$$
+RC\frac{dV_C}{dt} + V_C = V_S
+$$
+
+This is a **first-order linear ODE** with time constant $\tau = RC$.
+
+---
+
+## Laplace Domain Solution
+
+Taking the Laplace transform (with zero initial conditions):
+
+$$
+RC \cdot s \cdot V_C(s) + V_C(s) = V_S(s)
+$$
+
+$$
+V_C(s)\left(RCs + 1\right) = V_S(s)
+$$
+
+The **transfer function** of the RC low-pass filter is therefore:
+
+$$
+\boxed{H(s) = \frac{V_C(s)}{V_S(s)} = \frac{1}{\tau s + 1} = \frac{1}{RCs + 1}}
+$$
+
+This is a **first-order system** with a single pole at $s = -1/\tau$.
+
+---
+
+## Step Response — Time Domain Solution
+
+For a step input $V_S(s) = V_F/s$:
+
+$$
+V_C(s) = \frac{V_F}{s} \cdot \frac{1}{\tau s + 1} = V_F\left(\frac{1}{s} - \frac{\tau}{\tau s + 1}\right)
+$$
+
+Inverting back to the time domain:
+
+$$
+\boxed{V_C(t) = V_F\left(1 - e^{-t/\tau}\right)}
+$$
+
+For discharging from initial voltage $V_0$ with $V_S = 0$:
+
+$$
+\boxed{V_C(t) = V_0\, e^{-t/\tau}}
+$$
+
+---
+
+## Frequency Domain — Low-Pass Filter
+
+Substituting $s = j\omega$ into the transfer function:
+
+$$
+H(j\omega) = \frac{1}{j\omega RC + 1}
+$$
+
+The magnitude (gain) is:
+
+$$
+|H(j\omega)| = \frac{1}{\sqrt{1 + (\omega RC)^2}} = \frac{1}{\sqrt{1 + (\omega/\omega_c)^2}}
+$$
+
+Where the **cutoff frequency** is:
+
+$$
+\omega_c = \frac{1}{RC} = \frac{1}{\tau} \qquad \Longrightarrow \qquad f_c = \frac{1}{2\pi RC}
+$$
+
+At $\omega = \omega_c$ the gain equals $1/\sqrt{2} \approx 0.707$ — this is the **−3 dB point**.
+
+---
+
 ## Charging Table
 
 | Time | Charge Level |
@@ -142,17 +228,18 @@ A Simscape Electrical RC circuit driven by a pulsing voltage source. A Voltage S
 
 ### Components Required
 
-| Component | Library Path |
-|---|---|
-| Controlled Voltage Source | Simscape > Electrical > Sources |
-| Resistor | Simscape > Electrical > Passives |
-| Capacitor | Simscape > Electrical > Passives |
-| Voltage Sensor | Simscape > Electrical > Sensors & Transducers |
-| Electrical Reference | Simscape > Electrical > Utilities |
-| Solver Configuration | Simscape > Utilities |
-| Pulse Generator | Simulink > Sources |
-| Scope | Simulink > Sinks |
-| PS-Simulink Converter | Simscape > Utilities |
+| Component | Library Path | Quantity |
+|---|---|---|
+| Controlled Voltage Source | Simscape > Electrical > Sources | 1 |
+| Resistor | Simscape > Electrical > Passives | 1 |
+| Capacitor | Simscape > Electrical > Passives | 1 |
+| Voltage Sensor | Simscape > Electrical > Sensors & Transducers | 1 |
+| Electrical Reference | Simscape > Electrical > Utilities | 1 |
+| Solver Configuration | Simscape > Utilities | 1 |
+| Pulse Generator | Simulink > Sources | 1 |
+| Simulink-PS Converter | Simscape > Utilities | 1 |
+| PS-Simulink Converter | Simscape > Utilities | 1 |
+| Scope | Simulink > Sinks | 1 |
 
 ---
 
@@ -179,8 +266,12 @@ In MATLAB: Home > New > Simulink Model. Save as `RC_Circuits.slx`.
 **3. Add the Controlled Voltage Source**
 
 - Drag a **Controlled Voltage Source** onto the canvas.
-- Connect the output of the **Pulse Generator** to the input port of the Controlled Voltage Source.
+- Drag a **Simulink-PS Converter** (Simscape > Utilities) onto the canvas.
+- Connect the **Pulse Generator** output → **Simulink-PS Converter** input.
+- Connect the **Simulink-PS Converter** output → **Controlled Voltage Source** input port.
 - The `+` terminal faces upward (top of circuit).
+
+> The Controlled Voltage Source input port expects a **physical signal (PS)**, not a standard Simulink signal. The Simulink-PS Converter bridges the two domains. Without it the model will produce a data-type error on simulation.
 
 ---
 
@@ -245,7 +336,7 @@ In MATLAB: Home > New > Simulink Model. Save as `RC_Circuits.slx`.
 
 ### Wiring Checklist
 
-✅ Pulse Generator output → Controlled Voltage Source input
+✅ Pulse Generator output → **Simulink-PS Converter** → Controlled Voltage Source input port
 
 ✅ Voltage Source `+` → Resistor → Capacitor `+` (series chain)
 
@@ -323,17 +414,18 @@ A Simscape Electrical RC circuit driven by a sine wave source. Two Voltage Senso
 
 ### Components Required
 
-| Component | Library Path |
-|---|---|
-| Controlled Voltage Source | Simscape > Electrical > Sources |
-| Resistor | Simscape > Electrical > Passives |
-| Capacitor | Simscape > Electrical > Passives |
-| Voltage Sensor (×2) | Simscape > Electrical > Sensors & Transducers |
-| Electrical Reference | Simscape > Electrical > Utilities |
-| Solver Configuration | Simscape > Utilities |
-| Sine Wave | Simulink > Sources |
-| Scope | Simulink > Sinks |
-| PS-Simulink Converter (×2) | Simscape > Utilities |
+| Component | Library Path | Quantity |
+|---|---|---|
+| Controlled Voltage Source | Simscape > Electrical > Sources | 1 |
+| Resistor | Simscape > Electrical > Passives | 1 |
+| Capacitor | Simscape > Electrical > Passives | 1 |
+| Voltage Sensor | Simscape > Electrical > Sensors & Transducers | 2 |
+| Electrical Reference | Simscape > Electrical > Utilities | 1 |
+| Solver Configuration | Simscape > Utilities | 1 |
+| Sine Wave | Simulink > Sources | 1 |
+| Simulink-PS Converter | Simscape > Utilities | 1 |
+| PS-Simulink Converter | Simscape > Utilities | 2 |
+| Scope | Simulink > Sinks | 1 |
 
 ---
 
@@ -353,7 +445,11 @@ Add a second subsystem or save a copy as `RC_Filter.slx`.
   - Frequency: `2*pi*159` rad/s (= 159 Hz, the cutoff frequency)
   - Phase: `0`
   - Sample time: `0`
-- Connect its output to the Controlled Voltage Source input.
+- Drag a **Simulink-PS Converter** (Simscape > Utilities) onto the canvas.
+- Connect the **Sine Wave** output → **Simulink-PS Converter** input.
+- Connect the **Simulink-PS Converter** output → **Controlled Voltage Source** input port.
+
+> The same domain-bridging rule applies here: the Sine Wave is a Simulink signal and the Controlled Voltage Source expects a physical signal.
 
 ---
 
@@ -390,7 +486,7 @@ Add a second subsystem or save a copy as `RC_Filter.slx`.
 
 ### Wiring Checklist
 
-✅ Sine Wave → Controlled Voltage Source input
+✅ Sine Wave → **Simulink-PS Converter** → Controlled Voltage Source input port
 
 ✅ Voltage Source `+` → Resistor → Capacitor `+` → Electrical Reference (LP circuit)
 

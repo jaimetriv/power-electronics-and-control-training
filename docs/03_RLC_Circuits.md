@@ -223,6 +223,76 @@ Where $\zeta$ = Damping Ratio.
 
 ---
 
+## RLC Circuit Differential Equation
+
+Applying Kirchhoff's Voltage Law around the series RLC loop:
+
+$$
+V_S = V_R + V_L + V_C = iR + L\frac{di}{dt} + V_C
+$$
+
+Since $i = C\dfrac{dV_C}{dt}$:
+
+$$
+LC\frac{d^2V_C}{dt^2} + RC\frac{dV_C}{dt} + V_C = V_S
+$$
+
+This is a **second-order linear ODE** — two energy storage elements produce a second derivative.
+
+---
+
+## Laplace Domain Solution
+
+Taking the Laplace transform (zero initial conditions):
+
+$$
+LCs^2 V_C(s) + RCs\, V_C(s) + V_C(s) = V_S(s)
+$$
+
+The **transfer function** is:
+
+$$
+\boxed{H(s) = \frac{V_C(s)}{V_S(s)} = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}}
+$$
+
+Where:
+
+$$
+\omega_n = \frac{1}{\sqrt{LC}} \qquad \zeta = \frac{R}{2}\sqrt{\frac{C}{L}}
+$$
+
+The poles of $H(s)$ are:
+
+$$
+s_{1,2} = -\zeta\omega_n \pm \omega_n\sqrt{\zeta^2 - 1}
+$$
+
+- $\zeta < 1$: complex conjugate poles → underdamped (oscillatory)
+- $\zeta = 1$: repeated real pole → critically damped
+- $\zeta > 1$: two distinct real poles → overdamped
+
+---
+
+## Underdamped Step Response — Time Domain
+
+For $\zeta < 1$ the step response is:
+
+$$
+V_C(t) = V_S\left[1 - \frac{e^{-\zeta\omega_n t}}{\sqrt{1-\zeta^2}}\sin\!\left(\omega_d t + \phi\right)\right]
+$$
+
+Where the **damped natural frequency** is:
+
+$$
+\omega_d = \omega_n\sqrt{1 - \zeta^2}
+$$
+
+and $\phi = \arccos(\zeta)$.
+
+The ringing you observe on the oscilloscope oscillates at $\omega_d$, which is slightly lower than $\omega_n$ when damping is present.
+
+---
+
 ## Types of Response
 
 ### Underdamped ($\zeta < 1$)
@@ -287,6 +357,7 @@ Drag the following blocks onto the canvas:
 | Capacitor | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
 | Voltage Sensor | Simscape → Foundation Library → Electrical → Electrical Sensors | 1 |
 | Electrical Reference | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
+| Simulink-PS Converter | Simscape → Utilities | 1 |
 | PS-Simulink Converter | Simscape → Utilities | 1 |
 | Scope | Simulink → Sinks | 1 |
 | Solver Configuration | Simscape → Utilities | 1 |
@@ -345,7 +416,7 @@ Double-click the **Capacitor** block and set:
 Connect the blocks in this order:
 
 ```text
-Pulse Generator  →  Controlled Voltage Source (input port)
+Pulse Generator  →  Simulink-PS Converter  →  Controlled Voltage Source (input port)
 
 Controlled Voltage Source (+)  →  Resistor (left port)
 Resistor (right port)          →  Inductor (left port)
@@ -419,7 +490,7 @@ Change the **Resistor** value and re-run for each experiment:
 
 ### Wiring Checklist
 
-✅ Pulse Generator output connected to Controlled Voltage Source input port
+✅ Pulse Generator output → **Simulink-PS Converter** → Controlled Voltage Source input port
 
 ✅ Series path: Controlled Voltage Source (+) → Resistor → Inductor → Capacitor (p) → Electrical Reference
 
