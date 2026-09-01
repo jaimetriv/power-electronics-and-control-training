@@ -819,6 +819,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rlc-circuit-differential-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RLC Circuit Differential Equation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#laplace-domain-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laplace Domain Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#underdamped-step-response-time-domain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Underdamped Step Response — Time Domain
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#types-of-response" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2454,6 +2487,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rlc-circuit-differential-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RLC Circuit Differential Equation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#laplace-domain-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laplace Domain Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#underdamped-step-response-time-domain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Underdamped Step Response — Time Domain
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#types-of-response" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3451,6 +3517,52 @@ f_n = \frac{10\,000}{2\pi} \approx 1591\ \text{Hz}
 \]</div>
 <p>Where <span class="arithmatex">\(\zeta\)</span> = Damping Ratio.</p>
 <hr />
+<h2 id="rlc-circuit-differential-equation">RLC Circuit Differential Equation<a class="headerlink" href="#rlc-circuit-differential-equation" title="Permanent link">&para;</a></h2>
+<p>Applying Kirchhoff's Voltage Law around the series RLC loop:</p>
+<div class="arithmatex">\[
+V_S = V_R + V_L + V_C = iR + L\frac{di}{dt} + V_C
+\]</div>
+<p>Since <span class="arithmatex">\(i = C\dfrac{dV_C}{dt}\)</span>:</p>
+<div class="arithmatex">\[
+LC\frac{d^2V_C}{dt^2} + RC\frac{dV_C}{dt} + V_C = V_S
+\]</div>
+<p>This is a <strong>second-order linear ODE</strong> — two energy storage elements produce a second derivative.</p>
+<hr />
+<h2 id="laplace-domain-solution">Laplace Domain Solution<a class="headerlink" href="#laplace-domain-solution" title="Permanent link">&para;</a></h2>
+<p>Taking the Laplace transform (zero initial conditions):</p>
+<div class="arithmatex">\[
+LCs^2 V_C(s) + RCs\, V_C(s) + V_C(s) = V_S(s)
+\]</div>
+<p>The <strong>transfer function</strong> is:</p>
+<div class="arithmatex">\[
+\boxed{H(s) = \frac{V_C(s)}{V_S(s)} = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}}
+\]</div>
+<p>Where:</p>
+<div class="arithmatex">\[
+\omega_n = \frac{1}{\sqrt{LC}} \qquad \zeta = \frac{R}{2}\sqrt{\frac{C}{L}}
+\]</div>
+<p>The poles of <span class="arithmatex">\(H(s)\)</span> are:</p>
+<div class="arithmatex">\[
+s_{1,2} = -\zeta\omega_n \pm \omega_n\sqrt{\zeta^2 - 1}
+\]</div>
+<ul>
+<li><span class="arithmatex">\(\zeta &lt; 1\)</span>: complex conjugate poles → underdamped (oscillatory)</li>
+<li><span class="arithmatex">\(\zeta = 1\)</span>: repeated real pole → critically damped</li>
+<li><span class="arithmatex">\(\zeta &gt; 1\)</span>: two distinct real poles → overdamped</li>
+</ul>
+<hr />
+<h2 id="underdamped-step-response-time-domain">Underdamped Step Response — Time Domain<a class="headerlink" href="#underdamped-step-response-time-domain" title="Permanent link">&para;</a></h2>
+<p>For <span class="arithmatex">\(\zeta &lt; 1\)</span> the step response is:</p>
+<div class="arithmatex">\[
+V_C(t) = V_S\left[1 - \frac{e^{-\zeta\omega_n t}}{\sqrt{1-\zeta^2}}\sin\!\left(\omega_d t + \phi\right)\right]
+\]</div>
+<p>Where the <strong>damped natural frequency</strong> is:</p>
+<div class="arithmatex">\[
+\omega_d = \omega_n\sqrt{1 - \zeta^2}
+\]</div>
+<p>and <span class="arithmatex">\(\phi = \arccos(\zeta)\)</span>.</p>
+<p>The ringing you observe on the oscilloscope oscillates at <span class="arithmatex">\(\omega_d\)</span>, which is slightly lower than <span class="arithmatex">\(\omega_n\)</span> when damping is present.</p>
+<hr />
 <h2 id="types-of-response">Types of Response<a class="headerlink" href="#types-of-response" title="Permanent link">&para;</a></h2>
 <h3 id="underdamped-zeta-1">Underdamped (<span class="arithmatex">\(\zeta &lt; 1\)</span>)<a class="headerlink" href="#underdamped-zeta-1" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3535,6 +3647,11 @@ f_n = \frac{10\,000}{2\pi} \approx 1591\ \text{Hz}
 <tr>
 <td>Electrical Reference</td>
 <td>Simscape → Foundation Library → Electrical → Electrical Elements</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Simulink-PS Converter</td>
+<td>Simscape → Utilities</td>
 <td>1</td>
 </tr>
 <tr>
@@ -3639,7 +3756,7 @@ f_n = \frac{10\,000}{2\pi} \approx 1591\ \text{Hz}
 <hr />
 <h3 id="step-8-wire-the-circuit">Step 8 — Wire the Circuit<a class="headerlink" href="#step-8-wire-the-circuit" title="Permanent link">&para;</a></h3>
 <p>Connect the blocks in this order:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Pulse Generator  →  Controlled Voltage Source (input port)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Pulse Generator  →  Simulink-PS Converter  →  Controlled Voltage Source (input port)
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Controlled Voltage Source (+)  →  Resistor (left port)
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Resistor (right port)          →  Inductor (left port)
@@ -3730,7 +3847,7 @@ f_n = \frac{10\,000}{2\pi} \approx 1591\ \text{Hz}
 </table>
 <hr />
 <h3 id="wiring-checklist">Wiring Checklist<a class="headerlink" href="#wiring-checklist" title="Permanent link">&para;</a></h3>
-<p>✅ Pulse Generator output connected to Controlled Voltage Source input port</p>
+<p>✅ Pulse Generator output → <strong>Simulink-PS Converter</strong> → Controlled Voltage Source input port</p>
 <p>✅ Series path: Controlled Voltage Source (+) → Resistor → Inductor → Capacitor (p) → Electrical Reference</p>
 <p>✅ Controlled Voltage Source (−) connected to Electrical Reference</p>
 <p>✅ Voltage Sensor (+) at junction between Inductor and Capacitor (p port)</p>

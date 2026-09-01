@@ -725,6 +725,50 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rc-circuit-differential-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RC Circuit Differential Equation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#laplace-domain-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laplace Domain Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-response-time-domain-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step Response — Time Domain Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frequency-domain-low-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frequency Domain — Low-Pass Filter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#charging-table" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2361,6 +2405,50 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rc-circuit-differential-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RC Circuit Differential Equation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#laplace-domain-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laplace Domain Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-response-time-domain-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step Response — Time Domain Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frequency-domain-low-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frequency Domain — Low-Pass Filter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#charging-table" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3302,6 +3390,60 @@ V_C(t) = V_0 \, e^{-t/\tau}
 \]</div>
 <p>After one time constant (<span class="arithmatex">\(t = \tau\)</span>) the capacitor reaches <strong>63.2%</strong> of its final value during charging.</p>
 <hr />
+<h2 id="rc-circuit-differential-equation">RC Circuit Differential Equation<a class="headerlink" href="#rc-circuit-differential-equation" title="Permanent link">&para;</a></h2>
+<p>Applying Kirchhoff's Voltage Law around the series RC loop:</p>
+<div class="arithmatex">\[
+V_S = V_R + V_C = iR + V_C
+\]</div>
+<p>Since <span class="arithmatex">\(i = C\dfrac{dV_C}{dt}\)</span>:</p>
+<div class="arithmatex">\[
+RC\frac{dV_C}{dt} + V_C = V_S
+\]</div>
+<p>This is a <strong>first-order linear ODE</strong> with time constant <span class="arithmatex">\(\tau = RC\)</span>.</p>
+<hr />
+<h2 id="laplace-domain-solution">Laplace Domain Solution<a class="headerlink" href="#laplace-domain-solution" title="Permanent link">&para;</a></h2>
+<p>Taking the Laplace transform (with zero initial conditions):</p>
+<div class="arithmatex">\[
+RC \cdot s \cdot V_C(s) + V_C(s) = V_S(s)
+\]</div>
+<div class="arithmatex">\[
+V_C(s)\left(RCs + 1\right) = V_S(s)
+\]</div>
+<p>The <strong>transfer function</strong> of the RC low-pass filter is therefore:</p>
+<div class="arithmatex">\[
+\boxed{H(s) = \frac{V_C(s)}{V_S(s)} = \frac{1}{\tau s + 1} = \frac{1}{RCs + 1}}
+\]</div>
+<p>This is a <strong>first-order system</strong> with a single pole at <span class="arithmatex">\(s = -1/\tau\)</span>.</p>
+<hr />
+<h2 id="step-response-time-domain-solution">Step Response — Time Domain Solution<a class="headerlink" href="#step-response-time-domain-solution" title="Permanent link">&para;</a></h2>
+<p>For a step input <span class="arithmatex">\(V_S(s) = V_F/s\)</span>:</p>
+<div class="arithmatex">\[
+V_C(s) = \frac{V_F}{s} \cdot \frac{1}{\tau s + 1} = V_F\left(\frac{1}{s} - \frac{\tau}{\tau s + 1}\right)
+\]</div>
+<p>Inverting back to the time domain:</p>
+<div class="arithmatex">\[
+\boxed{V_C(t) = V_F\left(1 - e^{-t/\tau}\right)}
+\]</div>
+<p>For discharging from initial voltage <span class="arithmatex">\(V_0\)</span> with <span class="arithmatex">\(V_S = 0\)</span>:</p>
+<div class="arithmatex">\[
+\boxed{V_C(t) = V_0\, e^{-t/\tau}}
+\]</div>
+<hr />
+<h2 id="frequency-domain-low-pass-filter">Frequency Domain — Low-Pass Filter<a class="headerlink" href="#frequency-domain-low-pass-filter" title="Permanent link">&para;</a></h2>
+<p>Substituting <span class="arithmatex">\(s = j\omega\)</span> into the transfer function:</p>
+<div class="arithmatex">\[
+H(j\omega) = \frac{1}{j\omega RC + 1}
+\]</div>
+<p>The magnitude (gain) is:</p>
+<div class="arithmatex">\[
+|H(j\omega)| = \frac{1}{\sqrt{1 + (\omega RC)^2}} = \frac{1}{\sqrt{1 + (\omega/\omega_c)^2}}
+\]</div>
+<p>Where the <strong>cutoff frequency</strong> is:</p>
+<div class="arithmatex">\[
+\omega_c = \frac{1}{RC} = \frac{1}{\tau} \qquad \Longrightarrow \qquad f_c = \frac{1}{2\pi RC}
+\]</div>
+<p>At <span class="arithmatex">\(\omega = \omega_c\)</span> the gain equals <span class="arithmatex">\(1/\sqrt{2} \approx 0.707\)</span> — this is the <strong>−3 dB point</strong>.</p>
+<hr />
 <h2 id="charging-table">Charging Table<a class="headerlink" href="#charging-table" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -3347,44 +3489,59 @@ V_C(t) = V_0 \, e^{-t/\tau}
 <tr>
 <th>Component</th>
 <th>Library Path</th>
+<th>Quantity</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Controlled Voltage Source</td>
 <td>Simscape &gt; Electrical &gt; Sources</td>
+<td>1</td>
 </tr>
 <tr>
 <td>Resistor</td>
 <td>Simscape &gt; Electrical &gt; Passives</td>
+<td>1</td>
 </tr>
 <tr>
 <td>Capacitor</td>
 <td>Simscape &gt; Electrical &gt; Passives</td>
+<td>1</td>
 </tr>
 <tr>
 <td>Voltage Sensor</td>
 <td>Simscape &gt; Electrical &gt; Sensors &amp; Transducers</td>
+<td>1</td>
 </tr>
 <tr>
 <td>Electrical Reference</td>
 <td>Simscape &gt; Electrical &gt; Utilities</td>
+<td>1</td>
 </tr>
 <tr>
 <td>Solver Configuration</td>
 <td>Simscape &gt; Utilities</td>
+<td>1</td>
 </tr>
 <tr>
 <td>Pulse Generator</td>
 <td>Simulink &gt; Sources</td>
+<td>1</td>
 </tr>
 <tr>
-<td>Scope</td>
-<td>Simulink &gt; Sinks</td>
+<td>Simulink-PS Converter</td>
+<td>Simscape &gt; Utilities</td>
+<td>1</td>
 </tr>
 <tr>
 <td>PS-Simulink Converter</td>
 <td>Simscape &gt; Utilities</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>Simulink &gt; Sinks</td>
+<td>1</td>
 </tr>
 </tbody>
 </table>
@@ -3407,9 +3564,14 @@ V_C(t) = V_0 \, e^{-t/\tau}
 <p><strong>3. Add the Controlled Voltage Source</strong></p>
 <ul>
 <li>Drag a <strong>Controlled Voltage Source</strong> onto the canvas.</li>
-<li>Connect the output of the <strong>Pulse Generator</strong> to the input port of the Controlled Voltage Source.</li>
+<li>Drag a <strong>Simulink-PS Converter</strong> (Simscape &gt; Utilities) onto the canvas.</li>
+<li>Connect the <strong>Pulse Generator</strong> output → <strong>Simulink-PS Converter</strong> input.</li>
+<li>Connect the <strong>Simulink-PS Converter</strong> output → <strong>Controlled Voltage Source</strong> input port.</li>
 <li>The <code>+</code> terminal faces upward (top of circuit).</li>
 </ul>
+<blockquote>
+<p>The Controlled Voltage Source input port expects a <strong>physical signal (PS)</strong>, not a standard Simulink signal. The Simulink-PS Converter bridges the two domains. Without it the model will produce a data-type error on simulation.</p>
+</blockquote>
 <hr />
 <p><strong>4. Add the Resistor</strong></p>
 <ul>
@@ -3464,7 +3626,7 @@ V_C(t) = V_0 \, e^{-t/\tau}
 </ul>
 <hr />
 <h3 id="wiring-checklist">Wiring Checklist<a class="headerlink" href="#wiring-checklist" title="Permanent link">&para;</a></h3>
-<p>✅ Pulse Generator output → Controlled Voltage Source input</p>
+<p>✅ Pulse Generator output → <strong>Simulink-PS Converter</strong> → Controlled Voltage Source input port</p>
 <p>✅ Voltage Source <code>+</code> → Resistor → Capacitor <code>+</code> (series chain)</p>
 <p>✅ Voltage Source <code>−</code> → Electrical Reference</p>
 <p>✅ Capacitor <code>−</code> → Electrical Reference</p>
@@ -3571,44 +3733,59 @@ V_C(t) = V_0 \, e^{-t/\tau}
 <tr>
 <th>Component</th>
 <th>Library Path</th>
+<th>Quantity</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Controlled Voltage Source</td>
 <td>Simscape &gt; Electrical &gt; Sources</td>
+<td>1</td>
 </tr>
 <tr>
 <td>Resistor</td>
 <td>Simscape &gt; Electrical &gt; Passives</td>
+<td>1</td>
 </tr>
 <tr>
 <td>Capacitor</td>
 <td>Simscape &gt; Electrical &gt; Passives</td>
+<td>1</td>
 </tr>
 <tr>
-<td>Voltage Sensor (×2)</td>
+<td>Voltage Sensor</td>
 <td>Simscape &gt; Electrical &gt; Sensors &amp; Transducers</td>
+<td>2</td>
 </tr>
 <tr>
 <td>Electrical Reference</td>
 <td>Simscape &gt; Electrical &gt; Utilities</td>
+<td>1</td>
 </tr>
 <tr>
 <td>Solver Configuration</td>
 <td>Simscape &gt; Utilities</td>
+<td>1</td>
 </tr>
 <tr>
 <td>Sine Wave</td>
 <td>Simulink &gt; Sources</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Simulink-PS Converter</td>
+<td>Simscape &gt; Utilities</td>
+<td>1</td>
+</tr>
+<tr>
+<td>PS-Simulink Converter</td>
+<td>Simscape &gt; Utilities</td>
+<td>2</td>
 </tr>
 <tr>
 <td>Scope</td>
 <td>Simulink &gt; Sinks</td>
-</tr>
-<tr>
-<td>PS-Simulink Converter (×2)</td>
-<td>Simscape &gt; Utilities</td>
+<td>1</td>
 </tr>
 </tbody>
 </table>
@@ -3625,8 +3802,13 @@ V_C(t) = V_0 \, e^{-t/\tau}
 <li>Frequency: <code>2*pi*159</code> rad/s (= 159 Hz, the cutoff frequency)</li>
 <li>Phase: <code>0</code></li>
 <li>Sample time: <code>0</code></li>
-<li>Connect its output to the Controlled Voltage Source input.</li>
+<li>Drag a <strong>Simulink-PS Converter</strong> (Simscape &gt; Utilities) onto the canvas.</li>
+<li>Connect the <strong>Sine Wave</strong> output → <strong>Simulink-PS Converter</strong> input.</li>
+<li>Connect the <strong>Simulink-PS Converter</strong> output → <strong>Controlled Voltage Source</strong> input port.</li>
 </ul>
+<blockquote>
+<p>The same domain-bridging rule applies here: the Sine Wave is a Simulink signal and the Controlled Voltage Source expects a physical signal.</p>
+</blockquote>
 <hr />
 <p><strong>3. Build the low-pass RC circuit</strong></p>
 <ul>
@@ -3656,7 +3838,7 @@ V_C(t) = V_0 \, e^{-t/\tau}
 </ul>
 <hr />
 <h3 id="wiring-checklist_1">Wiring Checklist<a class="headerlink" href="#wiring-checklist_1" title="Permanent link">&para;</a></h3>
-<p>✅ Sine Wave → Controlled Voltage Source input</p>
+<p>✅ Sine Wave → <strong>Simulink-PS Converter</strong> → Controlled Voltage Source input port</p>
 <p>✅ Voltage Source <code>+</code> → Resistor → Capacitor <code>+</code> → Electrical Reference (LP circuit)</p>
 <p>✅ Voltage Sensor 1 across Voltage Source (measures <span class="arithmatex">\(V_{IN}\)</span>)</p>
 <p>✅ Voltage Sensor 2 across Capacitor (measures <span class="arithmatex">\(V_{OUT}\)</span>)</p>
