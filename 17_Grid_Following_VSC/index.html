@@ -1466,6 +1466,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#l-filter-transfer-function-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L-Filter Transfer Function Derivation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#current-pi-controller" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2455,6 +2466,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#l-filter-transfer-function-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L-Filter Transfer Function Derivation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#current-pi-controller" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3358,6 +3380,27 @@ i(t) = 10\sin(\omega t)
 </code></pre></div>
 <p>which is easier to regulate with a PI controller.</p>
 <hr />
+<h2 id="l-filter-transfer-function-derivation">L-Filter Transfer Function Derivation<a class="headerlink" href="#l-filter-transfer-function-derivation" title="Permanent link">&para;</a></h2>
+<p>The grid-side circuit consists of the inverter output voltage <span class="arithmatex">\(V_{inv}\)</span>, a series inductor <span class="arithmatex">\(L\)</span> with winding resistance <span class="arithmatex">\(R\)</span>, and the grid voltage <span class="arithmatex">\(V_{grid}\)</span>.</p>
+<p>Applying KVL around the loop:</p>
+<div class="arithmatex">\[
+V_{inv} - V_{grid} = L\frac{di}{dt} + Ri
+\]</div>
+<p>Taking the Laplace transform (zero initial conditions):</p>
+<div class="arithmatex">\[
+V_{inv}(s) - V_{grid}(s) = (Ls + R)\,I(s)
+\]</div>
+<p>The transfer function from net voltage to current is:</p>
+<div class="arithmatex">\[
+\boxed{G(s) = \frac{I(s)}{V_{inv}(s) - V_{grid}(s)} = \frac{1}{Ls + R}}
+\]</div>
+<p>With <span class="arithmatex">\(L = 1\ \text{mH}\)</span> and <span class="arithmatex">\(R = 1\ \Omega\)</span>:</p>
+<div class="arithmatex">\[
+G(s) = \frac{1}{0.001s + 1}
+\]</div>
+<p>This is the denominator <code>[0.001, 1]</code> used in the Simulink current controller model.</p>
+<p>The grid voltage <span class="arithmatex">\(V_{grid}\)</span> acts as a disturbance input. The current controller must reject this disturbance while tracking the current reference.</p>
+<hr />
 <h2 id="current-pi-controller">Current PI Controller<a class="headerlink" href="#current-pi-controller" title="Permanent link">&para;</a></h2>
 <p>The current controller calculates:</p>
 <div class="arithmatex">\[
@@ -3643,32 +3686,18 @@ u = K_P e + K_I \int e\,dt
 <p>Record the predicted rise time and overshoot before running Experiment 4.</p>
 <hr />
 <h3 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Predicted value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Current controller rise time</td>
-<td></td>
-</tr>
-<tr>
-<td>Current controller overshoot (%)</td>
-<td></td>
-</tr>
-<tr>
-<td>SPWM carrier frequency (Hz)</td>
-<td>10 000</td>
-</tr>
-<tr>
-<td>Grid frequency (Hz)</td>
-<td>50</td>
-</tr>
-</tbody>
+  <thead><tr><th>Parameter</th><th>Predicted value</th></tr></thead>
+  <tbody>
+    <tr><td>Current controller rise time</td><td><input class="result-input" id="lab17-sim-rise" placeholder="s"></td></tr>
+    <tr><td>Current controller overshoot (%)</td><td><input class="result-input" id="lab17-sim-os" placeholder="%"></td></tr>
+    <tr><td>SPWM carrier frequency (Hz)</td><td>10 000</td></tr>
+    <tr><td>Grid frequency (Hz)</td><td>50</td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-1-pll-observation">Experiment 1 - PLL Observation<a class="headerlink" href="#experiment-1-pll-observation" title="Permanent link">&para;</a></h2>
 <h3 id="objective_1">Objective<a class="headerlink" href="#objective_1" title="Permanent link">&para;</a></h3>
@@ -3782,32 +3811,18 @@ u = K_P e + K_I \int e\,dt
 </code></pre></div>
 <hr />
 <h3 id="measurements">Measurements<a class="headerlink" href="#measurements" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>PWM Frequency</td>
-<td></td>
-</tr>
-<tr>
-<td>Grid Frequency</td>
-<td></td>
-</tr>
-<tr>
-<td>RMS Voltage</td>
-<td></td>
-</tr>
-<tr>
-<td>Peak Voltage</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>PWM Frequency</td><td><input class="result-input" id="lab17-exp3-pwmfreq" placeholder="Hz"></td></tr>
+    <tr><td>Grid Frequency</td><td><input class="result-input" id="lab17-exp3-gridfreq" placeholder="Hz"></td></tr>
+    <tr><td>RMS Voltage</td><td><input class="result-input" id="lab17-exp3-vrms" placeholder="V"></td></tr>
+    <tr><td>Peak Voltage</td><td><input class="result-input" id="lab17-exp3-vpeak" placeholder="V"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-4-current-control">Experiment 4 - Current Control<a class="headerlink" href="#experiment-4-current-control" title="Permanent link">&para;</a></h2>
 <h3 id="objective_4">Objective<a class="headerlink" href="#objective_4" title="Permanent link">&para;</a></h3>
@@ -3824,28 +3839,17 @@ u = K_P e + K_I \int e\,dt
 <p>For each setpoint, record the measured current from the ACS712 sensor.</p>
 <hr />
 <h3 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Current Reference</th>
-<th>Measured Current</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0.5 A</td>
-<td></td>
-</tr>
-<tr>
-<td>1.0 A</td>
-<td></td>
-</tr>
-<tr>
-<td>1.5 A</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Current Reference</th><th>Measured Current</th></tr></thead>
+  <tbody>
+    <tr><td>0.5 A</td><td><input class="result-input" id="lab17-exp4-i05" placeholder="A"></td></tr>
+    <tr><td>1.0 A</td><td><input class="result-input" id="lab17-exp4-i10" placeholder="A"></td></tr>
+    <tr><td>1.5 A</td><td><input class="result-input" id="lab17-exp4-i15" placeholder="A"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h2>
 <p>After completing the experiments, enter your measured current tracking data and compare against the simulated PI response.</p>
@@ -3925,6 +3929,12 @@ u = K_P e + K_I \int e\,dt
 <p>✅ Current sensor operating</p>
 <p>✅ Current tracking reference</p>
 <p>✅ Stable system operation</p>
+<hr />
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab17">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab17">✕ Clear All Results</button>
+</div>
+
 <hr />
 <h2 id="knowledge-check">Knowledge Check<a class="headerlink" href="#knowledge-check" title="Permanent link">&para;</a></h2>
 <h3 id="question-1">Question 1<a class="headerlink" href="#question-1" title="Permanent link">&para;</a></h3>

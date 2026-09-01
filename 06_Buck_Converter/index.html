@@ -914,6 +914,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#volt-second-balance-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Volt-Second Balance Derivation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Volt-Second Balance Derivation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-mosfet-on-duration-dt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1 — MOSFET ON (duration \(DT\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-mosfet-off-duration-1-dt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 — MOSFET OFF (duration \((1-D)T\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#applying-volt-second-balance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applying Volt-Second Balance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ideal-buck-converter-equation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2304,6 +2354,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#volt-second-balance-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Volt-Second Balance Derivation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Volt-Second Balance Derivation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-mosfet-on-duration-dt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1 — MOSFET ON (duration \(DT\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-mosfet-off-duration-1-dt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 — MOSFET OFF (duration \((1-D)T\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#applying-volt-second-balance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applying Volt-Second Balance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ideal-buck-converter-equation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3192,6 +3292,41 @@ E = \frac{1}{2}CV^2
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Freewheel Path
 </code></pre></div>
 <p>A Schottky diode (1N5819) is preferred because its lower forward voltage drop improves efficiency.</p>
+<hr />
+<h2 id="volt-second-balance-derivation">Volt-Second Balance Derivation<a class="headerlink" href="#volt-second-balance-derivation" title="Permanent link">&para;</a></h2>
+<p>In steady state the average voltage across the inductor must be zero — otherwise the current would drift without bound.</p>
+<p>This condition is called <strong>volt-second balance</strong>.</p>
+<h3 id="phase-1-mosfet-on-duration-dt">Phase 1 — MOSFET ON (duration <span class="arithmatex">\(DT\)</span>)<a class="headerlink" href="#phase-1-mosfet-on-duration-dt" title="Permanent link">&para;</a></h3>
+<p>The switch node is connected to <span class="arithmatex">\(V_{IN}\)</span>.</p>
+<p>Applying KVL around the inductor loop:</p>
+<div class="arithmatex">\[
+V_L = V_{IN} - V_{OUT}
+\]</div>
+<p>The inductor voltage is positive, so current rises.</p>
+<h3 id="phase-2-mosfet-off-duration-1-dt">Phase 2 — MOSFET OFF (duration <span class="arithmatex">\((1-D)T\)</span>)<a class="headerlink" href="#phase-2-mosfet-off-duration-1-dt" title="Permanent link">&para;</a></h3>
+<p>The freewheel diode conducts and the switch node is clamped to approximately 0 V.</p>
+<p>Applying KVL:</p>
+<div class="arithmatex">\[
+V_L = 0 - V_{OUT} = -V_{OUT}
+\]</div>
+<p>The inductor voltage is negative, so current falls.</p>
+<h3 id="applying-volt-second-balance">Applying Volt-Second Balance<a class="headerlink" href="#applying-volt-second-balance" title="Permanent link">&para;</a></h3>
+<p>The net volt-seconds over one complete period must equal zero:</p>
+<div class="arithmatex">\[
+(V_{IN} - V_{OUT}) \cdot DT + (-V_{OUT}) \cdot (1-D)T = 0
+\]</div>
+<p>Expanding:</p>
+<div class="arithmatex">\[
+V_{IN} \cdot DT - V_{OUT} \cdot DT - V_{OUT} \cdot T + V_{OUT} \cdot DT = 0
+\]</div>
+<p>Simplifying:</p>
+<div class="arithmatex">\[
+V_{IN} \cdot DT - V_{OUT} \cdot T = 0
+\]</div>
+<p>Dividing through by <span class="arithmatex">\(T\)</span>:</p>
+<div class="arithmatex">\[
+\boxed{V_{OUT} = D \cdot V_{IN}}
+\]</div>
 <hr />
 <h2 id="ideal-buck-converter-equation">Ideal Buck Converter Equation<a class="headerlink" href="#ideal-buck-converter-equation" title="Permanent link">&para;</a></h2>
 <div class="arithmatex">\[

@@ -1060,6 +1060,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#from-rc-circuit-to-first-order-transfer-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From RC Circuit to First-Order Transfer Function
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#from-rlc-circuit-to-second-order-transfer-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From RLC Circuit to Second-Order Transfer Function
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#first-order-transfer-function" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1734,17 +1756,6 @@
   
     <nav class="md-nav" aria-label="Troubleshooting">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#incorrect-time-constant" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Incorrect Time Constant
-      
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#poor-measurements" class="md-nav__link">
@@ -2255,6 +2266,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#from-rc-circuit-to-first-order-transfer-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From RC Circuit to First-Order Transfer Function
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#from-rlc-circuit-to-second-order-transfer-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From RLC Circuit to Second-Order Transfer Function
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#first-order-transfer-function" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2931,17 +2964,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#incorrect-time-constant" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Incorrect Time Constant
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#poor-measurements" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3167,6 +3189,43 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>0% → 100% PWM
 </code></pre></div>
 <p>Step responses are easy to generate and contain valuable information about system dynamics.</p>
+<hr />
+<h2 id="from-rc-circuit-to-first-order-transfer-function">From RC Circuit to First-Order Transfer Function<a class="headerlink" href="#from-rc-circuit-to-first-order-transfer-function" title="Permanent link">&para;</a></h2>
+<p>In Project 02 the RC circuit KVL equation was derived as:</p>
+<div class="arithmatex">\[
+V_{IN} = RC\frac{dV_C}{dt} + V_C
+\]</div>
+<p>Taking the Laplace transform (zero initial conditions):</p>
+<div class="arithmatex">\[
+V_{IN}(s) = RCsV_C(s) + V_C(s) = V_C(s)(RCs + 1)
+\]</div>
+<p>Rearranging to give the transfer function <span class="arithmatex">\(G(s) = V_C(s)/V_{IN}(s)\)</span>:</p>
+<div class="arithmatex">\[
+G(s) = \frac{1}{RCs + 1} = \frac{K}{\tau s + 1}
+\]</div>
+<p>where <span class="arithmatex">\(K = 1\)</span> (DC gain) and <span class="arithmatex">\(\tau = RC\)</span> (time constant).</p>
+<p>This is the <strong>general first-order transfer function</strong> used throughout system identification.</p>
+<h2 id="from-rlc-circuit-to-second-order-transfer-function">From RLC Circuit to Second-Order Transfer Function<a class="headerlink" href="#from-rlc-circuit-to-second-order-transfer-function" title="Permanent link">&para;</a></h2>
+<p>In Project 03 the series RLC KVL equation was derived as:</p>
+<div class="arithmatex">\[
+L\frac{d^2V_C}{dt^2} + R\frac{dV_C}{dt} + \frac{V_C}{C} = \frac{V_{IN}}{C} \cdot \frac{1}{C}
+\]</div>
+<p>More precisely, applying KVL and substituting <span class="arithmatex">\(i = C\,dV_C/dt\)</span>:</p>
+<div class="arithmatex">\[
+LC\frac{d^2V_C}{dt^2} + RC\frac{dV_C}{dt} + V_C = V_{IN}
+\]</div>
+<p>Taking the Laplace transform:</p>
+<div class="arithmatex">\[
+(LCs^2 + RCs + 1)V_C(s) = V_{IN}(s)
+\]</div>
+<p>Dividing numerator and denominator by <span class="arithmatex">\(LC\)</span>:</p>
+<div class="arithmatex">\[
+G(s) = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}
+\]</div>
+<p>where:</p>
+<div class="arithmatex">\[
+\omega_n = \frac{1}{\sqrt{LC}}, \qquad \zeta = \frac{R}{2}\sqrt{\frac{C}{L}}
+\]</div>
 <hr />
 <h2 id="first-order-transfer-function">First-Order Transfer Function<a class="headerlink" href="#first-order-transfer-function" title="Permanent link">&para;</a></h2>
 <div class="arithmatex">\[
@@ -3501,42 +3560,18 @@ G(s) = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}
 </code></pre></div>
 <hr />
 <h3 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>System</th>
-<th>Expected τ</th>
-<th>Expected K</th>
-<th>Response type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RC (10 kΩ, 100 µF)</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>RC (10 kΩ, 220 µF)</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>RC (22 kΩ, 100 µF)</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Motor (from Project 08)</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>System</th><th>Expected τ</th><th>Expected K</th><th>Response type</th></tr></thead>
+  <tbody>
+    <tr><td>RC (10 kΩ, 100 µF)</td><td><input class="result-input" id="lab11-sim-tau-rc1" placeholder="s"></td><td><input class="result-input" id="lab11-sim-k-rc1" placeholder=""></td><td><input class="result-input" id="lab11-sim-type-rc1" placeholder=""></td></tr>
+    <tr><td>RC (10 kΩ, 220 µF)</td><td><input class="result-input" id="lab11-sim-tau-rc2" placeholder="s"></td><td><input class="result-input" id="lab11-sim-k-rc2" placeholder=""></td><td><input class="result-input" id="lab11-sim-type-rc2" placeholder=""></td></tr>
+    <tr><td>RC (22 kΩ, 100 µF)</td><td><input class="result-input" id="lab11-sim-tau-rc3" placeholder="s"></td><td><input class="result-input" id="lab11-sim-k-rc3" placeholder=""></td><td><input class="result-input" id="lab11-sim-type-rc3" placeholder=""></td></tr>
+    <tr><td>Motor (from Project 08)</td><td><input class="result-input" id="lab11-sim-tau-mot" placeholder="s"></td><td><input class="result-input" id="lab11-sim-k-mot" placeholder=""></td><td><input class="result-input" id="lab11-sim-type-mot" placeholder=""></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="components-required">Components Required<a class="headerlink" href="#components-required" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3643,32 +3678,18 @@ G(s) = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}
 </ol>
 <hr />
 <h3 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Final Voltage</td>
-<td></td>
-</tr>
-<tr>
-<td>63.2% Voltage</td>
-<td></td>
-</tr>
-<tr>
-<td>Measured Time Constant</td>
-<td></td>
-</tr>
-<tr>
-<td>Calculated Time Constant (RC)</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>Final Voltage</td><td><input class="result-input" id="lab11-exp1-vfinal" placeholder="V"></td></tr>
+    <tr><td>63.2% Voltage</td><td><input class="result-input" id="lab11-exp1-v632" placeholder="V"></td></tr>
+    <tr><td>Measured Time Constant</td><td><input class="result-input" id="lab11-exp1-tau-meas" placeholder="s"></td></tr>
+    <tr><td>Calculated Time Constant (RC)</td><td><input class="result-input" id="lab11-exp1-tau-calc" placeholder="s"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-2-vary-component-values">Experiment 2 - Vary Component Values<a class="headerlink" href="#experiment-2-vary-component-values" title="Permanent link">&para;</a></h2>
 <h3 id="objective_2">Objective<a class="headerlink" href="#objective_2" title="Permanent link">&para;</a></h3>
@@ -3688,36 +3709,17 @@ G(s) = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}
 <p>For each test, adjust the oscilloscope horizontal scale to suit the new time constant.</p>
 <hr />
 <h3 id="results-table_1">Results Table<a class="headerlink" href="#results-table_1" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Resistance</th>
-<th>Capacitance</th>
-<th>Theoretical τ</th>
-<th>Measured τ</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>10 kΩ</td>
-<td>100 µF</td>
-<td>1.0 s</td>
-<td></td>
-</tr>
-<tr>
-<td>10 kΩ</td>
-<td>220 µF</td>
-<td>2.2 s</td>
-<td></td>
-</tr>
-<tr>
-<td>22 kΩ</td>
-<td>100 µF</td>
-<td>2.2 s</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Resistance</th><th>Capacitance</th><th>Theoretical τ</th><th>Measured τ</th></tr></thead>
+  <tbody>
+    <tr><td>10 kΩ</td><td>100 µF</td><td>1.0 s</td><td><input class="result-input" id="lab11-exp2-tau-rc1" placeholder="s"></td></tr>
+    <tr><td>10 kΩ</td><td>220 µF</td><td>2.2 s</td><td><input class="result-input" id="lab11-exp2-tau-rc2" placeholder="s"></td></tr>
+    <tr><td>22 kΩ</td><td>100 µF</td><td>2.2 s</td><td><input class="result-input" id="lab11-exp2-tau-rc3" placeholder="s"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-3-identify-motor-dynamics">Experiment 3 - Identify Motor Dynamics<a class="headerlink" href="#experiment-3-identify-motor-dynamics" title="Permanent link">&para;</a></h2>
 <h3 id="objective_3">Objective<a class="headerlink" href="#objective_3" title="Permanent link">&para;</a></h3>
@@ -3735,28 +3737,17 @@ G(s) = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}
 </ol>
 <hr />
 <h3 id="record">Record<a class="headerlink" href="#record" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Approximate rise time</td>
-<td></td>
-</tr>
-<tr>
-<td>Approximate settling time</td>
-<td></td>
-</tr>
-<tr>
-<td>Estimated τ</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>Approximate rise time</td><td><input class="result-input" id="lab11-exp3-rise" placeholder="s"></td></tr>
+    <tr><td>Approximate settling time</td><td><input class="result-input" id="lab11-exp3-settle" placeholder="s"></td></tr>
+    <tr><td>Estimated τ</td><td><input class="result-input" id="lab11-exp3-tau" placeholder="s"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h2>
 <p>Fit first-order models to your measured RC and motor step responses and validate them.</p>
@@ -3799,8 +3790,13 @@ G(s) = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}
 <li>How does the motor τ identified here compare to your informal estimate from Project 10?</li>
 </ul>
 <hr />
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab11">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab11">✕ Clear All Results</button>
+</div>
+
+<hr />
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
-<h3 id="incorrect-time-constant">Incorrect Time Constant<a class="headerlink" href="#incorrect-time-constant" title="Permanent link">&para;</a></h3>
 <p>Check:</p>
 <p>✅ Component values (read resistor colour bands or measure with multimeter)</p>
 <p>✅ Oscilloscope horizontal scale appropriate for the time constant</p>

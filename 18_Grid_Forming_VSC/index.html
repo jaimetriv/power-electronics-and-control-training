@@ -1503,6 +1503,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#lc-filter-transfer-function-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LC Filter Transfer Function Derivation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#voltage-reference" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2547,6 +2558,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#lc-filter-transfer-function-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LC Filter Transfer Function Derivation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#voltage-reference" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3568,6 +3590,43 @@
 <a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>     GND
 </code></pre></div>
 <hr />
+<h2 id="lc-filter-transfer-function-derivation">LC Filter Transfer Function Derivation<a class="headerlink" href="#lc-filter-transfer-function-derivation" title="Permanent link">&para;</a></h2>
+<p>The grid-forming inverter output stage is an LC filter driving a resistive load <span class="arithmatex">\(R\)</span>.</p>
+<p>Applying KVL around the inductor loop:</p>
+<div class="arithmatex">\[
+V_{inv} = L\frac{di_L}{dt} + V_{OUT}
+\]</div>
+<p>Applying KCL at the output node (inductor current splits into capacitor current and load current):</p>
+<div class="arithmatex">\[
+i_L = C\frac{dV_{OUT}}{dt} + \frac{V_{OUT}}{R}
+\]</div>
+<p>Differentiating the KCL equation and substituting into KVL:</p>
+<div class="arithmatex">\[
+V_{inv} = LC\frac{d^2V_{OUT}}{dt^2} + \frac{L}{R}\frac{dV_{OUT}}{dt} + V_{OUT}
+\]</div>
+<p>Taking the Laplace transform:</p>
+<div class="arithmatex">\[
+V_{inv}(s) = \left(LCs^2 + \frac{L}{R}s + 1\right)V_{OUT}(s)
+\]</div>
+<p>Rearranging to give the transfer function:</p>
+<div class="arithmatex">\[
+G(s) = \frac{V_{OUT}(s)}{V_{inv}(s)} = \frac{1}{LCs^2 + \dfrac{L}{R}s + 1}
+\]</div>
+<p>Multiplying numerator and denominator by <span class="arithmatex">\(R\)</span>:</p>
+<div class="arithmatex">\[
+\boxed{G(s) = \frac{R}{LCRs^2 + Ls + R}}
+\]</div>
+<p>With <span class="arithmatex">\(L = 1\ \text{mH}\)</span>, <span class="arithmatex">\(C = 1\ \mu\text{F}\)</span>, <span class="arithmatex">\(R = 220\ \Omega\)</span>:</p>
+<div class="arithmatex">\[
+G(s) = \frac{220}{2.2 \times 10^{-7}s^2 + 10^{-3}s + 220}
+\]</div>
+<p>This is the denominator <code>[2.2e-7, 1e-3, 220]</code> used in the Simulink voltage controller model.</p>
+<p>The natural frequency of the LC filter is:</p>
+<div class="arithmatex">\[
+f_n = \frac{1}{2\pi\sqrt{LC}} = \frac{1}{2\pi\sqrt{10^{-3} \times 10^{-6}}} \approx 5033\ \text{Hz}
+\]</div>
+<p>The voltage controller bandwidth must remain well below <span class="arithmatex">\(f_n\)</span> to avoid exciting the filter resonance.</p>
+<hr />
 <h2 id="voltage-reference">Voltage Reference<a class="headerlink" href="#voltage-reference" title="Permanent link">&para;</a></h2>
 <p>The inverter generates:</p>
 <div class="arithmatex">\[
@@ -3914,37 +3973,19 @@ V = V_0 - K_Q(Q - Q_0)
 <p>Inverter 2 (Kd = 0.2) will show a lower frequency than Inverter 1 (Kd = 0.1) at the same power level, demonstrating that higher droop coefficient → greater frequency deviation per watt.</p>
 <hr />
 <h3 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h3>
-<p>Record before proceeding to the experiments:</p>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Predicted value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>PI voltage controller rise time</td>
-<td></td>
-</tr>
-<tr>
-<td>PI voltage controller overshoot (%)</td>
-<td></td>
-</tr>
-<tr>
-<td>LC filter natural frequency (Hz)</td>
-<td></td>
-</tr>
-<tr>
-<td>Inverter 1 frequency at P = 5 W (Hz)</td>
-<td></td>
-</tr>
-<tr>
-<td>Inverter 2 frequency at P = 5 W (Hz)</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Parameter</th><th>Predicted value</th></tr></thead>
+  <tbody>
+    <tr><td>PI voltage controller rise time</td><td><input class="result-input" id="lab18-sim-rise" placeholder="s"></td></tr>
+    <tr><td>PI voltage controller overshoot (%)</td><td><input class="result-input" id="lab18-sim-os" placeholder="%"></td></tr>
+    <tr><td>LC filter natural frequency (Hz)</td><td><input class="result-input" id="lab18-sim-fn" placeholder="Hz"></td></tr>
+    <tr><td>Inverter 1 frequency at P = 5 W (Hz)</td><td><input class="result-input" id="lab18-sim-f1" placeholder="Hz"></td></tr>
+    <tr><td>Inverter 2 frequency at P = 5 W (Hz)</td><td><input class="result-input" id="lab18-sim-f2" placeholder="Hz"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="recommended-build-stages">Recommended Build Stages<a class="headerlink" href="#recommended-build-stages" title="Permanent link">&para;</a></h2>
 <h3 id="stage-1">Stage 1<a class="headerlink" href="#stage-1" title="Permanent link">&para;</a></h3>
@@ -4012,28 +4053,17 @@ V = V_0 - K_Q(Q - Q_0)
 </table>
 <hr />
 <h3 id="measurements">Measurements<a class="headerlink" href="#measurements" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Measured</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Frequency</td>
-<td></td>
-</tr>
-<tr>
-<td>RMS Voltage</td>
-<td></td>
-</tr>
-<tr>
-<td>Peak Voltage</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Parameter</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>Frequency</td><td><input class="result-input" id="lab18-exp1-freq" placeholder="Hz"></td></tr>
+    <tr><td>RMS Voltage</td><td><input class="result-input" id="lab18-exp1-vrms" placeholder="V"></td></tr>
+    <tr><td>Peak Voltage</td><td><input class="result-input" id="lab18-exp1-vpeak" placeholder="V"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-2-load-regulation">Experiment 2 - Load Regulation<a class="headerlink" href="#experiment-2-load-regulation" title="Permanent link">&para;</a></h2>
 <h3 id="objective_2">Objective<a class="headerlink" href="#objective_2" title="Permanent link">&para;</a></h3>
@@ -4049,28 +4079,17 @@ V = V_0 - K_Q(Q - Q_0)
 <p>For each load, measure the output voltage with the PI controller active.</p>
 <hr />
 <h3 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Load</th>
-<th>Output Voltage</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>100 Ω</td>
-<td></td>
-</tr>
-<tr>
-<td>220 Ω</td>
-<td></td>
-</tr>
-<tr>
-<td>470 Ω</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Load</th><th>Output Voltage</th></tr></thead>
+  <tbody>
+    <tr><td>100 Ω</td><td><input class="result-input" id="lab18-exp2-v100" placeholder="V"></td></tr>
+    <tr><td>220 Ω</td><td><input class="result-input" id="lab18-exp2-v220" placeholder="V"></td></tr>
+    <tr><td>470 Ω</td><td><input class="result-input" id="lab18-exp2-v470" placeholder="V"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-3-pi-tuning">Experiment 3 - PI Tuning<a class="headerlink" href="#experiment-3-pi-tuning" title="Permanent link">&para;</a></h2>
 <h3 id="objective_3">Objective<a class="headerlink" href="#objective_3" title="Permanent link">&para;</a></h3>
@@ -4078,32 +4097,17 @@ V = V_0 - K_Q(Q - Q_0)
 <hr />
 <h3 id="procedure">Procedure<a class="headerlink" href="#procedure" title="Permanent link">&para;</a></h3>
 <p>Step through the following gain sets and record the behaviour:</p>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Kp</th>
-<th>Ki</th>
-<th>Behaviour</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>10</td>
-<td></td>
-</tr>
-<tr>
-<td>3</td>
-<td>100</td>
-<td></td>
-</tr>
-<tr>
-<td>10</td>
-<td>500</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Kp</th><th>Ki</th><th>Behaviour</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>10</td><td><input class="result-input" id="lab18-exp3-beh1" placeholder=""></td></tr>
+    <tr><td>3</td><td>100</td><td><input class="result-input" id="lab18-exp3-beh2" placeholder=""></td></tr>
+    <tr><td>10</td><td>500</td><td><input class="result-input" id="lab18-exp3-beh3" placeholder=""></td></tr>
+  </tbody>
 </table>
+</div>
+
 <p>Measure for each:</p>
 <ul>
 <li>Overshoot</li>
@@ -4206,6 +4210,12 @@ V = V_0 - K_Q(Q - Q_0)
 <p>✅ Output frequency stable at 50 Hz</p>
 <p>✅ Output voltage regulated</p>
 <p>✅ Safe load connection verified</p>
+<hr />
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab18">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab18">✕ Clear All Results</button>
+</div>
+
 <hr />
 <h2 id="knowledge-check">Knowledge Check<a class="headerlink" href="#knowledge-check" title="Permanent link">&para;</a></h2>
 <h3 id="question-1">Question 1<a class="headerlink" href="#question-1" title="Permanent link">&para;</a></h3>

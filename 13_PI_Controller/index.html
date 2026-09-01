@@ -1094,6 +1094,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#closed-loop-transfer-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Closed-Loop Transfer Function
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Closed-Loop Transfer Function">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-steady-state-error-is-eliminated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Steady-State Error Is Eliminated
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pi-controller-equation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2006,6 +2034,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#closed-loop-transfer-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Closed-Loop Transfer Function
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Closed-Loop Transfer Function">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-steady-state-error-is-eliminated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Steady-State Error Is Eliminated
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pi-controller-equation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2693,6 +2749,31 @@ u(t) = K_P e(t)
 <p>This represents the total accumulated error.</p>
 <p>Even a small persistent error will cause the integral to grow, eventually producing enough output to eliminate the error completely.</p>
 <hr />
+<h2 id="closed-loop-transfer-function">Closed-Loop Transfer Function<a class="headerlink" href="#closed-loop-transfer-function" title="Permanent link">&para;</a></h2>
+<p>The PI controller in the Laplace domain is:</p>
+<div class="arithmatex">\[
+C(s) = K_P + \frac{K_I}{s} = \frac{K_P s + K_I}{s}
+\]</div>
+<p>Applied to the first-order plant <span class="arithmatex">\(G(s) = K/(\tau s + 1)\)</span>, the open-loop transfer function is:</p>
+<div class="arithmatex">\[
+L(s) = C(s)G(s) = \frac{(K_P s + K_I)K}{s(\tau s + 1)}
+\]</div>
+<p>The closed-loop transfer function is:</p>
+<div class="arithmatex">\[
+T(s) = \frac{L(s)}{1 + L(s)} = \frac{(K_P s + K_I)K}{s(\tau s + 1) + (K_P s + K_I)K}
+\]</div>
+<p>Expanding the denominator:</p>
+<div class="arithmatex">\[
+T(s) = \frac{K(K_P s + K_I)}{\tau s^2 + (1 + KK_P)s + KK_I}
+\]</div>
+<p>This is a <strong>second-order system</strong>. The integral term introduces a pole at <span class="arithmatex">\(s = 0\)</span> in the open loop, which guarantees zero steady-state error for a step input — the system type increases from 0 (P only) to 1 (PI).</p>
+<h3 id="why-steady-state-error-is-eliminated">Why Steady-State Error Is Eliminated<a class="headerlink" href="#why-steady-state-error-is-eliminated" title="Permanent link">&para;</a></h3>
+<p>Applying the Final Value Theorem to a unit step input <span class="arithmatex">\(R(s) = 1/s\)</span>:</p>
+<div class="arithmatex">\[
+y_{ss} = \lim_{s \to 0} s \cdot T(s) \cdot \frac{1}{s} = T(0) = \frac{K \cdot K_I}{K K_I} = 1
+\]</div>
+<p>Therefore <span class="arithmatex">\(e_{ss} = 1 - 1 = 0\)</span> for any <span class="arithmatex">\(K_I &gt; 0\)</span>.</p>
+<hr />
 <h2 id="pi-controller-equation">PI Controller Equation<a class="headerlink" href="#pi-controller-equation" title="Permanent link">&para;</a></h2>
 <div class="arithmatex">\[
 u(t) = K_P e(t) + K_I \int e(t)\,dt
@@ -2954,48 +3035,19 @@ u(t) = K_P e(t) + K_I \int e(t)\,dt
 <p>✅ Scope showing Transfer Fcn output</p>
 <hr />
 <h3 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Kp</th>
-<th>Ki</th>
-<th>Predicted e_{ss}</th>
-<th>Expected overshoot?</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0.5</td>
-<td>0</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>0.5</td>
-<td>0.5</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>0.5</td>
-<td>1.0</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>0.5</td>
-<td>2.0</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>0.5</td>
-<td>5.0</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Kp</th><th>Ki</th><th>Predicted e<sub>ss</sub></th><th>Expected overshoot?</th></tr></thead>
+  <tbody>
+    <tr><td>0.5</td><td>0</td><td><input class="result-input" id="lab13-sim-ess-ki0" placeholder=""></td><td><input class="result-input" id="lab13-sim-os-ki0" placeholder="Yes / No"></td></tr>
+    <tr><td>0.5</td><td>0.5</td><td><input class="result-input" id="lab13-sim-ess-ki05" placeholder=""></td><td><input class="result-input" id="lab13-sim-os-ki05" placeholder="Yes / No"></td></tr>
+    <tr><td>0.5</td><td>1.0</td><td><input class="result-input" id="lab13-sim-ess-ki10" placeholder=""></td><td><input class="result-input" id="lab13-sim-os-ki10" placeholder="Yes / No"></td></tr>
+    <tr><td>0.5</td><td>2.0</td><td><input class="result-input" id="lab13-sim-ess-ki20" placeholder=""></td><td><input class="result-input" id="lab13-sim-os-ki20" placeholder="Yes / No"></td></tr>
+    <tr><td>0.5</td><td>5.0</td><td><input class="result-input" id="lab13-sim-ess-ki50" placeholder=""></td><td><input class="result-input" id="lab13-sim-os-ki50" placeholder="Yes / No"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="components-required">Components Required<a class="headerlink" href="#components-required" title="Permanent link">&para;</a></h2>
 <p>Same circuit as Project 12:</p>
@@ -3185,91 +3237,70 @@ u = K_P e + K_I \int e\,dt
 <h3 id="test-a">Test A<a class="headerlink" href="#test-a" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">Ki</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">   </span><span class="c1">// Pure P Controller</span>
 </code></pre></div>
-<p>Observation:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>_______________________
-</code></pre></div>
+<div class="result-block">
+  <textarea class="result-textarea" id="lab13-exp2-obsA" placeholder="Observation for Ki = 0..."></textarea>
+</div>
+
 <hr />
 <h3 id="test-b">Test B<a class="headerlink" href="#test-b" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">Ki</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.01</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">Ki</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.01</span><span class="p">;</span>
 </code></pre></div>
-<p>Observation:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>_______________________
-</code></pre></div>
+<div class="result-block">
+  <textarea class="result-textarea" id="lab13-exp2-obsB" placeholder="Observation for Ki = 0.01..."></textarea>
+</div>
+
 <hr />
 <h3 id="test-c">Test C<a class="headerlink" href="#test-c" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">Ki</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.05</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">Ki</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.05</span><span class="p">;</span>
 </code></pre></div>
-<p>Observation:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>_______________________
-</code></pre></div>
+<div class="result-block">
+  <textarea class="result-textarea" id="lab13-exp2-obsC" placeholder="Observation for Ki = 0.05..."></textarea>
+</div>
+
 <hr />
 <h3 id="test-d">Test D<a class="headerlink" href="#test-d" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">Ki</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">Ki</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span>
 </code></pre></div>
-<p>Observation:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>_______________________
-</code></pre></div>
+<div class="result-block">
+  <textarea class="result-textarea" id="lab13-exp2-obsD" placeholder="Observation for Ki = 0.1..."></textarea>
+</div>
+
 <hr />
 <h3 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Ki</th>
-<th>Behaviour</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td></td>
-</tr>
-<tr>
-<td>0.01</td>
-<td></td>
-</tr>
-<tr>
-<td>0.05</td>
-<td></td>
-</tr>
-<tr>
-<td>0.10</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Ki</th><th>Behaviour</th></tr></thead>
+  <tbody>
+    <tr><td>0</td><td><input class="result-input" id="lab13-exp2-beh-ki0" placeholder=""></td></tr>
+    <tr><td>0.01</td><td><input class="result-input" id="lab13-exp2-beh-ki001" placeholder=""></td></tr>
+    <tr><td>0.05</td><td><input class="result-input" id="lab13-exp2-beh-ki005" placeholder=""></td></tr>
+    <tr><td>0.10</td><td><input class="result-input" id="lab13-exp2-beh-ki010" placeholder=""></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-3-effect-of-proportional-gain">Experiment 3 - Effect of Proportional Gain<a class="headerlink" href="#experiment-3-effect-of-proportional-gain" title="Permanent link">&para;</a></h2>
 <p>Keep:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">Ki</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.02</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">Ki</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.02</span><span class="p">;</span>
 </code></pre></div>
 <p>Change Kp through the following values and record the behaviour.</p>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Kp</th>
-<th>Behaviour</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0.1</td>
-<td></td>
-</tr>
-<tr>
-<td>0.5</td>
-<td></td>
-</tr>
-<tr>
-<td>1.0</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Kp</th><th>Behaviour</th></tr></thead>
+  <tbody>
+    <tr><td>0.1</td><td><input class="result-input" id="lab13-exp3-beh-kp01" placeholder=""></td></tr>
+    <tr><td>0.5</td><td><input class="result-input" id="lab13-exp3-beh-kp05" placeholder=""></td></tr>
+    <tr><td>1.0</td><td><input class="result-input" id="lab13-exp3-beh-kp10" placeholder=""></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="oscilloscope-exercise">Oscilloscope Exercise<a class="headerlink" href="#oscilloscope-exercise" title="Permanent link">&para;</a></h2>
 <p>Observe the controller PWM output.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Probe Tip  ──────► MOSFET Gate (ESP32 GPIO18 or Arduino Pin 9 as backup)
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>Probe GND  ──────► GND
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Probe Tip  ──────► MOSFET Gate (ESP32 GPIO18 or Arduino Pin 9 as backup)
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Probe GND  ──────► GND
 </code></pre></div>
 <table>
 <thead>
@@ -3305,9 +3336,10 @@ u = K_P e + K_I \int e\,dt
 <hr />
 <h3 id="observe_1">Observe<a class="headerlink" href="#observe_1" title="Permanent link">&para;</a></h3>
 <p>As the reference changes, observe how the PWM duty cycle changes.</p>
-<p>Record observations:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>__________________________________
-</code></pre></div>
+<div class="result-block">
+  <textarea class="result-textarea" id="lab13-osc-obs" placeholder="Record your oscilloscope observations..."></textarea>
+</div>
+
 <hr />
 <h2 id="comparing-p-and-pi-control">Comparing P and PI Control<a class="headerlink" href="#comparing-p-and-pi-control" title="Permanent link">&para;</a></h2>
 <table>
@@ -3349,35 +3381,35 @@ u = K_P e + K_I \int e\,dt
 <hr />
 <h2 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h2>
 <p>Simulate the closed-loop PI response using your actual Kp and Ki values from Experiments 2 and 3.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">K</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">tau</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w">       </span><span class="c">% your measured tau from Project 08 / Project 11 (s)</span>
-<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="n">Kp</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span>
-<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="n">Ki</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
-<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>
-<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="n">G</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">tau</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]);</span>
-<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="n">C_P</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="n">Kp</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
-<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="n">C_PI</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">([</span><span class="n">Kp</span><span class="p">,</span><span class="w"> </span><span class="n">Ki</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]);</span>
-<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>
-<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="n">T_P</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">feedback</span><span class="p">(</span><span class="n">C_P</span><span class="w">  </span><span class="o">*</span><span class="w"> </span><span class="n">G</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
-<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="n">T_PI</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">feedback</span><span class="p">(</span><span class="n">C_PI</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">G</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
-<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>
-<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="n">t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="mi">8</span><span class="p">;</span>
-<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="p">[</span><span class="n">y_P</span><span class="p">,</span><span class="w">  </span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">T_P</span><span class="p">,</span><span class="w">  </span><span class="n">t</span><span class="p">);</span>
-<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="p">[</span><span class="n">y_PI</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">T_PI</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
-<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>
-<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y_P</span><span class="p">,</span><span class="w">  </span><span class="s">&#39;b--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="w">    </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;P only  e_{ss}=%.1f%%&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">Kp</span><span class="o">*</span><span class="n">K</span><span class="p">)));</span>
-<a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y_PI</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w">   </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;PI  e_{ss}=0%&#39;</span><span class="p">);</span>
-<a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="nb">yline</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Reference&#39;</span><span class="p">);</span>
-<a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (s)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Normalised Output&#39;</span><span class="p">);</span>
-<a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;P vs PI - Steady-State Error Elimination&#39;</span><span class="p">);</span>
-<a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;southeast&#39;</span><span class="p">);</span>
-<a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a>
-<a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a><span class="n">info_PI</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">stepinfo</span><span class="p">(</span><span class="n">T_PI</span><span class="p">);</span>
-<a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;PI Settling time: %.2fs\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">info_PI</span><span class="p">.</span><span class="n">SettlingTime</span><span class="p">);</span>
-<a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;PI Overshoot:     %.1f%%\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">info_PI</span><span class="p">.</span><span class="n">Overshoot</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">K</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">tau</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w">       </span><span class="c">% your measured tau from Project 08 / Project 11 (s)</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">Kp</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="n">Ki</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="n">G</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">tau</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]);</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="n">C_P</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="n">Kp</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="n">C_PI</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">([</span><span class="n">Kp</span><span class="p">,</span><span class="w"> </span><span class="n">Ki</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]);</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="n">T_P</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">feedback</span><span class="p">(</span><span class="n">C_P</span><span class="w">  </span><span class="o">*</span><span class="w"> </span><span class="n">G</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="n">T_PI</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">feedback</span><span class="p">(</span><span class="n">C_PI</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">G</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="n">t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="mi">8</span><span class="p">;</span>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="p">[</span><span class="n">y_P</span><span class="p">,</span><span class="w">  </span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">T_P</span><span class="p">,</span><span class="w">  </span><span class="n">t</span><span class="p">);</span>
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="p">[</span><span class="n">y_PI</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">T_PI</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y_P</span><span class="p">,</span><span class="w">  </span><span class="s">&#39;b--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="w">    </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;P only  e_{ss}=%.1f%%&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">Kp</span><span class="o">*</span><span class="n">K</span><span class="p">)));</span>
+<a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y_PI</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w">   </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;PI  e_{ss}=0%&#39;</span><span class="p">);</span>
+<a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a><span class="nb">yline</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Reference&#39;</span><span class="p">);</span>
+<a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (s)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Normalised Output&#39;</span><span class="p">);</span>
+<a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;P vs PI - Steady-State Error Elimination&#39;</span><span class="p">);</span>
+<a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;southeast&#39;</span><span class="p">);</span>
+<a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a>
+<a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a><span class="n">info_PI</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">stepinfo</span><span class="p">(</span><span class="n">T_PI</span><span class="p">);</span>
+<a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;PI Settling time: %.2fs\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">info_PI</span><span class="p">.</span><span class="n">SettlingTime</span><span class="p">);</span>
+<a id="__codelineno-13-29" name="__codelineno-13-29" href="#__codelineno-13-29"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;PI Overshoot:     %.1f%%\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">info_PI</span><span class="p">.</span><span class="n">Overshoot</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="reflection">Reflection<a class="headerlink" href="#reflection" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3418,6 +3450,12 @@ u = K_P e + K_I \int e\,dt
 <p>✅ Anti-windup limit in code</p>
 <p>✅ Integral drives feedback toward reference</p>
 <hr />
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab13">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab13">✕ Clear All Results</button>
+</div>
+
+<hr />
 <h2 id="knowledge-check">Knowledge Check<a class="headerlink" href="#knowledge-check" title="Permanent link">&para;</a></h2>
 <h3 id="question-1">Question 1<a class="headerlink" href="#question-1" title="Permanent link">&para;</a></h3>
 <p>What is steady-state error?</p>
@@ -3449,7 +3487,7 @@ u = K_P e + K_I \int e\,dt
 <p>✅ PWM control through feedback</p>
 <hr />
 <h2 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>14_PID_Controller.md
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>14_PID_Controller.md
 </code></pre></div>
 <p>Topics:</p>
 <ul>

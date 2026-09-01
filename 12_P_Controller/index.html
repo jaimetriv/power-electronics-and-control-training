@@ -1155,6 +1155,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#closed-loop-transfer-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Closed-Loop Transfer Function
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Closed-Loop Transfer Function">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#steady-state-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Steady-State Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#proportional-control-equation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1205,7 +1233,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#steady-state-error" class="md-nav__link">
+  <a href="#steady-state-error_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Steady-State Error
@@ -2251,6 +2279,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#closed-loop-transfer-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Closed-Loop Transfer Function
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Closed-Loop Transfer Function">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#steady-state-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Steady-State Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#proportional-control-equation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2301,7 +2357,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#steady-state-error" class="md-nav__link">
+  <a href="#steady-state-error_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Steady-State Error
@@ -3041,6 +3097,36 @@ e(t) = r(t) - y(t)
 e = 100 - 70 = 30
 \]</div>
 <hr />
+<h2 id="closed-loop-transfer-function">Closed-Loop Transfer Function<a class="headerlink" href="#closed-loop-transfer-function" title="Permanent link">&para;</a></h2>
+<p>For a proportional controller <span class="arithmatex">\(C(s) = K_P\)</span> applied to a first-order plant <span class="arithmatex">\(G(s) = K/(\tau s + 1)\)</span>, the closed-loop transfer function is:</p>
+<div class="arithmatex">\[
+T(s) = \frac{C(s)G(s)}{1 + C(s)G(s)} = \frac{K_P K / (\tau s + 1)}{1 + K_P K / (\tau s + 1)}
+\]</div>
+<p>Multiplying numerator and denominator by <span class="arithmatex">\((\tau s + 1)\)</span>:</p>
+<div class="arithmatex">\[
+T(s) = \frac{K_P K}{\tau s + 1 + K_P K} = \frac{K_P K}{\tau s + (1 + K_P K)}
+\]</div>
+<p>Dividing by <span class="arithmatex">\((1 + K_P K)\)</span>:</p>
+<div class="arithmatex">\[
+\boxed{T(s) = \frac{K_P K / (1 + K_P K)}{\dfrac{\tau}{1 + K_P K}\,s + 1}}
+\]</div>
+<p>This is still a first-order system, but with:</p>
+<ul>
+<li>Closed-loop DC gain: <span class="arithmatex">\(\dfrac{K_P K}{1 + K_P K} &lt; 1\)</span></li>
+<li>Closed-loop time constant: <span class="arithmatex">\(\dfrac{\tau}{1 + K_P K}\)</span> (faster than open loop)</li>
+</ul>
+<h3 id="steady-state-error">Steady-State Error<a class="headerlink" href="#steady-state-error" title="Permanent link">&para;</a></h3>
+<p>The DC gain of <span class="arithmatex">\(T(s)\)</span> is less than 1, so the output never fully reaches the reference.</p>
+<p>The steady-state error for a unit step input is:</p>
+<div class="arithmatex">\[
+e_{ss} = 1 - \frac{K_P K}{1 + K_P K} = \frac{1}{1 + K_P K}
+\]</div>
+<p>With <span class="arithmatex">\(K = 1\)</span>:</p>
+<div class="arithmatex">\[
+\boxed{e_{ss} = \frac{1}{1 + K_P}}
+\]</div>
+<p>Higher <span class="arithmatex">\(K_P\)</span> reduces steady-state error but never eliminates it entirely.</p>
+<hr />
 <h2 id="proportional-control-equation">Proportional Control Equation<a class="headerlink" href="#proportional-control-equation" title="Permanent link">&para;</a></h2>
 <div class="arithmatex">\[
 u(t) = K_P e(t)
@@ -3066,7 +3152,7 @@ u = 5 \times 20 = 100
 \]</div>
 <p>The controller responds aggressively.</p>
 <hr />
-<h2 id="steady-state-error">Steady-State Error<a class="headerlink" href="#steady-state-error" title="Permanent link">&para;</a></h2>
+<h2 id="steady-state-error_1">Steady-State Error<a class="headerlink" href="#steady-state-error_1" title="Permanent link">&para;</a></h2>
 <p>One limitation of a proportional controller is that the output often remains slightly different from the reference.</p>
 <p>Example:</p>
 <p><span class="arithmatex">\(r = 100\)</span>, <span class="arithmatex">\(y = 95\)</span>:</p>
@@ -3275,42 +3361,19 @@ e_{ss} = 1 - y_{final}
 <hr />
 <h3 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h3>
 <p>Complete before hardware experiments:</p>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Kp</th>
-<th>Predicted e_{ss} (%)</th>
-<th>Expected behaviour</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0.5</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1.0</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2.0</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>5.0</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>10.0</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Kp</th><th>Predicted e<sub>ss</sub> (%)</th><th>Expected behaviour</th></tr></thead>
+  <tbody>
+    <tr><td>0.5</td><td><input class="result-input" id="lab12-sim-ess05" placeholder="%"></td><td><input class="result-input" id="lab12-sim-beh05" placeholder=""></td></tr>
+    <tr><td>1.0</td><td><input class="result-input" id="lab12-sim-ess10" placeholder="%"></td><td><input class="result-input" id="lab12-sim-beh10" placeholder=""></td></tr>
+    <tr><td>2.0</td><td><input class="result-input" id="lab12-sim-ess20" placeholder="%"></td><td><input class="result-input" id="lab12-sim-beh20" placeholder=""></td></tr>
+    <tr><td>5.0</td><td><input class="result-input" id="lab12-sim-ess50" placeholder="%"></td><td><input class="result-input" id="lab12-sim-beh50" placeholder=""></td></tr>
+    <tr><td>10.0</td><td><input class="result-input" id="lab12-sim-ess100" placeholder="%"></td><td><input class="result-input" id="lab12-sim-beh100" placeholder=""></td></tr>
+  </tbody>
 </table>
+</div>
+
 <blockquote>
 <p>Theoretical formula: <span class="arithmatex">\(e_{ss} = \frac{1}{1 + K_P K} \times 100\%\)</span> where K = 1.</p>
 </blockquote>
@@ -3522,8 +3585,10 @@ u = K_P (r - y)
 <li>Release. Observe the PWM return toward its previous value.</li>
 </ol>
 <p>Record observations:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>____________________________________
-</code></pre></div>
+<div class="result-block">
+  <textarea class="result-textarea" id="lab12-exp2-obs" placeholder="Record your observations of closed-loop behaviour and disturbance rejection..."></textarea>
+</div>
+
 <hr />
 <h2 id="experiment-3-investigate-controller-gain">Experiment 3 - Investigate Controller Gain<a class="headerlink" href="#experiment-3-investigate-controller-gain" title="Permanent link">&para;</a></h2>
 <h3 id="objective_3">Objective<a class="headerlink" href="#objective_3" title="Permanent link">&para;</a></h3>
@@ -3531,70 +3596,55 @@ u = K_P (r - y)
 <p>Use the same closed-loop code from Experiment 2. Change only the Kp value at the top of the sketch.</p>
 <hr />
 <h3 id="test-a">Test A<a class="headerlink" href="#test-a" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">Kp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">Kp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span>
 </code></pre></div>
-<p>Observation:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>______________________
-</code></pre></div>
+<div class="result-block">
+  <textarea class="result-textarea" id="lab12-exp3-obsA" placeholder="Observation for Kp = 0.1..."></textarea>
+</div>
+
 <hr />
 <h3 id="test-b">Test B<a class="headerlink" href="#test-b" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">Kp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.25</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">Kp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.25</span><span class="p">;</span>
 </code></pre></div>
-<p>Observation:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>______________________
-</code></pre></div>
+<div class="result-block">
+  <textarea class="result-textarea" id="lab12-exp3-obsB" placeholder="Observation for Kp = 0.25..."></textarea>
+</div>
+
 <hr />
 <h3 id="test-c">Test C<a class="headerlink" href="#test-c" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">Kp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">Kp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span>
 </code></pre></div>
-<p>Observation:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>______________________
-</code></pre></div>
+<div class="result-block">
+  <textarea class="result-textarea" id="lab12-exp3-obsC" placeholder="Observation for Kp = 0.5..."></textarea>
+</div>
+
 <hr />
 <h3 id="test-d">Test D<a class="headerlink" href="#test-d" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">Kp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">Kp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
 </code></pre></div>
-<p>Observation:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>______________________
-</code></pre></div>
+<div class="result-block">
+  <textarea class="result-textarea" id="lab12-exp3-obsD" placeholder="Observation for Kp = 1.0..."></textarea>
+</div>
+
 <hr />
 <h3 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Kp</th>
-<th>Motor behaviour</th>
-<th>PWM saturates?</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0.1</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>0.25</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>0.5</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1.0</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Kp</th><th>Motor behaviour</th><th>PWM saturates?</th></tr></thead>
+  <tbody>
+    <tr><td>0.1</td><td><input class="result-input" id="lab12-exp3-beh01" placeholder=""></td><td><input class="result-input" id="lab12-exp3-sat01" placeholder="Yes / No"></td></tr>
+    <tr><td>0.25</td><td><input class="result-input" id="lab12-exp3-beh025" placeholder=""></td><td><input class="result-input" id="lab12-exp3-sat025" placeholder="Yes / No"></td></tr>
+    <tr><td>0.5</td><td><input class="result-input" id="lab12-exp3-beh05" placeholder=""></td><td><input class="result-input" id="lab12-exp3-sat05" placeholder="Yes / No"></td></tr>
+    <tr><td>1.0</td><td><input class="result-input" id="lab12-exp3-beh10" placeholder=""></td><td><input class="result-input" id="lab12-exp3-sat10" placeholder="Yes / No"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="oscilloscope-exercise">Oscilloscope Exercise<a class="headerlink" href="#oscilloscope-exercise" title="Permanent link">&para;</a></h2>
 <p>Observe how the PWM duty cycle changes as you rotate the potentiometer.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Probe Tip  ──────► MOSFET Gate (ESP32 GPIO18 or Arduino Pin 9 as backup)
-<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>Probe GND  ──────► ESP32 GND
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Probe Tip  ──────► MOSFET Gate (ESP32 GPIO18 or Arduino Pin 9 as backup)
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>Probe GND  ──────► ESP32 GND
 </code></pre></div>
 <table>
 <thead>
@@ -3639,29 +3689,29 @@ u = K_P (r - y)
 <hr />
 <h2 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h2>
 <p>Simulate the closed-loop response using your actual Kp values from Experiment 3 and the motor model from Project 10.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">K</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="n">tau</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w">       </span><span class="c">% your measured tau from Project 08 / Project 11 (s)</span>
-<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
-<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="n">G</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">tau</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]);</span>
-<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
-<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="n">Kp_tested</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">];</span>
-<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="n">labels</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">&#39;Kp=0.1&#39;</span><span class="p">,</span><span class="s">&#39;Kp=0.25&#39;</span><span class="p">,</span><span class="s">&#39;Kp=0.5&#39;</span><span class="p">,</span><span class="s">&#39;Kp=1.0&#39;</span><span class="p">};</span>
-<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>
-<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="n">t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="mi">5</span><span class="p">;</span>
-<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>
-<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a><span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span>
-<a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a><span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">feedback</span><span class="p">(</span><span class="n">Kp_tested</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">G</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
-<a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a><span class="w">    </span><span class="p">[</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
-<a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a><span class="w">    </span><span class="n">ess</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Kp_tested</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">K</span><span class="p">);</span>
-<a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a><span class="w">    </span><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a><span class="w">        </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;%s  e_{ss}=%.1f%%&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="p">{</span><span class="nb">i</span><span class="p">},</span><span class="w"> </span><span class="n">ess</span><span class="o">*</span><span class="mi">100</span><span class="p">));</span>
-<a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a><span class="k">end</span>
-<a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a><span class="nb">yline</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Reference&#39;</span><span class="p">);</span>
-<a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (s)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Normalised Output&#39;</span><span class="p">);</span>
-<a id="__codelineno-21-22" name="__codelineno-21-22" href="#__codelineno-21-22"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;P Controller - Closed-Loop Response (Motor Plant)&#39;</span><span class="p">);</span>
-<a id="__codelineno-21-23" name="__codelineno-21-23" href="#__codelineno-21-23"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;southeast&#39;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">K</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="n">tau</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w">       </span><span class="c">% your measured tau from Project 08 / Project 11 (s)</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="n">G</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">tau</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]);</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="n">Kp_tested</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">];</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="n">labels</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">&#39;Kp=0.1&#39;</span><span class="p">,</span><span class="s">&#39;Kp=0.25&#39;</span><span class="p">,</span><span class="s">&#39;Kp=0.5&#39;</span><span class="p">,</span><span class="s">&#39;Kp=1.0&#39;</span><span class="p">};</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="n">t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="mi">5</span><span class="p">;</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">feedback</span><span class="p">(</span><span class="n">Kp_tested</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">G</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="w">    </span><span class="p">[</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="w">    </span><span class="n">ess</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Kp_tested</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">K</span><span class="p">);</span>
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="w">    </span><span class="nb">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="w">        </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;%s  e_{ss}=%.1f%%&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="p">{</span><span class="nb">i</span><span class="p">},</span><span class="w"> </span><span class="n">ess</span><span class="o">*</span><span class="mi">100</span><span class="p">));</span>
+<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="k">end</span>
+<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a><span class="nb">yline</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Reference&#39;</span><span class="p">);</span>
+<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (s)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Normalised Output&#39;</span><span class="p">);</span>
+<a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;P Controller - Closed-Loop Response (Motor Plant)&#39;</span><span class="p">);</span>
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;southeast&#39;</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="reflection">Reflection<a class="headerlink" href="#reflection" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3731,7 +3781,7 @@ u = K_P (r - y)
 <p>✅ Controller behaviour</p>
 <hr />
 <h2 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>13_PI_Controller.md
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>13_PI_Controller.md
 </code></pre></div>
 <p>Topics:</p>
 <ul>

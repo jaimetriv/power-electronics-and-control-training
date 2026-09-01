@@ -1183,6 +1183,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#lc-filter-transfer-function-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LC Filter Transfer Function Derivation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pi-controller-equation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2239,6 +2250,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#lc-filter-transfer-function-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LC Filter Transfer Function Derivation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pi-controller-equation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3117,6 +3139,34 @@
 V_{A0} = \frac{V_{OUT}}{2}
 \]</div>
 <hr />
+<h2 id="lc-filter-transfer-function-derivation">LC Filter Transfer Function Derivation<a class="headerlink" href="#lc-filter-transfer-function-derivation" title="Permanent link">&para;</a></h2>
+<p>The Buck Converter output stage is an LC low-pass filter driving a resistive load.</p>
+<p>Applying KVL around the output loop (inductor voltage + capacitor voltage = switch node voltage):</p>
+<div class="arithmatex">\[
+V_{sw} = L\frac{di_L}{dt} + V_{OUT}
+\]</div>
+<p>The capacitor current is:</p>
+<div class="arithmatex">\[
+i_C = C\frac{dV_{OUT}}{dt} = i_L - \frac{V_{OUT}}{R}
+\]</div>
+<p>Substituting <span class="arithmatex">\(i_L = C\,dV_{OUT}/dt + V_{OUT}/R\)</span> into the KVL equation and differentiating:</p>
+<div class="arithmatex">\[
+V_{sw} = LC\frac{d^2V_{OUT}}{dt^2} + \frac{L}{R}\frac{dV_{OUT}}{dt} + V_{OUT}
+\]</div>
+<p>Taking the Laplace transform:</p>
+<div class="arithmatex">\[
+V_{sw}(s) = \left(LCs^2 + \frac{L}{R}s + 1\right)V_{OUT}(s)
+\]</div>
+<p>The transfer function from switch node voltage to output voltage is:</p>
+<div class="arithmatex">\[
+\boxed{G(s) = \frac{V_{OUT}(s)}{V_{sw}(s)} = \frac{1}{LCs^2 + \dfrac{L}{R}s + 1}}
+\]</div>
+<p>With <span class="arithmatex">\(L = 100\ \mu\text{H}\)</span>, <span class="arithmatex">\(C = 100\ \mu\text{F}\)</span>, <span class="arithmatex">\(R = 100\ \Omega\)</span>:</p>
+<div class="arithmatex">\[
+G(s) = \frac{1}{10^{-8}s^2 + 10^{-3}s + 1}
+\]</div>
+<p>This is the denominator <code>[1e-8, 1e-3, 1]</code> used in the Simulink model.</p>
+<hr />
 <h2 id="pi-controller-equation">PI Controller Equation<a class="headerlink" href="#pi-controller-equation" title="Permanent link">&para;</a></h2>
 <div class="arithmatex">\[
 u(t) = K_P e(t) + K_I \int e(t)\,dt
@@ -3431,36 +3481,17 @@ V_{OUT} = D \times V_{IN} = 0.5 \times 3.3 = 1.65\ \text{V}
 <p>✅ Scope showing Transfer Fcn output</p>
 <hr />
 <h3 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Kp</th>
-<th>Ki</th>
-<th>Predicted behaviour</th>
-<th style="text-align: right;">Predicted e_{ss}</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2</td>
-<td>0.2</td>
-<td></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>10</td>
-<td>1</td>
-<td></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>50</td>
-<td>5</td>
-<td></td>
-<td style="text-align: right;"></td>
-</tr>
-</tbody>
+  <thead><tr><th>Kp</th><th>Ki</th><th>Predicted behaviour</th><th>Predicted e<sub>ss</sub></th></tr></thead>
+  <tbody>
+    <tr><td>2</td><td>0.2</td><td><input class="result-input" id="lab15-sim-beh1" placeholder=""></td><td><input class="result-input" id="lab15-sim-ess1" placeholder=""></td></tr>
+    <tr><td>10</td><td>1</td><td><input class="result-input" id="lab15-sim-beh2" placeholder=""></td><td><input class="result-input" id="lab15-sim-ess2" placeholder=""></td></tr>
+    <tr><td>50</td><td>5</td><td><input class="result-input" id="lab15-sim-beh3" placeholder=""></td><td><input class="result-input" id="lab15-sim-ess3" placeholder=""></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="components-required">Components Required<a class="headerlink" href="#components-required" title="Permanent link">&para;</a></h2>
 <ul>
@@ -3684,32 +3715,17 @@ V_{OUT} = V_{A0} \times 2
 <p>Expected: very aggressive response, possible oscillation.</p>
 <hr />
 <h3 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Kp</th>
-<th>Ki</th>
-<th>Behaviour</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2</td>
-<td>0.2</td>
-<td></td>
-</tr>
-<tr>
-<td>10</td>
-<td>1</td>
-<td></td>
-</tr>
-<tr>
-<td>50</td>
-<td>5</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Kp</th><th>Ki</th><th>Behaviour</th></tr></thead>
+  <tbody>
+    <tr><td>2</td><td>0.2</td><td><input class="result-input" id="lab15-exp4-beh1" placeholder=""></td></tr>
+    <tr><td>10</td><td>1</td><td><input class="result-input" id="lab15-exp4-beh2" placeholder=""></td></tr>
+    <tr><td>50</td><td>5</td><td><input class="result-input" id="lab15-exp4-beh3" placeholder=""></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="oscilloscope-exercise">Oscilloscope Exercise<a class="headerlink" href="#oscilloscope-exercise" title="Permanent link">&para;</a></h2>
 <h3 id="pwm-signal">PWM Signal<a class="headerlink" href="#pwm-signal" title="Permanent link">&para;</a></h3>
@@ -3855,6 +3871,12 @@ V_{OUT} = V_{A0} \times 2
 <p>✅ Output responds to disturbances</p>
 <p>✅ Stable regulation achieved</p>
 <p>✅ Output voltage remains near target</p>
+<hr />
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab15">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab15">✕ Clear All Results</button>
+</div>
+
 <hr />
 <h2 id="knowledge-check">Knowledge Check<a class="headerlink" href="#knowledge-check" title="Permanent link">&para;</a></h2>
 <h3 id="question-1">Question 1<a class="headerlink" href="#question-1" title="Permanent link">&para;</a></h3>

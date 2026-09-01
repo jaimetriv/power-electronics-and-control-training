@@ -943,6 +943,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rms-voltage-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RMS Voltage Derivation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#average-dc-output-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Average DC Output Derivation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Average DC Output Derivation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#half-wave-rectifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Half-Wave Rectifier
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#full-wave-bridge-rectifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full-Wave Bridge Rectifier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#rms-voltage" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -993,7 +1043,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#half-wave-rectifier" class="md-nav__link">
+  <a href="#half-wave-rectifier_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Half-Wave Rectifier
@@ -2460,6 +2510,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rms-voltage-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RMS Voltage Derivation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#average-dc-output-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Average DC Output Derivation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Average DC Output Derivation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#half-wave-rectifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Half-Wave Rectifier
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#full-wave-bridge-rectifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full-Wave Bridge Rectifier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#rms-voltage" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2510,7 +2610,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#half-wave-rectifier" class="md-nav__link">
+  <a href="#half-wave-rectifier_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Half-Wave Rectifier
@@ -3614,6 +3714,50 @@
 </tbody>
 </table>
 <hr />
+<h2 id="rms-voltage-derivation">RMS Voltage Derivation<a class="headerlink" href="#rms-voltage-derivation" title="Permanent link">&para;</a></h2>
+<p>The RMS value is defined as the square root of the mean of the squared signal over one period.</p>
+<p>For a sinusoid <span class="arithmatex">\(v(t) = V_{PEAK}\sin(\omega t)\)</span>:</p>
+<div class="arithmatex">\[
+V_{RMS} = \sqrt{\frac{1}{T}\int_0^T v(t)^2\,dt}
+\]</div>
+<p>Substituting and using the identity <span class="arithmatex">\(\sin^2(\omega t) = \frac{1 - \cos(2\omega t)}{2}\)</span>:</p>
+<div class="arithmatex">\[
+V_{RMS} = \sqrt{\frac{V_{PEAK}^2}{T}\int_0^T \frac{1 - \cos(2\omega t)}{2}\,dt}
+\]</div>
+<p>The cosine term integrates to zero over a full period, leaving:</p>
+<div class="arithmatex">\[
+V_{RMS} = \sqrt{\frac{V_{PEAK}^2}{2}} = \frac{V_{PEAK}}{\sqrt{2}}
+\]</div>
+<div class="arithmatex">\[
+\boxed{V_{RMS} = \frac{V_{PEAK}}{\sqrt{2}}}
+\]</div>
+<hr />
+<h2 id="average-dc-output-derivation">Average DC Output Derivation<a class="headerlink" href="#average-dc-output-derivation" title="Permanent link">&para;</a></h2>
+<h3 id="half-wave-rectifier">Half-Wave Rectifier<a class="headerlink" href="#half-wave-rectifier" title="Permanent link">&para;</a></h3>
+<p>Only the positive half-cycle conducts. The average over a full period is:</p>
+<div class="arithmatex">\[
+V_{avg} = \frac{1}{2\pi}\int_0^{\pi} V_{PEAK}\sin(\theta)\,d\theta
+\]</div>
+<div class="arithmatex">\[
+V_{avg} = \frac{V_{PEAK}}{2\pi}\Big[-\cos(\theta)\Big]_0^{\pi} = \frac{V_{PEAK}}{2\pi}(1 - (-1))
+\]</div>
+<div class="arithmatex">\[
+\boxed{V_{avg,HW} = \frac{V_{PEAK}}{\pi} \approx 0.318\,V_{PEAK}}
+\]</div>
+<h3 id="full-wave-bridge-rectifier">Full-Wave Bridge Rectifier<a class="headerlink" href="#full-wave-bridge-rectifier" title="Permanent link">&para;</a></h3>
+<p>Both half-cycles are rectified. The average over a full period is:</p>
+<div class="arithmatex">\[
+V_{avg} = \frac{2}{2\pi}\int_0^{\pi} V_{PEAK}\sin(\theta)\,d\theta = \frac{2V_{PEAK}}{\pi}
+\]</div>
+<div class="arithmatex">\[
+\boxed{V_{avg,FW} = \frac{2V_{PEAK}}{\pi} \approx 0.637\,V_{PEAK}}
+\]</div>
+<p>With two diode drops in series (bridge rectifier), the practical value is:</p>
+<div class="arithmatex">\[
+V_{avg,FW} = \frac{2(V_{PEAK} - 2V_f)}{\pi}
+\]</div>
+<p>where <span class="arithmatex">\(V_f \approx 0.7\ \text{V}\)</span> per diode.</p>
+<hr />
 <h2 id="rms-voltage">RMS Voltage<a class="headerlink" href="#rms-voltage" title="Permanent link">&para;</a></h2>
 <p>AC voltages are normally specified using the RMS value.</p>
 <p>For a sinewave:</p>
@@ -3643,7 +3787,7 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Alternating Voltage  →  Pulsating DC Voltage
 </code></pre></div>
 <hr />
-<h2 id="half-wave-rectifier">Half-Wave Rectifier<a class="headerlink" href="#half-wave-rectifier" title="Permanent link">&para;</a></h2>
+<h2 id="half-wave-rectifier_1">Half-Wave Rectifier<a class="headerlink" href="#half-wave-rectifier_1" title="Permanent link">&para;</a></h2>
 <p>The simplest rectifier uses one diode.</p>
 <h3 id="circuit-diagram">Circuit Diagram<a class="headerlink" href="#circuit-diagram" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>AC Source
@@ -4072,37 +4216,18 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Ripple with 470 uF:      %.2f V\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Vripple_470</span><span class="p">);</span>
 </code></pre></div>
 <p>Set the OWON HDS272S waveform generator to: <strong>10 Vpeak, 50 Hz, sine wave</strong></p>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Configuration</th>
-<th>Predicted V_{avg} (V)</th>
-<th>Predicted ripple (V)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Half-wave</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Full-wave</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Full-wave + 100 µF</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Full-wave + 470 µF</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Configuration</th><th>Predicted V<sub>avg</sub> (V)</th><th>Predicted ripple (V)</th></tr></thead>
+  <tbody>
+    <tr><td>Half-wave</td><td><input class="result-input" id="lab09-sim-vavg-hw" placeholder="V"></td><td><input class="result-input" id="lab09-sim-ripple-hw" placeholder="V"></td></tr>
+    <tr><td>Full-wave</td><td><input class="result-input" id="lab09-sim-vavg-fw" placeholder="V"></td><td><input class="result-input" id="lab09-sim-ripple-fw" placeholder="V"></td></tr>
+    <tr><td>Full-wave + 100 µF</td><td><input class="result-input" id="lab09-sim-vavg-fw100" placeholder="V"></td><td><input class="result-input" id="lab09-sim-ripple-fw100" placeholder="V"></td></tr>
+    <tr><td>Full-wave + 470 µF</td><td><input class="result-input" id="lab09-sim-vavg-fw470" placeholder="V"></td><td><input class="result-input" id="lab09-sim-ripple-fw470" placeholder="V"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="components-required">Components Required<a class="headerlink" href="#components-required" title="Permanent link">&para;</a></h2>
 <ul>
@@ -4184,28 +4309,17 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 </code></pre></div>
 <hr />
 <h3 id="record-measurements">Record Measurements<a class="headerlink" href="#record-measurements" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Measured Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Frequency</td>
-<td></td>
-</tr>
-<tr>
-<td>Peak Voltage</td>
-<td></td>
-</tr>
-<tr>
-<td>RMS Voltage</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Parameter</th><th>Measured Value</th></tr></thead>
+  <tbody>
+    <tr><td>Frequency</td><td><input class="result-input" id="lab09-exp1-freq" placeholder="Hz"></td></tr>
+    <tr><td>Peak Voltage</td><td><input class="result-input" id="lab09-exp1-vpeak" placeholder="V"></td></tr>
+    <tr><td>RMS Voltage</td><td><input class="result-input" id="lab09-exp1-vrms" placeholder="V"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-2-half-wave-rectifier">Experiment 2 - Half-Wave Rectifier<a class="headerlink" href="#experiment-2-half-wave-rectifier" title="Permanent link">&para;</a></h2>
 <h3 id="objective_2">Objective<a class="headerlink" href="#objective_2" title="Permanent link">&para;</a></h3>
@@ -4296,28 +4410,17 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 </code></pre></div>
 <hr />
 <h3 id="record-measurements_1">Record Measurements<a class="headerlink" href="#record-measurements_1" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Measured Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Peak Voltage</td>
-<td></td>
-</tr>
-<tr>
-<td>Average Voltage</td>
-<td></td>
-</tr>
-<tr>
-<td>Frequency</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Parameter</th><th>Measured Value</th></tr></thead>
+  <tbody>
+    <tr><td>Peak Voltage</td><td><input class="result-input" id="lab09-exp2-vpeak" placeholder="V"></td></tr>
+    <tr><td>Average Voltage</td><td><input class="result-input" id="lab09-exp2-vavg" placeholder="V"></td></tr>
+    <tr><td>Frequency</td><td><input class="result-input" id="lab09-exp2-freq" placeholder="Hz"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-3-bridge-rectifier">Experiment 3 - Bridge Rectifier<a class="headerlink" href="#experiment-3-bridge-rectifier" title="Permanent link">&para;</a></h2>
 <h3 id="objective_3">Objective<a class="headerlink" href="#objective_3" title="Permanent link">&para;</a></h3>
@@ -4412,28 +4515,17 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 </code></pre></div>
 <hr />
 <h3 id="record-measurements_2">Record Measurements<a class="headerlink" href="#record-measurements_2" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Measured Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Peak Voltage</td>
-<td></td>
-</tr>
-<tr>
-<td>Average Voltage</td>
-<td></td>
-</tr>
-<tr>
-<td>Ripple Frequency</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Parameter</th><th>Measured Value</th></tr></thead>
+  <tbody>
+    <tr><td>Peak Voltage</td><td><input class="result-input" id="lab09-exp3-vpeak" placeholder="V"></td></tr>
+    <tr><td>Average Voltage</td><td><input class="result-input" id="lab09-exp3-vavg" placeholder="V"></td></tr>
+    <tr><td>Ripple Frequency</td><td><input class="result-input" id="lab09-exp3-freq" placeholder="Hz"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="experiment-4-capacitor-smoothing">Experiment 4 - Capacitor Smoothing<a class="headerlink" href="#experiment-4-capacitor-smoothing" title="Permanent link">&para;</a></h2>
 <h3 id="objective_4">Objective<a class="headerlink" href="#objective_4" title="Permanent link">&para;</a></h3>
@@ -4496,32 +4588,18 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <p>Then replace the 100 µF capacitor with the <strong>470 µF</strong> capacitor and observe the further reduction in ripple.</p>
 <hr />
 <h3 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h3>
+<div class="result-block">
 <table>
-<thead>
-<tr>
-<th>Configuration</th>
-<th>Ripple Voltage (V)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Half-wave</td>
-<td></td>
-</tr>
-<tr>
-<td>Full-wave</td>
-<td></td>
-</tr>
-<tr>
-<td>Full-wave + 100 µF</td>
-<td></td>
-</tr>
-<tr>
-<td>Full-wave + 470 µF</td>
-<td></td>
-</tr>
-</tbody>
+  <thead><tr><th>Configuration</th><th>Ripple Voltage (V)</th></tr></thead>
+  <tbody>
+    <tr><td>Half-wave</td><td><input class="result-input" id="lab09-exp4-ripple-hw" placeholder="V"></td></tr>
+    <tr><td>Full-wave</td><td><input class="result-input" id="lab09-exp4-ripple-fw" placeholder="V"></td></tr>
+    <tr><td>Full-wave + 100 µF</td><td><input class="result-input" id="lab09-exp4-ripple-fw100" placeholder="V"></td></tr>
+    <tr><td>Full-wave + 470 µF</td><td><input class="result-input" id="lab09-exp4-ripple-fw470" placeholder="V"></td></tr>
+  </tbody>
 </table>
+</div>
+
 <hr />
 <h2 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h2>
 <p>Now overlay your measured waveform parameters against the simulated predictions.</p>
@@ -4600,6 +4678,12 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <p>✅ Capacitor polarity verified</p>
 <p>✅ Oscilloscope triggering correctly</p>
 <p>✅ Probe ground at DC(−) rail</p>
+<hr />
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab09">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab09">✕ Clear All Results</button>
+</div>
+
 <hr />
 <h2 id="knowledge-check">Knowledge Check<a class="headerlink" href="#knowledge-check" title="Permanent link">&para;</a></h2>
 <h3 id="question-1">Question 1<a class="headerlink" href="#question-1" title="Permanent link">&para;</a></h3>

@@ -926,6 +926,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#volt-second-balance-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Volt-Second Balance Derivation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Volt-Second Balance Derivation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-mosfet-on-duration-dt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1 — MOSFET ON (duration \(DT\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-mosfet-off-duration-1-dt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 — MOSFET OFF (duration \((1-D)T\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#applying-volt-second-balance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applying Volt-Second Balance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ideal-boost-converter-equation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2244,6 +2294,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#volt-second-balance-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Volt-Second Balance Derivation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Volt-Second Balance Derivation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-mosfet-on-duration-dt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1 — MOSFET ON (duration \(DT\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-mosfet-off-duration-1-dt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 — MOSFET OFF (duration \((1-D)T\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#applying-volt-second-balance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applying Volt-Second Balance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ideal-boost-converter-equation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3091,6 +3191,43 @@ V_L = L\frac{di}{dt}
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Output Voltage &gt; Input Voltage
 </code></pre></div>
 <p>is possible.</p>
+<hr />
+<h2 id="volt-second-balance-derivation">Volt-Second Balance Derivation<a class="headerlink" href="#volt-second-balance-derivation" title="Permanent link">&para;</a></h2>
+<p>The same volt-second balance principle used in the Buck Converter applies here, but the inductor position and switch action are different.</p>
+<h3 id="phase-1-mosfet-on-duration-dt">Phase 1 — MOSFET ON (duration <span class="arithmatex">\(DT\)</span>)<a class="headerlink" href="#phase-1-mosfet-on-duration-dt" title="Permanent link">&para;</a></h3>
+<p>The MOSFET shorts the switch node to GND.</p>
+<p>Applying KVL around the inductor loop:</p>
+<div class="arithmatex">\[
+V_L = V_{IN}
+\]</div>
+<p>The full input voltage appears across the inductor and current rises.</p>
+<h3 id="phase-2-mosfet-off-duration-1-dt">Phase 2 — MOSFET OFF (duration <span class="arithmatex">\((1-D)T\)</span>)<a class="headerlink" href="#phase-2-mosfet-off-duration-1-dt" title="Permanent link">&para;</a></h3>
+<p>The MOSFET opens. The inductor forces current through the diode into the output capacitor.</p>
+<p>Applying KVL:</p>
+<div class="arithmatex">\[
+V_L = V_{IN} - V_{OUT}
+\]</div>
+<p>Since <span class="arithmatex">\(V_{OUT} &gt; V_{IN}\)</span>, this voltage is negative and current falls.</p>
+<h3 id="applying-volt-second-balance">Applying Volt-Second Balance<a class="headerlink" href="#applying-volt-second-balance" title="Permanent link">&para;</a></h3>
+<p>Setting the net volt-seconds to zero:</p>
+<div class="arithmatex">\[
+V_{IN} \cdot DT + (V_{IN} - V_{OUT}) \cdot (1-D)T = 0
+\]</div>
+<p>Expanding:</p>
+<div class="arithmatex">\[
+V_{IN} \cdot DT + V_{IN} \cdot T - V_{IN} \cdot DT - V_{OUT} \cdot T + V_{OUT} \cdot DT = 0
+\]</div>
+<p>Simplifying:</p>
+<div class="arithmatex">\[
+V_{IN} \cdot T - V_{OUT} \cdot T + V_{OUT} \cdot DT = 0
+\]</div>
+<div class="arithmatex">\[
+V_{IN} = V_{OUT}(1 - D)
+\]</div>
+<p>Rearranging:</p>
+<div class="arithmatex">\[
+\boxed{V_{OUT} = \frac{V_{IN}}{1 - D}}
+\]</div>
 <hr />
 <h2 id="ideal-boost-converter-equation">Ideal Boost Converter Equation<a class="headerlink" href="#ideal-boost-converter-equation" title="Permanent link">&para;</a></h2>
 <div class="arithmatex">\[
