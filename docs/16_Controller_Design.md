@@ -146,6 +146,27 @@ Models allow engineers to predict performance, tune gains, evaluate stability, a
 
 ---
 
+## Closed-Loop Performance Equations
+
+For a PID controller $C(s) = K_P + K_I/s + K_D s$ applied to the plant $G(s) = K/(\tau s + 1)$, the closed-loop transfer function is:
+
+$$
+T(s) = \frac{C(s)G(s)}{1 + C(s)G(s)}
+$$
+
+The key performance metrics can be read directly from $T(s)$:
+
+| Metric | Relation to $T(s)$ |
+|--------|--------------------|
+| Steady-state error | $e_{ss} = 1 - T(0)$ — zero if $K_I > 0$ |
+| Natural frequency | $\omega_n = \sqrt{KK_I/(\tau + KK_D)}$ |
+| Damping ratio | $\zeta = (1 + KK_P)/(2\omega_n(\tau + KK_D))$ |
+| Overshoot | $OS = e^{-\pi\zeta/\sqrt{1-\zeta^2}} \times 100\%$ (for $\zeta < 1$) |
+
+These relationships explain the tuning guidelines: increasing $K_P$ raises $\omega_n$ (faster response), increasing $K_I$ ensures $e_{ss} = 0$, and increasing $K_D$ raises $\zeta$ (less overshoot).
+
+---
+
 ## Step 3 - Select a Controller
 
 | Controller | Characteristics |

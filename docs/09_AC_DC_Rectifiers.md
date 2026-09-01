@@ -144,6 +144,74 @@ AC voltage repeats periodically.
 
 ---
 
+## RMS Voltage Derivation
+
+The RMS value is defined as the square root of the mean of the squared signal over one period.
+
+For a sinusoid $v(t) = V_{PEAK}\sin(\omega t)$:
+
+$$
+V_{RMS} = \sqrt{\frac{1}{T}\int_0^T v(t)^2\,dt}
+$$
+
+Substituting and using the identity $\sin^2(\omega t) = \frac{1 - \cos(2\omega t)}{2}$:
+
+$$
+V_{RMS} = \sqrt{\frac{V_{PEAK}^2}{T}\int_0^T \frac{1 - \cos(2\omega t)}{2}\,dt}
+$$
+
+The cosine term integrates to zero over a full period, leaving:
+
+$$
+V_{RMS} = \sqrt{\frac{V_{PEAK}^2}{2}} = \frac{V_{PEAK}}{\sqrt{2}}
+$$
+
+$$
+\boxed{V_{RMS} = \frac{V_{PEAK}}{\sqrt{2}}}
+$$
+
+---
+
+## Average DC Output Derivation
+
+### Half-Wave Rectifier
+
+Only the positive half-cycle conducts. The average over a full period is:
+
+$$
+V_{avg} = \frac{1}{2\pi}\int_0^{\pi} V_{PEAK}\sin(\theta)\,d\theta
+$$
+
+$$
+V_{avg} = \frac{V_{PEAK}}{2\pi}\Big[-\cos(\theta)\Big]_0^{\pi} = \frac{V_{PEAK}}{2\pi}(1 - (-1))
+$$
+
+$$
+\boxed{V_{avg,HW} = \frac{V_{PEAK}}{\pi} \approx 0.318\,V_{PEAK}}
+$$
+
+### Full-Wave Bridge Rectifier
+
+Both half-cycles are rectified. The average over a full period is:
+
+$$
+V_{avg} = \frac{2}{2\pi}\int_0^{\pi} V_{PEAK}\sin(\theta)\,d\theta = \frac{2V_{PEAK}}{\pi}
+$$
+
+$$
+\boxed{V_{avg,FW} = \frac{2V_{PEAK}}{\pi} \approx 0.637\,V_{PEAK}}
+$$
+
+With two diode drops in series (bridge rectifier), the practical value is:
+
+$$
+V_{avg,FW} = \frac{2(V_{PEAK} - 2V_f)}{\pi}
+$$
+
+where $V_f \approx 0.7\ \text{V}$ per diode.
+
+---
+
 ## RMS Voltage
 
 AC voltages are normally specified using the RMS value.

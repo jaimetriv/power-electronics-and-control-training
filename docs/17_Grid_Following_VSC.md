@@ -299,6 +299,40 @@ which is easier to regulate with a PI controller.
 
 ---
 
+## L-Filter Transfer Function Derivation
+
+The grid-side circuit consists of the inverter output voltage $V_{inv}$, a series inductor $L$ with winding resistance $R$, and the grid voltage $V_{grid}$.
+
+Applying KVL around the loop:
+
+$$
+V_{inv} - V_{grid} = L\frac{di}{dt} + Ri
+$$
+
+Taking the Laplace transform (zero initial conditions):
+
+$$
+V_{inv}(s) - V_{grid}(s) = (Ls + R)\,I(s)
+$$
+
+The transfer function from net voltage to current is:
+
+$$
+\boxed{G(s) = \frac{I(s)}{V_{inv}(s) - V_{grid}(s)} = \frac{1}{Ls + R}}
+$$
+
+With $L = 1\ \text{mH}$ and $R = 1\ \Omega$:
+
+$$
+G(s) = \frac{1}{0.001s + 1}
+$$
+
+This is the denominator `[0.001, 1]` used in the Simulink current controller model.
+
+The grid voltage $V_{grid}$ acts as a disturbance input. The current controller must reject this disturbance while tracking the current reference.
+
+---
+
 ## Current PI Controller
 
 The current controller calculates:

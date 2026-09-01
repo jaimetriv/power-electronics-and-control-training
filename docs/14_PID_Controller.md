@@ -124,6 +124,42 @@ The derivative term anticipates future behaviour.
 
 ---
 
+## Closed-Loop Transfer Function
+
+The PID controller in the Laplace domain is:
+
+$$
+C(s) = K_P + \frac{K_I}{s} + K_D s = \frac{K_D s^2 + K_P s + K_I}{s}
+$$
+
+Applied to the first-order plant $G(s) = K/(\tau s + 1)$, the closed-loop transfer function is:
+
+$$
+T(s) = \frac{C(s)G(s)}{1 + C(s)G(s)} = \frac{K(K_D s^2 + K_P s + K_I)}{s(\tau s + 1) + K(K_D s^2 + K_P s + K_I)}
+$$
+
+Expanding the denominator:
+
+$$
+T(s) = \frac{K(K_D s^2 + K_P s + K_I)}{(\tau + KK_D)s^2 + (1 + KK_P)s + KK_I}
+$$
+
+This is a **second-order system** (same order as PI) but the derivative term $K_D$ appears in both numerator and denominator.
+
+### Effect of the Derivative Term
+
+The $K_D$ term increases the effective damping of the closed-loop poles.
+
+Comparing the denominator to the standard second-order form $s^2 + 2\zeta\omega_n s + \omega_n^2$:
+
+$$
+\omega_n = \sqrt{\frac{KK_I}{\tau + KK_D}}, \qquad \zeta = \frac{1 + KK_P}{2\sqrt{KK_I(\tau + KK_D)}}
+$$
+
+Increasing $K_D$ increases $\zeta$, which reduces overshoot and oscillation — this is the mathematical basis for the damping effect observed in the experiments.
+
+---
+
 ## PID Controller Equation
 
 $$

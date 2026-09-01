@@ -145,6 +145,51 @@ $$
 
 ---
 
+## Closed-Loop Transfer Function
+
+For a proportional controller $C(s) = K_P$ applied to a first-order plant $G(s) = K/(\tau s + 1)$, the closed-loop transfer function is:
+
+$$
+T(s) = \frac{C(s)G(s)}{1 + C(s)G(s)} = \frac{K_P K / (\tau s + 1)}{1 + K_P K / (\tau s + 1)}
+$$
+
+Multiplying numerator and denominator by $(\tau s + 1)$:
+
+$$
+T(s) = \frac{K_P K}{\tau s + 1 + K_P K} = \frac{K_P K}{\tau s + (1 + K_P K)}
+$$
+
+Dividing by $(1 + K_P K)$:
+
+$$
+\boxed{T(s) = \frac{K_P K / (1 + K_P K)}{\dfrac{\tau}{1 + K_P K}\,s + 1}}
+$$
+
+This is still a first-order system, but with:
+
+- Closed-loop DC gain: $\dfrac{K_P K}{1 + K_P K} < 1$
+- Closed-loop time constant: $\dfrac{\tau}{1 + K_P K}$ (faster than open loop)
+
+### Steady-State Error
+
+The DC gain of $T(s)$ is less than 1, so the output never fully reaches the reference.
+
+The steady-state error for a unit step input is:
+
+$$
+e_{ss} = 1 - \frac{K_P K}{1 + K_P K} = \frac{1}{1 + K_P K}
+$$
+
+With $K = 1$:
+
+$$
+\boxed{e_{ss} = \frac{1}{1 + K_P}}
+$$
+
+Higher $K_P$ reduces steady-state error but never eliminates it entirely.
+
+---
+
 ## Proportional Control Equation
 
 $$

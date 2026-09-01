@@ -120,6 +120,50 @@ $$
 
 ---
 
+## LC Filter Transfer Function Derivation
+
+The Buck Converter output stage is an LC low-pass filter driving a resistive load.
+
+Applying KVL around the output loop (inductor voltage + capacitor voltage = switch node voltage):
+
+$$
+V_{sw} = L\frac{di_L}{dt} + V_{OUT}
+$$
+
+The capacitor current is:
+
+$$
+i_C = C\frac{dV_{OUT}}{dt} = i_L - \frac{V_{OUT}}{R}
+$$
+
+Substituting $i_L = C\,dV_{OUT}/dt + V_{OUT}/R$ into the KVL equation and differentiating:
+
+$$
+V_{sw} = LC\frac{d^2V_{OUT}}{dt^2} + \frac{L}{R}\frac{dV_{OUT}}{dt} + V_{OUT}
+$$
+
+Taking the Laplace transform:
+
+$$
+V_{sw}(s) = \left(LCs^2 + \frac{L}{R}s + 1\right)V_{OUT}(s)
+$$
+
+The transfer function from switch node voltage to output voltage is:
+
+$$
+\boxed{G(s) = \frac{V_{OUT}(s)}{V_{sw}(s)} = \frac{1}{LCs^2 + \dfrac{L}{R}s + 1}}
+$$
+
+With $L = 100\ \mu\text{H}$, $C = 100\ \mu\text{F}$, $R = 100\ \Omega$:
+
+$$
+G(s) = \frac{1}{10^{-8}s^2 + 10^{-3}s + 1}
+$$
+
+This is the denominator `[1e-8, 1e-3, 1]` used in the Simulink model.
+
+---
+
 ## PI Controller Equation
 
 $$

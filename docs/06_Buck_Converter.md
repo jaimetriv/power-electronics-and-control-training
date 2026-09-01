@@ -171,6 +171,64 @@ A Schottky diode (1N5819) is preferred because its lower forward voltage drop im
 
 ---
 
+## Volt-Second Balance Derivation
+
+In steady state the average voltage across the inductor must be zero — otherwise the current would drift without bound.
+
+This condition is called **volt-second balance**.
+
+### Phase 1 — MOSFET ON (duration $DT$)
+
+The switch node is connected to $V_{IN}$.
+
+Applying KVL around the inductor loop:
+
+$$
+V_L = V_{IN} - V_{OUT}
+$$
+
+The inductor voltage is positive, so current rises.
+
+### Phase 2 — MOSFET OFF (duration $(1-D)T$)
+
+The freewheel diode conducts and the switch node is clamped to approximately 0 V.
+
+Applying KVL:
+
+$$
+V_L = 0 - V_{OUT} = -V_{OUT}
+$$
+
+The inductor voltage is negative, so current falls.
+
+### Applying Volt-Second Balance
+
+The net volt-seconds over one complete period must equal zero:
+
+$$
+(V_{IN} - V_{OUT}) \cdot DT + (-V_{OUT}) \cdot (1-D)T = 0
+$$
+
+Expanding:
+
+$$
+V_{IN} \cdot DT - V_{OUT} \cdot DT - V_{OUT} \cdot T + V_{OUT} \cdot DT = 0
+$$
+
+Simplifying:
+
+$$
+V_{IN} \cdot DT - V_{OUT} \cdot T = 0
+$$
+
+Dividing through by $T$:
+
+$$
+\boxed{V_{OUT} = D \cdot V_{IN}}
+$$
+
+---
+
 ## Ideal Buck Converter Equation
 
 $$

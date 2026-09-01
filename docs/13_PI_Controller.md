@@ -80,6 +80,46 @@ Even a small persistent error will cause the integral to grow, eventually produc
 
 ---
 
+## Closed-Loop Transfer Function
+
+The PI controller in the Laplace domain is:
+
+$$
+C(s) = K_P + \frac{K_I}{s} = \frac{K_P s + K_I}{s}
+$$
+
+Applied to the first-order plant $G(s) = K/(\tau s + 1)$, the open-loop transfer function is:
+
+$$
+L(s) = C(s)G(s) = \frac{(K_P s + K_I)K}{s(\tau s + 1)}
+$$
+
+The closed-loop transfer function is:
+
+$$
+T(s) = \frac{L(s)}{1 + L(s)} = \frac{(K_P s + K_I)K}{s(\tau s + 1) + (K_P s + K_I)K}
+$$
+
+Expanding the denominator:
+
+$$
+T(s) = \frac{K(K_P s + K_I)}{\tau s^2 + (1 + KK_P)s + KK_I}
+$$
+
+This is a **second-order system**. The integral term introduces a pole at $s = 0$ in the open loop, which guarantees zero steady-state error for a step input — the system type increases from 0 (P only) to 1 (PI).
+
+### Why Steady-State Error Is Eliminated
+
+Applying the Final Value Theorem to a unit step input $R(s) = 1/s$:
+
+$$
+y_{ss} = \lim_{s \to 0} s \cdot T(s) \cdot \frac{1}{s} = T(0) = \frac{K \cdot K_I}{K K_I} = 1
+$$
+
+Therefore $e_{ss} = 1 - 1 = 0$ for any $K_I > 0$.
+
+---
+
 ## PI Controller Equation
 
 $$

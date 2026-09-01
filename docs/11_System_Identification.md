@@ -114,6 +114,64 @@ Step responses are easy to generate and contain valuable information about syste
 
 ---
 
+## From RC Circuit to First-Order Transfer Function
+
+In Project 02 the RC circuit KVL equation was derived as:
+
+$$
+V_{IN} = RC\frac{dV_C}{dt} + V_C
+$$
+
+Taking the Laplace transform (zero initial conditions):
+
+$$
+V_{IN}(s) = RCsV_C(s) + V_C(s) = V_C(s)(RCs + 1)
+$$
+
+Rearranging to give the transfer function $G(s) = V_C(s)/V_{IN}(s)$:
+
+$$
+G(s) = \frac{1}{RCs + 1} = \frac{K}{\tau s + 1}
+$$
+
+where $K = 1$ (DC gain) and $\tau = RC$ (time constant).
+
+This is the **general first-order transfer function** used throughout system identification.
+
+## From RLC Circuit to Second-Order Transfer Function
+
+In Project 03 the series RLC KVL equation was derived as:
+
+$$
+L\frac{d^2V_C}{dt^2} + R\frac{dV_C}{dt} + \frac{V_C}{C} = \frac{V_{IN}}{C} \cdot \frac{1}{C}
+$$
+
+More precisely, applying KVL and substituting $i = C\,dV_C/dt$:
+
+$$
+LC\frac{d^2V_C}{dt^2} + RC\frac{dV_C}{dt} + V_C = V_{IN}
+$$
+
+Taking the Laplace transform:
+
+$$
+(LCs^2 + RCs + 1)V_C(s) = V_{IN}(s)
+$$
+
+Dividing numerator and denominator by $LC$:
+
+$$
+G(s) = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}
+$$
+
+where:
+
+$$
+\omega_n = \frac{1}{\sqrt{LC}}, \qquad \zeta = \frac{R}{2}\sqrt{\frac{C}{L}}
+$$
+
+---
+
 ## First-Order Transfer Function
 
 $$

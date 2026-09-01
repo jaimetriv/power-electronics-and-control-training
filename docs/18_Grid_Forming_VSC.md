@@ -313,6 +313,64 @@ Output Voltage
 
 ---
 
+## LC Filter Transfer Function Derivation
+
+The grid-forming inverter output stage is an LC filter driving a resistive load $R$.
+
+Applying KVL around the inductor loop:
+
+$$
+V_{inv} = L\frac{di_L}{dt} + V_{OUT}
+$$
+
+Applying KCL at the output node (inductor current splits into capacitor current and load current):
+
+$$
+i_L = C\frac{dV_{OUT}}{dt} + \frac{V_{OUT}}{R}
+$$
+
+Differentiating the KCL equation and substituting into KVL:
+
+$$
+V_{inv} = LC\frac{d^2V_{OUT}}{dt^2} + \frac{L}{R}\frac{dV_{OUT}}{dt} + V_{OUT}
+$$
+
+Taking the Laplace transform:
+
+$$
+V_{inv}(s) = \left(LCs^2 + \frac{L}{R}s + 1\right)V_{OUT}(s)
+$$
+
+Rearranging to give the transfer function:
+
+$$
+G(s) = \frac{V_{OUT}(s)}{V_{inv}(s)} = \frac{1}{LCs^2 + \dfrac{L}{R}s + 1}
+$$
+
+Multiplying numerator and denominator by $R$:
+
+$$
+\boxed{G(s) = \frac{R}{LCRs^2 + Ls + R}}
+$$
+
+With $L = 1\ \text{mH}$, $C = 1\ \mu\text{F}$, $R = 220\ \Omega$:
+
+$$
+G(s) = \frac{220}{2.2 \times 10^{-7}s^2 + 10^{-3}s + 220}
+$$
+
+This is the denominator `[2.2e-7, 1e-3, 220]` used in the Simulink voltage controller model.
+
+The natural frequency of the LC filter is:
+
+$$
+f_n = \frac{1}{2\pi\sqrt{LC}} = \frac{1}{2\pi\sqrt{10^{-3} \times 10^{-6}}} \approx 5033\ \text{Hz}
+$$
+
+The voltage controller bandwidth must remain well below $f_n$ to avoid exciting the filter resonance.
+
+---
+
 ## Voltage Reference
 
 The inverter generates:

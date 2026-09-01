@@ -147,6 +147,66 @@ is possible.
 
 ---
 
+## Volt-Second Balance Derivation
+
+The same volt-second balance principle used in the Buck Converter applies here, but the inductor position and switch action are different.
+
+### Phase 1 — MOSFET ON (duration $DT$)
+
+The MOSFET shorts the switch node to GND.
+
+Applying KVL around the inductor loop:
+
+$$
+V_L = V_{IN}
+$$
+
+The full input voltage appears across the inductor and current rises.
+
+### Phase 2 — MOSFET OFF (duration $(1-D)T$)
+
+The MOSFET opens. The inductor forces current through the diode into the output capacitor.
+
+Applying KVL:
+
+$$
+V_L = V_{IN} - V_{OUT}
+$$
+
+Since $V_{OUT} > V_{IN}$, this voltage is negative and current falls.
+
+### Applying Volt-Second Balance
+
+Setting the net volt-seconds to zero:
+
+$$
+V_{IN} \cdot DT + (V_{IN} - V_{OUT}) \cdot (1-D)T = 0
+$$
+
+Expanding:
+
+$$
+V_{IN} \cdot DT + V_{IN} \cdot T - V_{IN} \cdot DT - V_{OUT} \cdot T + V_{OUT} \cdot DT = 0
+$$
+
+Simplifying:
+
+$$
+V_{IN} \cdot T - V_{OUT} \cdot T + V_{OUT} \cdot DT = 0
+$$
+
+$$
+V_{IN} = V_{OUT}(1 - D)
+$$
+
+Rearranging:
+
+$$
+\boxed{V_{OUT} = \frac{V_{IN}}{1 - D}}
+$$
+
+---
+
 ## Ideal Boost Converter Equation
 
 $$
