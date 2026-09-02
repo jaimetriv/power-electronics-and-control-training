@@ -826,23 +826,6 @@ During Experiment 4 your measured current settling time was longer than the MATL
 
 ---
 
-## Next Project
-
-```text
-18_Grid_Forming_VSC.md
-```
-
-Topics:
-
-- Grid-Forming Operation
-- Autonomous AC Generation
-- Voltage Regulation
-- Droop Control
-- Virtual Synchronous Machines
-- Microgrid Fundamentals
-
----
-
 ## Project Summary
 
 This project combines:
@@ -878,3 +861,20 @@ You have now progressed from basic PWM generation to the same fundamental contro
 - Grid Support Systems
 
 and have completed the full introductory power electronics and control engineering pathway.
+
+---
+
+## Next Project
+
+```text
+18_Grid_Forming_VSC.md
+```
+
+Topics:
+
+- Grid-Forming Operation
+- Autonomous AC Generation
+- Voltage Regulation
+- Droop Control
+- Virtual Synchronous Machines
+- Microgrid Fundamentals

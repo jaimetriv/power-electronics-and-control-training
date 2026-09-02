@@ -1162,13 +1162,6 @@ Check:
 
 ---
 
-<div class="result-actions">
-  <button class="result-export-btn" data-lab="lab09">⬇ Export Results (JSON)</button>
-  <button class="result-clear-btn" data-lab="lab09">✕ Clear All Results</button>
-</div>
-
----
-
 ## Knowledge Check
 
 ### Question 1
@@ -1204,6 +1197,13 @@ Why is a smoothing capacitor used?
 ### Question 6
 
 A full-wave rectifier with a 100 µF capacitor produces 2 V of ripple at 50 Hz with a 1 kΩ load. Estimate the ripple if the capacitor is replaced with 470 µF, using the approximation $V_{ripple} \approx I_{load} / (f_{ripple} \times C)$. Show your working.
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab09">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab09">✕ Clear All Results</button>
+</div>
 
 ---
 

@@ -247,54 +247,13 @@ File:
 
 ---
 
-## Phase 3 - Control Systems
+## Phase 3 - Power Electronics
 
-The third phase introduces feedback control.
+The third phase introduces switching power converters.
 
 ---
 
 ## Project 6
-
-### P Controller
-
-Concepts:
-
-- Error
-- Feedback
-- Gain
-
----
-
-## Project 7
-
-### PI Controller
-
-Concepts:
-
-- Integral Action
-- Steady-State Error
-
----
-
-## Project 8
-
-### PID Controller
-
-Concepts:
-
-- Derivative Action
-- Stability
-- Tuning
-
----
-
-## Phase 4 - Power Electronics
-
-The fourth phase combines everything learned so far.
-
----
-
-## Project 9
 
 ### Buck Converter
 
@@ -304,21 +263,15 @@ Concepts:
 - Switching Power Supplies
 - Output Ripple
 
----
+File:
 
-## Project 10
-
-### Closed-Loop Buck Converter
-
-Concepts:
-
-- Voltage Regulation
-- PI Control
-- Feedback Systems
+```text
+06_Buck_Converter.md
+```
 
 ---
 
-## Project 11
+## Project 7
 
 ### Boost Converter
 
@@ -328,21 +281,39 @@ Concepts:
 - Energy Storage
 - Converter Efficiency
 
+File:
+
+```text
+07_Boost_Converter.md
+```
+
 ---
 
-## Project 11B
+## Project 8
 
-### DC Chopper Converters
+### PWM Motor Control
 
 Concepts:
 
-- Chopper Operation
-- DC Motor Drives
-- Quadrant Operation
+- DC Motor Speed Control
+- PWM Drive Signals
+- Open-Loop Motor Drive
+
+File:
+
+```text
+08_PWM_Motor_Control.md
+```
 
 ---
 
-## Project 12
+## Phase 4 - AC Power Electronics
+
+The fourth phase introduces AC conversion.
+
+---
+
+## Project 9
 
 ### AC-DC Rectifiers
 
@@ -352,9 +323,15 @@ Concepts:
 - Bridge Rectifiers
 - Capacitor Smoothing
 
+File:
+
+```text
+09_AC_DC_Rectifiers.md
+```
+
 ---
 
-## Project 13
+## Project 10
 
 ### DC-AC Inverters
 
@@ -364,15 +341,21 @@ Concepts:
 - SPWM
 - AC Generation
 
+File:
+
+```text
+10_DC_AC_Inverters.md
+```
+
 ---
 
-## Phase 5 - Advanced Topics
+## Phase 5 - Control Systems
 
-The final phase focuses on modelling, design and grid-connected systems.
+The fifth phase introduces feedback control applied to power electronics.
 
 ---
 
-## Project 14
+## Project 11
 
 ### System Identification
 
@@ -382,9 +365,92 @@ Concepts:
 - Parameter Estimation
 - Transfer Functions
 
+File:
+
+```text
+11_System_Identification.md
+```
+
+---
+
+## Project 12
+
+### P Controller
+
+Concepts:
+
+- Error
+- Feedback
+- Gain
+
+File:
+
+```text
+12_P_Controller.md
+```
+
+---
+
+## Project 13
+
+### PI Controller
+
+Concepts:
+
+- Integral Action
+- Steady-State Error
+
+File:
+
+```text
+13_PI_Controller.md
+```
+
+---
+
+## Project 14
+
+### PID Controller
+
+Concepts:
+
+- Derivative Action
+- Stability
+- Tuning
+
+File:
+
+```text
+14_PID_Controller.md
+```
+
 ---
 
 ## Project 15
+
+### Closed-Loop Buck Converter
+
+Concepts:
+
+- Voltage Regulation
+- PI Control
+- Feedback Systems
+
+File:
+
+```text
+15_Closed_Loop_Buck.md
+```
+
+---
+
+## Phase 6 - Advanced Topics
+
+The final phase focuses on modelling, design and grid-connected systems.
+
+---
+
+## Project 16
 
 ### Controller Design
 
@@ -395,9 +461,15 @@ Concepts:
 - PID Controllers
 - Closed-Loop Analysis
 
+File:
+
+```text
+16_Controller_Design.md
+```
+
 ---
 
-## Project 16
+## Project 17
 
 ### Grid-Following VSC
 
@@ -407,9 +479,15 @@ Concepts:
 - Current Control
 - dq Control
 
+File:
+
+```text
+17_Grid_Following_VSC.md
+```
+
 ---
 
-## Project 17
+## Project 18
 
 ### Grid-Forming VSC
 
@@ -418,6 +496,12 @@ Concepts:
 - Autonomous AC Generation
 - Voltage Regulation
 - Droop Control
+
+File:
+
+```text
+18_Grid_Forming_VSC.md
+```
 
 ---
 

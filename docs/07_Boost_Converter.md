@@ -286,7 +286,7 @@ Drag the following blocks onto the canvas:
 | Block | Library path | Quantity |
 |-------|-------------|----------|
 | Pulse Generator | Simulink → Sources | 1 |
-| Controlled Voltage Source | Simscape → Foundation Library → Electrical → Electrical Sources | 1 |
+| DC Voltage Source | Simscape → Foundation Library → Electrical → Electrical Sources | 1 |
 | Inductor | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
 | Ideal Switch | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
 | Diode | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
@@ -316,17 +316,15 @@ This produces a 0–1 control signal at 500 Hz, 50% duty cycle.
 
 ---
 
-### Step 5 — Configure the Controlled Voltage Source
+### Step 5 — Configure the DC Voltage Source
 
-This represents the 3.3 V ESP32 supply. Set it to a fixed DC source — the switching is handled by the Ideal Switch, not the voltage source.
+This represents the 3.3 V ESP32 supply. Use a **DC Voltage Source** block (Simscape → Foundation Library → Electrical → Electrical Sources) set directly to 3.3 V — no Constant block or Controlled Voltage Source is needed.
 
 Double-click and set:
 
 | Parameter | Value |
 |-----------|-------|
 | Constant voltage | `3.3` |
-
-Connect the Controlled Voltage Source input port to a **Constant** block (Simulink → Sources) set to `1`, so it outputs a steady 3.3 V.
 
 ---
 
@@ -367,9 +365,7 @@ A higher load resistance is used here than in the Buck lab because the Boost out
 The Boost topology differs from the Buck — the inductor is on the input side and the switch connects the switch node to GND:
 
 ```text
-Constant (1) → Controlled Voltage Source (input port)
-
-Controlled Voltage Source (+) → Current Sensor (+ port)
+DC Voltage Source (+) → Current Sensor (+ port)
 Current Sensor (− port)       → Inductor (left port)        [input node]
 Inductor (right port)         → Ideal Switch (left port)    [switch node]
 Inductor (right port)         → Diode (+ port)              [switch node]
@@ -448,9 +444,7 @@ Change the **Pulse Width** in the Pulse Generator and re-run for each experiment
 
 ✅ Pulse Generator output → Ideal Switch control port
 
-✅ Constant (1) → Controlled Voltage Source input
-
-✅ Series input path: Voltage Source (+) → Current Sensor → Inductor → switch node
+✅ Series input path: DC Voltage Source (+) → Current Sensor → Inductor → switch node
 
 ✅ Ideal Switch: left port at switch node, right port at Electrical Reference
 
@@ -862,7 +856,7 @@ ylim([0 20]);
 
 Check:
 
-✅ Inductor connected between 5V supply and MOSFET Drain (not between Drain and GND)
+✅ Inductor connected between 3.3V supply and MOSFET Drain (not between Drain and GND)
 
 ✅ Diode orientation (anode at switch node, cathode toward Vout)
 

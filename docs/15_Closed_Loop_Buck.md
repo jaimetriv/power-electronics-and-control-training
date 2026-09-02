@@ -765,7 +765,7 @@ As the controller regulates voltage:
 Compare your measured steady-state output voltages against the simulated closed-loop responses.
 
 ```matlab
-L = 100e-6; C = 100e-6; R = 100; Vin = 5; H = 0.5;
+L = 100e-6; C = 100e-6; R = 100; Vin = 3.3; H = 0.5;
 G = tf(1, [L*C, L/R, 1]);
 
 gain_sets = [2, 0.2; 10, 1.0; 50, 5.0];
@@ -787,7 +787,7 @@ for i = 1:3
         sprintf('%s | OS=%.1f%% Ts=%.1fms', labels{i}, ...
         info.Overshoot, info.SettlingTime*1e3));
 end
-yline(2.5, 'k--', 'Reference 2.5V');
+yline(1.65, 'k--', 'Reference 1.65V');
 scatter([50, 50, 50], Vout_measured, 80, 'r', 'filled', ...
     'DisplayName', 'Measured Vout');
 grid on;
@@ -895,7 +895,7 @@ What happens if the gains are too large?
 
 ### Question 6
 
-The voltage divider scales Vout by 0.5 before the ADC. The reference in the code is set to 2.5 V. What actual output voltage is the controller regulating to, and what would you change in the code to regulate to 3.0 V instead?
+The voltage divider scales Vout by 0.5 before the ADC. The ESP32 reference in the code is set to 1.65 V. What actual output voltage is the controller regulating to, and what would you change in the code to regulate to 2.0 V instead?
 
 ---
 

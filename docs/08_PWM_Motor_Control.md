@@ -795,7 +795,7 @@ In this project you learned:
 
 The motor is the first real plant we will control.
 
-In the next projects we will add feedback and begin building true control systems.
+After completing the AC and DC power electronics projects (09–10), feedback control will be introduced in Projects 11–14.
 
 ---
 

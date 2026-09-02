@@ -253,9 +253,8 @@ Under **Solver**:
 | Setting | Value |
 |---------|-------|
 | Stop time | `0.008` |
-| Type | Fixed-step |
-| Solver | `discrete (no continuous states)` |
-| Fixed-step size | `1e-6` |
+| Type | Variable-step |
+| Solver | `ode45` |
 
 Click **OK**.
 
@@ -314,7 +313,7 @@ Note that the Type A (Buck) curve and the motor chopper $V_{AVG} = D \cdot V_S$ 
 
 ✅ Gain = 3.3
 
-✅ Stop time = 0.008, Fixed-step solver, step size = 1e-6
+✅ Stop time = 0.008, Variable-step, ode45
 
 ---
 
@@ -518,6 +517,10 @@ end
 ```matlab
 Vin = 3.3;
 D   = 0:0.001:0.95;
+
+% Replace with your measured values from the Results Table above
+D_measured    = [0.25, 0.50, 0.75];
+Vavg_measured = [0.00, 0.00, 0.00];   % (V)
 
 figure; hold on;
 plot(D, Vin.*D,          'b',  'LineWidth', 2, 'DisplayName', 'Type A Buck');

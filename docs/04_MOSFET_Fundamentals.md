@@ -259,9 +259,8 @@ Under **Solver**:
 | Setting | Value |
 |---------|-------|
 | Stop time | `0.008` |
-| Type | Fixed-step |
-| Solver | `discrete (no continuous states)` |
-| Fixed-step size | `1e-6` |
+| Type | Variable-step |
+| Solver | `ode45` |
 
 Click **OK**.
 
@@ -296,7 +295,7 @@ Observe how the ON time grows relative to the period as duty cycle increases.
 
 ✅ Amplitude = 3.3, Period = 0.002, Phase delay = 0
 
-✅ Stop time = 0.008, Fixed-step solver, step size = 1e-6
+✅ Stop time = 0.008, Variable-step, ode45
 
 ---
 
@@ -780,7 +779,7 @@ for k = 1:3
     D = D_vals(k);
 
     % --- FFT of simulated waveform ---
-    N = 20 * round(fs / f0);                    % 20 complete cycles
+    N = 20 * round(fs / f0);                    % 20 complete cycles — must be integer
     t = (0:N-1) / fs;
     pwm = Vs * double(mod(t, 1/f0) < D/f0);
 

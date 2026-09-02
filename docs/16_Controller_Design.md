@@ -692,24 +692,7 @@ Your MATLAB simulation predicted zero steady-state error and 8% overshoot with a
 
 ---
 
-## Next Project
-
-```text
-17_Grid_Following_VSC.md
-```
-
-Topics:
-
-- Voltage Source Converters
-- Grid Synchronisation
-- Phase-Locked Loops
-- Current Control
-- Active and Reactive Power
-- Grid-Following Operation
-
----
-
-## Final Course Summary
+## Project Summary
 
 Throughout this course you have studied:
 
@@ -763,3 +746,20 @@ and the practical skills required to continue into more advanced topics such as:
 - Power Supply Design
 - Advanced Robotics
 - Industrial Automation
+
+---
+
+## Next Project
+
+```text
+17_Grid_Following_VSC.md
+```
+
+Topics:
+
+- Voltage Source Converters
+- Grid Synchronisation
+- Phase-Locked Loops
+- Current Control
+- Active and Reactive Power
+- Grid-Following Operation

@@ -947,6 +947,8 @@ Adjust:
 
 ✅ Appropriate time scale selected
 
+---
+
 ## Laboratory Exercises
 
 ### Exercise 1
@@ -1011,8 +1013,6 @@ Your MATLAB simulation predicted $f_n$ = 1591 Hz but you measured $f_n$ = 1520 H
   <button class="result-export-btn" data-lab="lab03">⬇ Export Results (JSON)</button>
   <button class="result-clear-btn" data-lab="lab03">✕ Clear All Results</button>
 </div>
-
----
 
 ## Project Summary
 

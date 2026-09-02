@@ -560,6 +560,7 @@ Re-run at the same frequencies. The ratio should now increase with frequency ins
 - Breadboard and jumper wires
 - 10 kΩ resistor
 - 100 µF electrolytic capacitor
+- 100 nF ceramic capacitor (for Experiments 5–6)
 - OWON HDS272S Oscilloscope (recommended)
 - DSO Nano Oscilloscope (compatible)
 

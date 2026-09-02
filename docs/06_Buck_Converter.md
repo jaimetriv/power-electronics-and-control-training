@@ -340,26 +340,26 @@ Double-click the **Pulse Generator** and set:
 
 | Parameter | Value |
 |-----------|-------|
-| Amplitude | `1` |
+| Amplitude | `3.3` |
 | Period | `0.002` |
 | Pulse Width | `50` (percent) |
 | Phase delay | `0` |
 
-This produces a 0–1 control signal at 500 Hz, 50% duty cycle.
+This produces a 0–3.3 V control signal at 500 Hz, 50% duty cycle.
 
 ---
 
 ### Step 5 — Configure the Controlled Voltage Source
 
-This represents the 3.3 V ESP32 supply. Connect the **Pulse Generator** output to its input port — the source will switch between 0 V and 3.3 V following the PWM signal.
+This represents the 3.3 V ESP32 supply. The Pulse Generator drives its input port directly — the source outputs exactly the value of its input signal in volts, so it switches between 0 V and 3.3 V following the PWM signal.
+
+> `Constant voltage: 1` means the source outputs exactly the value of its input signal with no scaling. The Pulse Generator amplitude of 3.3 already sets the voltage level.
 
 Double-click and set:
 
 | Parameter | Value |
 |-----------|-------|
-| Constant voltage | `3.3` |
-
-> In Simscape 2025b the Controlled Voltage Source scales its output by the input signal. With Amplitude = 1 and Constant voltage = 3.3, the output switches between 0 V and 3.3 V.
+| Constant voltage | `1` |
 
 ---
 
@@ -401,6 +401,7 @@ Connect the blocks in this order:
 
 ```text
 Pulse Generator → Controlled Voltage Source (input port)
+Pulse Generator → Ideal Switch (control port)
 
 Controlled Voltage Source (+) → Ideal Switch (left port)
 Ideal Switch (right port)     → Current Sensor (+ port)
@@ -418,7 +419,7 @@ Voltage Sensor (+ port) → Vout node (junction of Inductor, Capacitor, Resistor
 Voltage Sensor (− port) → Electrical Reference
 ```
 
-> The Ideal Switch is controlled by the Pulse Generator signal. Connect the Pulse Generator output to the **control port** (the signal input on top of the Ideal Switch block).
+> Branch the Pulse Generator output wire to reach both blocks.
 
 > The Diode acts as the freewheel diode. Its `+` port connects to GND (Electrical Reference) and its `−` port connects to the switch node. This allows inductor current to continue flowing when the switch is open.
 
@@ -882,7 +883,7 @@ Check:
 
 ✅ MOSFET pinout correct (G, D, S identified)
 
-✅ Diode polarity (cathode banded end toward switch node / 5V side)
+✅ Diode polarity (anode at switch node, cathode at GND)
 
 ✅ Inductor connected between MOSFET Drain and Vout
 

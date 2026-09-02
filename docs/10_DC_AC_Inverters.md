@@ -779,13 +779,6 @@ legend('Location', 'south');
 
 ---
 
-<div class="result-actions">
-  <button class="result-export-btn" data-lab="lab10">⬇ Export Results (JSON)</button>
-  <button class="result-clear-btn" data-lab="lab10">✕ Clear All Results</button>
-</div>
-
----
-
 ## Troubleshooting
 
 Check:
@@ -869,6 +862,13 @@ What is shoot-through?
 ### Question 6
 
 A square wave at 50 Hz contains harmonics at 150 Hz, 250 Hz, 350 Hz and so on. Explain why these odd harmonics are present and why they are absent in a pure sine wave. Why does this matter for motor drives?
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="lab10">⬇ Export Results (JSON)</button>
+  <button class="result-clear-btn" data-lab="lab10">✕ Clear All Results</button>
+</div>
 
 ---
 

@@ -18,9 +18,10 @@ This project introduces the basic oscilloscope skills required for the remainder
 
 ---
 
-### Learning Outcomes
-  
+## Learning Outcomes
+
 At the end of this project you should be able to:
+
 ✅ Connect the OWON HDS272S safely to a circuit
 
 ✅ Adjust the vertical scale to suit the signal
@@ -483,9 +484,10 @@ A mismatch will cause the displayed voltage to be 10 times too high or too low.
 
 ### Record Measurements
 
-| Parameter | Expected | Measured |
-|-----------|----------|---------|
-| DC Voltage | 5 V | |
+<div class="result-block">
+  <label>DC Voltage (V)</label>
+  <input type="text" id="lab00B-exp2-voltage" class="result-input" placeholder="Expected: 5 V" data-lab="00B">
+</div>
 
 ---
 
@@ -613,12 +615,22 @@ $$
 
 ### Measurement Worksheet
 
-| Measurement | Expected | Measured |
-|-------------|----------|---------|
-| Peak Voltage | 5 V | |
-| Period | 2 ms | |
-| Frequency | 490 Hz | |
-| Duty Cycle | 50% | |
+<div class="result-block">
+  <label>Peak Voltage (V)</label>
+  <input type="text" id="lab00B-exp3-vpeak" class="result-input" placeholder="Expected: 5 V" data-lab="00B">
+</div>
+<div class="result-block">
+  <label>Period (ms)</label>
+  <input type="text" id="lab00B-exp3-period" class="result-input" placeholder="Expected: 2 ms" data-lab="00B">
+</div>
+<div class="result-block">
+  <label>Frequency (Hz)</label>
+  <input type="text" id="lab00B-exp3-freq" class="result-input" placeholder="Expected: 490 Hz" data-lab="00B">
+</div>
+<div class="result-block">
+  <label>Duty Cycle (%)</label>
+  <input type="text" id="lab00B-exp3-duty" class="result-input" placeholder="Expected: 50%" data-lab="00B">
+</div>
 
 ---
 
@@ -915,12 +927,38 @@ Expected: CH2 significantly smaller than CH1.
 
 ### Record Measurements
 
-| Frequency | CH1 Vpp (input) | CH2 Vpp (output) | Ratio V_OUT / V_IN |
-|-----------|----------------|-----------------|-------------------|
-| 100 Hz | | | |
-| 500 Hz | | | |
-| 1 kHz | | | |
-| 10 kHz | | | |
+<div class="result-block">
+  <label>100 Hz — CH1 Vpp (V)</label>
+  <input type="text" id="lab00B-exp5-ch1-100" class="result-input" placeholder="Input amplitude" data-lab="00B">
+</div>
+<div class="result-block">
+  <label>100 Hz — CH2 Vpp (V)</label>
+  <input type="text" id="lab00B-exp5-ch2-100" class="result-input" placeholder="Output amplitude" data-lab="00B">
+</div>
+<div class="result-block">
+  <label>500 Hz — CH1 Vpp (V)</label>
+  <input type="text" id="lab00B-exp5-ch1-500" class="result-input" placeholder="Input amplitude" data-lab="00B">
+</div>
+<div class="result-block">
+  <label>500 Hz — CH2 Vpp (V)</label>
+  <input type="text" id="lab00B-exp5-ch2-500" class="result-input" placeholder="Output amplitude" data-lab="00B">
+</div>
+<div class="result-block">
+  <label>1 kHz — CH1 Vpp (V)</label>
+  <input type="text" id="lab00B-exp5-ch1-1k" class="result-input" placeholder="Input amplitude" data-lab="00B">
+</div>
+<div class="result-block">
+  <label>1 kHz — CH2 Vpp (V)</label>
+  <input type="text" id="lab00B-exp5-ch2-1k" class="result-input" placeholder="Output amplitude" data-lab="00B">
+</div>
+<div class="result-block">
+  <label>10 kHz — CH1 Vpp (V)</label>
+  <input type="text" id="lab00B-exp5-ch1-10k" class="result-input" placeholder="Input amplitude" data-lab="00B">
+</div>
+<div class="result-block">
+  <label>10 kHz — CH2 Vpp (V)</label>
+  <input type="text" id="lab00B-exp5-ch2-10k" class="result-input" placeholder="Output amplitude" data-lab="00B">
+</div>
 
 At the cutoff frequency the ratio should be approximately:
 
@@ -1100,17 +1138,16 @@ void loop()
 }
 ```
 ---
-#### Exercise 6
-  
+
+### Exercise 6
+
 Build the RC Low-Pass Filter from Experiment 5.
 
 Configure the OWON signal generator:
 
-Waveform:Sine
-
-Amplitude:2 Vpp
-
-Offset:0 V
+- Waveform: Sine
+- Amplitude: 2 Vpp
+- Offset: 0 V
 
 Measure the input voltage and output voltage at:
 
@@ -1123,13 +1160,8 @@ Record the measurements and compare the input and output amplitudes.
 
 Determine experimentally whether the circuit behaves as a low-pass filter.
 
-Calculate:
+Calculate the output ratio $V_{OUT} / V_{IN}$ for each test frequency.
 
-Output Ratio
-=
-VOUT / VIN
-
-for each test frequency.
 ---
 
 ## Knowledge Check
@@ -1169,28 +1201,29 @@ Why is triggering important when observing a repeating waveform?
 Where should the probe ground clip always be connected in Arduino experiments?
 
 ---
-#### Question 7
-  
+### Question 7
+
 What is the purpose of CH1 in the low-pass filter experiment?
 
 ---
-#### Question 8
-  
+
+### Question 8
+
 What is the purpose of CH2 in the low-pass filter experiment?
 
 ---
-#### Question 9
-  
+
+### Question 9
+
 Why does the output voltage decrease as the frequency increases?
 
 ---
-#### Question 10
-  
+
+### Question 10
+
 A 10 kΩ resistor and a 100 nF capacitor are connected as a low-pass filter.
 
-The cutoff frequency is approximately:
-
-159 Hz
+The cutoff frequency is approximately 159 Hz.
 
 Would a 100 Hz signal be attenuated more or less than a 10 kHz signal?
 
@@ -1198,30 +1231,50 @@ Explain your answer.
 
 ---
 
-### Project Summary
-  
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="00B">Export Results</button>
+  <button class="result-clear-btn" data-lab="00B">Clear Results</button>
+</div>
+
+---
+
+## Project Summary
+
 In this project you learned:
+
 ✅ What an oscilloscope measures and why it is important
+
 ✅ How to connect the OWON HDS272S safely
+
 ✅ How to adjust the vertical scale
+
 ✅ How to adjust the horizontal scale
+
 ✅ How to use edge triggering
+
 ✅ How to measure DC voltage
+
 ✅ How to measure PWM peak voltage, period, frequency, and duty cycle
 
-✅ How to use the built-in signal generator  
+✅ How to use the built-in signal generator
 
-✅ How to measure input and output signals simultaneously  
+✅ How to measure input and output signals simultaneously
 
-✅ How to observe a simple low-pass filter  
+✅ How to observe a simple low-pass filter
 
-✅ How to compare two waveforms using CH1 and CH2  
+✅ How to compare two waveforms using CH1 and CH2
 
-✅ How to observe signal attenuation as frequency changes  
+✅ How to observe signal attenuation as frequency changes
 
-✅ How to adjust scales to suit different signals  
+✅ How to adjust scales to suit different signals
 
-These skills will be used in every subsequent project in this course, beginning with:
+---
+
+## Next Project
+
+Proceed to:
 
 ```text
 01_PWM_Fundamentals.md

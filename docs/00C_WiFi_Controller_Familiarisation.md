@@ -2,6 +2,15 @@
 
 ---
 
+## Prerequisites
+
+Complete:
+
+- 00_Introduction.md
+- 00A_Microcontroller_Familiarisation.md
+
+---
+
 ## Objective
 
 The objective of this project is to become familiar with the ESP32 DevKit V1 development platform and how to program it using the Arduino IDE.

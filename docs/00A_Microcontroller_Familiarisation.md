@@ -2,6 +2,14 @@
 
 ---
 
+## Prerequisites
+
+No prior knowledge is required for this project.
+
+This is the first hands-on lab in the course.
+
+---
+
 ## Objective
 
 The objective of this project is to become familiar with the Arduino Uno development platform and the Arduino Integrated Development Environment (IDE).
@@ -1195,6 +1203,15 @@ What does PWM stand for?
 
 ---
 
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="00A">Export Results</button>
+  <button class="result-clear-btn" data-lab="00A">Clear Results</button>
+</div>
+
+---
+
 ## Project Summary
 
 In this project you learned:
@@ -1215,7 +1232,11 @@ In this project you learned:
 
 ✅ Basic Circuit Construction
 
-These skills form the foundation for the next project:
+---
+
+## Next Project
+
+Proceed to:
 
 ```text
 00B_Oscilloscope_Familiarisation.md

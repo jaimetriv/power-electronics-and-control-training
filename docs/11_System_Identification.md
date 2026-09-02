@@ -636,7 +636,7 @@ Same as Project 10 (MOSFET motor driver with flyback diode).
 
 ### Procedure
 
-1. Upload the step code from Project 10 Experiment 4.
+1. Upload the step code from Project 08 Experiment 4.
 2. Observe the motor speed response visually.
 3. Record the approximate rise time and settling time.
 4. Estimate τ as the time to reach 63.2% of final speed.
