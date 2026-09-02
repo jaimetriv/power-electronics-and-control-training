@@ -665,17 +665,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prerequisites
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#objective" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2195,17 +2184,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prerequisites
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#objective" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3128,15 +3106,6 @@
 
 
 <h1 id="project-04-mosfet-fundamentals-and-electronic-switching">Project 04 - MOSFET Fundamentals and Electronic Switching<a class="headerlink" href="#project-04-mosfet-fundamentals-and-electronic-switching" title="Permanent link">&para;</a></h1>
-<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
-<p>Complete:</p>
-<ul>
-<li>00_Introduction.md</li>
-<li>00B_Oscilloscope_Familiarisation.md</li>
-<li>01_PWM_Fundamentals.md</li>
-<li>02_RC_Circuits.md</li>
-<li>03_RLC_Circuits.md</li>
-</ul>
 <hr />
 <h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
 <p>In this project you will learn:</p>
@@ -3344,15 +3313,11 @@ P = V \cdot I
 </tr>
 <tr>
 <td>Type</td>
-<td>Fixed-step</td>
+<td>Variable-step</td>
 </tr>
 <tr>
 <td>Solver</td>
-<td><code>discrete (no continuous states)</code></td>
-</tr>
-<tr>
-<td>Fixed-step size</td>
-<td><code>1e-6</code></td>
+<td><code>ode45</code></td>
 </tr>
 </tbody>
 </table>
@@ -3400,7 +3365,7 @@ P = V \cdot I
 <h3 id="wiring-checklist">Wiring Checklist<a class="headerlink" href="#wiring-checklist" title="Permanent link">&para;</a></h3>
 <p>✅ Pulse Generator output connected to Scope input</p>
 <p>✅ Amplitude = 3.3, Period = 0.002, Phase delay = 0</p>
-<p>✅ Stop time = 0.008, Fixed-step solver, step size = 1e-6</p>
+<p>✅ Stop time = 0.008, Variable-step, ode45</p>
 <hr />
 <h3 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h3>
 <p>Record your predicted average voltages before measuring:</p>
@@ -3815,7 +3780,7 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 <a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">    </span><span class="n">D</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">D_vals</span><span class="p">(</span><span class="n">k</span><span class="p">);</span>
 <a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>
 <a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">    </span><span class="c">% --- FFT of simulated waveform ---</span>
-<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">    </span><span class="n">N</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">round</span><span class="p">(</span><span class="n">fs</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">f0</span><span class="p">);</span><span class="w">                    </span><span class="c">% 20 complete cycles</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">    </span><span class="n">N</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">round</span><span class="p">(</span><span class="n">fs</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">f0</span><span class="p">);</span><span class="w">                    </span><span class="c">% 20 complete cycles — must be integer</span>
 <a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">    </span><span class="n">t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">fs</span><span class="p">;</span>
 <a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="w">    </span><span class="n">pwm</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vs</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">double</span><span class="p">(</span><span class="nb">mod</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="n">f0</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">D</span><span class="o">/</span><span class="n">f0</span><span class="p">);</span>
 <a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>

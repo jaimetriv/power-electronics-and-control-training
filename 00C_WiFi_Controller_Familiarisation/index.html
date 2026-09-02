@@ -1884,6 +1884,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#next-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Project
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4067,6 +4078,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#next-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Project
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4744,6 +4766,9 @@ For converted voltages, use <code>analogReadMilliVolts()</code> to get calibrati
 <a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a>
 <a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a>3. Set duty cycle
 </code></pre></div>
+<blockquote>
+<p>These examples use the ESP32 Arduino core v2.x LEDC API. If using core v3.x, replace <code>ledcSetup(ch, freq, res)</code> + <code>ledcAttachPin(pin, ch)</code> with <code>ledcAttach(pin, freq, res)</code>, and replace <code>ledcWrite(ch, duty)</code> with <code>ledcWrite(pin, duty)</code>.</p>
+</blockquote>
 <hr />
 <h2 id="ledc-functions">LEDC Functions<a class="headerlink" href="#ledc-functions" title="Permanent link">&para;</a></h2>
 <h3 id="configure-channel">Configure Channel<a class="headerlink" href="#configure-channel" title="Permanent link">&para;</a></h3>
@@ -5061,6 +5086,12 @@ For converted voltages, use <code>analogReadMilliVolts()</code> to get calibrati
 <h3 id="question-5">Question 5<a class="headerlink" href="#question-5" title="Permanent link">&para;</a></h3>
 <p>Why is higher PWM resolution important in power electronics?</p>
 <hr />
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="00C">Export Results</button>
+  <button class="result-clear-btn" data-lab="00C">Clear Results</button>
+</div>
+
+<hr />
 <h2 id="project-summary">Project Summary<a class="headerlink" href="#project-summary" title="Permanent link">&para;</a></h2>
 <p>In this project you learned:</p>
 <p>✅ ESP32 DevKit V1 hardware</p>
@@ -5077,6 +5108,11 @@ For converted voltages, use <code>analogReadMilliVolts()</code> to get calibrati
 <a id="__codelineno-83-3" name="__codelineno-83-3" href="#__codelineno-83-3"></a>18_Grid_Forming_VSC.md
 </code></pre></div>
 <p>where the ESP32 is used as the primary controller.</p>
+<hr />
+<h2 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h2>
+<p>Proceed to:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-84-1" name="__codelineno-84-1" href="#__codelineno-84-1"></a>01_PWM_Fundamentals.md
+</code></pre></div>
 
 
 

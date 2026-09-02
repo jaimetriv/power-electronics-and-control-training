@@ -1095,17 +1095,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prerequisites
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#objective" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2162,17 +2151,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prerequisites
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#objective" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3062,21 +3040,6 @@
 
 
 <h1 id="project-15-closed-loop-buck-converter-control">Project 15 - Closed-Loop Buck Converter Control<a class="headerlink" href="#project-15-closed-loop-buck-converter-control" title="Permanent link">&para;</a></h1>
-<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
-<p>Complete:</p>
-<ul>
-<li>00_Introduction.md</li>
-<li>00B_Oscilloscope_Familiarisation.md</li>
-<li>01_PWM_Fundamentals.md</li>
-<li>02_RC_Circuits.md</li>
-<li>03_RLC_Circuits.md</li>
-<li>04_MOSFET_Fundamentals.md</li>
-<li>08_PWM_Motor_Control.md</li>
-<li>12_P_Controller.md</li>
-<li>13_PI_Controller.md</li>
-<li>14_PID_Controller.md</li>
-<li>06_Buck_Converter.md</li>
-</ul>
 <hr />
 <h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
 <p>In this project you will learn:</p>
@@ -3496,7 +3459,7 @@ V_{OUT} = D \times V_{IN} = 0.5 \times 3.3 = 1.65\ \text{V}
 <h2 id="components-required">Components Required<a class="headerlink" href="#components-required" title="Permanent link">&para;</a></h2>
 <ul>
 <li>ESP32 DevKit V1</li>
-<li>Buck Converter from Project 08 (MOSFET, diode, inductor, capacitor)</li>
+<li>Buck Converter from Project 06 (MOSFET, diode, inductor, capacitor)</li>
 <li>2 × 10 kΩ resistors (voltage divider)</li>
 <li>Breadboard and jumper wires</li>
 <li>OWON HDS272S Oscilloscope (recommended)</li>
@@ -3511,7 +3474,7 @@ V_{OUT} = D \times V_{IN} = 0.5 \times 3.3 = 1.65\ \text{V}
 <p>Read the converter output voltage using the controller ADC and verify the voltage divider is working correctly.</p>
 <hr />
 <h3 id="step-by-step-wiring">Step-by-Step Wiring<a class="headerlink" href="#step-by-step-wiring" title="Permanent link">&para;</a></h3>
-<p>Keep the Buck Converter from Project 08 intact.</p>
+<p>Keep the Buck Converter from Project 06 intact.</p>
 <ol>
 <li>Insert the <strong>first 10 kΩ resistor</strong> so one leg connects to the <strong>Vout node</strong> and the other leg is in a new row. This is the top of the divider.</li>
 <li>Insert the <strong>second 10 kΩ resistor</strong> so one leg is in the same row as the bottom of the first resistor and the other leg connects to <strong>GND</strong>. This is the bottom of the divider.</li>
@@ -3527,7 +3490,7 @@ V_{A0} = \frac{V_{OUT}}{2}
 <p>✅ Top resistor connected between Vout and divider midpoint</p>
 <p>✅ Bottom resistor connected between divider midpoint and GND</p>
 <p>✅ Divider midpoint connected to GPIO34 (ESP32) or A0 (Arduino backup)</p>
-<p>✅ Buck Converter circuit intact from Project 08</p>
+<p>✅ Buck Converter circuit intact from Project 06</p>
 <hr />
 <h3 id="esp32-code">ESP32 Code<a class="headerlink" href="#esp32-code" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">FBK_PIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">34</span><span class="p">;</span>
@@ -3633,9 +3596,12 @@ V_{OUT} = V_{A0} \times 2
 <a id="__codelineno-8-40" name="__codelineno-8-40" href="#__codelineno-8-40"></a><span class="p">}</span>
 </code></pre></div>
 <h3 id="arduino-equivalent-code-backup_1">Arduino Equivalent Code (backup)<a class="headerlink" href="#arduino-equivalent-code-backup_1" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>This backup variant assumes an <strong>Arduino Uno (5 V logic, 10-bit ADC)</strong> driving a buck converter built for a <strong>5 V input</strong>, giving a 2.5 V output target — a different hardware configuration from the 3.3 V ESP32 build used throughout the rest of this lab. Do not mix these constants with the 3.3 V circuit: for a 3.3 V system, keep <code>Vref = 1.65</code> and use the ESP32 code above instead.</p>
+</blockquote>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">dt</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="mf">0.01</span><span class="p">;</span><span class="w">     </span><span class="c1">// sample time (s) — matches delay(10)</span>
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">Vref</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="mf">2.5</span><span class="p">;</span><span class="w">      </span><span class="c1">// target voltage at divider midpoint (V)</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">                                  </span><span class="c1">// corresponds to Vout = 5.0 V</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">                                  </span><span class="c1">// corresponds to Vout = 5.0 V for a 5 V-input Arduino build</span>
 <a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">int_max</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mf">50.0</span><span class="p">;</span><span class="w">     </span><span class="c1">// anti-windup limit</span>
 <a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
 <a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="kt">float</span><span class="w"> </span><span class="n">Kp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10.0</span><span class="p">;</span>
@@ -3810,7 +3776,7 @@ V_{OUT} = V_{A0} \times 2
 <hr />
 <h2 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h2>
 <p>Compare your measured steady-state output voltages against the simulated closed-loop responses.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">L</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">100e-6</span><span class="p">;</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">100e-6</span><span class="p">;</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w"> </span><span class="n">Vin</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"> </span><span class="n">H</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">L</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">100e-6</span><span class="p">;</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">100e-6</span><span class="p">;</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w"> </span><span class="n">Vin</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">3.3</span><span class="p">;</span><span class="w"> </span><span class="n">H</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span>
 <a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">G</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">L</span><span class="o">*</span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="o">/</span><span class="n">R</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]);</span>
 <a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
 <a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="n">gain_sets</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">;</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">];</span>
@@ -3832,7 +3798,7 @@ V_{OUT} = V_{A0} \times 2
 <a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="w">        </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;%s | OS=%.1f%% Ts=%.1fms&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="p">{</span><span class="nb">i</span><span class="p">},</span><span class="w"> </span><span class="k">...</span>
 <a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="w">        </span><span class="n">info</span><span class="p">.</span><span class="n">Overshoot</span><span class="p">,</span><span class="w"> </span><span class="n">info</span><span class="p">.</span><span class="n">SettlingTime</span><span class="o">*</span><span class="mf">1e3</span><span class="p">));</span>
 <a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a><span class="k">end</span>
-<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="nb">yline</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Reference 2.5V&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="nb">yline</span><span class="p">(</span><span class="mf">1.65</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Reference 1.65V&#39;</span><span class="p">);</span>
 <a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a><span class="nb">scatter</span><span class="p">([</span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">],</span><span class="w"> </span><span class="n">Vout_measured</span><span class="p">,</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;filled&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
 <a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a><span class="w">    </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Measured Vout&#39;</span><span class="p">);</span>
 <a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
@@ -3895,7 +3861,7 @@ V_{OUT} = V_{A0} \times 2
 <p>What happens if the gains are too large?</p>
 <hr />
 <h3 id="question-6">Question 6<a class="headerlink" href="#question-6" title="Permanent link">&para;</a></h3>
-<p>The voltage divider scales Vout by 0.5 before the ADC. The reference in the code is set to 2.5 V. What actual output voltage is the controller regulating to, and what would you change in the code to regulate to 3.0 V instead?</p>
+<p>The voltage divider scales Vout by 0.5 before the ADC. The ESP32 reference in the code is set to 1.65 V. What actual output voltage is the controller regulating to, and what would you change in the code to regulate to 2.0 V instead?</p>
 <hr />
 <h2 id="project-summary">Project Summary<a class="headerlink" href="#project-summary" title="Permanent link">&para;</a></h2>
 <p>In this project you learned:</p>
@@ -3913,10 +3879,10 @@ V_{OUT} = V_{A0} \times 2
 </code></pre></div>
 <p>Topics:</p>
 <ul>
-<li>Step-Up Conversion</li>
-<li>Boost Converter Operation</li>
-<li>Inductor Energy Transfer</li>
-<li>Duty Cycle Relationships</li>
+<li>Mathematical Motor Modelling</li>
+<li>PID Controller Design</li>
+<li>Gain Tuning</li>
+<li>Simulated vs Measured Response</li>
 <li>Converter Efficiency</li>
 <li>Practical Measurements</li>
 </ul>

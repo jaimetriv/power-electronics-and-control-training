@@ -782,17 +782,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prerequisites
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#objective" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2222,17 +2211,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prerequisites
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#objective" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3182,17 +3160,6 @@
 
 
 <h1 id="project-06-buck-converter-fundamentals">Project 06 - Buck Converter Fundamentals<a class="headerlink" href="#project-06-buck-converter-fundamentals" title="Permanent link">&para;</a></h1>
-<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
-<p>Complete:</p>
-<ul>
-<li>00_Introduction.md</li>
-<li>00B_Oscilloscope_Familiarisation.md</li>
-<li>01_PWM_Fundamentals.md</li>
-<li>02_RC_Circuits.md</li>
-<li>03_RLC_Circuits.md</li>
-<li>04_MOSFET_Fundamentals.md</li>
-<li>05_DC_Chopper_Converters.md</li>
-</ul>
 <hr />
 <h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
 <p>In this project you will learn:</p>
@@ -3445,6 +3412,11 @@ V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 <td>1</td>
 </tr>
 <tr>
+<td>Simulink-PS Converter</td>
+<td>Simscape → Utilities</td>
+<td>1</td>
+</tr>
+<tr>
 <td>PS-Simulink Converter</td>
 <td>Simscape → Utilities</td>
 <td>2</td>
@@ -3474,7 +3446,7 @@ V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 <tbody>
 <tr>
 <td>Amplitude</td>
-<td><code>1</code></td>
+<td><code>3.3</code></td>
 </tr>
 <tr>
 <td>Period</td>
@@ -3490,10 +3462,13 @@ V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 </tr>
 </tbody>
 </table>
-<p>This produces a 0–1 control signal at 500 Hz, 50% duty cycle.</p>
+<p>This produces a 0–3.3 V control signal at 500 Hz, 50% duty cycle.</p>
 <hr />
 <h3 id="step-5-configure-the-controlled-voltage-source">Step 5 — Configure the Controlled Voltage Source<a class="headerlink" href="#step-5-configure-the-controlled-voltage-source" title="Permanent link">&para;</a></h3>
-<p>This represents the 3.3 V ESP32 supply. Connect the <strong>Pulse Generator</strong> output to its input port — the source will switch between 0 V and 3.3 V following the PWM signal.</p>
+<p>This represents the 3.3 V ESP32 supply. The Controlled Voltage Source input port expects a physical signal (PS), not a Simulink signal, so the Pulse Generator output must pass through a <strong>Simulink-PS Converter</strong> before reaching it — see Step 9 for wiring. Once converted, the source outputs exactly the value of its input signal in volts, so it switches between 0 V and 3.3 V following the PWM signal.</p>
+<blockquote>
+<p><code>Constant voltage: 1</code> means the source outputs exactly the value of its input signal with no scaling. The Pulse Generator amplitude of 3.3 already sets the voltage level.</p>
+</blockquote>
 <p>Double-click and set:</p>
 <table>
 <thead>
@@ -3505,13 +3480,10 @@ V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 <tbody>
 <tr>
 <td>Constant voltage</td>
-<td><code>3.3</code></td>
+<td><code>1</code></td>
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p>In Simscape 2025b the Controlled Voltage Source scales its output by the input signal. With Amplitude = 1 and Constant voltage = 3.3, the output switches between 0 V and 3.3 V.</p>
-</blockquote>
 <hr />
 <h3 id="step-6-configure-the-inductor">Step 6 — Configure the Inductor<a class="headerlink" href="#step-6-configure-the-inductor" title="Permanent link">&para;</a></h3>
 <p>Double-click the <strong>Inductor</strong> and set:</p>
@@ -3567,25 +3539,26 @@ V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 <hr />
 <h3 id="step-9-wire-the-circuit">Step 9 — Wire the Circuit<a class="headerlink" href="#step-9-wire-the-circuit" title="Permanent link">&para;</a></h3>
 <p>Connect the blocks in this order:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Pulse Generator → Controlled Voltage Source (input port)
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Controlled Voltage Source (+) → Ideal Switch (left port)
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>Ideal Switch (right port)     → Current Sensor (+ port)
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>Current Sensor (− port)       → Inductor (left port)       [switch node]
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>Inductor (right port)         → Capacitor (p port)         [Vout node]
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>Inductor (right port)         → Resistor (left port)       [Vout node]
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>Capacitor (n port)            → Electrical Reference
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>Resistor (right port)         → Electrical Reference
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>Controlled Voltage Source (−) → Electrical Reference
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>Diode (+ port) → Electrical Reference
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>Diode (− port) → switch node (junction between Ideal Switch and Inductor)
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>
-<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>Voltage Sensor (+ port) → Vout node (junction of Inductor, Capacitor, Resistor)
-<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>Voltage Sensor (− port) → Electrical Reference
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Pulse Generator → Simulink-PS Converter → Controlled Voltage Source (input port)
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Simulink-PS Converter → Ideal Switch (control port)
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>Controlled Voltage Source (+) → Ideal Switch (left port)
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>Ideal Switch (right port)     → Current Sensor (+ port)
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>Current Sensor (− port)       → Inductor (left port)       [switch node]
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>Inductor (right port)         → Capacitor (p port)         [Vout node]
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>Inductor (right port)         → Resistor (left port)       [Vout node]
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>Capacitor (n port)            → Electrical Reference
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>Resistor (right port)         → Electrical Reference
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>Controlled Voltage Source (−) → Electrical Reference
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>Diode (+ port) → Electrical Reference
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>Diode (− port) → switch node (junction between Ideal Switch and Inductor)
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>Voltage Sensor (+ port) → Vout node (junction of Inductor, Capacitor, Resistor)
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>Voltage Sensor (− port) → Electrical Reference
 </code></pre></div>
 <blockquote>
-<p>The Ideal Switch is controlled by the Pulse Generator signal. Connect the Pulse Generator output to the <strong>control port</strong> (the signal input on top of the Ideal Switch block).</p>
+<p>Branch the Simulink-PS Converter output wire to reach both blocks. The converter is required because both destination ports are physical-signal (PS) inputs, not Simulink signal inputs.</p>
 <p>The Diode acts as the freewheel diode. Its <code>+</code> port connects to GND (Electrical Reference) and its <code>−</code> port connects to the switch node. This allows inductor current to continue flowing when the switch is open.</p>
 <p>The Current Sensor is placed in series between the switch node and the inductor to measure inductor current.</p>
 </blockquote>
@@ -3667,7 +3640,7 @@ V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 </table>
 <hr />
 <h3 id="wiring-checklist">Wiring Checklist<a class="headerlink" href="#wiring-checklist" title="Permanent link">&para;</a></h3>
-<p>✅ Pulse Generator output → Controlled Voltage Source input AND Ideal Switch control port</p>
+<p>✅ Pulse Generator output → Simulink-PS Converter → Controlled Voltage Source input AND Ideal Switch control port</p>
 <p>✅ Series path: Voltage Source (+) → Ideal Switch → Current Sensor → Inductor → Vout node</p>
 <p>✅ Freewheel Diode: (+) at Electrical Reference, (−) at switch node</p>
 <p>✅ Capacitor and Resistor both connected from Vout node to Electrical Reference</p>
@@ -4043,7 +4016,7 @@ V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 <h3 id="no-output-voltage">No Output Voltage<a class="headerlink" href="#no-output-voltage" title="Permanent link">&para;</a></h3>
 <p>Check:</p>
 <p>✅ MOSFET pinout correct (G, D, S identified)</p>
-<p>✅ Diode polarity (cathode banded end toward switch node / 5V side)</p>
+<p>✅ Diode polarity (anode at switch node, cathode at GND)</p>
 <p>✅ Inductor connected between MOSFET Drain and Vout</p>
 <p>✅ Shared GND between ESP32 and converter</p>
 <hr />
