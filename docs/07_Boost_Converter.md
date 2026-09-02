@@ -295,6 +295,7 @@ Drag the following blocks onto the canvas:
 | Voltage Sensor | Simscape → Foundation Library → Electrical → Electrical Sensors | 1 |
 | Current Sensor | Simscape → Foundation Library → Electrical → Electrical Sensors | 1 |
 | Electrical Reference | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
+| Simulink-PS Converter | Simscape → Utilities | 1 |
 | PS-Simulink Converter | Simscape → Utilities | 2 |
 | Scope | Simulink → Sinks | 1 |
 | Solver Configuration | Simscape → Utilities | 1 |
@@ -370,7 +371,7 @@ Current Sensor (− port)       → Inductor (left port)        [input node]
 Inductor (right port)         → Ideal Switch (left port)    [switch node]
 Inductor (right port)         → Diode (+ port)              [switch node]
 Ideal Switch (right port)     → Electrical Reference
-Controlled Voltage Source (−) → Electrical Reference
+DC Voltage Source (−)          → Electrical Reference
 
 Diode (− port) → Capacitor (p port)    [Vout node]
 Diode (− port) → Resistor (left port)  [Vout node]
@@ -381,7 +382,7 @@ Voltage Sensor (+ port) → Vout node
 Voltage Sensor (− port) → Electrical Reference
 ```
 
-> Connect the **Pulse Generator** output to the **control port** of the Ideal Switch (the signal input on top of the block). When the pulse is HIGH the switch closes, shorting the switch node to GND and storing energy in the inductor. When the pulse is LOW the switch opens and the inductor forces current through the diode to charge the output capacitor.
+> Connect the **Pulse Generator** output through a **Simulink-PS Converter** to the **control port** of the Ideal Switch (the signal input on top of the block). The control port expects a physical signal (PS), not a Simulink signal, so the converter is required. When the pulse is HIGH the switch closes, shorting the switch node to GND and storing energy in the inductor. When the pulse is LOW the switch opens and the inductor forces current through the diode to charge the output capacitor.
 
 > The Current Sensor is placed in series on the input side (between the voltage source and the inductor) to measure inductor current.
 
@@ -442,7 +443,7 @@ Change the **Pulse Width** in the Pulse Generator and re-run for each experiment
 
 ### Wiring Checklist
 
-✅ Pulse Generator output → Ideal Switch control port
+✅ Pulse Generator output → Simulink-PS Converter → Ideal Switch control port
 
 ✅ Series input path: DC Voltage Source (+) → Current Sensor → Inductor → switch node
 

@@ -586,6 +586,7 @@ Change Kp and Ki Gain block values for each run.
 |-------|-------------|----------|
 | Constant | Simulink → Sources | 3 |
 | Gain | Simulink → Math Operations | 2 |
+| Product | Simulink → Math Operations | 2 |
 | Sum | Simulink → Math Operations | 2 |
 | Scope | Simulink → Sinks | 1 |
 
@@ -603,13 +604,19 @@ Change Kp and Ki Gain block values for each run.
 
 ```text
 Constant 1 (f0=50) → Sum1 (+) input 1
-Gain 1 (P) → Constant 2 (Kd1) → Sum1 (−) input
+Gain 1 (P) → Product1 input 1
+Constant 2 (Kd1) → Product1 input 2
+Product1 output → Sum1 (−) input
 Sum1 output → Scope input 1   [Inverter 1 frequency]
 
 Constant 1 (f0=50) → Sum2 (+) input 1
-Gain 2 (P) → Constant 3 (Kd2) → Sum2 (−) input
+Gain 2 (P) → Product2 input 1
+Constant 3 (Kd2) → Product2 input 2
+Product2 output → Sum2 (−) input
 Sum2 output → Scope input 2   [Inverter 2 frequency]
 ```
+
+> Two Product blocks compute $P \times K_d$ for each inverter — this is the multiplication in the droop equation $f = f_0 - K_d(P - P_0)$. Constant blocks have no input port, so Kd1/Kd2 must feed a Product block rather than being wired directly in series with Gain 1/Gain 2.
 
 > This is a static calculation — the Scope shows the steady-state frequency for each inverter at the given power level.
 

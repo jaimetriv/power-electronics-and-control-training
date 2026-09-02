@@ -388,6 +388,8 @@ All three are signal-only models — no Simscape electrical components are neede
 | Frequency (rad/s) | `2*pi*10000` |
 | Phase (rad) | `pi/2` |
 
+> This uses a sine-carrier approximation for simplicity. Real SPWM uses a triangular carrier — for a true triangular carrier, replace this Sine Wave block with a **Repeating Sequence** block (Simulink → Sources) configured as a triangle wave at the same 10 kHz frequency.
+
 #### Step 5 — Set Relational Operator parameters
 
 | Parameter | Value |
@@ -559,6 +561,21 @@ The Serial Monitor should show the estimated grid angle increasing from 0 to 2π
 
 ---
 
+### Measurements
+
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>Measured grid frequency</td><td><input class="result-input" id="lab17-exp1-freq" placeholder="Hz"></td></tr>
+    <tr><td>PLL lock time</td><td><input class="result-input" id="lab17-exp1-locktime" placeholder="s"></td></tr>
+    <tr><td>Steady-state phase error</td><td><input class="result-input" id="lab17-exp1-phaseerr" placeholder="deg"></td></tr>
+  </tbody>
+</table>
+</div>
+
+---
+
 ## Experiment 2 - SPWM Generation
 
 ### Objective
@@ -593,6 +610,21 @@ Measure:
 - PWM carrier frequency
 - Modulation index (duty cycle variation)
 - Output period (~20 ms for 50 Hz)
+
+---
+
+### Measurements
+
+<div class="result-block">
+<table>
+  <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
+  <tbody>
+    <tr><td>PWM carrier frequency</td><td>~500 Hz</td><td><input class="result-input" id="lab17-exp2-carrier" placeholder="Hz"></td></tr>
+    <tr><td>Modulation index</td><td>~1.0</td><td><input class="result-input" id="lab17-exp2-modindex" placeholder=""></td></tr>
+    <tr><td>Output period</td><td>~20 ms</td><td><input class="result-input" id="lab17-exp2-period" placeholder="ms"></td></tr>
+  </tbody>
+</table>
+</div>
 
 ---
 

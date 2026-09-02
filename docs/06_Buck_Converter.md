@@ -328,6 +328,7 @@ Drag the following blocks onto the canvas:
 | Voltage Sensor | Simscape → Foundation Library → Electrical → Electrical Sensors | 1 |
 | Current Sensor | Simscape → Foundation Library → Electrical → Electrical Sensors | 1 |
 | Electrical Reference | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
+| Simulink-PS Converter | Simscape → Utilities | 1 |
 | PS-Simulink Converter | Simscape → Utilities | 2 |
 | Scope | Simulink → Sinks | 1 |
 | Solver Configuration | Simscape → Utilities | 1 |
@@ -351,7 +352,7 @@ This produces a 0–3.3 V control signal at 500 Hz, 50% duty cycle.
 
 ### Step 5 — Configure the Controlled Voltage Source
 
-This represents the 3.3 V ESP32 supply. The Pulse Generator drives its input port directly — the source outputs exactly the value of its input signal in volts, so it switches between 0 V and 3.3 V following the PWM signal.
+This represents the 3.3 V ESP32 supply. The Controlled Voltage Source input port expects a physical signal (PS), not a Simulink signal, so the Pulse Generator output must pass through a **Simulink-PS Converter** before reaching it — see Step 9 for wiring. Once converted, the source outputs exactly the value of its input signal in volts, so it switches between 0 V and 3.3 V following the PWM signal.
 
 > `Constant voltage: 1` means the source outputs exactly the value of its input signal with no scaling. The Pulse Generator amplitude of 3.3 already sets the voltage level.
 
@@ -400,8 +401,8 @@ This represents a 100 Ω load. At 50% duty cycle, Vout ≈ 1.65 V, so load curre
 Connect the blocks in this order:
 
 ```text
-Pulse Generator → Controlled Voltage Source (input port)
-Pulse Generator → Ideal Switch (control port)
+Pulse Generator → Simulink-PS Converter → Controlled Voltage Source (input port)
+Simulink-PS Converter → Ideal Switch (control port)
 
 Controlled Voltage Source (+) → Ideal Switch (left port)
 Ideal Switch (right port)     → Current Sensor (+ port)
@@ -419,7 +420,7 @@ Voltage Sensor (+ port) → Vout node (junction of Inductor, Capacitor, Resistor
 Voltage Sensor (− port) → Electrical Reference
 ```
 
-> Branch the Pulse Generator output wire to reach both blocks.
+> Branch the Simulink-PS Converter output wire to reach both blocks. The converter is required because both destination ports are physical-signal (PS) inputs, not Simulink signal inputs.
 
 > The Diode acts as the freewheel diode. Its `+` port connects to GND (Electrical Reference) and its `−` port connects to the switch node. This allows inductor current to continue flowing when the switch is open.
 
@@ -484,7 +485,7 @@ Change the **Pulse Width** in the Pulse Generator and re-run for each experiment
 
 ### Wiring Checklist
 
-✅ Pulse Generator output → Controlled Voltage Source input AND Ideal Switch control port
+✅ Pulse Generator output → Simulink-PS Converter → Controlled Voltage Source input AND Ideal Switch control port
 
 ✅ Series path: Voltage Source (+) → Ideal Switch → Current Sensor → Inductor → Vout node
 

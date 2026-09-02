@@ -401,7 +401,7 @@ Change Kp and Ki Gain block values for each run.
 ## Components Required
 
 - ESP32 DevKit V1
-- Buck Converter from Project 08 (MOSFET, diode, inductor, capacitor)
+- Buck Converter from Project 06 (MOSFET, diode, inductor, capacitor)
 - 2 × 10 kΩ resistors (voltage divider)
 - Breadboard and jumper wires
 - OWON HDS272S Oscilloscope (recommended)
@@ -421,7 +421,7 @@ Read the converter output voltage using the controller ADC and verify the voltag
 
 ### Step-by-Step Wiring
 
-Keep the Buck Converter from Project 08 intact.
+Keep the Buck Converter from Project 06 intact.
 
 1. Insert the **first 10 kΩ resistor** so one leg connects to the **Vout node** and the other leg is in a new row. This is the top of the divider.
 2. Insert the **second 10 kΩ resistor** so one leg is in the same row as the bottom of the first resistor and the other leg connects to **GND**. This is the bottom of the divider.
@@ -445,7 +445,7 @@ Before uploading:
 
 ✅ Divider midpoint connected to GPIO34 (ESP32) or A0 (Arduino backup)
 
-✅ Buck Converter circuit intact from Project 08
+✅ Buck Converter circuit intact from Project 06
 
 ---
 
@@ -582,10 +582,12 @@ void loop()
 
 ### Arduino Equivalent Code (backup)
 
+> This backup variant assumes an **Arduino Uno (5 V logic, 10-bit ADC)** driving a buck converter built for a **5 V input**, giving a 2.5 V output target — a different hardware configuration from the 3.3 V ESP32 build used throughout the rest of this lab. Do not mix these constants with the 3.3 V circuit: for a 3.3 V system, keep `Vref = 1.65` and use the ESP32 code above instead.
+
 ```cpp
 const float dt        = 0.01;     // sample time (s) — matches delay(10)
 const float Vref      = 2.5;      // target voltage at divider midpoint (V)
-                                  // corresponds to Vout = 5.0 V
+                                  // corresponds to Vout = 5.0 V for a 5 V-input Arduino build
 const float int_max   = 50.0;     // anti-windup limit
 
 float Kp = 10.0;
@@ -929,9 +931,9 @@ In this project you learned:
 
 Topics:
 
-- Step-Up Conversion
-- Boost Converter Operation
-- Inductor Energy Transfer
-- Duty Cycle Relationships
+- Mathematical Motor Modelling
+- PID Controller Design
+- Gain Tuning
+- Simulated vs Measured Response
 - Converter Efficiency
 - Practical Measurements

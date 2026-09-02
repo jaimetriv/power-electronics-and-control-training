@@ -459,7 +459,7 @@ fprintf('Fitted: K=%.2f  tau=%.2fs\n', K_fit, tau_fit);
 - 22 kΩ resistor
 - 100 µF capacitor
 - 220 µF capacitor
-- DC motor + IRLZ44N MOSFET + flyback diode (from Project 10)
+- DC motor + IRLZ44N MOSFET + flyback diode (from Project 08)
 - OWON HDS272S Oscilloscope (recommended)
 - DSO Nano Oscilloscope (compatible)
 
@@ -630,7 +630,7 @@ Apply a PWM step change to the motor and observe the first-order speed response.
 
 ### Circuit
 
-Same as Project 10 (MOSFET motor driver with flyback diode).
+Same as Project 08 (MOSFET motor driver with flyback diode).
 
 ---
 
@@ -701,7 +701,7 @@ fprintf('Error:            %.1f%%\n', 100*abs(tau_fit-tau_theory)/tau_theory);
 
 - How close is your fitted RC τ to the theoretical value RC = 1.0 s? What causes the difference?
 - Does the motor step response fit well to a first-order model, or do you see a delay or second-order behaviour?
-- How does the motor τ identified here compare to your informal estimate from Project 10?
+- How does the motor τ identified here compare to your informal estimate from Project 08?
 
 ---
 

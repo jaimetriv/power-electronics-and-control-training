@@ -166,7 +166,7 @@ This model is signal-only — the motor is represented as a transfer function bl
 
 1. In MATLAB, go to **Home** tab → click **Simulink**.
 2. Click **Blank Model**.
-3. Go to **File → Save** and name the file `Motor_First_Order`.
+3. Go to **File → Save** and name the file `Motor_First_Order.slx`.
 
 ---
 

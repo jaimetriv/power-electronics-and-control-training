@@ -1059,6 +1059,8 @@ Three steps are required:
 3. Set duty cycle
 ```
 
+> These examples use the ESP32 Arduino core v2.x LEDC API. If using core v3.x, replace `ledcSetup(ch, freq, res)` + `ledcAttachPin(pin, ch)` with `ledcAttach(pin, freq, res)`, and replace `ledcWrite(ch, duty)` with `ledcWrite(pin, duty)`.
+
 ---
 
 ## LEDC Functions
@@ -1495,6 +1497,13 @@ How many PWM channels does the ESP32 LEDC peripheral provide?
 ### Question 5
 
 Why is higher PWM resolution important in power electronics?
+
+---
+
+<div class="result-actions">
+  <button class="result-export-btn" data-lab="00C">Export Results</button>
+  <button class="result-clear-btn" data-lab="00C">Clear Results</button>
+</div>
 
 ---
 

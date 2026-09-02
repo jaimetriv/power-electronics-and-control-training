@@ -551,7 +551,7 @@ The voltage divider scales the motor terminal voltage to stay within the ADC ran
 
 Before uploading:
 
-✅ Motor circuit wired correctly (MOSFET + flyback diode, same as Project 10)
+✅ Motor circuit wired correctly (MOSFET + flyback diode, same as Project 08)
 
 ✅ 10 kΩ divider connected from motor positive terminal to GPIO35 (midpoint) to GND
 
@@ -620,7 +620,9 @@ void loop()
     int error  = reference - feedback;
 
     // P controller: output proportional to error.
-    int output = (int)(Kp * error);
+    // Arduino's 10-bit ADC (0-1023) needs different scaling to the
+    // 12-bit ESP32 ADC (0-4095), so error is divided by 4 instead of 16.
+    int output = (int)(Kp * error / 4.0);
 
     // Clamp output to valid PWM range.
     output = constrain(output, 0, 255);

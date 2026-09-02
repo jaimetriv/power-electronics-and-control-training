@@ -157,7 +157,7 @@ $$
 \omega_n = \sqrt{\frac{KK_I}{\tau + KK_D}}, \qquad \zeta = \frac{1 + KK_P}{2\sqrt{KK_I(\tau + KK_D)}}
 $$
 
-Increasing $K_D$ increases $\zeta$, which reduces overshoot and oscillation — this is the mathematical basis for the damping effect observed in the experiments.
+Note that for fixed $K_P$ and $K_I$, increasing $K_D$ actually makes $(\tau + KK_D)$ larger, which *decreases* both $\zeta$ and $\omega_n$ in this formula — so the pole damping ratio alone does not explain the reduced overshoot seen experimentally. The real explanation is that $K_D$ also appears in the closed-loop **numerator** $K(K_D s^2 + K_P s + K_I)$, adding a zero to the response. This zero speeds up the rise and cancels part of the oscillatory behaviour contributed by the poles, which is why increasing $K_D$ reduces overshoot and oscillation in practice even though it lowers $\zeta$.
 
 ---
 
@@ -501,7 +501,8 @@ void loop()
     int reference = analogRead(A0);   // 0–1023 on Arduino 10-bit ADC
     int feedback  = analogRead(A1);
 
-    float error = reference - feedback;
+    // Arduino's 10-bit ADC needs /4 scaling here vs /16 on the 12-bit ESP32 ADC.
+    float error = (reference - feedback) / 4.0;
 
     integral = integral + error * dt;
     integral = constrain(integral, -integral_max, integral_max);

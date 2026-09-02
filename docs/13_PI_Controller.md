@@ -479,7 +479,8 @@ void loop()
     int reference = analogRead(A0);   // 0–1023 on Arduino 10-bit ADC
     int feedback  = analogRead(A1);
 
-    float error = reference - feedback;
+    // Arduino's 10-bit ADC needs /4 scaling here vs /16 on the 12-bit ESP32 ADC.
+    float error = (reference - feedback) / 4.0;
 
     integral = integral + error * dt;
     integral = constrain(integral, -int_max, int_max);
