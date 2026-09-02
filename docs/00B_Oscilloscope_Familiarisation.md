@@ -1231,8 +1231,6 @@ Explain your answer.
 
 ---
 
----
-
 <div class="result-actions">
   <button class="result-export-btn" data-lab="00B">Export Results</button>
   <button class="result-clear-btn" data-lab="00B">Clear Results</button>

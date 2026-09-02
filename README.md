@@ -35,9 +35,9 @@ A practical hands-on course covering:
 ### Foundations
 
 - 00 Introduction
-- 00A Arduino Uno Familiarisation
-- 00B DSO Nano V3 Familiarisation
-- 00C ESP32 DevKit Familiarisation
+- 00A Microcontroller Familiarisation (Arduino Uno / ESP32)
+- 00B Oscilloscope Familiarisation
+- 00C WiFi Controller Familiarisation (ESP32)
 
 ### Electronics
 
@@ -46,25 +46,25 @@ A practical hands-on course covering:
 - 03 RLC Circuits
 - 04 MOSFET Fundamentals
 
-### Control Systems
-
-- 05 PWM Motor Control
-- 06 P Controller
-- 07 PI Controller
-- 08 PID Controller
-
 ### Power Electronics
 
-- 09 Buck Converter
-- 10 Closed Loop Buck
-- 11 Boost Converter
-- 11B DC Chopper Converters
-- 12 AC-DC Rectifiers
-- 13 DC-AC Inverters
+- 05 DC Chopper Converters
+- 06 Buck Converter
+- 07 Boost Converter
+- 08 PWM Motor Control
+- 09 AC-DC Rectifiers
+- 10 DC-AC Inverters
+
+### Control Systems
+
+- 11 System Identification
+- 12 P Controller
+- 13 PI Controller
+- 14 PID Controller
+- 15 Closed-Loop Buck Converter
+- 16 Controller Design
 
 ### Advanced Topics
 
-- 14 System Identification
-- 15 Controller Design
-- 16 Grid Following VSC
-- 17 Grid Forming VSC
+- 17 Grid-Following VSC
+- 18 Grid-Forming VSC

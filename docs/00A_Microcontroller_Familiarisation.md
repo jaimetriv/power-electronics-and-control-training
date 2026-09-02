@@ -1195,8 +1195,6 @@ What does PWM stand for?
 
 ---
 
----
-
 <div class="result-actions">
   <button class="result-export-btn" data-lab="00A">Export Results</button>
   <button class="result-clear-btn" data-lab="00A">Clear Results</button>

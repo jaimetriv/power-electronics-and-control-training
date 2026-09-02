@@ -760,7 +760,7 @@ Observe:
 
 ## MATLAB Comparison
 
-Simulate the closed-loop response using your actual Kp values from Experiment 3 and the motor model from Project 10.
+Simulate the closed-loop response using your actual Kp values from Experiment 3 and the motor model from Project 08 / Project 11.
 
 ```matlab
 K   = 1;

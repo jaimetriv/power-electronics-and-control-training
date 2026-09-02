@@ -833,8 +833,6 @@ During Experiment 4 your measured current settling time was longer than the MATL
 
 ---
 
----
-
 ## Project Summary
 
 This project combines:
