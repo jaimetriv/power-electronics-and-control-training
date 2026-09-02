@@ -88,7 +88,13 @@ Welcome to the course.
 flowchart TD
 
 A[Introduction]
---> B[PWM]
+--> A1[Microcontroller Familiarisation]
+
+A1 --> A2[Oscilloscope Familiarisation]
+
+A2 --> A3[WiFi Controller Familiarisation]
+
+A3 --> B[PWM]
 
 B --> C[RC Circuits]
 

@@ -1,20 +1,5 @@
 # Project 14 - PID Control, Damping and Stability
 
-### Prerequisites
-
-Complete:
-
-- 00_Introduction.md
-- 00B_Oscilloscope_Familiarisation.md
-- 01_PWM_Fundamentals.md
-- 02_RC_Circuits.md
-- 03_RLC_Circuits.md
-- 04_MOSFET_Fundamentals.md
-- 08_PWM_Motor_Control.md
-- 11_System_Identification.md
-- 12_P_Controller.md
-- 13_PI_Controller.md
-
 ---
 
 ## Objective
@@ -906,15 +891,13 @@ In this project you learned:
 ## Next Project
 
 ```text
-15_Controller_Design.md
+15_Closed_Loop_Buck.md
 ```
 
 Topics:
 
-- DC-DC Conversion
-- Inductors in Power Electronics
-- MOSFET Switching
-- Energy Transfer
-- Output Ripple
-- Converter Efficiency
-- Practical Power Electronics
+- Closed-Loop Regulation
+- Voltage Feedback
+- PI Voltage Control
+- Disturbance Rejection
+- Converter Tuning

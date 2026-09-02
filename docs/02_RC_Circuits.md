@@ -1,13 +1,5 @@
 # Project 02 - RC Circuits and Time Constants
 
-### Prerequisites
-
-Complete:
-
-- 00_Introduction.md
-- 00B_Oscilloscope_Familiarisation.md
-- 01_PWM_Fundamentals.md
-
 ---
 
 ## Objective

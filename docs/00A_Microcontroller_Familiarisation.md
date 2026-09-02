@@ -2,14 +2,6 @@
 
 ---
 
-## Prerequisites
-
-No prior knowledge is required for this project.
-
-This is the first hands-on lab in the course.
-
----
-
 ## Objective
 
 The objective of this project is to become familiar with the Arduino Uno development platform and the Arduino Integrated Development Environment (IDE).

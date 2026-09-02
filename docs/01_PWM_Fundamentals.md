@@ -1,12 +1,5 @@
 # Project 01 - PWM Fundamentals and Oscilloscope Measurements
 
-### Prerequisites
-
-Complete:
-
-- 00_Introduction.md
-- 00B_Oscilloscope_Familiarisation.md
-
 ---
 
 ## Objective

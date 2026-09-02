@@ -1,21 +1,5 @@
 # Project 10 - DC-AC Inverters and AC Generation
 
-### Prerequisites
-
-Complete:
-
-- 00_Introduction.md
-- 00B_Oscilloscope_Familiarisation.md
-- 01_PWM_Fundamentals.md
-- 02_RC_Circuits.md
-- 03_RLC_Circuits.md
-- 04_MOSFET_Fundamentals.md
-- 05_DC_Chopper_Converters.md
-- 06_Buck_Converter.md
-- 07_Boost_Converter.md
-- 08_PWM_Motor_Control.md
-- 09_AC_DC_Rectifiers.md
-
 ---
 
 ## Objective

@@ -1,29 +1,5 @@
 # Project 18 - Grid-Forming Voltage Source Converter (VSC)
 
-### Prerequisites
-
-Complete:
-
-- 00_Introduction.md
-- 00B_Oscilloscope_Familiarisation.md
-- 01_PWM_Fundamentals.md
-- 02_RC_Circuits.md
-- 03_RLC_Circuits.md
-- 04_MOSFET_Fundamentals.md
-- 08_PWM_Motor_Control.md
-- 12_P_Controller.md
-- 13_PI_Controller.md
-- 14_PID_Controller.md
-- 06_Buck_Converter.md
-- 15_Closed_Loop_Buck.md
-- 07_Boost_Converter.md
-- 05_DC_Chopper_Converters.md
-- 09_AC_DC_Rectifiers.md
-- 10_DC_AC_Inverters.md
-- 11_System_Identification.md
-- 16_Controller_Design.md
-- 17_Grid_Following_VSC.md
-
 ---
 
 ## Objective

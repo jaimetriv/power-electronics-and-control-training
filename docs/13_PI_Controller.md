@@ -1,19 +1,5 @@
 # Project 13 - PI Control and Eliminating Steady-State Error
 
-### Prerequisites
-
-Complete:
-
-- 00_Introduction.md
-- 00B_Oscilloscope_Familiarisation.md
-- 01_PWM_Fundamentals.md
-- 02_RC_Circuits.md
-- 03_RLC_Circuits.md
-- 04_MOSFET_Fundamentals.md
-- 08_PWM_Motor_Control.md
-- 11_System_Identification.md
-- 12_P_Controller.md
-
 ---
 
 ## Objective

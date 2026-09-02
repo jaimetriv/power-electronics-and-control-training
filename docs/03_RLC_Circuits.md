@@ -1,14 +1,5 @@
 # Project 03 - RLC Circuits, Resonance and Second-Order Systems
 
-### Prerequisites
-
-Complete:
-
-- 00_Introduction.md
-- 00B_Oscilloscope_Familiarisation.md
-- 01_PWM_Fundamentals.md
-- 02_RC_Circuits.md
-
 ---
 
 ## Objective

@@ -1,15 +1,5 @@
 # Project 04 - MOSFET Fundamentals and Electronic Switching
 
-### Prerequisites
-
-Complete:
-
-- 00_Introduction.md
-- 00B_Oscilloscope_Familiarisation.md
-- 01_PWM_Fundamentals.md
-- 02_RC_Circuits.md
-- 03_RLC_Circuits.md
-
 ---
 
 ## Objective

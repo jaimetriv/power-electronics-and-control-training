@@ -1,17 +1,5 @@
 # Project 06 - Buck Converter Fundamentals
 
-### Prerequisites
-
-Complete:
-
-- 00_Introduction.md
-- 00B_Oscilloscope_Familiarisation.md
-- 01_PWM_Fundamentals.md
-- 02_RC_Circuits.md
-- 03_RLC_Circuits.md
-- 04_MOSFET_Fundamentals.md
-- 05_DC_Chopper_Converters.md
-
 ---
 
 ## Objective
