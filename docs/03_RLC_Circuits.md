@@ -117,6 +117,56 @@ GND ──── CH1 probe ground
 
 ---
 
+## RLC Circuit Differential Equation
+
+Applying Kirchhoff's Voltage Law around the series RLC loop:
+
+$$
+V_S = V_R + V_L + V_C = iR + L\frac{di}{dt} + V_C
+$$
+
+Since $i = C\dfrac{dV_C}{dt}$:
+
+$$
+LC\frac{d^2V_C}{dt^2} + RC\frac{dV_C}{dt} + V_C = V_S
+$$
+
+This is a **second-order linear ODE** — two energy storage elements produce a second derivative.
+
+---
+
+## Laplace Domain Solution
+
+Taking the Laplace transform (zero initial conditions):
+
+$$
+LCs^2 V_C(s) + RCs\, V_C(s) + V_C(s) = V_S(s)
+$$
+
+The **transfer function** is:
+
+$$
+\boxed{H(s) = \frac{V_C(s)}{V_S(s)} = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}}
+$$
+
+Where:
+
+$$
+\omega_n = \frac{1}{\sqrt{LC}} \qquad \zeta = \frac{R}{2}\sqrt{\frac{C}{L}}
+$$
+
+The poles of $H(s)$ are:
+
+$$
+s_{1,2} = -\zeta\omega_n \pm \omega_n\sqrt{\zeta^2 - 1}
+$$
+
+- $\zeta < 1$: complex conjugate poles → underdamped (oscillatory)
+- $\zeta = 1$: repeated real pole → critically damped
+- $\zeta > 1$: two distinct real poles → overdamped
+
+---
+
 ## What Makes RLC Circuits Different?
 
 In Project 02 the capacitor was the only energy storage element.
@@ -211,56 +261,6 @@ $$
 $$
 
 Where $\zeta$ = Damping Ratio.
-
----
-
-## RLC Circuit Differential Equation
-
-Applying Kirchhoff's Voltage Law around the series RLC loop:
-
-$$
-V_S = V_R + V_L + V_C = iR + L\frac{di}{dt} + V_C
-$$
-
-Since $i = C\dfrac{dV_C}{dt}$:
-
-$$
-LC\frac{d^2V_C}{dt^2} + RC\frac{dV_C}{dt} + V_C = V_S
-$$
-
-This is a **second-order linear ODE** — two energy storage elements produce a second derivative.
-
----
-
-## Laplace Domain Solution
-
-Taking the Laplace transform (zero initial conditions):
-
-$$
-LCs^2 V_C(s) + RCs\, V_C(s) + V_C(s) = V_S(s)
-$$
-
-The **transfer function** is:
-
-$$
-\boxed{H(s) = \frac{V_C(s)}{V_S(s)} = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}}
-$$
-
-Where:
-
-$$
-\omega_n = \frac{1}{\sqrt{LC}} \qquad \zeta = \frac{R}{2}\sqrt{\frac{C}{L}}
-$$
-
-The poles of $H(s)$ are:
-
-$$
-s_{1,2} = -\zeta\omega_n \pm \omega_n\sqrt{\zeta^2 - 1}
-$$
-
-- $\zeta < 1$: complex conjugate poles → underdamped (oscillatory)
-- $\zeta = 1$: repeated real pole → critically damped
-- $\zeta > 1$: two distinct real poles → overdamped
 
 ---
 

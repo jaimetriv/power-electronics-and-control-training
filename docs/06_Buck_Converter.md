@@ -219,9 +219,13 @@ $$
 
 ## Ideal Buck Converter Equation
 
+For an ideal converter operating in steady state and continuous conduction mode (CCM):
+
 $$
 V_{OUT} = D \cdot V_{IN}
 $$
+
+CCM means that inductor current never reaches zero. In discontinuous conduction mode, the conversion ratio also depends on inductance, switching frequency, load, and input voltage, so this simple expression no longer applies. Real measurements also include diode drop, switch loss, inductor resistance, capacitor ESR, and output ripple.
 
 Where:
 

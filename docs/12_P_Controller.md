@@ -134,6 +134,8 @@ $$
 
 ## Closed-Loop Transfer Function
 
+The following derivation assumes a linear first-order plant, unity negative feedback, no transport delay, no actuator saturation, and a stable closed loop.
+
 For a proportional controller $C(s) = K_P$ applied to a first-order plant $G(s) = K/(\tau s + 1)$, the closed-loop transfer function is:
 
 $$

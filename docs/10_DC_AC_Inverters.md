@@ -183,7 +183,15 @@ A sinewave reference is compared against a high-frequency carrier waveform.
 
 The resulting PWM pulses vary in width according to the sinewave.
 
-The average voltage follows a sinusoidal shape.
+The filtered fundamental voltage follows a sinusoidal shape. The modulation index is the ratio of the sine-reference peak to the carrier peak:
+
+$$
+m_a = \frac{V_{ref,peak}}{V_{carrier,peak}}
+$$
+
+In the linear modulation region, typically $0 \leq m_a \leq 1$, its amplitude depends on the DC-link voltage, bridge topology, and $m_a$; it is not determined by the sine-reference frequency alone.
+
+The bridge output voltage, filtered load voltage, peak voltage, RMS voltage, and fundamental component are different quantities and should be labelled separately in measurements.
 
 After passing through a filter:
 

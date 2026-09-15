@@ -96,16 +96,16 @@ The inverter therefore controls current rather than voltage.
 Real power is:
 
 $$
-P = VI\cos(\phi)
+P = V_{RMS}I_{RMS}\cos(\phi)
 $$
 
 If voltage and current are in phase ($\phi = 0$):
 
 $$
-P = VI
+P = V_{RMS}I_{RMS}
 $$
 
-Maximum real power is transferred.
+For a given RMS voltage and current magnitude, unity power factor gives the largest real-power component. The actual transferred power is still limited by converter current, thermal ratings, grid impedance, and the available DC-link power.
 
 ---
 
@@ -272,7 +272,7 @@ Id = 10
 Iq = 0
 ```
 
-which is easier to regulate with a PI controller.
+This example assumes that the rotating reference frame is aligned with the grid-voltage vector and uses a consistent transform scaling. With a different alignment or scaling convention, the $d$ and $q$ values will differ. Under the chosen alignment, the approximately DC quantities are easier to regulate with PI controllers.
 
 ---
 
@@ -323,6 +323,8 @@ and produces:
 $$
 u = K_P e + K_I \int e\,dt
 $$
+
+This is a simplified current loop. Practical dq controllers commonly add grid-voltage feedforward, cross-coupling compensation, current limiting, and anti-windup. These terms are omitted here so the L-filter plant and PI action remain visible.
 
 ---
 

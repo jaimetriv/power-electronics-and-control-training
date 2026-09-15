@@ -155,7 +155,7 @@ which is useful for low-power sensing applications.
 ### Digital I/O Pins
 
 ```text
-Up to 34
+Up to 34 GPIO-capable pins
 ```
 
 Pins:
@@ -164,14 +164,14 @@ Pins:
 GPIO0 to GPIO39
 ```
 
-Not all pins are available on every DevKit layout.
+Not all pins are available on every DevKit layout. Some GPIOs are input-only, reserved, or affect boot mode, so check the board pinout before wiring a circuit.
 
 ---
 
 ### Analogue Inputs
 
 ```text
-18
+Up to 18 ADC-capable channels on the ESP32 silicon
 ```
 
 12-bit ADC resolution:
@@ -179,6 +179,8 @@ Not all pins are available on every DevKit layout.
 ```text
 0 to 4095
 ```
+
+ADC availability depends on the GPIO and board variant. On the classic ESP32, ADC2 channels cannot normally be used while WiFi is active; use an ADC1 pin for WiFi projects when possible.
 
 ---
 

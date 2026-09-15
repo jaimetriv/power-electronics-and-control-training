@@ -273,19 +273,15 @@ H-Bridge
 
 ## Voltage Measurement Circuit
 
-The ESP32 must never measure the inverter voltage directly.
+The ESP32 must never measure the inverter voltage directly. The inverter output is bipolar, so a simple divider to ground would drive the single-ended ADC below 0 V during the negative half-cycle and could damage the ESP32.
 
-Use a resistor divider to scale the output to the ADC range:
+Use one of the following arrangements instead:
 
-```text
-Output Voltage
-      │
-    47 kΩ
-      │──── ADC (ESP32 GPIO34)
-    10 kΩ
-      │
-     GND
-```
+- an isolated or differential voltage sensor with an output limited to the ADC range;
+- an appropriately attenuated, mid-supply-biased measurement with input protection and verified positive and negative limits; or
+- an isolated oscilloscope or measurement interface when only observation is required.
+
+For an ESP32 ADC, the measured signal must remain between 0 V and 3.3 V under all operating conditions. Select the attenuation and bias from the actual maximum inverter peak voltage, not only the nominal RMS voltage.
 
 ---
 
@@ -396,6 +392,8 @@ Where:
 - `reference` = Sine Reference
 - `pwm` = PWM Duty Cycle
 
+This snippet generates one sine-referenced duty value; it is not a complete H-bridge gate-drive implementation. A practical bridge requires complementary high- and low-side commands, gate-driver enable logic, shoot-through protection, and verified dead time before connecting the bridge power stage.
+
 ---
 
 ## Voltage Control Loop
@@ -428,13 +426,19 @@ $$
 f = f_0 - K_P(P - P_0)
 $$
 
+Here $K_P$ has units of frequency per watt (or per unit power). The sign assumes that increasing delivered active power reduces the commanded frequency.
+
 ### Reactive Power Droop
 
 $$
 V = V_0 - K_Q(Q - Q_0)
 $$
 
+Here $K_Q$ has units of volts per var (or per unit reactive power). The signs depend on the chosen current, power, and voltage conventions.
+
 Droop allows multiple inverters to share loads automatically without communication.
+
+Black start means energising a previously de-energised network without an external grid reference. Islanded operation means supplying a local load while electrically separated from the utility grid.
 
 ---
 

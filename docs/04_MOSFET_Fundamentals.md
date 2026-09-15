@@ -143,23 +143,25 @@ $$
 
 ## Logic Level MOSFETs
 
-For microcontroller projects always use a **Logic Level MOSFET**.
+For microcontroller projects use a **Logic Level MOSFET** whose data sheet specifies a suitably low $R_{DS(on)}$ at the available gate voltage.
 
-These turn on fully with a 3.3 V or 5 V gate signal.
+A threshold voltage only indicates the onset of conduction; it does not guarantee full enhancement. A 5 V logic-level rating also does not guarantee low resistance at 3.3 V.
 
-Recommended:
+Examples for low-voltage experiments include:
 
 - IRLZ44N
 - IRLZ34N
 - IRL540N
 
-Avoid the IRFZ44N for beginner microcontroller projects — it requires a higher gate voltage to turn on fully.
+Avoid the IRFZ44N for direct beginner microcontroller drive unless a suitable gate driver is used — its low $R_{DS(on)}$ is not specified for typical 3.3 V logic drive.
+
+For the IRLZ44N, verify the required gate voltage and expected load current from the data sheet. At higher current, use a MOSFET with a guaranteed 2.5 V or 3.3 V $R_{DS(on)}$ rating, or add a gate driver.
 
 ---
 
 ## Why a MOSFET is Efficient
 
-Power loss is:
+The instantaneous device loss is:
 
 $$
 P = V \cdot I

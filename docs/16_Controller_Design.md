@@ -132,16 +132,16 @@ $$
 T(s) = \frac{C(s)G(s)}{1 + C(s)G(s)}
 $$
 
-The key performance metrics can be read directly from $T(s)$:
+The denominator of $T(s)$ determines the closed-loop pole locations. For this PID and first-order plant, the corresponding pole-based parameters are:
 
-| Metric | Relation to $T(s)$ |
-|--------|--------------------|
-| Steady-state error | $e_{ss} = 1 - T(0)$ — zero if $K_I > 0$ |
+| Metric | Relation to the closed-loop model |
+|--------|-----------------------------------|
+| Steady-state error | $e_{ss} = 1 - T(0)$ — zero for a stable system with $K_I > 0$ |
 | Natural frequency | $\omega_n = \sqrt{KK_I/(\tau + KK_D)}$ |
-| Damping ratio | $\zeta = (1 + KK_P)/(2\omega_n(\tau + KK_D))$ |
-| Overshoot | $OS = e^{-\pi\zeta/\sqrt{1-\zeta^2}} \times 100\%$ (for $\zeta < 1$) |
+| Damping ratio | $\zeta = (1 + KK_P)/(2\sqrt{KK_I(\tau + KK_D)})$ |
+| Pole-only overshoot | $OS \approx e^{-\pi\zeta/\sqrt{1-\zeta^2}} \times 100\%$ (for $\zeta < 1$) |
 
-These relationships explain the tuning guidelines: increasing $K_P$ raises $\omega_n$ (faster response), increasing $K_I$ ensures $e_{ss} = 0$, and increasing $K_D$ raises $\zeta$ (less overshoot).
+These relationships explain the tuning guidelines: increasing $K_P$ raises the pole damping ratio, increasing $K_I$ raises the natural frequency but can reduce the damping ratio, and increasing $K_D$ changes both quantities. Because the PID controller also contributes zeros to $T(s)$, measured output overshoot may differ from the pole-only estimate. All steady-state claims assume the closed loop remains stable and the actuator is not saturated.
 
 ---
 

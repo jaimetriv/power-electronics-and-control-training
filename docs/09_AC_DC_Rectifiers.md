@@ -159,6 +159,8 @@ $$
 
 ## Average DC Output Derivation
 
+The following average-value equations assume a sinusoidal source, a resistive load, ideal diodes unless a constant forward drop is included, and negligible source impedance. A capacitor-input supply has a different conduction pattern, discussed later in this lab.
+
 ### Half-Wave Rectifier
 
 Only the positive half-cycle conducts. The average over a full period is:
@@ -375,6 +377,14 @@ The average voltage becomes smoother.
 ## Ripple Voltage
 
 Ripple voltage is the small AC variation remaining on a DC output.
+
+For a capacitor-input rectifier with approximately constant load current, a useful first estimate is:
+
+$$
+\Delta V \approx \frac{I_{LOAD}}{f_{RIPPLE}C}
+$$
+
+where $f_{RIPPLE}=f_{AC}$ for a half-wave rectifier and approximately $2f_{AC}$ for a full-wave rectifier. This is an approximation; diode resistance, source impedance, capacitor ESR, and conduction angle also affect the measured ripple.
 
 Ripple increases when load current increases or capacitance decreases.
 

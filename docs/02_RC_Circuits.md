@@ -80,32 +80,6 @@ GND ──── Probe GND
 
 ---
 
-## Capacitor Charging
-
-$$
-V_C(t) = V_F\left(1 - e^{-t/\tau}\right)
-$$
-
----
-
-## Capacitor Discharging
-
-$$
-V_C(t) = V_0 \, e^{-t/\tau}
-$$
-
----
-
-## Time Constant
-
-$$
-\tau = RC
-$$
-
-After one time constant ($t = \tau$) the capacitor reaches **63.2%** of its final value during charging.
-
----
-
 ## RC Circuit Differential Equation
 
 Applying Kirchhoff's Voltage Law around the series RC loop:
@@ -143,6 +117,32 @@ $$
 $$
 
 This is a **first-order system** with a single pole at $s = -1/\tau$.
+
+---
+
+## Capacitor Charging
+
+$$
+V_C(t) = V_F\left(1 - e^{-t/\tau}\right)
+$$
+
+---
+
+## Capacitor Discharging
+
+$$
+V_C(t) = V_0 \, e^{-t/\tau}
+$$
+
+---
+
+## Time Constant
+
+$$
+\tau = RC
+$$
+
+After one time constant ($t = \tau$) the capacitor reaches **63.2%** of its final value during charging.
 
 ---
 

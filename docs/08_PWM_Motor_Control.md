@@ -69,7 +69,7 @@ Motors have mass and inertia.
 
 Just like a car cannot instantly accelerate from 0 to 70 mph, a motor cannot instantly reach maximum speed.
 
-Instead speed rises gradually, following a first-order exponential response similar to the RC circuit from Project 02.
+Instead, speed rises gradually, following a first-order exponential response similar to the RC circuit from Project 02.
 
 ---
 
@@ -86,6 +86,8 @@ Where:
 - $K$ = System Gain
 - $\tau$ = Motor Time Constant
 
+In this lab, the input is the applied PWM duty cycle (or its averaged voltage) and the output is motor speed. This first-order model is an approximation that neglects switching ripple, electrical transients, delay, saturation, and changes in load torque.
+
 ---
 
 ## PWM Motor Control
@@ -96,7 +98,7 @@ $$
 V_{AVG} = D \cdot V_S
 $$
 
-The motor receives less average voltage and therefore rotates more slowly.
+For a fixed motor and approximately constant load, reducing duty cycle usually reduces average speed. The relationship is not universally proportional because speed also depends on back-EMF, winding resistance, friction, current, and load torque.
 
 ---
 

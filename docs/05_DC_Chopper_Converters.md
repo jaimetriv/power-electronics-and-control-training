@@ -65,7 +65,7 @@ The average value depends on the duty cycle.
 
 ## Average Output Voltage
 
-For an ideal step-down chopper:
+For an ideal step-down chopper operating in steady state, the value below is the average over one switching period. The load or a filter provides the physical smoothing; the instantaneous voltage remains a switched waveform.
 
 $$
 V_{OUT} = D \cdot V_{IN}
@@ -162,7 +162,7 @@ $$
 V_{AVG} = D \cdot V_S
 $$
 
-Motor speed is approximately proportional to average voltage.
+For a given motor and approximately constant load, motor speed often increases with average applied voltage. The exact speed also depends on back-EMF, winding resistance, current, friction, and load torque.
 
 ---
 

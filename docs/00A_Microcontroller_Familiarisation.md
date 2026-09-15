@@ -646,7 +646,7 @@ into:
 
 digital counts.
 
-In practice, conversion depends on the actual ADC reference voltage (typically Vcc), so values may vary slightly.
+In practice, conversion depends on the actual ADC reference voltage (typically Vcc), so values may vary slightly. The conversion assumes the input remains between GND and the selected reference voltage; signals outside that range can damage the input or be clipped.
 
 ---
 
@@ -812,6 +812,8 @@ Select:
 ---
 
 ## PWM Fundamentals
+
+On the Arduino Uno, `analogWrite()` produces hardware PWM on supported timer pins rather than a true analogue voltage. PWM frequency depends on the pin and timer configuration, so it should be checked before comparing measurements with ESP32 PWM.
 
 PWM stands for:
 

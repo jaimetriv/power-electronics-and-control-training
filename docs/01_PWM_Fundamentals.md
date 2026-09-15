@@ -165,6 +165,8 @@ V_S ─────────
 
 ## Average Voltage
 
+For an ideal unfiltered PWM waveform, this is the time-average value. A GPIO pin still switches between logic levels; a load or filter must convert the average switching energy into a slowly varying voltage or current.
+
 $$
 V_{AVG} = D \cdot V_S
 $$

@@ -134,7 +134,7 @@ This is a **second-order system** (same order as PI) but the derivative term $K_
 
 ### Effect of the Derivative Term
 
-The $K_D$ term increases the effective damping of the closed-loop poles.
+The $K_D$ term changes the closed-loop poles and adds zeros to the response; it should not be described as simply increasing the pole damping ratio.
 
 Comparing the denominator to the standard second-order form $s^2 + 2\zeta\omega_n s + \omega_n^2$:
 
@@ -148,6 +148,8 @@ Note that for fixed $K_P$ and $K_I$, increasing $K_D$ actually makes $(\tau + KK
 
 ## PID Controller Equation
 
+An ideal derivative responds immediately to rapid changes in error, but it also amplifies measurement noise and can produce a derivative kick when the reference changes suddenly. Practical controllers usually filter the derivative term and often apply it to the measured output rather than the reference.
+
 $$
 u(t) = K_P e(t) + K_I \int e(t)\,dt + K_D \frac{de(t)}{dt}
 $$
@@ -159,6 +161,8 @@ Where:
 - $K_I$ = Integral Gain — eliminates steady-state error
 - $K_D$ = Derivative Gain — predictive damping, reduces overshoot
 - $e(t)$ = Error Signal
+
+In a sampled controller, the derivative is approximated from successive samples and is normally filtered. Its result depends on $T_s$, measurement noise, and whether the derivative is applied to the error or to the measured output.
 
 ---
 

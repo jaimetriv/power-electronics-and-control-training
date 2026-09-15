@@ -90,7 +90,7 @@ A voltage divider scales the converter output to a safe level:
 Vout
   │
  10 kΩ
-  │──── A0  (ADC input)
+  │──── GPIO34  (ESP32 ADC input)
  10 kΩ
   │
  GND
@@ -99,14 +99,16 @@ Vout
 For equal resistors:
 
 $$
-V_{A0} = \frac{V_{OUT}}{2}
+V_{FB} = \frac{V_{OUT}}{2}
 $$
+
+For an Arduino Uno backup, use A0 instead of GPIO34. The divider and ADC range must be selected for the actual converter maximum voltage; never assume that a 1:1 divider is safe for every hardware configuration.
 
 ---
 
 ## LC Filter Transfer Function Derivation
 
-The Buck Converter output stage is an LC low-pass filter driving a resistive load.
+The Buck Converter output stage is modelled as an averaged linear LC low-pass plant driving a resistive load. The derivation below describes averaged large-signal variables around an operating condition; it is not a duty-cycle small-signal model. It assumes steady-state continuous-conduction operation with fixed component values and load resistance, and omits switching ripple, capacitor ESR, inductor resistance, and semiconductor voltage drops.
 
 Applying KVL around the output loop (inductor voltage + capacitor voltage = switch node voltage):
 

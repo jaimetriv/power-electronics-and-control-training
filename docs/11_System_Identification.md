@@ -126,10 +126,10 @@ This is the **general first-order transfer function** used throughout system ide
 In Project 03 the series RLC KVL equation was derived as:
 
 $$
-L\frac{d^2V_C}{dt^2} + R\frac{dV_C}{dt} + \frac{V_C}{C} = \frac{V_{IN}}{C} \cdot \frac{1}{C}
+L\frac{d^2V_C}{dt^2} + R\frac{dV_C}{dt} + \frac{V_C}{C} = V_{IN}
 $$
 
-More precisely, applying KVL and substituting $i = C\,dV_C/dt$:
+Applying KVL and substituting $i = C\,dV_C/dt$, the equivalent form is:
 
 $$
 LC\frac{d^2V_C}{dt^2} + RC\frac{dV_C}{dt} + V_C = V_{IN}
@@ -655,10 +655,11 @@ y_data = [0, 0.9, 1.6, 2.2, 2.7, 3.1, 3.7, 4.1, 4.6, 4.8, 5.0]; % replace (V)
 
 Vfinal = max(y_data);
 
-cost   = @(p) sum((p(1)*(1-exp(-t_data/p(2))) - y_data).^2);
-p_fit  = fminsearch(cost, [Vfinal, 0.5]);
-K_fit  = p_fit(1);
-tau_fit = p_fit(2);
+% Fit [K, tau] while enforcing K > 0 and tau > 0.
+cost   = @(q) sum((q(1)*(1-exp(-t_data/exp(q(2)))) - y_data).^2);
+q_fit  = fminsearch(cost, [max(Vfinal, eps), log(0.5)]);
+K_fit  = q_fit(1);
+tau_fit = exp(q_fit(2));
 
 t_model = 0:0.01:max(t_data);
 y_model = K_fit * (1 - exp(-t_model / tau_fit));

@@ -92,7 +92,7 @@ $$
 T(s) = \frac{K(K_P s + K_I)}{\tau s^2 + (1 + KK_P)s + KK_I}
 $$
 
-This is a **second-order system**. The integral term introduces a pole at $s = 0$ in the open loop, which guarantees zero steady-state error for a step input — the system type increases from 0 (P only) to 1 (PI).
+This is a **second-order system**. The integral term introduces a pole at $s = 0$ in the open loop, which gives zero steady-state error for a step input when the closed loop is stable and the actuator is not saturated — the system type increases from 0 (P only) to 1 (PI).
 
 ### Why Steady-State Error Is Eliminated
 
@@ -102,7 +102,7 @@ $$
 y_{ss} = \lim_{s \to 0} s \cdot T(s) \cdot \frac{1}{s} = T(0) = \frac{K \cdot K_I}{K K_I} = 1
 $$
 
-Therefore $e_{ss} = 1 - 1 = 0$ for any $K_I > 0$.
+Therefore $e_{ss} = 1 - 1 = 0$ for $K_I > 0$, provided the final value theorem conditions hold and the actuator does not saturate.
 
 ---
 
@@ -118,6 +118,14 @@ Where:
 - $K_P$ = Proportional Gain
 - $K_I$ = Integral Gain
 - $e(t)$ = Error Signal
+
+In a sampled controller, the integral is implemented approximately as:
+
+$$
+I[k] = I[k-1] + K_I e[k]T_s
+$$
+
+where $T_s$ is the sample period. The effective integral action therefore depends on the controller update rate as well as on $K_I$.
 
 ---
 

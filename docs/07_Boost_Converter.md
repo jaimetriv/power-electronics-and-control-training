@@ -196,9 +196,13 @@ $$
 
 ## Ideal Boost Converter Equation
 
+For an ideal converter operating in steady state and continuous conduction mode (CCM):
+
 $$
 V_{OUT} = \frac{V_{IN}}{1 - D}
 $$
+
+CCM means that inductor current never reaches zero. Near $D=1$, the ideal expression becomes extremely sensitive to duty-cycle error and predicts impractically large current and voltage; real losses, component ratings, startup transients, and discontinuous conduction limit the usable range.
 
 Where:
 

@@ -153,7 +153,7 @@ This capability allows simple frequency-response experiments to be performed by 
 
 The DSO Nano V3 is a compact single-channel fallback option.
 
-All experiments in this project can be completed with either instrument. Where settings differ, both are noted.
+The oscilloscope measurements can be completed with either instrument. The DSO Nano V3 does not include the OWON's built-in signal generator, so Experiment 5 requires a separate isolated signal generator when using the DSO Nano.
 
 ---
 
@@ -217,11 +217,13 @@ If the vertical scale is set to:
 1 V/div
 ```
 
-and the waveform spans 5 divisions from bottom to top, then:
+and the waveform spans 5 divisions from minimum to maximum, then:
 
 $$
-V_{peak} = 5 \times 1 = 5 \text{ V}
+V_{pp} = 5 \times 1 = 5 \text{ V}
 $$
+
+If the waveform is centred at 0 V, its peak magnitude is half this value: $V_{peak} = V_{pp}/2 = 2.5\ \text{V}$.
 
 ---
 
@@ -309,6 +311,8 @@ Trigger Edge:  Rising
 ```
 
 The trigger level should be set to approximately half the signal amplitude.
+
+Check that the probe attenuation setting on the oscilloscope matches the physical probe switch, commonly 1× or 10×. Use DC coupling when measuring absolute logic levels; AC coupling removes the DC component and is useful only when the AC variation is the quantity of interest. The signal-generator amplitude convention (peak, peak-to-peak, or RMS) must also be confirmed before comparing it with a calculated value.
 
 ---
 
