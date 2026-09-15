@@ -2659,7 +2659,7 @@
 <p>The average value depends on the duty cycle.</p>
 <hr />
 <h2 id="average-output-voltage">Average Output Voltage<a class="headerlink" href="#average-output-voltage" title="Permanent link">&para;</a></h2>
-<p>For an ideal step-down chopper:</p>
+<p>For an ideal step-down chopper operating in steady state, the value below is the average over one switching period. The load or a filter provides the physical smoothing; the instantaneous voltage remains a switched waveform.</p>
 <div class="arithmatex">\[
 V_{OUT} = D \cdot V_{IN}
 \]</div>
@@ -2727,7 +2727,7 @@ V_{OUT} = 0.5 \times 12 = 6\ \text{V}
 <div class="arithmatex">\[
 V_{AVG} = D \cdot V_S
 \]</div>
-<p>Motor speed is approximately proportional to average voltage.</p>
+<p>For a given motor and approximately constant load, motor speed often increases with average applied voltage. The exact speed also depends on back-EMF, winding resistance, current, friction, and load torque.</p>
 <hr />
 <h2 id="simulink-simulation">Simulink Simulation<a class="headerlink" href="#simulink-simulation" title="Permanent link">&para;</a></h2>
 <p>Before building the circuit, build a Simulink model to predict the chopper waveform and average output voltage at each duty cycle.</p>

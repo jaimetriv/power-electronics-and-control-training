@@ -3818,7 +3818,7 @@
 <hr />
 <h2 id="about-the-dso-nano-v3">About The DSO Nano V3<a class="headerlink" href="#about-the-dso-nano-v3" title="Permanent link">&para;</a></h2>
 <p>The DSO Nano V3 is a compact single-channel fallback option.</p>
-<p>All experiments in this project can be completed with either instrument. Where settings differ, both are noted.</p>
+<p>The oscilloscope measurements can be completed with either instrument. The DSO Nano V3 does not include the OWON's built-in signal generator, so Experiment 5 requires a separate isolated signal generator when using the DSO Nano.</p>
 <hr />
 <h2 id="understanding-the-screen">Understanding The Screen<a class="headerlink" href="#understanding-the-screen" title="Permanent link">&para;</a></h2>
 <p>The oscilloscope screen is a grid of squares called divisions:</p>
@@ -3857,10 +3857,11 @@
 <p>If the vertical scale is set to:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>1 V/div
 </code></pre></div>
-<p>and the waveform spans 5 divisions from bottom to top, then:</p>
+<p>and the waveform spans 5 divisions from minimum to maximum, then:</p>
 <div class="arithmatex">\[
-V_{peak} = 5 \times 1 = 5 \text{ V}
+V_{pp} = 5 \times 1 = 5 \text{ V}
 \]</div>
+<p>If the waveform is centred at 0 V, its peak magnitude is half this value: <span class="arithmatex">\(V_{peak} = V_{pp}/2 = 2.5\ \text{V}\)</span>.</p>
 <hr />
 <h2 id="horizontal-scale">Horizontal Scale<a class="headerlink" href="#horizontal-scale" title="Permanent link">&para;</a></h2>
 <p>The horizontal scale sets how much time each division represents:</p>
@@ -3912,6 +3913,7 @@ f = \frac{1}{0.002} = 500 \text{ Hz}
 <a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Trigger Edge:  Rising
 </code></pre></div>
 <p>The trigger level should be set to approximately half the signal amplitude.</p>
+<p>Check that the probe attenuation setting on the oscilloscope matches the physical probe switch, commonly 1× or 10×. Use DC coupling when measuring absolute logic levels; AC coupling removes the DC component and is useful only when the AC variation is the quantity of interest. The signal-generator amplitude convention (peak, peak-to-peak, or RMS) must also be confirmed before comparing it with a calculated value.</p>
 <hr />
 <h2 id="safe-oscilloscope-connections">Safe Oscilloscope Connections<a class="headerlink" href="#safe-oscilloscope-connections" title="Permanent link">&para;</a></h2>
 <p>For all Arduino and ESP32 experiments:</p>

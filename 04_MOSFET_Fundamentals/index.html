@@ -3196,18 +3196,19 @@ V_{GS} = V_G - V_S
 \]</div>
 <hr />
 <h2 id="logic-level-mosfets">Logic Level MOSFETs<a class="headerlink" href="#logic-level-mosfets" title="Permanent link">&para;</a></h2>
-<p>For microcontroller projects always use a <strong>Logic Level MOSFET</strong>.</p>
-<p>These turn on fully with a 3.3 V or 5 V gate signal.</p>
-<p>Recommended:</p>
+<p>For microcontroller projects use a <strong>Logic Level MOSFET</strong> whose data sheet specifies a suitably low <span class="arithmatex">\(R_{DS(on)}\)</span> at the available gate voltage.</p>
+<p>A threshold voltage only indicates the onset of conduction; it does not guarantee full enhancement. A 5 V logic-level rating also does not guarantee low resistance at 3.3 V.</p>
+<p>Examples for low-voltage experiments include:</p>
 <ul>
 <li>IRLZ44N</li>
 <li>IRLZ34N</li>
 <li>IRL540N</li>
 </ul>
-<p>Avoid the IRFZ44N for beginner microcontroller projects — it requires a higher gate voltage to turn on fully.</p>
+<p>Avoid the IRFZ44N for direct beginner microcontroller drive unless a suitable gate driver is used — its low <span class="arithmatex">\(R_{DS(on)}\)</span> is not specified for typical 3.3 V logic drive.</p>
+<p>For the IRLZ44N, verify the required gate voltage and expected load current from the data sheet. At higher current, use a MOSFET with a guaranteed 2.5 V or 3.3 V <span class="arithmatex">\(R_{DS(on)}\)</span> rating, or add a gate driver.</p>
 <hr />
 <h2 id="why-a-mosfet-is-efficient">Why a MOSFET is Efficient<a class="headerlink" href="#why-a-mosfet-is-efficient" title="Permanent link">&para;</a></h2>
-<p>Power loss is:</p>
+<p>The instantaneous device loss is:</p>
 <div class="arithmatex">\[
 P = V \cdot I
 \]</div>

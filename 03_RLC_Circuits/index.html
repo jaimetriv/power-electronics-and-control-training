@@ -720,6 +720,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rlc-circuit-differential-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RLC Circuit Differential Equation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#laplace-domain-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laplace Domain Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-makes-rlc-circuits-different" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -801,28 +823,6 @@
     <span class="md-ellipsis">
       
         Damping Ratio
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rlc-circuit-differential-equation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        RLC Circuit Differential Equation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#laplace-domain-solution" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Laplace Domain Solution
       
     </span>
   </a>
@@ -2377,6 +2377,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rlc-circuit-differential-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RLC Circuit Differential Equation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#laplace-domain-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laplace Domain Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-makes-rlc-circuits-different" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2458,28 +2480,6 @@
     <span class="md-ellipsis">
       
         Damping Ratio
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rlc-circuit-differential-equation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        RLC Circuit Differential Equation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#laplace-domain-solution" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Laplace Domain Solution
       
     </span>
   </a>
@@ -3408,6 +3408,40 @@ E = \frac{1}{2}LI^2
 <a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>GND ──── CH1 probe ground
 </code></pre></div>
 <hr />
+<h2 id="rlc-circuit-differential-equation">RLC Circuit Differential Equation<a class="headerlink" href="#rlc-circuit-differential-equation" title="Permanent link">&para;</a></h2>
+<p>Applying Kirchhoff's Voltage Law around the series RLC loop:</p>
+<div class="arithmatex">\[
+V_S = V_R + V_L + V_C = iR + L\frac{di}{dt} + V_C
+\]</div>
+<p>Since <span class="arithmatex">\(i = C\dfrac{dV_C}{dt}\)</span>:</p>
+<div class="arithmatex">\[
+LC\frac{d^2V_C}{dt^2} + RC\frac{dV_C}{dt} + V_C = V_S
+\]</div>
+<p>This is a <strong>second-order linear ODE</strong> — two energy storage elements produce a second derivative.</p>
+<hr />
+<h2 id="laplace-domain-solution">Laplace Domain Solution<a class="headerlink" href="#laplace-domain-solution" title="Permanent link">&para;</a></h2>
+<p>Taking the Laplace transform (zero initial conditions):</p>
+<div class="arithmatex">\[
+LCs^2 V_C(s) + RCs\, V_C(s) + V_C(s) = V_S(s)
+\]</div>
+<p>The <strong>transfer function</strong> is:</p>
+<div class="arithmatex">\[
+\boxed{H(s) = \frac{V_C(s)}{V_S(s)} = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}}
+\]</div>
+<p>Where:</p>
+<div class="arithmatex">\[
+\omega_n = \frac{1}{\sqrt{LC}} \qquad \zeta = \frac{R}{2}\sqrt{\frac{C}{L}}
+\]</div>
+<p>The poles of <span class="arithmatex">\(H(s)\)</span> are:</p>
+<div class="arithmatex">\[
+s_{1,2} = -\zeta\omega_n \pm \omega_n\sqrt{\zeta^2 - 1}
+\]</div>
+<ul>
+<li><span class="arithmatex">\(\zeta &lt; 1\)</span>: complex conjugate poles → underdamped (oscillatory)</li>
+<li><span class="arithmatex">\(\zeta = 1\)</span>: repeated real pole → critically damped</li>
+<li><span class="arithmatex">\(\zeta &gt; 1\)</span>: two distinct real poles → overdamped</li>
+</ul>
+<hr />
 <h2 id="what-makes-rlc-circuits-different">What Makes RLC Circuits Different?<a class="headerlink" href="#what-makes-rlc-circuits-different" title="Permanent link">&para;</a></h2>
 <p>In Project 02 the capacitor was the only energy storage element.</p>
 <p>Now we have two:</p>
@@ -3486,40 +3520,6 @@ f_n = \frac{10\,000}{2\pi} \approx 1591\ \text{Hz}
 \zeta = \frac{R}{2}\sqrt{\frac{C}{L}}
 \]</div>
 <p>Where <span class="arithmatex">\(\zeta\)</span> = Damping Ratio.</p>
-<hr />
-<h2 id="rlc-circuit-differential-equation">RLC Circuit Differential Equation<a class="headerlink" href="#rlc-circuit-differential-equation" title="Permanent link">&para;</a></h2>
-<p>Applying Kirchhoff's Voltage Law around the series RLC loop:</p>
-<div class="arithmatex">\[
-V_S = V_R + V_L + V_C = iR + L\frac{di}{dt} + V_C
-\]</div>
-<p>Since <span class="arithmatex">\(i = C\dfrac{dV_C}{dt}\)</span>:</p>
-<div class="arithmatex">\[
-LC\frac{d^2V_C}{dt^2} + RC\frac{dV_C}{dt} + V_C = V_S
-\]</div>
-<p>This is a <strong>second-order linear ODE</strong> — two energy storage elements produce a second derivative.</p>
-<hr />
-<h2 id="laplace-domain-solution">Laplace Domain Solution<a class="headerlink" href="#laplace-domain-solution" title="Permanent link">&para;</a></h2>
-<p>Taking the Laplace transform (zero initial conditions):</p>
-<div class="arithmatex">\[
-LCs^2 V_C(s) + RCs\, V_C(s) + V_C(s) = V_S(s)
-\]</div>
-<p>The <strong>transfer function</strong> is:</p>
-<div class="arithmatex">\[
-\boxed{H(s) = \frac{V_C(s)}{V_S(s)} = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}}
-\]</div>
-<p>Where:</p>
-<div class="arithmatex">\[
-\omega_n = \frac{1}{\sqrt{LC}} \qquad \zeta = \frac{R}{2}\sqrt{\frac{C}{L}}
-\]</div>
-<p>The poles of <span class="arithmatex">\(H(s)\)</span> are:</p>
-<div class="arithmatex">\[
-s_{1,2} = -\zeta\omega_n \pm \omega_n\sqrt{\zeta^2 - 1}
-\]</div>
-<ul>
-<li><span class="arithmatex">\(\zeta &lt; 1\)</span>: complex conjugate poles → underdamped (oscillatory)</li>
-<li><span class="arithmatex">\(\zeta = 1\)</span>: repeated real pole → critically damped</li>
-<li><span class="arithmatex">\(\zeta &gt; 1\)</span>: two distinct real poles → overdamped</li>
-</ul>
 <hr />
 <h2 id="underdamped-step-response-time-domain">Underdamped Step Response — Time Domain<a class="headerlink" href="#underdamped-step-response-time-domain" title="Permanent link">&para;</a></h2>
 <p>For <span class="arithmatex">\(\zeta &lt; 1\)</span> the step response is:</p>

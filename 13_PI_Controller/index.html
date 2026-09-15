@@ -2731,13 +2731,13 @@ T(s) = \frac{L(s)}{1 + L(s)} = \frac{(K_P s + K_I)K}{s(\tau s + 1) + (K_P s + K_
 <div class="arithmatex">\[
 T(s) = \frac{K(K_P s + K_I)}{\tau s^2 + (1 + KK_P)s + KK_I}
 \]</div>
-<p>This is a <strong>second-order system</strong>. The integral term introduces a pole at <span class="arithmatex">\(s = 0\)</span> in the open loop, which guarantees zero steady-state error for a step input — the system type increases from 0 (P only) to 1 (PI).</p>
+<p>This is a <strong>second-order system</strong>. The integral term introduces a pole at <span class="arithmatex">\(s = 0\)</span> in the open loop, which gives zero steady-state error for a step input when the closed loop is stable and the actuator is not saturated — the system type increases from 0 (P only) to 1 (PI).</p>
 <h3 id="why-steady-state-error-is-eliminated">Why Steady-State Error Is Eliminated<a class="headerlink" href="#why-steady-state-error-is-eliminated" title="Permanent link">&para;</a></h3>
 <p>Applying the Final Value Theorem to a unit step input <span class="arithmatex">\(R(s) = 1/s\)</span>:</p>
 <div class="arithmatex">\[
 y_{ss} = \lim_{s \to 0} s \cdot T(s) \cdot \frac{1}{s} = T(0) = \frac{K \cdot K_I}{K K_I} = 1
 \]</div>
-<p>Therefore <span class="arithmatex">\(e_{ss} = 1 - 1 = 0\)</span> for any <span class="arithmatex">\(K_I &gt; 0\)</span>.</p>
+<p>Therefore <span class="arithmatex">\(e_{ss} = 1 - 1 = 0\)</span> for <span class="arithmatex">\(K_I &gt; 0\)</span>, provided the final value theorem conditions hold and the actuator does not saturate.</p>
 <hr />
 <h2 id="pi-controller-equation">PI Controller Equation<a class="headerlink" href="#pi-controller-equation" title="Permanent link">&para;</a></h2>
 <div class="arithmatex">\[
@@ -2750,6 +2750,11 @@ u(t) = K_P e(t) + K_I \int e(t)\,dt
 <li><span class="arithmatex">\(K_I\)</span> = Integral Gain</li>
 <li><span class="arithmatex">\(e(t)\)</span> = Error Signal</li>
 </ul>
+<p>In a sampled controller, the integral is implemented approximately as:</p>
+<div class="arithmatex">\[
+I[k] = I[k-1] + K_I e[k]T_s
+\]</div>
+<p>where <span class="arithmatex">\(T_s\)</span> is the sample period. The effective integral action therefore depends on the controller update rate as well as on <span class="arithmatex">\(K_I\)</span>.</p>
 <hr />
 <h2 id="pi-controller-block-diagram">PI Controller Block Diagram<a class="headerlink" href="#pi-controller-block-diagram" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Reference → [−] → Error → Kp ──────────────┐

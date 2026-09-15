@@ -2883,7 +2883,7 @@
 <h2 id="why-doesnt-a-motor-reach-full-speed-instantly">Why Doesn't a Motor Reach Full Speed Instantly?<a class="headerlink" href="#why-doesnt-a-motor-reach-full-speed-instantly" title="Permanent link">&para;</a></h2>
 <p>Motors have mass and inertia.</p>
 <p>Just like a car cannot instantly accelerate from 0 to 70 mph, a motor cannot instantly reach maximum speed.</p>
-<p>Instead speed rises gradually, following a first-order exponential response similar to the RC circuit from Project 02.</p>
+<p>Instead, speed rises gradually, following a first-order exponential response similar to the RC circuit from Project 02.</p>
 <hr />
 <h2 id="first-order-motor-model">First-Order Motor Model<a class="headerlink" href="#first-order-motor-model" title="Permanent link">&para;</a></h2>
 <p>A DC motor can often be approximated by:</p>
@@ -2895,13 +2895,14 @@ G(s) = \frac{K}{\tau s + 1}
 <li><span class="arithmatex">\(K\)</span> = System Gain</li>
 <li><span class="arithmatex">\(\tau\)</span> = Motor Time Constant</li>
 </ul>
+<p>In this lab, the input is the applied PWM duty cycle (or its averaged voltage) and the output is motor speed. This first-order model is an approximation that neglects switching ripple, electrical transients, delay, saturation, and changes in load torque.</p>
 <hr />
 <h2 id="pwm-motor-control">PWM Motor Control<a class="headerlink" href="#pwm-motor-control" title="Permanent link">&para;</a></h2>
 <p>PWM controls the average voltage applied to the motor:</p>
 <div class="arithmatex">\[
 V_{AVG} = D \cdot V_S
 \]</div>
-<p>The motor receives less average voltage and therefore rotates more slowly.</p>
+<p>For a fixed motor and approximately constant load, reducing duty cycle usually reduces average speed. The relationship is not universally proportional because speed also depends on back-EMF, winding resistance, friction, current, and load torque.</p>
 <hr />
 <h2 id="why-use-pwm-instead-of-a-resistor">Why Use PWM Instead of a Resistor?<a class="headerlink" href="#why-use-pwm-instead-of-a-resistor" title="Permanent link">&para;</a></h2>
 <p>Resistor control wastes energy as heat.</p>

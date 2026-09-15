@@ -2912,7 +2912,7 @@ T(s) = \frac{K(K_D s^2 + K_P s + K_I)}{(\tau + KK_D)s^2 + (1 + KK_P)s + KK_I}
 \]</div>
 <p>This is a <strong>second-order system</strong> (same order as PI) but the derivative term <span class="arithmatex">\(K_D\)</span> appears in both numerator and denominator.</p>
 <h3 id="effect-of-the-derivative-term">Effect of the Derivative Term<a class="headerlink" href="#effect-of-the-derivative-term" title="Permanent link">&para;</a></h3>
-<p>The <span class="arithmatex">\(K_D\)</span> term increases the effective damping of the closed-loop poles.</p>
+<p>The <span class="arithmatex">\(K_D\)</span> term changes the closed-loop poles and adds zeros to the response; it should not be described as simply increasing the pole damping ratio.</p>
 <p>Comparing the denominator to the standard second-order form <span class="arithmatex">\(s^2 + 2\zeta\omega_n s + \omega_n^2\)</span>:</p>
 <div class="arithmatex">\[
 \omega_n = \sqrt{\frac{KK_I}{\tau + KK_D}}, \qquad \zeta = \frac{1 + KK_P}{2\sqrt{KK_I(\tau + KK_D)}}
@@ -2920,6 +2920,7 @@ T(s) = \frac{K(K_D s^2 + K_P s + K_I)}{(\tau + KK_D)s^2 + (1 + KK_P)s + KK_I}
 <p>Note that for fixed <span class="arithmatex">\(K_P\)</span> and <span class="arithmatex">\(K_I\)</span>, increasing <span class="arithmatex">\(K_D\)</span> actually makes <span class="arithmatex">\((\tau + KK_D)\)</span> larger, which <em>decreases</em> both <span class="arithmatex">\(\zeta\)</span> and <span class="arithmatex">\(\omega_n\)</span> in this formula — so the pole damping ratio alone does not explain the reduced overshoot seen experimentally. The real explanation is that <span class="arithmatex">\(K_D\)</span> also appears in the closed-loop <strong>numerator</strong> <span class="arithmatex">\(K(K_D s^2 + K_P s + K_I)\)</span>, adding a zero to the response. This zero speeds up the rise and cancels part of the oscillatory behaviour contributed by the poles, which is why increasing <span class="arithmatex">\(K_D\)</span> reduces overshoot and oscillation in practice even though it lowers <span class="arithmatex">\(\zeta\)</span>.</p>
 <hr />
 <h2 id="pid-controller-equation">PID Controller Equation<a class="headerlink" href="#pid-controller-equation" title="Permanent link">&para;</a></h2>
+<p>An ideal derivative responds immediately to rapid changes in error, but it also amplifies measurement noise and can produce a derivative kick when the reference changes suddenly. Practical controllers usually filter the derivative term and often apply it to the measured output rather than the reference.</p>
 <div class="arithmatex">\[
 u(t) = K_P e(t) + K_I \int e(t)\,dt + K_D \frac{de(t)}{dt}
 \]</div>
@@ -2931,6 +2932,7 @@ u(t) = K_P e(t) + K_I \int e(t)\,dt + K_D \frac{de(t)}{dt}
 <li><span class="arithmatex">\(K_D\)</span> = Derivative Gain — predictive damping, reduces overshoot</li>
 <li><span class="arithmatex">\(e(t)\)</span> = Error Signal</li>
 </ul>
+<p>In a sampled controller, the derivative is approximated from successive samples and is normally filtered. Its result depends on <span class="arithmatex">\(T_s\)</span>, measurement noise, and whether the derivative is applied to the error or to the measured output.</p>
 <hr />
 <h2 id="summary-table">Summary Table<a class="headerlink" href="#summary-table" title="Permanent link">&para;</a></h2>
 <table>

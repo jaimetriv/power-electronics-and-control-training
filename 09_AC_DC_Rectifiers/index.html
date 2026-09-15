@@ -3697,6 +3697,7 @@ V_{RMS} = \sqrt{\frac{V_{PEAK}^2}{2}} = \frac{V_{PEAK}}{\sqrt{2}}
 \]</div>
 <hr />
 <h2 id="average-dc-output-derivation">Average DC Output Derivation<a class="headerlink" href="#average-dc-output-derivation" title="Permanent link">&para;</a></h2>
+<p>The following average-value equations assume a sinusoidal source, a resistive load, ideal diodes unless a constant forward drop is included, and negligible source impedance. A capacitor-input supply has a different conduction pattern, discussed later in this lab.</p>
 <h3 id="half-wave-rectifier">Half-Wave Rectifier<a class="headerlink" href="#half-wave-rectifier" title="Permanent link">&para;</a></h3>
 <p>Only the positive half-cycle conducts. The average over a full period is:</p>
 <div class="arithmatex">\[
@@ -3827,6 +3828,11 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <hr />
 <h2 id="ripple-voltage">Ripple Voltage<a class="headerlink" href="#ripple-voltage" title="Permanent link">&para;</a></h2>
 <p>Ripple voltage is the small AC variation remaining on a DC output.</p>
+<p>For a capacitor-input rectifier with approximately constant load current, a useful first estimate is:</p>
+<div class="arithmatex">\[
+\Delta V \approx \frac{I_{LOAD}}{f_{RIPPLE}C}
+\]</div>
+<p>where <span class="arithmatex">\(f_{RIPPLE}=f_{AC}\)</span> for a half-wave rectifier and approximately <span class="arithmatex">\(2f_{AC}\)</span> for a full-wave rectifier. This is an approximation; diode resistance, source impedance, capacitor ESR, and conduction angle also affect the measured ripple.</p>
 <p>Ripple increases when load current increases or capacitance decreases.</p>
 <p>Ripple decreases when capacitance increases, load current decreases, or ripple frequency increases.</p>
 <hr />

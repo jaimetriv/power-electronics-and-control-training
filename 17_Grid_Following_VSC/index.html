@@ -3245,13 +3245,13 @@
 <h2 id="power-transfer">Power Transfer<a class="headerlink" href="#power-transfer" title="Permanent link">&para;</a></h2>
 <p>Real power is:</p>
 <div class="arithmatex">\[
-P = VI\cos(\phi)
+P = V_{RMS}I_{RMS}\cos(\phi)
 \]</div>
 <p>If voltage and current are in phase (<span class="arithmatex">\(\phi = 0\)</span>):</p>
 <div class="arithmatex">\[
-P = VI
+P = V_{RMS}I_{RMS}
 \]</div>
-<p>Maximum real power is transferred.</p>
+<p>For a given RMS voltage and current magnitude, unity power factor gives the largest real-power component. The actual transferred power is still limited by converter current, thermal ratings, grid impedance, and the available DC-link power.</p>
 <hr />
 <h2 id="overall-control-structure">Overall Control Structure<a class="headerlink" href="#overall-control-structure" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Grid Voltage
@@ -3378,7 +3378,7 @@ i(t) = 10\sin(\omega t)
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Iq = 0
 </code></pre></div>
-<p>which is easier to regulate with a PI controller.</p>
+<p>This example assumes that the rotating reference frame is aligned with the grid-voltage vector and uses a consistent transform scaling. With a different alignment or scaling convention, the <span class="arithmatex">\(d\)</span> and <span class="arithmatex">\(q\)</span> values will differ. Under the chosen alignment, the approximately DC quantities are easier to regulate with PI controllers.</p>
 <hr />
 <h2 id="l-filter-transfer-function-derivation">L-Filter Transfer Function Derivation<a class="headerlink" href="#l-filter-transfer-function-derivation" title="Permanent link">&para;</a></h2>
 <p>The grid-side circuit consists of the inverter output voltage <span class="arithmatex">\(V_{inv}\)</span>, a series inductor <span class="arithmatex">\(L\)</span> with winding resistance <span class="arithmatex">\(R\)</span>, and the grid voltage <span class="arithmatex">\(V_{grid}\)</span>.</p>
@@ -3410,6 +3410,7 @@ e = I_d^* - I_d
 <div class="arithmatex">\[
 u = K_P e + K_I \int e\,dt
 \]</div>
+<p>This is a simplified current loop. Practical dq controllers commonly add grid-voltage feedforward, cross-coupling compensation, current limiting, and anti-windup. These terms are omitted here so the L-filter plant and PI action remain visible.</p>
 <hr />
 <h2 id="simulink-simulation">Simulink Simulation<a class="headerlink" href="#simulink-simulation" title="Permanent link">&para;</a></h2>
 <p>Before building, simulate three key subsystems in Simulink: PLL angle tracking, SPWM generation, and the PI current controller on the L-filter plant.</p>

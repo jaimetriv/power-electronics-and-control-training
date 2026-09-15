@@ -3922,7 +3922,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>0 to 1023
 </code></pre></div>
 <p>digital counts.</p>
-<p>In practice, conversion depends on the actual ADC reference voltage (typically Vcc), so values may vary slightly.</p>
+<p>In practice, conversion depends on the actual ADC reference voltage (typically Vcc), so values may vary slightly. The conversion assumes the input remains between GND and the selected reference voltage; signals outside that range can damage the input or be clipped.</p>
 <hr />
 <h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>0 V     → 0
@@ -4038,6 +4038,7 @@
 </code></pre></div>
 <hr />
 <h2 id="pwm-fundamentals">PWM Fundamentals<a class="headerlink" href="#pwm-fundamentals" title="Permanent link">&para;</a></h2>
+<p>On the Arduino Uno, <code>analogWrite()</code> produces hardware PWM on supported timer pins rather than a true analogue voltage. PWM frequency depends on the pin and timer configuration, so it should be checked before comparing measurements with ESP32 PWM.</p>
 <p>PWM stands for:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>Pulse Width Modulation
 </code></pre></div>

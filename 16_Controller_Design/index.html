@@ -3010,18 +3010,18 @@ G(s) = \frac{K}{\tau s + 1}
 <div class="arithmatex">\[
 T(s) = \frac{C(s)G(s)}{1 + C(s)G(s)}
 \]</div>
-<p>The key performance metrics can be read directly from <span class="arithmatex">\(T(s)\)</span>:</p>
+<p>The denominator of <span class="arithmatex">\(T(s)\)</span> determines the closed-loop pole locations. For this PID and first-order plant, the corresponding pole-based parameters are:</p>
 <table>
 <thead>
 <tr>
 <th>Metric</th>
-<th>Relation to <span class="arithmatex">\(T(s)\)</span></th>
+<th>Relation to the closed-loop model</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Steady-state error</td>
-<td><span class="arithmatex">\(e_{ss} = 1 - T(0)\)</span> — zero if <span class="arithmatex">\(K_I &gt; 0\)</span></td>
+<td><span class="arithmatex">\(e_{ss} = 1 - T(0)\)</span> — zero for a stable system with <span class="arithmatex">\(K_I &gt; 0\)</span></td>
 </tr>
 <tr>
 <td>Natural frequency</td>
@@ -3029,15 +3029,15 @@ T(s) = \frac{C(s)G(s)}{1 + C(s)G(s)}
 </tr>
 <tr>
 <td>Damping ratio</td>
-<td><span class="arithmatex">\(\zeta = (1 + KK_P)/(2\omega_n(\tau + KK_D))\)</span></td>
+<td><span class="arithmatex">\(\zeta = (1 + KK_P)/(2\sqrt{KK_I(\tau + KK_D)})\)</span></td>
 </tr>
 <tr>
-<td>Overshoot</td>
-<td><span class="arithmatex">\(OS = e^{-\pi\zeta/\sqrt{1-\zeta^2}} \times 100\%\)</span> (for <span class="arithmatex">\(\zeta &lt; 1\)</span>)</td>
+<td>Pole-only overshoot</td>
+<td><span class="arithmatex">\(OS \approx e^{-\pi\zeta/\sqrt{1-\zeta^2}} \times 100\%\)</span> (for <span class="arithmatex">\(\zeta &lt; 1\)</span>)</td>
 </tr>
 </tbody>
 </table>
-<p>These relationships explain the tuning guidelines: increasing <span class="arithmatex">\(K_P\)</span> raises <span class="arithmatex">\(\omega_n\)</span> (faster response), increasing <span class="arithmatex">\(K_I\)</span> ensures <span class="arithmatex">\(e_{ss} = 0\)</span>, and increasing <span class="arithmatex">\(K_D\)</span> raises <span class="arithmatex">\(\zeta\)</span> (less overshoot).</p>
+<p>These relationships explain the tuning guidelines: increasing <span class="arithmatex">\(K_P\)</span> raises the pole damping ratio, increasing <span class="arithmatex">\(K_I\)</span> raises the natural frequency but can reduce the damping ratio, and increasing <span class="arithmatex">\(K_D\)</span> changes both quantities. Because the PID controller also contributes zeros to <span class="arithmatex">\(T(s)\)</span>, measured output overshoot may differ from the pole-only estimate. All steady-state claims assume the closed loop remains stable and the actuator is not saturated.</p>
 <hr />
 <h2 id="step-3-select-a-controller">Step 3 - Select a Controller<a class="headerlink" href="#step-3-select-a-controller" title="Permanent link">&para;</a></h2>
 <table>

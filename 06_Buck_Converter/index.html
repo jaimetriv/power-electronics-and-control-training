@@ -3296,9 +3296,11 @@ V_{IN} \cdot DT - V_{OUT} \cdot T = 0
 \]</div>
 <hr />
 <h2 id="ideal-buck-converter-equation">Ideal Buck Converter Equation<a class="headerlink" href="#ideal-buck-converter-equation" title="Permanent link">&para;</a></h2>
+<p>For an ideal converter operating in steady state and continuous conduction mode (CCM):</p>
 <div class="arithmatex">\[
 V_{OUT} = D \cdot V_{IN}
 \]</div>
+<p>CCM means that inductor current never reaches zero. In discontinuous conduction mode, the conversion ratio also depends on inductance, switching frequency, load, and input voltage, so this simple expression no longer applies. Real measurements also include diode drop, switch loss, inductor resistance, capacitor ESR, and output ripple.</p>
 <p>Where:</p>
 <ul>
 <li><span class="arithmatex">\(V_{OUT}\)</span> = Output Voltage</li>

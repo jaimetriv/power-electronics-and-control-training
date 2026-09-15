@@ -3196,9 +3196,11 @@ V_{IN} = V_{OUT}(1 - D)
 \]</div>
 <hr />
 <h2 id="ideal-boost-converter-equation">Ideal Boost Converter Equation<a class="headerlink" href="#ideal-boost-converter-equation" title="Permanent link">&para;</a></h2>
+<p>For an ideal converter operating in steady state and continuous conduction mode (CCM):</p>
 <div class="arithmatex">\[
 V_{OUT} = \frac{V_{IN}}{1 - D}
 \]</div>
+<p>CCM means that inductor current never reaches zero. Near <span class="arithmatex">\(D=1\)</span>, the ideal expression becomes extremely sensitive to duty-cycle error and predicts impractically large current and voltage; real losses, component ratings, startup transients, and discontinuous conduction limit the usable range.</p>
 <p>Where:</p>
 <ul>
 <li><span class="arithmatex">\(V_{OUT}\)</span> = Output Voltage</li>

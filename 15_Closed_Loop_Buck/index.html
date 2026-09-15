@@ -3092,18 +3092,19 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Vout
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  │
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a> 10 kΩ
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  │──── A0  (ADC input)
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  │──── GPIO34  (ESP32 ADC input)
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a> 10 kΩ
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  │
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a> GND
 </code></pre></div>
 <p>For equal resistors:</p>
 <div class="arithmatex">\[
-V_{A0} = \frac{V_{OUT}}{2}
+V_{FB} = \frac{V_{OUT}}{2}
 \]</div>
+<p>For an Arduino Uno backup, use A0 instead of GPIO34. The divider and ADC range must be selected for the actual converter maximum voltage; never assume that a 1:1 divider is safe for every hardware configuration.</p>
 <hr />
 <h2 id="lc-filter-transfer-function-derivation">LC Filter Transfer Function Derivation<a class="headerlink" href="#lc-filter-transfer-function-derivation" title="Permanent link">&para;</a></h2>
-<p>The Buck Converter output stage is an LC low-pass filter driving a resistive load.</p>
+<p>The Buck Converter output stage is modelled as an averaged linear LC low-pass plant driving a resistive load. The derivation below describes averaged large-signal variables around an operating condition; it is not a duty-cycle small-signal model. It assumes steady-state continuous-conduction operation with fixed component values and load resistance, and omits switching ripple, capacitor ESR, inductor resistance, and semiconductor voltage drops.</p>
 <p>Applying KVL around the output loop (inductor voltage + capacitor voltage = switch node voltage):</p>
 <div class="arithmatex">\[
 V_{sw} = L\frac{di_L}{dt} + V_{OUT}

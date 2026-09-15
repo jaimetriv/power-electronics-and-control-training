@@ -3020,7 +3020,12 @@
 <p>Modern inverters use Sinusoidal PWM rather than pure square waves.</p>
 <p>A sinewave reference is compared against a high-frequency carrier waveform.</p>
 <p>The resulting PWM pulses vary in width according to the sinewave.</p>
-<p>The average voltage follows a sinusoidal shape.</p>
+<p>The filtered fundamental voltage follows a sinusoidal shape. The modulation index is the ratio of the sine-reference peak to the carrier peak:</p>
+<div class="arithmatex">\[
+m_a = \frac{V_{ref,peak}}{V_{carrier,peak}}
+\]</div>
+<p>In the linear modulation region, typically <span class="arithmatex">\(0 \leq m_a \leq 1\)</span>, its amplitude depends on the DC-link voltage, bridge topology, and <span class="arithmatex">\(m_a\)</span>; it is not determined by the sine-reference frequency alone.</p>
+<p>The bridge output voltage, filtered load voltage, peak voltage, RMS voltage, and fundamental component are different quantities and should be labelled separately in measurements.</p>
 <p>After passing through a filter:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>SPWM → Filter → Approximate Sine Wave
 </code></pre></div>

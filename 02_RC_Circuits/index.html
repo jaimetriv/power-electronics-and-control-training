@@ -681,6 +681,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rc-circuit-differential-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RC Circuit Differential Equation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#laplace-domain-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laplace Domain Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#capacitor-charging" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -707,28 +729,6 @@
     <span class="md-ellipsis">
       
         Time Constant
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rc-circuit-differential-equation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        RC Circuit Differential Equation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#laplace-domain-solution" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Laplace Domain Solution
       
     </span>
   </a>
@@ -2350,6 +2350,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rc-circuit-differential-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RC Circuit Differential Equation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#laplace-domain-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laplace Domain Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#capacitor-charging" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2376,28 +2398,6 @@
     <span class="md-ellipsis">
       
         Time Constant
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rc-circuit-differential-equation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        RC Circuit Differential Equation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#laplace-domain-solution" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Laplace Domain Solution
       
     </span>
   </a>
@@ -3345,22 +3345,6 @@ E = \frac{1}{2}CV^2
 <a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>GND ──── Probe GND
 </code></pre></div>
 <hr />
-<h2 id="capacitor-charging">Capacitor Charging<a class="headerlink" href="#capacitor-charging" title="Permanent link">&para;</a></h2>
-<div class="arithmatex">\[
-V_C(t) = V_F\left(1 - e^{-t/\tau}\right)
-\]</div>
-<hr />
-<h2 id="capacitor-discharging">Capacitor Discharging<a class="headerlink" href="#capacitor-discharging" title="Permanent link">&para;</a></h2>
-<div class="arithmatex">\[
-V_C(t) = V_0 \, e^{-t/\tau}
-\]</div>
-<hr />
-<h2 id="time-constant">Time Constant<a class="headerlink" href="#time-constant" title="Permanent link">&para;</a></h2>
-<div class="arithmatex">\[
-\tau = RC
-\]</div>
-<p>After one time constant (<span class="arithmatex">\(t = \tau\)</span>) the capacitor reaches <strong>63.2%</strong> of its final value during charging.</p>
-<hr />
 <h2 id="rc-circuit-differential-equation">RC Circuit Differential Equation<a class="headerlink" href="#rc-circuit-differential-equation" title="Permanent link">&para;</a></h2>
 <p>Applying Kirchhoff's Voltage Law around the series RC loop:</p>
 <div class="arithmatex">\[
@@ -3385,6 +3369,22 @@ V_C(s)\left(RCs + 1\right) = V_S(s)
 \boxed{H(s) = \frac{V_C(s)}{V_S(s)} = \frac{1}{\tau s + 1} = \frac{1}{RCs + 1}}
 \]</div>
 <p>This is a <strong>first-order system</strong> with a single pole at <span class="arithmatex">\(s = -1/\tau\)</span>.</p>
+<hr />
+<h2 id="capacitor-charging">Capacitor Charging<a class="headerlink" href="#capacitor-charging" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[
+V_C(t) = V_F\left(1 - e^{-t/\tau}\right)
+\]</div>
+<hr />
+<h2 id="capacitor-discharging">Capacitor Discharging<a class="headerlink" href="#capacitor-discharging" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[
+V_C(t) = V_0 \, e^{-t/\tau}
+\]</div>
+<hr />
+<h2 id="time-constant">Time Constant<a class="headerlink" href="#time-constant" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[
+\tau = RC
+\]</div>
+<p>After one time constant (<span class="arithmatex">\(t = \tau\)</span>) the capacitor reaches <strong>63.2%</strong> of its final value during charging.</p>
 <hr />
 <h2 id="step-response-time-domain-solution">Step Response — Time Domain Solution<a class="headerlink" href="#step-response-time-domain-solution" title="Permanent link">&para;</a></h2>
 <p>For a step input <span class="arithmatex">\(V_S(s) = V_F/s\)</span>:</p>
