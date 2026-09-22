@@ -38,6 +38,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Erickson and Maksimovic, Ch. 3, **Steady-State Converter Analysis**, sections on **boost converters**, **inductor energy transfer**, **CCM**, **DCM**, and **duty-ratio limits**. The ideal conversion ratio becomes sensitive near $D=1$, so compare it with measurements only within the safe operating range of the hardware.
+
+---
+
 ## Introduction
 
 A Boost Converter is a step-up DC-DC converter.

@@ -39,6 +39,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Ogata, Ch. 2, **Mathematical Modeling of Control Systems**, sections on transfer functions, block diagrams, system modelling, and validation. The measured model is an approximation: sensor loading, delay, noise, saturation, and operating-point changes can make a fitted first-order model differ from the physical system.
+
+---
+
 ## Introduction
 
 Control engineers rarely design controllers directly from hardware.

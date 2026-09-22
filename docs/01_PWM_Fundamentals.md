@@ -49,6 +49,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Erickson and Maksimovic, Ch. 2, **Basic Concepts**, sections on switching waveforms, PWM, duty ratio, and average values. This lab introduces the switching concepts used in the converter labs; the average-voltage relationship assumes an ideal PWM source and a load or filter that averages the switching waveform.
+
+---
+
 ## Theory
 
 ### What is PWM?

@@ -38,6 +38,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Ogata, Ch. 8, **Analysis and Design of Feedback Control Systems**, sections on closed-loop regulation, disturbance rejection, and plant models. Also read Erickson and Maksimovic, Ch. 3, **Steady-State Converter Analysis**, sections on buck energy transfer and averaged converter models. The plant used here is an averaged linear model, not a complete duty-cycle small-signal model; switching ripple and parasitic elements are omitted.
+
+---
+
 ## Introduction
 
 In Project 06 the Buck Converter operated in open loop.

@@ -82,6 +82,10 @@ Welcome to the course.
 | 17 | [Grid-Following VSC](17_Grid_Following_VSC.md) |
 | 18 | [Grid-Forming VSC](18_Grid_Forming_VSC.md) |
 
+## Textbook Reading Path
+
+Use the [Textbook Reading Path](Textbook_Resources.md) to read the relevant sections of Ogata, Yazdani and Iravani, and Erickson and Maksimovic alongside the labs. It also explains where the textbook assumptions differ from the practical lab models.
+
 ## Learning Path
 
 ```mermaid

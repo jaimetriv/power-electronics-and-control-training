@@ -49,6 +49,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Erickson and Maksimovic, Ch. 3, **Steady-State Converter Analysis**, sections on **inverters**, **bridge converters**, **modulation**, **harmonics**, and **filters**. The lab distinguishes square-wave and SPWM operation; bridge voltage, filtered voltage, RMS voltage, and the fundamental component are different measured quantities.
+
+---
+
 ## Introduction
 
 An inverter converts:

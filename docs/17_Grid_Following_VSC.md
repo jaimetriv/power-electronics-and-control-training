@@ -60,6 +60,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Yazdani and Iravani, Ch. 2–4, sections on voltage-sourced converters, PWM, and balanced three-phase operation. Search for **PLL**, **dq transformation**, **current control**, and **grid-connected VSC** for the grid-following material. This lab uses a simplified low-voltage model; full VSC analysis also includes feedforward, dq decoupling, current limits, grid strength, protection, and validated isolation.
+
+---
+
 ## Introduction
 
 Most modern renewable energy systems use Grid-Following converters.

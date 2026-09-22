@@ -38,6 +38,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Ogata, Ch. 7, **Basic Control Actions and Response**, and Ch. 8, **Analysis and Design of Feedback Control Systems**, sections on derivative action, damping, zeros, noise, and PID limitations. The ideal derivative model is continuous and noise-free; practical implementation requires sampling, filtering, attention to derivative kick, and actuator-saturation handling.
+
+---
+
 ## Review of Previous Controllers
 
 ### Proportional Controller

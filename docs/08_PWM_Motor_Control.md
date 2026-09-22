@@ -40,6 +40,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Erickson and Maksimovic, Ch. 2, **Basic Concepts**, sections on converter applications and power supplies/motor drives. Then read Ogata, Ch. 2, **Mathematical Modeling of Control Systems**, and Ch. 5, **Transient and Steady-State Response Analysis**, for first-order plant behaviour and step-response parameters. This lab treats duty cycle or averaged motor voltage as the input and speed as the output; the first-order model omits electrical transients, delay, saturation, and changing load torque.
+
+---
+
 ## Theory
 
 ### What Is a DC Motor?

@@ -38,6 +38,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Ogata, Ch. 7, **Basic Control Actions and Response**, and Ch. 8, **Analysis and Design of Feedback Control Systems**, sections on integral action, system type, steady-state error, and controller implementation. The continuous-time zero-error result requires a stable loop and an unsaturated actuator; the hardware implementation is sampled and requires windup protection.
+
+---
+
 ## Review of Proportional Control
 
 $$

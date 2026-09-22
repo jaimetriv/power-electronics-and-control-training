@@ -42,6 +42,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Erickson and Maksimovic, Ch. 3, **Steady-State Converter Analysis**, sections on chopper operation, switching intervals, and average conversion. The lab is a simplified first-quadrant experiment; the measured waveform is switched, while the voltage equation describes its average under steady-state assumptions.
+
+---
+
 ## Introduction
 
 A Chopper Converter is a DC-to-DC converter that controls the average value of a DC voltage by rapidly switching a semiconductor device ON and OFF.

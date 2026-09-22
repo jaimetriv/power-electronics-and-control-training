@@ -40,6 +40,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Ogata, Ch. 8, **Analysis and Design of Feedback Control Systems**, and Ch. 13, **Control Systems Design by Root Locus**, sections on requirements, modelling, controller selection, simulation, and validation. This lab combines those control concepts with the practical plant models developed earlier; measured performance is limited by sampling, noise, saturation, delay, and controller zeros.
+
+---
+
 ## Introduction
 
 Control engineering is the process of designing systems that automatically achieve desired performance.

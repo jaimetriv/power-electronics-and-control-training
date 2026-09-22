@@ -47,6 +47,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Erickson and Maksimovic, Ch. 3, **Steady-State Converter Analysis**, sections on **diode rectifiers** and **capacitive filtering**. The ideal average-value equations assume a sinusoidal source and simplified diode/load conditions; capacitor-input conduction, source impedance, diode drops, and ripple explain practical differences.
+
+---
+
 ## Introduction
 
 Most electrical distribution systems use:

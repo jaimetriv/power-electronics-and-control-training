@@ -40,6 +40,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Ogata, Ch. 6, **Control Systems and Control Systems Components**, and Ch. 7, **Basic Control Actions and Response**, sections on feedback structure, proportional control, and steady-state error. The derivation assumes a linear first-order plant, unity negative feedback, a unit-step reference, no saturation or delay, and a stable closed loop.
+
+---
+
 ## Theory
 
 ### What is a Control System?

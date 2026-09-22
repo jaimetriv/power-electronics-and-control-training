@@ -12,6 +12,10 @@ A practical hands-on course covering:
 - Grid-Following VSCs
 - Grid-Forming VSCs
 
+## Textbook Reading Path
+
+The labs are supported by three reference books. See [docs/Textbook_Resources.md](docs/Textbook_Resources.md) for the lab-by-lab reading sequence, ISBNs, and differences between textbook assumptions and practical measurements.
+
 ## Recommended Hardware
 
 ### Controllers

@@ -66,6 +66,9 @@ nav:
 
   - Home: index.md
 
+  - Resources:
+      - Textbook Reading Path: Textbook_Resources.md
+
   - Getting Started:
       - Introduction: 00_Introduction.md
       - Microcontroller Familiarisation: 00A_Microcontroller_Familiarisation.md

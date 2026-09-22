@@ -38,6 +38,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Erickson and Maksimovic, Ch. 2, **Basic Concepts**, and Ch. 3, **Steady-State Converter Analysis**, sections on capacitor energy storage, transients, and passive filtering. This lab applies the first-order RC model; real measurements include component tolerance, source resistance, probe loading, and non-ideal capacitor behaviour.
+
+---
+
 ## Theory
 
 ### What is a Capacitor?

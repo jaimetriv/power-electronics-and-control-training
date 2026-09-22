@@ -45,6 +45,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Erickson and Maksimovic, Ch. 2, **Basic Concepts**, sections on power semiconductor switches, gate drive, conduction loss, and switching loss. Search for **device losses** and **gate drive**. Pay particular attention to the difference between threshold voltage and guaranteed low $R_{DS(on)}$ at the available gate voltage.
+
+---
+
 ## Theory
 
 ### What is a MOSFET?

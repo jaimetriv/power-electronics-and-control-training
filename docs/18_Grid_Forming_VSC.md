@@ -64,6 +64,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Yazdani and Iravani, Ch. 5–7, sections on unbalanced/islanded operation and VSC control. Search for **voltage control**, **LC filter**, **droop control**, and **grid-forming converter** for the grid-forming material. This lab is an educational low-voltage model; practical grid-forming converters require current limiting, protection, gate-driver interlock, safe isolated measurement, and validated stability studies.
+
+---
+
 ## Introduction
 
 Project 17 introduced Grid-Following Converters.

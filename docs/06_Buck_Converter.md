@@ -42,6 +42,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Erickson and Maksimovic, Ch. 3, **Steady-State Converter Analysis**, sections on **buck converters**, **volt-second balance**, **CCM**, **DCM**, and **ripple**. The ideal equation applies only under its stated steady-state CCM assumptions; the hardware adds diode, switch, inductor, capacitor, and wiring losses.
+
+---
+
 ## Introduction
 
 A Buck Converter is a DC-to-DC converter that reduces voltage.

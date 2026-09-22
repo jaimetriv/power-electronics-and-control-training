@@ -49,6 +49,12 @@ At the end of this project you should be able to:
 
 ---
 
+## Recommended Reading
+
+Read Erickson and Maksimovic, Ch. 2, **Basic Concepts**, and Ch. 3, **Steady-State Converter Analysis**, sections on inductor energy storage, resonant networks, damping, and filter dynamics. This lab uses an ideal linear RLC model first, then compares it with component resistance, measurement loading, and parasitic effects.
+
+---
+
 ## Theory
 
 ### What is an Inductor?
