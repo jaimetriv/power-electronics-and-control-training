@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, especially the sections on **inverters**, **bridge converters**, **modulation**, **harmonics**, and **filters**. Read this before starting the lab so you can distinguish bridge voltage, filtered voltage, RMS voltage, and the fundamental component before measuring the inverter.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -46,12 +52,6 @@ At the end of this project you should be able to:
 ✅ Understand SPWM fundamentals
 
 ✅ Explain dead time and shoot-through
-
----
-
-## Recommended Reading
-
-Read Erickson and Maksimovic, Ch. 3, **Steady-State Converter Analysis**, sections on **inverters**, **bridge converters**, **modulation**, **harmonics**, and **filters**. The lab distinguishes square-wave and SPWM operation; bridge voltage, filtered voltage, RMS voltage, and the fundamental component are different measured quantities.
 
 ---
 

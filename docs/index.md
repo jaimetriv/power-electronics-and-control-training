@@ -84,7 +84,7 @@ Welcome to the course.
 
 ## Textbook Reading Path
 
-Use the [Textbook Reading Path](Textbook_Resources.md) to read the relevant sections of Ogata, Yazdani and Iravani, and Erickson and Maksimovic alongside the labs. It also explains where the textbook assumptions differ from the practical lab models.
+Use the [Textbook Reading Path](Textbook_Resources.md) before each lab. It provides a lab-first roadmap, book titles, chapter mappings, prediction prompts, and the differences between textbook assumptions and practical lab models.
 
 ## Learning Path
 

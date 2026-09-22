@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, especially the sections on chopper operation, switching intervals, and average conversion. Read this before starting the lab so you can identify each switching interval and predict the average output voltage before measuring the switched waveform.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -39,12 +45,6 @@ At the end of this project you should be able to:
 ✅ Explain motor speed control using choppers
 
 ✅ Relate Buck and Boost converters to choppers
-
----
-
-## Recommended Reading
-
-Read Erickson and Maksimovic, Ch. 3, **Steady-State Converter Analysis**, sections on chopper operation, switching intervals, and average conversion. The lab is a simplified first-quadrant experiment; the measured waveform is switched, while the voltage equation describes its average under steady-state assumptions.
 
 ---
 

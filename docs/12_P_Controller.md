@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Modern Control Engineering_ by Ogata, Chapters 6, **Control Systems and Control Systems Components**, and 7, **Basic Control Actions and Response**, especially the sections on feedback structure, proportional control, and steady-state error. Read this before starting the lab so you can predict how proportional gain changes the error and closed-loop response before tuning the controller.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -37,12 +43,6 @@ At the end of this project you should be able to:
 ✅ Understand steady-state error
 
 ✅ Explain why higher gain is not always better
-
----
-
-## Recommended Reading
-
-Read Ogata, Ch. 6, **Control Systems and Control Systems Components**, and Ch. 7, **Basic Control Actions and Response**, sections on feedback structure, proportional control, and steady-state error. The derivation assumes a linear first-order plant, unity negative feedback, a unit-step reference, no saturation or delay, and a stable closed loop.
 
 ---
 

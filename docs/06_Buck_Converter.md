@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, especially the sections on **buck converters**, **volt-second balance**, **CCM**, **DCM**, and **ripple**. Read this before starting the lab so you can state the conduction-mode assumptions and predict the ideal output voltage and ripple before testing the converter.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -39,12 +45,6 @@ At the end of this project you should be able to:
 ✅ Understand duty-cycle control
 
 ✅ Relate converter operation to previous projects
-
----
-
-## Recommended Reading
-
-Read Erickson and Maksimovic, Ch. 3, **Steady-State Converter Analysis**, sections on **buck converters**, **volt-second balance**, **CCM**, **DCM**, and **ripple**. The ideal equation applies only under its stated steady-state CCM assumptions; the hardware adds diode, switch, inductor, capacitor, and wiring losses.
 
 ---
 

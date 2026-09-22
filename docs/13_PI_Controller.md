@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Modern Control Engineering_ by Ogata, Chapters 7, **Basic Control Actions and Response**, and 8, **Analysis and Design of Feedback Control Systems**, especially the sections on integral action, system type, steady-state error, and controller implementation. Read this before starting the lab so you can predict why integral action reduces steady-state error and recognise windup when the actuator saturates.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -35,12 +41,6 @@ At the end of this project you should be able to:
 ✅ Explain integral windup
 
 ✅ Understand why PI controllers are widely used
-
----
-
-## Recommended Reading
-
-Read Ogata, Ch. 7, **Basic Control Actions and Response**, and Ch. 8, **Analysis and Design of Feedback Control Systems**, sections on integral action, system type, steady-state error, and controller implementation. The continuous-time zero-error result requires a stable loop and an unsaturated actuator; the hardware implementation is sampled and requires windup protection.
 
 ---
 

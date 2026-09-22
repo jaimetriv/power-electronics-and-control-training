@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, especially the sections on **diode rectifiers** and **capacitive filtering**. Read this before starting the lab so you can predict the rectified waveform, average output, and ripple before comparing ideal equations with the measured supply.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -44,12 +50,6 @@ At the end of this project you should be able to:
 ✅ Explain capacitor smoothing
 
 ✅ Understand basic DC power supplies
-
----
-
-## Recommended Reading
-
-Read Erickson and Maksimovic, Ch. 3, **Steady-State Converter Analysis**, sections on **diode rectifiers** and **capacitive filtering**. The ideal average-value equations assume a sinusoidal source and simplified diode/load conditions; capacitor-input conduction, source impedance, diode drops, and ripple explain practical differences.
 
 ---
 

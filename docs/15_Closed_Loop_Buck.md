@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Modern Control Engineering_ by Ogata, Chapter 8, **Analysis and Design of Feedback Control Systems**, especially the sections on closed-loop regulation, disturbance rejection, and plant models. Also read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, on buck energy transfer and averaged converter models. Read this before starting the lab so you can predict the regulated output and disturbance response before closing the feedback loop.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -35,12 +41,6 @@ At the end of this project you should be able to:
 ✅ Tune PI gains
 
 ✅ Analyse converter performance
-
----
-
-## Recommended Reading
-
-Read Ogata, Ch. 8, **Analysis and Design of Feedback Control Systems**, sections on closed-loop regulation, disturbance rejection, and plant models. Also read Erickson and Maksimovic, Ch. 3, **Steady-State Converter Analysis**, sections on buck energy transfer and averaged converter models. The plant used here is an averaged linear model, not a complete duty-cycle small-signal model; switching ripple and parasitic elements are omitted.
 
 ---
 

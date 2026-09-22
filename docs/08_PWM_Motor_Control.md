@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 2, **Basic Concepts**, sections on converter applications and power supplies/motor drives. Then read _Modern Control Engineering_ by Ogata, Chapters 2, **Mathematical Modeling of Control Systems**, and 5, **Transient and Steady-State Response Analysis**, for first-order plant behaviour and step-response parameters. Read this before starting the lab so you can predict how PWM changes motor input and why speed responds more slowly than the electrical command.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -37,12 +43,6 @@ At the end of this project you should be able to:
 ✅ Understand motor time constants
 
 ✅ Model a motor as a first-order system
-
----
-
-## Recommended Reading
-
-Read Erickson and Maksimovic, Ch. 2, **Basic Concepts**, sections on converter applications and power supplies/motor drives. Then read Ogata, Ch. 2, **Mathematical Modeling of Control Systems**, and Ch. 5, **Transient and Steady-State Response Analysis**, for first-order plant behaviour and step-response parameters. This lab treats duty cycle or averaged motor voltage as the input and speed as the output; the first-order model omits electrical transients, delay, saturation, and changing load torque.
 
 ---
 

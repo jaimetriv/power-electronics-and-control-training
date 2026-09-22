@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Modern Control Engineering_ by Ogata, Chapters 8, **Analysis and Design of Feedback Control Systems**, and 13, **Control Systems Design by Root Locus**, especially the sections on requirements, modelling, controller selection, simulation, and validation. Read this before starting the lab so you can turn performance requirements into a controller choice and a testable prediction before implementing the design.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -37,12 +43,6 @@ At the end of this project you should be able to:
 ✅ Understand design trade-offs
 
 ✅ Apply control engineering principles to real systems
-
----
-
-## Recommended Reading
-
-Read Ogata, Ch. 8, **Analysis and Design of Feedback Control Systems**, and Ch. 13, **Control Systems Design by Root Locus**, sections on requirements, modelling, controller selection, simulation, and validation. This lab combines those control concepts with the practical plant models developed earlier; measured performance is limited by sampling, noise, saturation, delay, and controller zeros.
 
 ---
 

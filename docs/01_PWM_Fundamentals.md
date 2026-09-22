@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 2, **Basic Concepts**, especially the sections on switching waveforms, PWM, duty ratio, and average values. Read this before starting the lab so you can predict the relationship between duty cycle, frequency, period, and average voltage before generating and measuring the waveform.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -46,12 +52,6 @@ At the end of this project you should be able to:
 ✅ Generate PWM using ESP32 or Arduino
 
 ✅ Explain how PWM controls power
-
----
-
-## Recommended Reading
-
-Read Erickson and Maksimovic, Ch. 2, **Basic Concepts**, sections on switching waveforms, PWM, duty ratio, and average values. This lab introduces the switching concepts used in the converter labs; the average-voltage relationship assumes an ideal PWM source and a load or filter that averages the switching waveform.
 
 ---
 

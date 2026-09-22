@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 2, **Basic Concepts**, especially the sections on power semiconductor switches, gate drive, conduction loss, and switching loss. Search for **device losses** and **gate drive**. Read this before starting the lab so you can distinguish threshold voltage from the guaranteed low $R_{DS(on)}$ gate-drive condition before switching the MOSFET.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -42,12 +48,6 @@ At the end of this project you should be able to:
 ✅ Explain switching losses
 
 ✅ Understand the foundation of power electronics
-
----
-
-## Recommended Reading
-
-Read Erickson and Maksimovic, Ch. 2, **Basic Concepts**, sections on power semiconductor switches, gate drive, conduction loss, and switching loss. Search for **device losses** and **gate drive**. Pay particular attention to the difference between threshold voltage and guaranteed low $R_{DS(on)}$ at the available gate voltage.
 
 ---
 

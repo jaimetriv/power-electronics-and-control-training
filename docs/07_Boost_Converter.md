@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, especially the sections on **boost converters**, **inductor energy transfer**, **CCM**, **DCM**, and **duty-ratio limits**. Read this before starting the lab so you can predict the ideal conversion ratio and identify why operation near $D=1$ is unsafe for the hardware.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -35,12 +41,6 @@ At the end of this project you should be able to:
 ✅ Measure output ripple
 
 ✅ Compare Buck and Boost Converters
-
----
-
-## Recommended Reading
-
-Read Erickson and Maksimovic, Ch. 3, **Steady-State Converter Analysis**, sections on **boost converters**, **inductor energy transfer**, **CCM**, **DCM**, and **duty-ratio limits**. The ideal conversion ratio becomes sensitive near $D=1$, so compare it with measurements only within the safe operating range of the hardware.
 
 ---
 

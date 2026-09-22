@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Voltage-Sourced Converters in Power Systems_ by Yazdani and Iravani, Chapters 2–4, especially the sections on voltage-sourced converters, PWM, and balanced three-phase operation. Search for **PLL**, **dq transformation**, **current control**, and **grid-connected VSC**. Read this before starting the lab so you can understand why synchronization and reference-frame control are needed before injecting current into the AC system.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -57,12 +63,6 @@ At the end of this project you should be able to:
 ✅ Understand dq Control
 
 ✅ Understand Modern Renewable Energy Converters
-
----
-
-## Recommended Reading
-
-Read Yazdani and Iravani, Ch. 2–4, sections on voltage-sourced converters, PWM, and balanced three-phase operation. Search for **PLL**, **dq transformation**, **current control**, and **grid-connected VSC** for the grid-following material. This lab uses a simplified low-voltage model; full VSC analysis also includes feedforward, dq decoupling, current limits, grid strength, protection, and validated isolation.
 
 ---
 

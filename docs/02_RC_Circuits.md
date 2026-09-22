@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapters 2, **Basic Concepts**, and 3, **Steady-State Converter Analysis**, especially the sections on capacitor energy storage, transients, and passive filtering. Read this before starting the lab so you can calculate the RC time constant and predict the charging and discharging curves before comparing them with the oscilloscope measurement.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -35,12 +41,6 @@ At the end of this project you should be able to:
 ✅ Understand first-order systems
 
 ✅ Compare theory against measurements
-
----
-
-## Recommended Reading
-
-Read Erickson and Maksimovic, Ch. 2, **Basic Concepts**, and Ch. 3, **Steady-State Converter Analysis**, sections on capacitor energy storage, transients, and passive filtering. This lab applies the first-order RC model; real measurements include component tolerance, source resistance, probe loading, and non-ideal capacitor behaviour.
 
 ---
 

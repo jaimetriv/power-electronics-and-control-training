@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapters 2, **Basic Concepts**, and 3, **Steady-State Converter Analysis**, especially the sections on inductor energy storage, resonant networks, damping, and filter dynamics. Read this before starting the lab so you can estimate the natural frequency and damping behaviour before observing the measured ringing.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -46,12 +52,6 @@ At the end of this project you should be able to:
 ✅ Understand second-order systems
 
 ✅ Compare theory, simulation and measurements
-
----
-
-## Recommended Reading
-
-Read Erickson and Maksimovic, Ch. 2, **Basic Concepts**, and Ch. 3, **Steady-State Converter Analysis**, sections on inductor energy storage, resonant networks, damping, and filter dynamics. This lab uses an ideal linear RLC model first, then compares it with component resistance, measurement loading, and parasitic effects.
 
 ---
 

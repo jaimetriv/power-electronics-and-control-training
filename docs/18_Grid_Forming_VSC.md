@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Voltage-Sourced Converters in Power Systems_ by Yazdani and Iravani, Chapters 5–7, especially the sections on unbalanced or islanded operation and VSC control. Search for **voltage control**, **LC filter**, **droop control**, and **grid-forming converter**. Read this before starting the lab so you can predict how the converter establishes voltage and frequency before testing its response with a load.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -61,12 +67,6 @@ At the end of this project you should be able to:
 ✅ Understand Virtual Synchronous Machines
 
 ✅ Compare Grid-Following and Grid-Forming converters
-
----
-
-## Recommended Reading
-
-Read Yazdani and Iravani, Ch. 5–7, sections on unbalanced/islanded operation and VSC control. Search for **voltage control**, **LC filter**, **droop control**, and **grid-forming converter** for the grid-forming material. This lab is an educational low-voltage model; practical grid-forming converters require current limiting, protection, gate-driver interlock, safe isolated measurement, and validated stability studies.
 
 ---
 

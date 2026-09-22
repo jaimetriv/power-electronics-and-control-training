@@ -10,7 +10,15 @@ This page connects the practical labs with three reference books. The locators b
 
 ## How to Use the Path
 
-Read the listed chapter or section before the corresponding lab, derive or predict the expected result, complete the simulation, and then compare the measurement with the ideal model. Record the assumptions that explain any difference. The section keywords are also useful for locating the material in an e-book search.
+Use the lab roadmap first, then use the book tables to locate the relevant chapter. Read the core topics before the lab; treat the search terms as follow-up reading when you need more depth. The chapter title and section keywords are reliable locators when chapter numbering differs between editions.
+
+Before each lab, write down three things:
+
+1. The model or control block you expect to use.
+2. One equation or relationship that predicts the result.
+3. The assumptions that could make the measurement differ from the prediction.
+
+After the lab, compare the prediction with the simulation and measurement, then explain the largest difference.
 
 ## Practical Prerequisites
 
@@ -21,6 +29,31 @@ Complete Labs 00A–00C before the theory sequence:
 - **00C:** ESP32 setup, logic levels, ADC limitations, PWM, and WiFi-related constraints
 
 These are equipment and implementation prerequisites rather than assigned textbook reading.
+
+## Lab-First Roadmap
+
+This is the recommended order. The reading is deliberately placed before the practical work so that each experiment tests a prediction rather than introducing the theory afterwards.
+
+| Lab | Read before starting | What the reading prepares you to predict |
+|---|---|---|
+| [01 PWM Fundamentals](01_PWM_Fundamentals.md) | Erickson and Maksimovic, Ch. 2, **Basic Concepts** | Duty-cycle, period, frequency, and average voltage |
+| [02 RC Circuits](02_RC_Circuits.md) | Erickson and Maksimovic, Ch. 2–3: capacitor energy and transients | RC time constant and charging curve |
+| [03 RLC Circuits](03_RLC_Circuits.md) | Erickson and Maksimovic, Ch. 2–3: energy storage, resonance, and damping | Natural frequency, ringing, and damping |
+| [04 MOSFET Fundamentals](04_MOSFET_Fundamentals.md) | Erickson and Maksimovic, Ch. 2: switches, gate drive, and losses | Gate-voltage behaviour and switching loss |
+| [05 DC Chopper Converters](05_DC_Chopper_Converters.md) | Erickson and Maksimovic, Ch. 3: chopper operation | Switching intervals and average output voltage |
+| [06 Buck Converter](06_Buck_Converter.md) | Erickson and Maksimovic, Ch. 3: buck converters, CCM/DCM, and ripple | Output voltage, inductor current, and ripple |
+| [07 Boost Converter](07_Boost_Converter.md) | Erickson and Maksimovic, Ch. 3: boost converters and duty-ratio limits | Conversion ratio and safe operating limits |
+| [08 PWM Motor Control](08_PWM_Motor_Control.md) | Erickson and Maksimovic, Ch. 2; Ogata, Ch. 2 and 5 | Motor input response and first-order speed dynamics |
+| [09 AC-DC Rectifiers](09_AC_DC_Rectifiers.md) | Erickson and Maksimovic, Ch. 3: diode rectifiers and filtering | Average DC output and ripple |
+| [10 DC-AC Inverters](10_DC_AC_Inverters.md) | Erickson and Maksimovic, Ch. 3: inverters, modulation, and harmonics | Bridge waveform, RMS value, and fundamental component |
+| [11 System Identification](11_System_Identification.md) | Ogata, Ch. 2, **Mathematical Modeling of Control Systems** | Model structure, parameters, and step response |
+| [12 P Controller](12_P_Controller.md) | Ogata, Ch. 6–7: feedback and proportional control | Gain, error, and closed-loop response |
+| [13 PI Controller](13_PI_Controller.md) | Ogata, Ch. 7–8: integral action and system type | Steady-state error and windup behaviour |
+| [14 PID Controller](14_PID_Controller.md) | Ogata, Ch. 7–8: derivative action and feedback design | Damping, overshoot, and noise sensitivity |
+| [15 Closed-Loop Buck](15_Closed_Loop_Buck.md) | Ogata, Ch. 8; Erickson and Maksimovic, Ch. 3 | Regulation and disturbance rejection |
+| [16 Controller Design](16_Controller_Design.md) | Ogata, Ch. 8 and 13: feedback design and root locus | Design choice and performance requirements |
+| [17 Grid-Following VSC](17_Grid_Following_VSC.md) | Yazdani and Iravani, Ch. 2–4: PLL, dq control, and grid-connected VSCs | Synchronization and current injection |
+| [18 Grid-Forming VSC](18_Grid_Forming_VSC.md) | Yazdani and Iravani, Ch. 5–7: VSC control and islanded operation | Voltage, frequency, and droop response |
 
 ## Erickson and Maksimovic: Power Electronics
 

@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Modern Control Engineering_ by Ogata, Chapter 2, **Mathematical Modeling of Control Systems**, especially the sections on transfer functions, block diagrams, system modelling, and validation. Read this before starting the lab so you can select a model structure, predict the expected step response, and compare fitted parameters with the physical system.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -36,12 +42,6 @@ At the end of this project you should be able to:
 ✅ Create simple mathematical models
 
 ✅ Validate a model using measurements
-
----
-
-## Recommended Reading
-
-Read Ogata, Ch. 2, **Mathematical Modeling of Control Systems**, sections on transfer functions, block diagrams, system modelling, and validation. The measured model is an approximation: sensor loading, delay, noise, saturation, and operating-point changes can make a fitted first-order model differ from the physical system.
 
 ---
 

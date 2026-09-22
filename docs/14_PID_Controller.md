@@ -2,6 +2,12 @@
 
 ---
 
+## Reading Before the Lab
+
+Read _Modern Control Engineering_ by Ogata, Chapters 7, **Basic Control Actions and Response**, and 8, **Analysis and Design of Feedback Control Systems**, especially the sections on derivative action, damping, zeros, noise, and PID limitations. Read this before starting the lab so you can predict how derivative action changes transient response and why measurement noise must be filtered.
+
+---
+
 ## Objective
 
 In this project you will learn:
@@ -35,12 +41,6 @@ At the end of this project you should be able to:
 ✅ Understand PID trade-offs
 
 ✅ Explain stability improvements
-
----
-
-## Recommended Reading
-
-Read Ogata, Ch. 7, **Basic Control Actions and Response**, and Ch. 8, **Analysis and Design of Feedback Control Systems**, sections on derivative action, damping, zeros, noise, and PID limitations. The ideal derivative model is continuous and noise-free; practical implementation requires sampling, filtering, attention to derivative kick, and actuator-saturation handling.
 
 ---
 
