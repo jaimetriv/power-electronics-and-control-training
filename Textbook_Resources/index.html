@@ -441,6 +441,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#lab-first-roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab-First Roadmap
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#erickson-and-maksimovic-power-electronics" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1492,6 +1503,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#lab-first-roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab-First Roadmap
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#erickson-and-maksimovic-power-electronics" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1575,7 +1597,14 @@
 <li><strong>Erickson and Maksimovic, <em>Fundamentals of Power Electronics</em></strong> — ISBN <code>9783030438791</code></li>
 </ul>
 <h2 id="how-to-use-the-path">How to Use the Path<a class="headerlink" href="#how-to-use-the-path" title="Permanent link">&para;</a></h2>
-<p>Read the listed chapter or section before the corresponding lab, derive or predict the expected result, complete the simulation, and then compare the measurement with the ideal model. Record the assumptions that explain any difference. The section keywords are also useful for locating the material in an e-book search.</p>
+<p>Use the lab roadmap first, then use the book tables to locate the relevant chapter. Read the core topics before the lab; treat the search terms as follow-up reading when you need more depth. The chapter title and section keywords are reliable locators when chapter numbering differs between editions.</p>
+<p>Before each lab, write down three things:</p>
+<ol>
+<li>The model or control block you expect to use.</li>
+<li>One equation or relationship that predicts the result.</li>
+<li>The assumptions that could make the measurement differ from the prediction.</li>
+</ol>
+<p>After the lab, compare the prediction with the simulation and measurement, then explain the largest difference.</p>
 <h2 id="practical-prerequisites">Practical Prerequisites<a class="headerlink" href="#practical-prerequisites" title="Permanent link">&para;</a></h2>
 <p>Complete Labs 00A–00C before the theory sequence:</p>
 <ul>
@@ -1584,6 +1613,109 @@
 <li><strong>00C:</strong> ESP32 setup, logic levels, ADC limitations, PWM, and WiFi-related constraints</li>
 </ul>
 <p>These are equipment and implementation prerequisites rather than assigned textbook reading.</p>
+<h2 id="lab-first-roadmap">Lab-First Roadmap<a class="headerlink" href="#lab-first-roadmap" title="Permanent link">&para;</a></h2>
+<p>This is the recommended order. The reading is deliberately placed before the practical work so that each experiment tests a prediction rather than introducing the theory afterwards.</p>
+<table>
+<thead>
+<tr>
+<th>Lab</th>
+<th>Read before starting</th>
+<th>What the reading prepares you to predict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../01_PWM_Fundamentals/">01 PWM Fundamentals</a></td>
+<td>Erickson and Maksimovic, Ch. 2, <strong>Basic Concepts</strong></td>
+<td>Duty-cycle, period, frequency, and average voltage</td>
+</tr>
+<tr>
+<td><a href="../02_RC_Circuits/">02 RC Circuits</a></td>
+<td>Erickson and Maksimovic, Ch. 2–3: capacitor energy and transients</td>
+<td>RC time constant and charging curve</td>
+</tr>
+<tr>
+<td><a href="../03_RLC_Circuits/">03 RLC Circuits</a></td>
+<td>Erickson and Maksimovic, Ch. 2–3: energy storage, resonance, and damping</td>
+<td>Natural frequency, ringing, and damping</td>
+</tr>
+<tr>
+<td><a href="../04_MOSFET_Fundamentals/">04 MOSFET Fundamentals</a></td>
+<td>Erickson and Maksimovic, Ch. 2: switches, gate drive, and losses</td>
+<td>Gate-voltage behaviour and switching loss</td>
+</tr>
+<tr>
+<td><a href="../05_DC_Chopper_Converters/">05 DC Chopper Converters</a></td>
+<td>Erickson and Maksimovic, Ch. 3: chopper operation</td>
+<td>Switching intervals and average output voltage</td>
+</tr>
+<tr>
+<td><a href="../06_Buck_Converter/">06 Buck Converter</a></td>
+<td>Erickson and Maksimovic, Ch. 3: buck converters, CCM/DCM, and ripple</td>
+<td>Output voltage, inductor current, and ripple</td>
+</tr>
+<tr>
+<td><a href="../07_Boost_Converter/">07 Boost Converter</a></td>
+<td>Erickson and Maksimovic, Ch. 3: boost converters and duty-ratio limits</td>
+<td>Conversion ratio and safe operating limits</td>
+</tr>
+<tr>
+<td><a href="../08_PWM_Motor_Control/">08 PWM Motor Control</a></td>
+<td>Erickson and Maksimovic, Ch. 2; Ogata, Ch. 2 and 5</td>
+<td>Motor input response and first-order speed dynamics</td>
+</tr>
+<tr>
+<td><a href="../09_AC_DC_Rectifiers/">09 AC-DC Rectifiers</a></td>
+<td>Erickson and Maksimovic, Ch. 3: diode rectifiers and filtering</td>
+<td>Average DC output and ripple</td>
+</tr>
+<tr>
+<td><a href="../10_DC_AC_Inverters/">10 DC-AC Inverters</a></td>
+<td>Erickson and Maksimovic, Ch. 3: inverters, modulation, and harmonics</td>
+<td>Bridge waveform, RMS value, and fundamental component</td>
+</tr>
+<tr>
+<td><a href="../11_System_Identification/">11 System Identification</a></td>
+<td>Ogata, Ch. 2, <strong>Mathematical Modeling of Control Systems</strong></td>
+<td>Model structure, parameters, and step response</td>
+</tr>
+<tr>
+<td><a href="../12_P_Controller/">12 P Controller</a></td>
+<td>Ogata, Ch. 6–7: feedback and proportional control</td>
+<td>Gain, error, and closed-loop response</td>
+</tr>
+<tr>
+<td><a href="../13_PI_Controller/">13 PI Controller</a></td>
+<td>Ogata, Ch. 7–8: integral action and system type</td>
+<td>Steady-state error and windup behaviour</td>
+</tr>
+<tr>
+<td><a href="../14_PID_Controller/">14 PID Controller</a></td>
+<td>Ogata, Ch. 7–8: derivative action and feedback design</td>
+<td>Damping, overshoot, and noise sensitivity</td>
+</tr>
+<tr>
+<td><a href="../15_Closed_Loop_Buck/">15 Closed-Loop Buck</a></td>
+<td>Ogata, Ch. 8; Erickson and Maksimovic, Ch. 3</td>
+<td>Regulation and disturbance rejection</td>
+</tr>
+<tr>
+<td><a href="../16_Controller_Design/">16 Controller Design</a></td>
+<td>Ogata, Ch. 8 and 13: feedback design and root locus</td>
+<td>Design choice and performance requirements</td>
+</tr>
+<tr>
+<td><a href="../17_Grid_Following_VSC/">17 Grid-Following VSC</a></td>
+<td>Yazdani and Iravani, Ch. 2–4: PLL, dq control, and grid-connected VSCs</td>
+<td>Synchronization and current injection</td>
+</tr>
+<tr>
+<td><a href="../18_Grid_Forming_VSC/">18 Grid-Forming VSC</a></td>
+<td>Yazdani and Iravani, Ch. 5–7: VSC control and islanded operation</td>
+<td>Voltage, frequency, and droop response</td>
+</tr>
+</tbody>
+</table>
 <h2 id="erickson-and-maksimovic-power-electronics">Erickson and Maksimovic: Power Electronics<a class="headerlink" href="#erickson-and-maksimovic-power-electronics" title="Permanent link">&para;</a></h2>
 <p>Use the power-electronics topics in this sequence:</p>
 <table>
