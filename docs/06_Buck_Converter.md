@@ -26,27 +26,6 @@ This project combines concepts from PWM, RC Circuits, RLC Circuits, MOSFET Switc
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Explain Buck Converter operation
-
-✅ Explain inductor energy storage
-
-✅ Explain capacitor filtering
-
-✅ Calculate ideal output voltage
-
-✅ Measure PWM switching signals
-
-✅ Measure output ripple
-
-✅ Understand duty-cycle control
-
-✅ Relate converter operation to previous projects
-
----
 
 ## Introduction
 
@@ -778,7 +757,7 @@ Measure the output voltage ripple at the switching frequency.
 1. Hook the **CH1 probe tip** to the **Vout node** (lower inductor leg / capacitor positive).
 2. Clip the **CH1 probe ground** to any **GND pin** on the ESP32.
 
-> Use AC coupling to isolate the ripple from the DC offset.
+> Use AC coupling to isolate the ripple from the DC offset. Return to DC coupling before measuring absolute output voltage.
 
 ---
 
@@ -791,7 +770,7 @@ Measure the output voltage ripple at the switching frequency.
 | Trigger | Edge, Rising | Edge, Rising |
 | Coupling | AC | AC |
 
-> Switch to AC coupling to zoom in on the ripple while ignoring the DC offset.
+> Switch to AC coupling to zoom in on the ripple while ignoring the DC offset. Return to DC coupling before measuring the absolute output voltage.
 
 ---
 
@@ -977,27 +956,6 @@ Your simulation predicted Vout = 2.5 V at 50% duty cycle but you measured 2.1 V.
 
 ---
 
-## Project Summary
-
-In this project you learned:
-
-✅ Buck Converter fundamentals
-
-✅ PWM voltage control
-
-✅ MOSFET switching
-
-✅ Inductor energy storage
-
-✅ Capacitor filtering
-
-✅ Output ripple
-
-✅ Converter efficiency
-
-✅ Practical switched-mode power electronics
-
----
 
 ## Next Project
 

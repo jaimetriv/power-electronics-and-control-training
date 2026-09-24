@@ -17,29 +17,6 @@ This project introduces the key differences between the ESP32 and the Arduino Un
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Identify the main ESP32 DevKit V1 components
-
-✅ Install the ESP32 board package in Arduino IDE
-
-✅ Upload programs to the ESP32
-
-✅ Use digital outputs
-
-✅ Read digital inputs
-
-✅ Read analogue inputs
-
-✅ Generate PWM signals using the LEDC peripheral
-
-✅ Use the Serial Monitor
-
-✅ Understand the key differences from the Arduino Uno
-
----
 
 ## What Is the ESP32?
 
@@ -1500,37 +1477,6 @@ Why is higher PWM resolution important in power electronics?
 
 ---
 
-## Project Summary
-
-In this project you learned:
-
-✅ ESP32 DevKit V1 hardware
-
-✅ Arduino IDE ESP32 board package installation
-
-✅ Digital Outputs
-
-✅ Digital Inputs
-
-✅ Analogue Inputs
-
-✅ LEDC PWM generation
-
-✅ PWM resolution and frequency configuration
-
-✅ Key differences from the Arduino Uno
-
-These skills are required for the advanced projects in this course:
-
-```text
-17_Grid_Following_VSC.md
-
-18_Grid_Forming_VSC.md
-```
-
-where the ESP32 is used as the primary controller.
-
----
 
 ## Next Project
 

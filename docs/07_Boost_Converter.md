@@ -24,25 +24,6 @@ This project introduces the second major non-isolated DC-DC converter topology.
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Explain Boost Converter operation
-
-✅ Explain inductor energy storage
-
-✅ Calculate ideal output voltage
-
-✅ Understand duty cycle effects
-
-✅ Measure PWM switching signals
-
-✅ Measure output ripple
-
-✅ Compare Buck and Boost Converters
-
----
 
 ## Introduction
 
@@ -209,6 +190,8 @@ V_{OUT} = \frac{V_{IN}}{1 - D}
 $$
 
 CCM means that inductor current never reaches zero. Near $D=1$, the ideal expression becomes extremely sensitive to duty-cycle error and predicts impractically large current and voltage; real losses, component ratings, startup transients, and discontinuous conduction limit the usable range.
+
+For hardware, begin at $D=0.25$ and increase only while the measured output voltage, inductor current, diode, MOSFET, capacitor, load, and oscilloscope ratings remain within limits. Treat $D=0.50$ as the highest default hardware test in this lab; the $D=0.75$ case is a simulation prediction unless every component rating has been checked.
 
 Where:
 
@@ -682,7 +665,7 @@ void loop()
     ledcWrite(0, 128);   // ~50% duty cycle → Vout ≈ 6.6 V (ideal)
     delay(3000);
 
-    ledcWrite(0, 192);   // ~75% duty cycle → Vout ≈ 13.2 V (ideal)
+    ledcWrite(0, 192);   // ~75% duty cycle → simulation prediction only (~13.2 V ideal)
     delay(3000);
 }
 ```
@@ -718,7 +701,7 @@ Measure the average DC output at each step with a multimeter.
   <tbody>
     <tr><td>64</td><td>25%</td><td>4.4 V</td><td><input class="result-input" id="lab07-exp2-vout25" placeholder="V"></td></tr>
     <tr><td>128</td><td>50%</td><td>6.6 V</td><td><input class="result-input" id="lab07-exp2-vout50" placeholder="V"></td></tr>
-    <tr><td>192</td><td>75%</td><td>13.2 V</td><td><input class="result-input" id="lab07-exp2-vout75" placeholder="V"></td></tr>
+    <tr><td>192</td><td>75%</td><td>13.2 V (simulation only)</td><td><input class="result-input" id="lab07-exp2-vout75" placeholder="V"></td></tr>
   </tbody>
 </table>
 </div>
@@ -738,7 +721,7 @@ Observe output voltage ripple at the switching frequency.
 1. Hook the **CH1 probe tip** to the **Vout node** (diode cathode / capacitor positive).
 2. Clip the **CH1 probe ground** to any **GND pin** on the ESP32.
 
-> Use AC coupling to isolate the ripple from the DC offset.
+> Use AC coupling to isolate the ripple from the DC offset. Return to DC coupling before measuring absolute output voltage.
 
 ---
 
@@ -947,30 +930,6 @@ The ideal Boost equation predicts Vout = 13.2 V at D = 0.75 with Vin = 3.3 V. Yo
 
 ---
 
-## Project Summary
-
-In this project you learned:
-
-✅ Boost Converter operation
-
-✅ Step-up voltage conversion
-
-✅ Inductor energy storage
-
-✅ PWM-controlled energy transfer
-
-✅ Diode operation
-
-✅ Output ripple
-
-✅ Practical DC-DC conversion
-
-You have now studied the two most important non-isolated converter topologies:
-
-- Buck Converter
-- Boost Converter
-
----
 
 ## Next Project
 

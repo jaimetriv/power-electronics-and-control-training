@@ -33,27 +33,6 @@ DC → AC
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Explain inverter operation
-
-✅ Explain H-Bridge circuits
-
-✅ Generate AC from DC
-
-✅ Measure inverter waveforms
-
-✅ Explain square-wave inverters
-
-✅ Explain PWM inverters
-
-✅ Understand SPWM fundamentals
-
-✅ Explain dead time and shoot-through
-
----
 
 ## Introduction
 
@@ -870,35 +849,6 @@ A square wave at 50 Hz contains harmonics at 150 Hz, 250 Hz, 350 Hz and so on. E
 
 ---
 
-## Project Summary
-
-In this project you learned:
-
-✅ DC-to-AC conversion
-
-✅ Inverter fundamentals
-
-✅ H-Bridge operation
-
-✅ Square-wave generation
-
-✅ PWM inverters
-
-✅ SPWM concepts
-
-✅ Dead time and shoot-through protection
-
-You have now studied all three major power conversion categories:
-
-```text
-AC → DC
-
-DC → DC
-
-DC → AC
-```
-
----
 
 ## Next Project
 

@@ -33,25 +33,6 @@ AC Power Supply
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Explain AC and DC voltages
-
-✅ Explain diode rectification
-
-✅ Explain half-wave rectifiers
-
-✅ Explain bridge rectifiers
-
-✅ Measure ripple voltage
-
-✅ Explain capacitor smoothing
-
-✅ Understand basic DC power supplies
-
----
 
 ## Introduction
 
@@ -1208,27 +1189,6 @@ A full-wave rectifier with a 100 µF capacitor produces 2 V of ripple at 50 Hz w
 
 ---
 
-## Project Summary
-
-In this project you learned:
-
-✅ AC and DC fundamentals
-
-✅ Diode operation
-
-✅ Half-wave rectification
-
-✅ Full-wave rectification
-
-✅ Bridge rectifiers
-
-✅ Ripple voltage
-
-✅ Capacitor smoothing
-
-✅ Power supply fundamentals
-
----
 
 ## Next Project
 

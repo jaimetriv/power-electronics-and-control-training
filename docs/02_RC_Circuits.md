@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapter 6 for capacitors and energy storage, then Chapter 7, **First-Order Circuits**, for zero-input/zero-state response and the RC time constant. Calculate $\tau=RC$ and estimate the voltage at $t=\tau$, $3\tau$, and $5\tau$ before measuring.
+Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapter 6 for capacitors and energy storage, then Chapter 7, **First-Order Circuits**, for zero-input/zero-state response and the RC time constant. Also review _Modern Control Engineering_ by Ogata, Chapter 2, **Mathematical Modeling of Control Systems**, and Chapter 5, **Transient and Steady-State Response Analysis**, for first-order models, transfer functions, poles, and time constants. Calculate $\tau=RC$, identify the pole $s=-1/\tau$, and estimate the voltage at $t=\tau$, $3\tau$, and $5\tau$ before measuring.
 
 ---
 
@@ -22,27 +22,6 @@ In this project you will learn:
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Explain how a capacitor works
-
-✅ Explain capacitor charging
-
-✅ Explain capacitor discharging
-
-✅ Calculate a time constant
-
-✅ Measure a time constant
-
-✅ Understand exponential responses
-
-✅ Understand first-order systems
-
-✅ Compare theory against measurements
-
----
 
 ## Theory
 
@@ -1135,35 +1114,6 @@ Your MATLAB simulation predicted τ = 1.0 s but you measured τ = 1.15 s. Name t
 
 ---
 
-## Project Summary
-
-In this project you learned:
-
-✅ Capacitor operation
-
-✅ Energy storage
-
-✅ RC circuits
-
-✅ Exponential charging
-
-✅ Exponential discharging
-
-✅ Time constants
-
-✅ First-order systems
-
-✅ Oscilloscope transient measurements
-
-✅ MATLAB modelling
-
-✅ RC low-pass filter frequency response
-
-✅ RC high-pass filter
-
-✅ Cutoff frequency measurement and verification
-
----
 
 ## Next Project
 

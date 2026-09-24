@@ -24,27 +24,6 @@ This project brings together everything learned throughout the course.
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Follow a structured controller design process
-
-✅ Define performance requirements
-
-✅ Design a P controller
-
-✅ Design a PI controller
-
-✅ Design a PID controller
-
-✅ Evaluate controller performance
-
-✅ Understand design trade-offs
-
-✅ Apply control engineering principles to real systems
-
----
 
 ## Introduction
 
@@ -676,62 +655,6 @@ Your MATLAB simulation predicted zero steady-state error and 8% overshoot with a
 
 ---
 
-## Project Summary
-
-Throughout this course you have studied:
-
-✅ PWM
-
-✅ RC Circuits
-
-✅ RLC Circuits
-
-✅ MOSFETs
-
-✅ Motor Control
-
-✅ P Control
-
-✅ PI Control
-
-✅ PID Control
-
-✅ Buck Converters
-
-✅ Boost Converters
-
-✅ DC Choppers
-
-✅ Rectifiers
-
-✅ Inverters
-
-✅ System Identification
-
-✅ Controller Design
-
-You now have a foundation in:
-
-```text
-Electronics
-
-Power Electronics
-
-Control Engineering
-
-Embedded Systems
-```
-
-and the practical skills required to continue into more advanced topics such as:
-
-- State-Space Control
-- Digital Control Systems
-- Motor Drive Design
-- Power Supply Design
-- Advanced Robotics
-- Industrial Automation
-
----
 
 ## Next Project
 

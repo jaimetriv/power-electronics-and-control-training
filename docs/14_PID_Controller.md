@@ -24,25 +24,6 @@ The PID controller is often considered the most important controller in classica
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Explain derivative action
-
-✅ Explain overshoot
-
-✅ Explain damping
-
-✅ Implement a PID controller
-
-✅ Tune Kp, Ki and Kd
-
-✅ Understand PID trade-offs
-
-✅ Explain stability improvements
-
----
 
 ## Review of Previous Controllers
 
@@ -876,27 +857,6 @@ Your MATLAB comparison shows PID settling time is shorter than PI but overshoot 
 
 ---
 
-## Project Summary
-
-In this project you learned:
-
-✅ PID control
-
-✅ Derivative action
-
-✅ Damping
-
-✅ Overshoot reduction
-
-✅ Controller tuning
-
-✅ Stability concepts
-
-✅ Closed-loop performance metrics
-
-✅ Practical PID implementation with back-EMF feedback
-
----
 
 ## Next Project
 

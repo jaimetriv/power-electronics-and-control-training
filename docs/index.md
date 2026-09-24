@@ -107,7 +107,9 @@ B --> C[RC Circuits]
 
 C --> D[RLC Circuits]
 
-D --> E[MOSFET Fundamentals]
+D --> CP[Control Theory Checkpoint]
+
+CP --> E[MOSFET Fundamentals]
 end
 
 subgraph S2[Stage 2: Power-Converter Fundamentals]

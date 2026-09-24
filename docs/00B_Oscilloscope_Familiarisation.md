@@ -18,37 +18,6 @@ This project introduces the basic oscilloscope skills required for the remainder
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Connect the OWON HDS272S safely to a circuit
-
-✅ Adjust the vertical scale to suit the signal
-
-✅ Adjust the horizontal scale to suit the signal
-
-✅ Use edge triggering to stabilise a waveform
-
-✅ Measure DC voltage
-
-✅ Measure peak voltage of a PWM signal
-
-✅ Measure the period and frequency of a PWM signal
-
-✅ Identify duty cycle from a waveform
-
-✅ Use the built-in signal generator  
-
-✅ Measure input and output signals simultaneously  
-
-✅ Observe the behaviour of a simple low-pass filter  
-
-✅ Measure signal attenuation as frequency changes  
-
-✅ Prepare the oscilloscope for future experiments
-
----
 
 ## What Is An Oscilloscope?
 
@@ -1242,37 +1211,6 @@ Explain your answer.
 
 ---
 
-## Project Summary
-
-In this project you learned:
-
-✅ What an oscilloscope measures and why it is important
-
-✅ How to connect the OWON HDS272S safely
-
-✅ How to adjust the vertical scale
-
-✅ How to adjust the horizontal scale
-
-✅ How to use edge triggering
-
-✅ How to measure DC voltage
-
-✅ How to measure PWM peak voltage, period, frequency, and duty cycle
-
-✅ How to use the built-in signal generator
-
-✅ How to measure input and output signals simultaneously
-
-✅ How to observe a simple low-pass filter
-
-✅ How to compare two waveforms using CH1 and CH2
-
-✅ How to observe signal attenuation as frequency changes
-
-✅ How to adjust scales to suit different signals
-
----
 
 ## Next Project
 

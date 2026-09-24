@@ -31,25 +31,6 @@ This project marks the beginning of:
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Explain MOSFET operation
-
-✅ Identify Gate, Drain and Source
-
-✅ Use a MOSFET as a switch
-
-✅ Drive a MOSFET from a microcontroller
-
-✅ Measure PWM on the MOSFET gate
-
-✅ Explain switching losses
-
-✅ Understand the foundation of power electronics
-
----
 
 ## Theory
 
@@ -161,7 +142,7 @@ Examples for low-voltage experiments include:
 
 Avoid the IRFZ44N for direct beginner microcontroller drive unless a suitable gate driver is used — its low $R_{DS(on)}$ is not specified for typical 3.3 V logic drive.
 
-For the IRLZ44N, verify the required gate voltage and expected load current from the data sheet. At higher current, use a MOSFET with a guaranteed 2.5 V or 3.3 V $R_{DS(on)}$ rating, or add a gate driver.
+For the IRLZ44N, verify the required gate voltage and expected load current from the data sheet. Do not use an $R_{DS(on)}$ value specified only at 5 V or 10 V gate drive to predict losses from a 3.3 V GPIO. Estimate conduction loss with $P_{cond}\approx I_D^2R_{DS(on)}$ only when the resistance is specified at the actual $V_{GS}$; otherwise use a gate driver or measure the device voltage drop. At higher current, use a MOSFET with a guaranteed 2.5 V or 3.3 V $R_{DS(on)}$ rating, or add a gate driver.
 
 ---
 
@@ -944,33 +925,6 @@ Your simulation predicted $V_{AVG}$ = 2.5 V at 50% duty cycle but you measured 2
 
 ---
 
-## Project Summary
-
-In this project you learned:
-
-✅ MOSFET operation
-
-✅ Gate, Drain and Source
-
-✅ Electronic switching
-
-✅ PWM-controlled switching
-
-✅ MOSFET efficiency
-
-✅ How a microcontroller controls larger loads
-
-✅ Foundations of power electronics
-
-These ideas are the building blocks for:
-
-- Motor controllers
-- Buck converters
-- Boost converters
-- Inverters
-- Switching power supplies
-
----
 
 ## Next Project
 

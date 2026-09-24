@@ -24,25 +24,6 @@ The PI controller is one of the most important controllers in engineering becaus
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Explain integral action
-
-✅ Explain steady-state error
-
-✅ Implement a PI controller
-
-✅ Tune proportional gain
-
-✅ Tune integral gain
-
-✅ Explain integral windup
-
-✅ Understand why PI controllers are widely used
-
----
 
 ## Review of Proportional Control
 
@@ -838,27 +819,6 @@ Your PI simulation shows overshoot at Ki = 5.0 but not at Ki = 1.0. Explain why 
 
 ---
 
-## Project Summary
-
-In this project you learned:
-
-✅ Integral action
-
-✅ PI control
-
-✅ Closed-loop operation with back-EMF feedback
-
-✅ Steady-state error
-
-✅ Integral gain
-
-✅ Integral windup
-
-✅ Controller tuning
-
-✅ PWM control through feedback
-
----
 
 ## Next Project
 

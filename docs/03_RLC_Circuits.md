@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapter 6 for inductors and energy storage, then Chapter 8, **Second-Order Circuits**, for natural frequency, damping ratio, overdamped/underdamped response, and resonance. Estimate the natural frequency and classify the damping before observing the ringing.
+Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapter 6 for inductors and energy storage, then Chapter 8, **Second-Order Circuits**, for natural frequency, damping ratio, overdamped/underdamped response, and resonance. Also review _Modern Control Engineering_ by Ogata, Chapter 5, **Transient and Steady-State Response Analysis**, for second-order poles, damping, overshoot, and settling time. Estimate the natural frequency, classify the damping, and predict the transient response before observing the ringing.
 
 ---
 
@@ -35,25 +35,6 @@ These concepts are fundamental to:
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Explain resonance
-
-✅ Explain natural frequency
-
-✅ Explain damping
-
-✅ Observe ringing
-
-✅ Estimate resonant frequency
-
-✅ Understand second-order systems
-
-✅ Compare theory, simulation and measurements
-
----
 
 ## Theory
 
@@ -1009,41 +990,6 @@ Your MATLAB simulation predicted $f_n$ = 1591 Hz but you measured $f_n$ = 1520 H
   <button class="result-clear-btn" data-lab="lab03">✕ Clear All Results</button>
 </div>
 
-## Project Summary
-
-In this project you learned:
-
-✅ Inductor behaviour
-
-✅ Energy storage in magnetic fields
-
-✅ Resonance
-
-✅ Ringing
-
-✅ Natural frequency
-
-✅ Damping
-
-✅ Overshoot
-
-✅ Second-order systems
-
-✅ Oscilloscope measurements of oscillatory systems
-
-✅ MATLAB simulation of dynamic behaviour
-
-These concepts form the foundation of:
-
-- Transfer functions
-- Pole-zero analysis
-- Control theory
-- PID tuning
-- Buck converters
-- Boost converters
-- Inverters
-
----
 
 ## Next Project
 

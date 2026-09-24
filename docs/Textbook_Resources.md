@@ -37,7 +37,17 @@ Follow the labs in four stages. Read only the listed topics before each lab, the
 
 ### Stage 1: Circuit Foundations
 
-Complete Labs 01–04 using Alexander and Sadiku for circuit analysis and Erickson and Maksimovic for MOSFET switching. Focus on predicting waveforms, time constants, energy storage, resonance, and switching behaviour.
+Complete Labs 01–04 using Alexander and Sadiku for circuit analysis and Erickson and Maksimovic for MOSFET switching. Introduce control theory through the RC and RLC models: use Ogata Chapters 2 and 5 to connect differential equations, transfer functions, poles, time constants, damping, and transient response to measured circuits.
+
+### Control Theory Checkpoint After Lab 03
+
+Before continuing to the converter labs, complete this short checkpoint:
+
+1. Derive the RC transfer function $H_{RC}(s)=1/(RCs+1)$.
+2. Identify its pole and relate it to $\tau=RC$.
+3. Review the RLC characteristic equation and classify its damping.
+4. Compare measured rise time, settling time, overshoot, and ringing with the Ogata model.
+5. Record the assumptions that explain differences between the model and hardware.
 
 ### Stage 2: Power-Converter Fundamentals
 
@@ -58,8 +68,8 @@ The roadmap below gives the reading to complete before each experiment. Do not t
 | Lab | Lab subtopics | Read before starting | Prediction to prepare |
 |---|---|---|---|
 | [01 PWM Fundamentals](01_PWM_Fundamentals.md) | Voltage/current/power, duty ratio, period, frequency, average voltage | Alexander and Sadiku, Ch. 1–2: circuit variables, Ohm's law, Kirchhoff's laws, power, and measurement conventions. Erickson and Maksimovic, Ch. 2, **Basic Concepts**: switching waveforms, duty ratio, and averaging | Calculate $T=1/f$ and the ideal average of a PWM waveform from duty ratio and amplitude |
-| [02 RC Circuits](02_RC_Circuits.md) | Capacitor charging, discharging, time constant, first-order response | Alexander and Sadiku, Ch. 6: capacitors and energy storage; Ch. 7, **First-Order Circuits**: zero-input/zero-state response and the RC time constant | Calculate $\tau=RC$ and estimate the voltage at $t=\tau$, $3\tau$, and $5\tau$ |
-| [03 RLC Circuits](03_RLC_Circuits.md) | Inductor energy, resonance, natural response, damping, ringing | Alexander and Sadiku, Ch. 6: inductors and energy storage; Ch. 8, **Second-Order Circuits**: natural frequency, damping ratio, overdamped/underdamped response, and resonance | Estimate natural frequency, classify damping, and predict whether the waveform rings |
+| [02 RC Circuits](02_RC_Circuits.md) | Capacitor charging, discharging, time constant, first-order response, transfer function, pole | Alexander and Sadiku, Ch. 6: capacitors and energy storage; Ch. 7, **First-Order Circuits**: zero-input/zero-state response and the RC time constant. Ogata, Ch. 2: modelling and transfer functions; Ch. 5: first-order response and time constants | Calculate $\tau=RC$, identify $s=-1/\tau$, and estimate the voltage at $t=\tau$, $3\tau$, and $5\tau$ |
+| [03 RLC Circuits](03_RLC_Circuits.md) | Inductor energy, resonance, natural response, damping, ringing, second-order response | Alexander and Sadiku, Ch. 6: inductors and energy storage; Ch. 8, **Second-Order Circuits**: natural frequency, damping ratio, overdamped/underdamped response, and resonance. Ogata, Ch. 5: second-order poles, damping, overshoot, and settling time | Estimate natural frequency, classify damping, and predict ringing, overshoot, and settling behaviour |
 | [04 MOSFET Fundamentals](04_MOSFET_Fundamentals.md) | Threshold voltage, gate drive, $R_{DS(on)}$, conduction and switching loss | Erickson and Maksimovic, Ch. 2, **Basic Concepts**: power semiconductor switches, gate drive, conduction loss, switching loss, and device ratings. Search **device losses** and **gate drive** | Explain why threshold voltage is not the guaranteed fully-on gate voltage and identify the main loss mechanisms |
 | [05 DC Chopper Converters](05_DC_Chopper_Converters.md) | Switching intervals, freewheel path, average output, motor-drive action | Alexander and Sadiku, Ch. 1–2: circuit laws applied separately to each switch state. Erickson and Maksimovic, Ch. 3, **Steady-State Converter Analysis**: switching intervals and average conversion | Draw both switch-state circuits and calculate the ideal average output from duty ratio |
 | [06 Buck Converter](06_Buck_Converter.md) | Buck operation, inductor current, capacitor voltage, CCM/DCM, ripple | Alexander and Sadiku, Ch. 6–7: inductor/capacitor energy storage and transient response. Erickson and Maksimovic, Ch. 3: **buck converters**, **volt-second balance**, **charge balance**, **CCM**, **DCM**, and **ripple** | Predict $V_o\approx DV_{in}$ in ideal CCM and estimate inductor-current and output-voltage ripple |

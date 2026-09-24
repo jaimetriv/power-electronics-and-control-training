@@ -18,27 +18,6 @@ This project introduces the basic skills required for the remainder of the cours
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Identify the main Arduino Uno components
-
-✅ Upload programs to the Arduino
-
-✅ Use digital outputs
-
-✅ Read digital inputs
-
-✅ Read analogue inputs
-
-✅ Generate PWM signals
-
-✅ Use the Serial Monitor
-
-✅ Build and troubleshoot simple circuits
-
----
 
 ## What Is Arduino?
 
@@ -1204,27 +1183,6 @@ What does PWM stand for?
 
 ---
 
-## Project Summary
-
-In this project you learned:
-
-✅ Arduino Uno hardware
-
-✅ Arduino IDE
-
-✅ Digital Outputs
-
-✅ Digital Inputs
-
-✅ Analogue Inputs
-
-✅ Serial Communication
-
-✅ PWM Fundamentals
-
-✅ Basic Circuit Construction
-
----
 
 ## Next Project
 

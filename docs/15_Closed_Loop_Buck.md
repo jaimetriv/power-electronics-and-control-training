@@ -24,25 +24,6 @@ This project combines power electronics and control systems to create a practica
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Explain closed-loop regulation
-
-✅ Implement voltage feedback
-
-✅ Calculate voltage error
-
-✅ Implement a PI controller
-
-✅ Explain disturbance rejection
-
-✅ Tune PI gains
-
-✅ Analyse converter performance
-
----
 
 ## Introduction
 
@@ -107,6 +88,8 @@ For equal resistors:
 $$
 V_{FB} = \frac{V_{OUT}}{2}
 $$
+
+This equal-divider arrangement is only suitable for the documented approximately 3.3 V output, where the midpoint is approximately 1.65 V. For any higher output, recalculate the divider so the maximum midpoint voltage remains within the selected ESP32 ADC range, and verify the ADC attenuation setting before connecting the converter. Do not connect an unscaled converter output to the ADC.
 
 For an Arduino Uno backup, use A0 instead of GPIO34. The divider and ADC range must be selected for the actual converter maximum voltage; never assume that a 1:1 divider is safe for every hardware configuration.
 
@@ -893,27 +876,6 @@ The voltage divider scales Vout by 0.5 before the ADC. The ESP32 reference in th
 
 ---
 
-## Project Summary
-
-In this project you learned:
-
-✅ Closed-loop regulation
-
-✅ Voltage feedback
-
-✅ PI control
-
-✅ Disturbance rejection
-
-✅ Controller tuning
-
-✅ Converter dynamics
-
-✅ Stability concepts
-
-✅ Practical voltage regulation
-
----
 
 ## Next Project
 

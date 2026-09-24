@@ -35,25 +35,6 @@ PWM is used in:
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Explain PWM
-
-✅ Calculate duty cycle
-
-✅ Measure frequency
-
-✅ Measure period
-
-✅ Use the OWON HDS272S oscilloscope
-
-✅ Generate PWM using ESP32 or Arduino
-
-✅ Explain how PWM controls power
-
----
 
 ## Theory
 
@@ -789,27 +770,6 @@ Your MATLAB simulation predicted a frequency of 500 Hz but you measured 502 Hz o
 
 ---
 
-## Project Summary
-
-In this project you learned:
-
-✅ Frequency
-
-✅ Period
-
-✅ Duty cycle
-
-✅ PWM
-
-✅ Average voltage
-
-✅ PWM generation on ESP32 or Arduino
-
-✅ Oscilloscope measurements with the OWON HDS272S
-
-✅ LED brightness control
-
----
 
 ## Next Project
 

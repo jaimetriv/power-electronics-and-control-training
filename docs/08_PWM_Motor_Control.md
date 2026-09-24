@@ -26,25 +26,6 @@ The motor will become our first real-world dynamic plant.
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Explain DC motor operation
-
-✅ Control motor speed with PWM
-
-✅ Drive a motor using a MOSFET
-
-✅ Measure PWM signals using an oscilloscope
-
-✅ Explain motor inertia
-
-✅ Understand motor time constants
-
-✅ Model a motor as a first-order system
-
----
 
 ## Theory
 
@@ -767,31 +748,6 @@ You estimated τ = 0.5 s from the step response. How would you verify this estim
 
 ---
 
-## Project Summary
-
-In this project you learned:
-
-✅ DC motor fundamentals
-
-✅ PWM speed control
-
-✅ MOSFET motor driving
-
-✅ Flyback diode protection
-
-✅ First-order dynamic behaviour
-
-✅ Motor time constants
-
-✅ Open-loop control
-
-✅ Oscilloscope motor measurements
-
-The motor is the first real plant we will control.
-
-After completing the AC and DC power electronics projects (09–10), feedback control will be introduced in Projects 11–14.
-
----
 
 ## Next Project
 

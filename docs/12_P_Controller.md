@@ -24,27 +24,6 @@ This project introduces the foundations of modern control engineering.
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Explain feedback
-
-✅ Explain open-loop control
-
-✅ Explain closed-loop control
-
-✅ Calculate an error signal
-
-✅ Implement a proportional controller
-
-✅ Tune proportional gain
-
-✅ Understand steady-state error
-
-✅ Explain why higher gain is not always better
-
----
 
 ## Theory
 
@@ -898,31 +877,6 @@ Your simulation shows $e_{ss}$ = 16.7% at Kp = 5. What would Kp need to be to re
 
 ---
 
-## Project Summary
-
-In this project you learned:
-
-✅ Open-loop control
-
-✅ Closed-loop control
-
-✅ Back-EMF feedback sensing
-
-✅ Feedback
-
-✅ Error signals
-
-✅ Proportional control
-
-✅ Gain tuning
-
-✅ Steady-state error
-
-✅ Disturbance rejection
-
-✅ Controller behaviour
-
----
 
 ## Next Project
 

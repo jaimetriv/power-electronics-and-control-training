@@ -44,27 +44,6 @@ Recommended AC test voltage:
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Explain Grid-Following Operation
-
-✅ Explain PLL Synchronisation
-
-✅ Explain Current Injection
-
-✅ Design a Current Controller
-
-✅ Implement PI Regulation
-
-✅ Generate SPWM
-
-✅ Understand dq Control
-
-✅ Understand Modern Renewable Energy Converters
-
----
 
 ## Introduction
 
@@ -178,7 +157,7 @@ Filter (L filter inductor)
 
 ### Voltage Measurement
 
-- Resistor divider
+- Isolated or differential voltage sensor with an output limited to 0–3.3 V; alternatively, use a resistor divider with a verified mid-supply bias and input protection
 
 ### Inverter Stage
 
@@ -520,7 +499,7 @@ Measure the grid phase angle and verify PLL tracking.
 ### Procedure
 
 1. Set the function generator to output a **50 Hz sine wave** at **5 Vpeak**.
-2. Connect the function generator output to the controller ADC input through a voltage divider (to scale to 0–3.3 V for ESP32).
+2. Connect the function generator output to an isolated or differential voltage sensor. If using the ESP32 ADC, use a properly attenuated mid-supply-biased interface so the complete bipolar waveform remains between 0 V and 3.3 V; a divider to ground alone is not safe for the negative half-cycle.
 3. Upload PLL code to the ESP32.
 4. Connect the oscilloscope probe to the function generator output.
 5. Observe zero crossings and verify the PLL is tracking the grid angle.
@@ -841,43 +820,6 @@ During Experiment 4 your measured current settling time was longer than the MATL
 
 ---
 
-## Project Summary
-
-This project combines:
-
-✅ PWM
-
-✅ MOSFET Switching
-
-✅ Inverters
-
-✅ PI Controllers
-
-✅ Signal Processing
-
-✅ Control Systems
-
-✅ System Identification
-
-✅ Power Electronics
-
-✅ AC Systems
-
-✅ Renewable Energy Concepts
-
-into a complete modern converter control architecture.
-
-You have now progressed from basic PWM generation to the same fundamental control structure used in modern:
-
-- Solar Inverters
-- Battery Energy Storage Systems
-- EV Chargers
-- Utility-Scale Converters
-- Grid Support Systems
-
-and have completed the full introductory power electronics and control engineering pathway.
-
----
 
 ## Next Project
 

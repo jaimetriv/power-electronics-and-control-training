@@ -28,25 +28,6 @@ Power Electronics  ←→  Motor Drives
 
 ---
 
-## Learning Outcomes
-
-At the end of this project you should be able to:
-
-✅ Define a chopper converter
-
-✅ Explain chopper operation
-
-✅ Calculate average output voltage
-
-✅ Explain first-quadrant operation
-
-✅ Measure PWM waveforms
-
-✅ Explain motor speed control using choppers
-
-✅ Relate Buck and Boost converters to choppers
-
----
 
 ## Introduction
 
@@ -623,25 +604,6 @@ A DC motor drive and a Buck Converter both use the equation $V_{AVG} = D \times 
 
 ---
 
-## Project Summary
-
-In this project you learned:
-
-✅ Chopper converter fundamentals
-
-✅ PWM-based voltage control
-
-✅ Buck and Boost chopper relationships
-
-✅ DC motor drive concepts
-
-✅ Average voltage control
-
-✅ First-quadrant operation
-
-✅ Industrial power electronics terminology
-
----
 
 ## Next Project
 
