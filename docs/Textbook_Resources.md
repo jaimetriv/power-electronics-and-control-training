@@ -41,7 +41,7 @@ Complete Labs 01–04 using Alexander and Sadiku for circuit analysis and Ericks
 
 ### Control Theory Checkpoint After Lab 03
 
-Before continuing to the converter labs, complete this short checkpoint:
+Before continuing to the converter labs, complete [Control Theory Familiarisation](00D_Control_Theory_Familiarisation.md):
 
 1. Derive the RC transfer function $H_{RC}(s)=1/(RCs+1)$.
 2. Identify its pole and relate it to $\tau=RC$.

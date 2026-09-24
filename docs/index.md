@@ -32,6 +32,7 @@ Welcome to the course.
 2. [Arduino Uno / ESP32 Familiarisation](00A_Microcontroller_Familiarisation.md)
 3. [DSO Nano V3 / OWON HDS272S Familiarisation](00B_Oscilloscope_Familiarisation.md)
 4. [ESP32 WiFi Controller Familiarisation](00C_WiFi_Controller_Familiarisation.md)
+5. [Control Theory Familiarisation](00D_Control_Theory_Familiarisation.md)
 
 ## Lab Index
 
@@ -43,6 +44,7 @@ Welcome to the course.
 | 00A | [Microcontroller Familiarisation](00A_Microcontroller_Familiarisation.md) |
 | 00B | [Oscilloscope Familiarisation](00B_Oscilloscope_Familiarisation.md) |
 | 00C | [WiFi Controller Familiarisation](00C_WiFi_Controller_Familiarisation.md) |
+| 00D | [Control Theory Familiarisation](00D_Control_Theory_Familiarisation.md) |
 
 ### Electronics
 
@@ -107,7 +109,7 @@ B --> C[RC Circuits]
 
 C --> D[RLC Circuits]
 
-D --> CP[Control Theory Checkpoint]
+D --> CP[Control Theory Familiarisation]
 
 CP --> E[MOSFET Fundamentals]
 end

@@ -74,6 +74,7 @@ nav:
       - Microcontroller Familiarisation: 00A_Microcontroller_Familiarisation.md
       - Oscilloscope Familiarisation: 00B_Oscilloscope_Familiarisation.md
       - WiFi Controller Familiarisation: 00C_WiFi_Controller_Familiarisation.md
+      - Control Theory Familiarisation: 00D_Control_Theory_Familiarisation.md
 
   - Core Electronics:
       - PWM Fundamentals: 01_PWM_Fundamentals.md
