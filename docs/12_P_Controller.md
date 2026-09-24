@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Modern Control Engineering_ by Ogata, Chapters 6, **Control Systems and Control Systems Components**, and 7, **Basic Control Actions and Response**, especially the sections on feedback structure, proportional control, and steady-state error. Read this before starting the lab so you can predict how proportional gain changes the error and closed-loop response before tuning the controller.
+Read _Modern Control Engineering_ by Ogata, Chapter 6, **Control Systems and Control Systems Components**, for feedback components and measurement, then Chapter 7, **Basic Control Actions and Response**, for proportional action, sensitivity, and steady-state error. Use the model from Lab 11 to predict how increasing $K_p$ changes error, response speed, and overshoot.
 
 ---
 

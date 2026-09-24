@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, especially the sections on **buck converters**, **volt-second balance**, **CCM**, **DCM**, and **ripple**. Read this before starting the lab so you can state the conduction-mode assumptions and predict the ideal output voltage and ripple before testing the converter.
+Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapters 6–7, for inductor/capacitor energy storage and transient response. Then read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, for **buck converters**, **volt-second balance**, **charge balance**, **CCM**, **DCM**, and **ripple**. State the conduction-mode assumptions, predict $V_o\approx DV_{in}$ in ideal CCM, and estimate current and voltage ripple.
 
 ---
 

@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 2, **Basic Concepts**, sections on converter applications and power supplies/motor drives. Then read _Modern Control Engineering_ by Ogata, Chapters 2, **Mathematical Modeling of Control Systems**, and 5, **Transient and Steady-State Response Analysis**, for first-order plant behaviour and step-response parameters. Read this before starting the lab so you can predict how PWM changes motor input and why speed responds more slowly than the electrical command.
+Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 2, **Basic Concepts**, sections on converter applications and motor drives. Then read _Modern Control Engineering_ by Ogata, Chapter 2, **Mathematical Modeling of Control Systems**, and Chapter 5, **Transient and Steady-State Response Analysis**, for first-order models, time constant, rise time, and settling time. Estimate the mechanical time constant from a step response.
 
 ---
 

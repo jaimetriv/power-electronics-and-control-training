@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, especially the sections on **diode rectifiers** and **capacitive filtering**. Read this before starting the lab so you can predict the rectified waveform, average output, and ripple before comparing ideal equations with the measured supply.
+Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapters 9–10 for sinusoidal steady state and phasors, then Chapter 11 for AC power. Then read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, for **diode rectifiers** and **capacitive filtering**. Sketch conduction intervals, estimate average DC output, and predict ripple before measuring.
 
 ---
 

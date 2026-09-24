@@ -91,13 +91,16 @@ Use the [Textbook Reading Path](Textbook_Resources.md) before each lab. It provi
 ```mermaid
 flowchart TD
 
+subgraph S0[Preparation]
 A[Introduction]
 --> A1[Microcontroller Familiarisation]
 
 A1 --> A2[Oscilloscope Familiarisation]
 
 A2 --> A3[WiFi Controller Familiarisation]
+end
 
+subgraph S1[Stage 1: Circuit Foundations]
 A3 --> B[PWM]
 
 B --> C[RC Circuits]
@@ -105,7 +108,9 @@ B --> C[RC Circuits]
 C --> D[RLC Circuits]
 
 D --> E[MOSFET Fundamentals]
+end
 
+subgraph S2[Stage 2: Power-Converter Fundamentals]
 E --> F[DC Chopper Converters]
 
 F --> G[Buck Converter]
@@ -117,7 +122,9 @@ H --> I[PWM Motor Control]
 I --> J[AC-DC Rectifiers]
 
 J --> K[DC-AC Inverters]
+end
 
+subgraph S3[Stage 3: Control Fundamentals and Design]
 K --> L[System Identification]
 
 L --> M[P Controller]
@@ -129,8 +136,11 @@ N --> O[PID Controller]
 O --> P[Closed Loop Buck]
 
 P --> Q[Controller Design]
+end
 
+subgraph S4[Stage 4: Grid-Connected Converter Control]
 Q --> R[Grid Following VSC]
 
 R --> S[Grid Forming VSC]
+end
 ```

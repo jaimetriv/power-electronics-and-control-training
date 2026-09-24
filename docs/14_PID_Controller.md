@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Modern Control Engineering_ by Ogata, Chapters 7, **Basic Control Actions and Response**, and 8, **Analysis and Design of Feedback Control Systems**, especially the sections on derivative action, damping, zeros, noise, and PID limitations. Read this before starting the lab so you can predict how derivative action changes transient response and why measurement noise must be filtered.
+Read _Modern Control Engineering_ by Ogata, Chapter 7, **Basic Control Actions and Response**, for derivative action, then Chapter 8, **Analysis and Design of Feedback Control Systems**, for zeros, transient response, noise sensitivity, and practical PID limitations. Predict the effect of derivative action on damping and explain why derivative measurement is filtered.
 
 ---
 

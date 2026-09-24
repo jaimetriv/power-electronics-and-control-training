@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Voltage-Sourced Converters in Power Systems_ by Yazdani and Iravani, Chapters 2–4, especially the sections on voltage-sourced converters, PWM, and balanced three-phase operation. Search for **PLL**, **dq transformation**, **current control**, and **grid-connected VSC**. Read this before starting the lab so you can understand why synchronization and reference-frame control are needed before injecting current into the AC system.
+Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapter 12 for three-phase circuits and balanced voltage/current relationships. Then read _Voltage-Sourced Converters in Power Systems_ by Yazdani and Iravani, Chapters 2–4, for VSC operation, PWM, balanced three-phase operation, PLL, dq transformation, and grid-connected current control. Predict why synchronization is required and how dq current commands affect AC power.
 
 ---
 

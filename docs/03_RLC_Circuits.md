@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapters 2, **Basic Concepts**, and 3, **Steady-State Converter Analysis**, especially the sections on inductor energy storage, resonant networks, damping, and filter dynamics. Read this before starting the lab so you can estimate the natural frequency and damping behaviour before observing the measured ringing.
+Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapter 6 for inductors and energy storage, then Chapter 8, **Second-Order Circuits**, for natural frequency, damping ratio, overdamped/underdamped response, and resonance. Estimate the natural frequency and classify the damping before observing the ringing.
 
 ---
 

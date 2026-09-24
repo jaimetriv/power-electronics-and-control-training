@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Modern Control Engineering_ by Ogata, Chapters 7, **Basic Control Actions and Response**, and 8, **Analysis and Design of Feedback Control Systems**, especially the sections on integral action, system type, steady-state error, and controller implementation. Read this before starting the lab so you can predict why integral action reduces steady-state error and recognise windup when the actuator saturates.
+Read _Modern Control Engineering_ by Ogata, Chapter 7, **Basic Control Actions and Response**, for integral control and system type, then Chapter 8, **Analysis and Design of Feedback Control Systems**, for steady-state error, controller implementation, saturation, and windup. Predict the reduction in steady-state error and identify when the integrator will continue accumulating.
 
 ---
 

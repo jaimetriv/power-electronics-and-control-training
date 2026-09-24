@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Voltage-Sourced Converters in Power Systems_ by Yazdani and Iravani, Chapters 5–7, especially the sections on unbalanced or islanded operation and VSC control. Search for **voltage control**, **LC filter**, **droop control**, and **grid-forming converter**. Read this before starting the lab so you can predict how the converter establishes voltage and frequency before testing its response with a load.
+Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapter 12 for three-phase voltage/current relationships. Then read _Voltage-Sourced Converters in Power Systems_ by Yazdani and Iravani, Chapters 5–7, for islanded operation, VSC control, voltage control, LC filters, droop control, and grid-forming converters. Predict how voltage and frequency change with load before testing the converter.
 
 ---
 

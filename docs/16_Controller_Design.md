@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Modern Control Engineering_ by Ogata, Chapters 8, **Analysis and Design of Feedback Control Systems**, and 13, **Control Systems Design by Root Locus**, especially the sections on requirements, modelling, controller selection, simulation, and validation. Read this before starting the lab so you can turn performance requirements into a controller choice and a testable prediction before implementing the design.
+Read _Modern Control Engineering_ by Ogata, Chapter 8, **Analysis and Design of Feedback Control Systems**, for feedback design and performance requirements. Then read Chapter 13, **Control Systems Design by Root Locus**, for root-locus construction, gain selection, dominant poles, and transient specifications. Turn the requirements into a controller choice and a testable prediction.
 
 ---
 

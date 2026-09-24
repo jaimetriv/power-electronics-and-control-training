@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, especially the sections on **boost converters**, **inductor energy transfer**, **CCM**, **DCM**, and **duty-ratio limits**. Read this before starting the lab so you can predict the ideal conversion ratio and identify why operation near $D=1$ is unsafe for the hardware.
+Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapters 6–7, for inductor/capacitor energy storage and transient response. Then read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, for **boost converters**, **inductor energy transfer**, **CCM**, **DCM**, and **duty-ratio limits**. Predict $V_o\approx V_{in}/(1-D)$ in ideal CCM and explain why high duty ratio increases stress.
 
 ---
 

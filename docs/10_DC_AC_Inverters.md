@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, especially the sections on **inverters**, **bridge converters**, **modulation**, **harmonics**, and **filters**. Read this before starting the lab so you can distinguish bridge voltage, filtered voltage, RMS voltage, and the fundamental component before measuring the inverter.
+Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapter 17, **Fourier Series**, for square-wave coefficients, RMS values, and harmonic content. Then read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, for **inverters**, **bridge converters**, **modulation**, and **filters**. Identify the bridge and fundamental components before measuring.
 
 ---
 

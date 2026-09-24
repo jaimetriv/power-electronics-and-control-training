@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Modern Control Engineering_ by Ogata, Chapter 8, **Analysis and Design of Feedback Control Systems**, especially the sections on closed-loop regulation, disturbance rejection, and plant models. Also read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, on buck energy transfer and averaged converter models. Read this before starting the lab so you can predict the regulated output and disturbance response before closing the feedback loop.
+Read _Modern Control Engineering_ by Ogata, Chapter 8, **Analysis and Design of Feedback Control Systems**, for closed-loop regulation, disturbance rejection, and plant models. Also read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, for buck energy transfer, steady-state relationships, and averaged converter behaviour. Predict the regulated output and disturbance response before closing the loop.
 
 ---
 

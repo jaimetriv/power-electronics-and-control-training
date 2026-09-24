@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, especially the sections on chopper operation, switching intervals, and average conversion. Read this before starting the lab so you can identify each switching interval and predict the average output voltage before measuring the switched waveform.
+Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapters 1–2, to refresh circuit laws applied separately to each switch state. Then read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, for switching intervals and average conversion. Draw both switch-state circuits and calculate the ideal average output from duty ratio before measuring it.
 
 ---
 

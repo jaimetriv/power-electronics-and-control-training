@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapters 2, **Basic Concepts**, and 3, **Steady-State Converter Analysis**, especially the sections on capacitor energy storage, transients, and passive filtering. Read this before starting the lab so you can calculate the RC time constant and predict the charging and discharging curves before comparing them with the oscilloscope measurement.
+Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapter 6 for capacitors and energy storage, then Chapter 7, **First-Order Circuits**, for zero-input/zero-state response and the RC time constant. Calculate $\tau=RC$ and estimate the voltage at $t=\tau$, $3\tau$, and $5\tau$ before measuring.
 
 ---
 

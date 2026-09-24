@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Modern Control Engineering_ by Ogata, Chapter 2, **Mathematical Modeling of Control Systems**, especially the sections on transfer functions, block diagrams, system modelling, and validation. Read this before starting the lab so you can select a model structure, predict the expected step response, and compare fitted parameters with the physical system.
+Before starting the control stage, review _Modern Control Engineering_ by Ogata, Chapter 2, **Mathematical Modeling of Control Systems**, including differential-equation models, transfer functions, block diagrams, and model validation. Also review Chapter 5, **Transient and Steady-State Response Analysis**, for first- and second-order responses, poles, zeros, damping, time constants, and steady-state error. Select a model structure and estimate its parameters from the measured step response.
 
 ---
 

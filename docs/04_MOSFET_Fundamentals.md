@@ -4,7 +4,7 @@
 
 ## Reading Before the Lab
 
-Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 2, **Basic Concepts**, especially the sections on power semiconductor switches, gate drive, conduction loss, and switching loss. Search for **device losses** and **gate drive**. Read this before starting the lab so you can distinguish threshold voltage from the guaranteed low $R_{DS(on)}$ gate-drive condition before switching the MOSFET.
+Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 2, **Basic Concepts**, especially power semiconductor switches, gate drive, conduction loss, switching loss, and device ratings. Search for **device losses** and **gate drive**. Before switching, distinguish threshold voltage from the guaranteed low $R_{DS(on)}$ gate-drive condition and identify the main loss mechanisms.
 
 ---
 
