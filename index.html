@@ -1879,13 +1879,16 @@
 <h2 id="learning-path">Learning Path<a class="headerlink" href="#learning-path" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart TD
 
+subgraph S0[Preparation]
 A[Introduction]
 --&gt; A1[Microcontroller Familiarisation]
 
 A1 --&gt; A2[Oscilloscope Familiarisation]
 
 A2 --&gt; A3[WiFi Controller Familiarisation]
+end
 
+subgraph S1[Stage 1: Circuit Foundations]
 A3 --&gt; B[PWM]
 
 B --&gt; C[RC Circuits]
@@ -1893,7 +1896,9 @@ B --&gt; C[RC Circuits]
 C --&gt; D[RLC Circuits]
 
 D --&gt; E[MOSFET Fundamentals]
+end
 
+subgraph S2[Stage 2: Power-Converter Fundamentals]
 E --&gt; F[DC Chopper Converters]
 
 F --&gt; G[Buck Converter]
@@ -1905,7 +1910,9 @@ H --&gt; I[PWM Motor Control]
 I --&gt; J[AC-DC Rectifiers]
 
 J --&gt; K[DC-AC Inverters]
+end
 
+subgraph S3[Stage 3: Control Fundamentals and Design]
 K --&gt; L[System Identification]
 
 L --&gt; M[P Controller]
@@ -1917,10 +1924,13 @@ N --&gt; O[PID Controller]
 O --&gt; P[Closed Loop Buck]
 
 P --&gt; Q[Controller Design]
+end
 
+subgraph S4[Stage 4: Grid-Connected Converter Control]
 Q --&gt; R[Grid Following VSC]
 
-R --&gt; S[Grid Forming VSC]</code></pre>
+R --&gt; S[Grid Forming VSC]
+end</code></pre>
 
 
 
