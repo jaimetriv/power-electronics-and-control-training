@@ -1,0 +1,2826 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Practical Electronics, Control Systems and Power Electronics Training">
+      
+      
+        <meta name="author" content="Jaime Trivino">
+      
+      
+      
+        <link rel="prev" href="../00C_WiFi_Controller_Familiarisation/">
+      
+      
+        <link rel="next" href="../01_PWM_Fundamentals/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Control Theory Familiarisation - Power Electronics and Control Training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/results.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#control-theory-familiarisation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Power Electronics and Control Training" class="md-header__button md-logo" aria-label="Power Electronics and Control Training" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Power Electronics and Control Training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Control Theory Familiarisation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jaimetriv/power-electronics-and-control-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jaimetriv/power-electronics-and-control-training
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Power Electronics and Control Training" class="md-nav__button md-logo" aria-label="Power Electronics and Control Training" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Power Electronics and Control Training
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jaimetriv/power-electronics-and-control-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jaimetriv/power-electronics-and-control-training
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Resources
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Textbook_Resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Textbook Reading Path
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00_Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00A_Microcontroller_Familiarisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microcontroller Familiarisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00B_Oscilloscope_Familiarisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oscilloscope Familiarisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00C_WiFi_Controller_Familiarisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WiFi Controller Familiarisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Theory Familiarisation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Theory Familiarisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-before-this-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading Before This Review
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-study-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Study Path
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step-by-Step Study Path">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-identify-the-plant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Identify the Plant
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-derive-the-differential-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Derive the Differential Equation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-convert-to-a-transfer-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Convert to a Transfer Function
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-find-poles-and-predict-the-time-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Find Poles and Predict the Time Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-compare-a-second-order-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Compare a Second-Order Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-form-the-feedback-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Form the Feedback Loop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-check-stability-before-hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: Check Stability Before Hardware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-8-inspect-frequency-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8: Inspect Frequency Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-9-translate-the-controller-to-discrete-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 9: Translate the Controller to Discrete Time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-10-handle-saturation-and-anti-windup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 10: Handle Saturation and Anti-Windup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-control-system-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Control-System View
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#differential-equations-and-transfer-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Differential Equations and Transfer Functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#laplace-transform-essentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laplace Transform Essentials
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Laplace Transform Essentials">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-1-rc-transfer-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Example 1: RC Transfer Function
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-2-laplace-transform-of-an-rc-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Example 2: Laplace Transform of an RC Step
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-3-rlc-pole-and-ringing-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Example 3: RLC Pole and Ringing Prediction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poles-and-time-constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poles and Time Constants
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#second-order-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Second-Order Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#feedback-and-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feedback and Error
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Feedback and Error">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-4-proportional-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Example 4: Proportional Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-5-closed-loop-block-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Example 5: Closed-Loop Block Reduction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#steady-state-error-and-system-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Steady-State Error and System Type
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transient-performance-measures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transient Performance Measures
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bode-magnitude-phase-and-bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bode Magnitude, Phase, and Bandwidth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discrete-pi-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discrete PI Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linearisation-around-an-operating-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linearisation Around an Operating Point
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-assumptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Assumptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer Key
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checkpoint-exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checkpoint Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#link-to-later-labs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Link to Later Labs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Step
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Electronics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core Electronics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_PWM_Fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PWM Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_RC_Circuits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_RLC_Circuits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RLC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_MOSFET_Fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MOSFET Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power Conversion
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Power Conversion
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_DC_Chopper_Converters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DC Chopper Converters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_Buck_Converter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Buck Converter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_Boost_Converter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boost Converter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08_PWM_Motor_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PWM Motor Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_AC_DC_Rectifiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AC-DC Rectifiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_DC_AC_Inverters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DC-AC Inverters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Control Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11_System_Identification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Identification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12_P_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13_PI_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PI Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14_PID_Controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PID Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15_Closed_Loop_Buck/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Closed Loop Buck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Advanced Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16_Controller_Design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Controller Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17_Grid_Following_VSC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grid Following VSC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18_Grid_Forming_VSC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grid Forming VSC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-before-this-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading Before This Review
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-study-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Study Path
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step-by-Step Study Path">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-identify-the-plant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Identify the Plant
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-derive-the-differential-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Derive the Differential Equation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-convert-to-a-transfer-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Convert to a Transfer Function
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-find-poles-and-predict-the-time-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Find Poles and Predict the Time Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-compare-a-second-order-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Compare a Second-Order Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-form-the-feedback-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Form the Feedback Loop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-check-stability-before-hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: Check Stability Before Hardware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-8-inspect-frequency-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8: Inspect Frequency Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-9-translate-the-controller-to-discrete-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 9: Translate the Controller to Discrete Time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-10-handle-saturation-and-anti-windup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 10: Handle Saturation and Anti-Windup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-control-system-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Control-System View
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#differential-equations-and-transfer-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Differential Equations and Transfer Functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#laplace-transform-essentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laplace Transform Essentials
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Laplace Transform Essentials">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-1-rc-transfer-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Example 1: RC Transfer Function
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-2-laplace-transform-of-an-rc-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Example 2: Laplace Transform of an RC Step
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-3-rlc-pole-and-ringing-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Example 3: RLC Pole and Ringing Prediction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poles-and-time-constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poles and Time Constants
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#second-order-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Second-Order Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#feedback-and-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feedback and Error
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Feedback and Error">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-4-proportional-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Example 4: Proportional Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-5-closed-loop-block-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Example 5: Closed-Loop Block Reduction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#steady-state-error-and-system-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Steady-State Error and System Type
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transient-performance-measures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transient Performance Measures
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bode-magnitude-phase-and-bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bode Magnitude, Phase, and Bandwidth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discrete-pi-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discrete PI Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linearisation-around-an-operating-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linearisation Around an Operating Point
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-assumptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Assumptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer Key
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checkpoint-exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checkpoint Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#link-to-later-labs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Link to Later Labs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Step
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="control-theory-familiarisation">Control Theory Familiarisation<a class="headerlink" href="#control-theory-familiarisation" title="Permanent link">&para;</a></h1>
+<hr />
+<h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
+<p>This short review connects the RC and RLC circuits to the control concepts used in Labs 08 and 11-16. It is not a replacement for the assigned sections of Ogata's <em>Modern Control Engineering</em>. Use it to refresh the language and equations before continuing with the converter and control labs.</p>
+<h2 id="reading-before-this-review">Reading Before This Review<a class="headerlink" href="#reading-before-this-review" title="Permanent link">&para;</a></h2>
+<p>Read Ogata, Chapter 2, <strong>Mathematical Modeling of Control Systems</strong>, for differential-equation models, transfer functions, and block diagrams. Read Chapter 5, <strong>Transient and Steady-State Response Analysis</strong>, for first-order and second-order responses, poles, damping, overshoot, and settling time.</p>
+<p>Use Alexander and Sadiku, Chapters 7 and 8, to connect those ideas to first-order RC and second-order RLC circuits.</p>
+<h2 id="step-by-step-study-path">Step-by-Step Study Path<a class="headerlink" href="#step-by-step-study-path" title="Permanent link">&para;</a></h2>
+<p>Work through the stages in order. At each stage, write down the model, calculate one prediction, and compare it with a simulation or measurement.</p>
+<h3 id="step-1-identify-the-plant">Step 1: Identify the Plant<a class="headerlink" href="#step-1-identify-the-plant" title="Permanent link">&para;</a></h3>
+<p>Start by naming the physical system, input, output, actuator, sensor, and disturbance.</p>
+<p>For Lab 02:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plant</td>
+<td>RC circuit</td>
+</tr>
+<tr>
+<td>Input</td>
+<td>Source voltage <span class="arithmatex">\(V_S\)</span></td>
+</tr>
+<tr>
+<td>Output</td>
+<td>Capacitor voltage <span class="arithmatex">\(V_C\)</span></td>
+</tr>
+<tr>
+<td>Actuator</td>
+<td>Voltage source or GPIO signal</td>
+</tr>
+<tr>
+<td>Sensor</td>
+<td>Oscilloscope probe</td>
+</tr>
+<tr>
+<td>Disturbance</td>
+<td>Load, source, or component change</td>
+</tr>
+</tbody>
+</table>
+<p>Do not choose a controller until the plant and measured output are clear.</p>
+<h3 id="step-2-derive-the-differential-equation">Step 2: Derive the Differential Equation<a class="headerlink" href="#step-2-derive-the-differential-equation" title="Permanent link">&para;</a></h3>
+<p>Use Kirchhoff's laws and component relationships. For the RC circuit:</p>
+<ol>
+<li>Write KVL: <span class="arithmatex">\(V_S=V_R+V_C\)</span>.</li>
+<li>Substitute <span class="arithmatex">\(V_R=iR\)</span>.</li>
+<li>Substitute <span class="arithmatex">\(i=C\,dV_C/dt\)</span>.</li>
+<li>Rearrange to <span class="arithmatex">\(RC\,dV_C/dt+V_C=V_S\)</span>.</li>
+</ol>
+<p>This equation is the physical model before any Laplace transform is applied.</p>
+<h3 id="step-3-convert-to-a-transfer-function">Step 3: Convert to a Transfer Function<a class="headerlink" href="#step-3-convert-to-a-transfer-function" title="Permanent link">&para;</a></h3>
+<p>Assume zero initial conditions, take the Laplace transform, collect the output terms, and divide by the input:</p>
+<div class="arithmatex">\[
+RCsV_C(s)+V_C(s)=V_S(s)
+\]</div>
+<div class="arithmatex">\[
+H(s)=\frac{V_C(s)}{V_S(s)}=\frac{1}{RCs+1}
+\]</div>
+<p>Check that the transfer function is dimensionless and that its DC gain is 1.</p>
+<h3 id="step-4-find-poles-and-predict-the-time-response">Step 4: Find Poles and Predict the Time Response<a class="headerlink" href="#step-4-find-poles-and-predict-the-time-response" title="Permanent link">&para;</a></h3>
+<p>Set the denominator equal to zero to find the pole. A negative real pole gives a decaying exponential. For the RC model:</p>
+<div class="arithmatex">\[
+s=-\frac{1}{RC}=-\frac{1}{\tau}
+\]</div>
+<p>Use the pole to predict the time constant and use the step equation to predict measured voltages.</p>
+<h3 id="step-5-compare-a-second-order-model">Step 5: Compare a Second-Order Model<a class="headerlink" href="#step-5-compare-a-second-order-model" title="Permanent link">&para;</a></h3>
+<p>Repeat the process for the RLC circuit. Match its denominator to:</p>
+<div class="arithmatex">\[
+s^2+2\zeta\omega_n s+\omega_n^2
+\]</div>
+<p>Then calculate <span class="arithmatex">\(\omega_n\)</span>, <span class="arithmatex">\(\zeta\)</span>, and, when <span class="arithmatex">\(\zeta&lt;1\)</span>, <span class="arithmatex">\(\omega_d\)</span>. Use the pole locations to predict ringing and decay before opening the oscilloscope.</p>
+<h3 id="step-6-form-the-feedback-loop">Step 6: Form the Feedback Loop<a class="headerlink" href="#step-6-form-the-feedback-loop" title="Permanent link">&para;</a></h3>
+<p>Once the plant model is known, add a controller and feedback measurement:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Reference -&gt; Error -&gt; Controller -&gt; Actuator -&gt; Plant -&gt; Output
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>               ^                                      |
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>               |------------ Sensor -----------------|
+</code></pre></div>
+<p>For unity negative feedback, the error is <span class="arithmatex">\(e=r-y\)</span> and the closed-loop transfer function is:</p>
+<div class="arithmatex">\[
+T(s)=\frac{C(s)G(s)}{1+C(s)G(s)}
+\]</div>
+<p>where <span class="arithmatex">\(C(s)\)</span> is the controller and <span class="arithmatex">\(G(s)\)</span> is the plant.</p>
+<h3 id="step-7-check-stability-before-hardware">Step 7: Check Stability Before Hardware<a class="headerlink" href="#step-7-check-stability-before-hardware" title="Permanent link">&para;</a></h3>
+<p>Find the roots of the closed-loop characteristic equation:</p>
+<div class="arithmatex">\[
+1+C(s)G(s)=0
+\]</div>
+<p>For continuous-time systems:</p>
+<ul>
+<li>Poles with negative real parts produce decaying responses.</li>
+<li>Poles on the imaginary axis produce sustained oscillation in the ideal model.</li>
+<li>Any pole with a positive real part produces an unstable response.</li>
+</ul>
+<p>Always simulate a low-gain case before applying a new controller to hardware.</p>
+<h3 id="step-8-inspect-frequency-response">Step 8: Inspect Frequency Response<a class="headerlink" href="#step-8-inspect-frequency-response" title="Permanent link">&para;</a></h3>
+<p>Evaluate the plant at <span class="arithmatex">\(s=j\omega\)</span>:</p>
+<div class="arithmatex">\[
+G(j\omega)=G(s)\big|_{s=j\omega}
+\]</div>
+<p>The magnitude shows how much each frequency is amplified or attenuated. The phase shows the delay introduced by the plant. For the RC low-pass circuit:</p>
+<div class="arithmatex">\[
+|H(j\omega)|=\frac{1}{\sqrt{1+(\omega RC)^2}}
+\]</div>
+<p>At <span class="arithmatex">\(\omega=1/(RC)\)</span>, the magnitude is <span class="arithmatex">\(0.707\)</span> or approximately <span class="arithmatex">\(-3\)</span> dB. This connects the frequency-sweep experiment in Lab 02 to Bode plots used later for controller design.</p>
+<h3 id="step-9-translate-the-controller-to-discrete-time">Step 9: Translate the Controller to Discrete Time<a class="headerlink" href="#step-9-translate-the-controller-to-discrete-time" title="Permanent link">&para;</a></h3>
+<p>The ESP32 does not calculate a continuous-time controller. It samples signals every <span class="arithmatex">\(T_s\)</span> seconds. A practical discrete PI controller can be written as:</p>
+<div class="arithmatex">\[
+I[k]=I[k-1]+K_i e[k]T_s
+\]</div>
+<div class="arithmatex">\[
+u_{raw}[k]=K_p e[k]+I[k]
+\]</div>
+<p>Then limit the actuator command to its permitted range:</p>
+<div class="arithmatex">\[
+u[k]=\operatorname{sat}(u_{raw}[k],u_{min},u_{max})
+\]</div>
+<p>Sampling time, ADC resolution, PWM resolution, computation delay, and sensor filtering can all change the measured response.</p>
+<h3 id="step-10-handle-saturation-and-anti-windup">Step 10: Handle Saturation and Anti-Windup<a class="headerlink" href="#step-10-handle-saturation-and-anti-windup" title="Permanent link">&para;</a></h3>
+<p>When the actuator saturates, the integral term can continue accumulating even though the actuator cannot produce more command. This is integral windup.</p>
+<p>A simple conditional-integration strategy is:</p>
+<ol>
+<li>Calculate <span class="arithmatex">\(u_{raw}\)</span>.</li>
+<li>Apply the actuator limits to obtain <span class="arithmatex">\(u\)</span>.</li>
+<li>If the actuator is saturated and the error would drive it further into saturation, pause the integral update.</li>
+<li>Resume integration when the error moves the command back toward the permitted range.</li>
+</ol>
+<p>This is essential for the PI and closed-loop buck experiments, where the PWM command is limited to a finite range.</p>
+<h2 id="the-control-system-view">The Control-System View<a class="headerlink" href="#the-control-system-view" title="Permanent link">&para;</a></h2>
+<p>A control system can be described as:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Input or reference -&gt; Plant -&gt; Output
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>                         ^        |
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>                         |        v
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>                         +-- Sensor
+</code></pre></div>
+<ul>
+<li>The <strong>plant</strong> is the physical system being controlled.</li>
+<li>The <strong>input</strong> is the applied command or disturbance.</li>
+<li>The <strong>output</strong> is the measured quantity of interest.</li>
+<li>The <strong>sensor</strong> measures the output for comparison or analysis.</li>
+<li>A <strong>controller</strong> changes the actuator command to influence the plant.</li>
+</ul>
+<p>In Labs 02 and 03, the RC or RLC circuit is the plant. The applied source is the input and the measured capacitor voltage is the output.</p>
+<h2 id="differential-equations-and-transfer-functions">Differential Equations and Transfer Functions<a class="headerlink" href="#differential-equations-and-transfer-functions" title="Permanent link">&para;</a></h2>
+<p>A differential equation describes the physical relationship between input and output. For the RC circuit:</p>
+<div class="arithmatex">\[
+RC\frac{dV_C}{dt}+V_C=V_S
+\]</div>
+<p>With zero initial conditions, the Laplace transform gives the transfer function:</p>
+<div class="arithmatex">\[
+H_{RC}(s)=\frac{V_C(s)}{V_S(s)}=\frac{1}{RCs+1}
+\]</div>
+<p>A transfer function is a model for the input-output relationship. It does not by itself describe non-zero initial conditions, saturation, noise, or component variation.</p>
+<h2 id="laplace-transform-essentials">Laplace Transform Essentials<a class="headerlink" href="#laplace-transform-essentials" title="Permanent link">&para;</a></h2>
+<p>The Laplace transform changes a time-domain differential equation into an algebraic equation in <span class="arithmatex">\(s\)</span>. This makes it easier to derive transfer functions and combine blocks.</p>
+<p>Useful transform pairs are:</p>
+<table>
+<thead>
+<tr>
+<th>Time-domain function</th>
+<th>Laplace transform</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(1\)</span></td>
+<td><span class="arithmatex">\(1/s\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(e^{-at}\)</span></td>
+<td><span class="arithmatex">\(1/(s+a)\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\dfrac{dx}{dt}\)</span></td>
+<td><span class="arithmatex">\(sX(s)-x(0^-)\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\displaystyle\int_0^t x(\lambda)\,d\lambda\)</span></td>
+<td><span class="arithmatex">\(X(s)/s\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>For transfer functions, assume zero initial conditions unless the problem states otherwise. A step of amplitude <span class="arithmatex">\(A\)</span> has transform:</p>
+<div class="arithmatex">\[
+x(t)=A \quad\Longrightarrow\quad X(s)=\frac{A}{s}
+\]</div>
+<h3 id="worked-example-1-rc-transfer-function">Worked Example 1: RC Transfer Function<a class="headerlink" href="#worked-example-1-rc-transfer-function" title="Permanent link">&para;</a></h3>
+<p>For an RC circuit with <span class="arithmatex">\(R=10\ \mathrm{k\Omega}\)</span> and <span class="arithmatex">\(C=100\ \mathrm{\mu F}\)</span>:</p>
+<div class="arithmatex">\[
+    au=RC=(10\,000)(100\times10^{-6})=1\ \mathrm{s}
+\]</div>
+<p>The transfer function and pole are:</p>
+<div class="arithmatex">\[
+H(s)=\frac{1}{s+1},\qquad s=-1\ \mathrm{rad/s}
+\]</div>
+<p>For a 3.3 V step:</p>
+<div class="arithmatex">\[
+V_C(s)=\frac{3.3}{s(s+1)}
+\]</div>
+<p>Using partial fractions:</p>
+<div class="arithmatex">\[
+V_C(t)=3.3(1-e^{-t})
+\]</div>
+<p>Therefore, the predicted values are approximately 2.09 V at 1 s, 3.14 V at 3 s, and 3.28 V at 5 s. These are the values to compare with Lab 02.</p>
+<h3 id="worked-example-2-laplace-transform-of-an-rc-step">Worked Example 2: Laplace Transform of an RC Step<a class="headerlink" href="#worked-example-2-laplace-transform-of-an-rc-step" title="Permanent link">&para;</a></h3>
+<p>Starting with:</p>
+<div class="arithmatex">\[
+RC\frac{dV_C}{dt}+V_C=V_S
+\]</div>
+<p>Taking the Laplace transform with <span class="arithmatex">\(V_C(0^-)=0\)</span> gives:</p>
+<div class="arithmatex">\[
+RCsV_C(s)+V_C(s)=V_S(s)
+\]</div>
+<p>Collecting <span class="arithmatex">\(V_C(s)\)</span>:</p>
+<div class="arithmatex">\[
+V_C(s)(RCs+1)=V_S(s)
+\]</div>
+<p>Dividing by the input gives the transfer function:</p>
+<div class="arithmatex">\[
+\frac{V_C(s)}{V_S(s)}=\frac{1}{RCs+1}
+\]</div>
+<p>For a step input, substitute <span class="arithmatex">\(V_S(s)=V_F/s\)</span> and use partial fractions to return to the exponential charging equation. This is the same model viewed in the frequency-domain variable <span class="arithmatex">\(s\)</span> rather than time <span class="arithmatex">\(t\)</span>.</p>
+<h3 id="worked-example-3-rlc-pole-and-ringing-prediction">Worked Example 3: RLC Pole and Ringing Prediction<a class="headerlink" href="#worked-example-3-rlc-pole-and-ringing-prediction" title="Permanent link">&para;</a></h3>
+<p>For Lab 03, take <span class="arithmatex">\(L=100\ \mathrm{mH}\)</span>, <span class="arithmatex">\(C=100\ \mathrm{nF}\)</span>, and <span class="arithmatex">\(R=100\ \Omega\)</span>:</p>
+<div class="arithmatex">\[
+\omega_n=\frac{1}{\sqrt{LC}}=10\,000\ \mathrm{rad/s}
+\]</div>
+<div class="arithmatex">\[
+f_n=\frac{\omega_n}{2\pi}\approx1591\ \mathrm{Hz}
+\]</div>
+<div class="arithmatex">\[
+\zeta=\frac{R}{2}\sqrt{\frac{C}{L}}=0.05
+\]</div>
+<p>Since <span class="arithmatex">\(\zeta&lt;1\)</span>, the response is underdamped. Its poles are approximately:</p>
+<div class="arithmatex">\[
+s_{1,2}=-\zeta\omega_n\pm j\omega_n\sqrt{1-\zeta^2}
+\]</div>
+<div class="arithmatex">\[
+s_{1,2}\approx-500\pm j9987\ \mathrm{rad/s}
+\]</div>
+<p>The expected ringing frequency is approximately <span class="arithmatex">\(1590\ \mathrm{Hz}\)</span>, with an exponentially decaying envelope. This gives a prediction to test in the RLC simulation and oscilloscope experiment.</p>
+<h2 id="poles-and-time-constants">Poles and Time Constants<a class="headerlink" href="#poles-and-time-constants" title="Permanent link">&para;</a></h2>
+<p>The RC pole is found from the denominator:</p>
+<div class="arithmatex">\[
+RCs+1=0\qquad\Longrightarrow\qquad s=-\frac{1}{RC}=-\frac{1}{\tau}
+\]</div>
+<p>For a stable first-order system, the pole is negative. The time constant is:</p>
+<div class="arithmatex">\[
+\tau=RC
+\]</div>
+<p>For a step from 0 to <span class="arithmatex">\(V_F\)</span>:</p>
+<div class="arithmatex">\[
+V_C(t)=V_F\left(1-e^{-t/\tau}\right)
+\]</div>
+<p>Useful checkpoints are:</p>
+<table>
+<thead>
+<tr>
+<th>Time</th>
+<th style="text-align: right;">Charging level</th>
+<th style="text-align: right;">Discharging level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(1\tau\)</span></td>
+<td style="text-align: right;">63.2%</td>
+<td style="text-align: right;">36.8% remaining</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(3\tau\)</span></td>
+<td style="text-align: right;">95.0%</td>
+<td style="text-align: right;">5.0% remaining</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(5\tau\)</span></td>
+<td style="text-align: right;">99.3%</td>
+<td style="text-align: right;">0.7% remaining</td>
+</tr>
+</tbody>
+</table>
+<h2 id="second-order-systems">Second-Order Systems<a class="headerlink" href="#second-order-systems" title="Permanent link">&para;</a></h2>
+<p>For the series RLC circuit measured across the capacitor:</p>
+<div class="arithmatex">\[
+LC\frac{d^2V_C}{dt^2}+RC\frac{dV_C}{dt}+V_C=V_S
+\]</div>
+<p>The standard second-order form is:</p>
+<div class="arithmatex">\[
+H(s)=\frac{\omega_n^2}{s^2+2\zeta\omega_n s+\omega_n^2}
+\]</div>
+<p>where:</p>
+<div class="arithmatex">\[
+\omega_n=\frac{1}{\sqrt{LC}},\qquad
+\zeta=\frac{R}{2}\sqrt{\frac{C}{L}}
+\]</div>
+<p>The damping classification is:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Damping ratio</th>
+<th>Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(\zeta&lt;1\)</span></td>
+<td>Underdamped; ringing and possible overshoot</td>
+</tr>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(\zeta=1\)</span></td>
+<td>Critically damped; fastest response without oscillation</td>
+</tr>
+<tr>
+<td style="text-align: right;"><span class="arithmatex">\(\zeta&gt;1\)</span></td>
+<td>Overdamped; no oscillation, slower response</td>
+</tr>
+</tbody>
+</table>
+<p>The damped ringing frequency for an underdamped system is:</p>
+<div class="arithmatex">\[
+\omega_d=\omega_n\sqrt{1-\zeta^2}
+\]</div>
+<h2 id="feedback-and-error">Feedback and Error<a class="headerlink" href="#feedback-and-error" title="Permanent link">&para;</a></h2>
+<p>In a feedback controller, the error is the difference between the reference and measured output:</p>
+<div class="arithmatex">\[
+e(t)=r(t)-y(t)
+\]</div>
+<p>A controller uses the error to calculate an actuator command. For a proportional controller:</p>
+<div class="arithmatex">\[
+u(t)=K_p e(t)
+\]</div>
+<p>Increasing <span class="arithmatex">\(K_p\)</span> usually reduces error and speeds up the response, but excessive gain can cause overshoot, oscillation, saturation, or instability.</p>
+<p>The later controllers extend this action:</p>
+<ul>
+<li><strong>P:</strong> reacts to present error.</li>
+<li><strong>PI:</strong> adds accumulated error to reduce steady-state error.</li>
+<li><strong>PID:</strong> adds a rate-of-change term to shape the transient response.</li>
+</ul>
+<h3 id="worked-example-4-proportional-control">Worked Example 4: Proportional Control<a class="headerlink" href="#worked-example-4-proportional-control" title="Permanent link">&para;</a></h3>
+<p>Suppose the reference is <span class="arithmatex">\(r=2.0\ \mathrm{V}\)</span>, the measured output is <span class="arithmatex">\(y=1.6\ \mathrm{V}\)</span>, and <span class="arithmatex">\(K_p=4\)</span>:</p>
+<div class="arithmatex">\[
+e=r-y=2.0-1.6=0.4\ \mathrm{V}
+\]</div>
+<div class="arithmatex">\[
+u=K_pe=4(0.4)=1.6
+\]</div>
+<p>The actuator must still limit <span class="arithmatex">\(u\)</span> to its safe range. If the actuator saturates, increasing <span class="arithmatex">\(K_p\)</span> cannot produce more physical output and may increase overshoot or recovery time.</p>
+<h3 id="worked-example-5-closed-loop-block-reduction">Worked Example 5: Closed-Loop Block Reduction<a class="headerlink" href="#worked-example-5-closed-loop-block-reduction" title="Permanent link">&para;</a></h3>
+<p>Let the plant be:</p>
+<div class="arithmatex">\[
+G(s)=\frac{1}{s+1}
+\]</div>
+<p>and let the controller be a proportional gain <span class="arithmatex">\(C(s)=2\)</span>. For unity negative feedback:</p>
+<ol>
+<li>Form the forward path: <span class="arithmatex">\(C(s)G(s)=2/(s+1)\)</span>.</li>
+<li>Add the feedback denominator: <span class="arithmatex">\(1+C(s)G(s)=1+2/(s+1)\)</span>.</li>
+<li>Simplify:</li>
+</ol>
+<div class="arithmatex">\[
+T(s)=\frac{C(s)G(s)}{1+C(s)G(s)}=\frac{2}{s+3}
+\]</div>
+<p>The closed-loop pole moved from <span class="arithmatex">\(-1\)</span> to <span class="arithmatex">\(-3\)</span>. The response is faster, but this conclusion assumes an unsaturated actuator, unity sensor gain, negligible delay, and a valid linear plant model.</p>
+<h2 id="steady-state-error-and-system-type">Steady-State Error and System Type<a class="headerlink" href="#steady-state-error-and-system-type" title="Permanent link">&para;</a></h2>
+<p>Steady-state error is the final difference between the reference and output:</p>
+<div class="arithmatex">\[
+e_{ss}=\lim_{t\to\infty}e(t)
+\]</div>
+<p>For the proportional example above, a unit-step reference gives:</p>
+<div class="arithmatex">\[
+T(0)=\frac{2}{3},\qquad y(\infty)=\frac{2}{3},\qquad e_{ss}=1-\frac{2}{3}=\frac{1}{3}
+\]</div>
+<p>The finite error occurs because proportional control has finite DC loop gain. Adding an integrator increases the system type and can remove step-reference error, provided the closed loop is stable and the actuator does not remain saturated.</p>
+<h2 id="transient-performance-measures">Transient Performance Measures<a class="headerlink" href="#transient-performance-measures" title="Permanent link">&para;</a></h2>
+<p>Use these definitions consistently when comparing simulation and measurement:</p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rise time <span class="arithmatex">\(t_r\)</span></td>
+<td>Time for the response to move between specified percentages, commonly 10% and 90%</td>
+</tr>
+<tr>
+<td>Peak time <span class="arithmatex">\(t_p\)</span></td>
+<td>Time at which the first maximum occurs</td>
+</tr>
+<tr>
+<td>Overshoot <span class="arithmatex">\(M_p\)</span></td>
+<td>Amount the peak exceeds the final value, expressed as a percentage</td>
+</tr>
+<tr>
+<td>Settling time <span class="arithmatex">\(t_s\)</span></td>
+<td>Time after which the response remains within a specified band, commonly 2% or 5%</td>
+</tr>
+</tbody>
+</table>
+<p>For an underdamped standard second-order system, the overshoot is approximately:</p>
+<div class="arithmatex">\[
+M_p=100e^{-\zeta\pi/\sqrt{1-\zeta^2}}\ \%
+\]</div>
+<p>For a 2% settling-time estimate:</p>
+<div class="arithmatex">\[
+t_s\approx\frac{4}{\zeta\omega_n}
+\]</div>
+<p>These estimates apply to the standard linear model and may differ from measured hardware when zeros, delays, saturation, or noise are significant.</p>
+<h2 id="bode-magnitude-phase-and-bandwidth">Bode Magnitude, Phase, and Bandwidth<a class="headerlink" href="#bode-magnitude-phase-and-bandwidth" title="Permanent link">&para;</a></h2>
+<p>For the RC low-pass transfer function:</p>
+<div class="arithmatex">\[
+H(j\omega)=\frac{1}{1+j\omega RC}
+\]</div>
+<p>The magnitude is:</p>
+<div class="arithmatex">\[
+|H(j\omega)|=\frac{1}{\sqrt{1+(\omega RC)^2}}
+\]</div>
+<p>The phase is:</p>
+<div class="arithmatex">\[
+\angle H(j\omega)=-\tan^{-1}(\omega RC)
+\]</div>
+<p>At low frequency, the gain is near 1 and the phase is near <span class="arithmatex">\(0^\circ\)</span>. At the cutoff frequency, the gain is <span class="arithmatex">\(0.707\)</span> and the phase is <span class="arithmatex">\(-45^\circ\)</span>. At high frequency, the gain decreases at approximately <span class="arithmatex">\(-20\)</span> dB per decade and the phase approaches <span class="arithmatex">\(-90^\circ\)</span>.</p>
+<p>Bandwidth is the range of frequencies passed with acceptable attenuation. For this first-order low-pass example, the bandwidth is approximately <span class="arithmatex">\(0\)</span> to <span class="arithmatex">\(f_c\)</span>.</p>
+<h2 id="discrete-pi-implementation">Discrete PI Implementation<a class="headerlink" href="#discrete-pi-implementation" title="Permanent link">&para;</a></h2>
+<p>The continuous PI controller is:</p>
+<div class="arithmatex">\[
+C(s)=K_p+\frac{K_i}{s}
+\]</div>
+<p>One practical forward-Euler implementation is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>read measurement
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>error = reference - measurement
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>integral = integral + Ki * error * sample_time
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>raw_command = Kp * error + integral
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>command = limit(raw_command, command_min, command_max)
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>write PWM command
+</code></pre></div>
+<p>The actual loop is affected by the sample time, ADC conversion, computation time, PWM update timing, and sensor filtering. The sample time should be much shorter than the dominant plant time constant and fast enough to resolve the important plant dynamics.</p>
+<h2 id="linearisation-around-an-operating-point">Linearisation Around an Operating Point<a class="headerlink" href="#linearisation-around-an-operating-point" title="Permanent link">&para;</a></h2>
+<p>Converter models are often nonlinear. For example, an ideal boost converter has:</p>
+<div class="arithmatex">\[
+V_o=\frac{V_{in}}{1-D}
+\]</div>
+<p>A small change in duty cycle does not produce the same output change at every operating point. Around a chosen operating point <span class="arithmatex">\((D_0,V_{o0})\)</span>, use small-signal variables:</p>
+<div class="arithmatex">\[
+D=D_0+\hat d,\qquad V_o=V_{o0}+\hat v_o
+\]</div>
+<p>The linearised relationship is obtained from the local slope:</p>
+<div class="arithmatex">\[
+\hat v_o\approx\left.\frac{\partial V_o}{\partial D}\right|_{D_0}\hat d
+\]</div>
+<p>For the ideal boost equation:</p>
+<div class="arithmatex">\[
+\frac{\partial V_o}{\partial D}=\frac{V_{in}}{(1-D)^2}
+\]</div>
+<p>This explains why a controller tuned at one duty cycle may behave differently at another. Real converter design also includes inductor, capacitor, load, switching, and control dynamics.</p>
+<h2 id="model-assumptions">Model Assumptions<a class="headerlink" href="#model-assumptions" title="Permanent link">&para;</a></h2>
+<p>Compare a model and measurement by listing assumptions. Typical differences include:</p>
+<ul>
+<li>Component tolerance and parasitic resistance</li>
+<li>Oscilloscope probe loading and bandwidth</li>
+<li>Sensor scaling and ADC quantisation</li>
+<li>Sampling and computation delay</li>
+<li>Actuator saturation</li>
+<li>Switching ripple and measurement noise</li>
+<li>Operating-point dependence</li>
+</ul>
+<h2 id="exercises">Exercises<a class="headerlink" href="#exercises" title="Permanent link">&para;</a></h2>
+<p>Try these before looking at the answer key.</p>
+<ol>
+<li>For <span class="arithmatex">\(R=22\ \mathrm{k\Omega}\)</span> and <span class="arithmatex">\(C=47\ \mathrm{\mu F}\)</span>, calculate <span class="arithmatex">\(\tau\)</span>, the pole, and the cutoff frequency.</li>
+<li>For a 5 V step and <span class="arithmatex">\(\tau=0.2\ \mathrm{s}\)</span>, calculate the output at <span class="arithmatex">\(t=0.2\ \mathrm{s}\)</span> and <span class="arithmatex">\(t=0.6\ \mathrm{s}\)</span>.</li>
+<li>For <span class="arithmatex">\(L=47\ \mathrm{mH}\)</span>, <span class="arithmatex">\(C=100\ \mathrm{nF}\)</span>, and <span class="arithmatex">\(R=47\ \Omega\)</span>, calculate <span class="arithmatex">\(\omega_n\)</span> and <span class="arithmatex">\(\zeta\)</span>. Classify the response.</li>
+<li>For <span class="arithmatex">\(H(s)=5/(s+5)\)</span> and a 2 V step, write <span class="arithmatex">\(Y(s)\)</span> and the time-domain output <span class="arithmatex">\(y(t)\)</span>.</li>
+<li>A proportional controller has <span class="arithmatex">\(r=3\ \mathrm{V}\)</span>, <span class="arithmatex">\(y=2.4\ \mathrm{V}\)</span>, and <span class="arithmatex">\(K_p=2.5\)</span>. Calculate the error and controller output.</li>
+<li>From a measured step response, the final value is 4 V and the output reaches 2.53 V at 0.8 s. Estimate the first-order time constant.</li>
+<li>For <span class="arithmatex">\(G(s)=1/(s+1)\)</span> with a proportional controller <span class="arithmatex">\(C(s)=2\)</span>, derive the unity-feedback closed-loop transfer function and its pole.</li>
+<li>For <span class="arithmatex">\(G(s)=1/(s+2)\)</span> and <span class="arithmatex">\(C(s)=3\)</span>, determine whether the unity-feedback system is stable.</li>
+<li>For <span class="arithmatex">\(R=10\ \mathrm{k\Omega}\)</span> and <span class="arithmatex">\(C=100\ \mathrm{nF}\)</span>, calculate <span class="arithmatex">\(f_c\)</span> and the magnitude at the cutoff frequency.</li>
+<li>For <span class="arithmatex">\(K_p=2\)</span>, <span class="arithmatex">\(K_i=5\)</span>, <span class="arithmatex">\(T_s=0.01\ \mathrm{s}\)</span>, <span class="arithmatex">\(e[k]=0.4\)</span>, and <span class="arithmatex">\(I[k-1]=0\)</span>, calculate <span class="arithmatex">\(I[k]\)</span> and <span class="arithmatex">\(u_{raw}[k]\)</span>.</li>
+<li>A PI controller requests <span class="arithmatex">\(u_{raw}=1.4\)</span> but the actuator limit is <span class="arithmatex">\(u_{max}=1.0\)</span>. Explain what should happen to the integral update if the positive error would drive the command further upward.</li>
+<li>For a standard second-order system with <span class="arithmatex">\(\zeta=0.5\)</span> and <span class="arithmatex">\(\omega_n=10\ \mathrm{rad/s}\)</span>, estimate percentage overshoot and 2% settling time.</li>
+<li>For <span class="arithmatex">\(H(s)=1/(1+s)\)</span>, calculate the magnitude and phase at <span class="arithmatex">\(\omega=1\ \mathrm{rad/s}\)</span>.</li>
+<li>For an ideal boost converter with <span class="arithmatex">\(V_{in}=3.3\ \mathrm{V}\)</span> at <span class="arithmatex">\(D_0=0.5\)</span>, calculate the local output-voltage slope <span class="arithmatex">\(\partial V_o/\partial D\)</span>.</li>
+<li>Explain two reasons why a discrete PI controller can behave differently from its continuous-time simulation.</li>
+<li>A unity-feedback plant has a sensor gain of <span class="arithmatex">\(0.5\)</span> rather than 1. Explain why the unity-feedback formula cannot be used without modification.</li>
+</ol>
+<h2 id="answer-key">Answer Key<a class="headerlink" href="#answer-key" title="Permanent link">&para;</a></h2>
+<ol>
+<li><span class="arithmatex">\(\tau=1.034\ \mathrm{s}\)</span>, pole <span class="arithmatex">\(\approx-0.967\ \mathrm{rad/s}\)</span>, and <span class="arithmatex">\(f_c\approx0.154\ \mathrm{Hz}\)</span>.</li>
+<li><span class="arithmatex">\(y(0.2)\approx3.16\ \mathrm{V}\)</span> and <span class="arithmatex">\(y(0.6)\approx4.75\ \mathrm{V}\)</span>.</li>
+<li><span class="arithmatex">\(\omega_n\approx14\,586\ \mathrm{rad/s}\)</span>, <span class="arithmatex">\(\zeta\approx0.034\)</span>, underdamped.</li>
+<li><span class="arithmatex">\(Y(s)=10/[s(s+5)]\)</span> and <span class="arithmatex">\(y(t)=2(1-e^{-5t})\)</span> V.</li>
+<li><span class="arithmatex">\(e=0.6\ \mathrm{V}\)</span> and <span class="arithmatex">\(u=1.5\)</span>.</li>
+<li>Since 2.53 V is 63.2% of 4 V, <span class="arithmatex">\(\tau\approx0.8\ \mathrm{s}\)</span>.</li>
+<li><span class="arithmatex">\(T(s)=2/(s+3)\)</span> and the pole is <span class="arithmatex">\(s=-3\)</span>.</li>
+<li><span class="arithmatex">\(T(s)=3/(s+5)\)</span>; the pole is <span class="arithmatex">\(s=-5\)</span>, so the system is stable.</li>
+<li><span class="arithmatex">\(f_c\approx159\ \mathrm{Hz}\)</span> and the magnitude is <span class="arithmatex">\(0.707\)</span> at the cutoff.</li>
+<li><span class="arithmatex">\(I[k]=0.02\)</span> and <span class="arithmatex">\(u_{raw}[k]=0.82\)</span>.</li>
+<li>Set <span class="arithmatex">\(u=1.0\)</span> and pause integration while the positive error would push the command further into saturation.</li>
+<li><span class="arithmatex">\(M_p\approx16.3\%\)</span> and <span class="arithmatex">\(t_s\approx0.8\ \mathrm{s}\)</span>.</li>
+<li>Magnitude <span class="arithmatex">\(\approx0.707\)</span> and phase <span class="arithmatex">\(=-45^\circ\)</span>.</li>
+<li><span class="arithmatex">\(\partial V_o/\partial D=3.3/(1-0.5)^2=13.2\ \mathrm{V}\)</span> per unit duty ratio.</li>
+<li>Possible causes include sampling delay, ADC quantisation, PWM update timing, actuator saturation, and sensor filtering.</li>
+<li>Use <span class="arithmatex">\(T(s)=C(s)G(s)/(1+C(s)G(s)H(s))\)</span> with sensor transfer function <span class="arithmatex">\(H(s)=0.5\)</span>.</li>
+</ol>
+<h2 id="checkpoint-exercise">Checkpoint Exercise<a class="headerlink" href="#checkpoint-exercise" title="Permanent link">&para;</a></h2>
+<p>Complete these before Lab 04 or the converter sequence:</p>
+<ol>
+<li>From the RC circuit, calculate <span class="arithmatex">\(\tau\)</span> and the pole for the component values used in Lab 02.</li>
+<li>From the RLC circuit, calculate <span class="arithmatex">\(\omega_n\)</span>, <span class="arithmatex">\(\zeta\)</span>, and whether the response is underdamped.</li>
+<li>Mark the expected <span class="arithmatex">\(1\tau\)</span>, <span class="arithmatex">\(3\tau\)</span>, and <span class="arithmatex">\(5\tau\)</span> points on a measured step response.</li>
+<li>Compare one measured waveform with its transfer-function prediction.</li>
+<li>Record two assumptions that explain the difference.</li>
+</ol>
+<h2 id="link-to-later-labs">Link to Later Labs<a class="headerlink" href="#link-to-later-labs" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Lab 08 treats the motor as a dynamic plant.</li>
+<li>Lab 11 identifies a model from measured data.</li>
+<li>Labs 12-14 apply P, PI, and PID feedback.</li>
+<li>Labs 15-16 apply the models and controllers to a buck converter and design problem.</li>
+</ul>
+<h2 id="next-step">Next Step<a class="headerlink" href="#next-step" title="Permanent link">&para;</a></h2>
+<p>Continue to <a href="../04_MOSFET_Fundamentals/">MOSFET Fundamentals</a>, then complete the converter sequence before starting <a href="../11_System_Identification/">System Identification</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@11/dist/mermaid.min"></script>
+      
+        <script src="../javascripts/results.js"></script>
+      
+    
+  </body>
+</html>
