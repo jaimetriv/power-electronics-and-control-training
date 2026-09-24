@@ -464,6 +464,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#control-theory-checkpoint-after-lab-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Control Theory Checkpoint After Lab 03
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#stage-2-power-converter-fundamentals" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1598,6 +1609,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#control-theory-checkpoint-after-lab-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Control Theory Checkpoint After Lab 03
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#stage-2-power-converter-fundamentals" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1761,7 +1783,16 @@
 <h2 id="recommended-learning-path">Recommended Learning Path<a class="headerlink" href="#recommended-learning-path" title="Permanent link">&para;</a></h2>
 <p>Follow the labs in four stages. Read only the listed topics before each lab, then use the experiment to test a prediction.</p>
 <h3 id="stage-1-circuit-foundations">Stage 1: Circuit Foundations<a class="headerlink" href="#stage-1-circuit-foundations" title="Permanent link">&para;</a></h3>
-<p>Complete Labs 01–04 using Alexander and Sadiku for circuit analysis and Erickson and Maksimovic for MOSFET switching. Focus on predicting waveforms, time constants, energy storage, resonance, and switching behaviour.</p>
+<p>Complete Labs 01–04 using Alexander and Sadiku for circuit analysis and Erickson and Maksimovic for MOSFET switching. Introduce control theory through the RC and RLC models: use Ogata Chapters 2 and 5 to connect differential equations, transfer functions, poles, time constants, damping, and transient response to measured circuits.</p>
+<h3 id="control-theory-checkpoint-after-lab-03">Control Theory Checkpoint After Lab 03<a class="headerlink" href="#control-theory-checkpoint-after-lab-03" title="Permanent link">&para;</a></h3>
+<p>Before continuing to the converter labs, complete this short checkpoint:</p>
+<ol>
+<li>Derive the RC transfer function <span class="arithmatex">\(H_{RC}(s)=1/(RCs+1)\)</span>.</li>
+<li>Identify its pole and relate it to <span class="arithmatex">\(\tau=RC\)</span>.</li>
+<li>Review the RLC characteristic equation and classify its damping.</li>
+<li>Compare measured rise time, settling time, overshoot, and ringing with the Ogata model.</li>
+<li>Record the assumptions that explain differences between the model and hardware.</li>
+</ol>
 <h3 id="stage-2-power-converter-fundamentals">Stage 2: Power-Converter Fundamentals<a class="headerlink" href="#stage-2-power-converter-fundamentals" title="Permanent link">&para;</a></h3>
 <p>Complete Labs 05–10 using Erickson and Maksimovic as the main text, with Alexander and Sadiku for circuit refreshers. Focus on switching intervals, volt-second balance, charge balance, conduction modes, ripple, rectification, modulation, and harmonics.</p>
 <h3 id="stage-3-control-fundamentals-and-design">Stage 3: Control Fundamentals and Design<a class="headerlink" href="#stage-3-control-fundamentals-and-design" title="Permanent link">&para;</a></h3>
@@ -1788,15 +1819,15 @@
 </tr>
 <tr>
 <td><a href="../02_RC_Circuits/">02 RC Circuits</a></td>
-<td>Capacitor charging, discharging, time constant, first-order response</td>
-<td>Alexander and Sadiku, Ch. 6: capacitors and energy storage; Ch. 7, <strong>First-Order Circuits</strong>: zero-input/zero-state response and the RC time constant</td>
-<td>Calculate <span class="arithmatex">\(\tau=RC\)</span> and estimate the voltage at <span class="arithmatex">\(t=\tau\)</span>, <span class="arithmatex">\(3\tau\)</span>, and <span class="arithmatex">\(5\tau\)</span></td>
+<td>Capacitor charging, discharging, time constant, first-order response, transfer function, pole</td>
+<td>Alexander and Sadiku, Ch. 6: capacitors and energy storage; Ch. 7, <strong>First-Order Circuits</strong>: zero-input/zero-state response and the RC time constant. Ogata, Ch. 2: modelling and transfer functions; Ch. 5: first-order response and time constants</td>
+<td>Calculate <span class="arithmatex">\(\tau=RC\)</span>, identify <span class="arithmatex">\(s=-1/\tau\)</span>, and estimate the voltage at <span class="arithmatex">\(t=\tau\)</span>, <span class="arithmatex">\(3\tau\)</span>, and <span class="arithmatex">\(5\tau\)</span></td>
 </tr>
 <tr>
 <td><a href="../03_RLC_Circuits/">03 RLC Circuits</a></td>
-<td>Inductor energy, resonance, natural response, damping, ringing</td>
-<td>Alexander and Sadiku, Ch. 6: inductors and energy storage; Ch. 8, <strong>Second-Order Circuits</strong>: natural frequency, damping ratio, overdamped/underdamped response, and resonance</td>
-<td>Estimate natural frequency, classify damping, and predict whether the waveform rings</td>
+<td>Inductor energy, resonance, natural response, damping, ringing, second-order response</td>
+<td>Alexander and Sadiku, Ch. 6: inductors and energy storage; Ch. 8, <strong>Second-Order Circuits</strong>: natural frequency, damping ratio, overdamped/underdamped response, and resonance. Ogata, Ch. 5: second-order poles, damping, overshoot, and settling time</td>
+<td>Estimate natural frequency, classify damping, and predict ringing, overshoot, and settling behaviour</td>
 </tr>
 <tr>
 <td><a href="../04_MOSFET_Fundamentals/">04 MOSFET Fundamentals</a></td>

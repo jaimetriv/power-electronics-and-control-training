@@ -1334,17 +1334,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#learning-outcomes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Learning Outcomes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#introduction" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2227,17 +2216,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#project-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Project Summary
-      
-    </span>
-  </a>
   
 </li>
       
@@ -2356,17 +2334,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#learning-outcomes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Learning Outcomes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#introduction" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3253,17 +3220,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#project-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Project Summary
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#next-project" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3324,17 +3280,6 @@
 <p>Recommended AC test voltage:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>1 V to 10 V RMS
 </code></pre></div>
-<hr />
-<h2 id="learning-outcomes">Learning Outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
-<p>At the end of this project you should be able to:</p>
-<p>✅ Explain Grid-Following Operation</p>
-<p>✅ Explain PLL Synchronisation</p>
-<p>✅ Explain Current Injection</p>
-<p>✅ Design a Current Controller</p>
-<p>✅ Implement PI Regulation</p>
-<p>✅ Generate SPWM</p>
-<p>✅ Understand dq Control</p>
-<p>✅ Understand Modern Renewable Energy Converters</p>
 <hr />
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>Most modern renewable energy systems use Grid-Following converters.</p>
@@ -3420,7 +3365,7 @@ P = V_{RMS}I_{RMS}
 </ul>
 <h3 id="voltage-measurement">Voltage Measurement<a class="headerlink" href="#voltage-measurement" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Resistor divider</li>
+<li>Isolated or differential voltage sensor with an output limited to 0–3.3 V; alternatively, use a resistor divider with a verified mid-supply bias and input protection</li>
 </ul>
 <h3 id="inverter-stage">Inverter Stage<a class="headerlink" href="#inverter-stage" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3824,7 +3769,7 @@ u = K_P e + K_I \int e\,dt
 <h3 id="procedure">Procedure<a class="headerlink" href="#procedure" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Set the function generator to output a <strong>50 Hz sine wave</strong> at <strong>5 Vpeak</strong>.</li>
-<li>Connect the function generator output to the controller ADC input through a voltage divider (to scale to 0–3.3 V for ESP32).</li>
+<li>Connect the function generator output to an isolated or differential voltage sensor. If using the ESP32 ADC, use a properly attenuated mid-supply-biased interface so the complete bipolar waveform remains between 0 V and 3.3 V; a divider to ground alone is not safe for the negative half-cycle.</li>
 <li>Upload PLL code to the ESP32.</li>
 <li>Connect the oscilloscope probe to the function generator output.</li>
 <li>Observe zero crossings and verify the PLL is tracking the grid angle.</li>
@@ -4098,29 +4043,6 @@ u = K_P e + K_I \int e\,dt
 <hr />
 <h3 id="question-6">Question 6<a class="headerlink" href="#question-6" title="Permanent link">&para;</a></h3>
 <p>During Experiment 4 your measured current settling time was longer than the MATLAB simulation predicted. List two physical causes and explain how you would update the plant model <span class="arithmatex">\(G(s) = 1/(Ls + R)\)</span> to account for them.</p>
-<hr />
-<h2 id="project-summary">Project Summary<a class="headerlink" href="#project-summary" title="Permanent link">&para;</a></h2>
-<p>This project combines:</p>
-<p>✅ PWM</p>
-<p>✅ MOSFET Switching</p>
-<p>✅ Inverters</p>
-<p>✅ PI Controllers</p>
-<p>✅ Signal Processing</p>
-<p>✅ Control Systems</p>
-<p>✅ System Identification</p>
-<p>✅ Power Electronics</p>
-<p>✅ AC Systems</p>
-<p>✅ Renewable Energy Concepts</p>
-<p>into a complete modern converter control architecture.</p>
-<p>You have now progressed from basic PWM generation to the same fundamental control structure used in modern:</p>
-<ul>
-<li>Solar Inverters</li>
-<li>Battery Energy Storage Systems</li>
-<li>EV Chargers</li>
-<li>Utility-Scale Converters</li>
-<li>Grid Support Systems</li>
-</ul>
-<p>and have completed the full introductory power electronics and control engineering pathway.</p>
 <hr />
 <h2 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>18_Grid_Forming_VSC.md

@@ -921,17 +921,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#learning-outcomes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Learning Outcomes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#introduction" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1769,17 +1758,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#project-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Project Summary
-      
-    </span>
-  </a>
   
 </li>
       
@@ -2289,17 +2267,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#learning-outcomes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Learning Outcomes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#introduction" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3141,17 +3108,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#project-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Project Summary
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#next-project" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3199,16 +3155,6 @@
 <li>How Boost Converters compare to Buck Converters</li>
 </ul>
 <p>This project introduces the second major non-isolated DC-DC converter topology.</p>
-<hr />
-<h2 id="learning-outcomes">Learning Outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
-<p>At the end of this project you should be able to:</p>
-<p>✅ Explain Boost Converter operation</p>
-<p>✅ Explain inductor energy storage</p>
-<p>✅ Calculate ideal output voltage</p>
-<p>✅ Understand duty cycle effects</p>
-<p>✅ Measure PWM switching signals</p>
-<p>✅ Measure output ripple</p>
-<p>✅ Compare Buck and Boost Converters</p>
 <hr />
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>A Boost Converter is a step-up DC-DC converter.</p>
@@ -3315,6 +3261,7 @@ V_{IN} = V_{OUT}(1 - D)
 V_{OUT} = \frac{V_{IN}}{1 - D}
 \]</div>
 <p>CCM means that inductor current never reaches zero. Near <span class="arithmatex">\(D=1\)</span>, the ideal expression becomes extremely sensitive to duty-cycle error and predicts impractically large current and voltage; real losses, component ratings, startup transients, and discontinuous conduction limit the usable range.</p>
+<p>For hardware, begin at <span class="arithmatex">\(D=0.25\)</span> and increase only while the measured output voltage, inductor current, diode, MOSFET, capacitor, load, and oscilloscope ratings remain within limits. Treat <span class="arithmatex">\(D=0.50\)</span> as the highest default hardware test in this lab; the <span class="arithmatex">\(D=0.75\)</span> case is a simulation prediction unless every component rating has been checked.</p>
 <p>Where:</p>
 <ul>
 <li><span class="arithmatex">\(V_{OUT}\)</span> = Output Voltage</li>
@@ -3850,7 +3797,7 @@ V_{OUT} = \frac{3.3}{1 - 0.75} = 13.2\ \text{V}
 <a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~50% duty cycle → Vout ≈ 6.6 V (ideal)</span>
 <a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
 <a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
-<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">192</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~75% duty cycle → Vout ≈ 13.2 V (ideal)</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">192</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~75% duty cycle → simulation prediction only (~13.2 V ideal)</span>
 <a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
 <a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="p">}</span>
 </code></pre></div>
@@ -3902,7 +3849,7 @@ V_{OUT} = \frac{3.3}{1 - 0.75} = 13.2\ \text{V}
   <tbody>
     <tr><td>64</td><td>25%</td><td>4.4 V</td><td><input class="result-input" id="lab07-exp2-vout25" placeholder="V"></td></tr>
     <tr><td>128</td><td>50%</td><td>6.6 V</td><td><input class="result-input" id="lab07-exp2-vout50" placeholder="V"></td></tr>
-    <tr><td>192</td><td>75%</td><td>13.2 V</td><td><input class="result-input" id="lab07-exp2-vout75" placeholder="V"></td></tr>
+    <tr><td>192</td><td>75%</td><td>13.2 V (simulation only)</td><td><input class="result-input" id="lab07-exp2-vout75" placeholder="V"></td></tr>
   </tbody>
 </table>
 </div>
@@ -3918,7 +3865,7 @@ V_{OUT} = \frac{3.3}{1 - 0.75} = 13.2\ \text{V}
 <li>Clip the <strong>CH1 probe ground</strong> to any <strong>GND pin</strong> on the ESP32.</li>
 </ol>
 <blockquote>
-<p>Use AC coupling to isolate the ripple from the DC offset.</p>
+<p>Use AC coupling to isolate the ripple from the DC offset. Return to DC coupling before measuring absolute output voltage.</p>
 </blockquote>
 <hr />
 <h3 id="oscilloscope-settings-ripple">Oscilloscope Settings — Ripple<a class="headerlink" href="#oscilloscope-settings-ripple" title="Permanent link">&para;</a></h3>
@@ -4122,21 +4069,6 @@ V_{OUT} = \frac{3.3}{1 - 0.75} = 13.2\ \text{V}
   <button class="result-clear-btn" data-lab="lab07">✕ Clear All Results</button>
 </div>
 
-<hr />
-<h2 id="project-summary">Project Summary<a class="headerlink" href="#project-summary" title="Permanent link">&para;</a></h2>
-<p>In this project you learned:</p>
-<p>✅ Boost Converter operation</p>
-<p>✅ Step-up voltage conversion</p>
-<p>✅ Inductor energy storage</p>
-<p>✅ PWM-controlled energy transfer</p>
-<p>✅ Diode operation</p>
-<p>✅ Output ripple</p>
-<p>✅ Practical DC-DC conversion</p>
-<p>You have now studied the two most important non-isolated converter topologies:</p>
-<ul>
-<li>Buck Converter</li>
-<li>Boost Converter</li>
-</ul>
 <hr />
 <h2 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>08_PWM_Motor_Control.md

@@ -1206,17 +1206,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#learning-outcomes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Learning Outcomes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#introduction" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2038,17 +2027,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#project-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Project Summary
-      
-    </span>
-  </a>
   
 </li>
       
@@ -2273,17 +2251,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#learning-outcomes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Learning Outcomes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#introduction" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3109,17 +3076,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#project-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Project Summary
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#next-project" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3168,16 +3124,6 @@
 </ul>
 <p>This project combines power electronics and control systems to create a practical regulated power supply.</p>
 <hr />
-<h2 id="learning-outcomes">Learning Outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
-<p>At the end of this project you should be able to:</p>
-<p>✅ Explain closed-loop regulation</p>
-<p>✅ Implement voltage feedback</p>
-<p>✅ Calculate voltage error</p>
-<p>✅ Implement a PI controller</p>
-<p>✅ Explain disturbance rejection</p>
-<p>✅ Tune PI gains</p>
-<p>✅ Analyse converter performance</p>
-<hr />
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>In Project 06 the Buck Converter operated in open loop.</p>
 <p>The controller generated a fixed duty cycle and the output depended entirely on input voltage, component values, and load conditions.</p>
@@ -3215,6 +3161,7 @@
 <div class="arithmatex">\[
 V_{FB} = \frac{V_{OUT}}{2}
 \]</div>
+<p>This equal-divider arrangement is only suitable for the documented approximately 3.3 V output, where the midpoint is approximately 1.65 V. For any higher output, recalculate the divider so the maximum midpoint voltage remains within the selected ESP32 ADC range, and verify the ADC attenuation setting before connecting the converter. Do not connect an unscaled converter output to the ADC.</p>
 <p>For an Arduino Uno backup, use A0 instead of GPIO34. The divider and ADC range must be selected for the actual converter maximum voltage; never assume that a 1:1 divider is safe for every hardware configuration.</p>
 <hr />
 <h2 id="lc-filter-transfer-function-derivation">LC Filter Transfer Function Derivation<a class="headerlink" href="#lc-filter-transfer-function-derivation" title="Permanent link">&para;</a></h2>
@@ -3977,17 +3924,6 @@ V_{OUT} = V_{A0} \times 2
 <hr />
 <h3 id="question-6">Question 6<a class="headerlink" href="#question-6" title="Permanent link">&para;</a></h3>
 <p>The voltage divider scales Vout by 0.5 before the ADC. The ESP32 reference in the code is set to 1.65 V. What actual output voltage is the controller regulating to, and what would you change in the code to regulate to 2.0 V instead?</p>
-<hr />
-<h2 id="project-summary">Project Summary<a class="headerlink" href="#project-summary" title="Permanent link">&para;</a></h2>
-<p>In this project you learned:</p>
-<p>✅ Closed-loop regulation</p>
-<p>✅ Voltage feedback</p>
-<p>✅ PI control</p>
-<p>✅ Disturbance rejection</p>
-<p>✅ Controller tuning</p>
-<p>✅ Converter dynamics</p>
-<p>✅ Stability concepts</p>
-<p>✅ Practical voltage regulation</p>
 <hr />
 <h2 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>16_Controller_Design.md

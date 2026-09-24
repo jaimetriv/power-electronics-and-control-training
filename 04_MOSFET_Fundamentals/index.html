@@ -776,17 +776,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#learning-outcomes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Learning Outcomes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#theory" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1641,17 +1630,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#project-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Project Summary
-      
-    </span>
-  </a>
   
 </li>
       
@@ -2306,17 +2284,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#learning-outcomes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Learning Outcomes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#theory" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3175,17 +3142,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#project-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Project Summary
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#next-project" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3241,16 +3197,6 @@
 <li>DC-DC converters</li>
 <li>Inverters</li>
 </ul>
-<hr />
-<h2 id="learning-outcomes">Learning Outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
-<p>At the end of this project you should be able to:</p>
-<p>✅ Explain MOSFET operation</p>
-<p>✅ Identify Gate, Drain and Source</p>
-<p>✅ Use a MOSFET as a switch</p>
-<p>✅ Drive a MOSFET from a microcontroller</p>
-<p>✅ Measure PWM on the MOSFET gate</p>
-<p>✅ Explain switching losses</p>
-<p>✅ Understand the foundation of power electronics</p>
 <hr />
 <h2 id="theory">Theory<a class="headerlink" href="#theory" title="Permanent link">&para;</a></h2>
 <h3 id="what-is-a-mosfet">What is a MOSFET?<a class="headerlink" href="#what-is-a-mosfet" title="Permanent link">&para;</a></h3>
@@ -3319,7 +3265,7 @@ V_{GS} = V_G - V_S
 <li>IRL540N</li>
 </ul>
 <p>Avoid the IRFZ44N for direct beginner microcontroller drive unless a suitable gate driver is used — its low <span class="arithmatex">\(R_{DS(on)}\)</span> is not specified for typical 3.3 V logic drive.</p>
-<p>For the IRLZ44N, verify the required gate voltage and expected load current from the data sheet. At higher current, use a MOSFET with a guaranteed 2.5 V or 3.3 V <span class="arithmatex">\(R_{DS(on)}\)</span> rating, or add a gate driver.</p>
+<p>For the IRLZ44N, verify the required gate voltage and expected load current from the data sheet. Do not use an <span class="arithmatex">\(R_{DS(on)}\)</span> value specified only at 5 V or 10 V gate drive to predict losses from a 3.3 V GPIO. Estimate conduction loss with <span class="arithmatex">\(P_{cond}\approx I_D^2R_{DS(on)}\)</span> only when the resistance is specified at the actual <span class="arithmatex">\(V_{GS}\)</span>; otherwise use a gate driver or measure the device voltage drop. At higher current, use a MOSFET with a guaranteed 2.5 V or 3.3 V <span class="arithmatex">\(R_{DS(on)}\)</span> rating, or add a gate driver.</p>
 <hr />
 <h2 id="why-a-mosfet-is-efficient">Why a MOSFET is Efficient<a class="headerlink" href="#why-a-mosfet-is-efficient" title="Permanent link">&para;</a></h2>
 <p>The instantaneous device loss is:</p>
@@ -4001,24 +3947,6 @@ V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
   <button class="result-clear-btn" data-lab="lab04">✕ Clear All Results</button>
 </div>
 
-<hr />
-<h2 id="project-summary">Project Summary<a class="headerlink" href="#project-summary" title="Permanent link">&para;</a></h2>
-<p>In this project you learned:</p>
-<p>✅ MOSFET operation</p>
-<p>✅ Gate, Drain and Source</p>
-<p>✅ Electronic switching</p>
-<p>✅ PWM-controlled switching</p>
-<p>✅ MOSFET efficiency</p>
-<p>✅ How a microcontroller controls larger loads</p>
-<p>✅ Foundations of power electronics</p>
-<p>These ideas are the building blocks for:</p>
-<ul>
-<li>Motor controllers</li>
-<li>Buck converters</li>
-<li>Boost converters</li>
-<li>Inverters</li>
-<li>Switching power supplies</li>
-</ul>
 <hr />
 <h2 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>05_DC_Chopper_Converters.md
