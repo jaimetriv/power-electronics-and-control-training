@@ -13,7 +13,7 @@
       
       
       
-        <link rel="prev" href="../04_MOSFET_Fundamentals/">
+        <link rel="prev" href="../04_MOSFET_Switching/">
       
       
         <link rel="next" href="../06_Buck_Converter/">
@@ -27,7 +27,7 @@
     
     
       
-        <title>DC Chopper Fundamentals - Power Electronics and Control Training</title>
+        <title>DC Chopper Operation - Power Electronics and Control Training</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#project-05-dc-chopper-fundamentals" class="md-skip">
+        <a href="#project-05-dc-chopper-operation" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              DC Chopper Fundamentals
+              DC Chopper Operation
             
           </span>
         </div>
@@ -465,14 +465,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../00A_Microcontroller_Familiarisation/" class="md-nav__link">
+      <a href="../00A_Microcontroller_Setup/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Microcontroller Familiarisation
+    Microcontroller Setup
   
 
     
@@ -493,14 +493,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../00B_Oscilloscope_Familiarisation/" class="md-nav__link">
+      <a href="../00B_Oscilloscope_Setup/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Oscilloscope Familiarisation
+    Oscilloscope Setup
   
 
     
@@ -521,14 +521,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../00C_WiFi_Controller_Familiarisation/" class="md-nav__link">
+      <a href="../00C_ESP32_WiFi_Control/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    WiFi Controller Familiarisation
+    ESP32 Wi-Fi Control
   
 
     
@@ -549,14 +549,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../00D_Control_Theory_Familiarisation/" class="md-nav__link">
+      <a href="../00D_Control_Engineering_Primer/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Control Theory Familiarisation
+    Control Engineering Primer
   
 
     
@@ -638,14 +638,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../01_PWM_Fundamentals/" class="md-nav__link">
+      <a href="../01_PWM_Operation/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    PWM Fundamentals
+    PWM Operation
   
 
     
@@ -722,14 +722,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../04_MOSFET_Fundamentals/" class="md-nav__link">
+      <a href="../04_MOSFET_Switching/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    MOSFET Fundamentals
+    MOSFET Switching
   
 
     
@@ -827,7 +827,7 @@
   <span class="md-ellipsis">
     
   
-    DC Chopper Fundamentals
+    DC Chopper Operation
   
 
     
@@ -845,7 +845,7 @@
   <span class="md-ellipsis">
     
   
-    DC Chopper Fundamentals
+    DC Chopper Operation
   
 
     
@@ -1816,7 +1816,7 @@
   
 
 
-<h1 id="project-05-dc-chopper-fundamentals">Project 05 - DC Chopper Fundamentals<a class="headerlink" href="#project-05-dc-chopper-fundamentals" title="Permanent link">&para;</a></h1>
+<h1 id="project-05-dc-chopper-operation">Project 05 - DC Chopper Operation<a class="headerlink" href="#project-05-dc-chopper-operation" title="Permanent link">&para;</a></h1>
 <hr />
 <h2 id="reading-before-the-lab">Reading Before the Lab<a class="headerlink" href="#reading-before-the-lab" title="Permanent link">&para;</a></h2>
 <p>Read <em>Fundamentals of Electric Circuits</em> by Alexander and Sadiku, Chapters 1–2, for circuit variables, power, and circuit laws. Then read <em>Fundamentals of Power Electronics</em> by Erickson and Maksimovic, Chapter 3, <strong>Steady-State Converter Analysis</strong>, for switching intervals and average conversion. This lab introduces the general chopper idea; Labs 06 and 07 derive the buck and boost topologies in detail.</p>
@@ -1885,7 +1885,7 @@ V_{o,avg}=0.5(3.3)=1.65\ \mathrm{V}
 <h2 id="simulink-model-pulsed-voltage-and-filtered-average">Simulink Model: Pulsed Voltage and Filtered Average<a class="headerlink" href="#simulink-model-pulsed-voltage-and-filtered-average" title="Permanent link">&para;</a></h2>
 <p>Build this signal-only model to compare the switching waveform with a smoothed output. The transfer-function block is an illustrative low-pass filter, not a physical power-stage or device-stress model. Lab 06 replaces this abstraction with a Simscape buck converter.</p>
 <h3 id="step-1-create-a-model">Step 1: Create a Model<a class="headerlink" href="#step-1-create-a-model" title="Permanent link">&para;</a></h3>
-<p>Create a blank Simulink model and save it as <code>DC_Chopper_Fundamentals.slx</code>.</p>
+<p>Create a blank Simulink model and save it as <code>DC_Chopper_Operation.slx</code>.</p>
 <h3 id="step-2-add-blocks">Step 2: Add Blocks<a class="headerlink" href="#step-2-add-blocks" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -2048,7 +2048,7 @@ V_{o,avg}=0.5(3.3)=1.65\ \mathrm{V}
 <li>Which later lab introduces the physical buck power stage? Which introduces the boost topology?</li>
 </ol>
 <h2 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h2>
-<p>Continue to <a href="../06_Buck_Converter/">Buck Converter Fundamentals</a>, where the ideal step-down model is extended with an inductor, freewheel path, output capacitor, and ripple analysis.</p>
+<p>Continue to <a href="../06_Buck_Converter/">Buck Converter Operation</a>, where the ideal step-down model is extended with an inductor, freewheel path, output capacitor, and ripple analysis.</p>
 
 
 
