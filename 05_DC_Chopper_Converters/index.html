@@ -27,7 +27,7 @@
     
     
       
-        <title>DC Chopper Converters - Power Electronics and Control Training</title>
+        <title>DC Chopper Fundamentals - Power Electronics and Control Training</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#project-05-dc-chopper-converters-and-dc-motor-drives" class="md-skip">
+        <a href="#project-05-dc-chopper-fundamentals" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              DC Chopper Converters
+              DC Chopper Fundamentals
             
           </span>
         </div>
@@ -827,7 +827,7 @@
   <span class="md-ellipsis">
     
   
-    DC Chopper Converters
+    DC Chopper Fundamentals
   
 
     
@@ -845,7 +845,7 @@
   <span class="md-ellipsis">
     
   
-    DC Chopper Converters
+    DC Chopper Fundamentals
   
 
     
@@ -893,44 +893,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
+  <a href="#chopper-operation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Introduction
+        Chopper Operation
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#why-is-it-called-a-chopper" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why Is It Called a Chopper?
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#average-output-voltage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Average Output Voltage
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Average Output Voltage">
+    <nav class="md-nav" aria-label="Chopper Operation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
+  <a href="#assumptions-and-what-carries-forward" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example
+        Assumptions and What Carries Forward
       
     </span>
   </a>
@@ -943,122 +921,33 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#chopper-versus-linear-control" class="md-nav__link">
+  <a href="#topology-preview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Chopper Versus Linear Control
+        Topology Preview
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Chopper Versus Linear Control">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simulink-model-pulsed-voltage-and-filtered-average" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simulink Model: Pulsed Voltage and Filtered Average
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Simulink Model: Pulsed Voltage and Filtered Average">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#linear-control" class="md-nav__link">
+  <a href="#step-1-create-a-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Linear Control
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#chopper-control" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chopper Control
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#chopper-classification" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chopper Classification
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Chopper Classification">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#type-a-chopper-step-down-buck" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Type A Chopper (Step-Down / Buck)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#type-b-chopper-step-up-boost" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Type B Chopper (Step-Up / Boost)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quadrant-concept" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quadrant Concept
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#chopper-controlled-motor-drive" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chopper Controlled Motor Drive
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simulink-simulation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Simulink Simulation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Simulink Simulation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#step-1-create-a-new-simulink-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 1 — Create a New Simulink Model
+        Step 1: Create a Model
       
     </span>
   </a>
@@ -1069,7 +958,7 @@
   <a href="#step-2-add-blocks" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2 — Add Blocks
+        Step 2: Add Blocks
       
     </span>
   </a>
@@ -1080,7 +969,7 @@
   <a href="#step-3-configure-the-pulse-generator" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3 — Configure the Pulse Generator
+        Step 3: Configure the Pulse Generator
       
     </span>
   </a>
@@ -1088,10 +977,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-4-configure-the-gain-block" class="md-nav__link">
+  <a href="#step-4-configure-the-gain-and-filter" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 4 — Configure the Gain Block
+        Step 4: Configure the Gain and Filter
       
     </span>
   </a>
@@ -1102,7 +991,7 @@
   <a href="#step-5-wire-the-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 5 — Wire the Model
+        Step 5: Wire the Model
       
     </span>
   </a>
@@ -1110,10 +999,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-6-simulation-settings" class="md-nav__link">
+  <a href="#step-6-configure-and-run" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 6 — Simulation Settings
+        Step 6: Configure and Run
       
     </span>
   </a>
@@ -1121,10 +1010,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-7-run-and-observe" class="md-nav__link">
+  <a href="#step-7-sweep-duty-ratio" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 7 — Run and Observe
+        Step 7: Sweep Duty Ratio
       
     </span>
   </a>
@@ -1132,43 +1021,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-8-vary-the-duty-cycle" class="md-nav__link">
+  <a href="#step-8-compare-switching-frequency" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 8 — Vary the Duty Cycle
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-9-unified-converter-comparison-matlab-script" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 9 — Unified Converter Comparison (MATLAB Script)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#wiring-checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Wiring Checklist
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#prediction-table" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prediction Table
+        Step 8: Compare Switching Frequency
       
     </span>
   </a>
@@ -1181,246 +1037,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#components-required" class="md-nav__link">
+  <a href="#optional-hardware-pwm-check" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Components Required
+        Optional Hardware PWM Check
       
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#experiment-1-observe-the-chopper-waveform" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Experiment 1 - Observe the Chopper Waveform
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Experiment 1 - Observe the Chopper Waveform">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#objective_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Objective
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#connections" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Connections
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#esp32-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ESP32 Code
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#oscilloscope-settings" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Oscilloscope Settings
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#expected-waveform" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Expected Waveform
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#observe" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Observe
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#measurements" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Measurements
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#experiment-2-duty-cycle-investigation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Experiment 2 - Duty Cycle Investigation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Experiment 2 - Duty Cycle Investigation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#objective_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Objective
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#esp32-code_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ESP32 Code
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#results-table" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Results Table
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#matlab-comparison" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        MATLAB Comparison
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="MATLAB Comparison">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#consolidation-plot-all-three-topologies" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Consolidation Plot — All Three Topologies
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#reflection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Reflection
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Troubleshooting
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#no-pwm-visible" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        No PWM Visible
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#average-voltage-not-matching-theory" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Average Voltage Not Matching Theory
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#troubleshooting-checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Troubleshooting Checklist
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1432,78 +1055,6 @@
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Knowledge Check">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#question-1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Question 1
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#question-2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Question 2
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#question-3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Question 3
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#question-4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Question 4
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#question-5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Question 5
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#question-6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Question 6
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2069,44 +1620,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
+  <a href="#chopper-operation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Introduction
+        Chopper Operation
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#why-is-it-called-a-chopper" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why Is It Called a Chopper?
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#average-output-voltage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Average Output Voltage
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Average Output Voltage">
+    <nav class="md-nav" aria-label="Chopper Operation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
+  <a href="#assumptions-and-what-carries-forward" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example
+        Assumptions and What Carries Forward
       
     </span>
   </a>
@@ -2119,122 +1648,33 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#chopper-versus-linear-control" class="md-nav__link">
+  <a href="#topology-preview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Chopper Versus Linear Control
+        Topology Preview
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Chopper Versus Linear Control">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simulink-model-pulsed-voltage-and-filtered-average" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simulink Model: Pulsed Voltage and Filtered Average
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Simulink Model: Pulsed Voltage and Filtered Average">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#linear-control" class="md-nav__link">
+  <a href="#step-1-create-a-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Linear Control
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#chopper-control" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chopper Control
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#chopper-classification" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chopper Classification
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Chopper Classification">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#type-a-chopper-step-down-buck" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Type A Chopper (Step-Down / Buck)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#type-b-chopper-step-up-boost" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Type B Chopper (Step-Up / Boost)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quadrant-concept" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quadrant Concept
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#chopper-controlled-motor-drive" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chopper Controlled Motor Drive
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simulink-simulation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Simulink Simulation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Simulink Simulation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#step-1-create-a-new-simulink-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 1 — Create a New Simulink Model
+        Step 1: Create a Model
       
     </span>
   </a>
@@ -2245,7 +1685,7 @@
   <a href="#step-2-add-blocks" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2 — Add Blocks
+        Step 2: Add Blocks
       
     </span>
   </a>
@@ -2256,7 +1696,7 @@
   <a href="#step-3-configure-the-pulse-generator" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3 — Configure the Pulse Generator
+        Step 3: Configure the Pulse Generator
       
     </span>
   </a>
@@ -2264,10 +1704,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-4-configure-the-gain-block" class="md-nav__link">
+  <a href="#step-4-configure-the-gain-and-filter" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 4 — Configure the Gain Block
+        Step 4: Configure the Gain and Filter
       
     </span>
   </a>
@@ -2278,7 +1718,7 @@
   <a href="#step-5-wire-the-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 5 — Wire the Model
+        Step 5: Wire the Model
       
     </span>
   </a>
@@ -2286,10 +1726,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-6-simulation-settings" class="md-nav__link">
+  <a href="#step-6-configure-and-run" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 6 — Simulation Settings
+        Step 6: Configure and Run
       
     </span>
   </a>
@@ -2297,10 +1737,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-7-run-and-observe" class="md-nav__link">
+  <a href="#step-7-sweep-duty-ratio" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 7 — Run and Observe
+        Step 7: Sweep Duty Ratio
       
     </span>
   </a>
@@ -2308,43 +1748,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-8-vary-the-duty-cycle" class="md-nav__link">
+  <a href="#step-8-compare-switching-frequency" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 8 — Vary the Duty Cycle
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-9-unified-converter-comparison-matlab-script" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 9 — Unified Converter Comparison (MATLAB Script)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#wiring-checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Wiring Checklist
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#prediction-table" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prediction Table
+        Step 8: Compare Switching Frequency
       
     </span>
   </a>
@@ -2357,246 +1764,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#components-required" class="md-nav__link">
+  <a href="#optional-hardware-pwm-check" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Components Required
+        Optional Hardware PWM Check
       
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#experiment-1-observe-the-chopper-waveform" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Experiment 1 - Observe the Chopper Waveform
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Experiment 1 - Observe the Chopper Waveform">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#objective_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Objective
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#connections" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Connections
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#esp32-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ESP32 Code
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#oscilloscope-settings" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Oscilloscope Settings
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#expected-waveform" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Expected Waveform
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#observe" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Observe
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#measurements" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Measurements
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#experiment-2-duty-cycle-investigation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Experiment 2 - Duty Cycle Investigation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Experiment 2 - Duty Cycle Investigation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#objective_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Objective
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#esp32-code_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ESP32 Code
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#results-table" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Results Table
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#matlab-comparison" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        MATLAB Comparison
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="MATLAB Comparison">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#consolidation-plot-all-three-topologies" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Consolidation Plot — All Three Topologies
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#reflection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Reflection
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Troubleshooting
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#no-pwm-visible" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        No PWM Visible
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#average-voltage-not-matching-theory" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Average Voltage Not Matching Theory
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#troubleshooting-checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Troubleshooting Checklist
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2608,78 +1782,6 @@
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Knowledge Check">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#question-1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Question 1
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#question-2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Question 2
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#question-3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Question 3
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#question-4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Question 4
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#question-5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Question 5
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#question-6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Question 6
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2714,182 +1816,140 @@
   
 
 
-<h1 id="project-05-dc-chopper-converters-and-dc-motor-drives">Project 05 - DC Chopper Converters and DC Motor Drives<a class="headerlink" href="#project-05-dc-chopper-converters-and-dc-motor-drives" title="Permanent link">&para;</a></h1>
+<h1 id="project-05-dc-chopper-fundamentals">Project 05 - DC Chopper Fundamentals<a class="headerlink" href="#project-05-dc-chopper-fundamentals" title="Permanent link">&para;</a></h1>
 <hr />
 <h2 id="reading-before-the-lab">Reading Before the Lab<a class="headerlink" href="#reading-before-the-lab" title="Permanent link">&para;</a></h2>
-<p>Read <em>Fundamentals of Electric Circuits</em> by Alexander and Sadiku, Chapters 1–2, to refresh circuit laws applied separately to each switch state. Then read <em>Fundamentals of Power Electronics</em> by Erickson and Maksimovic, Chapter 3, <strong>Steady-State Converter Analysis</strong>, for switching intervals and average conversion. Draw both switch-state circuits and calculate the ideal average output from duty ratio before measuring it.</p>
+<p>Read <em>Fundamentals of Electric Circuits</em> by Alexander and Sadiku, Chapters 1–2, for circuit variables, power, and circuit laws. Then read <em>Fundamentals of Power Electronics</em> by Erickson and Maksimovic, Chapter 3, <strong>Steady-State Converter Analysis</strong>, for switching intervals and average conversion. This lab introduces the general chopper idea; Labs 06 and 07 derive the buck and boost topologies in detail.</p>
 <hr />
 <h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
 <p>In this project you will learn:</p>
 <ul>
-<li>What a chopper converter is</li>
-<li>How PWM creates chopper action</li>
-<li>The relationship between Buck and Boost converters</li>
-<li>DC motor chopper drives</li>
-<li>Average voltage control</li>
-<li>Quadrant operation</li>
-<li>Industrial applications of choppers</li>
+<li>How a controlled switch produces a pulsed output</li>
+<li>The difference between instantaneous voltage and its switching-period average</li>
+<li>How duty ratio determines the ideal average voltage of a step-down chopper</li>
+<li>How a low-pass filter smooths a pulsed waveform</li>
+<li>How the general chopper principle leads into buck and boost converter topologies</li>
 </ul>
-<p>This project connects:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Power Electronics  ←→  Motor Drives
+<p>This is a simulation-led introduction. It does not build a motor drive or investigate regenerative quadrants; motor dynamics are covered in Lab 08.</p>
+<hr />
+<h2 id="chopper-operation">Chopper Operation<a class="headerlink" href="#chopper-operation" title="Permanent link">&para;</a></h2>
+<p>A DC chopper controls power from a DC source by rapidly switching a semiconductor device. In the ideal step-down case, the switch-node voltage alternates between zero and the input voltage:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Switch ON:  v_o = V_IN
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Switch OFF: v_o = 0
 </code></pre></div>
-<hr />
-<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>A Chopper Converter is a DC-to-DC converter that controls the average value of a DC voltage by rapidly switching a semiconductor device ON and OFF.</p>
-<hr />
-<h2 id="why-is-it-called-a-chopper">Why Is It Called a Chopper?<a class="headerlink" href="#why-is-it-called-a-chopper" title="Permanent link">&para;</a></h2>
-<p>The input DC voltage is chopped into pulses:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>12V ─────      ─────
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>          │      │
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>          │      │
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>0V _______│______│______
-</code></pre></div>
-<p>The average value depends on the duty cycle.</p>
-<hr />
-<h2 id="average-output-voltage">Average Output Voltage<a class="headerlink" href="#average-output-voltage" title="Permanent link">&para;</a></h2>
-<p>For an ideal step-down chopper operating in steady state, the value below is the average over one switching period. The load or a filter provides the physical smoothing; the instantaneous voltage remains a switched waveform.</p>
+<p>One switching period, <span class="arithmatex">\(T\)</span>, has two intervals:</p>
+<table>
+<thead>
+<tr>
+<th>Interval</th>
+<th style="text-align: right;">Duration</th>
+<th style="text-align: right;">Ideal switch-node voltage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Switch ON</td>
+<td style="text-align: right;"><span class="arithmatex">\(t_{ON}=DT\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(V_{IN}\)</span></td>
+</tr>
+<tr>
+<td>Switch OFF</td>
+<td style="text-align: right;"><span class="arithmatex">\(t_{OFF}=(1-D)T\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(0\)</span> V</td>
+</tr>
+</tbody>
+</table>
+<p>The duty ratio is the fraction of each switching period for which the switch is on:</p>
 <div class="arithmatex">\[
-V_{OUT} = D \cdot V_{IN}
+D=\frac{t_{ON}}{T},\qquad 0\leq D\leq1
 \]</div>
-<p>Where:</p>
-<ul>
-<li><span class="arithmatex">\(V_{OUT}\)</span> = Output Voltage</li>
-<li><span class="arithmatex">\(D\)</span> = Duty Cycle</li>
-<li><span class="arithmatex">\(V_{IN}\)</span> = Input Voltage</li>
-</ul>
-<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
-<p>Given <span class="arithmatex">\(V_{IN} = 12\ \text{V}\)</span> and <span class="arithmatex">\(D = 0.5\)</span>:</p>
+<p>The instantaneous switch-node voltage is still a pulse train. To find its average over one full period, add the voltage-time contribution from each interval and divide by the period. The OFF interval contributes zero volts:</p>
 <div class="arithmatex">\[
-V_{OUT} = 0.5 \times 12 = 6\ \text{V}
+V_{o,avg}=\frac{V_{IN}(DT)+0((1-D)T)}{T}=D V_{IN}
 \]</div>
-<hr />
-<h2 id="chopper-versus-linear-control">Chopper Versus Linear Control<a class="headerlink" href="#chopper-versus-linear-control" title="Permanent link">&para;</a></h2>
-<h3 id="linear-control">Linear Control<a class="headerlink" href="#linear-control" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Input → Resistor → Output
-</code></pre></div>
-<p>Disadvantages: heat generation, lower efficiency.</p>
-<h3 id="chopper-control">Chopper Control<a class="headerlink" href="#chopper-control" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Input → Switching → Output
-</code></pre></div>
-<p>Advantages: high efficiency, low losses, better performance.</p>
-<hr />
-<h2 id="chopper-classification">Chopper Classification<a class="headerlink" href="#chopper-classification" title="Permanent link">&para;</a></h2>
-<h3 id="type-a-chopper-step-down-buck">Type A Chopper (Step-Down / Buck)<a class="headerlink" href="#type-a-chopper-step-down-buck" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Positive voltage</li>
-<li>Positive current</li>
-<li>Output voltage lower than input</li>
-</ul>
-<h3 id="type-b-chopper-step-up-boost">Type B Chopper (Step-Up / Boost)<a class="headerlink" href="#type-b-chopper-step-up-boost" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Voltage boosting</li>
-<li>Output voltage higher than input</li>
-</ul>
-<hr />
-<h2 id="quadrant-concept">Quadrant Concept<a class="headerlink" href="#quadrant-concept" title="Permanent link">&para;</a></h2>
-<p>Motor drives are described using torque and speed quadrants:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>      Speed
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>        +
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>        │
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>   II   │   I
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>        │
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>────────┼────────
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>        │
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>   III  │   IV
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>        │
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        -
-</code></pre></div>
-<p>Most microcontroller motor control projects operate in First Quadrant only (positive voltage, positive current), which is sufficient for PWM speed control and Buck converters.</p>
-<hr />
-<h2 id="chopper-controlled-motor-drive">Chopper Controlled Motor Drive<a class="headerlink" href="#chopper-controlled-motor-drive" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Battery (+)
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    │
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>MOSFET Chopper (PWM controlled)
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    │
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>DC Motor
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    │
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>Battery (−) / GND
-</code></pre></div>
-<p>Motor average voltage:</p>
+<p>For <span class="arithmatex">\(V_{IN}=3.3\ \mathrm{V}\)</span> and <span class="arithmatex">\(D=0.5\)</span>, the switch is ON for half the period and OFF for half. Therefore:</p>
 <div class="arithmatex">\[
-V_{AVG} = D \cdot V_S
+V_{o,avg}=0.5(3.3)=1.65\ \mathrm{V}
 \]</div>
-<p>For a given motor and approximately constant load, motor speed often increases with average applied voltage. The exact speed also depends on back-EMF, winding resistance, current, friction, and load torque.</p>
-<hr />
-<h2 id="simulink-simulation">Simulink Simulation<a class="headerlink" href="#simulink-simulation" title="Permanent link">&para;</a></h2>
-<p>Before building the circuit, build a Simulink model to predict the chopper waveform and average output voltage at each duty cycle.</p>
-<p>This model is signal-only — no Simscape physical network is needed. The chopper output is a PWM waveform; the load averaging is conceptual at this stage.</p>
-<hr />
-<h3 id="step-1-create-a-new-simulink-model">Step 1 — Create a New Simulink Model<a class="headerlink" href="#step-1-create-a-new-simulink-model" title="Permanent link">&para;</a></h3>
-<ol>
-<li>In MATLAB, go to <strong>Home</strong> tab → click <strong>Simulink</strong>.</li>
-<li>Click <strong>Blank Model</strong>.</li>
-<li>Go to <strong>File → Save</strong> and name the file <code>DC_Chopper</code>.</li>
-</ol>
-<hr />
-<h3 id="step-2-add-blocks">Step 2 — Add Blocks<a class="headerlink" href="#step-2-add-blocks" title="Permanent link">&para;</a></h3>
-<p>Open the <strong>Library Browser</strong> and drag the following blocks onto the canvas:</p>
+<p>The average, 1.65 V in this example, is <strong>not</strong> the voltage at every instant: the switch node still alternates between 0 V and 3.3 V. A load or filter responds to those pulses and determines how much switching ripple remains in the output. In this lab's simple low-pass model, the filtered output settles near the calculated average; a real buck converter uses its inductor, capacitor, and load to shape the output, as studied in Lab 06.</p>
+<h3 id="assumptions-and-what-carries-forward">Assumptions and What Carries Forward<a class="headerlink" href="#assumptions-and-what-carries-forward" title="Permanent link">&para;</a></h3>
+<p>The equation <span class="arithmatex">\(V_{o,avg}=D V_{IN}\)</span> here assumes an ideal switch, constant input voltage, a repeating steady-state PWM waveform, and an average taken over one complete switching period. It describes the average switch-node voltage for this step-down example.</p>
+<p>An ideal buck converter also has <span class="arithmatex">\(V_{OUT}=D V_{IN}\)</span> in steady-state continuous conduction mode (CCM). Lab 06 derives that result using <strong>inductor volt-second balance</strong> and shows how the inductor, diode, and capacitor shape current and voltage ripple. The formula does not apply to every converter: Lab 07 derives the boost converter's different relationship.</p>
+<h2 id="topology-preview">Topology Preview<a class="headerlink" href="#topology-preview" title="Permanent link">&para;</a></h2>
+<p>The term <strong>chopper</strong> describes switched DC power conversion generally. A buck converter is a step-down topology and is developed in Lab 06. A boost converter is a distinct step-up topology, with a different ideal conversion relationship, and is developed in Lab 07.</p>
+<details class="note">
+<summary>Optional background: chopper quadrants</summary>
+<p>Chopper quadrant classes describe the signs of output voltage and current. A Type A chopper operates in the first quadrant, with positive voltage and current, and transfers power from source to load. A Type B chopper operates in the second quadrant, with positive voltage and negative current, allowing regenerative energy flow back toward the source. Type B does not simply mean “boost converter.”</p>
+<p>This lab models only first-quadrant operation; it does not test reverse current or regenerative braking.</p>
+</details>
+<h2 id="simulink-model-pulsed-voltage-and-filtered-average">Simulink Model: Pulsed Voltage and Filtered Average<a class="headerlink" href="#simulink-model-pulsed-voltage-and-filtered-average" title="Permanent link">&para;</a></h2>
+<p>Build this signal-only model to compare the switching waveform with a smoothed output. The transfer-function block is an illustrative low-pass filter, not a physical power-stage or device-stress model. Lab 06 replaces this abstraction with a Simscape buck converter.</p>
+<h3 id="step-1-create-a-model">Step 1: Create a Model<a class="headerlink" href="#step-1-create-a-model" title="Permanent link">&para;</a></h3>
+<p>Create a blank Simulink model and save it as <code>DC_Chopper_Fundamentals.slx</code>.</p>
+<h3 id="step-2-add-blocks">Step 2: Add Blocks<a class="headerlink" href="#step-2-add-blocks" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
 <th>Block</th>
 <th>Library path</th>
-<th>Quantity</th>
+<th style="text-align: right;">Quantity</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Pulse Generator</td>
-<td>Simulink → Sources</td>
-<td>1</td>
+<td>Simulink &gt; Sources</td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr>
 <td>Gain</td>
-<td>Simulink → Math Operations</td>
-<td>1</td>
+<td>Simulink &gt; Math Operations</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>Transfer Fcn</td>
+<td>Simulink &gt; Continuous</td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr>
 <td>Scope</td>
-<td>Simulink → Sinks</td>
-<td>1</td>
+<td>Simulink &gt; Sinks</td>
+<td style="text-align: right;">1</td>
 </tr>
 </tbody>
 </table>
-<p>The Gain block will scale the 0–1 pulse to 0–<span class="arithmatex">\(V_{IN}\)</span>.</p>
-<hr />
-<h3 id="step-3-configure-the-pulse-generator">Step 3 — Configure the Pulse Generator<a class="headerlink" href="#step-3-configure-the-pulse-generator" title="Permanent link">&para;</a></h3>
-<p>Double-click the <strong>Pulse Generator</strong> block and set:</p>
+<h3 id="step-3-configure-the-pulse-generator">Step 3: Configure the Pulse Generator<a class="headerlink" href="#step-3-configure-the-pulse-generator" title="Permanent link">&para;</a></h3>
+<p>Set:</p>
 <table>
 <thead>
 <tr>
 <th>Parameter</th>
-<th>Value</th>
+<th style="text-align: right;">Value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Amplitude</td>
-<td><code>1</code></td>
+<td style="text-align: right;"><code>1</code></td>
 </tr>
 <tr>
 <td>Period</td>
-<td><code>0.002</code></td>
+<td style="text-align: right;"><code>0.002</code> s</td>
 </tr>
 <tr>
-<td>Pulse Width</td>
-<td><code>50</code> (percent)</td>
+<td>Pulse width</td>
+<td style="text-align: right;"><code>50</code> percent</td>
 </tr>
 <tr>
 <td>Phase delay</td>
-<td><code>0</code></td>
+<td style="text-align: right;"><code>0</code> s</td>
 </tr>
 </tbody>
 </table>
-<p>This produces a normalised 0–1 pulse at 500 Hz with 50% duty cycle.</p>
-<hr />
-<h3 id="step-4-configure-the-gain-block">Step 4 — Configure the Gain Block<a class="headerlink" href="#step-4-configure-the-gain-block" title="Permanent link">&para;</a></h3>
-<p>Double-click the <strong>Gain</strong> block and set:</p>
+<p>This produces a normalized 0–1 pulse at 500 Hz.</p>
+<h3 id="step-4-configure-the-gain-and-filter">Step 4: Configure the Gain and Filter<a class="headerlink" href="#step-4-configure-the-gain-and-filter" title="Permanent link">&para;</a></h3>
+<p>Set the Gain block to <code>3.3</code>. This scales the normalized pulse to a modeled input of 3.3 V; it does not represent an ESP32 input pin.</p>
+<p>Set the Transfer Fcn block to:</p>
 <table>
 <thead>
 <tr>
@@ -2899,367 +1959,96 @@ V_{AVG} = D \cdot V_S
 </thead>
 <tbody>
 <tr>
-<td>Gain</td>
-<td><code>3.3</code></td>
+<td>Numerator coefficients</td>
+<td><code>[1]</code></td>
+</tr>
+<tr>
+<td>Denominator coefficients</td>
+<td><code>[0.02, 1]</code></td>
 </tr>
 </tbody>
 </table>
-<p>This scales the pulse to 0–3.3 V, matching the ESP32 GPIO output.</p>
-<hr />
-<h3 id="step-5-wire-the-model">Step 5 — Wire the Model<a class="headerlink" href="#step-5-wire-the-model" title="Permanent link">&para;</a></h3>
-<p>Connect:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Pulse Generator → Gain → Scope
+<p>The filter is <span class="arithmatex">\(H(s)=1/(0.02s+1)\)</span>, with a 20 ms time constant. Since this is ten times the 2 ms switching period, its output should settle near the PWM average with reduced ripple.</p>
+<h3 id="step-5-wire-the-model">Step 5: Wire the Model<a class="headerlink" href="#step-5-wire-the-model" title="Permanent link">&para;</a></h3>
+<p>Connect the blocks so the raw switched voltage and filtered response both appear on the Scope:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Pulse Generator -&gt; Gain -&gt; Scope input 1
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>                         -&gt; Transfer Fcn -&gt; Scope input 2
 </code></pre></div>
-<hr />
-<h3 id="step-6-simulation-settings">Step 6 — Simulation Settings<a class="headerlink" href="#step-6-simulation-settings" title="Permanent link">&para;</a></h3>
-<p>Go to <strong>Modeling → Model Settings</strong> (or press <strong>Ctrl+E</strong>).</p>
-<p>Under <strong>Solver</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Setting</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Stop time</td>
-<td><code>0.008</code></td>
-</tr>
-<tr>
-<td>Type</td>
-<td>Variable-step</td>
-</tr>
-<tr>
-<td>Solver</td>
-<td><code>ode45</code></td>
-</tr>
-</tbody>
-</table>
-<p>Click <strong>OK</strong>.</p>
-<hr />
-<h3 id="step-7-run-and-observe">Step 7 — Run and Observe<a class="headerlink" href="#step-7-run-and-observe" title="Permanent link">&para;</a></h3>
-<p>Click <strong>Run</strong>. Open the Scope.</p>
-<p>You should see a 0–3.3 V square wave at 500 Hz with equal ON and OFF times. The average value is <span class="arithmatex">\(0.5 \times 3.3 = 1.65\)</span> V.</p>
-<hr />
-<h3 id="step-8-vary-the-duty-cycle">Step 8 — Vary the Duty Cycle<a class="headerlink" href="#step-8-vary-the-duty-cycle" title="Permanent link">&para;</a></h3>
-<p>Change the <strong>Pulse Width</strong> parameter in the Pulse Generator and re-run for each duty cycle:</p>
-<table>
-<thead>
-<tr>
-<th>Pulse Width (%)</th>
-<th>Duty Cycle</th>
-<th>Expected <span class="arithmatex">\(V_{AVG}\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>25</td>
-<td>25%</td>
-<td>0.83 V</td>
-</tr>
-<tr>
-<td>50</td>
-<td>50%</td>
-<td>1.65 V</td>
-</tr>
-<tr>
-<td>75</td>
-<td>75%</td>
-<td>2.48 V</td>
-</tr>
-</tbody>
-</table>
-<p>Observe how the ON time grows and the average voltage rises proportionally.</p>
-<hr />
-<h3 id="step-9-unified-converter-comparison-matlab-script">Step 9 — Unified Converter Comparison (MATLAB Script)<a class="headerlink" href="#step-9-unified-converter-comparison-matlab-script" title="Permanent link">&para;</a></h3>
-<p>Run this script in the MATLAB Command Window to plot the Type A (Buck) and Type B (Boost) output voltage curves together, showing where the chopper motor drive sits:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">Vin</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">3.3</span><span class="p">;</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">D</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.001</span><span class="p">:</span><span class="mf">0.95</span><span class="p">;</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="nb">plot</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="n">Vin</span><span class="o">.*</span><span class="n">D</span><span class="p">,</span><span class="w">       </span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="w">  </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Type A (Buck)  V_{OUT}=D\cdotV_{IN}&#39;</span><span class="p">);</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="nb">plot</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="n">Vin</span><span class="o">./</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">D</span><span class="p">),</span><span class="w">   </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w">  </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Type B (Boost) V_{OUT}=V_{IN}/(1-D)&#39;</span><span class="p">);</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="nb">yline</span><span class="p">(</span><span class="n">Vin</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;V_{IN} = %.1fV&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Vin</span><span class="p">));</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Duty Cycle&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Output Voltage (V)&#39;</span><span class="p">);</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;DC Chopper Converters - Unified Comparison&#39;</span><span class="p">);</span>
-<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;northwest&#39;</span><span class="p">);</span>
-<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="nb">ylim</span><span class="p">([</span><span class="mi">0</span><span class="w"> </span><span class="mi">20</span><span class="p">]);</span>
-</code></pre></div>
-<p>Note that the Type A (Buck) curve and the motor chopper <span class="arithmatex">\(V_{AVG} = D \cdot V_S\)</span> are identical — a motor chopper and a Buck converter share the same voltage-control law.</p>
-<hr />
-<h3 id="wiring-checklist">Wiring Checklist<a class="headerlink" href="#wiring-checklist" title="Permanent link">&para;</a></h3>
-<p>✅ Pulse Generator output → Gain → Scope</p>
-<p>✅ Amplitude = 1, Period = 0.002, Phase delay = 0</p>
-<p>✅ Gain = 3.3</p>
-<p>✅ Stop time = 0.008, Variable-step, ode45</p>
-<hr />
-<h3 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h3>
-<div class="result-block">
-<table>
-  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Predicted V<sub>AVG</sub> (V)</th><th>Motor speed</th></tr></thead>
-  <tbody>
-    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab05-sim-vavg25" placeholder="V"></td><td><input class="result-input" id="lab05-sim-spd25" placeholder="e.g. Slow"></td></tr>
-    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab05-sim-vavg50" placeholder="V"></td><td><input class="result-input" id="lab05-sim-spd50" placeholder="e.g. Medium"></td></tr>
-    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab05-sim-vavg75" placeholder="V"></td><td><input class="result-input" id="lab05-sim-spd75" placeholder="e.g. Fast"></td></tr>
-  </tbody>
-</table>
-</div>
-
-<hr />
-<h2 id="components-required">Components Required<a class="headerlink" href="#components-required" title="Permanent link">&para;</a></h2>
+<p>Set the Scope to two input ports. Branch the Gain output so it feeds both the Scope and Transfer Fcn.</p>
+<h3 id="step-6-configure-and-run">Step 6: Configure and Run<a class="headerlink" href="#step-6-configure-and-run" title="Permanent link">&para;</a></h3>
+<p>Set the model stop time to <code>0.1</code> s and use a variable-step <code>ode45</code> solver. Run the model and observe both traces.</p>
 <ul>
-<li>ESP32 DevKit V1</li>
-<li>Breadboard</li>
-<li>Jumper wires</li>
-<li>Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)</li>
+<li>Scope input 1 should switch between 0 V and 3.3 V.</li>
+<li>Scope input 2 should rise toward the switching-period average.</li>
+<li>At 50% duty, the filtered output should settle near 1.65 V.</li>
+<li>The filtered trace is smoother, but it is not perfectly constant.</li>
 </ul>
-<h2 id="experiment-1-observe-the-chopper-waveform">Experiment 1 - Observe the Chopper Waveform<a class="headerlink" href="#experiment-1-observe-the-chopper-waveform" title="Permanent link">&para;</a></h2>
-<h3 id="objective_1">Objective<a class="headerlink" href="#objective_1" title="Permanent link">&para;</a></h3>
-<p>Observe the chopper switching waveform and measure its average voltage at 50% duty cycle.</p>
-<hr />
-<h3 id="connections">Connections<a class="headerlink" href="#connections" title="Permanent link">&para;</a></h3>
-<ol>
-<li>Insert the <strong>CH1 probe BNC</strong> into CH1 on the OWON HDS272S.</li>
-<li>Hook the <strong>CH1 probe tip</strong> onto <strong>ESP32 GPIO18</strong>.</li>
-<li>Clip the <strong>CH1 probe ground</strong> to any <strong>GND pin</strong> on the ESP32.</li>
-</ol>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>CH1 socket    ◄──── BNC connector
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ESP32 GND     ◄──── CH1 probe ground
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>ESP32 GPIO18  ◄──── CH1 probe tip
-</code></pre></div>
-<p>No breadboard components are needed for this experiment.</p>
-<hr />
-<h3 id="esp32-code">ESP32 Code<a class="headerlink" href="#esp32-code" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="p">{</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="c1">// Configure LEDC channel 0: 500 Hz, 8-bit resolution.</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="n">ledcSetup</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="n">ledcAttachPin</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="p">}</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="p">{</span>
-<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">    </span><span class="c1">// Set duty cycle to 128/255 ≈ 50%.</span>
-<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="c1">// Average voltage = 0.5 × V_S ≈ 1.65 V from a 3.3 V supply.</span>
-<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span>
-<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="p">}</span>
-</code></pre></div>
-<blockquote>
-<p><strong>Arduino Uno:</strong> replace <code>ledcWrite(0, 128)</code> with <code>analogWrite(9, 128)</code> on pin 9.</p>
-</blockquote>
-<hr />
-<h3 id="oscilloscope-settings">Oscilloscope Settings<a class="headerlink" href="#oscilloscope-settings" title="Permanent link">&para;</a></h3>
+<h3 id="step-7-sweep-duty-ratio">Step 7: Sweep Duty Ratio<a class="headerlink" href="#step-7-sweep-duty-ratio" title="Permanent link">&para;</a></h3>
+<p>Change the Pulse Generator pulse width and rerun the model:</p>
 <table>
 <thead>
 <tr>
-<th>Setting</th>
-<th>OWON HDS272S</th>
-<th>DSO Nano</th>
+<th style="text-align: right;">Duty ratio</th>
+<th style="text-align: right;">Ideal average for 3.3 V input</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Vertical scale</td>
-<td>2 V/div</td>
-<td>2 V/div</td>
+<td style="text-align: right;">25%</td>
+<td style="text-align: right;">0.825 V</td>
 </tr>
 <tr>
-<td>Horizontal scale</td>
-<td>500 µs/div</td>
-<td>500 µs/div</td>
+<td style="text-align: right;">50%</td>
+<td style="text-align: right;">1.650 V</td>
 </tr>
 <tr>
-<td>Trigger</td>
-<td>Edge, Rising</td>
-<td>Edge, Rising</td>
-</tr>
-<tr>
-<td>Coupling</td>
-<td>DC</td>
-<td>DC</td>
+<td style="text-align: right;">75%</td>
+<td style="text-align: right;">2.475 V</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h3 id="expected-waveform">Expected Waveform<a class="headerlink" href="#expected-waveform" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>3.3V ─────      ─────
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>          │      │
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>          │      │
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>0V ________│______│______
-</code></pre></div>
-<hr />
-<h3 id="observe">Observe<a class="headerlink" href="#observe" title="Permanent link">&para;</a></h3>
-<p>The waveform should switch between 0 V and approximately 3.3 V at ~500 Hz with equal ON and OFF times.</p>
-<hr />
-<h3 id="measurements">Measurements<a class="headerlink" href="#measurements" title="Permanent link">&para;</a></h3>
-<div class="result-block">
+<p>Record the settled filtered output and compare it with the ideal average. Explain any remaining ripple or transient error.</p>
+<h3 id="step-8-compare-switching-frequency">Step 8: Compare Switching Frequency<a class="headerlink" href="#step-8-compare-switching-frequency" title="Permanent link">&para;</a></h3>
+<p>Keep duty ratio at 50% and the filter time constant at 20 ms. Compare switching frequencies of 100 Hz, 500 Hz, and 1 kHz. For each, adjust the period to <span class="arithmatex">\(T=1/f_s\)</span> and keep the simulation stop time long enough for the filter output to settle.</p>
 <table>
-  <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
-  <tbody>
-    <tr><td>Frequency</td><td>~500 Hz</td><td><input class="result-input" id="lab05-exp1-freq" placeholder="Hz"></td></tr>
-    <tr><td>Duty Cycle</td><td>~50%</td><td><input class="result-input" id="lab05-exp1-duty" placeholder="%"></td></tr>
-    <tr><td>Peak Voltage</td><td>~3.3 V</td><td><input class="result-input" id="lab05-exp1-vpeak" placeholder="V"></td></tr>
-  </tbody>
+<thead>
+<tr>
+<th style="text-align: right;">Switching frequency</th>
+<th style="text-align: right;">Period</th>
+<th>Expected comparison</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">100 Hz</td>
+<td style="text-align: right;">10 ms</td>
+<td>More visible filtered ripple</td>
+</tr>
+<tr>
+<td style="text-align: right;">500 Hz</td>
+<td style="text-align: right;">2 ms</td>
+<td>Smaller filtered ripple</td>
+</tr>
+<tr>
+<td style="text-align: right;">1 kHz</td>
+<td style="text-align: right;">1 ms</td>
+<td>Still smaller filtered ripple</td>
+</tr>
+</tbody>
 </table>
-</div>
-
-<hr />
-<h2 id="experiment-2-duty-cycle-investigation">Experiment 2 - Duty Cycle Investigation<a class="headerlink" href="#experiment-2-duty-cycle-investigation" title="Permanent link">&para;</a></h2>
-<h3 id="objective_2">Objective<a class="headerlink" href="#objective_2" title="Permanent link">&para;</a></h3>
-<p>Observe how changing duty cycle changes the average output voltage — the fundamental principle of chopper speed control.</p>
-<hr />
-<h3 id="esp32-code_1">ESP32 Code<a class="headerlink" href="#esp32-code_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="p">{</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="n">ledcSetup</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">);</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="n">ledcAttachPin</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="p">}</span>
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
-<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
-<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="p">{</span>
-<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span><span class="c1">// Step through three duty cycles with a 3-second pause at each.</span>
-<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">    </span><span class="c1">// Average voltage = D × V_S at each step.</span>
-<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
-<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">);</span><span class="w">    </span><span class="c1">// ~25% duty cycle → V_AVG ≈ 0.83 V</span>
-<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
-<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>
-<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~50% duty cycle → V_AVG ≈ 1.65 V</span>
-<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
-<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
-<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">    </span><span class="n">ledcWrite</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">192</span><span class="p">);</span><span class="w">   </span><span class="c1">// ~75% duty cycle → V_AVG ≈ 2.48 V</span>
-<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
-<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="p">}</span>
-</code></pre></div>
-<blockquote>
-<p><strong>Arduino Uno:</strong> replace <code>ledcWrite(0, value)</code> with <code>analogWrite(9, value)</code> on pin 9.</p>
-</blockquote>
-<hr />
-<h3 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h3>
-<div class="result-block">
-<table>
-  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Measured V<sub>AVG</sub> (V)</th></tr></thead>
-  <tbody>
-    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab05-exp2-vavg25" placeholder="V"></td></tr>
-    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab05-exp2-vavg50" placeholder="V"></td></tr>
-    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab05-exp2-vavg75" placeholder="V"></td></tr>
-  </tbody>
-</table>
-</div>
-
-<hr />
-<h2 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h2>
-<p>Overlay your measured average voltages against the ideal chopper theory.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">Vin</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">3.3</span><span class="p">;</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">D_measured</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="w">  </span><span class="mf">0.50</span><span class="p">,</span><span class="w">  </span><span class="mf">0.75</span><span class="p">];</span><span class="w">   </span><span class="c">% measured duty cycles</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">Vavg_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.00</span><span class="p">,</span><span class="w">  </span><span class="mf">0.00</span><span class="p">,</span><span class="w">  </span><span class="mf">0.00</span><span class="p">];</span><span class="w">   </span><span class="c">% replace with measured average voltages (V)</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="n">D_ideal</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.01</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span>
-<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="n">Vavg_ideal</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vin</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">D_ideal</span><span class="p">;</span>
-<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
-<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="nb">plot</span><span class="p">(</span><span class="n">D_ideal</span><span class="p">,</span><span class="w"> </span><span class="n">Vavg_ideal</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">    </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Ideal: V_{AVG} = D \cdot V_{IN}&#39;</span><span class="p">);</span>
-<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="nb">scatter</span><span class="p">(</span><span class="n">D_measured</span><span class="p">,</span><span class="w"> </span><span class="n">Vavg_measured</span><span class="p">,</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;filled&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">    </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Measured&#39;</span><span class="p">);</span>
-<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Duty Cycle&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Average Voltage (V)&#39;</span><span class="p">);</span>
-<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;DC Chopper - Ideal vs Measured&#39;</span><span class="p">);</span>
-<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;northwest&#39;</span><span class="p">);</span>
-<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>
-<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;%-8s %-12s %-12s %-12s\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;D&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;V_ideal(V)&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;V_meas(V)&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Error(%)&#39;</span><span class="p">);</span>
-<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span>
-<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="w">    </span><span class="n">V_ideal</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vin</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">D_measured</span><span class="p">(</span><span class="nb">i</span><span class="p">);</span>
-<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="w">    </span><span class="n">err</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">V_ideal</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Vavg_measured</span><span class="p">(</span><span class="nb">i</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">V_ideal</span><span class="p">;</span>
-<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="w">    </span><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;%-8.2f %-12.3f %-12.3f %-12.1f\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a><span class="w">        </span><span class="n">D_measured</span><span class="p">(</span><span class="nb">i</span><span class="p">),</span><span class="w"> </span><span class="n">V_ideal</span><span class="p">,</span><span class="w"> </span><span class="n">Vavg_measured</span><span class="p">(</span><span class="nb">i</span><span class="p">),</span><span class="w"> </span><span class="n">err</span><span class="p">);</span>
-<a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a><span class="k">end</span>
-</code></pre></div>
-<h3 id="consolidation-plot-all-three-topologies">Consolidation Plot — All Three Topologies<a class="headerlink" href="#consolidation-plot-all-three-topologies" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">Vin</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">3.3</span><span class="p">;</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">D</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.001</span><span class="p">:</span><span class="mf">0.95</span><span class="p">;</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c">% Replace with your measured values from the Results Table above</span>
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="n">D_measured</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.50</span><span class="p">,</span><span class="w"> </span><span class="mf">0.75</span><span class="p">];</span>
-<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="n">Vavg_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.00</span><span class="p">,</span><span class="w"> </span><span class="mf">0.00</span><span class="p">];</span><span class="w">   </span><span class="c">% (V)</span>
-<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
-<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="nb">figure</span><span class="p">;</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="nb">plot</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="n">Vin</span><span class="o">.*</span><span class="n">D</span><span class="p">,</span><span class="w">          </span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="w">  </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Type A Buck&#39;</span><span class="p">);</span>
-<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="nb">plot</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="w"> </span><span class="n">Vin</span><span class="o">./</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">D</span><span class="p">),</span><span class="w">      </span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="w">  </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Type B Boost&#39;</span><span class="p">);</span>
-<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="nb">scatter</span><span class="p">(</span><span class="n">D_measured</span><span class="p">,</span><span class="w"> </span><span class="n">Vavg_measured</span><span class="p">,</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;gs&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;filled&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">    </span><span class="s">&#39;DisplayName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Measured (Chopper)&#39;</span><span class="p">);</span>
-<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="nb">yline</span><span class="p">(</span><span class="n">Vin</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k:&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;V_{IN}&#39;</span><span class="p">);</span>
-<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Duty Cycle&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Output Voltage (V)&#39;</span><span class="p">);</span>
-<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Buck / Boost / Chopper - Unified View&#39;</span><span class="p">);</span>
-<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;northwest&#39;</span><span class="p">);</span>
-<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="nb">ylim</span><span class="p">([</span><span class="mi">0</span><span class="w"> </span><span class="mi">20</span><span class="p">]);</span>
-</code></pre></div>
-<h3 id="reflection">Reflection<a class="headerlink" href="#reflection" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Do your measured average voltages fall on the ideal line?</li>
-<li>The Type A (Buck) and motor chopper curves are identical. What does this tell you about the relationship between a Buck Converter and a DC motor drive?</li>
-<li>Why does the Type B (Boost) curve diverge rapidly from the Type A curve as D increases?</li>
-</ul>
-<hr />
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
-<h3 id="no-pwm-visible">No PWM Visible<a class="headerlink" href="#no-pwm-visible" title="Permanent link">&para;</a></h3>
-<p>Check:</p>
-<p>✅ Probe tip on GPIO18</p>
-<p>✅ Trigger type set to Edge, Rising</p>
-<p>✅ Horizontal scale appropriate (500 µs/div for ~500 Hz)</p>
-<hr />
-<h3 id="average-voltage-not-matching-theory">Average Voltage Not Matching Theory<a class="headerlink" href="#average-voltage-not-matching-theory" title="Permanent link">&para;</a></h3>
-<p>Check:</p>
-<p>✅ Duty cycle measured correctly from oscilloscope</p>
-<p>✅ Supply voltage measured with multimeter</p>
-<p>✅ Probe attenuation setting matches probe switch</p>
-<hr />
-<h3 id="troubleshooting-checklist">Troubleshooting Checklist<a class="headerlink" href="#troubleshooting-checklist" title="Permanent link">&para;</a></h3>
-<p>✅ Controller powered and sketch uploaded</p>
-<p>✅ Probe on PWM pin</p>
-<p>✅ Probe ground on GND</p>
-<p>✅ Trigger enabled</p>
-<p>✅ Correct time scale selected</p>
-<hr />
+<p>The average remains approximately <span class="arithmatex">\(D V_{IN}\)</span>; increasing switching frequency mainly changes ripple and switching losses. This signal-only model does not calculate switching losses.</p>
+<h2 id="optional-hardware-pwm-check">Optional Hardware PWM Check<a class="headerlink" href="#optional-hardware-pwm-check" title="Permanent link">&para;</a></h2>
+<p>If Lab 01's PWM measurement is already complete, skip this check. Otherwise, follow its GPIO18 oscilloscope setup to verify a 0–3.3 V, 500 Hz, 50% duty-cycle command. This measures the controller output only; it is <strong>not</strong> a chopper power-stage or motor experiment.</p>
 <h2 id="knowledge-check">Knowledge Check<a class="headerlink" href="#knowledge-check" title="Permanent link">&para;</a></h2>
-<h3 id="question-1">Question 1<a class="headerlink" href="#question-1" title="Permanent link">&para;</a></h3>
-<p>What is a chopper converter?</p>
-<hr />
-<h3 id="question-2">Question 2<a class="headerlink" href="#question-2" title="Permanent link">&para;</a></h3>
-<p>Why is PWM used in choppers?</p>
-<hr />
-<h3 id="question-3">Question 3<a class="headerlink" href="#question-3" title="Permanent link">&para;</a></h3>
-<p>What type of chopper is a Buck Converter?</p>
-<hr />
-<h3 id="question-4">Question 4<a class="headerlink" href="#question-4" title="Permanent link">&para;</a></h3>
-<p>What determines the average output voltage?</p>
-<hr />
-<h3 id="question-5">Question 5<a class="headerlink" href="#question-5" title="Permanent link">&para;</a></h3>
-<p>Why are chopper converters efficient?</p>
-<hr />
-<h3 id="question-6">Question 6<a class="headerlink" href="#question-6" title="Permanent link">&para;</a></h3>
-<p>A DC motor drive and a Buck Converter both use the equation <span class="arithmatex">\(V_{AVG} = D \times V_S\)</span>. Explain one key circuit difference between them that makes the Buck Converter suitable for powering sensitive electronics while the basic motor chopper is not.</p>
-<hr />
-<div class="result-actions">
-  <button class="result-export-btn" data-lab="lab05">⬇ Export Results (JSON)</button>
-  <button class="result-clear-btn" data-lab="lab05">✕ Clear All Results</button>
-</div>
-
-<hr />
+<ol>
+<li>For <span class="arithmatex">\(V_{IN}=3.3\ \mathrm{V}\)</span> and <span class="arithmatex">\(D=0.25\)</span>, calculate the ideal switching-period average.</li>
+<li>Why does the switch-node waveform not become a constant voltage when its average is 1.65 V?</li>
+<li>What changes when the filter time constant is increased relative to the switching period?</li>
+<li>In the traditional chopper quadrant classification, what distinguishes Type B from a boost topology?</li>
+<li>Which later lab introduces the physical buck power stage? Which introduces the boost topology?</li>
+</ol>
 <h2 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>06_Buck_Converter.md
-</code></pre></div>
-<p>Topics:</p>
-<ul>
-<li>Buck Converter Fundamentals</li>
-<li>MOSFET Switching</li>
-<li>Inductor Energy Storage</li>
-<li>Output Voltage Control</li>
-<li>Ripple Voltage</li>
-</ul>
+<p>Continue to <a href="../06_Buck_Converter/">Buck Converter Fundamentals</a>, where the ideal step-down model is extended with an inductor, freewheel path, output capacitor, and ripple analysis.</p>
 
 
 
