@@ -1,4 +1,4 @@
-# Project 00A - Arduino Uno Familiarisation
+# Project 00A - Microcontroller Setup
 
 ---
 
@@ -603,7 +603,7 @@ Examples:
 
 ---
 
-## ADC Fundamentals
+## ADC Basics
 
 ADC stands for:
 
@@ -790,7 +790,7 @@ Select:
 
 ---
 
-## PWM Fundamentals
+## PWM Operation
 
 On the Arduino Uno, `analogWrite()` produces hardware PWM on supported timer pins rather than a true analogue voltage. PWM frequency depends on the pin and timer configuration, so it should be checked before comparing measurements with ESP32 PWM.
 
@@ -1189,7 +1189,7 @@ What does PWM stand for?
 Proceed to:
 
 ```text
-00B_Oscilloscope_Familiarisation.md
+00B_Oscilloscope_Setup.md
 ```
 
 where you will learn how to measure and analyse signals using an oscilloscope.

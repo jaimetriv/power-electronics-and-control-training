@@ -143,7 +143,7 @@ The first phase introduces:
 
 ## Project 1
 
-### PWM Fundamentals and Oscilloscope Measurements
+### PWM Operation and Oscilloscope Measurements
 
 Concepts:
 
@@ -157,7 +157,7 @@ Concepts:
 File:
 
 ```text
-01_PWM_Fundamentals.md
+01_PWM_Operation.md
 ```
 
 ---
@@ -203,7 +203,7 @@ File:
 
 ---
 
-## Phase 2 - Power Electronics Fundamentals
+## Phase 2 - Power Circuit Foundations
 
 The second phase introduces the foundation of modern power electronics.
 
@@ -211,7 +211,7 @@ The second phase introduces the foundation of modern power electronics.
 
 ## Project 4
 
-### MOSFET Fundamentals and Electronic Switching
+### MOSFET Switching
 
 Concepts:
 
@@ -223,7 +223,7 @@ Concepts:
 File:
 
 ```text
-04_MOSFET_Fundamentals.md
+04_MOSFET_Switching.md
 ```
 
 ---
@@ -767,7 +767,7 @@ After completing all projects you should be capable of:
 
 ✅ Designing simple closed-loop controllers
 
-✅ Understanding the fundamentals of power electronics
+✅ Understanding core power-electronics principles
 
 ---
 
@@ -776,19 +776,19 @@ After completing all projects you should be capable of:
 ```text
 00_Introduction.md
 
-00A_Microcontroller_Familiarisation.md
+00A_Microcontroller_Setup.md
 
-00B_Oscilloscope_Familiarisation.md
+00B_Oscilloscope_Setup.md
 
-00C_WiFi_Controller_Familiarisation.md
+00C_ESP32_WiFi_Control.md
 
-01_PWM_Fundamentals.md
+01_PWM_Operation.md
 
 02_RC_Circuits.md
 
 03_RLC_Circuits.md
 
-04_MOSFET_Fundamentals.md
+04_MOSFET_Switching.md
 
 05_DC_Chopper_Converters.md
 
@@ -830,5 +830,5 @@ The first project introduces the fundamental concept behind most modern power el
 Proceed to:
 
 ```text
-01_PWM_Fundamentals.md
+01_PWM_Operation.md
 ```

@@ -1,4 +1,4 @@
-# Project 06 - Buck Converter Fundamentals
+# Project 06 - Buck Converter Operation
 
 ---
 

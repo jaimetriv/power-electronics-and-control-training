@@ -20,7 +20,7 @@ In this project you will learn:
 - SPWM implementation
 - Droop control
 - Virtual Synchronous Machine concepts
-- Microgrid fundamentals
+- Microgrid operation
 
 This project serves as the capstone project for the course.
 

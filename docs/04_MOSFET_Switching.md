@@ -1,4 +1,4 @@
-# Project 04 - MOSFET Fundamentals and Electronic Switching
+# Project 04 - MOSFET Switching
 
 ---
 
@@ -934,7 +934,7 @@ Your simulation predicted $V_{AVG}$ = 2.5 V at 50% duty cycle but you measured 2
 
 Topics:
 
-- DC Motor Fundamentals
+- DC Motor Operation
 - Open-Loop Speed Control
 - PWM Motor Drives
 - Motor Time Constants

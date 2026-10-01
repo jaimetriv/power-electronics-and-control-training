@@ -1,4 +1,4 @@
-# Project 00C - ESP32 DevKit V1 Familiarisation
+# Project 00C - ESP32 Wi-Fi Control
 
 ---
 
@@ -814,7 +814,7 @@ Examples:
 
 ---
 
-## ADC Fundamentals
+## ADC Basics
 
 The ESP32 ADC converts:
 
@@ -1483,5 +1483,5 @@ Why is higher PWM resolution important in power electronics?
 Proceed to:
 
 ```text
-01_PWM_Fundamentals.md
+01_PWM_Operation.md
 ```

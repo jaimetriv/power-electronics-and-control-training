@@ -1,4 +1,4 @@
-# Project 07 - Boost Converter Fundamentals
+# Project 07 - Boost Converter Operation
 
 ---
 

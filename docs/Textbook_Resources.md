@@ -41,7 +41,7 @@ Complete Labs 01–04 using Alexander and Sadiku for circuit analysis and Ericks
 
 ### Control Theory Checkpoint After Lab 03
 
-Before continuing to the converter labs, complete [Control Theory Familiarisation](00D_Control_Theory_Familiarisation.md):
+Before continuing to the converter labs, complete [Control Engineering Primer](00D_Control_Engineering_Primer.md):
 
 1. Derive the RC transfer function $H_{RC}(s)=1/(RCs+1)$.
 2. Identify its pole and relate it to $\tau=RC$.
@@ -49,11 +49,11 @@ Before continuing to the converter labs, complete [Control Theory Familiarisatio
 4. Compare measured rise time, settling time, overshoot, and ringing with the Ogata model.
 5. Record the assumptions that explain differences between the model and hardware.
 
-### Stage 2: Power-Converter Fundamentals
+### Stage 2: Power Converters
 
 Complete Labs 05–10 using Erickson and Maksimovic as the main text, with Alexander and Sadiku for circuit refreshers. Focus on switching intervals, volt-second balance, charge balance, conduction modes, ripple, rectification, modulation, and harmonics.
 
-### Stage 3: Control Fundamentals and Design
+### Stage 3: Control and Design
 
 Before Lab 11, pause for a short Ogata review of differential-equation models, transfer functions, block diagrams, first- and second-order responses, poles, zeros, damping, feedback, and steady-state error. Then complete Labs 11–16 in order.
 
@@ -67,11 +67,11 @@ The roadmap below gives the reading to complete before each experiment. Do not t
 
 | Lab | Lab subtopics | Read before starting | Prediction to prepare |
 |---|---|---|---|
-| [01 PWM Fundamentals](01_PWM_Fundamentals.md) | Voltage/current/power, duty ratio, period, frequency, average voltage | Alexander and Sadiku, Ch. 1–2: circuit variables, Ohm's law, Kirchhoff's laws, power, and measurement conventions. Erickson and Maksimovic, Ch. 2, **Basic Concepts**: switching waveforms, duty ratio, and averaging | Calculate $T=1/f$ and the ideal average of a PWM waveform from duty ratio and amplitude |
+| [01 PWM Operation](01_PWM_Operation.md) | Voltage/current/power, duty ratio, period, frequency, average voltage | Alexander and Sadiku, Ch. 1–2: circuit variables, Ohm's law, Kirchhoff's laws, power, and measurement conventions. Erickson and Maksimovic, Ch. 2, **Basic Concepts**: switching waveforms, duty ratio, and averaging | Calculate $T=1/f$ and the ideal average of a PWM waveform from duty ratio and amplitude |
 | [02 RC Circuits](02_RC_Circuits.md) | Capacitor charging, discharging, time constant, first-order response, transfer function, pole | Alexander and Sadiku, Ch. 6: capacitors and energy storage; Ch. 7, **First-Order Circuits**: zero-input/zero-state response and the RC time constant. Ogata, Ch. 2: modelling and transfer functions; Ch. 5: first-order response and time constants | Calculate $\tau=RC$, identify $s=-1/\tau$, and estimate the voltage at $t=\tau$, $3\tau$, and $5\tau$ |
 | [03 RLC Circuits](03_RLC_Circuits.md) | Inductor energy, resonance, natural response, damping, ringing, second-order response | Alexander and Sadiku, Ch. 6: inductors and energy storage; Ch. 8, **Second-Order Circuits**: natural frequency, damping ratio, overdamped/underdamped response, and resonance. Ogata, Ch. 5: second-order poles, damping, overshoot, and settling time | Estimate natural frequency, classify damping, and predict ringing, overshoot, and settling behaviour |
-| [04 MOSFET Fundamentals](04_MOSFET_Fundamentals.md) | Threshold voltage, gate drive, $R_{DS(on)}$, conduction and switching loss | Erickson and Maksimovic, Ch. 2, **Basic Concepts**: power semiconductor switches, gate drive, conduction loss, switching loss, and device ratings. Search **device losses** and **gate drive** | Explain why threshold voltage is not the guaranteed fully-on gate voltage and identify the main loss mechanisms |
-| [05 DC Chopper Fundamentals](05_DC_Chopper_Converters.md) | Switched voltage, duty ratio, switching-period average, filtered output, topology preview | Alexander and Sadiku, Ch. 1–2: circuit variables, power, and circuit laws. Erickson and Maksimovic, Ch. 3, **Steady-State Converter Analysis**: switching intervals and average conversion | Calculate $D V_{IN}$ and compare the ideal average with the settled filtered simulation output |
+| [04 MOSFET Switching](04_MOSFET_Switching.md) | Threshold voltage, gate drive, $R_{DS(on)}$, conduction and switching loss | Erickson and Maksimovic, Ch. 2, **Basic Concepts**: power semiconductor switches, gate drive, conduction loss, switching loss, and device ratings. Search **device losses** and **gate drive** | Explain why threshold voltage is not the guaranteed fully-on gate voltage and identify the main loss mechanisms |
+| [05 DC Chopper Operation](05_DC_Chopper_Converters.md) | Switched voltage, duty ratio, switching-period average, filtered output, topology preview | Alexander and Sadiku, Ch. 1–2: circuit variables, power, and circuit laws. Erickson and Maksimovic, Ch. 3, **Steady-State Converter Analysis**: switching intervals and average conversion | Calculate $D V_{IN}$ and compare the ideal average with the settled filtered simulation output |
 | [06 Buck Converter](06_Buck_Converter.md) | Buck operation, inductor current, capacitor voltage, CCM/DCM, ripple | Alexander and Sadiku, Ch. 6–7: inductor/capacitor energy storage and transient response. Erickson and Maksimovic, Ch. 3: **buck converters**, **volt-second balance**, **charge balance**, **CCM**, **DCM**, and **ripple** | Predict $V_o\approx DV_{in}$ in ideal CCM and estimate inductor-current and output-voltage ripple |
 | [07 Boost Converter](07_Boost_Converter.md) | Energy transfer, boost ratio, CCM/DCM, duty-ratio limits, stress | Alexander and Sadiku, Ch. 6–7: inductor/capacitor energy storage and transients. Erickson and Maksimovic, Ch. 3: **boost converters**, **inductor energy transfer**, **CCM**, **DCM**, and **duty-ratio limits** | Predict $V_o\approx V_{in}/(1-D)$ in ideal CCM and explain why high duty ratio increases stress |
 | [08 PWM Motor Control](08_PWM_Motor_Control.md) | PWM input, motor inertia, speed response, first-order approximation | Erickson and Maksimovic, Ch. 2: converter applications and motor drives. Ogata, Ch. 2, **Mathematical Modeling of Control Systems**, and Ch. 5, **Transient and Steady-State Response Analysis**: first-order models, time constant, rise time, and settling time | Explain why motor speed lags the PWM command and estimate the mechanical time constant from a step response |

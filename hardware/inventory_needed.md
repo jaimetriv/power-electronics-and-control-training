@@ -72,9 +72,9 @@ Important note: the Beginner Parts Kit does not include a resistor assortment.
 
 The following areas are well covered by your current hardware:
 
-- Introductory Arduino and ESP32 familiarisation
-- Oscilloscope familiarisation
-- PWM fundamentals
+- Arduino and ESP32 setup and basic I/O
+- Oscilloscope setup and measurements
+- PWM operation
 - RC circuits
 - RLC circuits
 - Basic MOSFET experiments

@@ -4,7 +4,7 @@ Welcome to the course.
 
 ## Course Topics
 
-- Electronics Fundamentals
+- Circuit Foundations
 - PWM
 - RC and RLC Circuits
 - Control Systems
@@ -29,10 +29,10 @@ Welcome to the course.
 ## Start Here
 
 1. [Introduction](00_Introduction.md)
-2. [Arduino Uno / ESP32 Familiarisation](00A_Microcontroller_Familiarisation.md)
-3. [DSO Nano V3 / OWON HDS272S Familiarisation](00B_Oscilloscope_Familiarisation.md)
-4. [ESP32 WiFi Controller Familiarisation](00C_WiFi_Controller_Familiarisation.md)
-5. [Control Theory Familiarisation](00D_Control_Theory_Familiarisation.md)
+2. [Microcontroller Setup (Arduino Uno / ESP32)](00A_Microcontroller_Setup.md)
+3. [Oscilloscope Setup (DSO Nano V3 / OWON HDS272S)](00B_Oscilloscope_Setup.md)
+4. [ESP32 Wi-Fi Control](00C_ESP32_WiFi_Control.md)
+5. [Control Engineering Primer](00D_Control_Engineering_Primer.md)
 
 ## Lab Index
 
@@ -41,25 +41,25 @@ Welcome to the course.
 | Lab | Title |
 |-----|-------|
 | 00 | [Introduction](00_Introduction.md) |
-| 00A | [Microcontroller Familiarisation](00A_Microcontroller_Familiarisation.md) |
-| 00B | [Oscilloscope Familiarisation](00B_Oscilloscope_Familiarisation.md) |
-| 00C | [WiFi Controller Familiarisation](00C_WiFi_Controller_Familiarisation.md) |
-| 00D | [Control Theory Familiarisation](00D_Control_Theory_Familiarisation.md) |
+| 00A | [Microcontroller Setup](00A_Microcontroller_Setup.md) |
+| 00B | [Oscilloscope Setup](00B_Oscilloscope_Setup.md) |
+| 00C | [ESP32 Wi-Fi Control](00C_ESP32_WiFi_Control.md) |
+| 00D | [Control Engineering Primer](00D_Control_Engineering_Primer.md) |
 
 ### Electronics
 
 | Lab | Title |
 |-----|-------|
-| 01 | [PWM Fundamentals](01_PWM_Fundamentals.md) |
+| 01 | [PWM Operation](01_PWM_Operation.md) |
 | 02 | [RC Circuits](02_RC_Circuits.md) |
 | 03 | [RLC Circuits](03_RLC_Circuits.md) |
-| 04 | [MOSFET Fundamentals](04_MOSFET_Fundamentals.md) |
+| 04 | [MOSFET Switching](04_MOSFET_Switching.md) |
 
 ### Power Electronics
 
 | Lab | Title |
 |-----|-------|
-| 05 | [DC Chopper Fundamentals](05_DC_Chopper_Converters.md) |
+| 05 | [DC Chopper Operation](05_DC_Chopper_Converters.md) |
 | 06 | [Buck Converter](06_Buck_Converter.md) |
 | 07 | [Boost Converter](07_Boost_Converter.md) |
 | 08 | [PWM Motor Control](08_PWM_Motor_Control.md) |
@@ -95,11 +95,11 @@ flowchart TD
 
 subgraph S0[Preparation]
 A[Introduction]
---> A1[Microcontroller Familiarisation]
+--> A1[Microcontroller Setup]
 
-A1 --> A2[Oscilloscope Familiarisation]
+A1 --> A2[Oscilloscope Setup]
 
-A2 --> A3[WiFi Controller Familiarisation]
+A2 --> A3[ESP32 Wi-Fi Control]
 end
 
 subgraph S1[Stage 1: Circuit Foundations]
@@ -109,13 +109,13 @@ B --> C[RC Circuits]
 
 C --> D[RLC Circuits]
 
-D --> CP[Control Theory Familiarisation]
+D --> CP[Control Engineering Primer]
 
-CP --> E[MOSFET Fundamentals]
+CP --> E[MOSFET Switching]
 end
 
-subgraph S2[Stage 2: Power-Converter Fundamentals]
-E --> F[DC Chopper Fundamentals]
+subgraph S2[Stage 2: Power Converters]
+E --> F[DC Chopper Operation]
 
 F --> G[Buck Converter]
 
@@ -128,7 +128,7 @@ I --> J[AC-DC Rectifiers]
 J --> K[DC-AC Inverters]
 end
 
-subgraph S3[Stage 3: Control Fundamentals and Design]
+subgraph S3[Stage 3: Control and Design]
 K --> L[System Identification]
 
 L --> M[P Controller]

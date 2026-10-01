@@ -834,4 +834,4 @@ Topics:
 - Voltage Regulation
 - Droop Control
 - Virtual Synchronous Machines
-- Microgrid Fundamentals
+- Microgrid Operation

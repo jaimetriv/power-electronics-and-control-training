@@ -1,4 +1,4 @@
-# Project 05 - DC Chopper Fundamentals
+# Project 05 - DC Chopper Operation
 
 ---
 
@@ -80,7 +80,7 @@ Build this signal-only model to compare the switching waveform with a smoothed o
 
 ### Step 1: Create a Model
 
-Create a blank Simulink model and save it as `DC_Chopper_Fundamentals.slx`.
+Create a blank Simulink model and save it as `DC_Chopper_Operation.slx`.
 
 ### Step 2: Add Blocks
 
@@ -175,4 +175,4 @@ If Lab 01's PWM measurement is already complete, skip this check. Otherwise, fol
 
 ## Next Project
 
-Continue to [Buck Converter Fundamentals](06_Buck_Converter.md), where the ideal step-down model is extended with an inductor, freewheel path, output capacitor, and ripple analysis.
+Continue to [Buck Converter Operation](06_Buck_Converter.md), where the ideal step-down model is extended with an inductor, freewheel path, output capacitor, and ripple analysis.

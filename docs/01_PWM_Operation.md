@@ -1,4 +1,4 @@
-# Project 01 - PWM Fundamentals and Oscilloscope Measurements
+# Project 01 - PWM Operation and Oscilloscope Measurements
 
 ---
 

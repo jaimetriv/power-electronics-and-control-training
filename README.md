@@ -2,7 +2,7 @@
 
 A practical hands-on course covering:
 
-- Electronics Fundamentals
+- Circuit Foundations
 - PWM
 - RC and RLC Circuits
 - Control Systems
@@ -39,16 +39,16 @@ The labs are supported by three reference books. See [docs/Textbook_Resources.md
 ### Foundations
 
 - 00 Introduction
-- 00A Microcontroller Familiarisation (Arduino Uno / ESP32)
-- 00B Oscilloscope Familiarisation
-- 00C WiFi Controller Familiarisation (ESP32)
+- 00A Microcontroller Setup (Arduino Uno / ESP32)
+- 00B Oscilloscope Setup
+- 00C ESP32 Wi-Fi Control
 
 ### Electronics
 
-- 01 PWM Fundamentals
+- 01 PWM Operation
 - 02 RC Circuits
 - 03 RLC Circuits
-- 04 MOSFET Fundamentals
+- 04 MOSFET Switching
 
 ### Power Electronics
 

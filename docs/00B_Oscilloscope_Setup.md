@@ -1,4 +1,4 @@
-# Project 00B - Oscilloscope Familiarisation
+# Project 00B - Oscilloscope Setup
 
 ---
 
@@ -1217,5 +1217,5 @@ Explain your answer.
 Proceed to:
 
 ```text
-00C_WiFi_Controller_Familiarisation.md
+00C_ESP32_WiFi_Control.md
 ```
