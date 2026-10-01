@@ -1,10 +1,10 @@
-# Project 05 - DC Chopper Converters and DC Motor Drives
+# Project 05 - DC Chopper Fundamentals
 
 ---
 
 ## Reading Before the Lab
 
-Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapters 1–2, to refresh circuit laws applied separately to each switch state. Then read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, for switching intervals and average conversion. Draw both switch-state circuits and calculate the ideal average output from duty ratio before measuring it.
+Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapters 1–2, for circuit variables, power, and circuit laws. Then read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, for switching intervals and average conversion. This lab introduces the general chopper idea; Labs 06 and 07 derive the buck and boost topologies in detail.
 
 ---
 
@@ -12,609 +12,167 @@ Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapters 1–2
 
 In this project you will learn:
 
-- What a chopper converter is
-- How PWM creates chopper action
-- The relationship between Buck and Boost converters
-- DC motor chopper drives
-- Average voltage control
-- Quadrant operation
-- Industrial applications of choppers
+- How a controlled switch produces a pulsed output
+- The difference between instantaneous voltage and its switching-period average
+- How duty ratio determines the ideal average voltage of a step-down chopper
+- How a low-pass filter smooths a pulsed waveform
+- How the general chopper principle leads into buck and boost converter topologies
 
-This project connects:
+This is a simulation-led introduction. It does not build a motor drive or investigate regenerative quadrants; motor dynamics are covered in Lab 08.
+
+---
+
+## Chopper Operation
+
+A DC chopper controls power from a DC source by rapidly switching a semiconductor device. In the ideal step-down case, the switch-node voltage alternates between zero and the input voltage:
 
 ```text
-Power Electronics  ←→  Motor Drives
+Switch ON:  v_o = V_IN
+Switch OFF: v_o = 0
 ```
 
----
+One switching period, $T$, has two intervals:
 
+| Interval | Duration | Ideal switch-node voltage |
+|---|---:|---:|
+| Switch ON | $t_{ON}=DT$ | $V_{IN}$ |
+| Switch OFF | $t_{OFF}=(1-D)T$ | $0$ V |
 
-## Introduction
-
-A Chopper Converter is a DC-to-DC converter that controls the average value of a DC voltage by rapidly switching a semiconductor device ON and OFF.
-
----
-
-## Why Is It Called a Chopper?
-
-The input DC voltage is chopped into pulses:
-
-```text
-12V ─────      ─────
-          │      │
-          │      │
-0V _______│______│______
-```
-
-The average value depends on the duty cycle.
-
----
-
-## Average Output Voltage
-
-For an ideal step-down chopper operating in steady state, the value below is the average over one switching period. The load or a filter provides the physical smoothing; the instantaneous voltage remains a switched waveform.
+The duty ratio is the fraction of each switching period for which the switch is on:
 
 $$
-V_{OUT} = D \cdot V_{IN}
+D=\frac{t_{ON}}{T},\qquad 0\leq D\leq1
 $$
 
-Where:
-
-- $V_{OUT}$ = Output Voltage
-- $D$ = Duty Cycle
-- $V_{IN}$ = Input Voltage
-
-### Example
-
-Given $V_{IN} = 12\ \text{V}$ and $D = 0.5$:
+The instantaneous switch-node voltage is still a pulse train. To find its average over one full period, add the voltage-time contribution from each interval and divide by the period. The OFF interval contributes zero volts:
 
 $$
-V_{OUT} = 0.5 \times 12 = 6\ \text{V}
+V_{o,avg}=\frac{V_{IN}(DT)+0((1-D)T)}{T}=D V_{IN}
 $$
 
----
-
-## Chopper Versus Linear Control
-
-### Linear Control
-
-```text
-Input → Resistor → Output
-```
-
-Disadvantages: heat generation, lower efficiency.
-
-### Chopper Control
-
-```text
-Input → Switching → Output
-```
-
-Advantages: high efficiency, low losses, better performance.
-
----
-
-## Chopper Classification
-
-### Type A Chopper (Step-Down / Buck)
-
-- Positive voltage
-- Positive current
-- Output voltage lower than input
-
-### Type B Chopper (Step-Up / Boost)
-
-- Voltage boosting
-- Output voltage higher than input
-
----
-
-## Quadrant Concept
-
-Motor drives are described using torque and speed quadrants:
-
-```text
-      Speed
-
-        +
-        │
-   II   │   I
-        │
-────────┼────────
-        │
-   III  │   IV
-        │
-        -
-```
-
-Most microcontroller motor control projects operate in First Quadrant only (positive voltage, positive current), which is sufficient for PWM speed control and Buck converters.
-
----
-
-## Chopper Controlled Motor Drive
-
-```text
-Battery (+)
-    │
-MOSFET Chopper (PWM controlled)
-    │
-DC Motor
-    │
-Battery (−) / GND
-```
-
-Motor average voltage:
+For $V_{IN}=3.3\ \mathrm{V}$ and $D=0.5$, the switch is ON for half the period and OFF for half. Therefore:
 
 $$
-V_{AVG} = D \cdot V_S
+V_{o,avg}=0.5(3.3)=1.65\ \mathrm{V}
 $$
 
-For a given motor and approximately constant load, motor speed often increases with average applied voltage. The exact speed also depends on back-EMF, winding resistance, current, friction, and load torque.
+The average, 1.65 V in this example, is **not** the voltage at every instant: the switch node still alternates between 0 V and 3.3 V. A load or filter responds to those pulses and determines how much switching ripple remains in the output. In this lab's simple low-pass model, the filtered output settles near the calculated average; a real buck converter uses its inductor, capacitor, and load to shape the output, as studied in Lab 06.
 
----
+### Assumptions and What Carries Forward
 
-## Simulink Simulation
+The equation $V_{o,avg}=D V_{IN}$ here assumes an ideal switch, constant input voltage, a repeating steady-state PWM waveform, and an average taken over one complete switching period. It describes the average switch-node voltage for this step-down example.
 
-Before building the circuit, build a Simulink model to predict the chopper waveform and average output voltage at each duty cycle.
+An ideal buck converter also has $V_{OUT}=D V_{IN}$ in steady-state continuous conduction mode (CCM). Lab 06 derives that result using **inductor volt-second balance** and shows how the inductor, diode, and capacitor shape current and voltage ripple. The formula does not apply to every converter: Lab 07 derives the boost converter's different relationship.
 
-This model is signal-only — no Simscape physical network is needed. The chopper output is a PWM waveform; the load averaging is conceptual at this stage.
+## Topology Preview
 
----
+The term **chopper** describes switched DC power conversion generally. A buck converter is a step-down topology and is developed in Lab 06. A boost converter is a distinct step-up topology, with a different ideal conversion relationship, and is developed in Lab 07.
 
-### Step 1 — Create a New Simulink Model
+??? note "Optional background: chopper quadrants"
 
-1. In MATLAB, go to **Home** tab → click **Simulink**.
-2. Click **Blank Model**.
-3. Go to **File → Save** and name the file `DC_Chopper`.
+    Chopper quadrant classes describe the signs of output voltage and current. A Type A chopper operates in the first quadrant, with positive voltage and current, and transfers power from source to load. A Type B chopper operates in the second quadrant, with positive voltage and negative current, allowing regenerative energy flow back toward the source. Type B does not simply mean “boost converter.”
 
----
+    This lab models only first-quadrant operation; it does not test reverse current or regenerative braking.
 
-### Step 2 — Add Blocks
+## Simulink Model: Pulsed Voltage and Filtered Average
 
-Open the **Library Browser** and drag the following blocks onto the canvas:
+Build this signal-only model to compare the switching waveform with a smoothed output. The transfer-function block is an illustrative low-pass filter, not a physical power-stage or device-stress model. Lab 06 replaces this abstraction with a Simscape buck converter.
+
+### Step 1: Create a Model
+
+Create a blank Simulink model and save it as `DC_Chopper_Fundamentals.slx`.
+
+### Step 2: Add Blocks
 
 | Block | Library path | Quantity |
-|-------|-------------|----------|
-| Pulse Generator | Simulink → Sources | 1 |
-| Gain | Simulink → Math Operations | 1 |
-| Scope | Simulink → Sinks | 1 |
+|---|---|---:|
+| Pulse Generator | Simulink > Sources | 1 |
+| Gain | Simulink > Math Operations | 1 |
+| Transfer Fcn | Simulink > Continuous | 1 |
+| Scope | Simulink > Sinks | 1 |
 
-The Gain block will scale the 0–1 pulse to 0–$V_{IN}$.
+### Step 3: Configure the Pulse Generator
 
----
-
-### Step 3 — Configure the Pulse Generator
-
-Double-click the **Pulse Generator** block and set:
+Set:
 
 | Parameter | Value |
-|-----------|-------|
+|---|---:|
 | Amplitude | `1` |
-| Period | `0.002` |
-| Pulse Width | `50` (percent) |
-| Phase delay | `0` |
+| Period | `0.002` s |
+| Pulse width | `50` percent |
+| Phase delay | `0` s |
 
-This produces a normalised 0–1 pulse at 500 Hz with 50% duty cycle.
+This produces a normalized 0–1 pulse at 500 Hz.
 
----
+### Step 4: Configure the Gain and Filter
 
-### Step 4 — Configure the Gain Block
+Set the Gain block to `3.3`. This scales the normalized pulse to a modeled input of 3.3 V; it does not represent an ESP32 input pin.
 
-Double-click the **Gain** block and set:
+Set the Transfer Fcn block to:
 
 | Parameter | Value |
-|-----------|-------|
-| Gain | `3.3` |
+|---|---|
+| Numerator coefficients | `[1]` |
+| Denominator coefficients | `[0.02, 1]` |
 
-This scales the pulse to 0–3.3 V, matching the ESP32 GPIO output.
+The filter is $H(s)=1/(0.02s+1)$, with a 20 ms time constant. Since this is ten times the 2 ms switching period, its output should settle near the PWM average with reduced ripple.
 
----
+### Step 5: Wire the Model
 
-### Step 5 — Wire the Model
-
-Connect:
-
-```text
-Pulse Generator → Gain → Scope
-```
-
----
-
-### Step 6 — Simulation Settings
-
-Go to **Modeling → Model Settings** (or press **Ctrl+E**).
-
-Under **Solver**:
-
-| Setting | Value |
-|---------|-------|
-| Stop time | `0.008` |
-| Type | Variable-step |
-| Solver | `ode45` |
-
-Click **OK**.
-
----
-
-### Step 7 — Run and Observe
-
-Click **Run**. Open the Scope.
-
-You should see a 0–3.3 V square wave at 500 Hz with equal ON and OFF times. The average value is $0.5 \times 3.3 = 1.65$ V.
-
----
-
-### Step 8 — Vary the Duty Cycle
-
-Change the **Pulse Width** parameter in the Pulse Generator and re-run for each duty cycle:
-
-| Pulse Width (%) | Duty Cycle | Expected $V_{AVG}$ |
-|-----------------|------------|--------------------|
-| 25 | 25% | 0.83 V |
-| 50 | 50% | 1.65 V |
-| 75 | 75% | 2.48 V |
-
-Observe how the ON time grows and the average voltage rises proportionally.
-
----
-
-### Step 9 — Unified Converter Comparison (MATLAB Script)
-
-Run this script in the MATLAB Command Window to plot the Type A (Buck) and Type B (Boost) output voltage curves together, showing where the chopper motor drive sits:
-
-```matlab
-Vin = 3.3;
-D   = 0:0.001:0.95;
-
-figure; hold on;
-plot(D, Vin.*D,       'b',  'LineWidth', 2, 'DisplayName', 'Type A (Buck)  V_{OUT}=D\cdotV_{IN}');
-plot(D, Vin./(1-D),   'r',  'LineWidth', 2, 'DisplayName', 'Type B (Boost) V_{OUT}=V_{IN}/(1-D)');
-yline(Vin, 'k:', sprintf('V_{IN} = %.1fV', Vin));
-grid on;
-xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
-title('DC Chopper Converters - Unified Comparison');
-legend('Location', 'northwest');
-ylim([0 20]);
-```
-
-Note that the Type A (Buck) curve and the motor chopper $V_{AVG} = D \cdot V_S$ are identical — a motor chopper and a Buck converter share the same voltage-control law.
-
----
-
-### Wiring Checklist
-
-✅ Pulse Generator output → Gain → Scope
-
-✅ Amplitude = 1, Period = 0.002, Phase delay = 0
-
-✅ Gain = 3.3
-
-✅ Stop time = 0.008, Variable-step, ode45
-
----
-
-### Prediction Table
-
-<div class="result-block">
-<table>
-  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Predicted V<sub>AVG</sub> (V)</th><th>Motor speed</th></tr></thead>
-  <tbody>
-    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab05-sim-vavg25" placeholder="V"></td><td><input class="result-input" id="lab05-sim-spd25" placeholder="e.g. Slow"></td></tr>
-    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab05-sim-vavg50" placeholder="V"></td><td><input class="result-input" id="lab05-sim-spd50" placeholder="e.g. Medium"></td></tr>
-    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab05-sim-vavg75" placeholder="V"></td><td><input class="result-input" id="lab05-sim-spd75" placeholder="e.g. Fast"></td></tr>
-  </tbody>
-</table>
-</div>
-
----
-
-## Components Required
-
-- ESP32 DevKit V1
-- Breadboard
-- Jumper wires
-- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
-
-## Experiment 1 - Observe the Chopper Waveform
-
-### Objective
-
-Observe the chopper switching waveform and measure its average voltage at 50% duty cycle.
-
----
-
-### Connections
-
-1. Insert the **CH1 probe BNC** into CH1 on the OWON HDS272S.
-2. Hook the **CH1 probe tip** onto **ESP32 GPIO18**.
-3. Clip the **CH1 probe ground** to any **GND pin** on the ESP32.
+Connect the blocks so the raw switched voltage and filtered response both appear on the Scope:
 
 ```text
-CH1 socket    ◄──── BNC connector
-ESP32 GND     ◄──── CH1 probe ground
-ESP32 GPIO18  ◄──── CH1 probe tip
+Pulse Generator -> Gain -> Scope input 1
+                         -> Transfer Fcn -> Scope input 2
 ```
 
-No breadboard components are needed for this experiment.
+Set the Scope to two input ports. Branch the Gain output so it feeds both the Scope and Transfer Fcn.
 
----
+### Step 6: Configure and Run
 
-### ESP32 Code
+Set the model stop time to `0.1` s and use a variable-step `ode45` solver. Run the model and observe both traces.
 
-```cpp
-void setup()
-{
-    // Configure LEDC channel 0: 500 Hz, 8-bit resolution.
-    ledcSetup(0, 500, 8);
-    ledcAttachPin(18, 0);
-}
+- Scope input 1 should switch between 0 V and 3.3 V.
+- Scope input 2 should rise toward the switching-period average.
+- At 50% duty, the filtered output should settle near 1.65 V.
+- The filtered trace is smoother, but it is not perfectly constant.
 
-void loop()
-{
-    // Set duty cycle to 128/255 ≈ 50%.
-    // Average voltage = 0.5 × V_S ≈ 1.65 V from a 3.3 V supply.
-    ledcWrite(0, 128);
-}
-```
+### Step 7: Sweep Duty Ratio
 
-> **Arduino Uno:** replace `ledcWrite(0, 128)` with `analogWrite(9, 128)` on pin 9.
+Change the Pulse Generator pulse width and rerun the model:
 
----
+| Duty ratio | Ideal average for 3.3 V input |
+|---:|---:|
+| 25% | 0.825 V |
+| 50% | 1.650 V |
+| 75% | 2.475 V |
 
-### Oscilloscope Settings
+Record the settled filtered output and compare it with the ideal average. Explain any remaining ripple or transient error.
 
-| Setting | OWON HDS272S | DSO Nano |
-|---------|--------------|----------|
-| Vertical scale | 2 V/div | 2 V/div |
-| Horizontal scale | 500 µs/div | 500 µs/div |
-| Trigger | Edge, Rising | Edge, Rising |
-| Coupling | DC | DC |
+### Step 8: Compare Switching Frequency
 
----
+Keep duty ratio at 50% and the filter time constant at 20 ms. Compare switching frequencies of 100 Hz, 500 Hz, and 1 kHz. For each, adjust the period to $T=1/f_s$ and keep the simulation stop time long enough for the filter output to settle.
 
-### Expected Waveform
+| Switching frequency | Period | Expected comparison |
+|---:|---:|---|
+| 100 Hz | 10 ms | More visible filtered ripple |
+| 500 Hz | 2 ms | Smaller filtered ripple |
+| 1 kHz | 1 ms | Still smaller filtered ripple |
 
-```text
-3.3V ─────      ─────
-          │      │
-          │      │
-0V ________│______│______
-```
+The average remains approximately $D V_{IN}$; increasing switching frequency mainly changes ripple and switching losses. This signal-only model does not calculate switching losses.
 
----
+## Optional Hardware PWM Check
 
-### Observe
-
-The waveform should switch between 0 V and approximately 3.3 V at ~500 Hz with equal ON and OFF times.
-
----
-
-### Measurements
-
-<div class="result-block">
-<table>
-  <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
-  <tbody>
-    <tr><td>Frequency</td><td>~500 Hz</td><td><input class="result-input" id="lab05-exp1-freq" placeholder="Hz"></td></tr>
-    <tr><td>Duty Cycle</td><td>~50%</td><td><input class="result-input" id="lab05-exp1-duty" placeholder="%"></td></tr>
-    <tr><td>Peak Voltage</td><td>~3.3 V</td><td><input class="result-input" id="lab05-exp1-vpeak" placeholder="V"></td></tr>
-  </tbody>
-</table>
-</div>
-
----
-
-## Experiment 2 - Duty Cycle Investigation
-
-### Objective
-
-Observe how changing duty cycle changes the average output voltage — the fundamental principle of chopper speed control.
-
----
-
-### ESP32 Code
-
-```cpp
-void setup()
-{
-    ledcSetup(0, 500, 8);
-    ledcAttachPin(18, 0);
-}
-
-void loop()
-{
-    // Step through three duty cycles with a 3-second pause at each.
-    // Average voltage = D × V_S at each step.
-
-    ledcWrite(0, 64);    // ~25% duty cycle → V_AVG ≈ 0.83 V
-    delay(3000);
-
-    ledcWrite(0, 128);   // ~50% duty cycle → V_AVG ≈ 1.65 V
-    delay(3000);
-
-    ledcWrite(0, 192);   // ~75% duty cycle → V_AVG ≈ 2.48 V
-    delay(3000);
-}
-```
-
-> **Arduino Uno:** replace `ledcWrite(0, value)` with `analogWrite(9, value)` on pin 9.
-
----
-
-### Results Table
-
-<div class="result-block">
-<table>
-  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Measured V<sub>AVG</sub> (V)</th></tr></thead>
-  <tbody>
-    <tr><td>64</td><td>25%</td><td><input class="result-input" id="lab05-exp2-vavg25" placeholder="V"></td></tr>
-    <tr><td>128</td><td>50%</td><td><input class="result-input" id="lab05-exp2-vavg50" placeholder="V"></td></tr>
-    <tr><td>192</td><td>75%</td><td><input class="result-input" id="lab05-exp2-vavg75" placeholder="V"></td></tr>
-  </tbody>
-</table>
-</div>
-
----
-
-## MATLAB Comparison
-
-Overlay your measured average voltages against the ideal chopper theory.
-
-```matlab
-Vin = 3.3;
-
-D_measured    = [0.25,  0.50,  0.75];   % measured duty cycles
-Vavg_measured = [0.00,  0.00,  0.00];   % replace with measured average voltages (V)
-
-D_ideal  = 0:0.01:1;
-Vavg_ideal = Vin .* D_ideal;
-
-figure; hold on;
-plot(D_ideal, Vavg_ideal, 'b--', 'LineWidth', 2, ...
-    'DisplayName', 'Ideal: V_{AVG} = D \cdot V_{IN}');
-scatter(D_measured, Vavg_measured, 80, 'r', 'filled', ...
-    'DisplayName', 'Measured');
-grid on;
-xlabel('Duty Cycle'); ylabel('Average Voltage (V)');
-title('DC Chopper - Ideal vs Measured');
-legend('Location', 'northwest');
-
-fprintf('%-8s %-12s %-12s %-12s\n', 'D', 'V_ideal(V)', 'V_meas(V)', 'Error(%)');
-for i = 1:3
-    V_ideal = Vin * D_measured(i);
-    err     = 100 * abs(V_ideal - Vavg_measured(i)) / V_ideal;
-    fprintf('%-8.2f %-12.3f %-12.3f %-12.1f\n', ...
-        D_measured(i), V_ideal, Vavg_measured(i), err);
-end
-```
-
-### Consolidation Plot — All Three Topologies
-
-```matlab
-Vin = 3.3;
-D   = 0:0.001:0.95;
-
-% Replace with your measured values from the Results Table above
-D_measured    = [0.25, 0.50, 0.75];
-Vavg_measured = [0.00, 0.00, 0.00];   % (V)
-
-figure; hold on;
-plot(D, Vin.*D,          'b',  'LineWidth', 2, 'DisplayName', 'Type A Buck');
-plot(D, Vin./(1-D),      'r',  'LineWidth', 2, 'DisplayName', 'Type B Boost');
-scatter(D_measured, Vavg_measured, 80, 'gs', 'filled', ...
-    'DisplayName', 'Measured (Chopper)');
-yline(Vin, 'k:', 'V_{IN}');
-grid on;
-xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
-title('Buck / Boost / Chopper - Unified View');
-legend('Location', 'northwest');
-ylim([0 20]);
-```
-
-### Reflection
-
-- Do your measured average voltages fall on the ideal line?
-- The Type A (Buck) and motor chopper curves are identical. What does this tell you about the relationship between a Buck Converter and a DC motor drive?
-- Why does the Type B (Boost) curve diverge rapidly from the Type A curve as D increases?
-
----
-
-## Troubleshooting
-
-### No PWM Visible
-
-Check:
-
-✅ Probe tip on GPIO18
-
-✅ Trigger type set to Edge, Rising
-
-✅ Horizontal scale appropriate (500 µs/div for ~500 Hz)
-
----
-
-### Average Voltage Not Matching Theory
-
-Check:
-
-✅ Duty cycle measured correctly from oscilloscope
-
-✅ Supply voltage measured with multimeter
-
-✅ Probe attenuation setting matches probe switch
-
----
-
-### Troubleshooting Checklist
-
-✅ Controller powered and sketch uploaded
-
-✅ Probe on PWM pin
-
-✅ Probe ground on GND
-
-✅ Trigger enabled
-
-✅ Correct time scale selected
-
----
+If Lab 01's PWM measurement is already complete, skip this check. Otherwise, follow its GPIO18 oscilloscope setup to verify a 0–3.3 V, 500 Hz, 50% duty-cycle command. This measures the controller output only; it is **not** a chopper power-stage or motor experiment.
 
 ## Knowledge Check
 
-### Question 1
-
-What is a chopper converter?
-
----
-
-### Question 2
-
-Why is PWM used in choppers?
-
----
-
-### Question 3
-
-What type of chopper is a Buck Converter?
-
----
-
-### Question 4
-
-What determines the average output voltage?
-
----
-
-### Question 5
-
-Why are chopper converters efficient?
-
----
-
-### Question 6
-
-A DC motor drive and a Buck Converter both use the equation $V_{AVG} = D \times V_S$. Explain one key circuit difference between them that makes the Buck Converter suitable for powering sensitive electronics while the basic motor chopper is not.
-
----
-
-<div class="result-actions">
-  <button class="result-export-btn" data-lab="lab05">⬇ Export Results (JSON)</button>
-  <button class="result-clear-btn" data-lab="lab05">✕ Clear All Results</button>
-</div>
-
----
-
+1. For $V_{IN}=3.3\ \mathrm{V}$ and $D=0.25$, calculate the ideal switching-period average.
+2. Why does the switch-node waveform not become a constant voltage when its average is 1.65 V?
+3. What changes when the filter time constant is increased relative to the switching period?
+4. In the traditional chopper quadrant classification, what distinguishes Type B from a boost topology?
+5. Which later lab introduces the physical buck power stage? Which introduces the boost topology?
 
 ## Next Project
 
-```text
-06_Buck_Converter.md
-```
-
-Topics:
-
-- Buck Converter Fundamentals
-- MOSFET Switching
-- Inductor Energy Storage
-- Output Voltage Control
-- Ripple Voltage
+Continue to [Buck Converter Fundamentals](06_Buck_Converter.md), where the ideal step-down model is extended with an inductor, freewheel path, output capacitor, and ripple analysis.

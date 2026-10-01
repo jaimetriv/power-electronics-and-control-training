@@ -59,7 +59,7 @@ Welcome to the course.
 
 | Lab | Title |
 |-----|-------|
-| 05 | [DC Chopper Converters](05_DC_Chopper_Converters.md) |
+| 05 | [DC Chopper Fundamentals](05_DC_Chopper_Converters.md) |
 | 06 | [Buck Converter](06_Buck_Converter.md) |
 | 07 | [Boost Converter](07_Boost_Converter.md) |
 | 08 | [PWM Motor Control](08_PWM_Motor_Control.md) |
@@ -115,7 +115,7 @@ CP --> E[MOSFET Fundamentals]
 end
 
 subgraph S2[Stage 2: Power-Converter Fundamentals]
-E --> F[DC Chopper Converters]
+E --> F[DC Chopper Fundamentals]
 
 F --> G[Buck Converter]
 

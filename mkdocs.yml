@@ -83,7 +83,7 @@ nav:
       - MOSFET Fundamentals: 04_MOSFET_Fundamentals.md
 
   - Power Conversion:
-      - DC Chopper Converters: 05_DC_Chopper_Converters.md
+      - DC Chopper Fundamentals: 05_DC_Chopper_Converters.md
       - Buck Converter: 06_Buck_Converter.md
       - Boost Converter: 07_Boost_Converter.md
       - PWM Motor Control: 08_PWM_Motor_Control.md
