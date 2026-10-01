@@ -2,605 +2,255 @@
 
 ---
 
-## Purpose
+## Purpose and Task
 
-This short review connects the RC and RLC circuits to the control concepts used in Labs 08 and 11-16. It is not a replacement for the assigned sections of Ogata's _Modern Control Engineering_. Use it to refresh the language and equations before continuing with the converter and control labs.
+This guided introduction reviews the control-engineering ideas used later in the course. It is self-contained: the circuit, controller, and converter values needed for the examples are given here. Work through the steps in sequence; each step introduces one idea and then applies it numerically.
 
-## Reading Before This Review
+The overall task is to model a simple physical system, predict its response, add feedback, and consider what changes when the controller runs digitally or the plant is a converter.
 
-Read Ogata, Chapter 2, **Mathematical Modeling of Control Systems**, for differential-equation models, transfer functions, and block diagrams. Read Chapter 5, **Transient and Steady-State Response Analysis**, for first-order and second-order responses, poles, damping, overshoot, and settling time.
+## Worked-Example Parameters
 
-Use Alexander and Sadiku, Chapters 7 and 8, to connect those ideas to first-order RC and second-order RLC circuits.
+| Example | Parameter | Value |
+|---|---|---:|
+| RC plant | $R$, $C$ | $10\ \mathrm{k\Omega}$, $100\ \mathrm{\mu F}$ |
+| RC input | Step $V_S$, initial $V_C(0)$ | $3.3\ \mathrm{V}$, $0\ \mathrm{V}$ |
+| RLC plant | $R$, $L$, $C$ | $100\ \Omega$, $100\ \mathrm{mH}$, $100\ \mathrm{nF}$ |
+| P feedback | $K_p$, reference, sensor gain | $2$, $3.3\ \mathrm{V}$, $1$ |
+| Digital PI | $K_p$, $K_i$, $T_s$ | $2$, $5\ \mathrm{s^{-1}}$, $0.01\ \mathrm{s}$ |
+| Digital PI | Initial error, integral state | $0.4\ \mathrm{V}$, $0\ \mathrm{V}$ |
+| Boost linearisation | $V_{IN}$, operating duty $D_0$, duty change $\hat d$ | $3.3\ \mathrm{V}$, $0.5$, $0.01$ |
 
-## Step-by-Step Study Path
+## Step 1: Identify the System
 
-Work through the stages in order. At each stage, write down the model, calculate one prediction, and compare it with a simulation or measurement.
+A **plant** is the physical system being studied or controlled. Its **input** is the applied signal; its **output** is the quantity of interest. A sensor measures the output, an actuator applies the command, and a disturbance is an unwanted change such as a load increase.
 
-### Step 1: Identify the Plant
+This description is the starting point for any model: decide what quantity enters the plant and what quantity you will observe. In a control loop, the measured output is compared with a reference; in an open-loop experiment, you can simply observe how the output responds to a chosen input.
 
-Start by naming the physical system, input, output, actuator, sensor, and disturbance.
-
-For Lab 02:
-
-| Role | Example |
-|---|---|
-| Plant | RC circuit |
-| Input | Source voltage $V_S$ |
-| Output | Capacitor voltage $V_C$ |
-| Actuator | Voltage source or GPIO signal |
-| Sensor | Oscilloscope probe |
-| Disturbance | Load, source, or component change |
-
-Do not choose a controller until the plant and measured output are clear.
-
-### Step 2: Derive the Differential Equation
-
-Use Kirchhoff's laws and component relationships. For the RC circuit:
-
-1. Write KVL: $V_S=V_R+V_C$.
-2. Substitute $V_R=iR$.
-3. Substitute $i=C\,dV_C/dt$.
-4. Rearrange to $RC\,dV_C/dt+V_C=V_S$.
-
-This equation is the physical model before any Laplace transform is applied.
-
-### Step 3: Convert to a Transfer Function
-
-Assume zero initial conditions, take the Laplace transform, collect the output terms, and divide by the input:
-
-$$
-RCsV_C(s)+V_C(s)=V_S(s)
-$$
-
-$$
-H(s)=\frac{V_C(s)}{V_S(s)}=\frac{1}{RCs+1}
-$$
-
-Check that the transfer function is dimensionless and that its DC gain is 1.
-
-### Step 4: Find Poles and Predict the Time Response
-
-Set the denominator equal to zero to find the pole. A negative real pole gives a decaying exponential. For the RC model:
-
-$$
-s=-\frac{1}{RC}=-\frac{1}{\tau}
-$$
-
-Use the pole to predict the time constant and use the step equation to predict measured voltages.
-
-### Step 5: Compare a Second-Order Model
-
-Repeat the process for the RLC circuit. Match its denominator to:
-
-$$
-s^2+2\zeta\omega_n s+\omega_n^2
-$$
-
-Then calculate $\omega_n$, $\zeta$, and, when $\zeta<1$, $\omega_d$. Use the pole locations to predict ringing and decay before opening the oscilloscope.
-
-### Step 6: Form the Feedback Loop
-
-Once the plant model is known, add a controller and feedback measurement:
+**Read more:** Ogata, Ch. 2, **Mathematical Modeling of Control Systems**; Ch. 6, **Control Systems and Control Systems Components**.
 
 ```text
-Reference -> Error -> Controller -> Actuator -> Plant -> Output
-               ^                                      |
-               |------------ Sensor -----------------|
+Reference -> Controller -> Actuator -> Plant -> Output
+                 ^                           |
+                 +--------- Sensor -----------+
 ```
 
-For unity negative feedback, the error is $e=r-y$ and the closed-loop transfer function is:
+**Worked example:** for the RC plant, the input is source voltage $V_S$, the output is capacitor voltage $V_C$, the plant is the R-C circuit, and a voltage probe is the sensor. A changed load would be a disturbance. At this stage we are observing the system; no controller is required.
+
+## Step 2: Write a Physical Model
+
+Use circuit laws and component relationships. For the series RC circuit:
+
+The differential equation expresses the physical laws in terms of changing signals. It is useful before choosing a control strategy because it exposes the system's energy storage and time-dependent behavior. Keep initial conditions and units explicit.
 
 $$
-T(s)=\frac{C(s)G(s)}{1+C(s)G(s)}
+V_S=V_R+V_C,\qquad V_R=iR,\qquad i=C\frac{dV_C}{dt}
 $$
 
-where $C(s)$ is the controller and $G(s)$ is the plant.
-
-### Step 7: Check Stability Before Hardware
-
-Find the roots of the closed-loop characteristic equation:
-
-$$
-1+C(s)G(s)=0
-$$
-
-For continuous-time systems:
-
-- Poles with negative real parts produce decaying responses.
-- Poles on the imaginary axis produce sustained oscillation in the ideal model.
-- Any pole with a positive real part produces an unstable response.
-
-Always simulate a low-gain case before applying a new controller to hardware.
-
-### Step 8: Inspect Frequency Response
-
-Evaluate the plant at $s=j\omega$:
-
-$$
-G(j\omega)=G(s)\big|_{s=j\omega}
-$$
-
-The magnitude shows how much each frequency is amplified or attenuated. The phase shows the delay introduced by the plant. For the RC low-pass circuit:
-
-$$
-|H(j\omega)|=\frac{1}{\sqrt{1+(\omega RC)^2}}
-$$
-
-At $\omega=1/(RC)$, the magnitude is $0.707$ or approximately $-3$ dB. This connects the frequency-sweep experiment in Lab 02 to Bode plots used later for controller design.
-
-### Step 9: Translate the Controller to Discrete Time
-
-The ESP32 does not calculate a continuous-time controller. It samples signals every $T_s$ seconds. A practical discrete PI controller can be written as:
-
-$$
-I[k]=I[k-1]+K_i e[k]T_s
-$$
-
-$$
-u_{raw}[k]=K_p e[k]+I[k]
-$$
-
-Then limit the actuator command to its permitted range:
-
-$$
-u[k]=\operatorname{sat}(u_{raw}[k],u_{min},u_{max})
-$$
-
-Sampling time, ADC resolution, PWM resolution, computation delay, and sensor filtering can all change the measured response.
-
-### Step 10: Handle Saturation and Anti-Windup
-
-When the actuator saturates, the integral term can continue accumulating even though the actuator cannot produce more command. This is integral windup.
-
-A simple conditional-integration strategy is:
-
-1. Calculate $u_{raw}$.
-2. Apply the actuator limits to obtain $u$.
-3. If the actuator is saturated and the error would drive it further into saturation, pause the integral update.
-4. Resume integration when the error moves the command back toward the permitted range.
-
-This is essential for the PI and closed-loop buck experiments, where the PWM command is limited to a finite range.
-
-## The Control-System View
-
-A control system can be described as:
-
-```text
-Input or reference -> Plant -> Output
-                         ^        |
-                         |        v
-                         +-- Sensor
-```
-
-- The **plant** is the physical system being controlled.
-- The **input** is the applied command or disturbance.
-- The **output** is the measured quantity of interest.
-- The **sensor** measures the output for comparison or analysis.
-- A **controller** changes the actuator command to influence the plant.
-
-In Labs 02 and 03, the RC or RLC circuit is the plant. The applied source is the input and the measured capacitor voltage is the output.
-
-## Differential Equations and Transfer Functions
-
-A differential equation describes the physical relationship between input and output. For the RC circuit:
+Substitution gives:
 
 $$
 RC\frac{dV_C}{dt}+V_C=V_S
 $$
 
-With zero initial conditions, the Laplace transform gives the transfer function:
+**Worked example:** $RC=(10\,000)(100\times10^{-6})=1\ \mathrm{s}$. The numerical equation is therefore $(1\ \mathrm{s})dV_C/dt+V_C=V_S$. The seconds coefficient ensures the derivative term has voltage units.
+
+**Read more:** Alexander and Sadiku, Ch. 7, **First-Order Circuits**; Ogata, Ch. 2, **Mathematical Modeling of Control Systems**.
+
+## Step 3: Use Laplace Transforms and Transfer Functions
+
+The Laplace transform turns differential equations into algebraic equations in $s$. A transfer function is the output-to-input ratio in the Laplace domain, assuming zero initial conditions. For example, $\mathcal{L}\{dx/dt\}=sX(s)-x(0^-)$ and a step of amplitude $A$ has transform $A/s$.
+
+The transform makes it easier to combine system blocks and analyze responses. A transfer function describes the plant's input-output behavior for zero initial conditions; it does not include nonlinear saturation, noise, or component variation.
+
+**Worked example:** with $V_C(0)=0$, transform the RC equation:
 
 $$
-H_{RC}(s)=\frac{V_C(s)}{V_S(s)}=\frac{1}{RCs+1}
+RCsV_C(s)+V_C(s)=V_S(s)
 $$
 
-A transfer function is a model for the input-output relationship. It does not by itself describe non-zero initial conditions, saturation, noise, or component variation.
-
-## Laplace Transform Essentials
-
-The Laplace transform changes a time-domain differential equation into an algebraic equation in $s$. This makes it easier to derive transfer functions and combine blocks.
-
-Useful transform pairs are:
-
-| Time-domain function | Laplace transform |
-|---|---|
-| $1$ | $1/s$ |
-| $e^{-at}$ | $1/(s+a)$ |
-| $\dfrac{dx}{dt}$ | $sX(s)-x(0^-)$ |
-| $\displaystyle\int_0^t x(\lambda)\,d\lambda$ | $X(s)/s$ |
-
-For transfer functions, assume zero initial conditions unless the problem states otherwise. A step of amplitude $A$ has transform:
+Divide by the input to obtain:
 
 $$
-x(t)=A \quad\Longrightarrow\quad X(s)=\frac{A}{s}
+G(s)=\frac{V_C(s)}{V_S(s)}=\frac{1}{RCs+1}=\frac{1}{s+1}
 $$
 
-### Worked Example 1: RC Transfer Function
+The low-frequency or DC gain is 1: after transients settle, the capacitor voltage approaches the source voltage.
 
-For an RC circuit with $R=10\ \mathrm{k\Omega}$ and $C=100\ \mathrm{\mu F}$:
+**Read more:** Ogata, Ch. 2, **Mathematical Modeling of Control Systems**.
 
-$$
-	au=RC=(10\,000)(100\times10^{-6})=1\ \mathrm{s}
-$$
+## Step 4: Find Poles and Predict a Step Response
 
-The transfer function and pole are:
+Poles are roots of the transfer-function denominator. For a first-order system the pole sets the exponential response rate; a negative real pole produces a decaying transient.
 
-$$
-H(s)=\frac{1}{s+1},\qquad s=-1\ \mathrm{rad/s}
-$$
+The response to a step helps interpret a model in the time domain. The time constant $\tau$ is the time to reach 63.2% of the total change; it is the reciprocal of the magnitude of the first-order pole.
 
-For a 3.3 V step:
+**Worked example:** the RC pole is $s=-1/(RC)=-1\ \mathrm{s^{-1}}$, so $\tau=RC=1\ \mathrm{s}$. For a 3.3 V step:
 
 $$
 V_C(s)=\frac{3.3}{s(s+1)}
+\quad\Longrightarrow\quad
+V_C(t)=3.3\left(1-e^{-t/(1\,\mathrm{s})}\right)\ \mathrm{V}
 $$
 
-Using partial fractions:
+| Time | Predicted $V_C$ |
+|---:|---:|
+| $1\tau=1\ \mathrm{s}$ | $2.09\ \mathrm{V}$ (63.2% of final value) |
+| $3\tau=3\ \mathrm{s}$ | $3.14\ \mathrm{V}$ (95.0%) |
+| $5\tau=5\ \mathrm{s}$ | $3.28\ \mathrm{V}$ (99.3%) |
+
+**Read more:** Ogata, Ch. 5, **Transient and Steady-State Response Analysis**; Alexander and Sadiku, Ch. 7, **First-Order Circuits**.
+
+## Step 5: Recognise a Second-Order System
+
+Two energy-storage elements often produce a second-order model. Its standard form is:
 
 $$
-V_C(t)=3.3(1-e^{-t})
+G(s)=\frac{\omega_n^2}{s^2+2\zeta\omega_n s+\omega_n^2}
 $$
 
-Therefore, the predicted values are approximately 2.09 V at 1 s, 3.14 V at 3 s, and 3.28 V at 5 s. These are the values to compare with Lab 02.
+$\omega_n$ is natural frequency and $\zeta$ is damping ratio. Natural frequency sets the characteristic speed of the response; damping describes how quickly oscillations decay. If $\zeta<1$, the response is underdamped and rings; $\zeta=1$ is critically damped; $\zeta>1$ is overdamped.
 
-### Worked Example 2: Laplace Transform of an RC Step
-
-Starting with:
+**Worked RLC example:** for a series RLC circuit measured across its capacitor, use $R=100\ \Omega$, $L=0.1\ \mathrm{H}$, and $C=10^{-7}\ \mathrm{F}$:
 
 $$
-RC\frac{dV_C}{dt}+V_C=V_S
-$$
-
-Taking the Laplace transform with $V_C(0^-)=0$ gives:
-
-$$
-RCsV_C(s)+V_C(s)=V_S(s)
-$$
-
-Collecting $V_C(s)$:
-
-$$
-V_C(s)(RCs+1)=V_S(s)
-$$
-
-Dividing by the input gives the transfer function:
-
-$$
-\frac{V_C(s)}{V_S(s)}=\frac{1}{RCs+1}
-$$
-
-For a step input, substitute $V_S(s)=V_F/s$ and use partial fractions to return to the exponential charging equation. This is the same model viewed in the frequency-domain variable $s$ rather than time $t$.
-
-### Worked Example 3: RLC Pole and Ringing Prediction
-
-For Lab 03, take $L=100\ \mathrm{mH}$, $C=100\ \mathrm{nF}$, and $R=100\ \Omega$:
-
-$$
-\omega_n=\frac{1}{\sqrt{LC}}=10\,000\ \mathrm{rad/s}
-$$
-
-$$
-f_n=\frac{\omega_n}{2\pi}\approx1591\ \mathrm{Hz}
-$$
-
-$$
+\omega_n=\frac{1}{\sqrt{LC}}=10\,000\ \mathrm{rad/s},\qquad
 \zeta=\frac{R}{2}\sqrt{\frac{C}{L}}=0.05
 $$
 
-Since $\zeta<1$, the response is underdamped. Its poles are approximately:
+Since $\zeta<1$, expect ringing. The damped frequency is $\omega_d=\omega_n\sqrt{1-\zeta^2}\approx9987\ \mathrm{rad/s}$, or about $1590\ \mathrm{Hz}$.
+
+**Read more:** Alexander and Sadiku, Ch. 8, **Second-Order Circuits**; Ogata, Ch. 5, **Transient and Steady-State Response Analysis**.
+
+## Step 6: Estimate a Model from Measurements
+
+**System identification** uses measured input-output data to estimate a model. First choose a plausible model structure, then apply a known input and record the response. For $G(s)=K/(\tau s+1)$, estimate $K$ from the steady-state output change divided by the input change. Estimate $\tau$ as the time to reach 63.2% of the total output change after a step. Finally compare the model with the measured curve; fitting one point alone is not model validation.
+
+**Worked example:** for the RC plant, a 3.3 V input step produces a final 3.3 V output, so $K=3.3/3.3=1$. The output reaches about 2.09 V at 1 s, which is 63.2% of its total change; estimate $\tau\approx1\ \mathrm{s}$. Compare the complete predicted curve with measurements to check whether the model is adequate.
+
+**Read more:** Ogata, Ch. 2, **Mathematical Modeling of Control Systems**, and Ch. 5, **Transient and Steady-State Response Analysis**.
+
+## Step 7: Close the Feedback Loop
+
+Feedback measures the output and uses its difference from the desired reference to correct the plant. The error is $e(t)=r(t)-y(t)$. Sensor gain matters: the unity-feedback formula is valid only when the feedback path is modeled as $H(s)=1$. For controller $C(s)$, plant $G(s)$, and sensor $H(s)$, the reference-to-output transfer function is:
 
 $$
-s_{1,2}=-\zeta\omega_n\pm j\omega_n\sqrt{1-\zeta^2}
+T(s)=\frac{C(s)G(s)}{1+C(s)G(s)H(s)}
 $$
 
-$$
-s_{1,2}\approx-500\pm j9987\ \mathrm{rad/s}
-$$
+For unity feedback, $H(s)=1$. A proportional controller uses $C(s)=K_p$.
 
-The expected ringing frequency is approximately $1590\ \mathrm{Hz}$, with an exponentially decaying envelope. This gives a prediction to test in the RLC simulation and oscilloscope experiment.
-
-## Poles and Time Constants
-
-The RC pole is found from the denominator:
+**Worked P-control example:** let $G(s)=1/(s+1)$, $K_p=2$, and reference $r=3.3\ \mathrm{V}$. Then:
 
 $$
-RCs+1=0\qquad\Longrightarrow\qquad s=-\frac{1}{RC}=-\frac{1}{\tau}
+T(s)=\frac{2}{s+3}
 $$
 
-For a stable first-order system, the pole is negative. The time constant is:
+The DC gain is $T(0)=2/3$. Thus $y(\infty)=2.2\ \mathrm{V}$ and steady-state error is $e_{ss}=3.3-2.2=1.1\ \mathrm{V}$. The closed-loop pole is $-3\ \mathrm{s^{-1}}$.
+
+**Read more:** Ogata, Ch. 6, **Control Systems and Control Systems Components**, and Ch. 7, **Basic Control Actions and Response**.
+
+## Step 8: Understand P, PI, and PID
+
+P reacts to present error, I accumulates persistent error, and D reacts to how quickly the error changes. Combining them lets the designer trade response speed, accuracy, overshoot, and noise sensitivity.
+
+| Controller | Equation | Main effect | Main caution |
+|---|---|---|---|
+| P | $u=K_p e$ | Corrects present error | Can leave step error; high gain can cause overshoot or instability |
+| PI | $u=K_p e+K_i\int e\,dt$ | Accumulated error can remove step error | Integral windup during saturation |
+| PID | $u=K_p e+K_i\int e\,dt+K_d\,de/dt$ | Derivative action can shape transient response | Amplifies noise and can kick on reference steps |
+
+In the usual unity-feedback classification, P-only control is type 0; adding one integrator makes the loop type 1. A type 1 loop has zero step-reference error only if stable and not prevented from reaching the target by saturation. Practical PID controllers filter derivative action and may differentiate the measured output instead of the reference.
+
+**Read more:** Ogata, Ch. 7, **Basic Control Actions and Response**, and Ch. 8, **Analysis and Design of Feedback Control Systems**.
+
+## Step 9: Describe Transient Performance and Frequency Response
+
+Time-domain measures summarize how a system responds to a step: rise time describes how quickly the response approaches its target, overshoot is the amount it exceeds the final value, and settling time is when it stays within a chosen band, often 2%. Frequency response instead describes how the system treats sinusoidal inputs at different frequencies; magnitude is gain and phase is the output's phase shift relative to the input.
+
+**Read more:** Ogata, Ch. 5, **Transient and Steady-State Response Analysis**; Ch. 8, **Analysis and Design of Feedback Control Systems**.
+
+For a standard underdamped second-order response:
 
 $$
-\tau=RC
+M_p=100e^{-\zeta\pi/\sqrt{1-\zeta^2}}\ \%,\qquad
+t_s\approx\frac{4}{\zeta\omega_n}\quad\text{(2% estimate)}
 $$
 
-For a step from 0 to $V_F$:
+**Worked transient example:** with $\zeta=0.5$ and $\omega_n=10\ \mathrm{rad/s}$, estimated overshoot is 16.3% and settling time is 0.8 s. Zeros, delay, saturation, and filtering can change measured performance.
+
+Frequency response describes how sinusoidal inputs at different frequencies are amplified or attenuated and phase-shifted. For the RC plant:
 
 $$
-V_C(t)=V_F\left(1-e^{-t/\tau}\right)
+|G(j\omega)|=\frac{1}{\sqrt{1+(\omega RC)^2}},\qquad
+\angle G(j\omega)=-\tan^{-1}(\omega RC)
 $$
 
-Useful checkpoints are:
+**Worked Bode example:** with $RC=1\ \mathrm{s}$, $f_c=1/(2\pi RC)=0.159\ \mathrm{Hz}$. At $\omega_c=1\ \mathrm{rad/s}$, magnitude is 0.707 ($-3\ \mathrm{dB}$) and phase is $-45^\circ$. A Bode plot shows these quantities versus frequency.
 
-| Time | Charging level | Discharging level |
-|---|---:|---:|
-| $1\tau$ | 63.2% | 36.8% remaining |
-| $3\tau$ | 95.0% | 5.0% remaining |
-| $5\tau$ | 99.3% | 0.7% remaining |
+## Step 10: Check Stability and Use Root Locus
 
-## Second-Order Systems
+For unity negative feedback, closed-loop poles solve $1+C(s)G(s)=0$. Negative-real-part poles produce decaying modes; a pole with a positive real part produces an unstable growing mode. The **root locus** plots how closed-loop poles move as controller gain changes, helping select a gain that meets stability and response goals. It is a design aid, not a substitute for checking the full model and implementation.
 
-For the series RLC circuit measured across the capacitor:
+**Worked root-locus example:** for $G(s)=1/(s+1)$ and proportional gain $K$, the characteristic equation gives $s=-(1+K)$. Increasing $K$ from 0 to 2 moves the pole from $-1$ to $-3\ \mathrm{s^{-1}}$.
 
-$$
-LC\frac{d^2V_C}{dt^2}+RC\frac{dV_C}{dt}+V_C=V_S
-$$
+**Read more:** Ogata, Ch. 8, **Analysis and Design of Feedback Control Systems**, and Ch. 13, **Control Systems Design by Root Locus**.
 
-The standard second-order form is:
+Controller design starts with requirements such as rise time, overshoot, settling time, steady-state error, and disturbance rejection. Model the plant, select a controller, predict and simulate performance, then validate carefully at low power.
 
-$$
-H(s)=\frac{\omega_n^2}{s^2+2\zeta\omega_n s+\omega_n^2}
-$$
+## Step 11: Account for Converters and Operating Points
 
-where:
+Converter models are nonlinear because duty ratio, current, and voltage interact. A control-oriented model often averages over switching cycles and is then linearized around one operating point. This approximation describes small changes near that point; larger duty, input, or load changes can make it inaccurate, and it does not predict switching ripple by itself.
+
+**Worked boost linearisation:** for an ideal boost converter with $V_{IN}=3.3\ \mathrm{V}$ and operating duty $D_0=0.5$:
 
 $$
-\omega_n=\frac{1}{\sqrt{LC}},\qquad
-\zeta=\frac{R}{2}\sqrt{\frac{C}{L}}
+V_{o0}=\frac{V_{IN}}{1-D_0}=6.6\ \mathrm{V},\qquad
+\left.\frac{\partial V_o}{\partial D}\right|_{D_0}=\frac{V_{IN}}{(1-D_0)^2}=13.2\ \mathrm{V}
 $$
 
-The damping classification is:
+A small duty change $\hat d=0.01$ predicts $\hat v_o\approx0.132\ \mathrm{V}$. This is a local estimate, not a full dynamic converter model. For a buck converter, the ideal $V_o\approx D V_{in}$ relationship is a steady-state CCM result; it is not by itself the plant model needed for feedback design.
 
-| Damping ratio | Response |
-|---:|---|
-| $\zeta<1$ | Underdamped; ringing and possible overshoot |
-| $\zeta=1$ | Critically damped; fastest response without oscillation |
-| $\zeta>1$ | Overdamped; no oscillation, slower response |
+**Read more:** Ogata, Ch. 2, **Mathematical Modeling of Control Systems**; Erickson and Maksimovic, Ch. 3, **Steady-State Converter Analysis**.
 
-The damped ringing frequency for an underdamped system is:
+## Step 12: Implement PI Control Digitally
+
+A digital controller does not see a continuously changing signal: it samples every $T_s$ seconds and updates its output at those instants. The accumulated integral therefore depends on both the error and the sample period. One simple discrete PI implementation is:
 
 $$
-\omega_d=\omega_n\sqrt{1-\zeta^2}
+I[k]=I[k-1]+K_i e[k]T_s,\qquad u_{raw}[k]=K_p e[k]+I[k]
 $$
 
-## Feedback and Error
+The output command is limited to its allowed range. Sampling, ADC/PWM quantization, computation delay, sensor filtering, and noise make hardware behavior differ from a continuous model.
 
-In a feedback controller, the error is the difference between the reference and measured output:
+**Worked update:** let $K_p=2$, $K_i=5\ \mathrm{s^{-1}}$, $T_s=0.01\ \mathrm{s}$, $e[k]=0.4\ \mathrm{V}$, and $I[k-1]=0$. Then $I[k]=0.02\ \mathrm{V}$ and $u_{raw}=0.82\ \mathrm{V}$. On a 0–3.3 V command range this is about 24.8% duty.
 
-$$
-e(t)=r(t)-y(t)
-$$
+**Windup check:** if $I[k-1]=3.2\ \mathrm{V}$ with the same positive error, the raw command becomes $4.02\ \mathrm{V}$ and is limited to $3.3\ \mathrm{V}$. Conditional integration pauses while the error pushes farther into saturation; integration resumes as the command returns to range.
 
-A controller uses the error to calculate an actuator command. For a proportional controller:
+ADC/PWM quantization, computation delay, sensor filtering, and noise also affect hardware behavior. **Read more:** Ogata, Ch. 7, **Basic Control Actions and Response**, and Ch. 8, **Analysis and Design of Feedback Control Systems**; see the sampled-control and implementation cautions in [Textbook Resources](Textbook_Resources.md).
 
-$$
-u(t)=K_p e(t)
-$$
+## Practical Assumptions
 
-Increasing $K_p$ usually reduces error and speeds up the response, but excessive gain can cause overshoot, oscillation, saturation, or instability.
+The examples assume linear models, known parameters, and ideal sensors and actuators unless stated otherwise. Real systems add component tolerances, losses, measurement noise, sensor scaling, sampling delay, and actuator limits. Treat calculations as predictions to compare with data, not guaranteed hardware results.
 
-The later controllers extend this action:
+## Textbook Reading Pointers
 
-- **P:** reacts to present error.
-- **PI:** adds accumulated error to reduce steady-state error.
-- **PID:** adds a rate-of-change term to shape the transient response.
+Use chapter titles if numbering differs between printings. The complete book-to-course mapping is in `Textbook_Resources.md`.
 
-### Worked Example 4: Proportional Control
-
-Suppose the reference is $r=2.0\ \mathrm{V}$, the measured output is $y=1.6\ \mathrm{V}$, and $K_p=4$:
-
-$$
-e=r-y=2.0-1.6=0.4\ \mathrm{V}
-$$
-
-$$
-u=K_pe=4(0.4)=1.6
-$$
-
-The actuator must still limit $u$ to its safe range. If the actuator saturates, increasing $K_p$ cannot produce more physical output and may increase overshoot or recovery time.
-
-### Worked Example 5: Closed-Loop Block Reduction
-
-Let the plant be:
-
-$$
-G(s)=\frac{1}{s+1}
-$$
-
-and let the controller be a proportional gain $C(s)=2$. For unity negative feedback:
-
-1. Form the forward path: $C(s)G(s)=2/(s+1)$.
-2. Add the feedback denominator: $1+C(s)G(s)=1+2/(s+1)$.
-3. Simplify:
-
-$$
-T(s)=\frac{C(s)G(s)}{1+C(s)G(s)}=\frac{2}{s+3}
-$$
-
-The closed-loop pole moved from $-1$ to $-3$. The response is faster, but this conclusion assumes an unsaturated actuator, unity sensor gain, negligible delay, and a valid linear plant model.
-
-## Steady-State Error and System Type
-
-Steady-state error is the final difference between the reference and output:
-
-$$
-e_{ss}=\lim_{t\to\infty}e(t)
-$$
-
-For the proportional example above, a unit-step reference gives:
-
-$$
-T(0)=\frac{2}{3},\qquad y(\infty)=\frac{2}{3},\qquad e_{ss}=1-\frac{2}{3}=\frac{1}{3}
-$$
-
-The finite error occurs because proportional control has finite DC loop gain. Adding an integrator increases the system type and can remove step-reference error, provided the closed loop is stable and the actuator does not remain saturated.
-
-## Transient Performance Measures
-
-Use these definitions consistently when comparing simulation and measurement:
-
-| Measure | Meaning |
+| Topic | Book sections to revisit |
 |---|---|
-| Rise time $t_r$ | Time for the response to move between specified percentages, commonly 10% and 90% |
-| Peak time $t_p$ | Time at which the first maximum occurs |
-| Overshoot $M_p$ | Amount the peak exceeds the final value, expressed as a percentage |
-| Settling time $t_s$ | Time after which the response remains within a specified band, commonly 2% or 5% |
+| Modeling, transfer functions, step response | Ogata, Ch. 2 **Mathematical Modeling of Control Systems**; Ch. 5 **Transient and Steady-State Response Analysis** |
+| Feedback components and P/PI/PID | Ogata, Ch. 6 **Control Systems and Control Systems Components**; Ch. 7 **Basic Control Actions and Response** |
+| Steady-state error, feedback design, windup, disturbance response | Ogata, Ch. 8 **Analysis and Design of Feedback Control Systems** |
+| Root locus and gain selection | Ogata, Ch. 13 **Control Systems Design by Root Locus** |
+| RC/RLC circuit models | Alexander and Sadiku, Ch. 7 **First-Order Circuits**; Ch. 8 **Second-Order Circuits** |
+| Buck converter operating relationships | Erickson and Maksimovic, Ch. 3 **Steady-State Converter Analysis** |
 
-For an underdamped standard second-order system, the overshoot is approximately:
+## Self-Check
 
-$$
-M_p=100e^{-\zeta\pi/\sqrt{1-\zeta^2}}\ \%
-$$
+1. For the RC example, give $\tau$ and the output after one time constant.
+2. Is the RLC example underdamped or overdamped?
+3. For the P-control example, what is the steady-state error to the 3.3 V reference?
+4. What is the RC magnitude and phase at cutoff?
+5. What problem does anti-windup prevent?
 
-For a 2% settling-time estimate:
-
-$$
-t_s\approx\frac{4}{\zeta\omega_n}
-$$
-
-These estimates apply to the standard linear model and may differ from measured hardware when zeros, delays, saturation, or noise are significant.
-
-## Bode Magnitude, Phase, and Bandwidth
-
-For the RC low-pass transfer function:
-
-$$
-H(j\omega)=\frac{1}{1+j\omega RC}
-$$
-
-The magnitude is:
-
-$$
-|H(j\omega)|=\frac{1}{\sqrt{1+(\omega RC)^2}}
-$$
-
-The phase is:
-
-$$
-\angle H(j\omega)=-\tan^{-1}(\omega RC)
-$$
-
-At low frequency, the gain is near 1 and the phase is near $0^\circ$. At the cutoff frequency, the gain is $0.707$ and the phase is $-45^\circ$. At high frequency, the gain decreases at approximately $-20$ dB per decade and the phase approaches $-90^\circ$.
-
-Bandwidth is the range of frequencies passed with acceptable attenuation. For this first-order low-pass example, the bandwidth is approximately $0$ to $f_c$.
-
-## Discrete PI Implementation
-
-The continuous PI controller is:
-
-$$
-C(s)=K_p+\frac{K_i}{s}
-$$
-
-One practical forward-Euler implementation is:
-
-```text
-read measurement
-error = reference - measurement
-integral = integral + Ki * error * sample_time
-raw_command = Kp * error + integral
-command = limit(raw_command, command_min, command_max)
-write PWM command
-```
-
-The actual loop is affected by the sample time, ADC conversion, computation time, PWM update timing, and sensor filtering. The sample time should be much shorter than the dominant plant time constant and fast enough to resolve the important plant dynamics.
-
-## Linearisation Around an Operating Point
-
-Converter models are often nonlinear. For example, an ideal boost converter has:
-
-$$
-V_o=\frac{V_{in}}{1-D}
-$$
-
-A small change in duty cycle does not produce the same output change at every operating point. Around a chosen operating point $(D_0,V_{o0})$, use small-signal variables:
-
-$$
-D=D_0+\hat d,\qquad V_o=V_{o0}+\hat v_o
-$$
-
-The linearised relationship is obtained from the local slope:
-
-$$
-\hat v_o\approx\left.\frac{\partial V_o}{\partial D}\right|_{D_0}\hat d
-$$
-
-For the ideal boost equation:
-
-$$
-\frac{\partial V_o}{\partial D}=\frac{V_{in}}{(1-D)^2}
-$$
-
-This explains why a controller tuned at one duty cycle may behave differently at another. Real converter design also includes inductor, capacitor, load, switching, and control dynamics.
-
-## Model Assumptions
-
-Compare a model and measurement by listing assumptions. Typical differences include:
-
-- Component tolerance and parasitic resistance
-- Oscilloscope probe loading and bandwidth
-- Sensor scaling and ADC quantisation
-- Sampling and computation delay
-- Actuator saturation
-- Switching ripple and measurement noise
-- Operating-point dependence
-
-## Exercises
-
-Try these before looking at the answer key.
-
-1. For $R=22\ \mathrm{k\Omega}$ and $C=47\ \mathrm{\mu F}$, calculate $\tau$, the pole, and the cutoff frequency.
-2. For a 5 V step and $\tau=0.2\ \mathrm{s}$, calculate the output at $t=0.2\ \mathrm{s}$ and $t=0.6\ \mathrm{s}$.
-3. For $L=47\ \mathrm{mH}$, $C=100\ \mathrm{nF}$, and $R=47\ \Omega$, calculate $\omega_n$ and $\zeta$. Classify the response.
-4. For $H(s)=5/(s+5)$ and a 2 V step, write $Y(s)$ and the time-domain output $y(t)$.
-5. A proportional controller has $r=3\ \mathrm{V}$, $y=2.4\ \mathrm{V}$, and $K_p=2.5$. Calculate the error and controller output.
-6. From a measured step response, the final value is 4 V and the output reaches 2.53 V at 0.8 s. Estimate the first-order time constant.
-7. For $G(s)=1/(s+1)$ with a proportional controller $C(s)=2$, derive the unity-feedback closed-loop transfer function and its pole.
-8. For $G(s)=1/(s+2)$ and $C(s)=3$, determine whether the unity-feedback system is stable.
-9. For $R=10\ \mathrm{k\Omega}$ and $C=100\ \mathrm{nF}$, calculate $f_c$ and the magnitude at the cutoff frequency.
-10. For $K_p=2$, $K_i=5$, $T_s=0.01\ \mathrm{s}$, $e[k]=0.4$, and $I[k-1]=0$, calculate $I[k]$ and $u_{raw}[k]$.
-11. A PI controller requests $u_{raw}=1.4$ but the actuator limit is $u_{max}=1.0$. Explain what should happen to the integral update if the positive error would drive the command further upward.
-12. For a standard second-order system with $\zeta=0.5$ and $\omega_n=10\ \mathrm{rad/s}$, estimate percentage overshoot and 2% settling time.
-13. For $H(s)=1/(1+s)$, calculate the magnitude and phase at $\omega=1\ \mathrm{rad/s}$.
-14. For an ideal boost converter with $V_{in}=3.3\ \mathrm{V}$ at $D_0=0.5$, calculate the local output-voltage slope $\partial V_o/\partial D$.
-15. Explain two reasons why a discrete PI controller can behave differently from its continuous-time simulation.
-16. A unity-feedback plant has a sensor gain of $0.5$ rather than 1. Explain why the unity-feedback formula cannot be used without modification.
-
-## Answer Key
-
-1. $\tau=1.034\ \mathrm{s}$, pole $\approx-0.967\ \mathrm{rad/s}$, and $f_c\approx0.154\ \mathrm{Hz}$.
-2. $y(0.2)\approx3.16\ \mathrm{V}$ and $y(0.6)\approx4.75\ \mathrm{V}$.
-3. $\omega_n\approx14\,586\ \mathrm{rad/s}$, $\zeta\approx0.034$, underdamped.
-4. $Y(s)=10/[s(s+5)]$ and $y(t)=2(1-e^{-5t})$ V.
-5. $e=0.6\ \mathrm{V}$ and $u=1.5$.
-6. Since 2.53 V is 63.2% of 4 V, $\tau\approx0.8\ \mathrm{s}$.
-7. $T(s)=2/(s+3)$ and the pole is $s=-3$.
-8. $T(s)=3/(s+5)$; the pole is $s=-5$, so the system is stable.
-9. $f_c\approx159\ \mathrm{Hz}$ and the magnitude is $0.707$ at the cutoff.
-10. $I[k]=0.02$ and $u_{raw}[k]=0.82$.
-11. Set $u=1.0$ and pause integration while the positive error would push the command further into saturation.
-12. $M_p\approx16.3\%$ and $t_s\approx0.8\ \mathrm{s}$.
-13. Magnitude $\approx0.707$ and phase $=-45^\circ$.
-14. $\partial V_o/\partial D=3.3/(1-0.5)^2=13.2\ \mathrm{V}$ per unit duty ratio.
-15. Possible causes include sampling delay, ADC quantisation, PWM update timing, actuator saturation, and sensor filtering.
-16. Use $T(s)=C(s)G(s)/(1+C(s)G(s)H(s))$ with sensor transfer function $H(s)=0.5$.
-
-## Checkpoint Exercise
-
-Complete these before Lab 04 or the converter sequence:
-
-1. From the RC circuit, calculate $\tau$ and the pole for the component values used in Lab 02.
-2. From the RLC circuit, calculate $\omega_n$, $\zeta$, and whether the response is underdamped.
-3. Mark the expected $1\tau$, $3\tau$, and $5\tau$ points on a measured step response.
-4. Compare one measured waveform with its transfer-function prediction.
-5. Record two assumptions that explain the difference.
-
-## Link to Later Labs
-
-- Lab 08 treats the motor as a dynamic plant.
-- Lab 11 identifies a model from measured data.
-- Labs 12-14 apply P, PI, and PID feedback.
-- Labs 15-16 apply the models and controllers to a buck converter and design problem.
-
-## Next Step
-
-Continue to [MOSFET Fundamentals](04_MOSFET_Fundamentals.md), then complete the converter sequence before starting [System Identification](11_System_Identification.md).
+**Answers:** 1. $1\ \mathrm{s}$ and about $2.09\ \mathrm{V}$. 2. Underdamped. 3. $1.1\ \mathrm{V}$. 4. Magnitude 0.707 and phase $-45^\circ$. 5. Excessive integral accumulation while the actuator is saturated.
