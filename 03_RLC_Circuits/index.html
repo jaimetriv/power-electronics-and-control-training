@@ -16,7 +16,7 @@
         <link rel="prev" href="../02_RC_Circuits/">
       
       
-        <link rel="next" href="../04_MOSFET_Switching/">
+        <link rel="next" href="../00D_Control_Engineering_Primer/">
       
       
         
@@ -529,34 +529,6 @@
     
   
     ESP32 Wi-Fi Control
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../00D_Control_Engineering_Primer/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Control Engineering Primer
   
 
     
@@ -1758,6 +1730,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00D_Control_Engineering_Primer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Engineering Primer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -3520,10 +3520,11 @@ LCs^2 V_C(s) + RCs\, V_C(s) + V_C(s) = V_S(s)
 <div class="arithmatex">\[
 \omega_n = \frac{1}{\sqrt{LC}} \qquad \zeta = \frac{R}{2}\sqrt{\frac{C}{L}}
 \]</div>
-<p>The poles of <span class="arithmatex">\(H(s)\)</span> are:</p>
+<p>For an underdamped system (<span class="arithmatex">\(\zeta&lt;1\)</span>), the poles are complex conjugates:</p>
 <div class="arithmatex">\[
-s_{1,2} = -\zeta\omega_n \pm \omega_n\sqrt{\zeta^2 - 1}
+s_{1,2}=-\zeta\omega_n\pm j\omega_n\sqrt{1-\zeta^2}
 \]</div>
+<p>For <span class="arithmatex">\(\zeta\geq1\)</span>, the poles are real and are given by <span class="arithmatex">\(s_{1,2}=-\zeta\omega_n\pm\omega_n\sqrt{\zeta^2-1}\)</span>.</p>
 <ul>
 <li><span class="arithmatex">\(\zeta &lt; 1\)</span>: complex conjugate poles → underdamped (oscillatory)</li>
 <li><span class="arithmatex">\(\zeta = 1\)</span>: repeated real pole → critically damped</li>
@@ -3894,7 +3895,7 @@ V_C(t) = V_S\left[1 - \frac{e^{-\zeta\omega_n t}}{\sqrt{1-\zeta^2}}\sin\!\left(\
 <tr>
 <td>Experiment 3</td>
 <td>470 Ω</td>
-<td>Little or no ringing, fast decay</td>
+<td>Strongly damped but still underdamped; ringing decays faster than at 100 Ω</td>
 </tr>
 <tr>
 <td>Experiment 4</td>
@@ -3922,7 +3923,7 @@ V_C(t) = V_S\left[1 - \frac{e^{-\zeta\omega_n t}}{\sqrt{1-\zeta^2}}\sin\!\left(\
   <tbody>
     <tr><td>47 Ω</td><td><input class="result-input" id="lab03-sim-zeta47" placeholder=""></td><td><input class="result-input" id="lab03-sim-beh47" placeholder="e.g. Strong ringing"></td></tr>
     <tr><td>100 Ω</td><td><input class="result-input" id="lab03-sim-zeta100" placeholder=""></td><td><input class="result-input" id="lab03-sim-beh100" placeholder="e.g. Moderate ringing"></td></tr>
-    <tr><td>470 Ω</td><td><input class="result-input" id="lab03-sim-zeta470" placeholder=""></td><td><input class="result-input" id="lab03-sim-beh470" placeholder="e.g. Little ringing"></td></tr>
+    <tr><td>470 Ω</td><td>0.235</td><td><input class="result-input" id="lab03-sim-beh470" placeholder="Underdamped, faster decay"></td></tr>
   </tbody>
 </table>
 </div>
@@ -4135,7 +4136,7 @@ f_n \approx 1591\ \text{Hz}
   <thead><tr><th>Resistance</th><th>Ringing Observed</th></tr></thead>
   <tbody>
     <tr><td>100 Ω</td><td><input class="result-input" id="lab03-exp3-ring100" placeholder="e.g. Moderate"></td></tr>
-    <tr><td>470 Ω</td><td><input class="result-input" id="lab03-exp3-ring470" placeholder="e.g. Little / None"></td></tr>
+    <tr><td>470 Ω</td><td><input class="result-input" id="lab03-exp3-ring470" placeholder="Strongly damped ringing"></td></tr>
   </tbody>
 </table>
 </div>
@@ -4167,7 +4168,7 @@ f_n \approx 1591\ \text{Hz}
   <tbody>
     <tr><td>47 Ω</td><td>Low</td><td><input class="result-input" id="lab03-exp4-resp47" placeholder="e.g. Strong ringing"></td></tr>
     <tr><td>100 Ω</td><td>Medium</td><td><input class="result-input" id="lab03-exp4-resp100" placeholder="e.g. Moderate ringing"></td></tr>
-    <tr><td>470 Ω</td><td>High</td><td><input class="result-input" id="lab03-exp4-resp470" placeholder="e.g. Overdamped"></td></tr>
+    <tr><td>470 Ω</td><td>Higher, but $\zeta<1$</td><td><input class="result-input" id="lab03-exp4-resp470" placeholder="Underdamped, faster decay"></td></tr>
   </tbody>
 </table>
 </div>

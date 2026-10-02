@@ -542,34 +542,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../00D_Control_Engineering_Primer/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Control Engineering Primer
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -702,6 +674,34 @@
     
   
     RLC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00D_Control_Engineering_Primer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Engineering Primer
   
 
     
@@ -1674,17 +1674,6 @@
     <span class="md-ellipsis">
       
         Circuit Diagram
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#breadboard-layout" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Breadboard Layout
       
     </span>
   </a>
@@ -3226,17 +3215,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#breadboard-layout" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Breadboard Layout
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#step-by-step-wiring" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3805,11 +3783,11 @@ V_{avg} = \frac{2}{2\pi}\int_0^{\pi} V_{PEAK}\sin(\theta)\,d\theta = \frac{2V_{P
 <div class="arithmatex">\[
 \boxed{V_{avg,FW} = \frac{2V_{PEAK}}{\pi} \approx 0.637\,V_{PEAK}}
 \]</div>
-<p>With two diode drops in series (bridge rectifier), the practical value is:</p>
+<p>With two diode drops in series (bridge rectifier), a rough high-input approximation is:</p>
 <div class="arithmatex">\[
 V_{avg,FW} = \frac{2(V_{PEAK} - 2V_f)}{\pi}
 \]</div>
-<p>where <span class="arithmatex">\(V_f \approx 0.7\ \text{V}\)</span> per diode.</p>
+<p>where <span class="arithmatex">\(V_f \approx 0.7\ \text{V}\)</span> per diode. This approximation does not model the shortened conduction interval near the zero crossings; a capacitor-input supply has a different waveform and average, treated separately below.</p>
 <hr />
 <h2 id="rms-voltage">RMS Voltage<a class="headerlink" href="#rms-voltage" title="Permanent link">&para;</a></h2>
 <p>AC voltages are normally specified using the RMS value.</p>
@@ -3961,7 +3939,7 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <tr>
 <td>Resistor</td>
 <td>Simscape → Electrical → Passives</td>
-<td>1</td>
+<td>2 (source and load)</td>
 </tr>
 <tr>
 <td>Voltage Sensor</td>
@@ -4002,7 +3980,7 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <tbody>
 <tr>
 <td>Peak amplitude</td>
-<td><code>10</code> V</td>
+<td><code>8.5</code> V</td>
 </tr>
 <tr>
 <td>Phase shift</td>
@@ -4039,24 +4017,29 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 </tbody>
 </table>
 <h4 id="step-5-set-resistor-parameter">Step 5 — Set Resistor parameter<a class="headerlink" href="#step-5-set-resistor-parameter" title="Permanent link">&para;</a></h4>
+<p>Configure the two Resistor blocks:</p>
 <table>
 <thead>
 <tr>
-<th>Parameter</th>
-<th>Value</th>
+<th>Resistor</th>
+<th>Resistance</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Resistance</td>
+<td>Source resistor</td>
+<td><code>47</code> Ω</td>
+</tr>
+<tr>
+<td>Load resistor</td>
 <td><code>1000</code> Ω</td>
 </tr>
 </tbody>
 </table>
 <h4 id="step-6-wire-the-half-wave-circuit">Step 6 — Wire the half-wave circuit<a class="headerlink" href="#step-6-wire-the-half-wave-circuit" title="Permanent link">&para;</a></h4>
 <p>Connect in series:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>AC Voltage Source (+) → Diode (+) → Diode (−) → Resistor (p)
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>Resistor (n) → AC Voltage Source (−) → Electrical Reference
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>AC Voltage Source (+) → 47 Ω source resistor → Diode (+) → Diode (−) → 1 kΩ load (p)
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>1 kΩ load (n) → AC Voltage Source (−) → Electrical Reference
 </code></pre></div>
 <p>Connect the Voltage Sensor across the Resistor:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Voltage Sensor (+) → Resistor (p)
@@ -4065,7 +4048,7 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <p>Connect the Solver Configuration to any node.</p>
 <p>Connect: <code>Voltage Sensor (V) → PS-Simulink Converter → Scope</code></p>
 <h4 id="step-7-wiring-checklist">Step 7 — Wiring checklist<a class="headerlink" href="#step-7-wiring-checklist" title="Permanent link">&para;</a></h4>
-<p>✅ AC Voltage Source (+) to Diode anode (+)</p>
+<p>✅ AC Voltage Source (+) passes through the 47 Ω source resistor to the Diode anode</p>
 <p>✅ Diode cathode (−) to Resistor (p)</p>
 <p>✅ Resistor (n) to AC Voltage Source (−) and Electrical Reference</p>
 <p>✅ Voltage Sensor across Resistor</p>
@@ -4087,6 +4070,8 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <p>Only positive half-cycles appear. Negative half-cycles are blocked by the diode.</p>
 <hr />
 <h3 id="model-2-bridge-rectifier-with-smoothing-capacitor">Model 2 — Bridge Rectifier with Smoothing Capacitor<a class="headerlink" href="#model-2-bridge-rectifier-with-smoothing-capacitor" title="Permanent link">&para;</a></h3>
+<p>| Resistor | Simscape → Electrical → Passives | 2 |
+| Peak amplitude | <code>8.5</code> V |</p>
 <h4 id="step-1-create-a-new-simulink-model_1">Step 1 — Create a new Simulink model<a class="headerlink" href="#step-1-create-a-new-simulink-model_1" title="Permanent link">&para;</a></h4>
 <ol>
 <li>In MATLAB, click <strong>Home → New → Simulink Model</strong>.</li>
@@ -4115,7 +4100,7 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <tr>
 <td>Resistor</td>
 <td>Simscape → Electrical → Passives</td>
-<td>1</td>
+<td>2 (source and load)</td>
 </tr>
 <tr>
 <td>Capacitor</td>
@@ -4161,7 +4146,7 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <tbody>
 <tr>
 <td>Peak amplitude</td>
-<td><code>10</code> V</td>
+<td><code>8.5</code> V</td>
 </tr>
 <tr>
 <td>Frequency</td>
@@ -4196,11 +4181,12 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 </tr>
 </tbody>
 </table>
-<p>Resistor: <code>1000</code> Ω</p>
+<p>Source resistor: <code>47</code> Ω in series with one AC source lead.</p>
+<p>Load resistor: <code>1000</code> Ω.</p>
 <p>Capacitor: <code>100e-6</code> F (change to <code>470e-6</code> for the second test)</p>
 <h4 id="step-4-wire-the-bridge-circuit">Step 4 — Wire the bridge circuit<a class="headerlink" href="#step-4-wire-the-bridge-circuit" title="Permanent link">&para;</a></h4>
 <p>Label four nodes for clarity: <strong>AC+</strong>, <strong>AC−</strong>, <strong>DC+</strong>, <strong>DC−</strong>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>AC Voltage Source (+) → AC+ node
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>AC Voltage Source (+) → 47 Ω source resistor → AC+ node
 <a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>AC Voltage Source (−) → AC− node
 <a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
 <a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>D1: anode → AC+,  cathode → DC+
@@ -4256,7 +4242,7 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <hr />
 <h3 id="prediction-table">Prediction Table<a class="headerlink" href="#prediction-table" title="Permanent link">&para;</a></h3>
 <p>Run the MATLAB script below to calculate theoretical values, then complete the table before doing the hardware experiments.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="n">Vpeak</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="n">Vpeak</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">8.5</span><span class="p">;</span>
 <a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="n">Vf</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="mf">0.7</span><span class="p">;</span><span class="w">          </span><span class="c">% diode forward voltage drop</span>
 <a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="n">f</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span>
 <a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="n">R</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span>
@@ -4273,7 +4259,7 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Ripple with 100 uF:      %.2f V\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Vripple_100</span><span class="p">);</span>
 <a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Ripple with 470 uF:      %.2f V\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Vripple_470</span><span class="p">);</span>
 </code></pre></div>
-<p>Set the OWON HDS272S waveform generator to: <strong>10 Vpeak, 50 Hz, sine wave</strong></p>
+<p>The physical source is <strong>6 V AC RMS</strong>, approximately <strong>8.5 V peak</strong>, at 50 Hz. The Simscape models include a 47 Ω source resistor; the simple MATLAB waveform calculation is idealized and does not include diode drops or source resistance.</p>
 <div class="result-block">
 <table>
   <thead><tr><th>Configuration</th><th>Predicted V<sub>avg</sub> (V)</th><th>Predicted ripple (V)</th></tr></thead>
@@ -4289,40 +4275,40 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <hr />
 <h2 id="components-required">Components Required<a class="headerlink" href="#components-required" title="Permanent link">&para;</a></h2>
 <ul>
-<li>4 × 1N4001–1N4007 diodes</li>
-<li>100 µF electrolytic capacitor</li>
-<li>470 µF electrolytic capacitor</li>
-<li>1 kΩ load resistor</li>
-<li>OWON HDS272S Oscilloscope with built-in waveform generator (AC source — set to 10 Vpeak, 50 Hz, sine)</li>
-<li>DSO Nano Oscilloscope (compatible, requires separate signal generator)</li>
-<li>Multimeter</li>
+<li>4 × 1N4007 diodes (1 A, 1000 V reverse rating; use all four for the bridge)</li>
+<li>100 µF and 470 µF electrolytic capacitors, each rated at least 25 V</li>
+<li>1 kΩ, 0.5 W load resistor</li>
+<li>250 mA time-delay fuse and inline holder for one secondary lead; fuse rated at least 32 V</li>
+<li>47 Ω, 5 W series resistor on one transformer secondary lead</li>
+<li>Enclosed, safety-approved plug-in AC adapter with isolated SELV output: 6 V AC RMS, 50 Hz, rated at least 250 mA (1.5 VA), overload protected, and no-load output no higher than 9 V AC RMS; students handle only insulated secondary leads</li>
 <li>Breadboard and jumper wires</li>
+<li>Multimeter</li>
+<li>OWON HDS272S oscilloscope and a 10:1 probe</li>
 </ul>
 <hr />
 <h2 id="safety-notice">Safety Notice<a class="headerlink" href="#safety-notice" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>DO NOT CONNECT DIRECTLY TO MAINS VOLTAGE
 </code></pre></div>
-<p>For laboratory work use only the OWON HDS272S built-in waveform generator output or another isolated low-voltage AC source.</p>
+<p>For the physical build, use only the isolated 6 V AC output from the enclosed plug-in adapter specified above. Fit the 250 mA fuse and 47 Ω resistor in series with one secondary lead before connecting the rectifier. Students must not open the adapter or handle mains wiring. Do not use the OWON waveform generator to power the rectifier circuit unless its output voltage, current rating, and isolation have been verified from the instrument manual. Never connect any part of this circuit to mains.</p>
 <hr />
 <h2 id="experiment-1-measure-ac-voltage">Experiment 1 - Measure AC Voltage<a class="headerlink" href="#experiment-1-measure-ac-voltage" title="Permanent link">&para;</a></h2>
+<p>Measure the isolated 6 V AC adapter output before connecting the rectifier.</p>
 <h3 id="objective_1">Objective<a class="headerlink" href="#objective_1" title="Permanent link">&para;</a></h3>
-<p>Observe and measure the AC waveform from the OWON HDS272S waveform generator before any rectification.</p>
+<p>Observe and measure the selected isolated AC source before any rectification.</p>
 <hr />
 <h3 id="connections">Connections<a class="headerlink" href="#connections" title="Permanent link">&para;</a></h3>
-<blockquote>
-<p>Set the OWON HDS272S waveform generator to <strong>10 Vpeak, 50 Hz, sine</strong> before connecting.</p>
-</blockquote>
+<p>The specified source is <strong>6 V AC RMS at 50 Hz</strong>, approximately <strong>8.5 V peak</strong>. The Simscape source and MATLAB calculation should use 8.5 V peak. Measure the unloaded adapter output before wiring the rectifier; unregulated adapters may read higher than their rated voltage with no load.</p>
 <ol>
-<li>Insert the <strong>CH1 probe BNC</strong> into CH1 on the OWON HDS272S.</li>
-<li>Hook the <strong>CH1 probe tip</strong> to the <strong>GEN OUT terminal</strong> on the OWON HDS272S.</li>
-<li>Clip the <strong>CH1 probe ground</strong> to the <strong>GEN GND terminal</strong>.</li>
+<li>Keep the adapter closed and use only its insulated low-voltage output leads.</li>
+<li>Insert the <strong>CH1 probe BNC</strong> into CH1 on the oscilloscope.</li>
+<li>Connect the <strong>CH1 probe tip</strong> to secondary lead A and the probe ground to secondary lead B.</li>
 </ol>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>CH1 socket  ◄──── BNC connector
-<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>GEN OUT     ◄──── CH1 probe tip
-<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>GEN GND     ◄──── CH1 probe ground
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>CH1 socket                  ◄──── BNC connector
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>Transformer secondary lead A ◄──── CH1 probe tip
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>Transformer secondary lead B ◄──── CH1 probe ground
 </code></pre></div>
 <blockquote>
-<p>Verifying the generator output before adding any circuit components avoids wiring errors.</p>
+<p>Confirm approximately 6 V RMS (8.5 V peak) at 50 Hz before adding any circuit components.</p>
 </blockquote>
 <hr />
 <h3 id="oscilloscope-settings">Oscilloscope Settings<a class="headerlink" href="#oscilloscope-settings" title="Permanent link">&para;</a></h3>
@@ -4384,47 +4370,36 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <p>Observe half-wave rectification and measure the average DC output.</p>
 <hr />
 <h3 id="circuit-diagram_1">Circuit Diagram<a class="headerlink" href="#circuit-diagram_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>OWON HDS272S waveform generator (+)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Transformer secondary A
 <a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>    │
-<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>   1N4007 diode (anode toward waveform generator)
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>  250 mA fuse
 <a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>    │
-<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>    ├──── Probe Tip
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>  47 Ω, 5 W series resistor
 <a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>    │
-<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>   1 kΩ load resistor
-<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>    │
-<a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>OWON HDS272S waveform generator GND ──── Probe GND
+<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>  D1 1N4007 (anode)
+<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>  D1 cathode ──────── VOUT ─── CH1 tip
+<a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>                         │
+<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>                    1 kΩ, 0.5 W
+<a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a>                         │
+<a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a>Transformer secondary B ─┴──── CH1 ground
 </code></pre></div>
-<hr />
-<h3 id="breadboard-layout">Breadboard Layout<a class="headerlink" href="#breadboard-layout" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>       a      b      c      d      e
-<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>     ┌─────────────────────────────────────┐
-<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a> 4   │ [●]   [ ]   [ ]   [ ]   [A]       │ ← GEN OUT → a4, Diode anode e4  (same row)
-<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a> 5   │ [ ]   [ ]   [ ]   [ ]   [│]       │  1N4007 diode body
-<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a> 6   │ [ ]   [ ]   [┐]   [ ]   [K]       │ ← Diode cathode e6 = Resistor top c6 = VOUT  (same row)
-<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a> 7   │ [ ]   [ ]   [│]   [ ]   [ ]       │  1 kΩ resistor body
-<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a> 8   │ [●]   [ ]   [┘]   [ ]   [ ]       │ ← GEN GND → a8, Resistor bottom c8  (same row)
-<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>     └─────────────────────────────────────┘
-</code></pre></div>
-<p><code>[A]</code> = anode (unmarked end); <code>[K]</code> = cathode (banded end). Current flows A → K.</p>
-<p>Row 6 is the <strong>VOUT junction</strong> (diode cathode e6 and resistor top c6 share the same row — no jumper needed).</p>
+<p>Use separate breadboard rows for the source resistor, diode, VOUT junction, and load. Do not place both ends of a component into the same connected five-hole row.</p>
 <hr />
 <h3 id="step-by-step-wiring">Step-by-Step Wiring<a class="headerlink" href="#step-by-step-wiring" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Insert the <strong>1N4007 diode</strong> vertically: <strong>anode</strong> (unmarked end) in <strong>row 4, column e</strong>, <strong>cathode</strong> (banded end) in <strong>row 6, column e</strong>.</li>
-<li>Connect a jumper wire from the <strong>OWON GEN OUT terminal</strong> to <strong>row 4, column a</strong> (same row as diode anode).</li>
-<li>Insert the <strong>1 kΩ resistor</strong> vertically: one leg in <strong>row 6, column c</strong>, other in <strong>row 8, column c</strong>. Row 6 connects to the diode cathode (same row = VOUT junction).</li>
-<li>Connect a jumper wire from the <strong>OWON GEN GND terminal</strong> to <strong>row 8, column a</strong> (same row as resistor bottom).</li>
-<li>Hook the <strong>CH1 probe tip</strong> to any hole in <strong>row 6</strong> (VOUT junction).</li>
-<li>Clip the <strong>CH1 probe ground</strong> to <strong>row 8</strong> or directly to the GEN GND terminal.</li>
+<li>With the transformer disconnected, place D1 so its anode and banded cathode occupy separate breadboard rows.</li>
+<li>Connect transformer secondary A through the 250 mA time-delay fuse and then the 47 Ω, 5 W resistor to D1's anode.</li>
+<li>Connect D1's banded cathode to VOUT. Connect the 1 kΩ, 0.5 W load between VOUT and transformer secondary B.</li>
+<li>Connect the CH1 probe tip to VOUT and the ground clip to secondary B. This source is isolated low voltage; do not use the setup with any mains-connected circuit.</li>
 </ol>
 <hr />
 <h3 id="wiring-checklist">Wiring Checklist<a class="headerlink" href="#wiring-checklist" title="Permanent link">&para;</a></h3>
 <p>Before applying power:</p>
-<p>✅ Diode anode connected toward signal generator (+)</p>
+<p>✅ Transformer secondary A connected through the 47 Ω series resistor to diode anode</p>
 <p>✅ Diode cathode connected toward load resistor</p>
-<p>✅ Load resistor connected between diode cathode and GND</p>
+<p>✅ 1 kΩ load connected between diode cathode and secondary B</p>
 <p>✅ CH1 probe tip at row 6 (VOUT = diode cathode / resistor top junction)</p>
-<p>✅ CH1 probe ground at row 8 or GEN GND terminal</p>
+<p>✅ CH1 probe ground at transformer secondary B</p>
 <hr />
 <h3 id="oscilloscope-settings_1">Oscilloscope Settings<a class="headerlink" href="#oscilloscope-settings_1" title="Permanent link">&para;</a></h3>
 <table>
@@ -4460,11 +4435,11 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 </table>
 <hr />
 <h3 id="expected-output">Expected Output<a class="headerlink" href="#expected-output" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>      /\      /\
-<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>     /  \    /  \
-<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>____/    \__/    \____
-<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>
-<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>______________________
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>      /\      /\
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>     /  \    /  \
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>____/    \__/    \____
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>______________________
 </code></pre></div>
 <hr />
 <h3 id="record-measurements_1">Record Measurements<a class="headerlink" href="#record-measurements_1" title="Permanent link">&para;</a></h3>
@@ -4485,44 +4460,44 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <p>Observe full-wave rectification using a bridge of four diodes.</p>
 <hr />
 <h3 id="circuit-diagram_2">Circuit Diagram<a class="headerlink" href="#circuit-diagram_2" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>OWON HDS272S waveform generator (+) ──── D1 anode
-<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>OWON HDS272S waveform generator (−) ──── D3 anode
-<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>
-<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>D1 cathode ──┬── D2 cathode ──── DC (+) output
-<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>             │
-<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>           Load (1 kΩ)
-<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>             │
-<a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>D2 anode  ──┴── D4 anode  ──── DC (−) / GND
-<a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>
-<a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a>D3 cathode ──── DC (+) output
-<a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a>D4 cathode ──── DC (−) / GND
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>Transformer secondary A ── 250 mA fuse ── 47 Ω / 5 W ── AC(+)
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>Transformer secondary B ──────────────── AC(−)
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>D1 cathode ──┬── D2 cathode ──── DC (+) output
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>             │
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>           Load (1 kΩ)
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>             │
+<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>D2 anode  ──┴── D4 anode  ──── DC (−) / GND
+<a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>
+<a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a>D3 cathode ──── DC (+) output
+<a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a>D4 cathode ──── DC (−) / GND
 </code></pre></div>
 <p>The standard bridge arrangement:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>        AC (+)
-<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>           │
-<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>      D1 ──┤── D3
-<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>           │
-<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>    DC(+) ─┤
-<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>           │
-<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>      D4 ──┤── D2
-<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>           │
-<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>        AC (−)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>        AC (+)
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>           │
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>      D1 ──┤── D3
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>           │
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>    DC(+) ─┤
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>           │
+<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>      D4 ──┤── D2
+<a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>           │
+<a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>        AC (−)
 </code></pre></div>
 <hr />
 <h3 id="step-by-step-wiring_1">Step-by-Step Wiring<a class="headerlink" href="#step-by-step-wiring_1" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Insert all four 1N4007 diodes into the breadboard, each in a separate row.</li>
+<li>With the transformer disconnected, insert all four 1N4007 diodes into the breadboard, each in a separate row.</li>
 <li>Connect the bridge as follows:</li>
 <li><strong>D1</strong>: anode to AC(+), cathode to DC(+) rail</li>
 <li><strong>D2</strong>: anode to AC(−), cathode to DC(+) rail</li>
 <li><strong>D3</strong>: anode to DC(−) rail, cathode to AC(+)</li>
 <li><strong>D4</strong>: anode to DC(−) rail, cathode to AC(−)</li>
 <li>Connect the <strong>1 kΩ load resistor</strong> between the DC(+) rail and the DC(−) rail.</li>
-<li>Connect the <strong>OWON HDS272S waveform generator (+)</strong> to the AC(+) node and <strong>(−)</strong> to the AC(−) node.</li>
-<li>Hook the <strong>CH1 probe tip</strong> to the DC(+) rail. Clip the <strong>CH1 probe ground</strong> to the DC(−) rail.</li>
+<li>Connect transformer secondary lead A through the <strong>250 mA time-delay fuse</strong> and <strong>47 Ω, 5 W series resistor</strong> to AC(+); connect secondary lead B directly to AC(−). Keep the adapter closed and use only its insulated output leads.</li>
+<li>Hook the <strong>CH1 probe tip</strong> to the DC(+) rail. Clip the <strong>CH1 probe ground</strong> to the DC(−) rail. Keep the probe ground there for all bridge measurements.</li>
 </ol>
 <blockquote>
-<p>Tip: The DC(−) rail is the common reference. Connect the waveform generator GND and oscilloscope probe GND both to this point.</p>
+<p>Tip: The transformer secondary is isolated and low voltage. Connect the oscilloscope probe ground to DC(−) only. Do not connect the scope ground to an AC bridge terminal while also grounding DC(−), and do not connect this circuit to mains.</p>
 </blockquote>
 <hr />
 <h3 id="wiring-checklist_1">Wiring Checklist<a class="headerlink" href="#wiring-checklist_1" title="Permanent link">&para;</a></h3>
@@ -4531,6 +4506,7 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <p>✅ DC(+) rail connected to both D1 and D2 cathodes</p>
 <p>✅ DC(−) rail connected to both D3 and D4 anodes</p>
 <p>✅ Load resistor between DC(+) and DC(−)</p>
+<p>✅ Transformer secondary A reaches AC(+) through the 250 mA fuse and 47 Ω resistor; secondary B reaches AC(−)</p>
 <p>✅ CH1 probe tip at DC(+), CH1 probe ground at DC(−)</p>
 <hr />
 <h3 id="oscilloscope-settings_2">Oscilloscope Settings<a class="headerlink" href="#oscilloscope-settings_2" title="Permanent link">&para;</a></h3>
@@ -4567,9 +4543,9 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 </table>
 <hr />
 <h3 id="expected-output_1">Expected Output<a class="headerlink" href="#expected-output_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>     /\      /\      /\
-<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>    /  \    /  \    /  \
-<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>___/    \__/    \__/    \___
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>     /\      /\      /\
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>    /  \    /  \    /  \
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>___/    \__/    \__/    \___
 </code></pre></div>
 <hr />
 <h3 id="record-measurements_2">Record Measurements<a class="headerlink" href="#record-measurements_2" title="Permanent link">&para;</a></h3>
@@ -4661,44 +4637,45 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <hr />
 <h2 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h2>
 <p>Now overlay your measured waveform parameters against the simulated predictions.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="n">Vpeak</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span>
-<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="n">t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.0001</span><span class="p">:</span><span class="mf">0.1</span><span class="p">;</span>
-<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="n">v_ac</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vpeak</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="o">*</span><span class="n">f</span><span class="o">*</span><span class="n">t</span><span class="p">);</span>
-<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="n">v_fw</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">v_ac</span><span class="p">);</span>
-<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>
-<a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a><span class="n">dt</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="n">v_fw_100</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">zeros</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">v_fw</span><span class="p">));</span><span class="w"> </span><span class="n">v_fw_100</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">v_fw</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a><span class="n">v_fw_470</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">zeros</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">v_fw</span><span class="p">));</span><span class="w"> </span><span class="n">v_fw_470</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">v_fw</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a><span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-<a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a><span class="w">    </span><span class="n">v_fw_100</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="n">v_fw</span><span class="p">(</span><span class="nb">i</span><span class="p">),</span><span class="w"> </span><span class="n">v_fw_100</span><span class="p">(</span><span class="nb">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">dt</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">R</span><span class="o">*</span><span class="mf">100e-6</span><span class="p">)));</span>
-<a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a><span class="w">    </span><span class="n">v_fw_470</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="n">v_fw</span><span class="p">(</span><span class="nb">i</span><span class="p">),</span><span class="w"> </span><span class="n">v_fw_470</span><span class="p">(</span><span class="nb">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">dt</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">R</span><span class="o">*</span><span class="mf">470e-6</span><span class="p">)));</span>
-<a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a><span class="k">end</span>
-<a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a>
-<a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a><span class="c">% Your measured values — replace zeros</span>
-<a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a><span class="n">Vavg_measured</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">];</span><span class="w">   </span><span class="c">% (V) half-wave, FW, FW+100uF, FW+470uF</span>
-<a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a><span class="n">ripple_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">];</span><span class="w">   </span><span class="c">% (V) peak-to-peak ripple</span>
-<a id="__codelineno-32-17" name="__codelineno-32-17" href="#__codelineno-32-17"></a>
-<a id="__codelineno-32-18" name="__codelineno-32-18" href="#__codelineno-32-18"></a><span class="n">configs</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="nb">max</span><span class="p">(</span><span class="n">v_ac</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="n">v_fw</span><span class="p">,</span><span class="w"> </span><span class="n">v_fw_100</span><span class="p">,</span><span class="w"> </span><span class="n">v_fw_470</span><span class="p">};</span>
-<a id="__codelineno-32-19" name="__codelineno-32-19" href="#__codelineno-32-19"></a><span class="n">labels</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">&#39;Half-Wave&#39;</span><span class="p">,</span><span class="s">&#39;Full-Wave&#39;</span><span class="p">,</span><span class="s">&#39;FW+100\muF&#39;</span><span class="p">,</span><span class="s">&#39;FW+470\muF&#39;</span><span class="p">};</span>
-<a id="__codelineno-32-20" name="__codelineno-32-20" href="#__codelineno-32-20"></a>
-<a id="__codelineno-32-21" name="__codelineno-32-21" href="#__codelineno-32-21"></a><span class="n">Vavg_sim</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">cellfun</span><span class="p">(@</span><span class="nb">mean</span><span class="p">,</span><span class="w"> </span><span class="n">configs</span><span class="p">);</span>
-<a id="__codelineno-32-22" name="__codelineno-32-22" href="#__codelineno-32-22"></a>
-<a id="__codelineno-32-23" name="__codelineno-32-23" href="#__codelineno-32-23"></a><span class="nb">figure</span><span class="p">;</span>
-<a id="__codelineno-32-24" name="__codelineno-32-24" href="#__codelineno-32-24"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<a id="__codelineno-32-25" name="__codelineno-32-25" href="#__codelineno-32-25"></a><span class="n">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">;</span>
-<a id="__codelineno-32-26" name="__codelineno-32-26" href="#__codelineno-32-26"></a><span class="nb">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">Vavg_sim</span><span class="p">;</span><span class="w"> </span><span class="n">Vavg_measured</span><span class="p">]</span><span class="o">&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">);</span>
-<a id="__codelineno-32-27" name="__codelineno-32-27" href="#__codelineno-32-27"></a><span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s">&#39;XTickLabel&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="p">);</span>
-<a id="__codelineno-32-28" name="__codelineno-32-28" href="#__codelineno-32-28"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Simulated&#39;</span><span class="p">,</span><span class="s">&#39;Measured&#39;</span><span class="p">,</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="s">&#39;northwest&#39;</span><span class="p">);</span>
-<a id="__codelineno-32-29" name="__codelineno-32-29" href="#__codelineno-32-29"></a><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Average Voltage (V)&#39;</span><span class="p">);</span><span class="w"> </span><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-32-30" name="__codelineno-32-30" href="#__codelineno-32-30"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Average DC Voltage - Simulation vs Measurement&#39;</span><span class="p">);</span>
-<a id="__codelineno-32-31" name="__codelineno-32-31" href="#__codelineno-32-31"></a>
-<a id="__codelineno-32-32" name="__codelineno-32-32" href="#__codelineno-32-32"></a><span class="n">ripple_sim</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">cellfun</span><span class="p">(@(</span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">-</span><span class="nb">min</span><span class="p">(</span><span class="n">v</span><span class="p">),</span><span class="w"> </span><span class="n">configs</span><span class="p">);</span>
-<a id="__codelineno-32-33" name="__codelineno-32-33" href="#__codelineno-32-33"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
-<a id="__codelineno-32-34" name="__codelineno-32-34" href="#__codelineno-32-34"></a><span class="nb">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">ripple_sim</span><span class="p">;</span><span class="w"> </span><span class="n">ripple_measured</span><span class="p">]</span><span class="o">&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">);</span>
-<a id="__codelineno-32-35" name="__codelineno-32-35" href="#__codelineno-32-35"></a><span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s">&#39;XTickLabel&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="p">);</span>
-<a id="__codelineno-32-36" name="__codelineno-32-36" href="#__codelineno-32-36"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Simulated&#39;</span><span class="p">,</span><span class="s">&#39;Measured&#39;</span><span class="p">,</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="s">&#39;northeast&#39;</span><span class="p">);</span>
-<a id="__codelineno-32-37" name="__codelineno-32-37" href="#__codelineno-32-37"></a><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Ripple Voltage (V)&#39;</span><span class="p">);</span><span class="w"> </span><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-32-38" name="__codelineno-32-38" href="#__codelineno-32-38"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Ripple Voltage - Simulation vs Measurement&#39;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="n">Vpeak</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">8.5</span><span class="p">;</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="n">Vpeak</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">8.5</span><span class="p">;</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span>
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="n">t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">0.0001</span><span class="p">:</span><span class="mf">0.1</span><span class="p">;</span>
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="n">v_ac</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vpeak</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="o">*</span><span class="n">f</span><span class="o">*</span><span class="n">t</span><span class="p">);</span>
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="n">v_fw</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">v_ac</span><span class="p">);</span>
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="n">dt</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a><span class="n">v_fw_100</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">zeros</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">v_fw</span><span class="p">));</span><span class="w"> </span><span class="n">v_fw_100</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">v_fw</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a><span class="n">v_fw_470</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">zeros</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">v_fw</span><span class="p">));</span><span class="w"> </span><span class="n">v_fw_470</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">v_fw</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a><span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a><span class="w">    </span><span class="n">v_fw_100</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="n">v_fw</span><span class="p">(</span><span class="nb">i</span><span class="p">),</span><span class="w"> </span><span class="n">v_fw_100</span><span class="p">(</span><span class="nb">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">dt</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">R</span><span class="o">*</span><span class="mf">100e-6</span><span class="p">)));</span>
+<a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a><span class="w">    </span><span class="n">v_fw_470</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="n">v_fw</span><span class="p">(</span><span class="nb">i</span><span class="p">),</span><span class="w"> </span><span class="n">v_fw_470</span><span class="p">(</span><span class="nb">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">dt</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">R</span><span class="o">*</span><span class="mf">470e-6</span><span class="p">)));</span>
+<a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a><span class="k">end</span>
+<a id="__codelineno-31-14" name="__codelineno-31-14" href="#__codelineno-31-14"></a>
+<a id="__codelineno-31-15" name="__codelineno-31-15" href="#__codelineno-31-15"></a><span class="c">% Your measured values — replace zeros</span>
+<a id="__codelineno-31-16" name="__codelineno-31-16" href="#__codelineno-31-16"></a><span class="n">Vavg_measured</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">];</span><span class="w">   </span><span class="c">% (V) half-wave, FW, FW+100uF, FW+470uF</span>
+<a id="__codelineno-31-17" name="__codelineno-31-17" href="#__codelineno-31-17"></a><span class="n">ripple_measured</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">];</span><span class="w">   </span><span class="c">% (V) peak-to-peak ripple</span>
+<a id="__codelineno-31-18" name="__codelineno-31-18" href="#__codelineno-31-18"></a>
+<a id="__codelineno-31-19" name="__codelineno-31-19" href="#__codelineno-31-19"></a><span class="n">configs</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="nb">max</span><span class="p">(</span><span class="n">v_ac</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="n">v_fw</span><span class="p">,</span><span class="w"> </span><span class="n">v_fw_100</span><span class="p">,</span><span class="w"> </span><span class="n">v_fw_470</span><span class="p">};</span>
+<a id="__codelineno-31-20" name="__codelineno-31-20" href="#__codelineno-31-20"></a><span class="n">labels</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">&#39;Half-Wave&#39;</span><span class="p">,</span><span class="s">&#39;Full-Wave&#39;</span><span class="p">,</span><span class="s">&#39;FW+100\muF&#39;</span><span class="p">,</span><span class="s">&#39;FW+470\muF&#39;</span><span class="p">};</span>
+<a id="__codelineno-31-21" name="__codelineno-31-21" href="#__codelineno-31-21"></a>
+<a id="__codelineno-31-22" name="__codelineno-31-22" href="#__codelineno-31-22"></a><span class="n">Vavg_sim</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">cellfun</span><span class="p">(@</span><span class="nb">mean</span><span class="p">,</span><span class="w"> </span><span class="n">configs</span><span class="p">);</span>
+<a id="__codelineno-31-23" name="__codelineno-31-23" href="#__codelineno-31-23"></a>
+<a id="__codelineno-31-24" name="__codelineno-31-24" href="#__codelineno-31-24"></a><span class="nb">figure</span><span class="p">;</span>
+<a id="__codelineno-31-25" name="__codelineno-31-25" href="#__codelineno-31-25"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-31-26" name="__codelineno-31-26" href="#__codelineno-31-26"></a><span class="n">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">;</span>
+<a id="__codelineno-31-27" name="__codelineno-31-27" href="#__codelineno-31-27"></a><span class="nb">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">Vavg_sim</span><span class="p">;</span><span class="w"> </span><span class="n">Vavg_measured</span><span class="p">]</span><span class="o">&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">);</span>
+<a id="__codelineno-31-28" name="__codelineno-31-28" href="#__codelineno-31-28"></a><span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s">&#39;XTickLabel&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="p">);</span>
+<a id="__codelineno-31-29" name="__codelineno-31-29" href="#__codelineno-31-29"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Simulated&#39;</span><span class="p">,</span><span class="s">&#39;Measured&#39;</span><span class="p">,</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="s">&#39;northwest&#39;</span><span class="p">);</span>
+<a id="__codelineno-31-30" name="__codelineno-31-30" href="#__codelineno-31-30"></a><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Average Voltage (V)&#39;</span><span class="p">);</span><span class="w"> </span><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-31-31" name="__codelineno-31-31" href="#__codelineno-31-31"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Average DC Voltage - Simulation vs Measurement&#39;</span><span class="p">);</span>
+<a id="__codelineno-31-32" name="__codelineno-31-32" href="#__codelineno-31-32"></a>
+<a id="__codelineno-31-33" name="__codelineno-31-33" href="#__codelineno-31-33"></a><span class="n">ripple_sim</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">cellfun</span><span class="p">(@(</span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">-</span><span class="nb">min</span><span class="p">(</span><span class="n">v</span><span class="p">),</span><span class="w"> </span><span class="n">configs</span><span class="p">);</span>
+<a id="__codelineno-31-34" name="__codelineno-31-34" href="#__codelineno-31-34"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-31-35" name="__codelineno-31-35" href="#__codelineno-31-35"></a><span class="nb">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">ripple_sim</span><span class="p">;</span><span class="w"> </span><span class="n">ripple_measured</span><span class="p">]</span><span class="o">&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6</span><span class="p">);</span>
+<a id="__codelineno-31-36" name="__codelineno-31-36" href="#__codelineno-31-36"></a><span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s">&#39;XTickLabel&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="p">);</span>
+<a id="__codelineno-31-37" name="__codelineno-31-37" href="#__codelineno-31-37"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Simulated&#39;</span><span class="p">,</span><span class="s">&#39;Measured&#39;</span><span class="p">,</span><span class="s">&#39;Location&#39;</span><span class="p">,</span><span class="s">&#39;northeast&#39;</span><span class="p">);</span>
+<a id="__codelineno-31-38" name="__codelineno-31-38" href="#__codelineno-31-38"></a><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Ripple Voltage (V)&#39;</span><span class="p">);</span><span class="w"> </span><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-31-39" name="__codelineno-31-39" href="#__codelineno-31-39"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Ripple Voltage - Simulation vs Measurement&#39;</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="reflection">Reflection<a class="headerlink" href="#reflection" title="Permanent link">&para;</a></h3>
 <ul>
@@ -4727,10 +4704,7 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 <p>✅ Horizontal time scale appropriate for 50 Hz (5 ms/div shows two cycles)</p>
 <hr />
 <h3 id="troubleshooting-checklist">Troubleshooting Checklist<a class="headerlink" href="#troubleshooting-checklist" title="Permanent link">&para;</a></h3>
-<p>✅ Signal generator connected and set to 10 Vpeak, 50 Hz, sine</p>
-<blockquote>
-<p>Use the OWON HDS272S built-in waveform generator output.</p>
-</blockquote>
+<p>✅ Isolated source set within its output rating; use the same measured peak voltage in predictions</p>
 <p>✅ Diodes oriented correctly</p>
 <p>✅ Load resistor connected</p>
 <p>✅ Capacitor polarity verified</p>
@@ -4763,7 +4737,7 @@ V_{RMS} = \frac{10}{1.414} \approx 7.07\ \text{V}
 
 <hr />
 <h2 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>10_DC_AC_Inverters.md
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>10_DC_AC_Inverters.md
 </code></pre></div>
 <p>Topics:</p>
 <ul>

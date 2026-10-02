@@ -542,34 +542,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../00D_Control_Engineering_Primer/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Control Engineering Primer
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -702,6 +674,34 @@
     
   
     RLC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00D_Control_Engineering_Primer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Engineering Primer
   
 
     
@@ -1832,15 +1832,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#experiment-1-pll-observation" class="md-nav__link">
+  <a href="#experiment-1-pll-input-interface" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Experiment 1 - PLL Observation
+        Experiment 1 - PLL Input Interface
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Experiment 1 - PLL Observation">
+    <nav class="md-nav" aria-label="Experiment 1 - PLL Input Interface">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2832,15 +2832,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#experiment-1-pll-observation" class="md-nav__link">
+  <a href="#experiment-1-pll-input-interface" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Experiment 1 - PLL Observation
+        Experiment 1 - PLL Input Interface
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Experiment 1 - PLL Observation">
+    <nav class="md-nav" aria-label="Experiment 1 - PLL Input Interface">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3298,16 +3298,13 @@
 <p>This is the capstone project for the course.</p>
 <hr />
 <h2 id="safety-notice">Safety Notice<a class="headerlink" href="#safety-notice" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>MUST NOT be connected directly to mains power.
-</code></pre></div>
-<p>All experiments must use low-voltage AC sources such as:</p>
-<ul>
-<li>Function generators</li>
-<li>Isolated AC laboratory supplies</li>
-</ul>
-<p>Recommended AC test voltage:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>1 V to 10 V RMS
-</code></pre></div>
+<div class="admonition danger">
+<p class="admonition-title">No grid connection</p>
+</div>
+<p>Never connect this project to mains or connect the H-bridge output to the function generator. The generator supplies only a low-voltage PLL reference signal; the inverter drives only the separate 100 Ω load from the Lab 10 5 V / 100 mA current-limited stage. Grid current injection and current-loop tests remain simulation-only.</p>
+<p>For the physical PLL input, set a 50 Hz sine to no more than 1.0 V peak as measured on the scope before connecting the ESP32 interface. Use the biased, protected ADC interface below; never connect a bipolar generator output directly to an ESP32 ADC pin.</p>
+<p>The repository does not include or validate ESP32 PLL firmware. The physical input exercise below verifies only the protected signal interface and ADC voltage range; phase tracking remains a Simulink exercise until validated firmware is supplied. The Lab 10 inverter demonstration uses its own fixed 50 Hz reference and is not synchronized to this input.</p>
+<p>The physical scope of this project is the protected PLL input interface plus a separate Lab 10 load demonstration. The PLL and grid-current control algorithms remain simulation exercises.</p>
 <hr />
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>Most modern renewable energy systems use Grid-Following converters.</p>
@@ -3322,9 +3319,9 @@
 <h2 id="what-is-a-grid-following-converter">What Is a Grid-Following Converter?<a class="headerlink" href="#what-is-a-grid-following-converter" title="Permanent link">&para;</a></h2>
 <p>A Grid-Following Converter does not create the grid voltage.</p>
 <p>Instead:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>The Grid Creates Voltage
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>The Converter Injects Current
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>The Grid Creates Voltage
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>The Converter Injects Current
 </code></pre></div>
 <p>The grid already establishes voltage magnitude, frequency, and phase angle.</p>
 <p>The inverter therefore controls current rather than voltage.</p>
@@ -3341,35 +3338,29 @@ P = V_{RMS}I_{RMS}
 <p>For a given RMS voltage and current magnitude, unity power factor gives the largest real-power component. The actual transferred power is still limited by converter current, thermal ratings, grid impedance, and the available DC-link power.</p>
 <hr />
 <h2 id="overall-control-structure">Overall Control Structure<a class="headerlink" href="#overall-control-structure" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Grid Voltage
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>      ↓
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>     PLL
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>      ↓
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>Grid Angle θ
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>      ↓
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>Current Controller
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>      ↓
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    SPWM
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>      ↓
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>  Inverter
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>      ↓
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>   Filter
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>      ↓
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>    Grid
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Grid Voltage
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>      ↓
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>     PLL
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>      ↓
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Grid Angle θ
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>      ↓
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Current Controller
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>      ↓
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    SPWM
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>      ↓
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>  Inverter
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>      ↓
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>   Filter
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>      ↓
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    Grid
 </code></pre></div>
 <hr />
 <h2 id="hardware-overview">Hardware Overview<a class="headerlink" href="#hardware-overview" title="Permanent link">&para;</a></h2>
-<p>The laboratory setup consists of:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>AC Source (function generator)
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>      +
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Measurement System (voltage divider + current sensor)
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>      +
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Controller (ESP32 DevKit V1)
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>      +
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>Inverter (H-Bridge MOSFETs + gate driver)
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>      +
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>Filter (L filter inductor)
+<p>The physical exercises use two separate low-voltage circuits:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Function generator (≤1 V peak, 50 Hz) → protected biased ADC input at GPIO34
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Lab 10 fixed-reference SPWM → DRV8833 H-bridge (5 V, 100 mA limit) → LC filter → 100 Ω load
 </code></pre></div>
+<p>These are separate demonstrations, not a PLL-to-inverter control loop. The two circuits share signal ground only. Do not wire the load or H-bridge output to the function generator. Grid current injection is simulation-only.</p>
 <hr />
 <h2 id="recommended-hardware">Recommended Hardware<a class="headerlink" href="#recommended-hardware" title="Permanent link">&para;</a></h2>
 <h3 id="controller">Controller<a class="headerlink" href="#controller" title="Permanent link">&para;</a></h3>
@@ -3385,53 +3376,32 @@ P = V_{RMS}I_{RMS}
 </ul>
 <h3 id="signal-generator-simulated-grid">Signal Generator (simulated grid)<a class="headerlink" href="#signal-generator-simulated-grid" title="Permanent link">&para;</a></h3>
 <ul>
-<li>FY6900, JDS6600, or any function generator</li>
+<li>OWON HDS272S built-in generator or another isolated low-voltage source, adjusted and scope-verified to no more than 1.0 V peak at 50 Hz</li>
 </ul>
 <h3 id="current-sensor">Current Sensor<a class="headerlink" href="#current-sensor" title="Permanent link">&para;</a></h3>
 <ul>
-<li>ACS712 or ACS758</li>
+<li>Current control and the 0.5-1.5 A grid-injection examples are simulation-only; an ACS712 5 A module is not suitable for accurate current measurement on the Lab 10 low-current load</li>
 </ul>
 <h3 id="voltage-measurement">Voltage Measurement<a class="headerlink" href="#voltage-measurement" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Isolated or differential voltage sensor with an output limited to 0–3.3 V; alternatively, use a resistor divider with a verified mid-supply bias and input protection</li>
+<li>PLL input interface: function-generator output through a 1 µF series capacitor and 10 kΩ resistor to GPIO34; 100 kΩ from GPIO34 to 3.3 V and 100 kΩ from GPIO34 to GND; lower Schottky clamp anode to GND/cathode to GPIO34, upper clamp anode to GPIO34/cathode to 3.3 V</li>
+<li>Verify the biased ADC node stays between 0.3 V and 3.0 V over the full input waveform before running PLL firmware</li>
 </ul>
 <h3 id="inverter-stage">Inverter Stage<a class="headerlink" href="#inverter-stage" title="Permanent link">&para;</a></h3>
 <ul>
-<li>MOSFET H-Bridge (4 × IRLZ44N)</li>
-<li>IR2104 or IR2110 gate driver</li>
+<li>Reuse the Lab 10 DRV8833 breakout and 5 V / 100 mA current-limited supply for a separate resistor-load output demonstration</li>
+<li>No physical grid-tie or current-injection bridge is defined here</li>
 </ul>
 <h3 id="filter">Filter<a class="headerlink" href="#filter" title="Permanent link">&para;</a></h3>
 <ul>
-<li>L filter: 1 mH to 5 mH inductor</li>
+<li>Reuse the Lab 10 two-inductor / 1 µF differential output filter for the resistor-load measurement</li>
 </ul>
 <hr />
 <h2 id="system-schematic">System Schematic<a class="headerlink" href="#system-schematic" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Function Generator (simulated grid)
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>        │
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>        ▼
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  Grid Voltage
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>        │
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>   ┌────┴────┐
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>   ▼         ▼
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>  PLL    Voltage Sensor
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>   │
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>   ▼
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>Current Controller
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>   │
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>   ▼
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>SPWM Generator
-<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>   │
-<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>   ▼
-<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>H-Bridge Inverter
-<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>   │
-<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>   ▼
-<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>L Filter
-<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>   │
-<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>   ▼
-<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>Current Sensor
-<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>   │
-<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>   ▼
-<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>Simulated Grid
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Signal source (≤1 V peak) → coupling capacitor / bias / clamps → ESP32 GPIO34
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Lab 10 fixed-reference SPWM → DRV8833 H-bridge → two-inductor LC filter → 100 Ω load
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>The PLL algorithm and grid-current injection/current-control loop → Simulink only
 </code></pre></div>
 <hr />
 <h2 id="concept-of-synchronisation">Concept of Synchronisation<a class="headerlink" href="#concept-of-synchronisation" title="Permanent link">&para;</a></h2>
@@ -3448,7 +3418,7 @@ v(t) = V_m \sin(\omega t)
 \theta = \omega t
 \]</div>
 <h3 id="simplified-pll-block-diagram">Simplified PLL Block Diagram<a class="headerlink" href="#simplified-pll-block-diagram" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Grid Voltage → Phase Detector → PI Controller → Frequency Estimate → Integrator → Grid Angle θ
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Grid Voltage → Phase Detector → PI Controller → Frequency Estimate → Integrator → Grid Angle θ
 </code></pre></div>
 <p>The PLL itself contains a PI controller.</p>
 <p>Without synchronisation, current injection will occur at the wrong phase angle, resulting in poor power transfer, instability, or excessive current.</p>
@@ -3461,9 +3431,9 @@ v(t) = V_m \sin(\omega t)
 i(t) = 10\sin(\omega t)
 \]</div>
 <p>becomes approximately:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Id = 10
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Iq = 0
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Id = 10
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Iq = 0
 </code></pre></div>
 <p>This example assumes that the rotating reference frame is aligned with the grid-voltage vector and uses a consistent transform scaling. With a different alignment or scaling convention, the <span class="arithmatex">\(d\)</span> and <span class="arithmatex">\(q\)</span> values will differ. Under the chosen alignment, the approximately DC quantities are easier to regulate with PI controllers.</p>
 <hr />
@@ -3551,7 +3521,7 @@ u = K_P e + K_I \int e\,dt
 <tbody>
 <tr>
 <td>Amplitude</td>
-<td><code>5</code></td>
+<td><code>1</code></td>
 </tr>
 <tr>
 <td>Frequency (rad/s)</td>
@@ -3578,7 +3548,7 @@ u = K_P e + K_I \int e\,dt
 </tr>
 <tr>
 <td>Frequency (rad/s)</td>
-<td><code>2*pi*10000</code></td>
+<td><code>2*pi*20000</code></td>
 </tr>
 <tr>
 <td>Phase (rad)</td>
@@ -3587,7 +3557,7 @@ u = K_P e + K_I \int e\,dt
 </tbody>
 </table>
 <blockquote>
-<p>This uses a sine-carrier approximation for simplicity. Real SPWM uses a triangular carrier — for a true triangular carrier, replace this Sine Wave block with a <strong>Repeating Sequence</strong> block (Simulink → Sources) configured as a triangle wave at the same 10 kHz frequency.</p>
+<p>This uses a sine-carrier approximation for simplicity. Real SPWM uses a triangular carrier — for a true triangular carrier, replace this Sine Wave block with a <strong>Repeating Sequence</strong> block (Simulink → Sources) configured as a triangle wave at the same 20 kHz frequency.</p>
 </blockquote>
 <h4 id="step-5-set-relational-operator-parameters">Step 5 — Set Relational Operator parameters<a class="headerlink" href="#step-5-set-relational-operator-parameters" title="Permanent link">&para;</a></h4>
 <table>
@@ -3609,10 +3579,10 @@ u = K_P e + K_I \int e\,dt
 </tbody>
 </table>
 <h4 id="step-6-wire-the-model">Step 6 — Wire the model<a class="headerlink" href="#step-6-wire-the-model" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Grid Voltage → Scope input 1   [grid waveform]
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Grid Voltage → Relational Operator input 1
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>SPWM Carrier → Relational Operator input 2
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Relational Operator output → Scope input 2   [SPWM pattern]
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Grid Voltage → Scope input 1   [grid waveform]
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Grid Voltage → Relational Operator input 1
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>SPWM Carrier → Relational Operator input 2
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Relational Operator output → Scope input 2   [SPWM pattern]
 </code></pre></div>
 <h4 id="step-7-configure-the-scope">Step 7 — Configure the Scope<a class="headerlink" href="#step-7-configure-the-scope" title="Permanent link">&para;</a></h4>
 <p>Set <strong>Number of input ports</strong> to <code>2</code>, <strong>Layout</strong> to <code>2×1</code>.</p>
@@ -3740,11 +3710,11 @@ u = K_P e + K_I \int e\,dt
 <p>Denominator = <code>[L, R]</code> = <code>[1e-3, 1]</code></p>
 </blockquote>
 <h4 id="step-4-wire-the-closed-loop">Step 4 — Wire the closed-loop<a class="headerlink" href="#step-4-wire-the-closed-loop" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Step → Sum1 (+) input
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>Sum1 output → Kp Gain → Sum2 (+) input 1
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>Sum1 output → Ki Gain → Integrator → Sum2 (+) input 2
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>Sum2 output → Transfer Fcn → Scope
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>Transfer Fcn output → Sum1 (−) input
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Step → Sum1 (+) input
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Sum1 output → Kp Gain → Sum2 (+) input 1
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Sum1 output → Ki Gain → Integrator → Sum2 (+) input 2
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Sum2 output → Transfer Fcn → Scope
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Transfer Fcn output → Sum1 (−) input
 </code></pre></div>
 <h4 id="step-5-wiring-checklist">Step 5 — Wiring checklist<a class="headerlink" href="#step-5-wiring-checklist" title="Permanent link">&para;</a></h4>
 <p>✅ Step output to Sum1 (+)</p>
@@ -3783,24 +3753,24 @@ u = K_P e + K_I \int e\,dt
   <tbody>
     <tr><td>Current controller rise time</td><td><input class="result-input" id="lab17-sim-rise" placeholder="s"></td></tr>
     <tr><td>Current controller overshoot (%)</td><td><input class="result-input" id="lab17-sim-os" placeholder="%"></td></tr>
-    <tr><td>SPWM carrier frequency (Hz)</td><td>10 000</td></tr>
+    <tr><td>SPWM carrier frequency (Hz)</td><td>20 000</td></tr>
     <tr><td>Grid frequency (Hz)</td><td>50</td></tr>
   </tbody>
 </table>
 </div>
 
 <hr />
-<h2 id="experiment-1-pll-observation">Experiment 1 - PLL Observation<a class="headerlink" href="#experiment-1-pll-observation" title="Permanent link">&para;</a></h2>
+<h2 id="experiment-1-pll-input-interface">Experiment 1 - PLL Input Interface<a class="headerlink" href="#experiment-1-pll-input-interface" title="Permanent link">&para;</a></h2>
 <h3 id="objective_1">Objective<a class="headerlink" href="#objective_1" title="Permanent link">&para;</a></h3>
-<p>Measure the grid phase angle and verify PLL tracking.</p>
+<p>Build and verify the protected low-voltage input interface. PLL angle tracking is simulation-only because this repository does not include validated ESP32 PLL firmware.</p>
 <hr />
 <h3 id="procedure">Procedure<a class="headerlink" href="#procedure" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Set the function generator to output a <strong>50 Hz sine wave</strong> at <strong>5 Vpeak</strong>.</li>
-<li>Connect the function generator output to an isolated or differential voltage sensor. If using the ESP32 ADC, use a properly attenuated mid-supply-biased interface so the complete bipolar waveform remains between 0 V and 3.3 V; a divider to ground alone is not safe for the negative half-cycle.</li>
-<li>Upload PLL code to the ESP32.</li>
-<li>Connect the oscilloscope probe to the function generator output.</li>
-<li>Observe zero crossings and verify the PLL is tracking the grid angle.</li>
+<li>Set the function generator to a 50 Hz sine wave and adjust it to no more than <strong>1.0 V peak</strong>. Measure its actual output with the oscilloscope before wiring it to the ESP32.</li>
+<li>Connect generator output through a 1 µF series capacitor and 10 kΩ resistor to GPIO34. Connect 100 kΩ from GPIO34 to 3.3 V and 100 kΩ from GPIO34 to GND.</li>
+<li>Add a lower Schottky clamp with anode at GND and cathode at GPIO34, and an upper clamp with anode at GPIO34 and cathode at 3.3 V.</li>
+<li>Connect generator return, ESP32 GND, and scope ground to the same signal ground. Keep the generator connected only to the protected input; never connect it to either H-bridge output.</li>
+<li>Before connecting GPIO34, measure the node relative to GND and verify the complete waveform stays between 0.3 V and 3.0 V. Record its frequency and voltage range. Keep PLL angle tracking in Simulink; the function generator is only a low-voltage signal source, not a grid source.</li>
 </ol>
 <hr />
 <h3 id="oscilloscope-settings">Oscilloscope Settings<a class="headerlink" href="#oscilloscope-settings" title="Permanent link">&para;</a></h3>
@@ -3830,15 +3800,14 @@ u = K_P e + K_I \int e\,dt
 </tr>
 <tr>
 <td>Coupling</td>
-<td>AC</td>
-<td>AC</td>
+<td>DC</td>
+<td>DC</td>
 </tr>
 </tbody>
 </table>
 <hr />
 <h3 id="observe">Observe<a class="headerlink" href="#observe" title="Permanent link">&para;</a></h3>
-<p>The oscilloscope should show a stable 50 Hz sine wave.</p>
-<p>The Serial Monitor should show the estimated grid angle increasing from 0 to 2π and wrapping around.</p>
+<p>The scope should show the input sine wave and its biased GPIO34 waveform relative to GND. No Serial Monitor angle trace is available because this repository does not include PLL firmware.</p>
 <hr />
 <h3 id="measurements">Measurements<a class="headerlink" href="#measurements" title="Permanent link">&para;</a></h3>
 <div class="result-block">
@@ -3846,8 +3815,8 @@ u = K_P e + K_I \int e\,dt
   <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
   <tbody>
     <tr><td>Measured grid frequency</td><td><input class="result-input" id="lab17-exp1-freq" placeholder="Hz"></td></tr>
-    <tr><td>PLL lock time</td><td><input class="result-input" id="lab17-exp1-locktime" placeholder="s"></td></tr>
-    <tr><td>Steady-state phase error</td><td><input class="result-input" id="lab17-exp1-phaseerr" placeholder="deg"></td></tr>
+    <tr><td>GPIO34 minimum voltage</td><td><input class="result-input" id="lab17-exp1-vmin" placeholder="V"></td></tr>
+    <tr><td>GPIO34 maximum voltage</td><td><input class="result-input" id="lab17-exp1-vmax" placeholder="V"></td></tr>
   </tbody>
 </table>
 </div>
@@ -3855,13 +3824,13 @@ u = K_P e + K_I \int e\,dt
 <hr />
 <h2 id="experiment-2-spwm-generation">Experiment 2 - SPWM Generation<a class="headerlink" href="#experiment-2-spwm-generation" title="Permanent link">&para;</a></h2>
 <h3 id="objective_2">Objective<a class="headerlink" href="#objective_2" title="Permanent link">&para;</a></h3>
-<p>Generate a sinusoidal PWM pattern synchronised to the grid angle.</p>
+<p>Observe the Lab 10 SPWM output. Its 50 Hz reference is fixed locally and is not synchronized to the PLL input.</p>
 <hr />
 <h3 id="procedure_1">Procedure<a class="headerlink" href="#procedure_1" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Upload SPWM generation code to the ESP32.</li>
-<li>Connect the oscilloscope probe to the PWM output pin.</li>
-<li>Set horizontal scale to <strong>2 ms/div</strong> to observe the varying pulse widths.</li>
+<li>Use the Lab 10 two-input SPWM sketch, which generates a fixed 50 Hz reference with a 20 kHz carrier; do not treat this output as PLL-synchronized.</li>
+<li>Connect a scope probe tip to GPIO18 or GPIO19 and its ground clip to circuit GND only.</li>
+<li>Set horizontal scale to <strong>2 ms/div</strong> for the 50 Hz envelope; use a shorter time base to inspect the carrier pulses.</li>
 </ol>
 <hr />
 <h3 id="oscilloscope-settings_1">Oscilloscope Settings<a class="headerlink" href="#oscilloscope-settings_1" title="Permanent link">&para;</a></h3>
@@ -3910,8 +3879,8 @@ u = K_P e + K_I \int e\,dt
 <table>
   <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
   <tbody>
-    <tr><td>PWM carrier frequency</td><td>~500 Hz</td><td><input class="result-input" id="lab17-exp2-carrier" placeholder="Hz"></td></tr>
-    <tr><td>Modulation index</td><td>~1.0</td><td><input class="result-input" id="lab17-exp2-modindex" placeholder=""></td></tr>
+    <tr><td>PWM carrier frequency</td><td>~20 kHz</td><td><input class="result-input" id="lab17-exp2-carrier" placeholder="Hz"></td></tr>
+    <tr><td>Modulation index</td><td>~0.4 for the Lab 10 low-voltage output demonstration</td><td><input class="result-input" id="lab17-exp2-modindex" placeholder=""></td></tr>
     <tr><td>Output period</td><td>~20 ms</td><td><input class="result-input" id="lab17-exp2-period" placeholder="ms"></td></tr>
   </tbody>
 </table>
@@ -3923,9 +3892,12 @@ u = K_P e + K_I \int e\,dt
 <p>Measure the filtered inverter output voltage.</p>
 <hr />
 <h3 id="connections">Connections<a class="headerlink" href="#connections" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Probe Tip  ──────► Inverter output (after L filter)
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Probe GND  ──────► Circuit GND
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>CH1 tip ─────────► Filtered OUT_A
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>CH2 tip ─────────► Filtered OUT_B
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Both probe grounds ─► Circuit GND
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Scope math ──────► CH1 − CH2 (differential load voltage)
 </code></pre></div>
+<p>Reuse the Lab 10 5 V / 100 mA DRV8833 stage and 100 Ω load. Do not connect the inverter output to the function generator or to mains.</p>
 <hr />
 <h3 id="measurements_2">Measurements<a class="headerlink" href="#measurements_2" title="Permanent link">&para;</a></h3>
 <div class="result-block">
@@ -3943,22 +3915,26 @@ u = K_P e + K_I \int e\,dt
 <hr />
 <h2 id="experiment-4-current-control">Experiment 4 - Current Control<a class="headerlink" href="#experiment-4-current-control" title="Permanent link">&para;</a></h2>
 <h3 id="objective_4">Objective<a class="headerlink" href="#objective_4" title="Permanent link">&para;</a></h3>
-<p>Regulate the injected current to a series of reference values and verify tracking.</p>
+<p>Simulate grid-current regulation and verify tracking. No physical grid-current injection is defined in this lab.</p>
+<div class="admonition info">
+<p class="admonition-title">Simulation only</p>
+</div>
+<p>Use the 0.5 A, 1.0 A, and 1.5 A setpoints only in the Simulink current-controller model. Do not connect the inverter output to a function generator, AC source, or mains, and do not apply these setpoints to the Lab 10 low-current driver/load.</p>
 <hr />
 <h3 id="setpoint-tests">Setpoint Tests<a class="headerlink" href="#setpoint-tests" title="Permanent link">&para;</a></h3>
-<p>Test the following current references:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>0.5 A
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>1.0 A
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>1.5 A
+<p>In the Simulink current-controller model, test the following references:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>0.5 A
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>1.0 A
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>1.5 A
 </code></pre></div>
-<p>For each setpoint, record the measured current from the ACS712 sensor.</p>
+<p>For each setpoint, record the simulated current response. Do not use an ACS712 5 A module to measure the Lab 10 low-current load.</p>
 <hr />
 <h3 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h3>
 <div class="result-block">
 <table>
-  <thead><tr><th>Current Reference</th><th>Measured Current</th></tr></thead>
+  <thead><tr><th>Current Reference (simulation)</th><th>Simulated Current</th></tr></thead>
   <tbody>
     <tr><td>0.5 A</td><td><input class="result-input" id="lab17-exp4-i05" placeholder="A"></td></tr>
     <tr><td>1.0 A</td><td><input class="result-input" id="lab17-exp4-i10" placeholder="A"></td></tr>
@@ -3969,49 +3945,49 @@ u = K_P e + K_I \int e\,dt
 
 <hr />
 <h2 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h2>
-<p>After completing the experiments, enter your measured current tracking data and compare against the simulated PI response.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c">% Enter your system parameters</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">L</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="mf">1e-3</span><span class="p">;</span><span class="w">    </span><span class="c">% your filter inductance (H)</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">R</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">       </span><span class="c">% estimated winding resistance (Ohm)</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">Kp_cc</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w">       </span><span class="c">% gains used in Experiment 4</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="n">Ki_cc</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span>
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="n">I_ref</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w">     </span><span class="c">% A</span>
-<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="n">f_grid</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span><span class="w">      </span><span class="c">% Hz</span>
-<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
-<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="c">% Enter measured current step response (time in s, current in A)</span>
-<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="n">t_meas</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.002</span><span class="p">,</span><span class="w"> </span><span class="mf">0.005</span><span class="p">,</span><span class="w"> </span><span class="mf">0.010</span><span class="p">,</span><span class="w"> </span><span class="mf">0.015</span><span class="p">,</span><span class="w"> </span><span class="mf">0.020</span><span class="p">,</span><span class="w"> </span><span class="mf">0.030</span><span class="p">,</span><span class="w"> </span><span class="mf">0.040</span><span class="p">,</span><span class="w"> </span><span class="mf">0.050</span><span class="p">];</span><span class="w"> </span><span class="c">% replace</span>
-<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="n">i_meas</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.15</span><span class="p">,</span><span class="w">  </span><span class="mf">0.38</span><span class="p">,</span><span class="w">  </span><span class="mf">0.52</span><span class="p">,</span><span class="w">  </span><span class="mf">0.50</span><span class="p">,</span><span class="w">  </span><span class="mf">0.50</span><span class="p">,</span><span class="w">  </span><span class="mf">0.50</span><span class="p">,</span><span class="w">  </span><span class="mf">0.50</span><span class="p">,</span><span class="w">  </span><span class="mf">0.50</span><span class="p">];</span><span class="w">  </span><span class="c">% replace</span>
-<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
-<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="c">% Enter measured grid frequency from oscilloscope</span>
-<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="n">f_meas</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">50.2</span><span class="p">;</span><span class="w">    </span><span class="c">% Hz — replace with your reading</span>
-<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>
-<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="n">s</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="s">&#39;s&#39;</span><span class="p">);</span>
-<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="n">G_L</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">L</span><span class="o">*</span><span class="n">s</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">R</span><span class="p">);</span>
-<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="n">C</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="n">Kp_cc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Ki_cc</span><span class="o">/</span><span class="n">s</span><span class="p">;</span>
-<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="n">T</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="n">feedback</span><span class="p">(</span><span class="n">C</span><span class="o">*</span><span class="n">G_L</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
-<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="p">[</span><span class="n">y_sim</span><span class="p">,</span><span class="w"> </span><span class="n">t_sim</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">I_ref</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">1e-5</span><span class="p">:</span><span class="mf">0.05</span><span class="p">);</span>
-<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>
-<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="nb">figure</span><span class="p">;</span>
-<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t_sim</span><span class="p">,</span><span class="w"> </span><span class="n">y_sim</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="p">);</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t_meas</span><span class="p">,</span><span class="w"> </span><span class="n">i_meas</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;ro--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;MarkerSize&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
-<a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a><span class="nb">yline</span><span class="p">(</span><span class="n">I_ref</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">);</span>
-<a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Simulated&#39;</span><span class="p">,</span><span class="s">&#39;Measured&#39;</span><span class="p">);</span><span class="w"> </span><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (s)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Current (A)&#39;</span><span class="p">);</span>
-<a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a><span class="nb">title</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;PI Current Controller: Simulated vs Measured  Kp=%.1f Ki=%.0f&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Kp_cc</span><span class="p">,</span><span class="w"> </span><span class="n">Ki_cc</span><span class="p">));</span>
-<a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a>
-<a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
-<a id="__codelineno-12-32" name="__codelineno-12-32" href="#__codelineno-12-32"></a><span class="nb">bar</span><span class="p">([</span><span class="n">f_grid</span><span class="p">,</span><span class="w"> </span><span class="n">f_meas</span><span class="p">]);</span>
-<a id="__codelineno-12-33" name="__codelineno-12-33" href="#__codelineno-12-33"></a><span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s">&#39;XTickLabel&#39;</span><span class="p">,{</span><span class="s">&#39;Setpoint&#39;</span><span class="p">,</span><span class="s">&#39;Measured&#39;</span><span class="p">});</span>
-<a id="__codelineno-12-34" name="__codelineno-12-34" href="#__codelineno-12-34"></a><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Frequency (Hz)&#39;</span><span class="p">);</span><span class="w"> </span><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-12-35" name="__codelineno-12-35" href="#__codelineno-12-35"></a><span class="nb">title</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;Grid Frequency Error: %.2f Hz  (%.3f %%)&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-12-36" name="__codelineno-12-36" href="#__codelineno-12-36"></a><span class="w">    </span><span class="nb">abs</span><span class="p">(</span><span class="n">f_meas</span><span class="o">-</span><span class="n">f_grid</span><span class="p">),</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">f_meas</span><span class="o">-</span><span class="n">f_grid</span><span class="p">)</span><span class="o">/</span><span class="n">f_grid</span><span class="o">*</span><span class="mi">100</span><span class="p">));</span>
-<a id="__codelineno-12-37" name="__codelineno-12-37" href="#__codelineno-12-37"></a>
-<a id="__codelineno-12-38" name="__codelineno-12-38" href="#__codelineno-12-38"></a><span class="n">si</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">stepinfo</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
-<a id="__codelineno-12-39" name="__codelineno-12-39" href="#__codelineno-12-39"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Simulated rise time:    %.4f s\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">si</span><span class="p">.</span><span class="n">RiseTime</span><span class="p">);</span>
-<a id="__codelineno-12-40" name="__codelineno-12-40" href="#__codelineno-12-40"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Simulated overshoot:    %.1f %%\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">si</span><span class="p">.</span><span class="n">Overshoot</span><span class="p">);</span>
-<a id="__codelineno-12-41" name="__codelineno-12-41" href="#__codelineno-12-41"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Simulated settling time:%.4f s\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">si</span><span class="p">.</span><span class="n">SettlingTime</span><span class="p">);</span>
-<a id="__codelineno-12-42" name="__codelineno-12-42" href="#__codelineno-12-42"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Grid frequency error:   %.3f %%\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">f_meas</span><span class="o">-</span><span class="n">f_grid</span><span class="p">)</span><span class="o">/</span><span class="n">f_grid</span><span class="o">*</span><span class="mi">100</span><span class="p">);</span>
+<p>After completing Experiment 4 in Simulink, enter its current tracking data and compare against the PI response model. This script does not represent a physical grid connection.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c">% Enter your system parameters</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">L</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="mf">1e-3</span><span class="p">;</span><span class="w">    </span><span class="c">% your filter inductance (H)</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">R</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">       </span><span class="c">% estimated winding resistance (Ohm)</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="n">Kp_cc</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w">       </span><span class="c">% gains used in Experiment 4</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="n">Ki_cc</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="n">I_ref</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w">     </span><span class="c">% A</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="n">f_grid</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span><span class="w">      </span><span class="c">% Hz</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="c">% Enter measured current step response (time in s, current in A)</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="n">t_meas</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.002</span><span class="p">,</span><span class="w"> </span><span class="mf">0.005</span><span class="p">,</span><span class="w"> </span><span class="mf">0.010</span><span class="p">,</span><span class="w"> </span><span class="mf">0.015</span><span class="p">,</span><span class="w"> </span><span class="mf">0.020</span><span class="p">,</span><span class="w"> </span><span class="mf">0.030</span><span class="p">,</span><span class="w"> </span><span class="mf">0.040</span><span class="p">,</span><span class="w"> </span><span class="mf">0.050</span><span class="p">];</span><span class="w"> </span><span class="c">% replace</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="n">i_meas</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.15</span><span class="p">,</span><span class="w">  </span><span class="mf">0.38</span><span class="p">,</span><span class="w">  </span><span class="mf">0.52</span><span class="p">,</span><span class="w">  </span><span class="mf">0.50</span><span class="p">,</span><span class="w">  </span><span class="mf">0.50</span><span class="p">,</span><span class="w">  </span><span class="mf">0.50</span><span class="p">,</span><span class="w">  </span><span class="mf">0.50</span><span class="p">,</span><span class="w">  </span><span class="mf">0.50</span><span class="p">];</span><span class="w">  </span><span class="c">% replace</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="c">% Enter measured grid frequency from oscilloscope</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="n">f_meas</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">50.2</span><span class="p">;</span><span class="w">    </span><span class="c">% Hz — replace with your reading</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="n">s</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="s">&#39;s&#39;</span><span class="p">);</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="n">G_L</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">L</span><span class="o">*</span><span class="n">s</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">R</span><span class="p">);</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="n">C</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="n">Kp_cc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Ki_cc</span><span class="o">/</span><span class="n">s</span><span class="p">;</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="n">T</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="n">feedback</span><span class="p">(</span><span class="n">C</span><span class="o">*</span><span class="n">G_L</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="p">[</span><span class="n">y_sim</span><span class="p">,</span><span class="w"> </span><span class="n">t_sim</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">I_ref</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">1e-5</span><span class="p">:</span><span class="mf">0.05</span><span class="p">);</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="nb">figure</span><span class="p">;</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t_sim</span><span class="p">,</span><span class="w"> </span><span class="n">y_sim</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="p">);</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t_meas</span><span class="p">,</span><span class="w"> </span><span class="n">i_meas</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;ro--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;MarkerSize&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a><span class="nb">yline</span><span class="p">(</span><span class="n">I_ref</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">);</span>
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Simulated&#39;</span><span class="p">,</span><span class="s">&#39;Measured&#39;</span><span class="p">);</span><span class="w"> </span><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (s)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Current (A)&#39;</span><span class="p">);</span>
+<a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a><span class="nb">title</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;PI Current Controller: Simulated vs Measured  Kp=%.1f Ki=%.0f&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Kp_cc</span><span class="p">,</span><span class="w"> </span><span class="n">Ki_cc</span><span class="p">));</span>
+<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a>
+<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a><span class="nb">bar</span><span class="p">([</span><span class="n">f_grid</span><span class="p">,</span><span class="w"> </span><span class="n">f_meas</span><span class="p">]);</span>
+<a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a><span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s">&#39;XTickLabel&#39;</span><span class="p">,{</span><span class="s">&#39;Setpoint&#39;</span><span class="p">,</span><span class="s">&#39;Measured&#39;</span><span class="p">});</span>
+<a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Frequency (Hz)&#39;</span><span class="p">);</span><span class="w"> </span><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a><span class="nb">title</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;Grid Frequency Error: %.2f Hz  (%.3f %%)&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a><span class="w">    </span><span class="nb">abs</span><span class="p">(</span><span class="n">f_meas</span><span class="o">-</span><span class="n">f_grid</span><span class="p">),</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">f_meas</span><span class="o">-</span><span class="n">f_grid</span><span class="p">)</span><span class="o">/</span><span class="n">f_grid</span><span class="o">*</span><span class="mi">100</span><span class="p">));</span>
+<a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a>
+<a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a><span class="n">si</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">stepinfo</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+<a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Simulated rise time:    %.4f s\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">si</span><span class="p">.</span><span class="n">RiseTime</span><span class="p">);</span>
+<a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Simulated overshoot:    %.1f %%\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">si</span><span class="p">.</span><span class="n">Overshoot</span><span class="p">);</span>
+<a id="__codelineno-10-41" name="__codelineno-10-41" href="#__codelineno-10-41"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Simulated settling time:%.4f s\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">si</span><span class="p">.</span><span class="n">SettlingTime</span><span class="p">);</span>
+<a id="__codelineno-10-42" name="__codelineno-10-42" href="#__codelineno-10-42"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;Grid frequency error:   %.3f %%\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">f_meas</span><span class="o">-</span><span class="n">f_grid</span><span class="p">)</span><span class="o">/</span><span class="n">f_grid</span><span class="o">*</span><span class="mi">100</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="reflection">Reflection<a class="headerlink" href="#reflection" title="Permanent link">&para;</a></h3>
 <ol>
@@ -4023,9 +3999,9 @@ u = K_P e + K_I \int e\,dt
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="pll-not-locking">PLL Not Locking<a class="headerlink" href="#pll-not-locking" title="Permanent link">&para;</a></h3>
 <p>Check:</p>
-<p>✅ Signal generator connected and outputting 50 Hz sine wave</p>
-<p>✅ Voltage divider scaling signal to ADC range</p>
-<p>✅ PLL PI gains appropriate</p>
+<p>✅ Signal generator output is 50 Hz and no more than 1.0 V peak</p>
+<p>✅ GPIO34 input node is biased and stays between 0.3 V and 3.0 V</p>
+<p>PLL firmware is not included in this repository; verify tracking in the Simulink model.</p>
 <hr />
 <h3 id="excessive-current-ripple">Excessive Current Ripple<a class="headerlink" href="#excessive-current-ripple" title="Permanent link">&para;</a></h3>
 <p>Check:</p>
@@ -4038,14 +4014,12 @@ u = K_P e + K_I \int e\,dt
 <p>✅ Current sensor calibration and offset</p>
 <hr />
 <h3 id="troubleshooting-checklist">Troubleshooting Checklist<a class="headerlink" href="#troubleshooting-checklist" title="Permanent link">&para;</a></h3>
-<p>✅ Grid signal available from function generator</p>
-<p>✅ PLL locked (angle tracking visible in Serial Monitor)</p>
-<p>✅ SPWM operating (varying pulse widths visible on oscilloscope)</p>
-<p>✅ H-Bridge switching correctly</p>
-<p>✅ L filter installed</p>
-<p>✅ Current sensor operating</p>
-<p>✅ Current tracking reference</p>
-<p>✅ Stable system operation</p>
+<p>✅ Function generator limited to a scope-verified 1.0 V peak or less</p>
+<p>✅ GPIO34 input verified between 0.3 V and 3.0 V before connection</p>
+<p>✅ Lab 10 fixed-reference SPWM observed separately from the PLL input</p>
+<p>✅ DRV8833 H-bridge connected to the 100 Ω load with a 5 V / 100 mA supply limit</p>
+<p>✅ Differential output measured with both probe grounds at circuit GND and CH1−CH2 math</p>
+<p>✅ Grid current injection and current-loop tests kept in Simulink only</p>
 <hr />
 <div class="result-actions">
   <button class="result-export-btn" data-lab="lab17">⬇ Export Results (JSON)</button>
@@ -4073,7 +4047,7 @@ u = K_P e + K_I \int e\,dt
 <p>During Experiment 4 your measured current settling time was longer than the MATLAB simulation predicted. List two physical causes and explain how you would update the plant model <span class="arithmatex">\(G(s) = 1/(Ls + R)\)</span> to account for them.</p>
 <hr />
 <h2 id="next-project">Next Project<a class="headerlink" href="#next-project" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>18_Grid_Forming_VSC.md
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>18_Grid_Forming_VSC.md
 </code></pre></div>
 <p>Topics:</p>
 <ul>

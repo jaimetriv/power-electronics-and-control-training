@@ -542,34 +542,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../00D_Control_Engineering_Primer/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Control Engineering Primer
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -702,6 +674,34 @@
     
   
     RLC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00D_Control_Engineering_Primer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Engineering Primer
   
 
     
@@ -1571,15 +1571,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#experiment-2-closed-loop-p-controller-with-back-emf-feedback" class="md-nav__link">
+  <a href="#experiment-2-closed-loop-p-controller-with-speed-sensor-feedback" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Experiment 2 - Closed-Loop P Controller with Back-EMF Feedback
+        Experiment 2 - Closed-Loop P Controller with Speed-Sensor Feedback
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Experiment 2 - Closed-Loop P Controller with Back-EMF Feedback">
+    <nav class="md-nav" aria-label="Experiment 2 - Closed-Loop P Controller with Speed-Sensor Feedback">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2673,15 +2673,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#experiment-2-closed-loop-p-controller-with-back-emf-feedback" class="md-nav__link">
+  <a href="#experiment-2-closed-loop-p-controller-with-speed-sensor-feedback" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Experiment 2 - Closed-Loop P Controller with Back-EMF Feedback
+        Experiment 2 - Closed-Loop P Controller with Speed-Sensor Feedback
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Experiment 2 - Closed-Loop P Controller with Back-EMF Feedback">
+    <nav class="md-nav" aria-label="Experiment 2 - Closed-Loop P Controller with Speed-Sensor Feedback">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3441,7 +3441,7 @@ e_{ss} = 1 - y_{final}
 <li>DC Motor</li>
 <li>Flyback diode (1N4001–1N4007)</li>
 <li>220 Ω gate resistor</li>
-<li>2 × 10 kΩ resistors (back-EMF voltage divider)</li>
+<li>Analog motor speed sensor with calibrated output within the selected ADC range (not included in the listed base hardware; use simulation if unavailable)</li>
 <li>External battery pack</li>
 <li>OWON HDS272S Oscilloscope (recommended)</li>
 <li>DSO Nano Oscilloscope (compatible)</li>
@@ -3514,48 +3514,35 @@ e_{ss} = 1 - y_{final}
 <h3 id="observe">Observe<a class="headerlink" href="#observe" title="Permanent link">&para;</a></h3>
 <p>Rotating the potentiometer should change the Serial Monitor value between approximately 0 and full ADC scale.</p>
 <hr />
-<h2 id="experiment-2-closed-loop-p-controller-with-back-emf-feedback">Experiment 2 - Closed-Loop P Controller with Back-EMF Feedback<a class="headerlink" href="#experiment-2-closed-loop-p-controller-with-back-emf-feedback" title="Permanent link">&para;</a></h2>
+<h2 id="experiment-2-closed-loop-p-controller-with-speed-sensor-feedback">Experiment 2 - Closed-Loop P Controller with Speed-Sensor Feedback<a class="headerlink" href="#experiment-2-closed-loop-p-controller-with-speed-sensor-feedback" title="Permanent link">&para;</a></h2>
 <h3 id="objective_2">Objective<a class="headerlink" href="#objective_2" title="Permanent link">&para;</a></h3>
-<p>Close the feedback loop using the motor's back-EMF voltage as a proxy for speed.</p>
-<p>When a DC motor spins it generates a voltage proportional to speed — this is called back-EMF. A resistor divider on the motor terminals feeds this voltage into the controller ADC, giving a real feedback signal without a dedicated speed sensor.</p>
+<p>Close the feedback loop using a motor speed sensor.</p>
+<p>The feedback signal must come from a tachometer or other speed sensor whose output is calibrated against motor speed. The voltage across a motor terminal in this low-side PWM circuit is either tied to the supply or switches with PWM; a resistor divider there does <strong>not</strong> measure back-EMF or speed.</p>
 <blockquote>
-<p>Note: Back-EMF is not a perfect speed measurement — it is affected by winding resistance and load current. It is however sufficient to demonstrate true closed-loop behaviour and observe steady-state error with a P controller.</p>
+<p>If no compatible speed sensor is available, complete the closed-loop simulation only. Do not use the motor-terminal divider as speed feedback.</p>
 </blockquote>
 <hr />
 <h3 id="circuit-diagram_1">Circuit Diagram<a class="headerlink" href="#circuit-diagram_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Battery (+)
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    │
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>  Motor
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    │──── Flyback diode (cathode toward Battery+)
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    │
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    ├──── 10 kΩ ──── GPIO35  (back-EMF feedback)
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>                │
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>              10 kΩ
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>                │
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>               GND
-<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>
-<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>  Drain (MOSFET IRLZ44N)
-<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>  Source
-<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    │
-<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>   GND
-<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>
-<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>ESP32 GPIO18 (or Arduino Pin 9 as backup) ──── 220 Ω ──── Gate
-<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>Potentiometer centre pin ──── GPIO34
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Battery (+) -&gt; Motor -&gt; MOSFET Drain
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Flyback diode across motor (cathode toward Battery+)
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>MOSFET Source -&gt; GND; share GND with controller and battery
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>ESP32 GPIO18 -&gt; 220 Ω gate resistor -&gt; MOSFET Gate
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>Potentiometer wiper -&gt; GPIO34 (reference)
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>Speed sensor output (calibrated and ADC-safe) -&gt; GPIO35 (feedback)
 </code></pre></div>
-<p>For Arduino backup, use A0 for the reference and A1 for the feedback.</p>
-<p>The voltage divider scales the motor terminal voltage to stay within the ADC range.</p>
+<p>For the Arduino Uno backup, use A0 for the reference and A1 for the sensor output. Verify that the sensor's output never exceeds the controller ADC range; use signal conditioning if needed.</p>
 <hr />
 <h3 id="wiring-checklist_1">Wiring Checklist<a class="headerlink" href="#wiring-checklist_1" title="Permanent link">&para;</a></h3>
 <p>Before uploading:</p>
 <p>✅ Motor circuit wired correctly (MOSFET + flyback diode, same as Project 08)</p>
-<p>✅ 10 kΩ divider connected from motor positive terminal to GPIO35 (midpoint) to GND</p>
+<p>✅ Speed sensor output represents motor speed and is scaled within the ADC range</p>
 <p>✅ Potentiometer wiper connected to GPIO34</p>
 <p>✅ Shared GND between ESP32, battery, and MOSFET Source</p>
 <hr />
 <h3 id="esp32-code_1">ESP32 Code<a class="headerlink" href="#esp32-code_1" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PWM_PIN</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">18</span><span class="p">;</span>
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">REF_PIN</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">34</span><span class="p">;</span><span class="w">   </span><span class="c1">// potentiometer wiper</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">FBK_PIN</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">35</span><span class="p">;</span><span class="w">   </span><span class="c1">// back-EMF divider output</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">FBK_PIN</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">35</span><span class="p">;</span><span class="w">   </span><span class="c1">// calibrated analog speed-sensor output</span>
 <a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
 <a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="kt">float</span><span class="w"> </span><span class="n">Kp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span>
 <a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
@@ -3570,7 +3557,7 @@ e_{ss} = 1 - y_{final}
 <a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
 <a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="p">{</span>
 <a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">reference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">REF_PIN</span><span class="p">);</span><span class="w">   </span><span class="c1">// 0–4095 on ESP32 ADC</span>
-<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">feedback</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">FBK_PIN</span><span class="p">);</span><span class="w">   </span><span class="c1">// back-EMF proxy</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">feedback</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">FBK_PIN</span><span class="p">);</span><span class="w">   </span><span class="c1">// speed-sensor signal</span>
 <a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>
 <a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">    </span><span class="c1">// Scale 12-bit error to 8-bit PWM domain.</span>
 <a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">error</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">reference</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">feedback</span><span class="p">;</span>
@@ -3600,7 +3587,7 @@ e_{ss} = 1 - y_{final}
 <a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
 <a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="p">{</span>
 <a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">reference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">A0</span><span class="p">);</span><span class="w">   </span><span class="c1">// desired speed setpoint (0–1023)</span>
-<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">feedback</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">A1</span><span class="p">);</span><span class="w">   </span><span class="c1">// back-EMF proxy (0–1023)</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">feedback</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">A1</span><span class="p">);</span><span class="w">   </span><span class="c1">// speed-sensor signal (0–1023)</span>
 <a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>
 <a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">    </span><span class="c1">// Calculate error: positive error means motor is too slow.</span>
 <a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">error</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">reference</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">feedback</span><span class="p">;</span>
@@ -3626,7 +3613,7 @@ e_{ss} = 1 - y_{final}
 <hr />
 <h3 id="what-is-happening">What Is Happening?<a class="headerlink" href="#what-is-happening" title="Permanent link">&para;</a></h3>
 <p>The potentiometer sets the reference <span class="arithmatex">\(r\)</span>.</p>
-<p>The back-EMF divider measures actual motor speed (proxy) <span class="arithmatex">\(y\)</span>.</p>
+<p>The calibrated speed sensor measures motor speed <span class="arithmatex">\(y\)</span>.</p>
 <p>The P controller computes:</p>
 <div class="arithmatex">\[
 u = K_P (r - y)
@@ -3796,7 +3783,7 @@ u = K_P (r - y)
 <hr />
 <h3 id="troubleshooting-checklist">Troubleshooting Checklist<a class="headerlink" href="#troubleshooting-checklist" title="Permanent link">&para;</a></h3>
 <p>✅ Motor circuit wired correctly (MOSFET + flyback diode)</p>
-<p>✅ Back-EMF divider connected to feedback ADC input</p>
+<p>✅ Calibrated speed-sensor output connected to feedback ADC input</p>
 <p>✅ Shared GND between controller and battery</p>
 <p>✅ Potentiometer reading changes in Serial Monitor</p>
 <p>✅ Feedback reading changes with motor speed in Serial Monitor</p>

@@ -540,34 +540,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../00D_Control_Engineering_Primer/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Control Engineering Primer
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -700,6 +672,34 @@
     
   
     RLC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00D_Control_Engineering_Primer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Engineering Primer
   
 
     
@@ -1609,10 +1609,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#lc-filter-transfer-function-derivation" class="md-nav__link">
+  <a href="#lc-filter-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        LC Filter Transfer Function Derivation
+        LC Filter Model
       
     </span>
   </a>
@@ -2047,10 +2047,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#connections" class="md-nav__link">
+  <a href="#power-up-procedure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Connections
+        Power-Up Procedure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oscilloscope-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Oscilloscope Connections
       
     </span>
   </a>
@@ -2182,10 +2193,9 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="MATLAB Comparison">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reflection" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2193,11 +2203,6 @@
       
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2642,10 +2647,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#lc-filter-transfer-function-derivation" class="md-nav__link">
+  <a href="#lc-filter-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        LC Filter Transfer Function Derivation
+        LC Filter Model
       
     </span>
   </a>
@@ -3080,10 +3085,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#connections" class="md-nav__link">
+  <a href="#power-up-procedure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Connections
+        Power-Up Procedure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oscilloscope-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Oscilloscope Connections
       
     </span>
   </a>
@@ -3215,10 +3231,9 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="MATLAB Comparison">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reflection" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3226,11 +3241,6 @@
       
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -3421,17 +3431,13 @@
 <h2 id="safety-notice">Safety Notice<a class="headerlink" href="#safety-notice" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>DO NOT CONNECT DIRECTLY TO MAINS VOLTAGE
 </code></pre></div>
-<p>All experiments must use:</p>
-<ul>
-<li>Low-voltage DC supplies</li>
-<li>Low-power loads</li>
-<li>Isolated laboratory circuits</li>
-</ul>
+<p>For the physical output demonstration, reuse the Lab 10 DRV8833 stage with a 5.0 V isolated bench supply limited to 0.10 A and a load always connected. Do not build the discrete IRLZ44N/IR2104 bridge from this page. PI voltage control and droop power-sharing remain simulation-only until complete firmware and an independently checked gate-drive design are available.</p>
 <p>Recommended:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>12 V DC Input
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>5 V DC Input, 0.10 A current limit
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>5–12 V RMS Output
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>2 V peak nominal differential output (1.41 V RMS for a sine wave)
 </code></pre></div>
+<p>The DRV8833 supply range is 2.7-10.8 V; use 5 V only. With modulation index 0.4, the ideal fundamental is about 2 V peak. Never connect this inverter or its load to mains, a function generator, or another AC source.</p>
 <hr />
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>Project 17 introduced Grid-Following Converters.</p>
@@ -3500,9 +3506,9 @@
 <a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>        │
 <a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>        ▼
 <a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>SPWM Generator
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>        │
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>        ▼
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>H-Bridge (4 × IRLZ44N + IR2104 driver)
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>  │
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>  ▼
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>DRV8833 H-Bridge (5 V, 100 mA current limit)
 <a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>        │
 <a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>        ▼
 <a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>LC Filter
@@ -3511,7 +3517,7 @@
 <a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>Load
 <a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>        ▲
 <a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>        │
-<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>Voltage Sensor (resistor divider → ADC)
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>Differential/isolated voltage sensor → protected ADC interface
 <a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>        │
 <a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>        └──────── Feedback
 </code></pre></div>
@@ -3524,56 +3530,49 @@
 </code></pre></div>
 <h3 id="inverter-stage">Inverter Stage<a class="headerlink" href="#inverter-stage" title="Permanent link">&para;</a></h3>
 <ul>
-<li>4 × IRLZ44N MOSFETs</li>
-<li>IR2104 gate driver (recommended) or IR2110</li>
+<li>DRV8833 H-bridge breakout with labeled input/output pins and 3.3 V logic compatibility; reuse the Lab 10 board</li>
+<li>Do not substitute a discrete IRLZ44N/IR2104 bridge in this low-voltage exercise</li>
 </ul>
 <h3 id="sensors">Sensors<a class="headerlink" href="#sensors" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Voltage measurement: resistor divider</li>
-<li>Current measurement: ACS712 or ACS758</li>
+<li>Use two oscilloscope channels with both probe grounds at circuit GND and display CH1−CH2; if unavailable, use a rated differential probe or simulate</li>
+<li>ESP32 ADC feedback is simulation-only in this project; no ADC sensing circuit is part of the physical build</li>
 </ul>
 <h3 id="lc-filter">LC Filter<a class="headerlink" href="#lc-filter" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Inductor: 1 mH to 5 mH</li>
-<li>Capacitor: 1 µF film capacitor</li>
+<li>Two matched 1 mH series inductors, one in each bridge output leg; each rated for at least 0.5 A, no more than 1 Ω DCR, and at least 200 kHz self-resonant frequency</li>
+<li>1 µF film capacitor rated at least 25 V across the filtered output</li>
+<li>100 Ω, 0.25 W or higher load resistor across the filtered output; 220 Ω and 470 Ω resistors may be used for the load comparison</li>
 </ul>
 <h3 id="test-equipment">Test Equipment<a class="headerlink" href="#test-equipment" title="Permanent link">&para;</a></h3>
 <ul>
 <li>OWON HDS272S (recommended)</li>
 <li>DSO Nano (compatible)</li>
 <li>Multimeter</li>
-<li>12 V bench power supply</li>
+<li>Isolated 0-30 V / 0-3 A bench supply with CC mode, set to 5.0 V / 0.10 A maximum</li>
 </ul>
 <hr />
 <h2 id="complete-materials-list">Complete Materials List<a class="headerlink" href="#complete-materials-list" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ESP32 DevKit V1
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>IR2104 Gate Driver
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>4 × IRLZ44N MOSFETs
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>ACS712 Current Sensor
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>1 mH Inductor
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>1 µF Film Capacitor
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>470 µF Electrolytic Capacitor (DC link)
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>100 nF Ceramic Capacitor (DC link decoupling)
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>12 V Bench Supply
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>OWON HDS272S (or DSO Nano)
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>Breadboard and Jumper Wires
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>Multimeter
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>1 × DRV8833 H-Bridge Breakout (reused from Lab 10)
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>2 × Matched 1 mH Output Inductors (≥0.5 A, ≤1 Ω DCR, ≥200 kHz SRF)
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>1 µF / 25 V Film Capacitor (filter)
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>100 Ω / 0.25 W Load Resistor (plus optional 220 Ω and 470 Ω loads)
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>100 µF / 10 V Electrolytic Capacitor (DC link)
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>100 nF Ceramic Capacitor (DC link decoupling)
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>5 V Bench Supply, current limited to 0.10 A
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>OWON HDS272S (or DSO Nano)
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>Breadboard and Jumper Wires
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>Multimeter
 </code></pre></div>
 <hr />
 <h2 id="full-h-bridge-schematic">Full H-Bridge Schematic<a class="headerlink" href="#full-h-bridge-schematic" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>              +Vdc (12 V)
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>                │
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>          ┌─────┴─────┐
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>          │           │
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>         Q1          Q2
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>          │           │
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>          ├─── LOAD ──┤
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>          │           │
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>         Q3          Q4
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>          │           │
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>          └─────┬─────┘
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>                │
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>               GND
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>          5 V → DRV8833 VM; GND → circuit GND
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>          ESP32 GPIO18/GPIO19 → DRV8833 AIN1/AIN2; 3.3 V → nSLEEP
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>          DRV8833 AOUT1 → L_A 1 mH → OUT_A
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>          DRV8833 AOUT2 → L_B 1 mH → OUT_B
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>          1 µF and selected load resistor in parallel from OUT_A to OUT_B
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>          100 µF and 100 nF in parallel from VM to GND
 </code></pre></div>
 <hr />
 <h2 id="h-bridge-operation">H-Bridge Operation<a class="headerlink" href="#h-bridge-operation" title="Permanent link">&para;</a></h2>
@@ -3592,80 +3591,62 @@
 <p>This creates a direct supply short circuit.</p>
 <hr />
 <h2 id="dead-time">Dead Time<a class="headerlink" href="#dead-time" title="Permanent link">&para;</a></h2>
-<p>A delay is inserted between switching events to prevent shoot-through.</p>
-<p>Typical values:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>1 µs to 5 µs
-</code></pre></div>
+<p>The DRV8833 is an integrated driver; use its documented input truth table and internal protection. This lab's firmware does not drive discrete MOSFET gates. A discrete bridge substitution requires a separately reviewed gate-drive design with verified dead time and fault protection.</p>
 <hr />
 <h2 id="dc-link-circuit">DC Link Circuit<a class="headerlink" href="#dc-link-circuit" title="Permanent link">&para;</a></h2>
 <p>Every practical inverter requires a DC-link capacitor mounted near the MOSFET bridge:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>+12 V Supply
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>      │
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a> 470 µF Electrolytic  +  100 nF Ceramic  (in parallel)
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>      │
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>H-Bridge
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>+5 V current-limited supply
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>      │
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a> 100 µF Electrolytic  +  100 nF Ceramic  (in parallel)
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>      │
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>H-Bridge
 </code></pre></div>
 <hr />
 <h2 id="lc-output-filter">LC Output Filter<a class="headerlink" href="#lc-output-filter" title="Permanent link">&para;</a></h2>
-<p>The H-Bridge output contains PWM ripple.</p>
-<p>An LC filter smooths the waveform:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>H-Bridge
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    │
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    L (1 mH)
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    │
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    ├──── Load
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    │
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    C (1 µF)
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    │
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>   GND
+<p>The full H-bridge output is differential: neither load terminal is circuit ground. Use one series inductor in each bridge output leg, then connect the load and filter capacitor across the two filtered output terminals. The 1 µF capacitor is in parallel with the load.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Bridge OUT_A ── L_A ──┬──── R_load ────┬── L_B ── Bridge OUT_B
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>             │                │
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>             └────── C_f ─────┘
 </code></pre></div>
+<p>The single-phase model below uses <span class="arithmatex">\(L_{eq}=L_A+L_B\)</span> as the total differential series inductance. It is not a ground-referenced half-bridge model.</p>
 <hr />
 <h2 id="voltage-measurement-circuit">Voltage Measurement Circuit<a class="headerlink" href="#voltage-measurement-circuit" title="Permanent link">&para;</a></h2>
-<p>The ESP32 must never measure the inverter voltage directly. The inverter output is bipolar, so a simple divider to ground would drive the single-ended ADC below 0 V during the negative half-cycle and could damage the ESP32.</p>
-<p>Use one of the following arrangements instead:</p>
-<ul>
-<li>an isolated or differential voltage sensor with an output limited to the ADC range;</li>
-<li>an appropriately attenuated, mid-supply-biased measurement with input protection and verified positive and negative limits; or</li>
-<li>an isolated oscilloscope or measurement interface when only observation is required.</li>
-</ul>
-<p>For an ESP32 ADC, the measured signal must remain between 0 V and 3.3 V under all operating conditions. Select the attenuation and bias from the actual maximum inverter peak voltage, not only the nominal RMS voltage.</p>
-<hr />
-<h2 id="lc-filter-transfer-function-derivation">LC Filter Transfer Function Derivation<a class="headerlink" href="#lc-filter-transfer-function-derivation" title="Permanent link">&para;</a></h2>
-<p>The grid-forming inverter output stage is an LC filter driving a resistive load <span class="arithmatex">\(R\)</span>.</p>
-<p>Applying KVL around the inductor loop:</p>
+<p>Do not connect either bridge output to an ESP32 ADC. For scope measurement, connect CH1 tip to filtered OUT_A and CH2 tip to filtered OUT_B; connect both probe ground clips to circuit GND and display CH1−CH2. Never attach a probe ground clip to OUT_A or OUT_B. If the scope cannot display CH1−CH2, use a rated differential probe or run the measurement in simulation.</p>
+<h2 id="lc-filter-model">LC Filter Model<a class="headerlink" href="#lc-filter-model" title="Permanent link">&para;</a></h2>
+<p>Let <span class="arithmatex">\(L_{eq}=L_A+L_B\)</span> be the total differential series inductance. Applying KVL across the differential filter gives:</p>
 <div class="arithmatex">\[
-V_{inv} = L\frac{di_L}{dt} + V_{OUT}
+V_{inv,diff}=L_{eq}\frac{di_L}{dt}+V_{OUT}
 \]</div>
-<p>Applying KCL at the output node (inductor current splits into capacitor current and load current):</p>
+<p>Applying KCL at the output node (inductor current splits into capacitor and load current):</p>
 <div class="arithmatex">\[
-i_L = C\frac{dV_{OUT}}{dt} + \frac{V_{OUT}}{R}
+i_L = C_f\frac{dV_{OUT}}{dt} + \frac{V_{OUT}}{R}
 \]</div>
 <p>Differentiating the KCL equation and substituting into KVL:</p>
 <div class="arithmatex">\[
-V_{inv} = LC\frac{d^2V_{OUT}}{dt^2} + \frac{L}{R}\frac{dV_{OUT}}{dt} + V_{OUT}
+V_{inv,diff} = L_{eq}C_f\frac{d^2V_{OUT}}{dt^2} + \frac{L_{eq}}{R}\frac{dV_{OUT}}{dt} + V_{OUT}
 \]</div>
 <p>Taking the Laplace transform:</p>
 <div class="arithmatex">\[
-V_{inv}(s) = \left(LCs^2 + \frac{L}{R}s + 1\right)V_{OUT}(s)
+V_{inv,diff}(s) = \left(L_{eq}Cs^2 + \frac{L_{eq}}{R}s + 1\right)V_{OUT}(s)
 \]</div>
 <p>Rearranging to give the transfer function:</p>
 <div class="arithmatex">\[
-G(s) = \frac{V_{OUT}(s)}{V_{inv}(s)} = \frac{1}{LCs^2 + \dfrac{L}{R}s + 1}
+G(s) = \frac{V_{OUT}(s)}{V_{inv,diff}(s)} = \frac{1}{L_{eq}C_fs^2 + \dfrac{L_{eq}}{R}s + 1}
 \]</div>
 <p>Multiplying numerator and denominator by <span class="arithmatex">\(R\)</span>:</p>
 <div class="arithmatex">\[
-\boxed{G(s) = \frac{R}{LCRs^2 + Ls + R}}
+\boxed{G(s) = \frac{R}{L_{eq}C_fRs^2 + L_{eq}s + R}}
 \]</div>
-<p>With <span class="arithmatex">\(L = 1\ \text{mH}\)</span>, <span class="arithmatex">\(C = 1\ \mu\text{F}\)</span>, <span class="arithmatex">\(R = 220\ \Omega\)</span>:</p>
+<p>For two <span class="arithmatex">\(1\ \mathrm{mH}\)</span> output inductors, use <span class="arithmatex">\(L_{eq}=2\ \mathrm{mH}\)</span>, <span class="arithmatex">\(C_f=1\ \mathrm{\mu F}\)</span>, and <span class="arithmatex">\(R=220\ \Omega\)</span>:</p>
 <div class="arithmatex">\[
-G(s) = \frac{220}{2.2 \times 10^{-7}s^2 + 10^{-3}s + 220}
+G(s) = \frac{220}{4.4 \times 10^{-7}s^2 + 2\times10^{-3}s + 220}
 \]</div>
-<p>This is the denominator <code>[2.2e-7, 1e-3, 220]</code> used in the Simulink voltage controller model.</p>
+<p>This is the denominator <code>[4.4e-7, 2e-3, 220]</code> used in the Simulink voltage controller model.</p>
 <p>The natural frequency of the LC filter is:</p>
 <div class="arithmatex">\[
-f_n = \frac{1}{2\pi\sqrt{LC}} = \frac{1}{2\pi\sqrt{10^{-3} \times 10^{-6}}} \approx 5033\ \text{Hz}
+f_n = \frac{1}{2\pi\sqrt{L_{eq}C_f}} = \frac{1}{2\pi\sqrt{2\times10^{-3} \times 10^{-6}}} \approx 3560\ \text{Hz}
 \]</div>
-<p>The voltage controller bandwidth must remain well below <span class="arithmatex">\(f_n\)</span> to avoid exciting the filter resonance.</p>
+<p>The voltage-controller bandwidth must remain well below <span class="arithmatex">\(f_n\)</span> to avoid exciting the filter resonance. This ideal LC estimate does not include damping from the real load, component losses, or sensor/control delay.</p>
 <hr />
 <h2 id="voltage-reference">Voltage Reference<a class="headerlink" href="#voltage-reference" title="Permanent link">&para;</a></h2>
 <p>The inverter generates:</p>
@@ -3683,21 +3664,21 @@ v^*(t) = V_m \sin(\omega t)
 \]</div>
 <hr />
 <h2 id="digital-spwm-implementation">Digital SPWM Implementation<a class="headerlink" href="#digital-spwm-implementation" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">// Update angle each sample period</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">theta</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">omega</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ts</span><span class="p">;</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1">// Wrap angle to keep within 0 to 2π</span>
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">theta</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">PI</span><span class="p">)</span>
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="p">{</span>
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span><span class="n">theta</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">PI</span><span class="p">;</span>
-<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="p">}</span>
-<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
-<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="c1">// Generate sine reference</span>
-<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="kt">float</span><span class="w"> </span><span class="n">reference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span>
-<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
-<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="c1">// Convert to PWM duty cycle (0–255)</span>
-<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="kt">int</span><span class="w"> </span><span class="n">pwm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="mi">127</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">127</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">reference</span><span class="p">);</span>
-<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="n">pwm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">constrain</span><span class="p">(</span><span class="n">pwm</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">// Update angle each sample period</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">theta</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">omega</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Ts</span><span class="p">;</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1">// Wrap angle to keep within 0 to 2π</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">theta</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">PI</span><span class="p">)</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="p">{</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="n">theta</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">PI</span><span class="p">;</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="p">}</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="c1">// Generate sine reference</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="kt">float</span><span class="w"> </span><span class="n">reference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="c1">// Convert to PWM duty cycle (0–255)</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="kt">int</span><span class="w"> </span><span class="n">pwm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="mi">127</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">127</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">reference</span><span class="p">);</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="n">pwm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">constrain</span><span class="p">(</span><span class="n">pwm</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">);</span>
 </code></pre></div>
 <p>Where:</p>
 <ul>
@@ -3707,12 +3688,12 @@ v^*(t) = V_m \sin(\omega t)
 <li><code>reference</code> = Sine Reference</li>
 <li><code>pwm</code> = PWM Duty Cycle</li>
 </ul>
-<p>This snippet generates one sine-referenced duty value; it is not a complete H-bridge gate-drive implementation. A practical bridge requires complementary high- and low-side commands, gate-driver enable logic, shoot-through protection, and verified dead time before connecting the bridge power stage.</p>
+<p>This snippet generates one sine-referenced duty value only; it does not drive a bridge. For the physical open-loop waveform demonstration, reuse the Lab 10 DRV8833 two-input SPWM sketch with a 50 Hz reference and modulation index 0.4. The PI voltage-control and droop stages below are signal-only simulations; do not enable an unvalidated hardware feedback loop.</p>
 <hr />
 <h2 id="voltage-control-loop">Voltage Control Loop<a class="headerlink" href="#voltage-control-loop" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Voltage Reference → [−] → PI Controller → Modulation Index → SPWM → Inverter → Output Voltage
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>                       ↑                                                               │
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>                       └──────────────────── Voltage Sensor ──────────────────────────┘
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Voltage Reference → [−] → PI Controller → Modulation Index → SPWM → Inverter → Output Voltage
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>                       ↑                                                               │
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>                       └──────────────────── Voltage Sensor ──────────────────────────┘
 </code></pre></div>
 <hr />
 <h2 id="pi-voltage-controller">PI Voltage Controller<a class="headerlink" href="#pi-voltage-controller" title="Permanent link">&para;</a></h2>
@@ -3812,7 +3793,7 @@ V = V_0 - K_Q(Q - Q_0)
 </tr>
 <tr>
 <td>Final value</td>
-<td><code>5</code></td>
+<td><code>2</code></td>
 </tr>
 </tbody>
 </table>
@@ -3835,19 +3816,19 @@ V = V_0 - K_Q(Q - Q_0)
 </tr>
 <tr>
 <td>Denominator</td>
-<td><code>[2.2e-7, 1e-3, 220]</code></td>
+<td><code>[4.4e-7, 2e-3, 220]</code></td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p>Numerator = R_load = 220. Denominator = <code>[L×C×R, L, R]</code> = <code>[1e-3×1e-6×220, 1e-3, 220]</code> = <code>[2.2e-7, 1e-3, 220]</code></p>
+<p>Numerator = <span class="arithmatex">\(R_{load}=220\)</span>. Denominator = <code>[L_eq×C_f×R, L_eq, R]</code> = <code>[2e-3×1e-6×220, 2e-3, 220]</code> = <code>[4.4e-7, 2e-3, 220]</code>.</p>
 </blockquote>
 <h4 id="step-4-wire-the-closed-loop">Step 4 — Wire the closed-loop<a class="headerlink" href="#step-4-wire-the-closed-loop" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Step → Sum1 (+) input
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Sum1 output → Kp Gain → Sum2 (+) input 1
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Sum1 output → Ki Gain → Integrator → Sum2 (+) input 2
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>Sum2 output → Transfer Fcn → Scope
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>Transfer Fcn output → Sum1 (−) input
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Step → Sum1 (+) input
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Sum1 output → Kp Gain → Sum2 (+) input 1
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>Sum1 output → Ki Gain → Integrator → Sum2 (+) input 2
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>Sum2 output → Transfer Fcn → Scope
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>Transfer Fcn output → Sum1 (−) input
 </code></pre></div>
 <h4 id="step-5-wiring-checklist">Step 5 — Wiring checklist<a class="headerlink" href="#step-5-wiring-checklist" title="Permanent link">&para;</a></h4>
 <p>✅ Step output to Sum1 (+)</p>
@@ -3985,17 +3966,17 @@ V = V_0 - K_Q(Q - Q_0)
 </tbody>
 </table>
 <h4 id="step-4-wire-the-droop-model">Step 4 — Wire the droop model<a class="headerlink" href="#step-4-wire-the-droop-model" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Constant 1 (f0=50) → Sum1 (+) input 1
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Gain 1 (P) → Product1 input 1
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>Constant 2 (Kd1) → Product1 input 2
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>Product1 output → Sum1 (−) input
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>Sum1 output → Scope input 1   [Inverter 1 frequency]
-<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
-<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>Constant 1 (f0=50) → Sum2 (+) input 1
-<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>Gain 2 (P) → Product2 input 1
-<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>Constant 3 (Kd2) → Product2 input 2
-<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>Product2 output → Sum2 (−) input
-<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>Sum2 output → Scope input 2   [Inverter 2 frequency]
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Constant 1 (f0=50) → Sum1 (+) input 1
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Gain 1 (P) → Product1 input 1
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Constant 2 (Kd1) → Product1 input 2
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>Product1 output → Sum1 (−) input
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>Sum1 output → Scope input 1   [Inverter 1 frequency]
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>Constant 1 (f0=50) → Sum2 (+) input 1
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>Gain 2 (P) → Product2 input 1
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>Constant 3 (Kd2) → Product2 input 2
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>Product2 output → Sum2 (−) input
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>Sum2 output → Scope input 2   [Inverter 2 frequency]
 </code></pre></div>
 <blockquote>
 <p>Two Product blocks compute <span class="arithmatex">\(P \times K_d\)</span> for each inverter — this is the multiplication in the droop equation <span class="arithmatex">\(f = f_0 - K_d(P - P_0)\)</span>. Constant blocks have no input port, so Kd1/Kd2 must feed a Product block rather than being wired directly in series with Gain 1/Gain 2.</p>
@@ -4043,77 +4024,73 @@ V = V_0 - K_Q(Q - Q_0)
 <hr />
 <h2 id="recommended-build-stages">Recommended Build Stages<a class="headerlink" href="#recommended-build-stages" title="Permanent link">&para;</a></h2>
 <h3 id="stage-1">Stage 1<a class="headerlink" href="#stage-1" title="Permanent link">&para;</a></h3>
-<p>Generate a 50 Hz reference signal.</p>
-<p>Verify frequency and amplitude on the oscilloscope.</p>
+<p>Run the Lab 10 SPWM signal generator with modulation index 0.4 and a 50 Hz reference. Verify the 20 kHz carrier and 50 Hz envelope before connecting the driver.</p>
 <h3 id="stage-2">Stage 2<a class="headerlink" href="#stage-2" title="Permanent link">&para;</a></h3>
-<p>Generate SPWM.</p>
-<p>Verify PWM carrier frequency and varying duty cycle.</p>
+<p>Keep the DRV8833 VM supply disabled. Power the ESP32 by USB, connect GPIO18/GPIO19 to the labeled AIN1/AIN2 pins, and verify the two 3.3 V PWM logic signals relative to circuit GND. Set the bench supply to 5.0 V with a 0.10 A current limit and leave its output disabled.</p>
 <h3 id="stage-3">Stage 3<a class="headerlink" href="#stage-3" title="Permanent link">&para;</a></h3>
-<p>Build and test the H-Bridge.</p>
-<p>Verify alternating output voltage.</p>
+<p>With the LC filter disconnected, connect the 100 Ω load directly across DRV8833 AOUT1/AOUT2 before enabling the supply. Enable the 5 V / 0.10 A-limited supply, confirm it is not continuously in current limit, then disable the supply before changing the wiring. Test the bridge only with this load connected; never run it unloaded.</p>
 <h3 id="stage-4">Stage 4<a class="headerlink" href="#stage-4" title="Permanent link">&para;</a></h3>
-<p>Install the LC Filter.</p>
-<p>Verify smooth AC voltage output.</p>
+<p>Power off, install the two matched 1 mH inductors and 1 µF capacitor across OUT_A/OUT_B, and measure the filtered differential waveform.</p>
 <h3 id="stage-5">Stage 5<a class="headerlink" href="#stage-5" title="Permanent link">&para;</a></h3>
-<p>Implement voltage measurement.</p>
-<p>Verify ADC accuracy against multimeter reading.</p>
+<p>Measure both filtered output legs with scope channels referenced to circuit GND. Use CH1−CH2 math for the differential voltage; do not connect either bridge output to an ESP32 ADC pin.</p>
 <h3 id="stage-6">Stage 6<a class="headerlink" href="#stage-6" title="Permanent link">&para;</a></h3>
-<p>Implement PI voltage control.</p>
-<p>Verify stable regulation.</p>
+<p>Run the PI voltage controller in Simulink only. The code fragment on this page is not a complete hardware controller.</p>
 <h3 id="stage-7">Stage 7<a class="headerlink" href="#stage-7" title="Permanent link">&para;</a></h3>
-<p>Implement droop control.</p>
-<p>Study power-sharing behaviour.</p>
+<p>Study droop and power sharing in Simulink only; no second physical inverter is specified.</p>
 <hr />
 <h2 id="experiment-1-generate-ac-voltage">Experiment 1 - Generate AC Voltage<a class="headerlink" href="#experiment-1-generate-ac-voltage" title="Permanent link">&para;</a></h2>
 <h3 id="objective_1">Objective<a class="headerlink" href="#objective_1" title="Permanent link">&para;</a></h3>
-<p>Generate a stable 50 Hz AC voltage waveform from the inverter.</p>
-<hr />
-<h3 id="connections">Connections<a class="headerlink" href="#connections" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Probe Tip  ──────► Inverter output (after LC filter)
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>Probe GND  ──────► Circuit GND
+<p>Measure the filtered, open-loop 50 Hz differential output from the 5 V DRV8833 inverter.</p>
+<h3 id="power-up-procedure">Power-Up Procedure<a class="headerlink" href="#power-up-procedure" title="Permanent link">&para;</a></h3>
+<ol>
+<li>With the bench supply disabled, check the DRV8833 pin labels, capacitor polarity, filter wiring, and the 100 Ω load across OUT_A and OUT_B.</li>
+<li>Set the isolated supply to 5.0 V and 0.10 A current limit. Keep the load connected at all times.</li>
+<li>Connect ESP32 GND, DRV8833 GND, and supply negative. Connect CH1 and CH2 probe grounds to circuit GND only.</li>
+<li>Start with modulation index 0.4 using the Lab 10 SPWM sketch. Enable the supply and confirm it is not continuously in current limit.</li>
+<li>Measure the filtered output. Disable the supply and discharge the DC-link capacitor before changing wiring or loads.</li>
+</ol>
+<h3 id="oscilloscope-connections">Oscilloscope Connections<a class="headerlink" href="#oscilloscope-connections" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>CH1 tip ─────────► Filtered OUT_A
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>CH2 tip ─────────► Filtered OUT_B
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>Both probe grounds ► Circuit GND
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>Scope math ──────► CH1−CH2
 </code></pre></div>
-<hr />
+<p>Never connect a standard probe ground clip to OUT_A or OUT_B. If the scope cannot display CH1−CH2, use a rated differential probe or perform this measurement in simulation.</p>
 <h3 id="oscilloscope-settings">Oscilloscope Settings<a class="headerlink" href="#oscilloscope-settings" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
 <th>Setting</th>
 <th>OWON HDS272S</th>
-<th>DSO Nano</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Vertical scale</td>
-<td>2 V/div</td>
-<td>2 V/div</td>
+<td>1 V/div</td>
 </tr>
 <tr>
 <td>Horizontal scale</td>
-<td>5 ms/div</td>
 <td>5 ms/div</td>
 </tr>
 <tr>
 <td>Trigger</td>
 <td>Edge, Rising</td>
-<td>Edge, Rising</td>
 </tr>
 <tr>
 <td>Coupling</td>
-<td>AC</td>
-<td>AC</td>
+<td>AC for output waveform; DC to inspect offset</td>
 </tr>
 </tbody>
 </table>
-<hr />
 <h3 id="measurements">Measurements<a class="headerlink" href="#measurements" title="Permanent link">&para;</a></h3>
 <div class="result-block">
 <table>
-  <thead><tr><th>Parameter</th><th>Measured</th></tr></thead>
+  <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
   <tbody>
-    <tr><td>Frequency</td><td><input class="result-input" id="lab18-exp1-freq" placeholder="Hz"></td></tr>
-    <tr><td>RMS Voltage</td><td><input class="result-input" id="lab18-exp1-vrms" placeholder="V"></td></tr>
-    <tr><td>Peak Voltage</td><td><input class="result-input" id="lab18-exp1-vpeak" placeholder="V"></td></tr>
+    <tr><td>Frequency</td><td>50 Hz</td><td><input class="result-input" id="lab18-exp1-freq" placeholder="Hz"></td></tr>
+    <tr><td>Differential RMS voltage</td><td>About 1.41 V</td><td><input class="result-input" id="lab18-exp1-vrms" placeholder="V"></td></tr>
+    <tr><td>Differential peak voltage</td><td>About 2 V</td><td><input class="result-input" id="lab18-exp1-vpeak" placeholder="V"></td></tr>
   </tbody>
 </table>
 </div>
@@ -4121,16 +4098,16 @@ V = V_0 - K_Q(Q - Q_0)
 <hr />
 <h2 id="experiment-2-load-regulation">Experiment 2 - Load Regulation<a class="headerlink" href="#experiment-2-load-regulation" title="Permanent link">&para;</a></h2>
 <h3 id="objective_2">Objective<a class="headerlink" href="#objective_2" title="Permanent link">&para;</a></h3>
-<p>Observe how output voltage changes with different load resistances, with and without the PI voltage controller.</p>
+<p>Observe open-loop output changes as load resistance varies. Closed-loop PI load regulation is a Simulink-only exercise.</p>
 <hr />
 <h3 id="test-loads">Test Loads<a class="headerlink" href="#test-loads" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>100 Ω
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>220 Ω
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
-<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>470 Ω
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>100 Ω
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>220 Ω
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>470 Ω
 </code></pre></div>
-<p>For each load, measure the output voltage with the PI controller active.</p>
+<p>With modulation index fixed at 0.4, measure the differential output at 100 Ω, 220 Ω, and 470 Ω. Power off before changing loads. Do not remove the load or exceed the 0.10 A supply limit.</p>
 <hr />
 <h3 id="results-table">Results Table<a class="headerlink" href="#results-table" title="Permanent link">&para;</a></h3>
 <div class="result-block">
@@ -4147,7 +4124,7 @@ V = V_0 - K_Q(Q - Q_0)
 <hr />
 <h2 id="experiment-3-pi-tuning">Experiment 3 - PI Tuning<a class="headerlink" href="#experiment-3-pi-tuning" title="Permanent link">&para;</a></h2>
 <h3 id="objective_3">Objective<a class="headerlink" href="#objective_3" title="Permanent link">&para;</a></h3>
-<p>Observe how PI gains affect voltage regulation quality.</p>
+<p>Use the Simulink model to observe how PI gains affect voltage regulation quality. Do not apply these gains to the physical inverter.</p>
 <hr />
 <h3 id="procedure">Procedure<a class="headerlink" href="#procedure" title="Permanent link">&para;</a></h3>
 <p>Step through the following gain sets and record the behaviour:</p>
@@ -4164,75 +4141,58 @@ V = V_0 - K_Q(Q - Q_0)
 
 <p>Measure for each:</p>
 <ul>
-<li>Overshoot</li>
 <li>Settling time</li>
 <li>Voltage regulation error</li>
-<li>Stability</li>
 </ul>
 <hr />
 <h2 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h2>
-<p>After completing the experiments, enter your measured load regulation data and PI step response to compare against simulation.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c">% Enter your system parameters</span>
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="n">Vm</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="n">L</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="mf">1e-3</span><span class="p">;</span>
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="n">C</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="mf">1e-6</span><span class="p">;</span>
-<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="n">Kp_v</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
-<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="n">Ki_v</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
-<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>
-<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="c">% Enter measured Vout for each load (Experiment 2)</span>
-<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="n">R_loads</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">220</span><span class="p">,</span><span class="w"> </span><span class="mi">470</span><span class="p">];</span><span class="w">          </span><span class="c">% Ohm</span>
-<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="n">V_meas</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">4.6</span><span class="p">,</span><span class="w"> </span><span class="mf">4.85</span><span class="p">,</span><span class="w"> </span><span class="mf">4.95</span><span class="p">];</span><span class="w">       </span><span class="c">% V peak — replace with your readings</span>
-<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>
-<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="c">% Simulate Vout vs load</span>
-<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="n">s</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="s">&#39;s&#39;</span><span class="p">);</span>
-<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="n">V_sim</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">numel</span><span class="p">(</span><span class="n">R_loads</span><span class="p">));</span>
-<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="k">for</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="nb">numel</span><span class="p">(</span><span class="n">R_loads</span><span class="p">)</span>
-<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="w">    </span><span class="n">R</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">R_loads</span><span class="p">(</span><span class="n">k</span><span class="p">);</span>
-<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="w">    </span><span class="n">G_lc</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">L</span><span class="o">*</span><span class="n">C</span><span class="o">*</span><span class="n">R</span><span class="o">*</span><span class="n">s</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">L</span><span class="o">*</span><span class="n">s</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">R</span><span class="p">);</span>
-<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="w">    </span><span class="n">C_pi</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Kp_v</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Ki_v</span><span class="o">/</span><span class="n">s</span><span class="p">;</span>
-<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a><span class="w">    </span><span class="n">T_v</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">feedback</span><span class="p">(</span><span class="n">C_pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">G_lc</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
-<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="w">    </span><span class="n">V_sim</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vm</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dcgain</span><span class="p">(</span><span class="n">T_v</span><span class="p">);</span>
-<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="k">end</span>
-<a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>
-<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="nb">figure</span><span class="p">;</span>
-<a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a><span class="nb">plot</span><span class="p">(</span><span class="n">R_loads</span><span class="p">,</span><span class="w"> </span><span class="n">V_sim</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b-o&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">R_loads</span><span class="p">,</span><span class="w"> </span><span class="n">V_meas</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r-s&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="p">);</span>
-<a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Simulated&#39;</span><span class="p">,</span><span class="s">&#39;Measured&#39;</span><span class="p">);</span><span class="w"> </span><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Load Resistance (\Omega)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Output Voltage (V)&#39;</span><span class="p">);</span>
-<a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Load Regulation: Simulated vs Measured&#39;</span><span class="p">);</span>
-<a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a><span class="nb">yline</span><span class="p">(</span><span class="n">Vm</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">);</span>
-<a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a>
-<a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a><span class="c">% Enter measured PI step response (Experiment 3)</span>
-<a id="__codelineno-16-32" name="__codelineno-16-32" href="#__codelineno-16-32"></a><span class="n">t_meas</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.002</span><span class="p">,</span><span class="w"> </span><span class="mf">0.005</span><span class="p">,</span><span class="w"> </span><span class="mf">0.010</span><span class="p">,</span><span class="w"> </span><span class="mf">0.015</span><span class="p">,</span><span class="w"> </span><span class="mf">0.020</span><span class="p">,</span><span class="w"> </span><span class="mf">0.030</span><span class="p">];</span><span class="w">  </span><span class="c">% s — replace</span>
-<a id="__codelineno-16-33" name="__codelineno-16-33" href="#__codelineno-16-33"></a><span class="n">v_meas</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="p">,</span><span class="w">   </span><span class="mf">4.2</span><span class="p">,</span><span class="w">   </span><span class="mf">5.3</span><span class="p">,</span><span class="w">   </span><span class="mf">5.1</span><span class="p">,</span><span class="w">   </span><span class="mf">5.0</span><span class="p">,</span><span class="w">   </span><span class="mf">5.0</span><span class="p">];</span><span class="w">    </span><span class="c">% V — replace</span>
-<a id="__codelineno-16-34" name="__codelineno-16-34" href="#__codelineno-16-34"></a>
-<a id="__codelineno-16-35" name="__codelineno-16-35" href="#__codelineno-16-35"></a><span class="n">R_nom</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">220</span><span class="p">;</span>
-<a id="__codelineno-16-36" name="__codelineno-16-36" href="#__codelineno-16-36"></a><span class="n">G_lc</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">R_nom</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">L</span><span class="o">*</span><span class="n">C</span><span class="o">*</span><span class="n">R_nom</span><span class="o">*</span><span class="n">s</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">L</span><span class="o">*</span><span class="n">s</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">R_nom</span><span class="p">);</span>
-<a id="__codelineno-16-37" name="__codelineno-16-37" href="#__codelineno-16-37"></a><span class="n">C_pi</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">Kp_v</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Ki_v</span><span class="o">/</span><span class="n">s</span><span class="p">;</span>
-<a id="__codelineno-16-38" name="__codelineno-16-38" href="#__codelineno-16-38"></a><span class="n">T_v</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="n">feedback</span><span class="p">(</span><span class="n">C_pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">G_lc</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
-<a id="__codelineno-16-39" name="__codelineno-16-39" href="#__codelineno-16-39"></a><span class="p">[</span><span class="n">y_sim</span><span class="p">,</span><span class="w"> </span><span class="n">t_sim</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">Vm</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">T_v</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">1e-5</span><span class="p">:</span><span class="mf">0.05</span><span class="p">);</span>
-<a id="__codelineno-16-40" name="__codelineno-16-40" href="#__codelineno-16-40"></a>
-<a id="__codelineno-16-41" name="__codelineno-16-41" href="#__codelineno-16-41"></a><span class="nb">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
-<a id="__codelineno-16-42" name="__codelineno-16-42" href="#__codelineno-16-42"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t_sim</span><span class="p">,</span><span class="w"> </span><span class="n">y_sim</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="p">);</span><span class="w"> </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-16-43" name="__codelineno-16-43" href="#__codelineno-16-43"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t_meas</span><span class="p">,</span><span class="w"> </span><span class="n">v_meas</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;ro--&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;MarkerSize&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
-<a id="__codelineno-16-44" name="__codelineno-16-44" href="#__codelineno-16-44"></a><span class="nb">yline</span><span class="p">(</span><span class="n">Vm</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">);</span>
-<a id="__codelineno-16-45" name="__codelineno-16-45" href="#__codelineno-16-45"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Simulated&#39;</span><span class="p">,</span><span class="s">&#39;Measured&#39;</span><span class="p">);</span><span class="w"> </span><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
-<a id="__codelineno-16-46" name="__codelineno-16-46" href="#__codelineno-16-46"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (s)&#39;</span><span class="p">);</span><span class="w"> </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Voltage (V)&#39;</span><span class="p">);</span>
-<a id="__codelineno-16-47" name="__codelineno-16-47" href="#__codelineno-16-47"></a><span class="nb">title</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="s">&#39;PI Voltage Step Response  Kp=%.0f Ki=%.0f&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">Kp_v</span><span class="p">,</span><span class="w"> </span><span class="n">Ki_v</span><span class="p">));</span>
-<a id="__codelineno-16-48" name="__codelineno-16-48" href="#__codelineno-16-48"></a>
-<a id="__codelineno-16-49" name="__codelineno-16-49" href="#__codelineno-16-49"></a><span class="c">% Metrics</span>
-<a id="__codelineno-16-50" name="__codelineno-16-50" href="#__codelineno-16-50"></a><span class="n">reg_pct</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">V_meas</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Vm</span><span class="p">)</span><span class="w"> </span><span class="o">./</span><span class="w"> </span><span class="n">Vm</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
-<a id="__codelineno-16-51" name="__codelineno-16-51" href="#__codelineno-16-51"></a><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;\nVoltage regulation error:\n&#39;</span><span class="p">);</span>
-<a id="__codelineno-16-52" name="__codelineno-16-52" href="#__codelineno-16-52"></a><span class="k">for</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="nb">numel</span><span class="p">(</span><span class="n">R_loads</span><span class="p">)</span>
-<a id="__codelineno-16-53" name="__codelineno-16-53" href="#__codelineno-16-53"></a><span class="w">    </span><span class="nb">fprintf</span><span class="p">(</span><span class="s">&#39;  R=%3d Ohm: sim=%.3fV  meas=%.3fV  error=%.1f%%\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
-<a id="__codelineno-16-54" name="__codelineno-16-54" href="#__codelineno-16-54"></a><span class="w">        </span><span class="n">R_loads</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">V_sim</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">V_meas</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">reg_pct</span><span class="p">(</span><span class="n">k</span><span class="p">));</span>
-<a id="__codelineno-16-55" name="__codelineno-16-55" href="#__codelineno-16-55"></a><span class="k">end</span>
+<p>This signal-level model compares the ideal open-loop filter response with the peak voltages measured in Experiment 2. Replace the <code>NaN</code> entries with your measured values. The PI response is a separate simulation and is not applied to the physical bridge. Requires Control System Toolbox.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">Leq</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">2e-3</span><span class="p">;</span><span class="w">                     </span><span class="c">% total differential inductance (H)</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">Cf</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">1e-6</span><span class="p">;</span><span class="w">                      </span><span class="c">% filter capacitance (F)</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">Vref_peak</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w">                  </span><span class="c">% nominal differential peak (V)</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="n">R_loads</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">220</span><span class="p">,</span><span class="w"> </span><span class="mi">470</span><span class="p">];</span><span class="w">      </span><span class="c">% load resistance (ohm)</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="n">V_measured_peak</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="nb">NaN</span><span class="p">,</span><span class="w"> </span><span class="nb">NaN</span><span class="p">,</span><span class="w"> </span><span class="nb">NaN</span><span class="p">];</span><span class="w"> </span><span class="c">% replace with Experiment 2 readings</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="n">s</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tf</span><span class="p">(</span><span class="s">&#39;s&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="n">V_ideal_peak</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">zeros</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">R_loads</span><span class="p">));</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="k">for</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="nb">numel</span><span class="p">(</span><span class="n">R_loads</span><span class="p">)</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">    </span><span class="n">R</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">R_loads</span><span class="p">(</span><span class="n">k</span><span class="p">);</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">    </span><span class="n">G_lc</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">Leq</span><span class="o">*</span><span class="n">Cf</span><span class="o">*</span><span class="n">R</span><span class="o">*</span><span class="n">s</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Leq</span><span class="o">*</span><span class="n">s</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">R</span><span class="p">);</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">    </span><span class="n">V_ideal_peak</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Vref_peak</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dcgain</span><span class="p">(</span><span class="n">G_lc</span><span class="p">);</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="k">end</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="nb">figure</span><span class="p">;</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="nb">plot</span><span class="p">(</span><span class="n">R_loads</span><span class="p">,</span><span class="w"> </span><span class="n">V_ideal_peak</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b-o&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="w">    </span><span class="n">R_loads</span><span class="p">,</span><span class="w"> </span><span class="n">V_measured_peak</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;r-s&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="p">);</span>
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="nb">legend</span><span class="p">(</span><span class="s">&#39;Ideal model&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Measured&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Load resistance (ohm)&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Differential peak voltage (V)&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Open-Loop Load Response&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a>
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a><span class="c">% Signal-level PI simulation only; do not apply it to the physical bridge.</span>
+<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a><span class="n">Kp_v</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a><span class="n">Ki_v</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+<a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a><span class="n">R_nom</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">220</span><span class="p">;</span>
+<a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a><span class="n">G_lc</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">R_nom</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">Leq</span><span class="o">*</span><span class="n">Cf</span><span class="o">*</span><span class="n">R_nom</span><span class="o">*</span><span class="n">s</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Leq</span><span class="o">*</span><span class="n">s</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">R_nom</span><span class="p">);</span>
+<a id="__codelineno-15-29" name="__codelineno-15-29" href="#__codelineno-15-29"></a><span class="n">C_pi</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Kp_v</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Ki_v</span><span class="o">/</span><span class="n">s</span><span class="p">;</span>
+<a id="__codelineno-15-30" name="__codelineno-15-30" href="#__codelineno-15-30"></a><span class="n">T_v</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">feedback</span><span class="p">(</span><span class="n">C_pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">G_lc</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-15-31" name="__codelineno-15-31" href="#__codelineno-15-31"></a><span class="p">[</span><span class="n">y_pi</span><span class="p">,</span><span class="w"> </span><span class="n">t_pi</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">step</span><span class="p">(</span><span class="n">Vref_peak</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">T_v</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span><span class="mf">1e-5</span><span class="p">:</span><span class="mf">0.05</span><span class="p">);</span>
+<a id="__codelineno-15-32" name="__codelineno-15-32" href="#__codelineno-15-32"></a>
+<a id="__codelineno-15-33" name="__codelineno-15-33" href="#__codelineno-15-33"></a><span class="nb">figure</span><span class="p">;</span>
+<a id="__codelineno-15-34" name="__codelineno-15-34" href="#__codelineno-15-34"></a><span class="nb">plot</span><span class="p">(</span><span class="n">t_pi</span><span class="p">,</span><span class="w"> </span><span class="n">y_pi</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;LineWidth&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="p">);</span>
+<a id="__codelineno-15-35" name="__codelineno-15-35" href="#__codelineno-15-35"></a><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-15-36" name="__codelineno-15-36" href="#__codelineno-15-36"></a><span class="nb">yline</span><span class="p">(</span><span class="n">Vref_peak</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;k--&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-37" name="__codelineno-15-37" href="#__codelineno-15-37"></a><span class="n">grid</span><span class="w"> </span><span class="s">on</span><span class="p">;</span>
+<a id="__codelineno-15-38" name="__codelineno-15-38" href="#__codelineno-15-38"></a><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;Time (s)&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-39" name="__codelineno-15-39" href="#__codelineno-15-39"></a><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;Differential voltage (V)&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-40" name="__codelineno-15-40" href="#__codelineno-15-40"></a><span class="nb">title</span><span class="p">(</span><span class="s">&#39;Simulated PI Voltage Step Response&#39;</span><span class="p">);</span>
 </code></pre></div>
-<h3 id="reflection">Reflection<a class="headerlink" href="#reflection" title="Permanent link">&para;</a></h3>
+<h2 id="reflection">Reflection<a class="headerlink" href="#reflection" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Does voltage regulation worsen at lower load resistance (higher current)? What physical effect causes this?</li>
-<li>How does the LC filter natural frequency relate to the PI controller bandwidth? What happens if the controller bandwidth exceeds the filter resonance?</li>
-<li>How would adding a second inverter with a different droop coefficient change the load-sharing behaviour?</li>
+<li>Does the open-loop output change more at lower load resistance (higher current)? Which real component losses could cause the change?</li>
+<li>How does the LC filter natural frequency relate to PI-controller bandwidth? What could happen if controller bandwidth approaches the filter resonance?</li>
+<li>How would a second inverter with a different droop coefficient affect load sharing in the simulation?</li>
 </ol>
 <hr />
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
@@ -4244,26 +4204,21 @@ V = V_0 - K_Q(Q - Q_0)
 <hr />
 <h3 id="h-bridge-not-switching">H-Bridge Not Switching<a class="headerlink" href="#h-bridge-not-switching" title="Permanent link">&para;</a></h3>
 <p>Check:</p>
-<p>✅ Dead time implemented</p>
-<p>✅ Gate driver supply voltage correct</p>
-<p>✅ MOSFET pinout correct (G, D, S)</p>
+<p>✅ DRV8833 breakout pin labels and input truth table checked</p>
+<p>✅ nSLEEP held high at 3.3 V and common logic/power ground connected</p>
+<p>✅ Bench supply output enabled at 5.0 V with a 0.10 A limit</p>
 <hr />
 <h3 id="output-voltage-unstable">Output Voltage Unstable<a class="headerlink" href="#output-voltage-unstable" title="Permanent link">&para;</a></h3>
 <p>Check:</p>
-<p>✅ PI gains not too large</p>
-<p>✅ LC filter installed</p>
-<p>✅ Voltage sensor calibrated</p>
+<p>✅ 100 Ω load remains connected across the filtered differential output</p>
+<p>✅ Both filter inductors and capacitor are connected to the correct differential nodes</p>
+<p>✅ Scope channels are ground-referenced to circuit GND; differential output uses CH1−CH2</p>
 <hr />
 <h3 id="troubleshooting-checklist">Troubleshooting Checklist<a class="headerlink" href="#troubleshooting-checklist" title="Permanent link">&para;</a></h3>
-<p>✅ SPWM operating correctly</p>
-<p>✅ Dead time implemented</p>
-<p>✅ H-Bridge switching correctly</p>
-<p>✅ LC filter installed</p>
-<p>✅ Voltage sensor calibrated</p>
-<p>✅ PI controller operating</p>
-<p>✅ Output frequency stable at 50 Hz</p>
-<p>✅ Output voltage regulated</p>
-<p>✅ Safe load connection verified</p>
+<p>✅ DRV8833 outputs measured with both probe grounds at circuit GND</p>
+<p>✅ 100 Ω load stays connected and supply limit remains at 0.10 A</p>
+<p>✅ Two matched output inductors and 1 µF film capacitor installed for filtered tests</p>
+<p>✅ PI voltage control and droop remain Simulink-only</p>
 <hr />
 <div class="result-actions">
   <button class="result-export-btn" data-lab="lab18">⬇ Export Results (JSON)</button>

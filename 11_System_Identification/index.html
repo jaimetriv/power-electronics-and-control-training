@@ -542,34 +542,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../00D_Control_Engineering_Primer/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Control Engineering Primer
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -702,6 +674,34 @@
     
   
     RLC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00D_Control_Engineering_Primer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Engineering Primer
   
 
     
@@ -3256,11 +3256,7 @@ G(s) = \frac{1}{RCs + 1} = \frac{K}{\tau s + 1}
 <p>where <span class="arithmatex">\(K = 1\)</span> (DC gain) and <span class="arithmatex">\(\tau = RC\)</span> (time constant).</p>
 <p>This is the <strong>general first-order transfer function</strong> used throughout system identification.</p>
 <h2 id="from-rlc-circuit-to-second-order-transfer-function">From RLC Circuit to Second-Order Transfer Function<a class="headerlink" href="#from-rlc-circuit-to-second-order-transfer-function" title="Permanent link">&para;</a></h2>
-<p>In Project 03 the series RLC KVL equation was derived as:</p>
-<div class="arithmatex">\[
-L\frac{d^2V_C}{dt^2} + R\frac{dV_C}{dt} + \frac{V_C}{C} = V_{IN}
-\]</div>
-<p>Applying KVL and substituting <span class="arithmatex">\(i = C\,dV_C/dt\)</span>, the equivalent form is:</p>
+<p>For a series RLC circuit measured across its capacitor, applying KVL and substituting <span class="arithmatex">\(i=C\,dV_C/dt\)</span> gives:</p>
 <div class="arithmatex">\[
 LC\frac{d^2V_C}{dt^2} + RC\frac{dV_C}{dt} + V_C = V_{IN}
 \]</div>

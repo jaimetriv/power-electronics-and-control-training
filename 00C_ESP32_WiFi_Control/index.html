@@ -16,7 +16,7 @@
         <link rel="prev" href="../00B_Oscilloscope_Setup/">
       
       
-        <link rel="next" href="../00D_Control_Engineering_Primer/">
+        <link rel="next" href="../01_PWM_Operation/">
       
       
         
@@ -1971,34 +1971,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../00D_Control_Engineering_Primer/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Control Engineering Primer
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -2131,6 +2103,34 @@
     
   
     RLC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00D_Control_Engineering_Primer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Engineering Primer
   
 
     
@@ -4384,8 +4384,7 @@ which is useful for low-power sensing applications.</p>
 <p>On Linux the port appears as <code>/dev/ttyUSB0</code> rather than a COM port as on Windows.</p>
 <hr />
 <h2 id="installing-the-esp32-board-package">Installing the ESP32 Board Package<a class="headerlink" href="#installing-the-esp32-board-package" title="Permanent link">&para;</a></h2>
-<p>This tutorial is validated with the Arduino-ESP32 core available through Boards Manager.
-If you use a newer major core version, LEDC API calls may change; check the official migration notes if examples do not compile.</p>
+<p>The ESP32 sketches throughout these course labs use the Arduino-ESP32 <strong>core 2.x LEDC API</strong> unless a page says otherwise. For direct compatibility, select a 2.x core version in Boards Manager. If using core 3.x, update every course sketch that uses <code>ledcSetup(ch, freq, res)</code> and <code>ledcAttachPin(pin, ch)</code> to <code>ledcAttach(pin, freq, res)</code>, and change <code>ledcWrite(ch, duty)</code> to <code>ledcWrite(pin, duty)</code>; verify the pin/channel arguments before uploading.</p>
 <h3 id="step-1">Step 1<a class="headerlink" href="#step-1" title="Permanent link">&para;</a></h3>
 <p>Open Arduino IDE.</p>
 <p>Go to:</p>
