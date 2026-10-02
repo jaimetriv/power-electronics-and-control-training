@@ -110,13 +110,7 @@ This is the **general first-order transfer function** used throughout system ide
 
 ## From RLC Circuit to Second-Order Transfer Function
 
-In Project 03 the series RLC KVL equation was derived as:
-
-$$
-L\frac{d^2V_C}{dt^2} + R\frac{dV_C}{dt} + \frac{V_C}{C} = V_{IN}
-$$
-
-Applying KVL and substituting $i = C\,dV_C/dt$, the equivalent form is:
+For a series RLC circuit measured across its capacitor, applying KVL and substituting $i=C\,dV_C/dt$ gives:
 
 $$
 LC\frac{d^2V_C}{dt^2} + RC\frac{dV_C}{dt} + V_C = V_{IN}

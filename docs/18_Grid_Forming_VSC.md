@@ -32,19 +32,17 @@ This project serves as the capstone project for the course.
 DO NOT CONNECT DIRECTLY TO MAINS VOLTAGE
 ```
 
-All experiments must use:
-
-- Low-voltage DC supplies
-- Low-power loads
-- Isolated laboratory circuits
+For the physical output demonstration, reuse the Lab 10 DRV8833 stage with a 5.0 V isolated bench supply limited to 0.10 A and a load always connected. Do not build the discrete IRLZ44N/IR2104 bridge from this page. PI voltage control and droop power-sharing remain simulation-only until complete firmware and an independently checked gate-drive design are available.
 
 Recommended:
 
 ```text
-12 V DC Input
+5 V DC Input, 0.10 A current limit
 
-5–12 V RMS Output
+2 V peak nominal differential output (1.41 V RMS for a sine wave)
 ```
+
+The DRV8833 supply range is 2.7-10.8 V; use 5 V only. With modulation index 0.4, the ideal fundamental is about 2 V peak. Never connect this inverter or its load to mains, a function generator, or another AC source.
 
 ---
 
@@ -89,9 +87,9 @@ Modulation Index
         │
         ▼
 SPWM Generator
-        │
-        ▼
-H-Bridge (4 × IRLZ44N + IR2104 driver)
+  │
+  ▼
+DRV8833 H-Bridge (5 V, 100 mA current limit)
         │
         ▼
 LC Filter
@@ -100,7 +98,7 @@ LC Filter
 Load
         ▲
         │
-Voltage Sensor (resistor divider → ADC)
+Differential/isolated voltage sensor → protected ADC interface
         │
         └──────── Feedback
 ```
@@ -119,25 +117,26 @@ Arduino Mega     (alternative)
 
 ### Inverter Stage
 
-- 4 × IRLZ44N MOSFETs
-- IR2104 gate driver (recommended) or IR2110
+- DRV8833 H-bridge breakout with labeled input/output pins and 3.3 V logic compatibility; reuse the Lab 10 board
+- Do not substitute a discrete IRLZ44N/IR2104 bridge in this low-voltage exercise
 
 ### Sensors
 
-- Voltage measurement: resistor divider
-- Current measurement: ACS712 or ACS758
+- Use two oscilloscope channels with both probe grounds at circuit GND and display CH1−CH2; if unavailable, use a rated differential probe or simulate
+- ESP32 ADC feedback is simulation-only in this project; no ADC sensing circuit is part of the physical build
 
 ### LC Filter
 
-- Inductor: 1 mH to 5 mH
-- Capacitor: 1 µF film capacitor
+- Two matched 1 mH series inductors, one in each bridge output leg; each rated for at least 0.5 A, no more than 1 Ω DCR, and at least 200 kHz self-resonant frequency
+- 1 µF film capacitor rated at least 25 V across the filtered output
+- 100 Ω, 0.25 W or higher load resistor across the filtered output; 220 Ω and 470 Ω resistors may be used for the load comparison
 
 ### Test Equipment
 
 - OWON HDS272S (recommended)
 - DSO Nano (compatible)
 - Multimeter
-- 12 V bench power supply
+- Isolated 0-30 V / 0-3 A bench supply with CC mode, set to 5.0 V / 0.10 A maximum
 
 ---
 
@@ -145,14 +144,13 @@ Arduino Mega     (alternative)
 
 ```text
 ESP32 DevKit V1
-IR2104 Gate Driver
-4 × IRLZ44N MOSFETs
-ACS712 Current Sensor
-1 mH Inductor
-1 µF Film Capacitor
-470 µF Electrolytic Capacitor (DC link)
+1 × DRV8833 H-Bridge Breakout (reused from Lab 10)
+2 × Matched 1 mH Output Inductors (≥0.5 A, ≤1 Ω DCR, ≥200 kHz SRF)
+1 µF / 25 V Film Capacitor (filter)
+100 Ω / 0.25 W Load Resistor (plus optional 220 Ω and 470 Ω loads)
+100 µF / 10 V Electrolytic Capacitor (DC link)
 100 nF Ceramic Capacitor (DC link decoupling)
-12 V Bench Supply
+5 V Bench Supply, current limited to 0.10 A
 OWON HDS272S (or DSO Nano)
 Breadboard and Jumper Wires
 Multimeter
@@ -163,19 +161,12 @@ Multimeter
 ## Full H-Bridge Schematic
 
 ```text
-              +Vdc (12 V)
-                │
-          ┌─────┴─────┐
-          │           │
-         Q1          Q2
-          │           │
-          ├─── LOAD ──┤
-          │           │
-         Q3          Q4
-          │           │
-          └─────┬─────┘
-                │
-               GND
+          5 V → DRV8833 VM; GND → circuit GND
+          ESP32 GPIO18/GPIO19 → DRV8833 AIN1/AIN2; 3.3 V → nSLEEP
+          DRV8833 AOUT1 → L_A 1 mH → OUT_A
+          DRV8833 AOUT2 → L_B 1 mH → OUT_B
+          1 µF and selected load resistor in parallel from OUT_A to OUT_B
+          100 µF and 100 nF in parallel from VM to GND
 ```
 
 ---
@@ -212,13 +203,7 @@ This creates a direct supply short circuit.
 
 ## Dead Time
 
-A delay is inserted between switching events to prevent shoot-through.
-
-Typical values:
-
-```text
-1 µs to 5 µs
-```
+The DRV8833 is an integrated driver; use its documented input truth table and internal protection. This lab's firmware does not drive discrete MOSFET gates. A discrete bridge substitution requires a separately reviewed gate-drive design with verified dead time and fault protection.
 
 ---
 
@@ -227,9 +212,9 @@ Typical values:
 Every practical inverter requires a DC-link capacitor mounted near the MOSFET bridge:
 
 ```text
-+12 V Supply
++5 V current-limited supply
       │
- 470 µF Electrolytic  +  100 nF Ceramic  (in parallel)
+ 100 µF Electrolytic  +  100 nF Ceramic  (in parallel)
       │
 H-Bridge
 ```
@@ -238,93 +223,75 @@ H-Bridge
 
 ## LC Output Filter
 
-The H-Bridge output contains PWM ripple.
-
-An LC filter smooths the waveform:
+The full H-bridge output is differential: neither load terminal is circuit ground. Use one series inductor in each bridge output leg, then connect the load and filter capacitor across the two filtered output terminals. The 1 µF capacitor is in parallel with the load.
 
 ```text
-H-Bridge
-    │
-    L (1 mH)
-    │
-    ├──── Load
-    │
-    C (1 µF)
-    │
-   GND
+Bridge OUT_A ── L_A ──┬──── R_load ────┬── L_B ── Bridge OUT_B
+             │                │
+             └────── C_f ─────┘
 ```
+
+The single-phase model below uses $L_{eq}=L_A+L_B$ as the total differential series inductance. It is not a ground-referenced half-bridge model.
 
 ---
 
 ## Voltage Measurement Circuit
 
-The ESP32 must never measure the inverter voltage directly. The inverter output is bipolar, so a simple divider to ground would drive the single-ended ADC below 0 V during the negative half-cycle and could damage the ESP32.
+Do not connect either bridge output to an ESP32 ADC. For scope measurement, connect CH1 tip to filtered OUT_A and CH2 tip to filtered OUT_B; connect both probe ground clips to circuit GND and display CH1−CH2. Never attach a probe ground clip to OUT_A or OUT_B. If the scope cannot display CH1−CH2, use a rated differential probe or run the measurement in simulation.
 
-Use one of the following arrangements instead:
+## LC Filter Model
 
-- an isolated or differential voltage sensor with an output limited to the ADC range;
-- an appropriately attenuated, mid-supply-biased measurement with input protection and verified positive and negative limits; or
-- an isolated oscilloscope or measurement interface when only observation is required.
-
-For an ESP32 ADC, the measured signal must remain between 0 V and 3.3 V under all operating conditions. Select the attenuation and bias from the actual maximum inverter peak voltage, not only the nominal RMS voltage.
-
----
-
-## LC Filter Transfer Function Derivation
-
-The grid-forming inverter output stage is an LC filter driving a resistive load $R$.
-
-Applying KVL around the inductor loop:
+Let $L_{eq}=L_A+L_B$ be the total differential series inductance. Applying KVL across the differential filter gives:
 
 $$
-V_{inv} = L\frac{di_L}{dt} + V_{OUT}
+V_{inv,diff}=L_{eq}\frac{di_L}{dt}+V_{OUT}
 $$
 
-Applying KCL at the output node (inductor current splits into capacitor current and load current):
+Applying KCL at the output node (inductor current splits into capacitor and load current):
 
 $$
-i_L = C\frac{dV_{OUT}}{dt} + \frac{V_{OUT}}{R}
+i_L = C_f\frac{dV_{OUT}}{dt} + \frac{V_{OUT}}{R}
 $$
 
 Differentiating the KCL equation and substituting into KVL:
 
 $$
-V_{inv} = LC\frac{d^2V_{OUT}}{dt^2} + \frac{L}{R}\frac{dV_{OUT}}{dt} + V_{OUT}
+V_{inv,diff} = L_{eq}C_f\frac{d^2V_{OUT}}{dt^2} + \frac{L_{eq}}{R}\frac{dV_{OUT}}{dt} + V_{OUT}
 $$
 
 Taking the Laplace transform:
 
 $$
-V_{inv}(s) = \left(LCs^2 + \frac{L}{R}s + 1\right)V_{OUT}(s)
+V_{inv,diff}(s) = \left(L_{eq}Cs^2 + \frac{L_{eq}}{R}s + 1\right)V_{OUT}(s)
 $$
 
 Rearranging to give the transfer function:
 
 $$
-G(s) = \frac{V_{OUT}(s)}{V_{inv}(s)} = \frac{1}{LCs^2 + \dfrac{L}{R}s + 1}
+G(s) = \frac{V_{OUT}(s)}{V_{inv,diff}(s)} = \frac{1}{L_{eq}C_fs^2 + \dfrac{L_{eq}}{R}s + 1}
 $$
 
 Multiplying numerator and denominator by $R$:
 
 $$
-\boxed{G(s) = \frac{R}{LCRs^2 + Ls + R}}
+\boxed{G(s) = \frac{R}{L_{eq}C_fRs^2 + L_{eq}s + R}}
 $$
 
-With $L = 1\ \text{mH}$, $C = 1\ \mu\text{F}$, $R = 220\ \Omega$:
+For two $1\ \mathrm{mH}$ output inductors, use $L_{eq}=2\ \mathrm{mH}$, $C_f=1\ \mathrm{\mu F}$, and $R=220\ \Omega$:
 
 $$
-G(s) = \frac{220}{2.2 \times 10^{-7}s^2 + 10^{-3}s + 220}
+G(s) = \frac{220}{4.4 \times 10^{-7}s^2 + 2\times10^{-3}s + 220}
 $$
 
-This is the denominator `[2.2e-7, 1e-3, 220]` used in the Simulink voltage controller model.
+This is the denominator `[4.4e-7, 2e-3, 220]` used in the Simulink voltage controller model.
 
 The natural frequency of the LC filter is:
 
 $$
-f_n = \frac{1}{2\pi\sqrt{LC}} = \frac{1}{2\pi\sqrt{10^{-3} \times 10^{-6}}} \approx 5033\ \text{Hz}
+f_n = \frac{1}{2\pi\sqrt{L_{eq}C_f}} = \frac{1}{2\pi\sqrt{2\times10^{-3} \times 10^{-6}}} \approx 3560\ \text{Hz}
 $$
 
-The voltage controller bandwidth must remain well below $f_n$ to avoid exciting the filter resonance.
+The voltage-controller bandwidth must remain well below $f_n$ to avoid exciting the filter resonance. This ideal LC estimate does not include damping from the real load, component losses, or sensor/control delay.
 
 ---
 
@@ -377,7 +344,7 @@ Where:
 - `reference` = Sine Reference
 - `pwm` = PWM Duty Cycle
 
-This snippet generates one sine-referenced duty value; it is not a complete H-bridge gate-drive implementation. A practical bridge requires complementary high- and low-side commands, gate-driver enable logic, shoot-through protection, and verified dead time before connecting the bridge power stage.
+This snippet generates one sine-referenced duty value only; it does not drive a bridge. For the physical open-loop waveform demonstration, reuse the Lab 10 DRV8833 two-input SPWM sketch with a 50 Hz reference and modulation index 0.4. The PI voltage-control and droop stages below are signal-only simulations; do not enable an unvalidated hardware feedback loop.
 
 ---
 
@@ -476,7 +443,7 @@ Step block (voltage reference):
 | Parameter | Value |
 |-----------|-------|
 | Step time | `0` s |
-| Final value | `5` |
+| Final value | `2` |
 
 Gain block 1 (Kp): `3`
 
@@ -491,9 +458,9 @@ Transfer Fcn (LC filter with load `R/(LCRs² + Ls + R)`):
 | Parameter | Value |
 |-----------|-------|
 | Numerator | `[220]` |
-| Denominator | `[2.2e-7, 1e-3, 220]` |
+| Denominator | `[4.4e-7, 2e-3, 220]` |
 
-> Numerator = R\_load = 220. Denominator = `[L×C×R, L, R]` = `[1e-3×1e-6×220, 1e-3, 220]` = `[2.2e-7, 1e-3, 220]`
+> Numerator = $R_{load}=220$. Denominator = `[L_eq×C_f×R, L_eq, R]` = `[2e-3×1e-6×220, 2e-3, 220]` = `[4.4e-7, 2e-3, 220]`.
 
 #### Step 4 — Wire the closed-loop
 
@@ -625,45 +592,31 @@ Inverter 2 (Kd = 0.2) will show a lower frequency than Inverter 1 (Kd = 0.1) at 
 
 ### Stage 1
 
-Generate a 50 Hz reference signal.
-
-Verify frequency and amplitude on the oscilloscope.
+Run the Lab 10 SPWM signal generator with modulation index 0.4 and a 50 Hz reference. Verify the 20 kHz carrier and 50 Hz envelope before connecting the driver.
 
 ### Stage 2
 
-Generate SPWM.
-
-Verify PWM carrier frequency and varying duty cycle.
+Keep the DRV8833 VM supply disabled. Power the ESP32 by USB, connect GPIO18/GPIO19 to the labeled AIN1/AIN2 pins, and verify the two 3.3 V PWM logic signals relative to circuit GND. Set the bench supply to 5.0 V with a 0.10 A current limit and leave its output disabled.
 
 ### Stage 3
 
-Build and test the H-Bridge.
-
-Verify alternating output voltage.
+With the LC filter disconnected, connect the 100 Ω load directly across DRV8833 AOUT1/AOUT2 before enabling the supply. Enable the 5 V / 0.10 A-limited supply, confirm it is not continuously in current limit, then disable the supply before changing the wiring. Test the bridge only with this load connected; never run it unloaded.
 
 ### Stage 4
 
-Install the LC Filter.
-
-Verify smooth AC voltage output.
+Power off, install the two matched 1 mH inductors and 1 µF capacitor across OUT_A/OUT_B, and measure the filtered differential waveform.
 
 ### Stage 5
 
-Implement voltage measurement.
-
-Verify ADC accuracy against multimeter reading.
+Measure both filtered output legs with scope channels referenced to circuit GND. Use CH1−CH2 math for the differential voltage; do not connect either bridge output to an ESP32 ADC pin.
 
 ### Stage 6
 
-Implement PI voltage control.
-
-Verify stable regulation.
+Run the PI voltage controller in Simulink only. The code fragment on this page is not a complete hardware controller.
 
 ### Stage 7
 
-Implement droop control.
-
-Study power-sharing behaviour.
+Study droop and power sharing in Simulink only; no second physical inverter is specified.
 
 ---
 
@@ -671,39 +624,45 @@ Study power-sharing behaviour.
 
 ### Objective
 
-Generate a stable 50 Hz AC voltage waveform from the inverter.
+Measure the filtered, open-loop 50 Hz differential output from the 5 V DRV8833 inverter.
 
----
+### Power-Up Procedure
 
-### Connections
+1. With the bench supply disabled, check the DRV8833 pin labels, capacitor polarity, filter wiring, and the 100 Ω load across OUT_A and OUT_B.
+2. Set the isolated supply to 5.0 V and 0.10 A current limit. Keep the load connected at all times.
+3. Connect ESP32 GND, DRV8833 GND, and supply negative. Connect CH1 and CH2 probe grounds to circuit GND only.
+4. Start with modulation index 0.4 using the Lab 10 SPWM sketch. Enable the supply and confirm it is not continuously in current limit.
+5. Measure the filtered output. Disable the supply and discharge the DC-link capacitor before changing wiring or loads.
+
+### Oscilloscope Connections
 
 ```text
-Probe Tip  ──────► Inverter output (after LC filter)
-Probe GND  ──────► Circuit GND
+CH1 tip ─────────► Filtered OUT_A
+CH2 tip ─────────► Filtered OUT_B
+Both probe grounds ► Circuit GND
+Scope math ──────► CH1−CH2
 ```
 
----
+Never connect a standard probe ground clip to OUT_A or OUT_B. If the scope cannot display CH1−CH2, use a rated differential probe or perform this measurement in simulation.
 
 ### Oscilloscope Settings
 
-| Setting | OWON HDS272S | DSO Nano |
-|---------|--------------|----------|
-| Vertical scale | 2 V/div | 2 V/div |
-| Horizontal scale | 5 ms/div | 5 ms/div |
-| Trigger | Edge, Rising | Edge, Rising |
-| Coupling | AC | AC |
-
----
+| Setting | OWON HDS272S |
+|---------|--------------|
+| Vertical scale | 1 V/div |
+| Horizontal scale | 5 ms/div |
+| Trigger | Edge, Rising |
+| Coupling | AC for output waveform; DC to inspect offset |
 
 ### Measurements
 
 <div class="result-block">
 <table>
-  <thead><tr><th>Parameter</th><th>Measured</th></tr></thead>
+  <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
   <tbody>
-    <tr><td>Frequency</td><td><input class="result-input" id="lab18-exp1-freq" placeholder="Hz"></td></tr>
-    <tr><td>RMS Voltage</td><td><input class="result-input" id="lab18-exp1-vrms" placeholder="V"></td></tr>
-    <tr><td>Peak Voltage</td><td><input class="result-input" id="lab18-exp1-vpeak" placeholder="V"></td></tr>
+    <tr><td>Frequency</td><td>50 Hz</td><td><input class="result-input" id="lab18-exp1-freq" placeholder="Hz"></td></tr>
+    <tr><td>Differential RMS voltage</td><td>About 1.41 V</td><td><input class="result-input" id="lab18-exp1-vrms" placeholder="V"></td></tr>
+    <tr><td>Differential peak voltage</td><td>About 2 V</td><td><input class="result-input" id="lab18-exp1-vpeak" placeholder="V"></td></tr>
   </tbody>
 </table>
 </div>
@@ -714,7 +673,7 @@ Probe GND  ──────► Circuit GND
 
 ### Objective
 
-Observe how output voltage changes with different load resistances, with and without the PI voltage controller.
+Observe open-loop output changes as load resistance varies. Closed-loop PI load regulation is a Simulink-only exercise.
 
 ---
 
@@ -728,7 +687,7 @@ Observe how output voltage changes with different load resistances, with and wit
 470 Ω
 ```
 
-For each load, measure the output voltage with the PI controller active.
+With modulation index fixed at 0.4, measure the differential output at 100 Ω, 220 Ω, and 470 Ω. Power off before changing loads. Do not remove the load or exceed the 0.10 A supply limit.
 
 ---
 
@@ -751,7 +710,7 @@ For each load, measure the output voltage with the PI controller active.
 
 ### Objective
 
-Observe how PI gains affect voltage regulation quality.
+Use the Simulink model to observe how PI gains affect voltage regulation quality. Do not apply these gains to the physical inverter.
 
 ---
 
@@ -772,80 +731,63 @@ Step through the following gain sets and record the behaviour:
 
 Measure for each:
 
-- Overshoot
 - Settling time
 - Voltage regulation error
-- Stability
 
 ---
 
 ## MATLAB Comparison
 
-After completing the experiments, enter your measured load regulation data and PI step response to compare against simulation.
+This signal-level model compares the ideal open-loop filter response with the peak voltages measured in Experiment 2. Replace the `NaN` entries with your measured values. The PI response is a separate simulation and is not applied to the physical bridge. Requires Control System Toolbox.
 
 ```matlab
-% Enter your system parameters
-Vm     = 5;
-L      = 1e-3;
-C      = 1e-6;
-Kp_v   = 3;
-Ki_v   = 100;
+Leq = 2e-3;                     % total differential inductance (H)
+Cf = 1e-6;                      % filter capacitance (F)
+Vref_peak = 2;                  % nominal differential peak (V)
+R_loads = [100, 220, 470];      % load resistance (ohm)
+V_measured_peak = [NaN, NaN, NaN]; % replace with Experiment 2 readings
 
-% Enter measured Vout for each load (Experiment 2)
-R_loads  = [100, 220, 470];          % Ohm
-V_meas   = [4.6, 4.85, 4.95];       % V peak — replace with your readings
-
-% Simulate Vout vs load
 s = tf('s');
-V_sim = zeros(1, numel(R_loads));
+V_ideal_peak = zeros(size(R_loads));
 for k = 1:numel(R_loads)
     R = R_loads(k);
-    G_lc = R / (L*C*R*s^2 + L*s + R);
-    C_pi = Kp_v + Ki_v/s;
-    T_v  = feedback(C_pi * G_lc, 1);
-    V_sim(k) = Vm * dcgain(T_v);
+    G_lc = R / (Leq*Cf*R*s^2 + Leq*s + R);
+    V_ideal_peak(k) = Vref_peak * dcgain(G_lc);
 end
 
 figure;
-subplot(2,1,1);
-plot(R_loads, V_sim, 'b-o', R_loads, V_meas, 'r-s', 'LineWidth', 1.5);
-legend('Simulated','Measured'); grid on;
-xlabel('Load Resistance (\Omega)'); ylabel('Output Voltage (V)');
-title('Load Regulation: Simulated vs Measured');
-yline(Vm, 'k--');
+plot(R_loads, V_ideal_peak, 'b-o', ...
+    R_loads, V_measured_peak, 'r-s', 'LineWidth', 1.5);
+legend('Ideal model', 'Measured');
+grid on;
+xlabel('Load resistance (ohm)');
+ylabel('Differential peak voltage (V)');
+title('Open-Loop Load Response');
 
-% Enter measured PI step response (Experiment 3)
-t_meas = [0, 0.002, 0.005, 0.010, 0.015, 0.020, 0.030];  % s — replace
-v_meas = [0, 1.5,   4.2,   5.3,   5.1,   5.0,   5.0];    % V — replace
-
+% Signal-level PI simulation only; do not apply it to the physical bridge.
+Kp_v = 3;
+Ki_v = 100;
 R_nom = 220;
-G_lc  = R_nom / (L*C*R_nom*s^2 + L*s + R_nom);
-C_pi  = Kp_v + Ki_v/s;
-T_v   = feedback(C_pi * G_lc, 1);
-[y_sim, t_sim] = step(Vm * T_v, 0:1e-5:0.05);
+G_lc = R_nom / (Leq*Cf*R_nom*s^2 + Leq*s + R_nom);
+C_pi = Kp_v + Ki_v/s;
+T_v = feedback(C_pi * G_lc, 1);
+[y_pi, t_pi] = step(Vref_peak * T_v, 0:1e-5:0.05);
 
-subplot(2,1,2);
-plot(t_sim, y_sim, 'b-', 'LineWidth', 1.5); hold on;
-plot(t_meas, v_meas, 'ro--', 'MarkerSize', 6);
-yline(Vm, 'k--');
-legend('Simulated','Measured'); grid on;
-xlabel('Time (s)'); ylabel('Voltage (V)');
-title(sprintf('PI Voltage Step Response  Kp=%.0f Ki=%.0f', Kp_v, Ki_v));
-
-% Metrics
-reg_pct = abs(V_meas - Vm) ./ Vm * 100;
-fprintf('\nVoltage regulation error:\n');
-for k = 1:numel(R_loads)
-    fprintf('  R=%3d Ohm: sim=%.3fV  meas=%.3fV  error=%.1f%%\n', ...
-        R_loads(k), V_sim(k), V_meas(k), reg_pct(k));
-end
+figure;
+plot(t_pi, y_pi, 'b-', 'LineWidth', 1.5);
+hold on;
+yline(Vref_peak, 'k--');
+grid on;
+xlabel('Time (s)');
+ylabel('Differential voltage (V)');
+title('Simulated PI Voltage Step Response');
 ```
 
-### Reflection
+## Reflection
 
-1. Does voltage regulation worsen at lower load resistance (higher current)? What physical effect causes this?
-2. How does the LC filter natural frequency relate to the PI controller bandwidth? What happens if the controller bandwidth exceeds the filter resonance?
-3. How would adding a second inverter with a different droop coefficient change the load-sharing behaviour?
+1. Does the open-loop output change more at lower load resistance (higher current)? Which real component losses could cause the change?
+2. How does the LC filter natural frequency relate to PI-controller bandwidth? What could happen if controller bandwidth approaches the filter resonance?
+3. How would a second inverter with a different droop coefficient affect load sharing in the simulation?
 
 ---
 
@@ -867,11 +809,11 @@ Check:
 
 Check:
 
-✅ Dead time implemented
+✅ DRV8833 breakout pin labels and input truth table checked
 
-✅ Gate driver supply voltage correct
+✅ nSLEEP held high at 3.3 V and common logic/power ground connected
 
-✅ MOSFET pinout correct (G, D, S)
+✅ Bench supply output enabled at 5.0 V with a 0.10 A limit
 
 ---
 
@@ -879,33 +821,23 @@ Check:
 
 Check:
 
-✅ PI gains not too large
+✅ 100 Ω load remains connected across the filtered differential output
 
-✅ LC filter installed
+✅ Both filter inductors and capacitor are connected to the correct differential nodes
 
-✅ Voltage sensor calibrated
+✅ Scope channels are ground-referenced to circuit GND; differential output uses CH1−CH2
 
 ---
 
 ### Troubleshooting Checklist
 
-✅ SPWM operating correctly
+✅ DRV8833 outputs measured with both probe grounds at circuit GND
 
-✅ Dead time implemented
+✅ 100 Ω load stays connected and supply limit remains at 0.10 A
 
-✅ H-Bridge switching correctly
+✅ Two matched output inductors and 1 µF film capacitor installed for filtered tests
 
-✅ LC filter installed
-
-✅ Voltage sensor calibrated
-
-✅ PI controller operating
-
-✅ Output frequency stable at 50 Hz
-
-✅ Output voltage regulated
-
-✅ Safe load connection verified
+✅ PI voltage control and droop remain Simulink-only
 
 ---
 

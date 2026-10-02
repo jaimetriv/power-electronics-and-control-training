@@ -46,13 +46,13 @@ Voltage conversion is achieved using PWM, MOSFET switching, and inductor energy 
 ## Circuit Diagram
 
 ```text
-3.3 V Supply
+5 V current-limited supply
     │
-   Inductor (100 µH)
+  Inductor (1 mH)
     │
     ├──── Switch Node ──── Diode (1N5819) ──── Vout
     │                      (cathode toward Vout)    │
-   MOSFET (IRLZ44N)                           100 µF capacitor
+  MOSFET (AO3400A)                         220 µF capacitor
     │                                               │
    GND ─────────────────────────────────────────────┘
 ```
@@ -289,23 +289,23 @@ Double-click the **Pulse Generator** and set:
 | Parameter | Value |
 |-----------|-------|
 | Amplitude | `1` |
-| Period | `0.002` |
-| Pulse Width | `50` (percent) |
+| Period | `50e-6` |
+| Pulse Width | `10` (percent) |
 | Phase delay | `0` |
 
-This produces a 0–1 control signal at 500 Hz, 50% duty cycle.
+This produces a 0–1 control signal at 20 kHz. Repeat at 20% and 25% duty; do not test above 25% in this lab.
 
 ---
 
 ### Step 5 — Configure the DC Voltage Source
 
-This represents the 3.3 V ESP32 supply. Use a **DC Voltage Source** block (Simscape → Foundation Library → Electrical → Electrical Sources) set directly to 3.3 V — no Constant block or Controlled Voltage Source is needed.
+This represents the current-limited 5 V bench supply. Use a **DC Voltage Source** block (Simscape → Foundation Library → Electrical → Electrical Sources) set directly to 5 V — no Constant block or Controlled Voltage Source is needed.
 
 Double-click and set:
 
 | Parameter | Value |
 |-----------|-------|
-| Constant voltage | `3.3` |
+| Constant voltage | `5` |
 
 ---
 
@@ -315,7 +315,9 @@ Double-click the **Inductor** and set:
 
 | Parameter | Value |
 |-----------|-------|
-| Inductance | `100e-6` |
+| Inductance | `1e-3` |
+
+Use the same 1 mH inductor as the physical experiment. With a 100 Ω load, 20 kHz switching, and duty ratios 10%–25%, the ideal inductor peak current stays below approximately 0.13 A.
 
 ---
 
@@ -325,7 +327,7 @@ Double-click the **Capacitor** and set:
 
 | Parameter | Value |
 |-----------|-------|
-| Capacitance | `100e-6` |
+| Capacitance | `220e-6` |
 
 ---
 
@@ -335,9 +337,9 @@ Double-click the **Resistor** and set:
 
 | Parameter | Value |
 |-----------|-------|
-| Resistance | `470` |
+| Resistance | `100` |
 
-A higher load resistance is used here than in the Buck lab because the Boost output voltage is higher — 470 Ω keeps load current at a safe level.
+Use a 100 Ω, 1 W load. At the maximum 25% duty ratio the ideal output is 6.67 V and load power is about 0.45 W.
 
 ---
 
@@ -390,7 +392,7 @@ Under **Solver**:
 
 | Setting | Value |
 |---------|-------|
-| Stop time | `0.04` |
+| Stop time | `0.25` |
 | Type | Variable-step |
 | Solver | `ode23t` |
 | Max step size | `1e-6` |
@@ -460,25 +462,25 @@ Change the **Pulse Width** in the Pulse Generator and re-run for each experiment
 
 ## Components Required
 
-- IRLZ44N MOSFET
+- AO3400A N-channel MOSFET on a labeled breakout board ($V_{DS}\geq30$ V and $R_{DS(on)}$ specified at $V_{GS}=2.5$ V)
 - 1N5819 Schottky Diode
-- 100 µH Inductor
-- 100 µF Electrolytic Capacitor
-- 220 Ω gate resistor
+- 1 mH inductor, saturation current at least 0.5 A, DCR no more than 1 Ω, self-resonant frequency at least 200 kHz
+- 220 µF, 16 V electrolytic capacitor and 100 nF ceramic input bypass capacitor
+- 100 Ω, 1 W load resistor
+- 100 Ω gate resistor and 100 kΩ gate-to-source pull-down
 - ESP32 DevKit V1
-- Breadboard and jumper wires
-- OWON HDS272S Oscilloscope (recommended)
-- DSO Nano Oscilloscope (compatible)
+- Breadboard and short jumper wires
+- Isolated 0–30 V, 0–3 A bench supply with CC mode, output enable, and current setting resolution of 10 mA or finer; set to 5.0 V / 0.20 A for this lab
+- OWON HDS272S oscilloscope with a 10:1 probe
 
 ---
 
 ## Safety Notice
 
-Begin with the **ESP32 3.3 V supply** as the converter input.
+!!! warning "Use only the specified low-voltage boost operating point"
+  Use a 5.0 V isolated bench supply with a 0.20 A current limit, 1 mH inductor rated for at least 0.5 A saturation current, 100 Ω / 1 W load, and duty ratios of 10%, 20%, and 25% only. At 25%, ideal inductor ripple is about 62.5 mA peak-to-peak and expected peak current is about 0.12 A. Do not raise duty ratio or remove the load.
 
-If using ESP32 gate drive (~3.3 V), use a logic-level MOSFET with low $R_{DS(on)}$ specified at low $V_{GS}$, or use a gate driver.
-
-Do not connect sensitive electronics directly to an untested converter output.
+Do not power the converter from an ESP32 pin, USB port, or battery pack. Build with power off. Discharge the output capacitor through the 100 Ω load before handling. Connect the oscilloscope ground only to circuit GND, never to the switch node.
 
 ---
 
@@ -509,22 +511,21 @@ No breadboard components needed — verify the gate signal before building the f
 ### ESP32 Code
 
 ```cpp
+const int pwmValue = 128; // 50% for the standalone GPIO waveform check only.
+
 void setup()
 {
-    // Configure LEDC channel 0: 500 Hz, 8-bit resolution.
-    ledcSetup(0, 500, 8);
+    ledcSetup(0, 20000, 8);
     ledcAttachPin(18, 0);
 }
 
 void loop()
 {
-    // Set duty cycle to 128/255 ≈ 50%.
-    // This is the switching signal that will drive the MOSFET gate.
-    ledcWrite(0, 128);
+    ledcWrite(0, pwmValue);
 }
 ```
 
-> **Arduino Uno:** replace `ledcWrite(0, 128)` with `analogWrite(9, 128)` on pin 9.
+This standalone PWM check is done with the converter disconnected. Use the ESP32; the Arduino Uno's default PWM frequency is not the specified 20 kHz.
 
 ---
 
@@ -533,7 +534,7 @@ void loop()
 | Setting | OWON HDS272S | DSO Nano |
 |---------|--------------|----------|
 | Vertical scale | 2 V/div | 2 V/div |
-| Horizontal scale | 500 µs/div | 500 µs/div |
+| Horizontal scale | 20 µs/div | 20 µs/div |
 | Trigger | Edge, Rising | Edge, Rising |
 | Coupling | DC | DC |
 
@@ -556,7 +557,7 @@ void loop()
 <table>
   <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
   <tbody>
-    <tr><td>Frequency</td><td>~500 Hz</td><td><input class="result-input" id="lab07-exp1-freq" placeholder="Hz"></td></tr>
+    <tr><td>Frequency</td><td>~20 kHz</td><td><input class="result-input" id="lab07-exp1-freq" placeholder="Hz"></td></tr>
     <tr><td>Duty Cycle</td><td>~50%</td><td><input class="result-input" id="lab07-exp1-duty" placeholder="%"></td></tr>
     <tr><td>Gate Voltage</td><td>~3.3 V</td><td><input class="result-input" id="lab07-exp1-vgate" placeholder="V"></td></tr>
   </tbody>
@@ -565,13 +566,74 @@ void loop()
 
 ---
 
-## Experiment 2 - Build the Boost Converter and Vary Duty Cycle
+## Experiment 2 - Build and Test the Boost Converter
 
 ### Objective
 
-Build the full converter circuit and observe how duty cycle controls output voltage.
+Build and measure the low-voltage boost converter using the specified 5 V current-limited source, 20 kHz PWM, and 10%–25% duty range.
 
----
+### Corrected Wiring
+
+```text
+5 V → L1 1 mH → switch node → D1 anode
+                     │          D1 cathode → VOUT
+                     │                         │
+                  Q1 drain                  COUT 220 µF (+)
+                  Q1 source → GND              │
+                     │                      100 Ω load
+GPIO18 → 100 Ω → Q1 gate                        │
+               100 kΩ gate-to-source          GND
+ESP32 GND and supply negative → circuit GND
+100 nF and 220 µF input capacitors from +5 V to GND
+```
+
+Use an AO3400A breakout with its gate, drain, and source clearly labeled. Verify the diode's banded cathode faces VOUT. Keep the switching loop short.
+
+### First Power-Up and Measurements
+
+1. With supply output disabled, set 5.0 V and a 0.20 A current limit.
+2. Connect the 100 Ω load and set `pwmValue` to 26 (about 10%). Check wiring and diode/capacitor polarity.
+3. Connect oscilloscope ground to circuit GND. Never clip it to the switch node.
+4. Enable power and confirm the supply is not continuously in current limit. Test PWM values 26, 51, and 64 only (about 10%, 20%, and 25%). Turn the supply off before changing wiring.
+5. Measure VOUT DC and ripple. For the switch-node waveform, move only the probe tip and keep its ground at circuit GND.
+
+```cpp
+const int pwmValue = 26; // Try 26, 51, or 64 only: about 10%, 20%, or 25%.
+
+void setup()
+{
+    ledcSetup(0, 20000, 8);
+    ledcAttachPin(18, 0);
+}
+
+void loop()
+{
+    ledcWrite(0, pwmValue);
+}
+```
+
+Use the ESP32; the Arduino Uno default PWM frequency is not the specified 20 kHz.
+
+| Trace | Probe tip | Probe ground | Suggested setting |
+|-------|-----------|--------------|--------------------|
+| GPIO control | GPIO18 | Circuit GND | 2 V/div, 20 µs/div |
+| Switch node | Q1 drain | Circuit GND | 2 V/div, 20 µs/div |
+| Output | VOUT | Circuit GND | 2 V/div, DC coupling |
+
+### Results
+
+<div class="result-block">
+<table>
+  <thead><tr><th>PWM</th><th>Duty</th><th>Ideal V<sub>OUT</sub> (V)</th><th>Simscape V<sub>OUT</sub> (V)</th><th>Measured V<sub>OUT</sub> (V)</th></tr></thead>
+  <tbody>
+    <tr><td>26</td><td>10%</td><td>5.56</td><td><input class="result-input" id="lab07-exp2-vout10" placeholder="V"></td><td><input class="result-input" id="lab07-meas-vout10" placeholder="V"></td></tr>
+    <tr><td>51</td><td>20%</td><td>6.25</td><td><input class="result-input" id="lab07-exp2-vout20" placeholder="V"></td><td><input class="result-input" id="lab07-meas-vout20" placeholder="V"></td></tr>
+    <tr><td>64</td><td>25%</td><td>6.67</td><td><input class="result-input" id="lab07-exp2-vout25" placeholder="V"></td><td><input class="result-input" id="lab07-meas-vout25" placeholder="V"></td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Historical layout removed from the rendered lesson; do not restore it as a build guide.
 
 ### Breadboard Layout
 
@@ -601,7 +663,7 @@ Row connections (same row = internally linked):
 
 ---
 
-### Step-by-Step Wiring
+### Historical Wiring Notes — Not a Build Procedure
 
 1. Insert the **IRLZ44N MOSFET**: **Gate** at **row 3, col d**, **Drain** at **row 4, col d**, **Source** at **row 5, col d**. Verify G-D-S order from the pinout (Project 04).
 2. Connect a jumper wire from **ESP32 GND** to **row 6, col a**, then a short jumper from **row 6, col a** to **row 5, col d** (MOSFET Source).
@@ -627,7 +689,7 @@ The signal path will be:
 
 ---
 
-### Wiring Checklist
+### Historical Checklist — Not a Build Procedure
 
 Before uploading:
 
@@ -645,7 +707,7 @@ Before uploading:
 
 ---
 
-### ESP32 Code
+### Disabled ESP32 Sketch
 
 ```cpp
 void setup()
@@ -656,40 +718,18 @@ void setup()
 
 void loop()
 {
-    // Step through three duty cycles with a 3-second pause at each.
-    // Expected Vout = Vin / (1 - D) at each step.
-
-    ledcWrite(0, 64);    // ~25% duty cycle → Vout ≈ 4.4 V (ideal)
-    delay(3000);
-
-    ledcWrite(0, 128);   // ~50% duty cycle → Vout ≈ 6.6 V (ideal)
-    delay(3000);
-
-    ledcWrite(0, 192);   // ~75% duty cycle → simulation prediction only (~13.2 V ideal)
-    delay(3000);
+  ledcWrite(0, 0);     // Keep the power stage disabled; hardware test is deferred.
+  delay(1000);
 }
 ```
 
-> **Arduino Uno:** replace `ledcWrite(0, value)` with `analogWrite(9, value)` on pin 9.
+> The Arduino equivalent is omitted because this power-stage experiment is deferred.
 
 ---
 
-### Oscilloscope Settings — Output Voltage
+### Simulate the Output Voltage
 
-| Setting | OWON HDS272S | DSO Nano |
-|---------|--------------|----------|
-| Vertical scale | 2 V/div | 2 V/div |
-| Horizontal scale | 1 s/div | 1 s/div |
-| Trigger | Edge, Rising | Edge, Rising |
-| Coupling | DC | DC |
-
----
-
-### Observe
-
-The output voltage should step upward as duty cycle increases.
-
-Measure the average DC output at each step with a multimeter.
+Use the Simscape model from this lab. Compare its settled output with the ideal CCM prediction. Do not measure a physical boost output from the deferred layout.
 
 ---
 
@@ -697,7 +737,7 @@ Measure the average DC output at each step with a multimeter.
 
 <div class="result-block">
 <table>
-  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Expected V<sub>OUT</sub> (ideal)</th><th>Measured V<sub>OUT</sub> (V)</th></tr></thead>
+  <thead><tr><th>PWM Value</th><th>Duty Cycle</th><th>Ideal CCM reference (simulation)</th><th>Simscape V<sub>OUT</sub> (V)</th></tr></thead>
   <tbody>
     <tr><td>64</td><td>25%</td><td>4.4 V</td><td><input class="result-input" id="lab07-exp2-vout25" placeholder="V"></td></tr>
     <tr><td>128</td><td>50%</td><td>6.6 V</td><td><input class="result-input" id="lab07-exp2-vout50" placeholder="V"></td></tr>
@@ -705,38 +745,23 @@ Measure the average DC output at each step with a multimeter.
   </tbody>
 </table>
 </div>
+-->
 
 ---
 
-## Experiment 3 - Measure Output Ripple
+## Experiment 3 - Analyze Output Ripple
 
 ### Objective
 
-Observe output voltage ripple at the switching frequency.
+Compare output voltage ripple in the Simscape model and the physical boost converter at the switching frequency.
 
 ---
 
-### Connections
-
-1. Hook the **CH1 probe tip** to the **Vout node** (diode cathode / capacitor positive).
-2. Clip the **CH1 probe ground** to any **GND pin** on the ESP32.
-
-> Use AC coupling to isolate the ripple from the DC offset. Return to DC coupling before measuring absolute output voltage.
+Measure ripple at VOUT with the probe ground at circuit GND. For the switch-node waveform, move only the probe tip and keep ground at circuit GND. Do not exceed 25% duty or disconnect the load.
 
 ---
 
-### Oscilloscope Settings — Ripple
-
-| Setting | OWON HDS272S | DSO Nano |
-|---------|--------------|----------|
-| Vertical scale | 200 mV/div | 200 mV/div |
-| Horizontal scale | 500 µs/div | 500 µs/div |
-| Trigger | Edge, Rising | Edge, Rising |
-| Coupling | AC | AC |
-
----
-
-### Observe
+### Results
 
 The output should contain an average DC voltage plus a small ripple voltage.
 
@@ -744,10 +769,10 @@ Ripple occurs because the capacitor continuously charges and discharges.
 
 <div class="result-block">
 <table>
-  <thead><tr><th>Parameter</th><th>Measured</th></tr></thead>
+  <thead><tr><th>Parameter</th><th>Simulated</th><th>Measured</th></tr></thead>
   <tbody>
-    <tr><td>Peak-to-peak ripple (V)</td><td><input class="result-input" id="lab07-exp3-ripple" placeholder="V"></td></tr>
-    <tr><td>Ripple frequency (Hz)</td><td><input class="result-input" id="lab07-exp3-freq" placeholder="Hz"></td></tr>
+    <tr><td>Peak-to-peak ripple (V)</td><td><input class="result-input" id="lab07-exp3-ripple" placeholder="V"></td><td><input class="result-input" id="lab07-meas-ripple" placeholder="V"></td></tr>
+    <tr><td>Ripple frequency (Hz)</td><td><input class="result-input" id="lab07-exp3-freq" placeholder="Hz"></td><td><input class="result-input" id="lab07-meas-freq" placeholder="Hz"></td></tr>
   </tbody>
 </table>
 </div>
@@ -770,13 +795,13 @@ Ripple occurs because the capacitor continuously charges and discharges.
 
 ## MATLAB Comparison
 
-Overlay your measured output voltages against the ideal Boost Converter curve and compare with the Buck Converter results from Project 06.
+Overlay the simulated settled output voltages against the ideal CCM Boost curve and compare with the Buck simulation from Project 06.
 
 ```matlab
 Vin = 3.3;
 
-D_measured    = [0.25,  0.50,  0.75];
-Vout_measured = [0.00,  0.00,  0.00];   % replace with your measured voltages (V)
+D_simulated    = [0.25,  0.50,  0.75];
+Vout_simulated = [0.00,  0.00,  0.00];   % replace with settled Simscape values (V)
 
 D_ideal  = 0:0.001:0.95;
 Vout_ideal = Vin ./ (1 - D_ideal);
@@ -784,8 +809,8 @@ Vout_ideal = Vin ./ (1 - D_ideal);
 figure; hold on;
 plot(D_ideal, Vout_ideal, 'b--', 'LineWidth', 2, ...
     'DisplayName', 'Ideal: V_{OUT} = V_{IN}/(1-D)');
-scatter(D_measured, Vout_measured, 80, 'r', 'filled', ...
-    'DisplayName', 'Measured');
+scatter(D_simulated, Vout_simulated, 80, 'r', 'filled', ...
+  'DisplayName', 'Simulated');
 grid on;
 xlabel('Duty Cycle'); ylabel('Output Voltage (V)');
 title('Boost Converter - Ideal vs Measured');
@@ -793,13 +818,13 @@ legend('Location', 'northwest');
 ylim([0 25]);
 
 fprintf('%-8s %-12s %-12s %-14s %-12s\n', ...
-    'D', 'V_ideal(V)', 'V_meas(V)', 'Ratio_ideal', 'Ratio_meas');
+  'D', 'V_ideal(V)', 'V_sim(V)', 'Ratio_ideal', 'Ratio_sim');
 for i = 1:3
-    V_ideal  = Vin / (1 - D_measured(i));
+  V_ideal  = Vin / (1 - D_simulated(i));
     M_ideal  = V_ideal / Vin;
-    M_meas   = Vout_measured(i) / Vin;
+  M_sim    = Vout_simulated(i) / Vin;
     fprintf('%-8.2f %-12.2f %-12.2f %-14.2f %-12.2f\n', ...
-        D_measured(i), V_ideal, Vout_measured(i), M_ideal, M_meas);
+    D_simulated(i), V_ideal, Vout_simulated(i), M_ideal, M_sim);
 end
 ```
 
@@ -825,63 +850,41 @@ ylim([0 20]);
 
 ### Reflection
 
-- Is the measured Vout lower than ideal at all three duty cycles? Which duty cycle shows the largest absolute error?
+- Does the settled Simscape output follow the ideal CCM curve at all three duty cycles? If not, check whether the current remains continuous and whether the model has settled.
 - The Boost conversion ratio $M = V_{OUT}/V_{IN}$ becomes very sensitive to D near D = 1. Why is this a practical problem for control?
 - How does the inductor current waveform shape differ between the Buck (Project 06) and Boost converters?
 
 ---
 
-## Troubleshooting
+## Simulation Troubleshooting
 
-### Output Voltage Does Not Increase
+### Simulated Output Voltage Does Not Increase
 
-Check:
-
-✅ Inductor connected between 3.3V supply and MOSFET Drain (not between Drain and GND)
-
-✅ Diode orientation (anode at switch node, cathode toward Vout)
-
-✅ MOSFET Source connected to GND
+Check the Simscape connections: source-to-inductor-to-switch node, diode anode at the switch node, and diode cathode at Vout.
 
 ---
 
-### Excessive Ripple
+### Simulated Ripple Is Unexpected
 
-Check:
-
-✅ Capacitor value (100 µF)
-
-✅ Capacitor polarity (positive leg to Vout)
-
-✅ Load not drawing excessive current
+Check the simulated component values, load, switching frequency, and that the waveform is sampled finely enough to show switching ripple.
 
 ---
 
-### No PWM Observed
+### No Switching Signal in the Model
 
-Check:
-
-✅ Gate resistor connected between GPIO18 and MOSFET Gate
-
-✅ Code uploaded successfully
-
-✅ CH1 probe tip on MOSFET Gate, CH1 probe ground on ESP32 GND
+Check the Pulse Generator amplitude, period, pulse width, Simulink-PS conversion, and Ideal Switch control-port connection.
 
 ---
 
-### Troubleshooting Checklist
+### Simulation Checklist
 
-✅ PWM present at MOSFET gate
+✅ Pulse Generator produces the requested duty cycle and frequency
 
-✅ Inductor connected correctly (between supply and switch node)
+✅ Ideal Switch control uses the Simulink-PS converted signal
 
-✅ Diode orientation verified
+✅ Inductor and diode are connected to the intended boost switch node in Simscape
 
-✅ Capacitor polarity correct
-
-✅ Output voltage measured
-
-✅ Duty cycle affects output voltage
+✅ Simulated output and inductor current have reached steady state before recording values
 
 ---
 
@@ -919,7 +922,7 @@ What happens when duty cycle increases?
 
 ### Question 6
 
-The ideal Boost equation predicts Vout = 13.2 V at D = 0.75 with Vin = 3.3 V. Your measured value was lower. Apart from component losses, explain why the nonlinear gain curve makes the Boost Converter harder to control at high duty cycles than the Buck Converter.
+The ideal CCM equation predicts $V_{OUT}=13.2\ \mathrm{V}$ at $D=0.75$ with $V_{IN}=3.3\ \mathrm{V}$. Explain why this is only a simulation prediction in this course and why the ideal gain becomes very sensitive to duty-ratio changes near $D=1$.
 
 ---
 

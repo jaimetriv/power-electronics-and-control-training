@@ -1,5 +1,7 @@
 # Recommended Purchase Table (One-Page)
 
+> **Updated Lab 06-09 parts and UK price estimate:** use [purchase_plan_rs_uk.md](purchase_plan_rs_uk.md). The legacy table below predates the 5 V / 20 kHz converter redesign; do not use its 100 uH or IRLZ44N entries for Labs 06-07.
+
 ## Already Owned
 
 - OWON HDS272S

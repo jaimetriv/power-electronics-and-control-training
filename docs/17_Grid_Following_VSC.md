@@ -27,20 +27,14 @@ This is the capstone project for the course.
 
 ## Safety Notice
 
-```text
-MUST NOT be connected directly to mains power.
-```
+!!! danger "No grid connection"
+  Never connect this project to mains or connect the H-bridge output to the function generator. The generator supplies only a low-voltage PLL reference signal; the inverter drives only the separate 100 Ω load from the Lab 10 5 V / 100 mA current-limited stage. Grid current injection and current-loop tests remain simulation-only.
 
-All experiments must use low-voltage AC sources such as:
+For the physical PLL input, set a 50 Hz sine to no more than 1.0 V peak as measured on the scope before connecting the ESP32 interface. Use the biased, protected ADC interface below; never connect a bipolar generator output directly to an ESP32 ADC pin.
 
-- Function generators
-- Isolated AC laboratory supplies
+The repository does not include or validate ESP32 PLL firmware. The physical input exercise below verifies only the protected signal interface and ADC voltage range; phase tracking remains a Simulink exercise until validated firmware is supplied. The Lab 10 inverter demonstration uses its own fixed 50 Hz reference and is not synchronized to this input.
 
-Recommended AC test voltage:
-
-```text
-1 V to 10 V RMS
-```
+The physical scope of this project is the protected PLL input interface plus a separate Lab 10 load demonstration. The PLL and grid-current control algorithms remain simulation exercises.
 
 ---
 
@@ -118,19 +112,14 @@ Current Controller
 
 ## Hardware Overview
 
-The laboratory setup consists of:
+The physical exercises use two separate low-voltage circuits:
 
 ```text
-AC Source (function generator)
-      +
-Measurement System (voltage divider + current sensor)
-      +
-Controller (ESP32 DevKit V1)
-      +
-Inverter (H-Bridge MOSFETs + gate driver)
-      +
-Filter (L filter inductor)
+Function generator (≤1 V peak, 50 Hz) → protected biased ADC input at GPIO34
+Lab 10 fixed-reference SPWM → DRV8833 H-bridge (5 V, 100 mA limit) → LC filter → 100 Ω load
 ```
+
+These are separate demonstrations, not a PLL-to-inverter control loop. The two circuits share signal ground only. Do not wire the load or H-bridge output to the function generator. Grid current injection is simulation-only.
 
 ---
 
@@ -149,56 +138,35 @@ Filter (L filter inductor)
 
 ### Signal Generator (simulated grid)
 
-- FY6900, JDS6600, or any function generator
+- OWON HDS272S built-in generator or another isolated low-voltage source, adjusted and scope-verified to no more than 1.0 V peak at 50 Hz
 
 ### Current Sensor
 
-- ACS712 or ACS758
+- Current control and the 0.5-1.5 A grid-injection examples are simulation-only; an ACS712 5 A module is not suitable for accurate current measurement on the Lab 10 low-current load
 
 ### Voltage Measurement
 
-- Isolated or differential voltage sensor with an output limited to 0–3.3 V; alternatively, use a resistor divider with a verified mid-supply bias and input protection
+- PLL input interface: function-generator output through a 1 µF series capacitor and 10 kΩ resistor to GPIO34; 100 kΩ from GPIO34 to 3.3 V and 100 kΩ from GPIO34 to GND; lower Schottky clamp anode to GND/cathode to GPIO34, upper clamp anode to GPIO34/cathode to 3.3 V
+- Verify the biased ADC node stays between 0.3 V and 3.0 V over the full input waveform before running PLL firmware
 
 ### Inverter Stage
 
-- MOSFET H-Bridge (4 × IRLZ44N)
-- IR2104 or IR2110 gate driver
+- Reuse the Lab 10 DRV8833 breakout and 5 V / 100 mA current-limited supply for a separate resistor-load output demonstration
+- No physical grid-tie or current-injection bridge is defined here
 
 ### Filter
 
-- L filter: 1 mH to 5 mH inductor
+- Reuse the Lab 10 two-inductor / 1 µF differential output filter for the resistor-load measurement
 
 ---
 
 ## System Schematic
 
 ```text
-Function Generator (simulated grid)
-        │
-        ▼
-  Grid Voltage
-        │
-   ┌────┴────┐
-   ▼         ▼
-  PLL    Voltage Sensor
-   │
-   ▼
-Current Controller
-   │
-   ▼
-SPWM Generator
-   │
-   ▼
-H-Bridge Inverter
-   │
-   ▼
-L Filter
-   │
-   ▼
-Current Sensor
-   │
-   ▼
-Simulated Grid
+Signal source (≤1 V peak) → coupling capacitor / bias / clamps → ESP32 GPIO34
+Lab 10 fixed-reference SPWM → DRV8833 H-bridge → two-inductor LC filter → 100 Ω load
+
+The PLL algorithm and grid-current injection/current-control loop → Simulink only
 ```
 
 ---
@@ -340,7 +308,7 @@ All three are signal-only models — no Simscape electrical components are neede
 
 | Parameter | Value |
 |-----------|-------|
-| Amplitude | `5` |
+| Amplitude | `1` |
 | Frequency (rad/s) | `2*pi*50` |
 | Phase (rad) | `0` |
 
@@ -349,10 +317,10 @@ All three are signal-only models — no Simscape electrical components are neede
 | Parameter | Value |
 |-----------|-------|
 | Amplitude | `1` |
-| Frequency (rad/s) | `2*pi*10000` |
+| Frequency (rad/s) | `2*pi*20000` |
 | Phase (rad) | `pi/2` |
 
-> This uses a sine-carrier approximation for simplicity. Real SPWM uses a triangular carrier — for a true triangular carrier, replace this Sine Wave block with a **Repeating Sequence** block (Simulink → Sources) configured as a triangle wave at the same 10 kHz frequency.
+> This uses a sine-carrier approximation for simplicity. Real SPWM uses a triangular carrier — for a true triangular carrier, replace this Sine Wave block with a **Repeating Sequence** block (Simulink → Sources) configured as a triangle wave at the same 20 kHz frequency.
 
 #### Step 5 — Set Relational Operator parameters
 
@@ -480,7 +448,7 @@ Record the predicted rise time and overshoot before running Experiment 4.
   <tbody>
     <tr><td>Current controller rise time</td><td><input class="result-input" id="lab17-sim-rise" placeholder="s"></td></tr>
     <tr><td>Current controller overshoot (%)</td><td><input class="result-input" id="lab17-sim-os" placeholder="%"></td></tr>
-    <tr><td>SPWM carrier frequency (Hz)</td><td>10 000</td></tr>
+    <tr><td>SPWM carrier frequency (Hz)</td><td>20 000</td></tr>
     <tr><td>Grid frequency (Hz)</td><td>50</td></tr>
   </tbody>
 </table>
@@ -488,21 +456,21 @@ Record the predicted rise time and overshoot before running Experiment 4.
 
 ---
 
-## Experiment 1 - PLL Observation
+## Experiment 1 - PLL Input Interface
 
 ### Objective
 
-Measure the grid phase angle and verify PLL tracking.
+Build and verify the protected low-voltage input interface. PLL angle tracking is simulation-only because this repository does not include validated ESP32 PLL firmware.
 
 ---
 
 ### Procedure
 
-1. Set the function generator to output a **50 Hz sine wave** at **5 Vpeak**.
-2. Connect the function generator output to an isolated or differential voltage sensor. If using the ESP32 ADC, use a properly attenuated mid-supply-biased interface so the complete bipolar waveform remains between 0 V and 3.3 V; a divider to ground alone is not safe for the negative half-cycle.
-3. Upload PLL code to the ESP32.
-4. Connect the oscilloscope probe to the function generator output.
-5. Observe zero crossings and verify the PLL is tracking the grid angle.
+1. Set the function generator to a 50 Hz sine wave and adjust it to no more than **1.0 V peak**. Measure its actual output with the oscilloscope before wiring it to the ESP32.
+2. Connect generator output through a 1 µF series capacitor and 10 kΩ resistor to GPIO34. Connect 100 kΩ from GPIO34 to 3.3 V and 100 kΩ from GPIO34 to GND.
+3. Add a lower Schottky clamp with anode at GND and cathode at GPIO34, and an upper clamp with anode at GPIO34 and cathode at 3.3 V.
+4. Connect generator return, ESP32 GND, and scope ground to the same signal ground. Keep the generator connected only to the protected input; never connect it to either H-bridge output.
+5. Before connecting GPIO34, measure the node relative to GND and verify the complete waveform stays between 0.3 V and 3.0 V. Record its frequency and voltage range. Keep PLL angle tracking in Simulink; the function generator is only a low-voltage signal source, not a grid source.
 
 ---
 
@@ -513,15 +481,13 @@ Measure the grid phase angle and verify PLL tracking.
 | Vertical scale | 1 V/div | 1 V/div |
 | Horizontal scale | 5 ms/div | 5 ms/div |
 | Trigger | Edge, Rising | Edge, Rising |
-| Coupling | AC | AC |
+| Coupling | DC | DC |
 
 ---
 
 ### Observe
 
-The oscilloscope should show a stable 50 Hz sine wave.
-
-The Serial Monitor should show the estimated grid angle increasing from 0 to 2π and wrapping around.
+The scope should show the input sine wave and its biased GPIO34 waveform relative to GND. No Serial Monitor angle trace is available because this repository does not include PLL firmware.
 
 ---
 
@@ -532,8 +498,8 @@ The Serial Monitor should show the estimated grid angle increasing from 0 to 2π
   <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
   <tbody>
     <tr><td>Measured grid frequency</td><td><input class="result-input" id="lab17-exp1-freq" placeholder="Hz"></td></tr>
-    <tr><td>PLL lock time</td><td><input class="result-input" id="lab17-exp1-locktime" placeholder="s"></td></tr>
-    <tr><td>Steady-state phase error</td><td><input class="result-input" id="lab17-exp1-phaseerr" placeholder="deg"></td></tr>
+    <tr><td>GPIO34 minimum voltage</td><td><input class="result-input" id="lab17-exp1-vmin" placeholder="V"></td></tr>
+    <tr><td>GPIO34 maximum voltage</td><td><input class="result-input" id="lab17-exp1-vmax" placeholder="V"></td></tr>
   </tbody>
 </table>
 </div>
@@ -544,15 +510,15 @@ The Serial Monitor should show the estimated grid angle increasing from 0 to 2π
 
 ### Objective
 
-Generate a sinusoidal PWM pattern synchronised to the grid angle.
+Observe the Lab 10 SPWM output. Its 50 Hz reference is fixed locally and is not synchronized to the PLL input.
 
 ---
 
 ### Procedure
 
-1. Upload SPWM generation code to the ESP32.
-2. Connect the oscilloscope probe to the PWM output pin.
-3. Set horizontal scale to **2 ms/div** to observe the varying pulse widths.
+1. Use the Lab 10 two-input SPWM sketch, which generates a fixed 50 Hz reference with a 20 kHz carrier; do not treat this output as PLL-synchronized.
+2. Connect a scope probe tip to GPIO18 or GPIO19 and its ground clip to circuit GND only.
+3. Set horizontal scale to **2 ms/div** for the 50 Hz envelope; use a shorter time base to inspect the carrier pulses.
 
 ---
 
@@ -583,8 +549,8 @@ Measure:
 <table>
   <thead><tr><th>Parameter</th><th>Expected</th><th>Measured</th></tr></thead>
   <tbody>
-    <tr><td>PWM carrier frequency</td><td>~500 Hz</td><td><input class="result-input" id="lab17-exp2-carrier" placeholder="Hz"></td></tr>
-    <tr><td>Modulation index</td><td>~1.0</td><td><input class="result-input" id="lab17-exp2-modindex" placeholder=""></td></tr>
+    <tr><td>PWM carrier frequency</td><td>~20 kHz</td><td><input class="result-input" id="lab17-exp2-carrier" placeholder="Hz"></td></tr>
+    <tr><td>Modulation index</td><td>~0.4 for the Lab 10 low-voltage output demonstration</td><td><input class="result-input" id="lab17-exp2-modindex" placeholder=""></td></tr>
     <tr><td>Output period</td><td>~20 ms</td><td><input class="result-input" id="lab17-exp2-period" placeholder="ms"></td></tr>
   </tbody>
 </table>
@@ -603,9 +569,13 @@ Measure the filtered inverter output voltage.
 ### Connections
 
 ```text
-Probe Tip  ──────► Inverter output (after L filter)
-Probe GND  ──────► Circuit GND
+CH1 tip ─────────► Filtered OUT_A
+CH2 tip ─────────► Filtered OUT_B
+Both probe grounds ─► Circuit GND
+Scope math ──────► CH1 − CH2 (differential load voltage)
 ```
+
+Reuse the Lab 10 5 V / 100 mA DRV8833 stage and 100 Ω load. Do not connect the inverter output to the function generator or to mains.
 
 ---
 
@@ -629,13 +599,16 @@ Probe GND  ──────► Circuit GND
 
 ### Objective
 
-Regulate the injected current to a series of reference values and verify tracking.
+Simulate grid-current regulation and verify tracking. No physical grid-current injection is defined in this lab.
+
+!!! info "Simulation only"
+  Use the 0.5 A, 1.0 A, and 1.5 A setpoints only in the Simulink current-controller model. Do not connect the inverter output to a function generator, AC source, or mains, and do not apply these setpoints to the Lab 10 low-current driver/load.
 
 ---
 
 ### Setpoint Tests
 
-Test the following current references:
+In the Simulink current-controller model, test the following references:
 
 ```text
 0.5 A
@@ -645,7 +618,7 @@ Test the following current references:
 1.5 A
 ```
 
-For each setpoint, record the measured current from the ACS712 sensor.
+For each setpoint, record the simulated current response. Do not use an ACS712 5 A module to measure the Lab 10 low-current load.
 
 ---
 
@@ -653,7 +626,7 @@ For each setpoint, record the measured current from the ACS712 sensor.
 
 <div class="result-block">
 <table>
-  <thead><tr><th>Current Reference</th><th>Measured Current</th></tr></thead>
+  <thead><tr><th>Current Reference (simulation)</th><th>Simulated Current</th></tr></thead>
   <tbody>
     <tr><td>0.5 A</td><td><input class="result-input" id="lab17-exp4-i05" placeholder="A"></td></tr>
     <tr><td>1.0 A</td><td><input class="result-input" id="lab17-exp4-i10" placeholder="A"></td></tr>
@@ -666,7 +639,7 @@ For each setpoint, record the measured current from the ACS712 sensor.
 
 ## MATLAB Comparison
 
-After completing the experiments, enter your measured current tracking data and compare against the simulated PI response.
+After completing Experiment 4 in Simulink, enter its current tracking data and compare against the PI response model. This script does not represent a physical grid connection.
 
 ```matlab
 % Enter your system parameters
@@ -727,11 +700,11 @@ fprintf('Grid frequency error:   %.3f %%\n', abs(f_meas-f_grid)/f_grid*100);
 
 Check:
 
-✅ Signal generator connected and outputting 50 Hz sine wave
+✅ Signal generator output is 50 Hz and no more than 1.0 V peak
 
-✅ Voltage divider scaling signal to ADC range
+✅ GPIO34 input node is biased and stays between 0.3 V and 3.0 V
 
-✅ PLL PI gains appropriate
+PLL firmware is not included in this repository; verify tracking in the Simulink model.
 
 ---
 
@@ -757,21 +730,17 @@ Check:
 
 ### Troubleshooting Checklist
 
-✅ Grid signal available from function generator
+✅ Function generator limited to a scope-verified 1.0 V peak or less
 
-✅ PLL locked (angle tracking visible in Serial Monitor)
+✅ GPIO34 input verified between 0.3 V and 3.0 V before connection
 
-✅ SPWM operating (varying pulse widths visible on oscilloscope)
+✅ Lab 10 fixed-reference SPWM observed separately from the PLL input
 
-✅ H-Bridge switching correctly
+✅ DRV8833 H-bridge connected to the 100 Ω load with a 5 V / 100 mA supply limit
 
-✅ L filter installed
+✅ Differential output measured with both probe grounds at circuit GND and CH1−CH2 math
 
-✅ Current sensor operating
-
-✅ Current tracking reference
-
-✅ Stable system operation
+✅ Grid current injection and current-loop tests kept in Simulink only
 
 ---
 

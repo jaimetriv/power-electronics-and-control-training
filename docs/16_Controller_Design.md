@@ -225,11 +225,11 @@ Oscillations continue growing or never settle.
 
 ### Effect of Increasing Kd
 
-✅ Improves damping
+✅ Can shape the transient response and reduce overshoot for a suitable plant and implementation
 
-✅ Reduces overshoot
+❌ Does not guarantee improved damping or lower overshoot
 
-❌ Can increase sensitivity to noise
+❌ Can increase sensitivity to measurement noise and sampling effects
 
 ---
 

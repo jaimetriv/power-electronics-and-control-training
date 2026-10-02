@@ -176,13 +176,13 @@ $$
 \boxed{V_{avg,FW} = \frac{2V_{PEAK}}{\pi} \approx 0.637\,V_{PEAK}}
 $$
 
-With two diode drops in series (bridge rectifier), the practical value is:
+With two diode drops in series (bridge rectifier), a rough high-input approximation is:
 
 $$
 V_{avg,FW} = \frac{2(V_{PEAK} - 2V_f)}{\pi}
 $$
 
-where $V_f \approx 0.7\ \text{V}$ per diode.
+where $V_f \approx 0.7\ \text{V}$ per diode. This approximation does not model the shortened conduction interval near the zero crossings; a capacitor-input supply has a different waveform and average, treated separately below.
 
 ---
 
@@ -403,7 +403,7 @@ You will build two models:
 |-------|-------------|----------|
 | AC Voltage Source | Simscape → Electrical → Sources | 1 |
 | Diode | Simscape → Electrical → Semiconductors & Converters | 1 |
-| Resistor | Simscape → Electrical → Passives | 1 |
+| Resistor | Simscape → Electrical → Passives | 2 (source and load) |
 | Voltage Sensor | Simscape → Electrical → Sensors | 1 |
 | Electrical Reference | Simscape → Electrical → Electrical Elements | 1 |
 | PS-Simulink Converter | Simscape → Utilities | 1 |
@@ -416,7 +416,7 @@ Double-click the AC Voltage Source block:
 
 | Parameter | Value |
 |-----------|-------|
-| Peak amplitude | `10` V |
+| Peak amplitude | `8.5` V |
 | Phase shift | `0` deg |
 | Frequency | `50` Hz |
 | DC offset | `0` V |
@@ -432,17 +432,20 @@ Double-click the Diode block:
 
 #### Step 5 — Set Resistor parameter
 
-| Parameter | Value |
-|-----------|-------|
-| Resistance | `1000` Ω |
+Configure the two Resistor blocks:
+
+| Resistor | Resistance |
+|----------|------------|
+| Source resistor | `47` Ω |
+| Load resistor | `1000` Ω |
 
 #### Step 6 — Wire the half-wave circuit
 
 Connect in series:
 
 ```text
-AC Voltage Source (+) → Diode (+) → Diode (−) → Resistor (p)
-Resistor (n) → AC Voltage Source (−) → Electrical Reference
+AC Voltage Source (+) → 47 Ω source resistor → Diode (+) → Diode (−) → 1 kΩ load (p)
+1 kΩ load (n) → AC Voltage Source (−) → Electrical Reference
 ```
 
 Connect the Voltage Sensor across the Resistor:
@@ -458,7 +461,7 @@ Connect: `Voltage Sensor (V) → PS-Simulink Converter → Scope`
 
 #### Step 7 — Wiring checklist
 
-✅ AC Voltage Source (+) to Diode anode (+)
+✅ AC Voltage Source (+) passes through the 47 Ω source resistor to the Diode anode
 
 ✅ Diode cathode (−) to Resistor (p)
 
@@ -492,6 +495,8 @@ Only positive half-cycles appear. Negative half-cycles are blocked by the diode.
 ---
 
 ### Model 2 — Bridge Rectifier with Smoothing Capacitor
+| Resistor | Simscape → Electrical → Passives | 2 |
+| Peak amplitude | `8.5` V |
 
 #### Step 1 — Create a new Simulink model
 
@@ -504,7 +509,7 @@ Only positive half-cycles appear. Negative half-cycles are blocked by the diode.
 |-------|-------------|----------|
 | AC Voltage Source | Simscape → Electrical → Sources | 1 |
 | Diode | Simscape → Electrical → Semiconductors & Converters | 4 |
-| Resistor | Simscape → Electrical → Passives | 1 |
+| Resistor | Simscape → Electrical → Passives | 2 (source and load) |
 | Capacitor | Simscape → Electrical → Passives | 1 |
 | Voltage Sensor | Simscape → Electrical → Sensors | 1 |
 | Electrical Reference | Simscape → Electrical → Electrical Elements | 1 |
@@ -518,7 +523,7 @@ AC Voltage Source:
 
 | Parameter | Value |
 |-----------|-------|
-| Peak amplitude | `10` V |
+| Peak amplitude | `8.5` V |
 | Frequency | `50` Hz |
 | Phase shift | `0` deg |
 | DC offset | `0` V |
@@ -530,7 +535,9 @@ All four Diodes:
 | Forward voltage | `0.7` V |
 | On resistance | `0.01` Ω |
 
-Resistor: `1000` Ω
+Source resistor: `47` Ω in series with one AC source lead.
+
+Load resistor: `1000` Ω.
 
 Capacitor: `100e-6` F (change to `470e-6` for the second test)
 
@@ -539,7 +546,7 @@ Capacitor: `100e-6` F (change to `470e-6` for the second test)
 Label four nodes for clarity: **AC+**, **AC−**, **DC+**, **DC−**.
 
 ```text
-AC Voltage Source (+) → AC+ node
+AC Voltage Source (+) → 47 Ω source resistor → AC+ node
 AC Voltage Source (−) → AC− node
 
 D1: anode → AC+,  cathode → DC+
@@ -627,7 +634,7 @@ Expected output: further reduced ripple compared to 100 µF.
 Run the MATLAB script below to calculate theoretical values, then complete the table before doing the hardware experiments.
 
 ```matlab
-Vpeak = 10;
+Vpeak = 8.5;
 Vf    = 0.7;          % diode forward voltage drop
 f     = 50;
 R     = 1000;
@@ -645,7 +652,7 @@ fprintf('Ripple with 100 uF:      %.2f V\n', Vripple_100);
 fprintf('Ripple with 470 uF:      %.2f V\n', Vripple_470);
 ```
 
-Set the OWON HDS272S waveform generator to: **10 Vpeak, 50 Hz, sine wave**
+The physical source is **6 V AC RMS**, approximately **8.5 V peak**, at 50 Hz. The Simscape models include a 47 Ω source resistor; the simple MATLAB waveform calculation is idealized and does not include diode drops or source resistance.
 
 <div class="result-block">
 <table>
@@ -663,14 +670,15 @@ Set the OWON HDS272S waveform generator to: **10 Vpeak, 50 Hz, sine wave**
 
 ## Components Required
 
-- 4 × 1N4001–1N4007 diodes
-- 100 µF electrolytic capacitor
-- 470 µF electrolytic capacitor
-- 1 kΩ load resistor
-- OWON HDS272S Oscilloscope with built-in waveform generator (AC source — set to 10 Vpeak, 50 Hz, sine)
-- DSO Nano Oscilloscope (compatible, requires separate signal generator)
-- Multimeter
+- 4 × 1N4007 diodes (1 A, 1000 V reverse rating; use all four for the bridge)
+- 100 µF and 470 µF electrolytic capacitors, each rated at least 25 V
+- 1 kΩ, 0.5 W load resistor
+- 250 mA time-delay fuse and inline holder for one secondary lead; fuse rated at least 32 V
+- 47 Ω, 5 W series resistor on one transformer secondary lead
+- Enclosed, safety-approved plug-in AC adapter with isolated SELV output: 6 V AC RMS, 50 Hz, rated at least 250 mA (1.5 VA), overload protected, and no-load output no higher than 9 V AC RMS; students handle only insulated secondary leads
 - Breadboard and jumper wires
+- Multimeter
+- OWON HDS272S oscilloscope and a 10:1 probe
 
 ---
 
@@ -680,33 +688,34 @@ Set the OWON HDS272S waveform generator to: **10 Vpeak, 50 Hz, sine wave**
 DO NOT CONNECT DIRECTLY TO MAINS VOLTAGE
 ```
 
-For laboratory work use only the OWON HDS272S built-in waveform generator output or another isolated low-voltage AC source.
+For the physical build, use only the isolated 6 V AC output from the enclosed plug-in adapter specified above. Fit the 250 mA fuse and 47 Ω resistor in series with one secondary lead before connecting the rectifier. Students must not open the adapter or handle mains wiring. Do not use the OWON waveform generator to power the rectifier circuit unless its output voltage, current rating, and isolation have been verified from the instrument manual. Never connect any part of this circuit to mains.
 
 ---
 
 ## Experiment 1 - Measure AC Voltage
+Measure the isolated 6 V AC adapter output before connecting the rectifier.
 
 ### Objective
 
-Observe and measure the AC waveform from the OWON HDS272S waveform generator before any rectification.
+Observe and measure the selected isolated AC source before any rectification.
 
 ---
 
 ### Connections
 
-> Set the OWON HDS272S waveform generator to **10 Vpeak, 50 Hz, sine** before connecting.
+The specified source is **6 V AC RMS at 50 Hz**, approximately **8.5 V peak**. The Simscape source and MATLAB calculation should use 8.5 V peak. Measure the unloaded adapter output before wiring the rectifier; unregulated adapters may read higher than their rated voltage with no load.
 
-1. Insert the **CH1 probe BNC** into CH1 on the OWON HDS272S.
-2. Hook the **CH1 probe tip** to the **GEN OUT terminal** on the OWON HDS272S.
-3. Clip the **CH1 probe ground** to the **GEN GND terminal**.
+1. Keep the adapter closed and use only its insulated low-voltage output leads.
+2. Insert the **CH1 probe BNC** into CH1 on the oscilloscope.
+3. Connect the **CH1 probe tip** to secondary lead A and the probe ground to secondary lead B.
 
 ```text
-CH1 socket  ◄──── BNC connector
-GEN OUT     ◄──── CH1 probe tip
-GEN GND     ◄──── CH1 probe ground
+CH1 socket                  ◄──── BNC connector
+Transformer secondary lead A ◄──── CH1 probe tip
+Transformer secondary lead B ◄──── CH1 probe ground
 ```
 
-> Verifying the generator output before adding any circuit components avoids wiring errors.
+> Confirm approximately 6 V RMS (8.5 V peak) at 50 Hz before adding any circuit components.
 
 ---
 
@@ -759,46 +768,30 @@ Observe half-wave rectification and measure the average DC output.
 ### Circuit Diagram
 
 ```text
-OWON HDS272S waveform generator (+)
+Transformer secondary A
     │
-   1N4007 diode (anode toward waveform generator)
+  250 mA fuse
     │
-    ├──── Probe Tip
+  47 Ω, 5 W series resistor
     │
-   1 kΩ load resistor
-    │
-OWON HDS272S waveform generator GND ──── Probe GND
+  D1 1N4007 (anode)
+  D1 cathode ──────── VOUT ─── CH1 tip
+                         │
+                    1 kΩ, 0.5 W
+                         │
+Transformer secondary B ─┴──── CH1 ground
 ```
 
----
-
-### Breadboard Layout
-
-```
-       a      b      c      d      e
-     ┌─────────────────────────────────────┐
- 4   │ [●]   [ ]   [ ]   [ ]   [A]       │ ← GEN OUT → a4, Diode anode e4  (same row)
- 5   │ [ ]   [ ]   [ ]   [ ]   [│]       │  1N4007 diode body
- 6   │ [ ]   [ ]   [┐]   [ ]   [K]       │ ← Diode cathode e6 = Resistor top c6 = VOUT  (same row)
- 7   │ [ ]   [ ]   [│]   [ ]   [ ]       │  1 kΩ resistor body
- 8   │ [●]   [ ]   [┘]   [ ]   [ ]       │ ← GEN GND → a8, Resistor bottom c8  (same row)
-     └─────────────────────────────────────┘
-```
-
-`[A]` = anode (unmarked end); `[K]` = cathode (banded end). Current flows A → K.
-
-Row 6 is the **VOUT junction** (diode cathode e6 and resistor top c6 share the same row — no jumper needed).
+Use separate breadboard rows for the source resistor, diode, VOUT junction, and load. Do not place both ends of a component into the same connected five-hole row.
 
 ---
 
 ### Step-by-Step Wiring
 
-1. Insert the **1N4007 diode** vertically: **anode** (unmarked end) in **row 4, column e**, **cathode** (banded end) in **row 6, column e**.
-2. Connect a jumper wire from the **OWON GEN OUT terminal** to **row 4, column a** (same row as diode anode).
-3. Insert the **1 kΩ resistor** vertically: one leg in **row 6, column c**, other in **row 8, column c**. Row 6 connects to the diode cathode (same row = VOUT junction).
-4. Connect a jumper wire from the **OWON GEN GND terminal** to **row 8, column a** (same row as resistor bottom).
-5. Hook the **CH1 probe tip** to any hole in **row 6** (VOUT junction).
-6. Clip the **CH1 probe ground** to **row 8** or directly to the GEN GND terminal.
+1. With the transformer disconnected, place D1 so its anode and banded cathode occupy separate breadboard rows.
+2. Connect transformer secondary A through the 250 mA time-delay fuse and then the 47 Ω, 5 W resistor to D1's anode.
+3. Connect D1's banded cathode to VOUT. Connect the 1 kΩ, 0.5 W load between VOUT and transformer secondary B.
+4. Connect the CH1 probe tip to VOUT and the ground clip to secondary B. This source is isolated low voltage; do not use the setup with any mains-connected circuit.
 
 ---
 
@@ -806,15 +799,15 @@ Row 6 is the **VOUT junction** (diode cathode e6 and resistor top c6 share the s
 
 Before applying power:
 
-✅ Diode anode connected toward signal generator (+)
+✅ Transformer secondary A connected through the 47 Ω series resistor to diode anode
 
 ✅ Diode cathode connected toward load resistor
 
-✅ Load resistor connected between diode cathode and GND
+✅ 1 kΩ load connected between diode cathode and secondary B
 
 ✅ CH1 probe tip at row 6 (VOUT = diode cathode / resistor top junction)
 
-✅ CH1 probe ground at row 8 or GEN GND terminal
+✅ CH1 probe ground at transformer secondary B
 
 ---
 
@@ -867,8 +860,8 @@ Observe full-wave rectification using a bridge of four diodes.
 ### Circuit Diagram
 
 ```text
-OWON HDS272S waveform generator (+) ──── D1 anode
-OWON HDS272S waveform generator (−) ──── D3 anode
+Transformer secondary A ── 250 mA fuse ── 47 Ω / 5 W ── AC(+)
+Transformer secondary B ──────────────── AC(−)
 
 D1 cathode ──┬── D2 cathode ──── DC (+) output
              │
@@ -898,17 +891,17 @@ The standard bridge arrangement:
 
 ### Step-by-Step Wiring
 
-1. Insert all four 1N4007 diodes into the breadboard, each in a separate row.
+1. With the transformer disconnected, insert all four 1N4007 diodes into the breadboard, each in a separate row.
 2. Connect the bridge as follows:
    - **D1**: anode to AC(+), cathode to DC(+) rail
    - **D2**: anode to AC(−), cathode to DC(+) rail
    - **D3**: anode to DC(−) rail, cathode to AC(+)
    - **D4**: anode to DC(−) rail, cathode to AC(−)
 3. Connect the **1 kΩ load resistor** between the DC(+) rail and the DC(−) rail.
-4. Connect the **OWON HDS272S waveform generator (+)** to the AC(+) node and **(−)** to the AC(−) node.
-5. Hook the **CH1 probe tip** to the DC(+) rail. Clip the **CH1 probe ground** to the DC(−) rail.
+4. Connect transformer secondary lead A through the **250 mA time-delay fuse** and **47 Ω, 5 W series resistor** to AC(+); connect secondary lead B directly to AC(−). Keep the adapter closed and use only its insulated output leads.
+5. Hook the **CH1 probe tip** to the DC(+) rail. Clip the **CH1 probe ground** to the DC(−) rail. Keep the probe ground there for all bridge measurements.
 
-> Tip: The DC(−) rail is the common reference. Connect the waveform generator GND and oscilloscope probe GND both to this point.
+> Tip: The transformer secondary is isolated and low voltage. Connect the oscilloscope probe ground to DC(−) only. Do not connect the scope ground to an AC bridge terminal while also grounding DC(−), and do not connect this circuit to mains.
 
 ---
 
@@ -923,6 +916,8 @@ Before applying power:
 ✅ DC(−) rail connected to both D3 and D4 anodes
 
 ✅ Load resistor between DC(+) and DC(−)
+
+✅ Transformer secondary A reaches AC(+) through the 250 mA fuse and 47 Ω resistor; secondary B reaches AC(−)
 
 ✅ CH1 probe tip at DC(+), CH1 probe ground at DC(−)
 
@@ -1040,7 +1035,8 @@ Then replace the 100 µF capacitor with the **470 µF** capacitor and observe th
 Now overlay your measured waveform parameters against the simulated predictions.
 
 ```matlab
-Vpeak = 10; f = 50; R = 1000;
+Vpeak = 8.5; f = 50; R = 1000;
+Vpeak = 8.5; f = 50; R = 1000;
 t = 0:0.0001:0.1;
 v_ac = Vpeak * sin(2*pi*f*t);
 v_fw = abs(v_ac);
@@ -1128,9 +1124,7 @@ Check:
 
 ### Troubleshooting Checklist
 
-✅ Signal generator connected and set to 10 Vpeak, 50 Hz, sine
-
-> Use the OWON HDS272S built-in waveform generator output.
+✅ Isolated source set within its output rating; use the same measured peak voltage in predictions
 
 ✅ Diodes oriented correctly
 

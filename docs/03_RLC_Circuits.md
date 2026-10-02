@@ -142,11 +142,13 @@ $$
 \omega_n = \frac{1}{\sqrt{LC}} \qquad \zeta = \frac{R}{2}\sqrt{\frac{C}{L}}
 $$
 
-The poles of $H(s)$ are:
+For an underdamped system ($\zeta<1$), the poles are complex conjugates:
 
 $$
-s_{1,2} = -\zeta\omega_n \pm \omega_n\sqrt{\zeta^2 - 1}
+s_{1,2}=-\zeta\omega_n\pm j\omega_n\sqrt{1-\zeta^2}
 $$
+
+For $\zeta\geq1$, the poles are real and are given by $s_{1,2}=-\zeta\omega_n\pm\omega_n\sqrt{\zeta^2-1}$.
 
 - $\zeta < 1$: complex conjugate poles → underdamped (oscillatory)
 - $\zeta = 1$: repeated real pole → critically damped
@@ -461,7 +463,7 @@ Change the **Resistor** value and re-run for each experiment:
 | Experiment | R value | Expected response |
 |------------|---------|------------------|
 | Experiment 1 & 2 | 100 Ω | Moderate ringing, ~5–10 cycles visible |
-| Experiment 3 | 470 Ω | Little or no ringing, fast decay |
+| Experiment 3 | 470 Ω | Strongly damped but still underdamped; ringing decays faster than at 100 Ω |
 | Experiment 4 | 47 Ω | Strong ringing, many cycles visible |
 
 ---
@@ -496,7 +498,7 @@ Record your predictions before measuring:
   <tbody>
     <tr><td>47 Ω</td><td><input class="result-input" id="lab03-sim-zeta47" placeholder=""></td><td><input class="result-input" id="lab03-sim-beh47" placeholder="e.g. Strong ringing"></td></tr>
     <tr><td>100 Ω</td><td><input class="result-input" id="lab03-sim-zeta100" placeholder=""></td><td><input class="result-input" id="lab03-sim-beh100" placeholder="e.g. Moderate ringing"></td></tr>
-    <tr><td>470 Ω</td><td><input class="result-input" id="lab03-sim-zeta470" placeholder=""></td><td><input class="result-input" id="lab03-sim-beh470" placeholder="e.g. Little ringing"></td></tr>
+    <tr><td>470 Ω</td><td>0.235</td><td><input class="result-input" id="lab03-sim-beh470" placeholder="Underdamped, faster decay"></td></tr>
   </tbody>
 </table>
 </div>
@@ -757,7 +759,7 @@ Describe the waveform compared to Experiment 1:
   <thead><tr><th>Resistance</th><th>Ringing Observed</th></tr></thead>
   <tbody>
     <tr><td>100 Ω</td><td><input class="result-input" id="lab03-exp3-ring100" placeholder="e.g. Moderate"></td></tr>
-    <tr><td>470 Ω</td><td><input class="result-input" id="lab03-exp3-ring470" placeholder="e.g. Little / None"></td></tr>
+    <tr><td>470 Ω</td><td><input class="result-input" id="lab03-exp3-ring470" placeholder="Strongly damped ringing"></td></tr>
   </tbody>
 </table>
 </div>
@@ -800,7 +802,7 @@ Describe the waveform compared to Experiments 1 and 3:
   <tbody>
     <tr><td>47 Ω</td><td>Low</td><td><input class="result-input" id="lab03-exp4-resp47" placeholder="e.g. Strong ringing"></td></tr>
     <tr><td>100 Ω</td><td>Medium</td><td><input class="result-input" id="lab03-exp4-resp100" placeholder="e.g. Moderate ringing"></td></tr>
-    <tr><td>470 Ω</td><td>High</td><td><input class="result-input" id="lab03-exp4-resp470" placeholder="e.g. Overdamped"></td></tr>
+    <tr><td>470 Ω</td><td>Higher, but $\zeta<1$</td><td><input class="result-input" id="lab03-exp4-resp470" placeholder="Underdamped, faster decay"></td></tr>
   </tbody>
 </table>
 </div>

@@ -89,24 +89,37 @@ The following areas are well covered by your current hardware:
 
 These are the most important missing items for Buck, Boost, chopper and control labs:
 
-- IRLZ44N logic-level MOSFETs
+- AO3401A P-channel MOSFETs and AO3400A N-channel MOSFETs on labeled SOT-23-to-breadboard breakout boards for Labs 06-07
+- One DRV8833 H-bridge breakout with labeled pins and 3.3 V logic compatibility for Labs 10, 17, and 18
+- IRLZ44N logic-level MOSFETs for later experiments only when the required gate voltage is provided
 - 1N4007 diodes
 - 1N5819 Schottky diodes
-- 100 nF ceramic capacitors
-- 100 uF electrolytic capacitors
-- 220 uF electrolytic capacitors
-- 470 uF electrolytic capacitors
-- 100 uH inductors
-- Resistor assortment including 47R, 100R, 220R, 1k, 10k, 22k, 47k
+- 100 nF ceramic capacitors (at least 2)
+- 100 uF / 10 V electrolytic capacitors (at least 2 for Lab 06 input/output)
+- 220 uF / 16 V electrolytic capacitors (at least 2 for Lab 07 input/output)
+- 470 uF / 25 V electrolytic capacitor (Lab 09 ripple comparison)
+- 1 mH inductors rated for at least 0.5 A saturation current, no more than 1 Ω DCR, and at least 200 kHz self-resonant frequency; plan for 3 total (one shared by Labs 06-07, two matched for Labs 10/17/18)
+- 1 µF film capacitor rated at least 25 V for the differential inverter filter
+- Resistor assortment including 47 Ω / 1 W, 100 Ω / 1 W, 150 Ω, 1 kΩ, 2.2 kΩ, 10 kΩ, 22 kΩ, 47 kΩ, and 100 kΩ
 - Digital multimeter if you do not already have a reliable one
 
 ## Priority 2 - Power and Converter Support
 
 These items become important once you move into Buck/Boost and regulated converter work:
 
-- Bench power supply
+- Isolated, floating-output DC bench supply: 0-30 V, 0-3 A, constant-voltage and constant-current operation, adjustable current limit with 10 mA or finer resolution, output enable, and over-current/over-voltage protection. Set 5.0 V / 0.20 A for Labs 06-07 and 5.0 V / 0.35 A maximum for Lab 08; do not use these maximum settings without checking each load's rating.
+- Enclosed, safety-approved plug-in AC adapter for Lab 09: 6 V AC RMS, 50 Hz, at least 250 mA (1.5 VA), isolated SELV output, overload protected, and no-load voltage no higher than 9 V AC RMS. Students must not open it or handle mains wiring.
 - Additional 10 uF electrolytic capacitors
 - Power resistors or a simple load set for converter loading
+- Lab 06: AO3401A P-MOSFET breakout, 2N2222 NPN, 1N5819, 1 mH inductor (≥0.5 A saturation, ≤1 Ω DCR, ≥200 kHz self-resonance), two 100 uF / 10 V capacitors, 100 nF bypass capacitor, 47 Ω / 1 W load, 2.2 kΩ, 1 kΩ, 100 Ω, and 100 kΩ resistors
+- Lab 07: AO3400A N-MOSFET breakout, 1N5819, 1 mH inductor (≥0.5 A saturation, ≤1 Ω DCR, ≥200 kHz self-resonance), two 220 uF / 16 V capacitors, 100 nF bypass capacitor, 100 Ω / 1 W load, 100 Ω gate resistor, and 100 kΩ gate-to-source resistor
+- Lab 08 motor: 3-6 V brushed gearmotor with stall current no greater than 300 mA, 1N5819 flyback diode, and 100 Ω / 100 kΩ gate resistors
+- Lab 08 pulse pickup: TCRT5000 reflective sensor, 12-mark reflective wheel, 150 Ω IR-LED resistor, and 10 kΩ pull-up to 3.3 V. The sensor produces pulses; do not interpret its raw optical voltage as speed.
+- Analog motor-speed sensor for Labs 12-14: either build a frequency-to-voltage stage with an LM2907N-8 (minimum supply 12 V; buy a separate 12 V regulated adapter if no second bench-supply output is available), or buy a calibrated tachometer module powered from 3.3/5 V. It must accept the Lab 08 sensor's 12-pulse/revolution signal (0-600 Hz for 0-3000 RPM) and provide a monotonic 0-3.0 V analog output over the motor's measured speed range. For the LM2907, scale and clamp the output to at most 3.0 V before the ESP32 ADC. Calibrate output voltage against measured RPM before using it as feedback.
+- Lab 09: 4 × 1N4007 diodes, 100 uF and 470 uF / 25 V capacitors, 1 kΩ / 0.5 W load, 250 mA time-delay secondary fuse and holder, and 47 Ω / 5 W series resistor with the isolated AC adapter.
+- Labs 10/17/18 shared inverter build: one DRV8833 breakout, two matched 1 mH inductors (≥0.5 A, ≤1 Ω DCR, ≥200 kHz SRF), 1 µF / 25 V film capacitor, 100 µF / 10 V DC-link capacitor, 100 nF bypass capacitor, 100 Ω / 0.25 W load, and two oscilloscope channels for CH1−CH2 measurement. The inductors and driver can be reused between lessons.
+- Lab 17 input interface: OWON generator at no more than 1.0 V peak / 50 Hz through a 1 µF series capacitor and 10 kΩ resistor to GPIO34; bias GPIO34 with 100 kΩ to 3.3 V and 100 kΩ to GND. Lower Schottky clamp anode to GND/cathode to GPIO34; upper clamp anode to GPIO34/cathode to 3.3 V. Join generator return, ESP32 GND, and scope ground. Verify GPIO34 stays between 0.3 V and 3.0 V before connection.
+- Firmware status: no ESP32 PLL sketch is supplied or validated. The Lab 10 lesson contains a DRV8833 SPWM example, but it uses its own fixed 50 Hz reference and is not synchronized to the Lab 17 input. PLL tracking and grid-current control remain Simulink-only.
 - Extra breadboards / terminal blocks if your kits are already densely used
 
 Recommended load resistor values:
@@ -118,12 +131,11 @@ Recommended load resistor values:
 
 ## Priority 3 - Advanced Inverter and Grid Labs
 
-These are mainly needed for Projects 17 and 18:
+These are for a future, separately engineered higher-power three-phase/grid-connected inverter. They are not required for the present low-voltage signal exercises in Projects 17-18:
 
-- IR2104 half-bridge gate driver modules
-- ACS712 current sensor modules
-- 1 mH inductors
-- 1 uF film capacitors
+- Three-phase gate drivers and MOSFETs selected for a fully reviewed voltage/current design
+- Current sensing matched to the redesigned grid-stage range
+- Rated isolated/differential measurement interface for any higher-voltage bridge
 - Extra ESP32 board as spare if desired
 
 ## Priority 4 - Optional Upgrades
@@ -142,10 +154,11 @@ Note: the OWON HDS272S already includes a function generator, so a separate benc
 
 ## Important Specification Notes
 
-- For Buck and Boost labs, use 100 uH inductors, not 100 mH inductors.
+- Labs 06-07 use 5 V, 20 kHz switching, and a 1 mH inductor in both Simscape and the physical build. Lab 07 duty is limited to 25%; the current-limited supply is a protection layer, not permission to exceed the documented operating range.
+- The DC bench supply is for extra-low-voltage DC experiments only. Lab 09 uses the enclosed isolated 6 V AC adapter; students must never access its mains wiring.
 - For ESP32-driven power stages, ensure MOSFETs are logic-level parts with acceptable Rds(on) at about 3.3 V gate drive, or use a gate driver.
 - For introductory converter labs, low-voltage operation is preferred before moving to higher energy setups.
-- For inverter and grid labs, treat driver modules, current sensing and filtering parts as required, not optional.
+- For the current Lab 10/17/18 exercises, use only the specified DRV8833 stage, low-voltage supply limits, resistive load, and differential measurement. Do not connect any stage to a simulated-grid source or mains.
 
 ---
 

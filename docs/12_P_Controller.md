@@ -376,7 +376,7 @@ Complete before hardware experiments:
 - DC Motor
 - Flyback diode (1N4001–1N4007)
 - 220 Ω gate resistor
-- 2 × 10 kΩ resistors (back-EMF voltage divider)
+- Analog motor speed sensor with calibrated output within the selected ADC range (not included in the listed base hardware; use simulation if unavailable)
 - External battery pack
 - OWON HDS272S Oscilloscope (recommended)
 - DSO Nano Oscilloscope (compatible)
@@ -475,44 +475,30 @@ Rotating the potentiometer should change the Serial Monitor value between approx
 
 ---
 
-## Experiment 2 - Closed-Loop P Controller with Back-EMF Feedback
+## Experiment 2 - Closed-Loop P Controller with Speed-Sensor Feedback
 
 ### Objective
 
-Close the feedback loop using the motor's back-EMF voltage as a proxy for speed.
+Close the feedback loop using a motor speed sensor.
 
-When a DC motor spins it generates a voltage proportional to speed — this is called back-EMF. A resistor divider on the motor terminals feeds this voltage into the controller ADC, giving a real feedback signal without a dedicated speed sensor.
+The feedback signal must come from a tachometer or other speed sensor whose output is calibrated against motor speed. The voltage across a motor terminal in this low-side PWM circuit is either tied to the supply or switches with PWM; a resistor divider there does **not** measure back-EMF or speed.
 
-> Note: Back-EMF is not a perfect speed measurement — it is affected by winding resistance and load current. It is however sufficient to demonstrate true closed-loop behaviour and observe steady-state error with a P controller.
+> If no compatible speed sensor is available, complete the closed-loop simulation only. Do not use the motor-terminal divider as speed feedback.
 
 ---
 
 ### Circuit Diagram
 
 ```text
-Battery (+)
-    │
-  Motor
-    │──── Flyback diode (cathode toward Battery+)
-    │
-    ├──── 10 kΩ ──── GPIO35  (back-EMF feedback)
-                │
-              10 kΩ
-                │
-               GND
-
-  Drain (MOSFET IRLZ44N)
-  Source
-    │
-   GND
-
-ESP32 GPIO18 (or Arduino Pin 9 as backup) ──── 220 Ω ──── Gate
-Potentiometer centre pin ──── GPIO34
+Battery (+) -> Motor -> MOSFET Drain
+Flyback diode across motor (cathode toward Battery+)
+MOSFET Source -> GND; share GND with controller and battery
+ESP32 GPIO18 -> 220 Ω gate resistor -> MOSFET Gate
+Potentiometer wiper -> GPIO34 (reference)
+Speed sensor output (calibrated and ADC-safe) -> GPIO35 (feedback)
 ```
 
-For Arduino backup, use A0 for the reference and A1 for the feedback.
-
-The voltage divider scales the motor terminal voltage to stay within the ADC range.
+For the Arduino Uno backup, use A0 for the reference and A1 for the sensor output. Verify that the sensor's output never exceeds the controller ADC range; use signal conditioning if needed.
 
 ---
 
@@ -522,7 +508,7 @@ Before uploading:
 
 ✅ Motor circuit wired correctly (MOSFET + flyback diode, same as Project 08)
 
-✅ 10 kΩ divider connected from motor positive terminal to GPIO35 (midpoint) to GND
+✅ Speed sensor output represents motor speed and is scaled within the ADC range
 
 ✅ Potentiometer wiper connected to GPIO34
 
@@ -535,7 +521,7 @@ Before uploading:
 ```cpp
 const int PWM_PIN  = 18;
 const int REF_PIN  = 34;   // potentiometer wiper
-const int FBK_PIN  = 35;   // back-EMF divider output
+const int FBK_PIN  = 35;   // calibrated analog speed-sensor output
 
 float Kp = 0.5;
 
@@ -550,7 +536,7 @@ void setup()
 void loop()
 {
     int reference = analogRead(REF_PIN);   // 0–4095 on ESP32 ADC
-    int feedback  = analogRead(FBK_PIN);   // back-EMF proxy
+    int feedback  = analogRead(FBK_PIN);   // speed-sensor signal
 
     // Scale 12-bit error to 8-bit PWM domain.
     int error  = reference - feedback;
@@ -583,7 +569,7 @@ void setup()
 void loop()
 {
     int reference = analogRead(A0);   // desired speed setpoint (0–1023)
-    int feedback  = analogRead(A1);   // back-EMF proxy (0–1023)
+    int feedback  = analogRead(A1);   // speed-sensor signal (0–1023)
 
     // Calculate error: positive error means motor is too slow.
     int error  = reference - feedback;
@@ -613,7 +599,7 @@ void loop()
 
 The potentiometer sets the reference $r$.
 
-The back-EMF divider measures actual motor speed (proxy) $y$.
+The calibrated speed sensor measures motor speed $y$.
 
 The P controller computes:
 
@@ -823,7 +809,7 @@ Check:
 
 ✅ Motor circuit wired correctly (MOSFET + flyback diode)
 
-✅ Back-EMF divider connected to feedback ADC input
+✅ Calibrated speed-sensor output connected to feedback ADC input
 
 ✅ Shared GND between controller and battery
 

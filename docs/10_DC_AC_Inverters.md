@@ -381,26 +381,23 @@ Clean 50 Hz sine wave for comparison.
 ## Components Required
 
 - ESP32 DevKit V1
-- Breadboard
-- Jumper wires
-- Oscilloscope (OWON HDS272S recommended, DSO Nano compatible)
-
-Optional:
-
-- 2 × IRLZ44N MOSFETs (for half-bridge demonstration)
-- IR2104 half-bridge gate driver
-
-> Note: Full H-bridge experiments require 4 MOSFETs and gate driver ICs. This project demonstrates the waveform generation principles using single-ended PWM outputs.
+- DRV8833 H-bridge breakout with labeled VM, GND, nSLEEP, AIN1/AIN2, and AOUT1/AOUT2 pins; accept 3.3 V logic
+- Isolated 0-30 V / 0-3 A DC bench supply with CC mode and output enable; set to 5.0 V and 0.10 A maximum
+- Two matched 1 mH inductors rated for at least 0.5 A, no more than 1 Ω DCR, and at least 200 kHz self-resonant frequency
+- 1 µF film capacitor rated at least 25 V
+- 100 Ω, 1 W resistor load
+- 100 µF, 10 V electrolytic capacitor and 100 nF ceramic capacitor for VM decoupling
+- ESP32 DevKit V1, breadboard, and short jumper wires
+- OWON HDS272S oscilloscope with two 10:1 probes
 
 ---
 
 ## Safety Notice
 
-```text
-Low Voltage Demonstrations Only
-```
+!!! warning "Low-voltage H-bridge only"
+  Use the specified 5 V supply with a 0.10 A current limit and 100 Ω load. Do not connect this circuit to mains, batteries, or an AC source. Do not use the optional IRLZ44N/IR2104 arrangement in this lab.
 
-Do not connect experimental circuits directly to mains wiring.
+The DRV8833 breakout must be wired according to its pin labels. Connect both scope ground clips only to circuit GND. Measure the bipolar bridge output by placing CH1 and CH2 tips at OUT_A and OUT_B and displaying CH1−CH2; never attach a probe ground clip to either bridge output.
 
 ---
 
@@ -700,6 +697,89 @@ This is the SPWM pattern.
   </tbody>
 </table>
 </div>
+
+---
+
+## Experiment 5 - Build and Measure a Low-Voltage H-Bridge
+
+### Circuit Wiring
+
+Build with the bench supply disabled:
+
+```text
+Bench +5 V → DRV8833 VM; bench negative → DRV8833 GND
+100 µF (+) and 100 nF from VM to GND, close to the driver
+ESP32 3.3 V → DRV8833 nSLEEP
+ESP32 GPIO18 → AIN1; ESP32 GPIO19 → AIN2
+AOUT1 → L1 1 mH → OUT_A
+AOUT2 → L2 1 mH → OUT_B
+1 µF film capacitor and 100 Ω / 1 W load between OUT_A and OUT_B
+ESP32 GND → DRV8833 GND
+```
+
+Do not put the bridge outputs on the ESP32 ADC. The two output inductors and capacitor form the differential output filter; the resistor is the load.
+
+### First Power-Up
+
+1. Keep both PWM outputs at zero. Check the DRV8833 breakout pin labels, capacitor polarity, filter wiring, and common ground.
+2. Set the bench supply to 5.0 V and 0.10 A current limit with output disabled.
+3. Connect scope grounds to circuit GND only. Connect CH1 tip to OUT_A and CH2 tip to OUT_B; use the scope math function CH1−CH2 for the differential load voltage.
+4. Enable the supply and verify it is not continuously in current limit. Upload the SPWM code below. Disable the supply before changing wiring.
+
+```cpp
+const int pwmPinA = 18;
+const int pwmPinB = 19;
+const int channelA = 0;
+const int channelB = 1;
+const int samplesPerCycle = 100;
+const uint32_t samplePeriodUs = 200;
+const float modulationIndex = 0.4f;
+const float twoPi = 6.2831853f;
+
+uint32_t nextSampleUs;
+int sampleIndex = 0;
+
+void setup()
+{
+  ledcSetup(channelA, 20000, 8);
+  ledcSetup(channelB, 20000, 8);
+  ledcAttachPin(pwmPinA, channelA);
+  ledcAttachPin(pwmPinB, channelB);
+  nextSampleUs = micros();
+}
+
+void loop()
+{
+  uint32_t nowUs = micros();
+  if ((int32_t)(nowUs - nextSampleUs) >= 0) {
+    nextSampleUs += samplePeriodUs;
+    float reference = modulationIndex * sinf(twoPi * sampleIndex / samplesPerCycle);
+    int duty = (int)(fabsf(reference) * 255.0f);
+
+    if (reference >= 0) {
+      ledcWrite(channelB, 0);
+      ledcWrite(channelA, duty);
+    } else {
+      ledcWrite(channelA, 0);
+      ledcWrite(channelB, duty);
+    }
+
+    sampleIndex = (sampleIndex + 1) % samplesPerCycle;
+  }
+}
+```
+
+The 100 samples at 200 µs per sample form a 50 Hz reference. The 0.4 modulation index limits the ideal fundamental to about 2 V peak from the 5 V bus.
+
+### Measurements
+
+| Signal | Probe connection | Expected |
+|--------|------------------|----------|
+| AOUT1 switching node | CH1 tip at AOUT1; ground at circuit GND | 0-5 V PWM, 20 kHz |
+| AOUT2 switching node | CH1 tip at AOUT2; ground at circuit GND | 0-5 V PWM, 20 kHz |
+| Differential filtered output | CH1 tip OUT_A, CH2 tip OUT_B; both grounds at circuit GND; display CH1−CH2 | Approximately 50 Hz, up to 2 V peak, reduced carrier ripple |
+
+Record measured fundamental frequency, differential peak/RMS voltage, carrier ripple, and bench-supply current. Do not clip either probe ground to OUT_A or OUT_B.
 
 ---
 

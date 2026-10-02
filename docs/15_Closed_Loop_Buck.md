@@ -22,6 +22,9 @@ In this project you will learn:
 
 This project combines power electronics and control systems to create a practical regulated power supply.
 
+!!! warning "Closed-loop hardware test deferred"
+  Lab 06 now defines a low-voltage open-loop build. This PI sketch intentionally does not apply its PWM command, and the gains have not been validated against the 20 kHz physical stage. Use Labs 15 Experiments 2-4 in simulation only; do not enable the controller output or change the converter wiring based on this unvalidated loop.
+
 ---
 
 
@@ -89,7 +92,7 @@ $$
 V_{FB} = \frac{V_{OUT}}{2}
 $$
 
-This equal-divider arrangement is only suitable for the documented approximately 3.3 V output, where the midpoint is approximately 1.65 V. For any higher output, recalculate the divider so the maximum midpoint voltage remains within the selected ESP32 ADC range, and verify the ADC attenuation setting before connecting the converter. Do not connect an unscaled converter output to the ADC.
+With equal 10 kΩ resistors, the feedback voltage is half the output. This page's ESP32 example targets $V_{OUT}=2.0\ \mathrm{V}$, so its midpoint reference is $V_{ref}=1.0\ \mathrm{V}$. For any different target or maximum output, recalculate the divider and reference so the feedback always stays within the selected ADC range. Verify ESP32 ADC attenuation and calibration; never connect an unscaled converter output to the ADC.
 
 For an Arduino Uno backup, use A0 instead of GPIO34. The divider and ADC range must be selected for the actual converter maximum voltage; never assume that a 1:1 divider is safe for every hardware configuration.
 
@@ -285,7 +288,7 @@ Step block (reference voltage):
 |-----------|-------|
 | Step time | `0` s |
 | Initial value | `0` |
-| Final value | `1.65` |
+| Final value | `2.0` |
 
 Sum block 1 (error junction): signs `+-`
 
@@ -378,6 +381,7 @@ Change Kp and Ki Gain block values for each run.
 - ESP32 DevKit V1
 - Buck Converter from Project 06 (MOSFET, diode, inductor, capacitor)
 - 2 × 10 kΩ resistors (voltage divider)
+- Isolated 0–30 V, 0–3 A bench supply with CC mode; set the Lab 06 stage to 5.0 V / 0.20 A maximum
 - Breadboard and jumper wires
 - OWON HDS272S Oscilloscope (recommended)
 - DSO Nano Oscilloscope (compatible)
@@ -396,7 +400,7 @@ Read the converter output voltage using the controller ADC and verify the voltag
 
 ### Step-by-Step Wiring
 
-Keep the Buck Converter from Project 06 intact.
+Keep the corrected Buck Converter from Project 06 intact. For this open-loop measurement, use the ESP32 sketch below to provide a fixed PWM command and read the feedback divider.
 
 1. Insert the **first 10 kΩ resistor** so one leg connects to the **Vout node** and the other leg is in a new row. This is the top of the divider.
 2. Insert the **second 10 kΩ resistor** so one leg is in the same row as the bottom of the first resistor and the other leg connects to **GND**. This is the bottom of the divider.
@@ -412,7 +416,7 @@ $$
 
 ### Wiring Checklist
 
-Before uploading:
+Before enabling the bench supply:
 
 ✅ Top resistor connected between Vout and divider midpoint
 
@@ -422,53 +426,40 @@ Before uploading:
 
 ✅ Buck Converter circuit intact from Project 06
 
+✅ Bench supply set to 5.0 V with 0.20 A current limit
+
 ---
 
 ### ESP32 Code
 
 ```cpp
 const int FBK_PIN = 34;
+const int PWM_PIN = 18;
+const int pwmValue = 64; // Fixed open-loop command, about 25% duty.
 
 void setup()
 {
+  ledcSetup(0, 20000, 8);
+  ledcAttachPin(PWM_PIN, 0);
     Serial.begin(115200);
 }
 
 void loop()
 {
-    // analogRead() returns 0–4095 on ESP32 12-bit ADC.
+  ledcWrite(0, pwmValue);
     int adc = analogRead(FBK_PIN);
-
     Serial.println(adc);
-
     delay(100);
 }
 ```
 
-### Arduino Equivalent Code (backup)
-
-```cpp
-void setup()
-{
-    Serial.begin(9600);
-}
-
-void loop()
-{
-    // analogRead() returns 0–1023 on Arduino 10-bit ADC.
-    int adc = analogRead(A0);
-
-    Serial.println(adc);
-
-    delay(100);
-}
-```
+Use the ESP32 for the physical converter. The Arduino Uno backup does not configure the required 20 kHz PWM frequency.
 
 ---
 
 ### Observe
 
-The ADC value should vary with output voltage and duty cycle.
+At a fixed 25% duty command, the ADC reading should settle near half the measured output voltage, converted with the equation below. To compare duty-cycle points, disable the supply, change `pwmValue` to 128 or 192, then re-enable it; do not edit wiring while powered.
 
 ---
 
@@ -500,7 +491,10 @@ $$
 
 ### Objective
 
-Automatically regulate the converter output voltage to a fixed reference using a PI controller.
+Simulate regulation of the converter output voltage to a fixed reference using a PI controller.
+
+!!! info "Simulation only"
+  The ESP32 code below logs the requested duty but intentionally does not apply it. Use the Simulink PI model for regulation, disturbance rejection, and gain tuning; do not add or remove loads on the physical converter under PI control.
 
 ---
 
@@ -517,7 +511,7 @@ const int PWM_PIN  = 18;
 const int FBK_PIN  = 34;
 
 const float dt      = 0.01;
-const float Vref    = 1.65;    // target divider midpoint for ~3.3 V output
+const float Vref    = 1.0;     // target divider midpoint for 2.0 V output
 const float int_max = 50.0;
 
 float Kp = 10.0;
@@ -526,8 +520,8 @@ float integral = 0;
 
 void setup()
 {
-    // Configure LEDC channel 0: 500 Hz, 8-bit resolution.
-    ledcSetup(0, 500, 8);
+    // Configure LEDC channel 0 for the Lab 06 switching frequency.
+    ledcSetup(0, 20000, 8);
     ledcAttachPin(PWM_PIN, 0);
     Serial.begin(115200);
 }
@@ -545,10 +539,11 @@ void loop()
     float control = Kp * error + Ki * integral;
     control = constrain(control, 0, 255);
 
-    ledcWrite(0, (int)control);
+    // Hardware output intentionally disabled until the Lab 06 power stage is corrected and validated.
+    // ledcWrite(0, (int)control);
 
     Serial.print("Vout: ");  Serial.print(Vout_est, 3);
-    Serial.print("V  PWM: "); Serial.print((int)control);
+    Serial.print("V  Requested PWM (not applied): "); Serial.print((int)control);
     Serial.print("  Int: ");  Serial.println(integral, 3);
 
     delay(10);
@@ -557,12 +552,12 @@ void loop()
 
 ### Arduino Equivalent Code (backup)
 
-> This backup variant assumes an **Arduino Uno (5 V logic, 10-bit ADC)** driving a buck converter built for a **5 V input**, giving a 2.5 V output target — a different hardware configuration from the 3.3 V ESP32 build used throughout the rest of this lab. Do not mix these constants with the 3.3 V circuit: for a 3.3 V system, keep `Vref = 1.65` and use the ESP32 code above instead.
+> This backup variant assumes an **Arduino Uno (5 V logic, 10-bit ADC)** and a separate 5 V converter input. Its 3.0 V output target gives a 1.5 V midpoint reference, leaving control headroom. Do not mix these constants with the ESP32 configuration.
 
 ```cpp
 const float dt        = 0.01;     // sample time (s) — matches delay(10)
-const float Vref      = 2.5;      // target voltage at divider midpoint (V)
-                                  // corresponds to Vout = 5.0 V for a 5 V-input Arduino build
+const float Vref      = 1.5;      // target voltage at divider midpoint (V)
+                                  // corresponds to Vout = 3.0 V for a 5 V-input Arduino build
 const float int_max   = 50.0;     // anti-windup limit
 
 float Kp = 10.0;
@@ -588,10 +583,11 @@ void loop()
     float control = Kp * error + Ki * integral;
     control = constrain(control, 0, 255);
 
-    analogWrite(9, (int)control);
+    // Hardware output intentionally disabled until the buck power stage is corrected and validated.
+    // analogWrite(9, (int)control);
 
     Serial.print("Vout: ");  Serial.print(Vout_est, 3);
-    Serial.print("V  PWM: "); Serial.print((int)control);
+    Serial.print("V  Requested PWM (not applied): "); Serial.print((int)control);
     Serial.print("  Int: ");  Serial.println(integral, 3);
 
     delay(10);
@@ -602,9 +598,7 @@ void loop()
 
 ### Observe
 
-The Serial Monitor should show Vout converging toward the target value.
-
-The PWM duty cycle should adjust automatically to maintain regulation.
+The Serial Monitor reports measured output voltage and the requested PI duty command. The requested command is not applied to the physical converter. Observe closed-loop convergence in the Simulink model.
 
 ---
 
@@ -612,26 +606,19 @@ The PWM duty cycle should adjust automatically to maintain regulation.
 
 ### Objective
 
-Observe how feedback corrects disturbances.
+Simulate how feedback corrects disturbances.
 
 ---
 
 ### Procedure
 
-Operate the converter normally with the PI controller running.
-
-Then:
-
-- Connect a small additional load resistor across the output, or
-- Briefly change the input voltage slightly.
+In the Simulink PI model, run the nominal case and then apply a small load-resistance or input-voltage step. Do not perform this disturbance procedure on the physical converter.
 
 ---
 
 ### Observe
 
-The output voltage will deviate briefly.
-
-The controller will then adjust the duty cycle and return the voltage toward the target value.
+The simulated output voltage should deviate briefly, then return toward its reference as the controller changes its requested duty cycle.
 
 This ability to recover from disturbances is called **disturbance rejection** — one of the primary advantages of closed-loop control.
 
@@ -641,7 +628,7 @@ This ability to recover from disturbances is called **disturbance rejection** �
 
 ### Objective
 
-Observe how controller gains affect system behaviour.
+Use the Simulink PI model to observe how controller gains affect system behaviour. Do not use these unvalidated gains on the physical power stage.
 
 ---
 
@@ -705,7 +692,7 @@ Probe GND  ──────► GND
 | Setting | OWON HDS272S | DSO Nano |
 |---------|--------------|----------|
 | Vertical scale | 2 V/div | 2 V/div |
-| Horizontal scale | 500 µs/div | 500 µs/div |
+| Horizontal scale | 20 µs/div | 20 µs/div |
 | Trigger | Edge, Rising | Edge, Rising |
 | Coupling | DC | DC |
 
@@ -729,11 +716,11 @@ Probe GND  ──────► GND
 
 ### Observe
 
-As the controller regulates voltage:
+With the physical stage in open loop at a fixed duty command:
 
-- Duty cycle changes automatically
-- Ripple changes with operating conditions
-- Output voltage remains close to the reference value
+- Duty cycle remains fixed at the selected `pwmValue`
+- Output ripple appears at the 20 kHz switching frequency
+- Output voltage changes if `pwmValue` is changed between runs
 
 ---
 
@@ -764,7 +751,7 @@ for i = 1:3
         sprintf('%s | OS=%.1f%% Ts=%.1fms', labels{i}, ...
         info.Overshoot, info.SettlingTime*1e3));
 end
-yline(1.65, 'k--', 'Reference 1.65V');
+yline(2.0, 'k--', 'Reference 2.0V');
 scatter([50, 50, 50], Vout_measured, 80, 'r', 'filled', ...
     'DisplayName', 'Measured Vout');
 grid on;
@@ -872,7 +859,7 @@ What happens if the gains are too large?
 
 ### Question 6
 
-The voltage divider scales Vout by 0.5 before the ADC. The ESP32 reference in the code is set to 1.65 V. What actual output voltage is the controller regulating to, and what would you change in the code to regulate to 2.0 V instead?
+The voltage divider scales Vout by 0.5 before the ADC. The ESP32 reference is set to 1.0 V. What output voltage is the controller targeting? What midpoint reference would target a 2.5 V output with the same divider?
 
 ---
 

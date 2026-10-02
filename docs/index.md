@@ -32,7 +32,8 @@ Welcome to the course.
 2. [Microcontroller Setup (Arduino Uno / ESP32)](00A_Microcontroller_Setup.md)
 3. [Oscilloscope Setup (DSO Nano V3 / OWON HDS272S)](00B_Oscilloscope_Setup.md)
 4. [ESP32 Wi-Fi Control](00C_ESP32_WiFi_Control.md)
-5. [Control Engineering Primer](00D_Control_Engineering_Primer.md)
+
+Complete the [Control Engineering Primer](00D_Control_Engineering_Primer.md) after Lab 03 as a theory checkpoint.
 
 ## Lab Index
 
@@ -44,7 +45,6 @@ Welcome to the course.
 | 00A | [Microcontroller Setup](00A_Microcontroller_Setup.md) |
 | 00B | [Oscilloscope Setup](00B_Oscilloscope_Setup.md) |
 | 00C | [ESP32 Wi-Fi Control](00C_ESP32_WiFi_Control.md) |
-| 00D | [Control Engineering Primer](00D_Control_Engineering_Primer.md) |
 
 ### Electronics
 
@@ -53,6 +53,7 @@ Welcome to the course.
 | 01 | [PWM Operation](01_PWM_Operation.md) |
 | 02 | [RC Circuits](02_RC_Circuits.md) |
 | 03 | [RLC Circuits](03_RLC_Circuits.md) |
+| 00D | [Control Engineering Primer (checkpoint after Lab 03)](00D_Control_Engineering_Primer.md) |
 | 04 | [MOSFET Switching](04_MOSFET_Switching.md) |
 
 ### Power Electronics

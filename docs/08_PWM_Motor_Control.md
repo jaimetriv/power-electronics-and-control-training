@@ -110,21 +110,23 @@ The flyback diode provides a path for this spike, protecting the controller, MOS
 ## Circuit Diagram
 
 ```text
-Battery (+)
+5 V current-limited supply (+)
     │
   Motor
-    │──── Flyback diode (cathode toward Battery+, anode toward Drain)
+    │──── Flyback diode (cathode toward +5 V, anode toward Drain)
     │
-  Drain (MOSFET IRLZ44N)
+  Drain (MOSFET AO3400A)
   Source
     │
    GND
 
 PWM Output (ESP32 GPIO18)
       │
-    220 Ω gate resistor
+    100 Ω gate resistor
       │
     Gate
+
+Optical tachometer (3.3 V output) → ESP32 GPIO27 and oscilloscope CH2
 ```
 
 ---
@@ -264,13 +266,16 @@ For each run, note the time at which the output crosses 0.632 — this is always
 
 - ESP32 DevKit V1
 - Breadboard and jumper wires
-- IRLZ44N MOSFET
-- DC Motor
-- Flyback Diode (1N4001–1N4007)
-- 220 Ω gate resistor
-- External Battery Pack
+- AO3400A N-channel MOSFET on a labeled breakout board; $R_{DS(on)}$ specified at $V_{GS}=2.5$ V
+- 3–6 V brushed gearmotor, suitable at 5 V, with datasheet stall current no greater than 300 mA
+- 1N5819 Schottky flyback diode, rated at least 1 A and 20 V
+- 100 Ω gate resistor and 100 kΩ gate-to-source pull-down
+- Optical reflective tachometer: TCRT5000 phototransistor, 150 Ω IR LED resistor, 10 kΩ output pull-up to 3.3 V, and a 12-mark reflective encoder wheel
+- Isolated 0–30 V, 0–3 A bench supply with CC mode and output enable; set to 5.0 V and 0.35 A maximum for this motor
 - OWON HDS272S Oscilloscope (recommended)
-- DSO Nano Oscilloscope (compatible)
+- Two 10:1 probes or one probe plus the ESP32 serial plotter
+
+Do not power the motor from the ESP32. Connect the motor-supply negative, ESP32 GND, and tachometer GND together. Power the tachometer LED and its output pull-up from ESP32 3.3 V only. Confirm the selected motor's stall-current rating before connecting it; do not stall it during testing.
 
 ---
 
@@ -280,17 +285,35 @@ For each run, note the time at which the output crosses 0.632 — this is always
 
 Turn the motor fully ON and OFF and observe the gradual speed response.
 
----
+### Wiring (Node List)
 
-### Breadboard Layout
+Wire with both supplies off:
+
+```text
+Motor supply +5 V → motor terminal A and flyback-diode cathode
+Motor terminal B → Q1 AO3400A drain
+Q1 source → motor-supply negative / circuit GND
+1N5819 flyback diode across motor: cathode to +5 V, anode to motor terminal B
+ESP32 GPIO18 → 100 Ω → Q1 gate; 100 kΩ from gate to source
+Motor-supply negative → ESP32 GND
+TCRT5000 IR LED: ESP32 3.3 V → 150 Ω → LED anode; LED cathode → GND
+TCRT5000 phototransistor emitter → GND; collector → GPIO27 and 10 kΩ pull-up to 3.3 V
+``` 
+
+Attach the 12-mark reflective wheel to the motor shaft and secure the sensor so its output toggles once per mark. Verify the tachometer output never exceeds 3.3 V. Do not use a 5 V-powered comparator module unless its output is level-shifted to 3.3 V.
+
+Set the bench supply to 5.0 V and 0.35 A maximum. If the chosen motor's rated stall current exceeds 300 mA, do not use it with this setup; choose a smaller motor instead. The current limit is protection, not a substitute for checking the motor rating.
+
+<!-- Retired battery/IRLZ44N breadboard layout and wiring instructions follow; do not use them.
 
 ```
        a      b      c      d      e
      ┌─────────────────────────────────────┐
+ 1   │ [●]   [┐]   [ ]   [ ]   [ ]       │ ← GPIO18 → a1, gate resistor top b1
  2   │ [●]   [ ]   [ ]   [ ]   [ ]       │ ← Battery (+) → a2
- 3   │ [ ]   [ ]   [ ]   [●]   [ ]       │ ← MOSFET Gate d3
- 4   │ [ ]   [┐]   [ ]   [●]   [ ]       │ ← Gate res top b4, MOSFET Drain d4
- 5   │ [●]   [┘]   [ ]   [●]   [ ]       │ ← GPIO18 → a5, Gate res bottom b5 (jumper b5→d3), MOSFET Source d5
+ 3   │ [ ]   [┘]   [ ]   [●]   [ ]       │ ← Gate resistor bottom b3 = MOSFET Gate d3
+ 4   │ [ ]   [ ]   [ ]   [●]   [ ]       │ ← MOSFET Drain d4
+ 5   │ [ ]   [ ]   [ ]   [●]   [ ]       │ ← MOSFET Source d5 (no GPIO connection on this row)
  6   │ [●]   [ ]   [ ]   [ ]   [ ]       │ ← GND → a6 (jumper a6→d5 for MOSFET Source; also battery −)
  7   │ [ ]   [ ]   [M1]  [ ]   [ ]       │ ← Motor terminal 1 at c7 = MOSFET Drain row (jumper c7→d4)
  8   │ [ ]   [ ]   [M2]  [ ]   [ ]       │ ← Motor terminal 2 at c8 = Battery (+) row (jumper c8→a2)
@@ -302,9 +325,11 @@ Turn the motor fully ON and OFF and observe the gradual speed response.
 `[M1]`/`[M2]` = motor terminals (either orientation). `[A]` = diode anode; `[K]` = diode cathode (banded end).
 
 Row connections:
-- Row 4: gate resistor top and MOSFET Drain — connect with a jumper to the motor terminal 1 row
+- Row 1: GPIO18 and gate-resistor top
+- Row 3: gate-resistor bottom and MOSFET Gate
+- Row 4: MOSFET Drain — connect with a jumper to the motor terminal 1 row
 - Row 2: battery positive rail — connects to motor terminal 2 and flyback diode cathode
-- Row 6: shared GND — ESP32 GND, battery negative, and MOSFET Source all meet here
+- Row 6: shared GND — ESP32 GND, battery negative, and MOSFET Source meet through a jumper from row 5
 
 ---
 
@@ -312,8 +337,8 @@ Row connections:
 
 1. Insert the **IRLZ44N MOSFET**: **Gate** at **row 3, col d**, **Drain** at **row 4, col d**, **Source** at **row 5, col d**. Verify G-D-S order from the pinout (Project 04).
 2. Connect a jumper wire from **ESP32 GND** to **row 6, col a**. Connect **row 6, col a** to **row 5, col d** (MOSFET Source). Connect **battery negative** to **row 6, col a** as well.
-3. Insert the **220 Ω gate resistor**: one leg in **row 4, col b**, other in **row 5, col b**. Connect **row 5, col b** to **row 3, col d** (MOSFET Gate) with a short jumper.
-4. Connect a jumper wire from **ESP32 GPIO18** to **row 5, col a**.
+3. Insert the **220 Ω gate resistor** between **row 1, col b** and **row 3, col b**. Row 3 is the MOSFET Gate row; row 1 is isolated from the MOSFET Source and Drain rows.
+4. Connect **ESP32 GPIO18** to **row 1, col a**, the same electrical row as the gate-resistor top.
 5. Connect **motor terminal 1** to **row 7, col c**. Connect **row 7, col c** to **row 4, col d** (MOSFET Drain) with a jumper.
 6. Connect **motor terminal 2** to **row 8, col c**. Connect **row 8, col c** to **row 2, col a** (battery positive) with a jumper.
 7. Insert the **flyback diode**: **anode** (unmarked end) in **row 9, col c**, **cathode** (banded end) in **row 10, col c**. Connect **row 9** to motor terminal 1 row and **row 10** to battery positive row with short jumpers.
@@ -339,6 +364,7 @@ Before uploading:
 ✅ Gate resistor between GPIO18 and MOSFET Gate
 
 ✅ Battery connected
+-->
 
 ---
 
@@ -348,7 +374,7 @@ Before uploading:
 void setup()
 {
     // Configure GPIO18 as a digital output.
-    // Note: ESP32 outputs 3.3 V HIGH, sufficient for the IRLZ44N.
+    // Confirm the selected MOSFET's gate-drive rating before use.
     pinMode(18, OUTPUT);
 }
 
@@ -531,30 +557,63 @@ Observe the motor's first-order dynamic response to a step change in PWM, and es
 ### ESP32 Code
 
 ```cpp
+const int pwmPin = 18;
+const int tachPin = 27;
+const uint32_t marksPerRevolution = 12;
+
+volatile uint32_t pulseCount = 0;
+uint32_t lastReportMs = 0;
+uint32_t lastStepMs = 0;
+bool motorOn = true;
+
+void IRAM_ATTR countTachPulse()
+{
+  pulseCount++;
+}
+
 void setup()
 {
-    // Configure LEDC channel 0: 500 Hz, 8-bit resolution.
     ledcSetup(0, 500, 8);
-    ledcAttachPin(18, 0);
+  ledcAttachPin(pwmPin, 0);
+  pinMode(tachPin, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(tachPin), countTachPulse, FALLING);
+  Serial.begin(115200);
 }
 
 void loop()
 {
-    ledcWrite(0, 255);   // Step to full speed
-    delay(5000);
+  uint32_t now = millis();
+  if (now - lastStepMs >= 5000) {
+    motorOn = !motorOn;
+    lastStepMs = now;
+  }
+  int pwmValue = motorOn ? 255 : 0;
+  ledcWrite(0, pwmValue);
 
-    ledcWrite(0, 0);     // Step to zero
-    delay(5000);
+  if (now - lastReportMs >= 100) {
+    noInterrupts();
+    uint32_t pulses = pulseCount;
+    pulseCount = 0;
+    interrupts();
+
+    float rpm = pulses * 60000.0 / (marksPerRevolution * (now - lastReportMs));
+    Serial.print(now);
+    Serial.print(',');
+    Serial.print(pwmValue);
+    Serial.print(',');
+    Serial.println(rpm, 1);
+    lastReportMs = now;
+  }
 }
 ```
 
-> **Arduino Uno:** replace `ledcWrite(0, value)` with `analogWrite(9, value)` on pin 9.
+The serial columns are elapsed milliseconds, PWM command, and measured RPM. Use the Serial Plotter or export the data to MATLAB. Each falling edge represents one of the wheel's 12 reflective marks.
 
 ---
 
 ### Observe
 
-The motor speed should respond like:
+The measured RPM should respond like:
 
 ```text
 Speed
@@ -572,7 +631,7 @@ Speed
 
 ### Estimating the Time Constant
 
-Observe the motor start and estimate the time required to reach approximately 63.2% of final speed.
+Plot RPM against time for the first 5-second ON step. Estimate steady speed from the final part of the interval, then estimate $\tau$ as the time to reach 63.2% of that speed.
 
 This estimated time is approximately $\tau$, the motor time constant.
 
@@ -597,37 +656,41 @@ This estimated time is approximately $\tau$, the motor time constant.
 
 ## MATLAB Comparison
 
-Fit your measured step response to the first-order model using the time constant you estimated in Experiment 4.
+Save the Serial Monitor CSV lines to `rpm_step.csv` with columns `elapsed_ms,pwm,rpm`, then run this script. It estimates $\tau$ from the first 5-second ON step using the 63.2% rise-time definition.
 
 ```matlab
-K            = 1;
-tau_measured = 0.5;      % replace with your estimated tau (s)
+data = readmatrix('rpm_step.csv');
+time_s = data(:,1) / 1000;
+pwm = data(:,2);
+rpm = data(:,3);
 
-t = 0:0.01:5 * tau_measured * 3;
+onStart = find(pwm == 255, 1, 'first');
+offAfter = find(pwm(onStart:end) == 0, 1, 'first');
+if isempty(offAfter)
+  onEnd = numel(pwm);
+else
+  onEnd = onStart + offAfter - 2;
+end
+onIdx = onStart:onEnd;
+t = time_s(onIdx) - time_s(onIdx(1));
+steadyIdx = onIdx(max(1, numel(onIdx)-9):end);
+rpmFinal = mean(rpm(steadyIdx));
+speedNorm = rpm(onIdx) / rpmFinal;
 
-tau_theory_low  = tau_measured * 0.7;
-tau_theory_high = tau_measured * 1.3;
+tauIndex = find(speedNorm >= 0.632, 1, 'first');
+tauMeasured = t(tauIndex);
+fprintf('Estimated time constant: %.3f s\\n', tauMeasured);
 
-G_low  = tf(K, [tau_theory_low,  1]);
-G_mid  = tf(K, [tau_measured,    1]);
-G_high = tf(K, [tau_theory_high, 1]);
-
-[y_low,  ~] = step(G_low,  t);
-[y_mid,  ~] = step(G_mid,  t);
-[y_high, ~] = step(G_high, t);
-
-figure; hold on;
-plot(t, y_low,  'b--', 'LineWidth', 1.5, 'DisplayName', ...
-    sprintf('\\tau = %.2fs (low)', tau_theory_low));
-plot(t, y_mid,  'r',   'LineWidth', 2.5, 'DisplayName', ...
-    sprintf('\\tau = %.2fs (measured)', tau_measured));
-plot(t, y_high, 'b--', 'LineWidth', 1.5, 'DisplayName', ...
-    sprintf('\\tau = %.2fs (high)', tau_theory_high));
+figure;
+plot(t, speedNorm, 'o', 'DisplayName', 'Measured RPM');
+hold on;
+plot(t, 1 - exp(-t/tauMeasured), '-', 'DisplayName', 'First-order fit');
 yline(0.632, 'k:', '63.2% threshold');
-xline(tau_measured, 'r:', sprintf('\\tau = %.2fs', tau_measured));
+xline(tauMeasured, 'r:', sprintf('\\tau = %.2f s', tauMeasured));
 grid on;
-xlabel('Time (s)'); ylabel('Normalised Speed');
-title('First-Order Motor Model - Measured \tau Fit');
+xlabel('Time from PWM step (s)');
+ylabel('Normalised speed');
+title('Measured Motor Step Response');
 legend('Location', 'southeast');
 ```
 
@@ -645,11 +708,11 @@ legend('Location', 'southeast');
 
 Check:
 
-✅ Battery connected and charged
+✅ Bench supply enabled at 5.0 V and motor current below the 0.35 A limit
 
 ✅ MOSFET pinout correct (G, D, S identified)
 
-✅ Shared GND between ESP32 and battery negative
+✅ Shared GND between ESP32 and motor-supply negative
 
 ✅ Gate resistor connected between GPIO18 and Gate
 
@@ -661,7 +724,7 @@ Check:
 
 ✅ Flyback diode installed across motor terminals
 
-✅ Shared power supply issues (use separate battery for motor)
+✅ ESP32 USB supply and motor bench supply are separate; only their grounds are joined
 
 ---
 
@@ -669,7 +732,7 @@ Check:
 
 Check:
 
-✅ Logic-level MOSFET (IRLZ44N, not IRFZ44N)
+✅ MOSFET $R_{DS(on)}$ specified at the actual gate voltage, or a suitable gate driver installed
 
 ✅ Motor current within MOSFET rating
 
@@ -693,7 +756,7 @@ Check:
 
 ✅ Flyback diode installed
 
-✅ Battery connected
+✅ Bench supply set to 5.0 V with current limit no higher than 0.35 A
 
 ✅ MOSFET pinout verified
 

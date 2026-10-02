@@ -352,8 +352,7 @@ On Linux the port appears as `/dev/ttyUSB0` rather than a COM port as on Windows
 
 ## Installing the ESP32 Board Package
 
-This tutorial is validated with the Arduino-ESP32 core available through Boards Manager.
-If you use a newer major core version, LEDC API calls may change; check the official migration notes if examples do not compile.
+The ESP32 sketches throughout these course labs use the Arduino-ESP32 **core 2.x LEDC API** unless a page says otherwise. For direct compatibility, select a 2.x core version in Boards Manager. If using core 3.x, update every course sketch that uses `ledcSetup(ch, freq, res)` and `ledcAttachPin(pin, ch)` to `ledcAttach(pin, freq, res)`, and change `ledcWrite(ch, duty)` to `ledcWrite(pin, duty)`; verify the pin/channel arguments before uploading.
 
 ### Step 1
 

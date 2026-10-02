@@ -1,6 +1,6 @@
 # Textbook Reading Path
 
-This page connects the practical labs with three reference books. The locators below use the editions identified by ISBN where possible. Chapter numbering can differ between printings, so use the chapter title and section keywords as the reliable locator when your copy is organised differently.
+This page connects the practical labs with four reference books. The locators below use the editions identified by ISBN where possible. Chapter numbering can differ between printings, so use the chapter title and section keywords as the reliable locator when your copy is organised differently.
 
 ## Books
 

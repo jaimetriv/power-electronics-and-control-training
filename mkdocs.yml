@@ -74,12 +74,12 @@ nav:
       - Microcontroller Setup: 00A_Microcontroller_Setup.md
       - Oscilloscope Setup: 00B_Oscilloscope_Setup.md
       - ESP32 Wi-Fi Control: 00C_ESP32_WiFi_Control.md
-      - Control Engineering Primer: 00D_Control_Engineering_Primer.md
 
   - Core Electronics:
       - PWM Operation: 01_PWM_Operation.md
       - RC Circuits: 02_RC_Circuits.md
       - RLC Circuits: 03_RLC_Circuits.md
+      - Control Engineering Primer: 00D_Control_Engineering_Primer.md
       - MOSFET Switching: 04_MOSFET_Switching.md
 
   - Power Conversion:

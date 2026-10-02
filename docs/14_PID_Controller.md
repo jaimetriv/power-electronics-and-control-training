@@ -129,7 +129,7 @@ $$
 \omega_n = \sqrt{\frac{KK_I}{\tau + KK_D}}, \qquad \zeta = \frac{1 + KK_P}{2\sqrt{KK_I(\tau + KK_D)}}
 $$
 
-Note that for fixed $K_P$ and $K_I$, increasing $K_D$ actually makes $(\tau + KK_D)$ larger, which *decreases* both $\zeta$ and $\omega_n$ in this formula — so the pole damping ratio alone does not explain the reduced overshoot seen experimentally. The real explanation is that $K_D$ also appears in the closed-loop **numerator** $K(K_D s^2 + K_P s + K_I)$, adding a zero to the response. This zero speeds up the rise and cancels part of the oscillatory behaviour contributed by the poles, which is why increasing $K_D$ reduces overshoot and oscillation in practice even though it lowers $\zeta$.
+For fixed $K_P$ and $K_I$, increasing $K_D$ changes both the closed-loop poles and zeros. Therefore the pole damping ratio alone does not predict measured overshoot, and derivative gain does **not** guarantee reduced overshoot. Its effect depends on the plant, zero locations, derivative filtering, sampling, and noise; compare simulated and measured responses while changing one gain at a time.
 
 ---
 
@@ -146,7 +146,7 @@ Where:
 - $u(t)$ = Controller Output
 - $K_P$ = Proportional Gain — immediate correction
 - $K_I$ = Integral Gain — eliminates steady-state error
-- $K_D$ = Derivative Gain — predictive damping, reduces overshoot
+- $K_D$ = Derivative Gain — shapes the transient response; effect depends on plant and filtering
 - $e(t)$ = Error Signal
 
 In a sampled controller, the derivative is approximated from successive samples and is normally filtered. Its result depends on $T_s$, measurement noise, and whether the derivative is applied to the error or to the measured output.
@@ -354,7 +354,7 @@ Same circuit as Projects 12 and 13:
 
 Implement a full closed-loop PID controller driving the motor via MOSFET.
 
-The potentiometer sets the speed reference and back-EMF provides feedback.
+The potentiometer sets the speed reference. Closed-loop speed control requires a calibrated tachometer or encoder-derived signal; the motor-terminal divider shown in earlier drafts does not measure back-EMF or speed. If no suitable sensor is available, use the simulation and do not run the hardware controller experiment as a speed loop.
 
 ---
 
@@ -368,19 +368,11 @@ Battery (+)
   Motor
     │──── Flyback diode (cathode toward Battery+)
     │
-    ├──── 10 kΩ ──── GPIO35  (back-EMF feedback)
-                │
-              10 kΩ
-                │
-               GND
-
-  Drain (MOSFET IRLZ44N)
-  Source
-    │
-   GND
-
-ESP32 GPIO18 (or Arduino Pin 9 as backup) ──── 220 Ω ──── Gate
-Potentiometer centre pin ──── GPIO34 (or Arduino A0 as backup)
+    ├──── MOSFET Drain
+MOSFET Source -> GND; share GND with controller and battery
+ESP32 GPIO18 -> 220 Ω gate resistor -> MOSFET Gate
+Potentiometer wiper -> GPIO34 (or Arduino A0 as backup)
+Calibrated ADC-safe speed sensor output -> GPIO35 (or Arduino A1 as backup)
 ```
 
 ---
@@ -391,7 +383,7 @@ Before uploading:
 
 ✅ Motor circuit wired correctly (same as Projects 12 and 13)
 
-✅ Back-EMF divider connected to GPIO35 (ESP32) or A1 (Arduino backup)
+✅ Calibrated speed-sensor output connected to GPIO35 (ESP32) or A1 (Arduino backup)
 
 ✅ Potentiometer wiper connected to GPIO34 (ESP32) or A0 (Arduino backup)
 
@@ -408,12 +400,14 @@ float Kd = 0.1;
 
 const int PWM_PIN       = 18;
 const int REF_PIN       = 34;
-const int FBK_PIN       = 35;
+const int FBK_PIN       = 35;   // calibrated speed-sensor output
 const float dt          = 0.05;
 const float integralMax = 500.0;
+const float derivativeFilterTau = 0.1;
 
 float integral      = 0;
-float previousError = 0;
+float previousFeedback = 0;
+float derivativeFiltered = 0;
 
 void setup()
 {
@@ -425,18 +419,19 @@ void setup()
 
 void loop()
 {
-    int reference = analogRead(REF_PIN);   // 0–4095 on ESP32 12-bit ADC
-    int feedback  = analogRead(FBK_PIN);
-
-    // Scale 12-bit error to 8-bit PWM domain.
-    float error = (reference - feedback) / 16.0;
+    float reference = analogRead(REF_PIN) / 16.0;   // scaled 12-bit ADC reading
+    float feedback  = analogRead(FBK_PIN) / 16.0;   // calibrated speed-sensor reading
+    float error = reference - feedback;
 
     integral = integral + error * dt;
     integral = constrain(integral, -integralMax, integralMax);
 
-    float derivative = (error - previousError) / dt;
+    // Derivative on measurement avoids setpoint kick; a first-order filter reduces ADC noise.
+    float rawDerivative = -(feedback - previousFeedback) / dt;
+    float alpha = derivativeFilterTau / (derivativeFilterTau + dt);
+    derivativeFiltered = alpha * derivativeFiltered + (1 - alpha) * rawDerivative;
 
-    float output = Kp * error + Ki * integral + Kd * derivative;
+    float output = Kp * error + Ki * integral + Kd * derivativeFiltered;
     output = constrain(output, 0, 255);
 
     ledcWrite(0, (int)output);
@@ -445,10 +440,10 @@ void loop()
     Serial.print("  Fbk: "); Serial.print(feedback);
     Serial.print("  Err8: "); Serial.print(error, 1);
     Serial.print("  Int: "); Serial.print(integral, 2);
-    Serial.print("  Der: "); Serial.print(derivative, 2);
+    Serial.print("  Der: "); Serial.print(derivativeFiltered, 2);
     Serial.print("  PWM: "); Serial.println((int)output);
 
-    previousError = error;
+    previousFeedback = feedback;
     delay(50);
 }
 ```
@@ -460,11 +455,13 @@ float Kp = 0.5;
 float Ki = 1.0;
 float Kd = 0.1;
 
-const float dt           = 0.05;    // sample time (s) — matches delay(50)
+const float dt           = 0.05;    // nominal sample time (s)
 const float integral_max = 500.0;   // anti-windup limit
+const float derivative_filter_tau = 0.1;
 
-float integral      = 0;
-float previousError = 0;
+float integral = 0;
+float previousFeedback = 0;
+float derivativeFiltered = 0;
 
 void setup()
 {
@@ -474,18 +471,20 @@ void setup()
 
 void loop()
 {
-    int reference = analogRead(A0);   // 0–1023 on Arduino 10-bit ADC
-    int feedback  = analogRead(A1);
+    float reference = analogRead(A0) / 4.0;   // scale 10-bit reading to 8-bit command range
+    float feedback  = analogRead(A1) / 4.0;   // calibrated speed-sensor signal
 
-    // Arduino's 10-bit ADC needs /4 scaling here vs /16 on the 12-bit ESP32 ADC.
-    float error = (reference - feedback) / 4.0;
+    float error = reference - feedback;
 
     integral = integral + error * dt;
     integral = constrain(integral, -integral_max, integral_max);
 
-    float derivative = (error - previousError) / dt;
+    // Derivative on measurement avoids setpoint kick; a first-order filter reduces ADC noise.
+    float rawDerivative = -(feedback - previousFeedback) / dt;
+    float alpha = derivative_filter_tau / (derivative_filter_tau + dt);
+    derivativeFiltered = alpha * derivativeFiltered + (1 - alpha) * rawDerivative;
 
-    float output = Kp * error + Ki * integral + Kd * derivative;
+    float output = Kp * error + Ki * integral + Kd * derivativeFiltered;
     output = constrain(output, 0, 255);
 
     analogWrite(9, (int)output);
@@ -494,10 +493,10 @@ void loop()
     Serial.print("  Fbk: "); Serial.print(feedback);
     Serial.print("  Err: "); Serial.print((int)error);
     Serial.print("  Int: "); Serial.print(integral, 2);
-    Serial.print("  Der: "); Serial.print(derivative, 2);
+    Serial.print("  Der: "); Serial.print(derivativeFiltered, 2);
     Serial.print("  PWM: "); Serial.println((int)output);
 
-    previousError = error;
+    previousFeedback = feedback;
     delay(50);
 }
 ```
@@ -508,7 +507,7 @@ void loop()
 
 The potentiometer sets the reference $r$.
 
-The back-EMF divider provides the measured output proxy $y$.
+The calibrated speed sensor provides the measured output $y$.
 
 The controller computes:
 

@@ -14,7 +14,7 @@ A practical hands-on course covering:
 
 ## Textbook Reading Path
 
-The labs are supported by three reference books. See [docs/Textbook_Resources.md](docs/Textbook_Resources.md) for the lab-by-lab reading sequence, ISBNs, and differences between textbook assumptions and practical measurements.
+The labs are supported by four reference books. See [docs/Textbook_Resources.md](docs/Textbook_Resources.md) for the lab-by-lab reading sequence, ISBNs, and differences between textbook assumptions and practical measurements.
 
 ## Recommended Hardware
 
@@ -48,11 +48,12 @@ The labs are supported by three reference books. See [docs/Textbook_Resources.md
 - 01 PWM Operation
 - 02 RC Circuits
 - 03 RLC Circuits
+- 00D Control Engineering Primer (checkpoint after Lab 03)
 - 04 MOSFET Switching
 
 ### Power Electronics
 
-- 05 DC Chopper Converters
+- 05 DC Chopper Operation
 - 06 Buck Converter
 - 07 Boost Converter
 - 08 PWM Motor Control

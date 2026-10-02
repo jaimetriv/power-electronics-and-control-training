@@ -316,7 +316,7 @@ Same circuit as Project 12:
 - DC Motor
 - Flyback diode (1N4001–1N4007)
 - 220 Ω gate resistor
-- 2 × 10 kΩ resistors (back-EMF divider — already installed from Project 12)
+- Analog motor speed sensor with calibrated, ADC-safe output (not included in the base hardware list; use simulation if unavailable)
 - External battery pack
 - OWON HDS272S Oscilloscope (recommended)
 - DSO Nano Oscilloscope (compatible)
@@ -329,35 +329,23 @@ Same circuit as Project 12:
 
 ### Objective
 
-Implement a PI controller with back-EMF feedback closing the loop on the motor.
+Implement a PI controller with speed-sensor feedback closing the loop on the motor.
 
-The potentiometer sets the speed reference. The back-EMF divider provides the feedback signal.
+The potentiometer sets the speed reference. A calibrated tachometer or encoder-derived analog signal provides speed feedback. The motor-terminal divider shown in the older wiring does not measure back-EMF or speed; if no suitable sensor is available, complete the closed-loop exercise in simulation only.
 
 ---
 
 ### Circuit
 
-Same as Project 12 — back-EMF divider already in place:
+Same motor driver as Project 12, with a speed sensor added:
 
 ```text
-Battery (+)
-    │
-  Motor
-    │──── Flyback diode (cathode toward Battery+)
-    │
-    ├──── 10 kΩ ──── GPIO35  (back-EMF feedback)
-                │
-              10 kΩ
-                │
-               GND
-
-  Drain (MOSFET IRLZ44N)
-  Source
-    │
-   GND
-
-ESP32 GPIO18 (or Arduino Pin 9 as backup) ──── 220 Ω ──── Gate
-Potentiometer centre pin ──── GPIO34
+Battery (+) -> Motor -> MOSFET Drain
+Flyback diode across motor (cathode toward Battery+)
+MOSFET Source -> GND; share GND with controller and battery
+ESP32 GPIO18 -> 220 Ω gate resistor -> MOSFET Gate
+Potentiometer wiper -> GPIO34 (reference)
+Speed sensor output (calibrated and ADC-safe) -> GPIO35 (feedback)
 ```
 
 ---
@@ -367,12 +355,12 @@ Potentiometer centre pin ──── GPIO34
 If building fresh (circuit from Project 12 already in place, skip to the checklist):
 
 1. Keep the MOSFET motor driver circuit from Project 12 intact.
-2. Verify the **back-EMF voltage divider** is still connected: top 10 kΩ from motor positive terminal, midpoint to **GPIO35**, bottom 10 kΩ to **GND**.
+2. Verify the speed sensor is calibrated against RPM and its output remains within the ADC range. Do not connect GPIO35 to a motor terminal through a divider as a substitute for a speed sensor.
 3. Verify the **potentiometer** wiper is connected to **GPIO34**.
 4. Confirm the **220 Ω gate resistor** connects **GPIO18** to the MOSFET gate.
 5. Confirm **shared GND** between the ESP32, battery negative, and MOSFET source.
 
-> Tip: If the Serial Monitor shows the feedback reading stuck at 0 or 4095, check the back-EMF divider connections — a loose wire on GPIO35 is the most common cause.
+> Tip: If the feedback reading is stuck at 0 or full scale, check the sensor output, common ground, and ADC-safe scaling.
 
 ---
 
@@ -382,7 +370,7 @@ Before uploading:
 
 ✅ Motor circuit wired correctly (same as Project 12)
 
-✅ Back-EMF divider connected to GPIO35 (ESP32) or A1 (Arduino backup)
+✅ Calibrated speed-sensor output connected to GPIO35 (ESP32) or A1 (Arduino backup)
 
 ✅ Potentiometer wiper connected to GPIO34 (ESP32) or A0 (Arduino backup)
 
@@ -417,11 +405,15 @@ void loop()
     int reference = analogRead(REF_PIN);   // 0–4095 on ESP32 12-bit ADC
     int feedback  = analogRead(FBK_PIN);
 
-    // Scale 12-bit error to 8-bit PWM domain.
+    // Scale the calibrated 12-bit reference and speed signal to an 8-bit command domain.
     float error = (reference - feedback) / 16.0;
+    float integralCandidate = constrain(integral + error * dt, -int_max, int_max);
+    float candidateOutput = Kp * error + Ki * integralCandidate;
 
-    integral = integral + error * dt;
-    integral = constrain(integral, -int_max, int_max);
+    // Integrate unless the error would push an already limited output farther into saturation.
+    if (!((candidateOutput > 255 && error > 0) || (candidateOutput < 0 && error < 0))) {
+      integral = integralCandidate;
+    }
 
     float output = Kp * error + Ki * integral;
     output = constrain(output, 0, 255);
@@ -462,9 +454,12 @@ void loop()
 
     // Arduino's 10-bit ADC needs /4 scaling here vs /16 on the 12-bit ESP32 ADC.
     float error = (reference - feedback) / 4.0;
+    float integralCandidate = constrain(integral + error * dt, -int_max, int_max);
+    float candidateOutput = Kp * error + Ki * integralCandidate;
 
-    integral = integral + error * dt;
-    integral = constrain(integral, -int_max, int_max);
+    if (!((candidateOutput > 255 && error > 0) || (candidateOutput < 0 && error < 0))) {
+      integral = integralCandidate;
+    }
 
     float output = Kp * error + Ki * integral;
     output = constrain(output, 0, 255);
@@ -487,7 +482,7 @@ void loop()
 
 The potentiometer sets the reference $r$.
 
-The back-EMF divider measures actual motor speed (proxy) $y$.
+The calibrated speed sensor measures motor speed $y$.
 
 The PI controller computes:
 
@@ -758,7 +753,7 @@ Check:
 
 ✅ Motor circuit wired correctly (same as Project 12)
 
-✅ Back-EMF divider connected to feedback ADC input
+✅ Calibrated speed-sensor output connected to feedback ADC input
 
 ✅ Shared GND between controller and battery
 
