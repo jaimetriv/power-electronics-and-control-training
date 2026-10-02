@@ -66,6 +66,24 @@ SparkFun Beginner Parts Kit (KIT-13973) includes:
 
 Important note: the Beginner Parts Kit does not include a resistor assortment.
 
+### Other Existing Power Parts
+
+- IRLZ44N MOSFET used in Labs 00-04 (quantity on hand not specified). Do not count it as a replacement for the AO3401A P-channel buck switch or for an N-channel MOSFET with verified 3.3 V gate-drive performance in the revised Labs 06-08.
+
+### Recent RS Order Received 2 October 2026
+
+Order reference 3019365801. The parts have been received; inspect markings and ratings before use.
+
+- KEMET 100 uH inductor, 1.1 A, 0.35 ohm DCR, RS stock 265-2686 (1)
+- Murata 100 uH inductor, 5.4 A, 0.046 ohm DCR, RS stock 228-416 (1)
+- Yageo cement resistors, 5 W: 10 ohm x 5 (199-1718), 22 ohm x 5 (199-1702), 47 ohm x 5 (199-1709), and 100 ohm x 5 (199-1716)
+
+The two 100 uH inductors are not substitutes for the three 1 mH inductors specified for Labs 06-07 and the shared Lab 10 filter. The received 47 ohm / 5 W and 100 ohm / 5 W resistors meet or exceed the wattage ratings of same-value loads in the lab plans; keep their cement bodies off breadboards and allow ventilation.
+
+### Amazon Inductor Assortment Purchased; Ratings Unverified
+
+- Swpeet 90-piece, 15-value, 10 uH-20 mH inductor assortment. The title claims high SRF but does not provide the 1 mH coil count, saturation current, DCR, or numeric SRF needed to qualify it for Labs 06-07 or the Lab 10 filter. Identify/count the 1 mH pieces with the LCR meter and verify power ratings from a datasheet before use. Do not treat it as a qualified power-inductor pack until those checks pass.
+
 ---
 
 ## Labs Well Covered Already

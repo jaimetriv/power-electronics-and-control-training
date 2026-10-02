@@ -13,14 +13,14 @@ This estimate matches the current 5 V / 20 kHz converter builds, 6 V AC rectifie
 | RS PRO bench supply, 0-30 V / 5 A | 1 | £129.26 | RS stock 175-7367; verify 10 mA or finer current-limit setting before purchase |
 | Wurth 1 mH inductor, 750 mA, 0.98 Ω, 1 MHz SRF | 3 needed | £14.40 | RS stock 923-6220; sold as a 10-pack, leaving 7 spares |
 | DRV8833 H-bridge breakout | 1 | £5.95 | Adafruit breakout at Pimoroni; shared by Labs 10, 17, and 18 |
-| 1 µF film capacitor, ≥25 V | 1 needed | £4.27 | RS stock 622-4735P; sold in a five-pack |
+| 1 µF film capacitor, ≥25 V | 1 needed | £16.50 | RS stock 622-4735P; Panasonic 1 µF / 250 V part, current minimum pack is 25 pieces. The lower-cost Amazon 20-pack is £6.79 if you accept the marketplace-sourcing tradeoff. |
 | Enclosed 6 V AC adapter | 1 | £21.38 | RS stock 206-4927; EU plug version, so select a UK-plug equivalent or suitable approved plug adapter |
 | 250 mA time-lag 5 x 20 mm fuse | 1 needed | £7.03 | RS stock 630-823; sold as a box of 10 |
 | MOSFETs and SOT-23 breadboard breakouts | 2 builds | £8-15 | AO3401A P-channel and AO3400A N-channel, with labeled breakouts |
 | Diodes, resistors, loads, fuse holder and 47 Ω / 5 W resistor | 1 set | £15-30 | Excludes items listed separately; check kit capacitor voltage ratings before buying top-ups |
 | TCRT5000 sensor and reflective wheel | 1 set | £5-10 | A compatible encoder in the POP-BOT kit may remove this cost |
 
-**Estimated Labs 06-18 total: £210-£240**, before delivery. Add about £5-£10 only if your existing motor does not meet the Lab 08 stall-current limit. RS prices include VAT as shown; the Adafruit breakout price is Pimoroni's UK retail price and the small-parts bundle is a planning range.
+**Estimated Labs 06-18 total: £222-£252**, before delivery, with the RS Panasonic capacitor pack priced at its current 25-piece minimum. Using the Amazon 20-pack instead lowers this estimate by £9.71 to about £212-£242. Add about £5-£10 only if your existing motor does not meet the Lab 08 stall-current limit. RS prices include VAT as shown; the Adafruit breakout price is Pimoroni's UK retail price and the small-parts bundle is a planning range.
 
 For Labs 12-14 analog speed feedback, the RS LM2907N-8 is £13.89 inc VAT for a pack of five (RS stock 461-032). It needs a 12 V rail; budget another £10-£20 for a separate regulated 12 V adapter if you choose this DIY route and your supply has only one output. A calibrated 3.3/5 V tachometer module may be a simpler alternative.
 

@@ -9,6 +9,7 @@
 - OWON built-in digital multimeter
 - ESP32 DevKit V1 boards
 - 2 x Arduino Uno
+- IRLZ44N MOSFET used in Labs 00-04 (quantity on hand not specified)
 
 ---
 
@@ -16,7 +17,6 @@
 
 | Priority | Component | Qty | Est. Cost (GBP) |
 |---|---|---:|---:|
-| P1 | IRLZ44N MOSFET | 4 | 4-6 |
 | P1 | Resistor assortment kit | 1 | 5-10 |
 | P1 | 1N4007 diode | 10 | 1-2 |
 | P1 | 1N5819 Schottky diode | 5 | 2-3 |
@@ -50,6 +50,7 @@
 
 ## Notes
 
+- Do not buy additional IRLZ44N MOSFETs for Labs 00-04; one is already in use. It is not a substitute for the AO3401A P-channel buck switch or an N-channel MOSFET with verified 3.3 V gate-drive performance in the revised Labs 06-07.
 - Use 100 uH, not 100 mH, for Buck and Boost labs.
 - 100 nF and 10 uF capacitors are already covered by your existing kits, so they are excluded from the minimum buy list.
 - Standalone digital multimeter is optional because the OWON already includes one.
