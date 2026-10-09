@@ -955,6 +955,89 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-predict-this-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How To Predict This Circuit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How To Predict This Circuit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-component-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Component Behaviour
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-physical-meaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Physical Meaning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Topology
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Prediction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-reality-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Reality Check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Measurement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reading-before-the-lab" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2135,6 +2218,89 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-predict-this-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How To Predict This Circuit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How To Predict This Circuit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-component-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Component Behaviour
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-physical-meaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Physical Meaning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Topology
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Prediction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-reality-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Reality Check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Measurement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reading-before-the-lab" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2892,6 +3058,20 @@
 
 <h1 id="project-08-pwm-motor-control-and-first-order-system-dynamics">Project 08 - PWM Motor Control and First-Order System Dynamics<a class="headerlink" href="#project-08-pwm-motor-control-and-first-order-system-dynamics" title="Permanent link">&para;</a></h1>
 <hr />
+<h2 id="how-to-predict-this-circuit">How To Predict This Circuit<a class="headerlink" href="#how-to-predict-this-circuit" title="Permanent link">&para;</a></h2>
+<h3 id="1-component-behaviour">1. Component Behaviour<a class="headerlink" href="#1-component-behaviour" title="Permanent link">&para;</a></h3>
+<p>A simplified brushed motor obeys <span class="arithmatex">\(v_m=R_m i_m+L_m\,di_m/dt+K_e\omega\)</span> and <span class="arithmatex">\(J\,d\omega/dt=K_t i_m-b\omega-T_{load}\)</span>. Current produces torque; rotation generates back-EMF. The MOSFET controls the winding voltage and the flyback diode carries winding current during OFF time.</p>
+<h3 id="2-physical-meaning">2. Physical Meaning<a class="headerlink" href="#2-physical-meaning" title="Permanent link">&para;</a></h3>
+<p>The motor transfers electrical energy into motion, stores energy in winding inductance and rotor inertia, and dissipates energy through resistance and friction. PWM controls that transfer; it does not command shaft speed directly.</p>
+<h3 id="3-topology">3. Topology<a class="headerlink" href="#3-topology" title="Permanent link">&para;</a></h3>
+<p>ON: supply -&gt; winding -&gt; MOSFET -&gt; GND. OFF: winding current circulates through the diode back to the winding's supply-side terminal. The optical pickup observes shaft motion through the 12-mark wheel; it is separate from the power-current path.</p>
+<h3 id="4-prediction">4. Prediction<a class="headerlink" href="#4-prediction" title="Permanent link">&para;</a></h3>
+<p>At startup, back-EMF is small and current demand is greatest. As speed rises, back-EMF reduces current. Speed cannot jump under finite torque. Added load initially slows the rotor; reduced back-EMF then increases current. The first-order speed model is an approximation, not a description of every electrical transient.</p>
+<h3 id="5-reality-check">5. Reality Check<a class="headerlink" href="#5-reality-check" title="Permanent link">&para;</a></h3>
+<p>Friction, brush commutation, supply limiting and load torque break simple duty-to-speed proportionality. The diode limits interruption voltage by providing a current path. Use a motor with documented stall current &lt;=300 mA and the specified supply limit &lt;=0.35 A; do not deliberately stall an unknown motor.</p>
+<h3 id="6-measurement">6. Measurement<a class="headerlink" href="#6-measurement" title="Permanent link">&para;</a></h3>
+<p>Predict a speed ramp after a duty step, then record pulse frequency versus time using the documented sensor connection. For 12 pulses/revolution, <span class="arithmatex">\(RPM=60f/12\)</span>. A pulse-amplitude change alone is not a speed measurement. Dead zones, delay or multiple time scales challenge the simple first-order model.</p>
+<hr />
 <h2 id="reading-before-the-lab">Reading Before the Lab<a class="headerlink" href="#reading-before-the-lab" title="Permanent link">&para;</a></h2>
 <p>Read <em>Fundamentals of Power Electronics</em> by Erickson and Maksimovic, Chapter 2, <strong>Basic Concepts</strong>, sections on converter applications and motor drives. Then read <em>Modern Control Engineering</em> by Ogata, Chapter 2, <strong>Mathematical Modeling of Control Systems</strong>, and Chapter 5, <strong>Transient and Steady-State Response Analysis</strong>, for first-order models, time constant, rise time, and settling time. Estimate the mechanical time constant from a step response.</p>
 <hr />
@@ -2955,7 +3135,7 @@ V_{AVG} = D \cdot V_S
 <h2 id="why-is-a-flyback-diode-needed">Why Is a Flyback Diode Needed?<a class="headerlink" href="#why-is-a-flyback-diode-needed" title="Permanent link">&para;</a></h2>
 <p>Motors are inductive loads.</p>
 <p>When current is interrupted, a high voltage spike can occur.</p>
-<p>The flyback diode provides a path for this spike, protecting the controller, MOSFET, and other electronics.</p>
+<p>The flyback diode provides a closed path for winding current during MOSFET OFF time. This clamps the interruption voltage to approximately the supply voltage plus the diode drop at the drain, protecting the switch; it carries current rather than providing a path for voltage itself.</p>
 <hr />
 <h2 id="circuit-diagram">Circuit Diagram<a class="headerlink" href="#circuit-diagram" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>5 V current-limited supply (+)

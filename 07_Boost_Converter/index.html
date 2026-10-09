@@ -927,6 +927,89 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-predict-this-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How To Predict This Circuit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How To Predict This Circuit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-component-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Component Behaviour
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-physical-meaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Physical Meaning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Topology
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Prediction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-reality-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Reality Check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Measurement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reading-before-the-lab" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2207,6 +2290,89 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-predict-this-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How To Predict This Circuit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How To Predict This Circuit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-component-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Component Behaviour
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-physical-meaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Physical Meaning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Topology
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Prediction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-reality-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Reality Check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Measurement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reading-before-the-lab" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3035,6 +3201,20 @@
 
 
 <h1 id="project-07-boost-converter-operation">Project 07 - Boost Converter Operation<a class="headerlink" href="#project-07-boost-converter-operation" title="Permanent link">&para;</a></h1>
+<hr />
+<h2 id="how-to-predict-this-circuit">How To Predict This Circuit<a class="headerlink" href="#how-to-predict-this-circuit" title="Permanent link">&para;</a></h2>
+<h3 id="1-component-behaviour">1. Component Behaviour<a class="headerlink" href="#1-component-behaviour" title="Permanent link">&para;</a></h3>
+<p>The N-MOSFET pulls the switch node toward GND when enhanced. The diode conducts from that node into the output when the node exceeds output voltage by its forward drop. With current from input toward the switch node, <span class="arithmatex">\(di_L/dt=(V_{IN}-v_{sw})/L\)</span> and <span class="arithmatex">\(dv_o/dt=(i_D-i_{load})/C\)</span>.</p>
+<h3 id="2-physical-meaning">2. Physical Meaning<a class="headerlink" href="#2-physical-meaning" title="Permanent link">&para;</a></h3>
+<p>During ON time the source builds magnetic energy in L while C supplies the load. During OFF time the source and inductor deliver energy to the output. Voltage gain is paid for by input current and losses; the converter does not create energy.</p>
+<h3 id="3-topology">3. Topology<a class="headerlink" href="#3-topology" title="Permanent link">&para;</a></h3>
+<p>ON: supply -&gt; L -&gt; MOSFET -&gt; GND, with the output diode normally blocking once output voltage is established. OFF: supply -&gt; L -&gt; diode -&gt; parallel capacitor/load branches -&gt; GND. Unlike the buck, the input is connected to L continuously.</p>
+<h3 id="4-prediction">4. Prediction<a class="headerlink" href="#4-prediction" title="Permanent link">&para;</a></h3>
+<p>ON current rises with approximately <span class="arithmatex">\(V_{IN}/L\)</span>. OFF current falls when <span class="arithmatex">\(v_o+V_F&gt;V_{IN}\)</span>. In ideal periodic CCM, volt-second balance gives <span class="arithmatex">\(v_o=V_{IN}/(1-D)\)</span>. At zero duty, a source-to-output path still exists through L and the diode: disabling PWM does not isolate the output. Increasing duty initially extends the interval in which C alone supplies the load.</p>
+<h3 id="5-reality-check">5. Reality Check<a class="headerlink" href="#5-reality-check" title="Permanent link">&para;</a></h3>
+<p>The ideal gain does not diverge in a real circuit: resistance, saturation, losses and current limiting intervene. DCM makes output load-dependent. Keep the specified 5 V / 0.20 A supply and hardware duty limit of 25%; high-gain examples are not build settings.</p>
+<h3 id="6-measurement">6. Measurement<a class="headerlink" href="#6-measurement" title="Permanent link">&para;</a></h3>
+<p>Predict the low ON-state switch-node voltage and elevated OFF-state voltage, then compare simulated current slopes and measured output ripple. Use only the documented ground-referenced probing. Output failing to follow the CCM estimate can indicate DCM or losses; rapidly rising current is a reason to stop, not increase duty.</p>
 <hr />
 <h2 id="reading-before-the-lab">Reading Before the Lab<a class="headerlink" href="#reading-before-the-lab" title="Permanent link">&para;</a></h2>
 <p>Read <em>Fundamentals of Electric Circuits</em> by Alexander and Sadiku, Chapters 6–7, for inductor/capacitor energy storage and transient response. Then read <em>Fundamentals of Power Electronics</em> by Erickson and Maksimovic, Chapter 3, <strong>Steady-State Converter Analysis</strong>, for <strong>boost converters</strong>, <strong>inductor energy transfer</strong>, <strong>CCM</strong>, <strong>DCM</strong>, and <strong>duty-ratio limits</strong>. Predict <span class="arithmatex">\(V_o\approx V_{in}/(1-D)\)</span> in ideal CCM and explain why high duty ratio increases stress.</p>

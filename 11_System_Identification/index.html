@@ -1100,6 +1100,89 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-predict-this-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How To Predict This Circuit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How To Predict This Circuit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-component-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Component Behaviour
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-physical-meaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Physical Meaning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Topology
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Prediction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-reality-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Reality Check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Measurement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reading-before-the-lab" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2284,6 +2367,89 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-predict-this-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How To Predict This Circuit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How To Predict This Circuit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-component-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Component Behaviour
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-physical-meaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Physical Meaning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Topology
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Prediction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-reality-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Reality Check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Measurement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reading-before-the-lab" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3189,6 +3355,20 @@
 
 
 <h1 id="project-11-system-identification-and-dynamic-modelling">Project 11 - System Identification and Dynamic Modelling<a class="headerlink" href="#project-11-system-identification-and-dynamic-modelling" title="Permanent link">&para;</a></h1>
+<hr />
+<h2 id="how-to-predict-this-circuit">How To Predict This Circuit<a class="headerlink" href="#how-to-predict-this-circuit" title="Permanent link">&para;</a></h2>
+<h3 id="1-component-behaviour">1. Component Behaviour<a class="headerlink" href="#1-component-behaviour" title="Permanent link">&para;</a></h3>
+<p>Choose the plant's laws before fitting its response: <span class="arithmatex">\(i_C=C\,dv_C/dt\)</span> for an RC output, or torque proportional to winding current and back-EMF proportional to speed for a motor. A candidate <span class="arithmatex">\(G(s)=K/(\tau s+1)\)</span> is a simplified input-output description, not a component law.</p>
+<h3 id="2-physical-meaning">2. Physical Meaning<a class="headerlink" href="#2-physical-meaning" title="Permanent link">&para;</a></h3>
+<p>Capacitor charge or rotor inertia explains why output takes time to change. Resistance, friction and load explain dissipation and final balance. The fitted gain and time constant summarise these effects over the tested range.</p>
+<h3 id="3-topology">3. Topology<a class="headerlink" href="#3-topology" title="Permanent link">&para;</a></h3>
+<p>Define exactly where input is applied and output measured. For PWM-to-speed identification, duty is the input and calibrated speed is the output; including a sensor filter or delay changes the identified system. Record initial conditions and keep load unchanged during a test.</p>
+<h3 id="4-prediction">4. Prediction<a class="headerlink" href="#4-prediction" title="Permanent link">&para;</a></h3>
+<p>A small step around a settled operating point should give <span class="arithmatex">\(\Delta y_{ss}=K\Delta u\)</span> for the linear model. A first-order response reaches 63.2% of the total change after <span class="arithmatex">\(\tau\)</span>. Ringing or a noticeable delay suggests that a single first-order model is incomplete.</p>
+<h3 id="5-reality-check">5. Reality Check<a class="headerlink" href="#5-reality-check" title="Permanent link">&para;</a></h3>
+<p>Noise, PWM dead zones, sensor filtering, changing loads and supply limiting bias fitted parameters. Use the documented safe input range, not a full-duty motor step merely because the mathematical example shows one. Gain estimates use changes about the baseline, not absolute readings with offsets.</p>
+<h3 id="6-measurement">6. Measurement<a class="headerlink" href="#6-measurement" title="Permanent link">&para;</a></h3>
+<p>Capture input and output on the same time base. Estimate gain, delay and time constant, then predict a second safe step not used for fitting. Compare the whole response and residual error; matching only the final value cannot establish the model's dynamic accuracy.</p>
 <hr />
 <h2 id="reading-before-the-lab">Reading Before the Lab<a class="headerlink" href="#reading-before-the-lab" title="Permanent link">&para;</a></h2>
 <p>Before starting the control stage, review the <strong>Control Theory Checkpoint</strong> after Lab 03, then review <em>Modern Control Engineering</em> by Ogata, Chapter 2, <strong>Mathematical Modeling of Control Systems</strong>, including differential-equation models, transfer functions, block diagrams, and model validation. Also review Chapter 5, <strong>Transient and Steady-State Response Analysis</strong>, for first- and second-order responses, poles, zeros, damping, time constants, and steady-state error. Select a model structure and estimate its parameters from the measured step response.</p>

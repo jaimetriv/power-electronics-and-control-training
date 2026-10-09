@@ -871,6 +871,89 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-predict-this-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How To Predict This Circuit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How To Predict This Circuit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-component-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Component Behaviour
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-physical-meaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Physical Meaning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Topology
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Prediction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-reality-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Reality Check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Measurement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reading-before-the-lab" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1598,6 +1681,89 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-to-predict-this-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How To Predict This Circuit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How To Predict This Circuit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-component-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Component Behaviour
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-physical-meaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Physical Meaning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Topology
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Prediction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-reality-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Reality Check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Measurement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reading-before-the-lab" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1817,6 +1983,20 @@
 
 
 <h1 id="project-05-dc-chopper-operation">Project 05 - DC Chopper Operation<a class="headerlink" href="#project-05-dc-chopper-operation" title="Permanent link">&para;</a></h1>
+<hr />
+<h2 id="how-to-predict-this-circuit">How To Predict This Circuit<a class="headerlink" href="#how-to-predict-this-circuit" title="Permanent link">&para;</a></h2>
+<h3 id="1-component-behaviour">1. Component Behaviour<a class="headerlink" href="#1-component-behaviour" title="Permanent link">&para;</a></h3>
+<p>The ideal switch selects either <span class="arithmatex">\(V_{IN}\)</span> or zero in this step-down signal model. Its average is <span class="arithmatex">\(D V_{IN}\)</span>. The illustrative filter obeys <span class="arithmatex">\(\tau\,dy/dt+y=v_{sw}\)</span>; it is a mathematical block, not a specified physical power stage.</p>
+<h3 id="2-physical-meaning">2. Physical Meaning<a class="headerlink" href="#2-physical-meaning" title="Permanent link">&para;</a></h3>
+<p>Switching changes the duration of source-to-load energy delivery. A real filter stores and releases energy between pulses; this signal-only model illustrates smoothing but does not calculate device currents, losses or power ratings.</p>
+<h3 id="3-topology">3. Topology<a class="headerlink" href="#3-topology" title="Permanent link">&para;</a></h3>
+<p>The simulated pulse feeds both a direct scope trace and a low-pass block. Keep those two outputs distinct. A physical buck needs an inductor and a freewheel path; changing component connections to a boost gives a different conversion law.</p>
+<h3 id="4-prediction">4. Prediction<a class="headerlink" href="#4-prediction" title="Permanent link">&para;</a></h3>
+<p>At fixed frequency, greater duty increases the switched-voltage average. The filtered output rises gradually toward that average. With a filter time constant much longer than the period, expect small remaining ripple, not perfectly constant DC.</p>
+<h3 id="5-reality-check">5. Reality Check<a class="headerlink" href="#5-reality-check" title="Permanent link">&para;</a></h3>
+<p>The ideal model omits load dependence, semiconductor drops and conduction-mode changes. Numerical time steps must resolve PWM. Its 500 Hz GPIO observation is not permission to build an unspecified power circuit or test regeneration.</p>
+<h3 id="6-measurement">6. Measurement<a class="headerlink" href="#6-measurement" title="Permanent link">&para;</a></h3>
+<p>Predict the average at 25%, 50% and 75% duty, then compare raw and filtered simulation traces. For the optional hardware check, measure only the documented GPIO pulse timing and levels. A correct GPIO waveform does not validate a converter's energy-transfer behaviour.</p>
 <hr />
 <h2 id="reading-before-the-lab">Reading Before the Lab<a class="headerlink" href="#reading-before-the-lab" title="Permanent link">&para;</a></h2>
 <p>Read <em>Fundamentals of Electric Circuits</em> by Alexander and Sadiku, Chapters 1–2, for circuit variables, power, and circuit laws. Then read <em>Fundamentals of Power Electronics</em> by Erickson and Maksimovic, Chapter 3, <strong>Steady-State Converter Analysis</strong>, for switching intervals and average conversion. This lab introduces the general chopper idea; Labs 06 and 07 derive the buck and boost topologies in detail.</p>

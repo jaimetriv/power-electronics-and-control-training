@@ -720,6 +720,89 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-to-predict-this-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How To Predict This Circuit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How To Predict This Circuit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-component-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Component Behaviour
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-physical-meaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Physical Meaning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Topology
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Prediction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-reality-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Reality Check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Measurement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#theory" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2406,6 +2489,89 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-to-predict-this-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How To Predict This Circuit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How To Predict This Circuit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-component-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Component Behaviour
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-physical-meaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Physical Meaning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Topology
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Prediction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-reality-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Reality Check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Measurement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#theory" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3404,6 +3570,20 @@
 <li>What a first-order system is</li>
 <li>How theory compares with real measurements</li>
 </ul>
+<hr />
+<h2 id="how-to-predict-this-circuit">How To Predict This Circuit<a class="headerlink" href="#how-to-predict-this-circuit" title="Permanent link">&para;</a></h2>
+<h3 id="1-component-behaviour">1. Component Behaviour<a class="headerlink" href="#1-component-behaviour" title="Permanent link">&para;</a></h3>
+<p>A resistor obeys <span class="arithmatex">\(v_R=Ri\)</span>. A capacitor obeys <span class="arithmatex">\(i_C=C\,dv_C/dt\)</span>: current changes its voltage, rather than setting that voltage instantaneously. Define current into the capacitor's positive-voltage terminal.</p>
+<h3 id="2-physical-meaning">2. Physical Meaning<a class="headerlink" href="#2-physical-meaning" title="Permanent link">&para;</a></h3>
+<p>The resistor dissipates <span class="arithmatex">\(i^2R\)</span> as heat; the capacitor stores <span class="arithmatex">\(Cv_C^2/2\)</span> in an electric field. Charging transfers energy from the source into both storage and heat. Discharging releases stored energy through the resistor.</p>
+<h3 id="3-topology">3. Topology<a class="headerlink" href="#3-topology" title="Permanent link">&para;</a></h3>
+<p>In the series RC circuit, the resistor and capacitor carry the same current. The output is measured across the capacitor. The available charging current is therefore <span class="arithmatex">\(i=(V_S-v_C)/R\)</span>; changing the output measurement to the resistor would change the observed response.</p>
+<h3 id="4-prediction">4. Prediction<a class="headerlink" href="#4-prediction" title="Permanent link">&para;</a></h3>
+<p>Immediately after a source step, capacitor voltage retains its previous value under finite current. An initially uncharged capacitor gives the largest charging current, <span class="arithmatex">\(V_S/R\)</span>. As <span class="arithmatex">\(v_C\)</span> rises, resistor voltage and current fall, so the rise becomes slower. At constant-input steady state, ideal capacitor current is zero and <span class="arithmatex">\(v_C=V_S\)</span>. Returning the source to zero reverses current and produces a decaying voltage. The time scale is <span class="arithmatex">\(RC\)</span>.</p>
+<h3 id="5-reality-check">5. Reality Check<a class="headerlink" href="#5-reality-check" title="Permanent link">&para;</a></h3>
+<p>Capacitance tolerance changes the time constant. Source resistance and probe loading change the effective circuit; capacitor leakage and ESR alter the ideal response. Respect electrolytic polarity and voltage ratings. A capacitor can retain charge after the source is disconnected.</p>
+<h3 id="6-measurement">6. Measurement<a class="headerlink" href="#6-measurement" title="Permanent link">&para;</a></h3>
+<p>Predict the initial voltage, final voltage and value after one time constant before measuring. Observe the input step and capacitor voltage: a rounded exponential rise or decay supports the model. An apparent instantaneous jump, wrong final value or unexpected time constant calls for checking wiring, probe settings, loading and initial charge. Infer current from resistor voltage using <span class="arithmatex">\(i=v_R/R\)</span>, with the documented safe probe-ground connections.</p>
 <hr />
 <h2 id="theory">Theory<a class="headerlink" href="#theory" title="Permanent link">&para;</a></h2>
 <h3 id="what-is-a-capacitor">What is a Capacitor?<a class="headerlink" href="#what-is-a-capacitor" title="Permanent link">&para;</a></h3>
