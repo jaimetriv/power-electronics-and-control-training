@@ -2,6 +2,34 @@
 
 ---
 
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+The DRV8833's integrated switches select bridge output states according to its input truth table. The load sees $v_{AB}=v_A-v_B$, not either terminal's voltage to GND. The series filter inductors obey $v_L=L\,di/dt$ and the differential capacitor obeys $i_C=C\,dv_{AB}/dt$.
+
+### 2. Physical Meaning
+
+The bridge changes the polarity and timing of DC energy delivery. L and C exchange stored energy and attenuate switching harmonics; they do not remove every harmonic or generate extra power. The load dissipates delivered energy.
+
+### 3. Topology
+
+Trace the two opposite-direction load-current paths for the active bridge states and the documented recirculation states. In the physical build, each output leg has a series inductor and the filter capacitor is across the load. This differs from a ground-referenced low-side MOSFET circuit.
+
+### 4. Prediction
+
+Raw differential voltage switches between bridge states; its average over a carrier period follows the modulation command. The filtered output develops a 50 Hz fundamental with residual ripple. At the documented modulation index 0.4 and 5 V supply, the ideal fundamental is about 2 V peak; square-wave RMS and fundamental RMS are different quantities.
+
+### 5. Reality Check
+
+Switch resistance, driver timing, filter damping and load affect amplitude and distortion. Use the documented DRV8833, not an improvised discrete bridge; retain 5 V / 0.10 A and the connected load. Never connect the output to mains or another AC source.
+
+### 6. Measurement
+
+Sketch raw differential PWM and filtered output before observing them. Put both scope grounds at circuit GND and use CH1-CH2 for the bridge/load voltage, never a ground clip on a bridge output. Measure fundamental frequency, amplitude and residual ripple; ringing or clipping challenges the ideal filter/modulation model.
+
+---
+
 ## Reading Before the Lab
 
 Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapter 17, **Fourier Series**, for square-wave coefficients, RMS values, and harmonic content. Then read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, for **inverters**, **bridge converters**, **modulation**, and **filters**. Identify the bridge and fundamental components before measuring.

@@ -2,6 +2,34 @@
 
 ---
 
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+The ideal switch selects either $V_{IN}$ or zero in this step-down signal model. Its average is $D V_{IN}$. The illustrative filter obeys $\tau\,dy/dt+y=v_{sw}$; it is a mathematical block, not a specified physical power stage.
+
+### 2. Physical Meaning
+
+Switching changes the duration of source-to-load energy delivery. A real filter stores and releases energy between pulses; this signal-only model illustrates smoothing but does not calculate device currents, losses or power ratings.
+
+### 3. Topology
+
+The simulated pulse feeds both a direct scope trace and a low-pass block. Keep those two outputs distinct. A physical buck needs an inductor and a freewheel path; changing component connections to a boost gives a different conversion law.
+
+### 4. Prediction
+
+At fixed frequency, greater duty increases the switched-voltage average. The filtered output rises gradually toward that average. With a filter time constant much longer than the period, expect small remaining ripple, not perfectly constant DC.
+
+### 5. Reality Check
+
+The ideal model omits load dependence, semiconductor drops and conduction-mode changes. Numerical time steps must resolve PWM. Its 500 Hz GPIO observation is not permission to build an unspecified power circuit or test regeneration.
+
+### 6. Measurement
+
+Predict the average at 25%, 50% and 75% duty, then compare raw and filtered simulation traces. For the optional hardware check, measure only the documented GPIO pulse timing and levels. A correct GPIO waveform does not validate a converter's energy-transfer behaviour.
+
+---
+
 ## Reading Before the Lab
 
 Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapters 1–2, for circuit variables, power, and circuit laws. Then read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, for switching intervals and average conversion. This lab introduces the general chopper idea; Labs 06 and 07 derive the buck and boost topologies in detail.

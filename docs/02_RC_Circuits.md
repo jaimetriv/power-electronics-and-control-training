@@ -23,6 +23,34 @@ In this project you will learn:
 ---
 
 
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+A resistor obeys $v_R=Ri$. A capacitor obeys $i_C=C\,dv_C/dt$: current changes its voltage, rather than setting that voltage instantaneously. Define current into the capacitor's positive-voltage terminal.
+
+### 2. Physical Meaning
+
+The resistor dissipates $i^2R$ as heat; the capacitor stores $Cv_C^2/2$ in an electric field. Charging transfers energy from the source into both storage and heat. Discharging releases stored energy through the resistor.
+
+### 3. Topology
+
+In the series RC circuit, the resistor and capacitor carry the same current. The output is measured across the capacitor. The available charging current is therefore $i=(V_S-v_C)/R$; changing the output measurement to the resistor would change the observed response.
+
+### 4. Prediction
+
+Immediately after a source step, capacitor voltage retains its previous value under finite current. An initially uncharged capacitor gives the largest charging current, $V_S/R$. As $v_C$ rises, resistor voltage and current fall, so the rise becomes slower. At constant-input steady state, ideal capacitor current is zero and $v_C=V_S$. Returning the source to zero reverses current and produces a decaying voltage. The time scale is $RC$.
+
+### 5. Reality Check
+
+Capacitance tolerance changes the time constant. Source resistance and probe loading change the effective circuit; capacitor leakage and ESR alter the ideal response. Respect electrolytic polarity and voltage ratings. A capacitor can retain charge after the source is disconnected.
+
+### 6. Measurement
+
+Predict the initial voltage, final voltage and value after one time constant before measuring. Observe the input step and capacitor voltage: a rounded exponential rise or decay supports the model. An apparent instantaneous jump, wrong final value or unexpected time constant calls for checking wiring, probe settings, loading and initial charge. Infer current from resistor voltage using $i=v_R/R$, with the documented safe probe-ground connections.
+
+---
+
 ## Theory
 
 ### What is a Capacitor?

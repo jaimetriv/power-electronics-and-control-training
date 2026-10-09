@@ -2,6 +2,34 @@
 
 ---
 
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+A GPIO is a limited-current logic output, not an ideal supply. An external LED needs forward bias and a series resistor; approximately $i=(V_{GPIO}-V_F)/R$ when conducting. An ADC converts an input voltage into a quantised code relative to its configured range.
+
+### 2. Physical Meaning
+
+The board's supply provides energy. The GPIO controls a small LED current, the LED converts some energy into light, and the resistor dissipates heat while limiting current. Firmware commands electrical states rather than arbitrary amounts of power.
+
+### 3. Topology
+
+Trace the specified GPIO -> resistor -> LED -> GND loop and check polarity. A potentiometer connects between the specified supply and GND, with its wiper feeding the ADC; the ADC needs the same voltage reference as the circuit.
+
+### 4. Prediction
+
+A HIGH command lights a correctly oriented active-high LED; a LOW command extinguishes it. A reversed LED remains dark. Moving the potentiometer should change the ADC reading monotonically; board reset may leave GPIO in an input state before setup runs.
+
+### 5. Reality Check
+
+Pin current limits, LED drop, output loading and ADC reference accuracy affect readings. Check the actual board: Uno and ESP32 logic levels differ. Never connect an external supply directly to a GPIO or omit an external LED's resistor.
+
+### 6. Measurement
+
+Predict LED state and ADC direction before uploading. Compare observed LED behaviour, serial readings and safe GPIO voltage measurements. A successful upload with a dark LED suggests pin selection, polarity or wiring, not necessarily a software fault.
+
+---
+
 ## Objective
 
 The objective of this project is to become familiar with the Arduino Uno development platform and the Arduino Integrated Development Environment (IDE).

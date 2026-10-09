@@ -2,6 +2,34 @@
 
 ---
 
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+A diode carries appreciable forward current once its anode is sufficiently above its cathode; reverse bias normally blocks apart from leakage below breakdown. Its forward drop is current-dependent, not a universal fixed 0.7 V. A capacitor follows $i_C=C\,dv_C/dt$, and the resistive load draws $v_o/R$.
+
+### 2. Physical Meaning
+
+Diodes steer source energy toward one output polarity; they do not regulate it. A reservoir capacitor stores energy near input peaks and supplies the load between charging intervals. Source resistance and diode drops dissipate energy.
+
+### 3. Topology
+
+Trace one conducting diode for half-wave rectification, or each alternate pair in a bridge. In the bridge, both source polarities produce the same load-current direction. The reservoir capacitor sits across the load. Charging occurs only when rectified source voltage exceeds capacitor voltage plus the conducting diode drops.
+
+### 4. Prediction
+
+Without C, expect rectified lobes. With C, expect charging near peaks followed by decay between them. At 50 Hz input, ripple repeats at 50 Hz for half-wave and 100 Hz for a bridge. For small ripple and roughly constant load current, $\Delta v_o\approx I_{load}/(C f_{ripple})$. More C reduces ripple but increases charging-pulse demands.
+
+### 5. Reality Check
+
+Use peak voltage, not RMS voltage, to estimate capacitor charging: a sine has $V_{pk}=\sqrt{2}V_{RMS}$. Include source droop, diode drops, ESR and capacitor tolerance. Use only the enclosed isolated AC adapter, secondary fuse and series resistor specified here; never access mains wiring.
+
+### 6. Measurement
+
+Predict lobe/ripple frequency and peak output before comparing unfiltered and filtered traces. Follow the documented bridge probing arrangement: the AC secondary terminal and DC negative terminal are not interchangeable scope grounds. Unexpected polarity suggests diode orientation; excessive ripple suggests load, capacitance or source limitations.
+
+---
+
 ## Reading Before the Lab
 
 Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapters 9–10 for sinusoidal steady state and phasors, then Chapter 11 for AC power. Then read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, for **diode rectifiers** and **capacitive filtering**. Sketch conduction intervals, estimate average DC output, and predict ripple before measuring.

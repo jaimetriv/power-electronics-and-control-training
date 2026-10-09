@@ -35,6 +35,8 @@ Welcome to the course.
 
 Complete the [Control Engineering Primer](00D_Control_Engineering_Primer.md) after Lab 03 as a theory checkpoint.
 
+Each lab includes **How To Predict This Circuit**: component behaviour, physical meaning, topology, prediction, reality check and measurement. Sketch the expected response before simulating or measuring, then use discrepancies to test your assumptions. The [course philosophy](00_Introduction.md#course-philosophy) explains this shared reasoning sequence.
+
 ## Lab Index
 
 ### Foundations

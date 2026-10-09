@@ -82,8 +82,21 @@ The best way to learn engineering is by combining:
 
 Each project follows a common core structure, with optional sections added when relevant to the topic:
 
+Before detailed derivations or procedures, each practical lab and the control primer includes **How To Predict This Circuit**:
+
+1. **Component Behaviour:** relate voltage and current, or the controller's input and output, with explicit reference directions and units.
+2. **Physical Meaning:** identify the energy source, storage, transfer and losses. Distinguish a controller's stored numerical state from physical stored energy.
+3. **Topology:** trace connected nodes, current loops, switching states and feedback paths.
+4. **Prediction:** state the initial response, transient and final balance under explicit assumptions.
+5. **Reality Check:** consider tolerances, parasitics, loading, delay, saturation and the lab's safety limits.
+6. **Measurement:** specify a waveform or recorded signal that could confirm or contradict the prediction.
+
+Before running an experiment, sketch the expected waveform, mark its initial/final values and time scale, and write down the assumption most likely to fail. Compare those predictions with simulation and the permitted measurements. Explain discrepancies from component behaviour and topology before changing parameters. Simulation-only sections remain simulation-only; a plausible prediction does not authorise an unvalidated hardware test.
+
 ```text
 Objective
+
+Component-to-circuit reasoning
 
 Theory
 

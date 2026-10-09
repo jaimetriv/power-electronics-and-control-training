@@ -2,6 +2,34 @@
 
 ---
 
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+A probe and scope input present finite resistance and capacitance to the circuit. A compensated passive 10x probe attenuates voltage using matched resistor/capacitor ratios; the scope setting must match it. The display measures voltage between tip and probe ground.
+
+### 2. Physical Meaning
+
+Measurement is not perfectly passive: the probe draws current and can change a high-impedance node's response. Input capacitance stores charge and can slow fast edges. Triggering stabilises the display; it does not change the source waveform.
+
+### 3. Topology
+
+Attach the ground lead only to the documented circuit reference. Treat channel ground clips as connected unless the instrument manual explicitly establishes otherwise. Battery operation does not make arbitrary bridge-node grounding safe. Ground connections are electrical connections, not just display settings.
+
+### 4. Prediction
+
+Shorted tip and ground should read approximately zero. A PWM source should show repeating levels and a fixed period when properly triggered. Incorrect attenuation gives a scaling error; AC coupling removes DC information and can distort slow or long pulses.
+
+### 5. Reality Check
+
+Bandwidth, sample rate, probe compensation, ground-lead inductance and loading affect amplitude and edge shape. Distinguish vertical offset from a real voltage. Follow the instrument's voltage ratings and this course's low-voltage-only procedures.
+
+### 6. Measurement
+
+Predict amplitude and period from the source before connecting the probe. Verify zero, attenuation, coupling and trigger, then compare the trace. Change time scale to expose aliasing; compare probe compensation on the designated calibration signal, not an unknown power circuit.
+
+---
+
 ## Objective
 
 The objective of this project is to become familiar with the OWON HDS272S oscilloscope and to learn how to use it to measure and analyse electrical signals.

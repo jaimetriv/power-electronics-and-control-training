@@ -2,6 +2,34 @@
 
 ---
 
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+A simplified brushed motor obeys $v_m=R_m i_m+L_m\,di_m/dt+K_e\omega$ and $J\,d\omega/dt=K_t i_m-b\omega-T_{load}$. Current produces torque; rotation generates back-EMF. The MOSFET controls the winding voltage and the flyback diode carries winding current during OFF time.
+
+### 2. Physical Meaning
+
+The motor transfers electrical energy into motion, stores energy in winding inductance and rotor inertia, and dissipates energy through resistance and friction. PWM controls that transfer; it does not command shaft speed directly.
+
+### 3. Topology
+
+ON: supply -> winding -> MOSFET -> GND. OFF: winding current circulates through the diode back to the winding's supply-side terminal. The optical pickup observes shaft motion through the 12-mark wheel; it is separate from the power-current path.
+
+### 4. Prediction
+
+At startup, back-EMF is small and current demand is greatest. As speed rises, back-EMF reduces current. Speed cannot jump under finite torque. Added load initially slows the rotor; reduced back-EMF then increases current. The first-order speed model is an approximation, not a description of every electrical transient.
+
+### 5. Reality Check
+
+Friction, brush commutation, supply limiting and load torque break simple duty-to-speed proportionality. The diode limits interruption voltage by providing a current path. Use a motor with documented stall current <=300 mA and the specified supply limit <=0.35 A; do not deliberately stall an unknown motor.
+
+### 6. Measurement
+
+Predict a speed ramp after a duty step, then record pulse frequency versus time using the documented sensor connection. For 12 pulses/revolution, $RPM=60f/12$. A pulse-amplitude change alone is not a speed measurement. Dead zones, delay or multiple time scales challenge the simple first-order model.
+
+---
+
 ## Reading Before the Lab
 
 Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 2, **Basic Concepts**, sections on converter applications and motor drives. Then read _Modern Control Engineering_ by Ogata, Chapter 2, **Mathematical Modeling of Control Systems**, and Chapter 5, **Transient and Steady-State Response Analysis**, for first-order models, time constant, rise time, and settling time. Estimate the mechanical time constant from a step response.
@@ -103,7 +131,7 @@ Motors are inductive loads.
 
 When current is interrupted, a high voltage spike can occur.
 
-The flyback diode provides a path for this spike, protecting the controller, MOSFET, and other electronics.
+The flyback diode provides a closed path for winding current during MOSFET OFF time. This clamps the interruption voltage to approximately the supply voltage plus the diode drop at the drain, protecting the switch; it carries current rather than providing a path for voltage itself.
 
 ---
 

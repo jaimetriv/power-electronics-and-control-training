@@ -2,6 +2,34 @@
 
 ---
 
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+PI computes $u=K_p e+K_i x_I$, with $dx_I/dt=e$. The physical motor and calibrated speed sensor remain the same plant and feedback path as in Lab 12. Digital accumulation must include the sample interval: $x_I[k+1]=x_I[k]+T_s e[k]$.
+
+### 2. Physical Meaning
+
+The integrator stores error history, not electrical energy. It builds a sustained drive command to balance the motor's losses and load even when present error becomes zero. Actual energy still comes from the supply.
+
+### 3. Topology
+
+P and I branches act on the same error and sum before the actuator. The PWM limits sit between the computed command and the physical plant. A feedback sensor's offset becomes an error the integrator tries to correct.
+
+### 4. Prediction
+
+After a step, P acts immediately while I changes progressively. In a stable unsaturated loop with a reachable constant reference, error tends to zero and the integral state settles to the required sustaining command. A persistent unreachable reference instead keeps accumulating error unless anti-windup intervenes.
+
+### 5. Reality Check
+
+Windup, delay, calibration errors and excessive integral gain can cause overshoot or instability. Anti-windup must account for the actual command bounds. Removing a load can reveal accumulated integral action; zero measured error does not prove zero true speed error.
+
+### 6. Measurement
+
+Plot reference, output, error, integral state and limited command in simulation. Predict how a safe step and a modelled load disturbance differ from P-only control. Prolonged saturation followed by slow recovery indicates windup. Retain the lesson's hardware prerequisites and do not induce overload to demonstrate it.
+
+---
+
 ## Reading Before the Lab
 
 Read _Modern Control Engineering_ by Ogata, Chapter 7, **Basic Control Actions and Response**, for integral control and system type, then Chapter 8, **Analysis and Design of Feedback Control Systems**, for steady-state error, controller implementation, saturation, and windup. Predict the reduction in steady-state error and identify when the integrator will continue accumulating.

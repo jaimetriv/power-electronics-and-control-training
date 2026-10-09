@@ -2,6 +2,34 @@
 
 ---
 
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+Choose the plant's laws before fitting its response: $i_C=C\,dv_C/dt$ for an RC output, or torque proportional to winding current and back-EMF proportional to speed for a motor. A candidate $G(s)=K/(\tau s+1)$ is a simplified input-output description, not a component law.
+
+### 2. Physical Meaning
+
+Capacitor charge or rotor inertia explains why output takes time to change. Resistance, friction and load explain dissipation and final balance. The fitted gain and time constant summarise these effects over the tested range.
+
+### 3. Topology
+
+Define exactly where input is applied and output measured. For PWM-to-speed identification, duty is the input and calibrated speed is the output; including a sensor filter or delay changes the identified system. Record initial conditions and keep load unchanged during a test.
+
+### 4. Prediction
+
+A small step around a settled operating point should give $\Delta y_{ss}=K\Delta u$ for the linear model. A first-order response reaches 63.2% of the total change after $\tau$. Ringing or a noticeable delay suggests that a single first-order model is incomplete.
+
+### 5. Reality Check
+
+Noise, PWM dead zones, sensor filtering, changing loads and supply limiting bias fitted parameters. Use the documented safe input range, not a full-duty motor step merely because the mathematical example shows one. Gain estimates use changes about the baseline, not absolute readings with offsets.
+
+### 6. Measurement
+
+Capture input and output on the same time base. Estimate gain, delay and time constant, then predict a second safe step not used for fitting. Compare the whole response and residual error; matching only the final value cannot establish the model's dynamic accuracy.
+
+---
+
 ## Reading Before the Lab
 
 Before starting the control stage, review the **Control Theory Checkpoint** after Lab 03, then review _Modern Control Engineering_ by Ogata, Chapter 2, **Mathematical Modeling of Control Systems**, including differential-equation models, transfer functions, block diagrams, and model validation. Also review Chapter 5, **Transient and Steady-State Response Analysis**, for first- and second-order responses, poles, zeros, damping, time constants, and steady-state error. Select a model structure and estimate its parameters from the measured step response.

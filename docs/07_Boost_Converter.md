@@ -2,6 +2,34 @@
 
 ---
 
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+The N-MOSFET pulls the switch node toward GND when enhanced. The diode conducts from that node into the output when the node exceeds output voltage by its forward drop. With current from input toward the switch node, $di_L/dt=(V_{IN}-v_{sw})/L$ and $dv_o/dt=(i_D-i_{load})/C$.
+
+### 2. Physical Meaning
+
+During ON time the source builds magnetic energy in L while C supplies the load. During OFF time the source and inductor deliver energy to the output. Voltage gain is paid for by input current and losses; the converter does not create energy.
+
+### 3. Topology
+
+ON: supply -> L -> MOSFET -> GND, with the output diode normally blocking once output voltage is established. OFF: supply -> L -> diode -> parallel capacitor/load branches -> GND. Unlike the buck, the input is connected to L continuously.
+
+### 4. Prediction
+
+ON current rises with approximately $V_{IN}/L$. OFF current falls when $v_o+V_F>V_{IN}$. In ideal periodic CCM, volt-second balance gives $v_o=V_{IN}/(1-D)$. At zero duty, a source-to-output path still exists through L and the diode: disabling PWM does not isolate the output. Increasing duty initially extends the interval in which C alone supplies the load.
+
+### 5. Reality Check
+
+The ideal gain does not diverge in a real circuit: resistance, saturation, losses and current limiting intervene. DCM makes output load-dependent. Keep the specified 5 V / 0.20 A supply and hardware duty limit of 25%; high-gain examples are not build settings.
+
+### 6. Measurement
+
+Predict the low ON-state switch-node voltage and elevated OFF-state voltage, then compare simulated current slopes and measured output ripple. Use only the documented ground-referenced probing. Output failing to follow the CCM estimate can indicate DCM or losses; rapidly rising current is a reason to stop, not increase duty.
+
+---
+
 ## Reading Before the Lab
 
 Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapters 6–7, for inductor/capacitor energy storage and transient response. Then read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, for **boost converters**, **inductor energy transfer**, **CCM**, **DCM**, and **duty-ratio limits**. Predict $V_o\approx V_{in}/(1-D)$ in ideal CCM and explain why high duty ratio increases stress.

@@ -28,6 +28,34 @@ This project combines power electronics and control systems to create a practica
 ---
 
 
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+The buck still follows $L\,di_L/dt=v_{sw}-v_o$ and $C\,dv_o/dt=i_L-i_{load}$. The divider produces $v_{FB}=v_o R_{bottom}/(R_{top}+R_{bottom})$. PI converts the scaled voltage error into a proposed duty command.
+
+### 2. Physical Meaning
+
+L and C store the physical energy. The controller's integral state stores past voltage error and adjusts replenishment from the source. Feedback cannot instantaneously restore capacitor charge after a disturbance.
+
+### 3. Topology
+
+Separate the power path from the divider/ADC feedback path. Compare the divider measurement with a reference in the same scaled units. Correct negative feedback requests greater effective ON duty when output is too low, with the P-channel driver polarity accounted for.
+
+### 4. Prediction
+
+A load-current increase initially makes $i_C<0$, so output falls before inductor current catches up. In the simulated stable unsaturated loop, PI then increases energy delivery and restores the target. Ideal CCM gives a rough equilibrium duty $D\approx v_o/V_{IN}$, not a transient controller law.
+
+### 5. Reality Check
+
+LC resonance, ESR, sensor scaling, ADC error, sample delay and duty saturation affect stability. The page's illustrative averaged model uses values distinct from the Lab 06 physical stage. The supplied sketch intentionally does not apply PWM; closed-loop hardware remains deferred and gains are unvalidated.
+
+### 6. Measurement
+
+In simulation, record reference, output, limited duty and inductor current during reference/load steps. Predict the initial voltage dip and recovery. Do not enable hardware PWM to reproduce these traces; a printed controller command alone is not evidence of closed-loop regulation.
+
+---
+
 ## Introduction
 
 In Project 06 the Buck Converter operated in open loop.

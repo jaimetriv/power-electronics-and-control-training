@@ -47,6 +47,34 @@ The DRV8833 supply range is 2.7-10.8 V; use 5 V only. With modulation index 0.4,
 ---
 
 
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+The internal oscillator sets the model's phase and frequency; modulation selects bridge voltage states. The LC filter follows inductor voltage/current and capacitor current/voltage laws. In simulated droop, frequency and voltage references vary with measured power according to the stated sign conventions.
+
+### 2. Physical Meaning
+
+The converter establishes a voltage waveform using energy from its DC source. Filter energy supplies short transient imbalances. Droop deliberately changes references under load; it is not evidence of an unlimited or perfectly stiff voltage source.
+
+### 3. Topology
+
+Distinguish the simulated voltage-feedback/power-sharing loop from the physical fixed-reference Lab 10 DRV8833 stage driving one separate load. Differential output is measured between bridge legs. No physical ADC voltage-feedback circuit or parallel-converter power-sharing build is supplied here.
+
+### 4. Prediction
+
+With a fixed oscillator, no external grid is needed to establish frequency. In the simulated regulated loop, a load increase first draws charge from C, causing a voltage deviation; the controller subsequently adjusts delivery. With droop enabled, the settled voltage/frequency may intentionally differ from no-load references.
+
+### 5. Reality Check
+
+DC-link limits, LC resonance, losses, sensor filtering and current saturation constrain performance. PI voltage control and droop remain simulation-only. Reuse only the specified 5 V / 0.10 A DRV8833 demonstration with its load; do not build the discrete bridge or connect another AC source.
+
+### 6. Measurement
+
+In simulation, compare voltage, frequency, power and limited command before/after a load change. For the physical demonstration, use both scope grounds at GND and CH1-CH2 to measure differential amplitude and frequency. A fixed 50 Hz sine does not demonstrate closed-loop voltage regulation or droop sharing.
+
+---
+
 ## Introduction
 
 Project 17 introduced Grid-Following Converters.

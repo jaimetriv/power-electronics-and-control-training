@@ -2,6 +2,34 @@
 
 ---
 
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+ESP32 GPIO uses 3.3 V logic. For the external LED, the series resistor sets current approximately as $(V_{GPIO}-V_F)/R$. PWM changes pulse duration, not logic voltage. ADC input range depends on configuration and calibration.
+
+### 2. Physical Meaning
+
+Wi-Fi transfers command information, not the energy needed by the load. The board supply provides LED energy; the resistor limits current and dissipates heat. A remote command ultimately becomes a local GPIO or timer setting.
+
+### 3. Topology
+
+Separate the browser/network/program path from the physical GPIO/resistor/LED/GND loop. A potentiometer's wiper feeds a suitable ADC input. On a classic ESP32 with Wi-Fi active, use the documented ADC1 pin rather than assuming ADC2 remains available.
+
+### 4. Prediction
+
+A received command changes the output state or duty after software/network delay. Increasing LED duty usually increases perceived brightness without changing nominal pulse height. An onboard LED's presence and polarity depend on the actual DevKit variant.
+
+### 5. Reality Check
+
+Network latency is variable and unsuitable as the timing source for a fast control loop. Boot-strapping pins, board variants, PWM quantisation and ADC nonlinearity affect results. Never apply 5 V directly to GPIO; use the documented compatible core API and pin assignment.
+
+### 6. Measurement
+
+Predict output state, pulse period and duty before sending a command. Compare browser response, serial logs and scope trace. A page reporting success without a changed GPIO waveform suggests a local pin/API issue; a delayed command is not evidence that hardware PWM frequency changed.
+
+---
+
 ## Objective
 
 The objective of this project is to become familiar with the ESP32 DevKit V1 development platform and how to program it using the Arduino IDE.
