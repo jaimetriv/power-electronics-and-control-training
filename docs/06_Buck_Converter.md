@@ -2,34 +2,6 @@
 
 ---
 
-## How To Predict This Circuit
-
-### 1. Component Behaviour
-
-The P-MOSFET conducts when its gate is sufficiently below its source. The freewheel diode conducts from GND toward the switch node when forward biased. Taking inductor current toward the output, $di_L/dt=(v_{sw}-v_o)/L$ and $dv_o/dt=(i_L-i_{load})/C$.
-
-### 2. Physical Meaning
-
-The switch controls delivery from the source. L stores magnetic energy and C stores electric energy; the load consumes energy. The diode keeps inductor current circulating during OFF time rather than allowing a large interruption voltage.
-
-### 3. Topology
-
-ON: supply -> P-MOSFET -> inductor -> output capacitor/load -> return. OFF: GND -> diode -> inductor -> output capacitor/load -> GND. The capacitor and load are parallel output branches, not series components. With the transistor gate driver, GPIO HIGH pulls the P-MOSFET gate down and commands ON.
-
-### 4. Prediction
-
-ON gives approximately $v_L=V_{IN}-v_o$, so current rises. OFF gives approximately $v_L=-v_o-V_F$, so positive current falls. C charges only when $i_L>i_{load}$. In periodic ideal CCM, zero net inductor volt-seconds gives $v_o=D V_{IN}$; startup and DCM require different analysis.
-
-### 5. Reality Check
-
-Diode drop, MOSFET resistance, winding resistance and capacitor ESR reduce output and add ripple. Inductor saturation increases current slope. Retain the specified 5 V supply, 0.20 A limit and qualified components; the simple CCM relation is not a guarantee of the measured output.
-
-### 6. Measurement
-
-Sketch the pulsed switch-node voltage and slower output voltage before running. Observe both with probe grounds at GND, never at the switch node. Check duty, output mean and ripple. Do not add an unreviewed current shunt; use simulated inductor current to test the predicted slopes if no documented current measurement is available.
-
----
-
 ## Reading Before the Lab
 
 Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapters 6–7, for inductor/capacitor energy storage and transient response. Then read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 3, **Steady-State Converter Analysis**, for **buck converters**, **volt-second balance**, **charge balance**, **CCM**, **DCM**, and **ripple**. State the conduction-mode assumptions, predict $V_o\approx DV_{in}$ in ideal CCM, and estimate current and voltage ripple.
@@ -167,6 +139,34 @@ Freewheel Path
 ```
 
 A Schottky diode (1N5819) is preferred because its lower forward voltage drop improves efficiency.
+
+---
+
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+The P-MOSFET conducts when its gate is sufficiently below its source. The freewheel diode conducts from GND toward the switch node when forward biased. Taking inductor current toward the output, $di_L/dt=(v_{sw}-v_o)/L$ and $dv_o/dt=(i_L-i_{load})/C$.
+
+### 2. Physical Meaning
+
+The switch controls delivery from the source. L stores magnetic energy and C stores electric energy; the load consumes energy. The diode keeps inductor current circulating during OFF time rather than allowing a large interruption voltage.
+
+### 3. Topology
+
+ON: supply -> P-MOSFET -> inductor -> output capacitor/load -> return. OFF: GND -> diode -> inductor -> output capacitor/load -> GND. The capacitor and load are parallel output branches, not series components. With the transistor gate driver, GPIO HIGH pulls the P-MOSFET gate down and commands ON.
+
+### 4. Prediction
+
+ON gives approximately $v_L=V_{IN}-v_o$, so current rises. OFF gives approximately $v_L=-v_o-V_F$, so positive current falls. C charges only when $i_L>i_{load}$. In periodic ideal CCM, zero net inductor volt-seconds gives $v_o=D V_{IN}$; startup and DCM require different analysis.
+
+### 5. Reality Check
+
+Diode drop, MOSFET resistance, winding resistance and capacitor ESR reduce output and add ripple. Inductor saturation increases current slope. Retain the specified 5 V supply, 0.20 A limit and qualified components; the simple CCM relation is not a guarantee of the measured output.
+
+### 6. Measurement
+
+Sketch the pulsed switch-node voltage and slower output voltage before running. Observe both with probe grounds at GND, never at the switch node. Check duty, output mean and ripple. Do not add an unreviewed current shunt; use simulated inductor current to test the predicted slopes if no documented current measurement is available.
 
 ---
 

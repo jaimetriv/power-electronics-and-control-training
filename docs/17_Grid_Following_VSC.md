@@ -39,34 +39,6 @@ The physical scope of this project is the protected PLL input interface plus a s
 ---
 
 
-## How To Predict This Circuit
-
-### 1. Component Behaviour
-
-In the simulated grid-current path, $L\,di/dt=v_{conv}-v_{grid}-Ri$ with consistent voltage/current references. The PLL estimates phase from measured voltage. In the physical input interface, resistors establish bias, the series capacitor blocks DC and clamp diodes limit excursions within the documented protected arrangement.
-
-### 2. Physical Meaning
-
-A voltage difference across L changes current and therefore energy transfer. Synchronisation establishes the reference for controlling current relative to grid voltage; a PLL signal by itself transfers no load power. The input interface conditions a signal rather than powering the bridge.
-
-### 3. Topology
-
-Keep the two physical demonstrations separate: generator -> protected ADC input, and Lab 10 fixed-reference inverter -> its own resistive load. They share signal GND only. The simulated PLL/current-controller/bridge loop is not implemented by connecting these demonstrations together.
-
-### 4. Prediction
-
-In simulation, a voltage phase change produces temporary PLL error and a current disturbance before tracking recovers. In hardware, the biased ADC signal should stay within the documented 0.3-3.0 V window. The independent Lab 10 inverter will not automatically synchronise to that input.
-
-### 5. Reality Check
-
-Sensor bias, harmonics, PLL bandwidth, delay and current saturation change simulated tracking. No ESP32 PLL firmware is supplied or validated; current injection remains simulation-only. Never connect the bridge to the generator or mains, and retain the low-voltage limits.
-
-### 6. Measurement
-
-Plot grid angle, estimated angle and current in simulation to test the phase-tracking prediction. For hardware, verify generator amplitude and the protected input's range using the documented scope procedure before ADC connection. Observing a sine at the ADC confirms signal conditioning, not PLL lock or grid-current control.
-
----
-
 ## Introduction
 
 Most modern renewable energy systems use Grid-Following converters.
@@ -196,6 +168,34 @@ Lab 10 fixed-reference SPWM → DRV8833 H-bridge → two-inductor LC filter → 
 
 The PLL algorithm and grid-current injection/current-control loop → Simulink only
 ```
+
+---
+
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+In the simulated grid-current path, $L\,di/dt=v_{conv}-v_{grid}-Ri$ with consistent voltage/current references. The PLL estimates phase from measured voltage. In the physical input interface, resistors establish bias, the series capacitor blocks DC and clamp diodes limit excursions within the documented protected arrangement.
+
+### 2. Physical Meaning
+
+A voltage difference across L changes current and therefore energy transfer. Synchronisation establishes the reference for controlling current relative to grid voltage; a PLL signal by itself transfers no load power. The input interface conditions a signal rather than powering the bridge.
+
+### 3. Topology
+
+Keep the two physical demonstrations separate: generator -> protected ADC input, and Lab 10 fixed-reference inverter -> its own resistive load. They share signal GND only. The simulated PLL/current-controller/bridge loop is not implemented by connecting these demonstrations together.
+
+### 4. Prediction
+
+In simulation, a voltage phase change produces temporary PLL error and a current disturbance before tracking recovers. In hardware, the biased ADC signal should stay within the documented 0.3-3.0 V window. The independent Lab 10 inverter will not automatically synchronise to that input.
+
+### 5. Reality Check
+
+Sensor bias, harmonics, PLL bandwidth, delay and current saturation change simulated tracking. No ESP32 PLL firmware is supplied or validated; current injection remains simulation-only. Never connect the bridge to the generator or mains, and retain the low-voltage limits.
+
+### 6. Measurement
+
+Plot grid angle, estimated angle and current in simulation to test the phase-tracking prediction. For hardware, verify generator amplitude and the protected input's range using the documented scope procedure before ADC connection. Observing a sine at the ADC confirms signal conditioning, not PLL lock or grid-current control.
 
 ---
 

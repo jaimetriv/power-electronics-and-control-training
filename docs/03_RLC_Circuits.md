@@ -2,34 +2,6 @@
 
 ---
 
-## How To Predict This Circuit
-
-### 1. Component Behaviour
-
-With passive voltage/current references, $v_R=Ri$, $v_L=L\,di/dt$ and $i_C=C\,dv_C/dt$. Inductor current and capacitor voltage cannot jump under finite voltage and current, respectively.
-
-### 2. Physical Meaning
-
-The inductor stores magnetic energy $Li^2/2$, the capacitor stores electric energy $Cv_C^2/2$, and resistance removes energy as heat. Energy can move between the two stores, producing oscillation rather than the RC circuit's single decay mechanism.
-
-### 3. Topology
-
-Here R, L and C are in series and the output is across C. The same current passes through all three. KVL gives $V_S=Ri+L\,di/dt+v_C$; this reasoning must change for a parallel RLC circuit or a different output node.
-
-### 4. Prediction
-
-Starting with zero current and charge, a positive source step initially appears across L, so current starts rising while capacitor voltage initially has zero slope. Stored magnetic energy can keep charging C even after it reaches the source voltage, causing overshoot when damping is low. At DC steady state, ideal current is zero and $v_C=V_S$. Increasing series resistance increases damping.
-
-### 5. Reality Check
-
-Include source resistance, winding resistance, capacitor ESR and probe loading in the damping estimate. Inductor saturation changes L; parasitic capacitance limits high-frequency behaviour. Do not confuse this signal experiment's inductor with a qualified power-converter inductor.
-
-### 6. Measurement
-
-Predict whether the response rings and estimate $1/(2\pi\sqrt{LC})$ before applying the specified signal. Measure overshoot, ringing period and decay across C. More damping than expected suggests extra resistance; a changing frequency suggests component variation or a model outside its valid range.
-
----
-
 ## Reading Before the Lab
 
 Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapter 6 for inductors and energy storage, then Chapter 8, **Second-Order Circuits**, for natural frequency, damping ratio, overdamped/underdamped response, and resonance. Also review _Modern Control Engineering_ by Ogata, Chapter 5, **Transient and Steady-State Response Analysis**, for second-order poles, damping, overshoot, and settling time. Estimate the natural frequency, classify the damping, and predict the transient response before observing the ringing.
@@ -129,6 +101,34 @@ V_in
  │
 GND ──── CH1 probe ground
 ```
+
+---
+
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+With passive voltage/current references, $v_R=Ri$, $v_L=L\,di/dt$ and $i_C=C\,dv_C/dt$. Inductor current and capacitor voltage cannot jump under finite voltage and current, respectively.
+
+### 2. Physical Meaning
+
+The inductor stores magnetic energy $Li^2/2$, the capacitor stores electric energy $Cv_C^2/2$, and resistance removes energy as heat. Energy can move between the two stores, producing oscillation rather than the RC circuit's single decay mechanism.
+
+### 3. Topology
+
+Here R, L and C are in series and the output is across C. The same current passes through all three. KVL gives $V_S=Ri+L\,di/dt+v_C$; this reasoning must change for a parallel RLC circuit or a different output node.
+
+### 4. Prediction
+
+Starting with zero current and charge, a positive source step initially appears across L, so current starts rising while capacitor voltage initially has zero slope. Stored magnetic energy can keep charging C even after it reaches the source voltage, causing overshoot when damping is low. At DC steady state, ideal current is zero and $v_C=V_S$. Increasing series resistance increases damping.
+
+### 5. Reality Check
+
+Include source resistance, winding resistance, capacitor ESR and probe loading in the damping estimate. Inductor saturation changes L; parasitic capacitance limits high-frequency behaviour. Do not confuse this signal experiment's inductor with a qualified power-converter inductor.
+
+### 6. Measurement
+
+Predict whether the response rings and estimate $1/(2\pi\sqrt{LC})$ before applying the specified signal. Measure overshoot, ringing period and decay across C. More damping than expected suggests extra resistance; a changing frequency suggests component variation or a model outside its valid range.
 
 ---
 

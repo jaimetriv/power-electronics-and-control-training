@@ -2,34 +2,6 @@
 
 ---
 
-## How To Predict This Circuit
-
-### 1. Component Behaviour
-
-A digital output switches between low and high voltages; it is not an adjustable analogue voltage source. For duty ratio $D$, its period average is $\bar v=D V_H+(1-D)V_L$. A resistor draws instantaneous current $i=v/R$.
-
-### 2. Physical Meaning
-
-Duty ratio changes how long energy is delivered, not the nominal pulse height. For a resistive load, average power depends on $\overline{v^2}/R$, not $\bar v^2/R$; average voltage alone does not describe heating.
-
-### 3. Topology
-
-Trace GPIO, any specified series resistor/load, and the return to board GND. A scope observes the pulses; an added filter or a load with energy storage responds differently. Never use a GPIO as a power supply for a motor.
-
-### 4. Prediction
-
-Increasing duty at fixed frequency widens the high interval without changing the period. At 50% duty, the average is halfway between the two levels, but the instantaneous output still switches between them. A filter takes time to settle.
-
-### 5. Reality Check
-
-Output resistance, loading, PWM timer resolution and finite edge times change the ideal waveform. ESP32 GPIO is 3.3 V logic, not 5 V tolerant. A meter's reported value depends on its measurement mode and bandwidth.
-
-### 6. Measurement
-
-Sketch pulse height, period and high time before changing duty. Measure all three on the scope and calculate $D=t_{ON}/T$. If amplitude changes substantially with load, investigate loading rather than interpreting it as normal duty control.
-
----
-
 ## Reading Before the Lab
 
 Read _Fundamentals of Electric Circuits_ by Alexander and Sadiku, Chapters 1–2, for circuit variables, Ohm's law, Kirchhoff's laws, power, and measurement conventions. Then read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 2, **Basic Concepts**, for switching waveforms, duty ratio, and averaging. Before measuring, calculate $T=1/f$ and the ideal average of the PWM waveform.
@@ -193,6 +165,34 @@ $V_S = 3.3\ \text{V}$, $D = 0.5$:
 $$
 V_{AVG} = 0.5 \times 3.3 = 1.65\ \text{V}
 $$
+
+---
+
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+A digital output switches between low and high voltages; it is not an adjustable analogue voltage source. For duty ratio $D$, its period average is $\bar v=D V_H+(1-D)V_L$. A resistor draws instantaneous current $i=v/R$.
+
+### 2. Physical Meaning
+
+Duty ratio changes how long energy is delivered, not the nominal pulse height. For a resistive load, average power depends on $\overline{v^2}/R$, not $\bar v^2/R$; average voltage alone does not describe heating.
+
+### 3. Topology
+
+Trace GPIO, any specified series resistor/load, and the return to board GND. A scope observes the pulses; an added filter or a load with energy storage responds differently. Never use a GPIO as a power supply for a motor.
+
+### 4. Prediction
+
+Increasing duty at fixed frequency widens the high interval without changing the period. At 50% duty, the average is halfway between the two levels, but the instantaneous output still switches between them. A filter takes time to settle.
+
+### 5. Reality Check
+
+Output resistance, loading, PWM timer resolution and finite edge times change the ideal waveform. ESP32 GPIO is 3.3 V logic, not 5 V tolerant. A meter's reported value depends on its measurement mode and bandwidth.
+
+### 6. Measurement
+
+Sketch pulse height, period and high time before changing duty. Measure all three on the scope and calculate $D=t_{ON}/T$. If amplitude changes substantially with load, investigate loading rather than interpreting it as normal duty control.
 
 ---
 

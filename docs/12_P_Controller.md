@@ -2,34 +2,6 @@
 
 ---
 
-## How To Predict This Circuit
-
-### 1. Component Behaviour
-
-The controller computes $u=K_p(r-y)$ when measurement and reference use the same units. The actuator converts that command into PWM, and the motor converts winding current into torque. The speed sensor converts motion into the calibrated feedback signal.
-
-### 2. Physical Meaning
-
-P action changes the rate of energy delivery in proportion to present error. The motor still stores mechanical and magnetic energy and dissipates losses; feedback cannot make its speed jump or supply unlimited torque.
-
-### 3. Topology
-
-Follow reference -> error subtraction -> controller -> actuator -> plant -> sensor -> subtraction. A low measured speed must increase forward drive for this negative-feedback arrangement. A raw optical pickup is not an analogue speed voltage; use the specified calibrated feedback interface.
-
-### 4. Prediction
-
-A reference step immediately changes the command, while speed changes gradually. For the ideal stable unity-feedback first-order model, the closed-loop time constant is $\tau/(1+KK_p)$ and step error is $r/(1+KK_p)$. Increasing gain reduces this error but demands greater initial command.
-
-### 5. Reality Check
-
-Delay, sensor scaling, PWM saturation and unmodelled dynamics limit useful gain. P-only offset is expected for this type-0 plant, not for every possible plant. Confirm feedback sign and calibration before any supported hardware run; a saturated command is not proportional action anymore.
-
-### 6. Measurement
-
-Predict error and settling time from the identified model, then compare reference, measured output and command for several simulated gains. Check whether the command clips. Sustained oscillation, growing error or unchanged speed despite increasing duty challenges the model, feedback sign or actuator assumptions.
-
----
-
 ## Reading Before the Lab
 
 Read _Modern Control Engineering_ by Ogata, Chapter 6, **Control Systems and Control Systems Components**, for feedback components and measurement, then Chapter 7, **Basic Control Actions and Response**, for proportional action, sensitivity, and steady-state error. Use the model from Lab 11 to predict how increasing $K_p$ changes error, response speed, and overshoot.
@@ -142,6 +114,34 @@ $r = 100$, $y = 70$:
 $$
 e = 100 - 70 = 30
 $$
+
+---
+
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+The controller computes $u=K_p(r-y)$ when measurement and reference use the same units. The actuator converts that command into PWM, and the motor converts winding current into torque. The speed sensor converts motion into the calibrated feedback signal.
+
+### 2. Physical Meaning
+
+P action changes the rate of energy delivery in proportion to present error. The motor still stores mechanical and magnetic energy and dissipates losses; feedback cannot make its speed jump or supply unlimited torque.
+
+### 3. Topology
+
+Follow reference -> error subtraction -> controller -> actuator -> plant -> sensor -> subtraction. A low measured speed must increase forward drive for this negative-feedback arrangement. A raw optical pickup is not an analogue speed voltage; use the specified calibrated feedback interface.
+
+### 4. Prediction
+
+A reference step immediately changes the command, while speed changes gradually. For the ideal stable unity-feedback first-order model, the closed-loop time constant is $\tau/(1+KK_p)$ and step error is $r/(1+KK_p)$. Increasing gain reduces this error but demands greater initial command.
+
+### 5. Reality Check
+
+Delay, sensor scaling, PWM saturation and unmodelled dynamics limit useful gain. P-only offset is expected for this type-0 plant, not for every possible plant. Confirm feedback sign and calibration before any supported hardware run; a saturated command is not proportional action anymore.
+
+### 6. Measurement
+
+Predict error and settling time from the identified model, then compare reference, measured output and command for several simulated gains. Check whether the command clips. Sustained oscillation, growing error or unchanged speed despite increasing duty challenges the model, feedback sign or actuator assumptions.
 
 ---
 

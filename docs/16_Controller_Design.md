@@ -2,34 +2,6 @@
 
 ---
 
-## How To Predict This Circuit
-
-### 1. Component Behaviour
-
-Use the identified plant dynamics, sensor calibration and actuator response as the components of the design. Controller gains have units determined by input/output scaling; they are not interchangeable between speed and voltage loops.
-
-### 2. Physical Meaning
-
-Plant energy stores set how quickly output can move; source and actuator limits bound the available correction. A requested settling time is meaningful only if the required current, torque or duty is achievable.
-
-### 3. Topology
-
-Draw the complete loop with sensor gain, disturbances, sampling and actuator limits. Specify the operating point and the quantity regulated. Changing a sensor or adding a filter changes the loop, even when the controller gains stay unchanged.
-
-### 4. Prediction
-
-Translate requirements into predicted rise time, overshoot, settling time, offset and peak command. Pole locations describe the linear response, while saturation can produce a different large-step response. Check both a reference step and a disturbance case before implementation.
-
-### 5. Reality Check
-
-Model uncertainty, delay, noise, tolerances and thermal limits constrain bandwidth. A controller that meets one nominal simulation is not yet validated. Preserve the simulation-only status of unvalidated converter and grid-control functions; this design exercise does not authorise enabling them.
-
-### 6. Measurement
-
-Write numerical acceptance criteria before running the model. Compare predicted and observed output and command, then repeat with plausible parameter variation. Failed criteria should lead to revisiting the model, limits or tuning, not increasing gain without diagnosis.
-
----
-
 ## Reading Before the Lab
 
 Read _Modern Control Engineering_ by Ogata, Chapter 8, **Analysis and Design of Feedback Control Systems**, for feedback design and performance requirements. Then read Chapter 13, **Control Systems Design by Root Locus**, for root-locus construction, gain selection, dominant poles, and transient specifications. Turn the requirements into a controller choice and a testable prediction.
@@ -94,6 +66,34 @@ Implement
        ↓
 Test and Refine
 ```
+
+---
+
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+Use the identified plant dynamics, sensor calibration and actuator response as the components of the design. Controller gains have units determined by input/output scaling; they are not interchangeable between speed and voltage loops.
+
+### 2. Physical Meaning
+
+Plant energy stores set how quickly output can move; source and actuator limits bound the available correction. A requested settling time is meaningful only if the required current, torque or duty is achievable.
+
+### 3. Topology
+
+Draw the complete loop with sensor gain, disturbances, sampling and actuator limits. Specify the operating point and the quantity regulated. Changing a sensor or adding a filter changes the loop, even when the controller gains stay unchanged.
+
+### 4. Prediction
+
+Translate requirements into predicted rise time, overshoot, settling time, offset and peak command. Pole locations describe the linear response, while saturation can produce a different large-step response. Check both a reference step and a disturbance case before implementation.
+
+### 5. Reality Check
+
+Model uncertainty, delay, noise, tolerances and thermal limits constrain bandwidth. A controller that meets one nominal simulation is not yet validated. Preserve the simulation-only status of unvalidated converter and grid-control functions; this design exercise does not authorise enabling them.
+
+### 6. Measurement
+
+Write numerical acceptance criteria before running the model. Compare predicted and observed output and command, then repeat with plausible parameter variation. Failed criteria should lead to revisiting the model, limits or tuning, not increasing gain without diagnosis.
 
 ---
 

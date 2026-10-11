@@ -22,34 +22,6 @@ MATLAB examples using `tf`, `feedback`, `step`, `margin`, `rlocus`, `ss` or `c2d
 
 **Reading convention:** the book ISBNs recorded for this course are `9780072977189` (Alexander and Sadiku) and `9789332550162` (Ogata). Topic titles below are index/search locators, not verified edition-specific chapter numbers. Use your copy's contents and index; exact section/page numbering remains unverified.
 
-## How To Predict This Circuit
-
-### 1. Component Behaviour
-
-Begin with $v_R=Ri$, $i_C=C\,dv_C/dt$ and $v_L=L\,di_L/dt$, with consistent reference directions. A controller computes a command from error; unlike L or C, its mathematical state need not represent stored physical energy.
-
-### 2. Physical Meaning
-
-Identify the energy source, stores and losses before choosing a transfer function. In an RC plant, C stores energy while R dissipates it. Feedback changes source delivery through an actuator; it does not remove the plant's physical limits.
-
-### 3. Topology
-
-Mark plant input, output and return path, then distinguish the electrical circuit from the feedback diagram. Sensor gain and the error sign determine whether a command corrects or reinforces a deviation. Express reference and measurement in matching units.
-
-### 4. Prediction
-
-Predict initial continuity, transient shape and final balance before calculating poles. The uncharged example RC plant has a rising capacitor voltage with a 1 s time constant. Feedback can change the response, but only within the actuator's achievable range.
-
-### 5. Reality Check
-
-Transfer functions assume a stated model and operating condition. Component tolerance, sensor error, sampling delay and saturation can invalidate an ideal prediction. The primer's numerical converter examples are modelling exercises, not replacement settings for the hardware labs.
-
-### 6. Measurement
-
-For each worked example, write an expected initial value, final value and time scale, then compare the complete simulated response. Later, compare safe measured data with those predictions; a single matching final value does not validate transient behaviour.
-
----
-
 ## Worked-Example Parameters
 
 | Example | Parameter | Value |
@@ -221,6 +193,34 @@ nexttile;
 plot(time, states(:, 2)); grid on;
 ylabel('Speed (rad/s)'); xlabel('Time (s)');
 ```
+
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+Begin with $v_R=Ri$, $i_C=C\,dv_C/dt$ and $v_L=L\,di_L/dt$, with consistent reference directions. A controller computes a command from error; unlike L or C, its mathematical state need not represent stored physical energy.
+
+### 2. Physical Meaning
+
+Identify the energy source, stores and losses before choosing a transfer function. In an RC plant, C stores energy while R dissipates it. Feedback changes source delivery through an actuator; it does not remove the plant's physical limits.
+
+### 3. Topology
+
+Mark plant input, output and return path, then distinguish the electrical circuit from the feedback diagram. Sensor gain and the error sign determine whether a command corrects or reinforces a deviation. Express reference and measurement in matching units.
+
+### 4. Prediction
+
+Predict initial continuity, transient shape and final balance before calculating poles. The uncharged example RC plant has a rising capacitor voltage with a 1 s time constant. Feedback can change the response, but only within the actuator's achievable range.
+
+### 5. Reality Check
+
+Transfer functions assume a stated model and operating condition. Component tolerance, sensor error, sampling delay and saturation can invalidate an ideal prediction. The primer's numerical converter examples are modelling exercises, not replacement settings for the hardware labs.
+
+### 6. Measurement
+
+For each worked example, write an expected initial value, final value and time scale, then compare the complete simulated response. Later, compare safe measured data with those predictions; a single matching final value does not validate transient behaviour.
+
+---
 
 ## Step 3: Use Laplace Transforms and Transfer Functions
 

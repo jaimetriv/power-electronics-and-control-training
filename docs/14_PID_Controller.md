@@ -2,34 +2,6 @@
 
 ---
 
-## How To Predict This Circuit
-
-### 1. Component Behaviour
-
-PID combines present error, accumulated error and rate information. The ideal form is $u=K_p e+K_i\int e\,dt+K_d\,de/dt$; a practical derivative uses filtering. The motor and sensor dynamics determine whether that rate signal is useful.
-
-### 2. Physical Meaning
-
-Derivative action responds to a trend already observed; it does not predict the future or dissipate stored energy by itself. It can reduce drive as output approaches the target, letting the plant's dynamics and losses produce a better-damped response.
-
-### 3. Topology
-
-The P, I and filtered-D commands sum before actuator limiting. Derivative on error reacts to a reference step as well as output movement; derivative on measurement avoids that reference kick. State which arrangement is being modelled rather than treating them as identical.
-
-### 4. Prediction
-
-For a suitable plant and tuning, added D action can reduce overshoot while I removes constant offset. Too much D can amplify measurement noise into command chatter. An ideal derivative of a step is impulsive, so the practical command depends on filtering and saturation.
-
-### 5. Reality Check
-
-Sampling, noisy speed estimation, derivative filtering, delay and command limits alter damping and stability. Derivative action does not guarantee stability. Compare controllers using the same plant and bounds; simulated gains are not automatically safe hardware settings.
-
-### 6. Measurement
-
-Predict changes in overshoot and command activity before comparing PI and filtered PID simulation traces. Plot reference, output and command, including a modelled noisy sensor. Reduced output overshoot with excessive command chatter is a tradeoff, not an unconditional improvement.
-
----
-
 ## Reading Before the Lab
 
 Read _Modern Control Engineering_ by Ogata, Chapter 7, **Basic Control Actions and Response**, for derivative action, then Chapter 8, **Analysis and Design of Feedback Control Systems**, for zeros, transient response, noise sensitivity, and practical PID limitations. Predict the effect of derivative action on damping and explain why derivative measurement is filtered.
@@ -188,6 +160,34 @@ In a sampled controller, the derivative is approximated from successive samples 
 | P | React to Error |
 | I | Remove Steady-State Error |
 | D | Reduce Overshoot and Oscillation |
+
+---
+
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+PID combines present error, accumulated error and rate information. The ideal form is $u=K_p e+K_i\int e\,dt+K_d\,de/dt$; a practical derivative uses filtering. The motor and sensor dynamics determine whether that rate signal is useful.
+
+### 2. Physical Meaning
+
+Derivative action responds to a trend already observed; it does not predict the future or dissipate stored energy by itself. It can reduce drive as output approaches the target, letting the plant's dynamics and losses produce a better-damped response.
+
+### 3. Topology
+
+The P, I and filtered-D commands sum before actuator limiting. Derivative on error reacts to a reference step as well as output movement; derivative on measurement avoids that reference kick. State which arrangement is being modelled rather than treating them as identical.
+
+### 4. Prediction
+
+For a suitable plant and tuning, added D action can reduce overshoot while I removes constant offset. Too much D can amplify measurement noise into command chatter. An ideal derivative of a step is impulsive, so the practical command depends on filtering and saturation.
+
+### 5. Reality Check
+
+Sampling, noisy speed estimation, derivative filtering, delay and command limits alter damping and stability. Derivative action does not guarantee stability. Compare controllers using the same plant and bounds; simulated gains are not automatically safe hardware settings.
+
+### 6. Measurement
+
+Predict changes in overshoot and command activity before comparing PI and filtered PID simulation traces. Plot reference, output and command, including a modelled noisy sensor. Reduced output overshoot with excessive command chatter is a tradeoff, not an unconditional improvement.
 
 ---
 

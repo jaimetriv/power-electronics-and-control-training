@@ -2,34 +2,6 @@
 
 ---
 
-## How To Predict This Circuit
-
-### 1. Component Behaviour
-
-An enhancement N-MOSFET's channel is controlled by $V_{GS}=V_G-V_S$, not gate voltage relative to an arbitrary ground. When adequately enhanced, $V_{DS}\approx I_D R_{DS(on)}$. Threshold specifies the onset of a small current, not a low-resistance power switch. Its insulated gate draws charging current during transitions, approximately $i_G=dQ_G/dt$.
-
-### 2. Physical Meaning
-
-The gate controls energy delivered from the load supply; the GPIO does not supply the load's power. Channel resistance dissipates $I_D^2R_{DS(on)}$. During switching, simultaneous drain voltage and current produce additional loss.
-
-### 3. Topology
-
-For the low-side circuit, trace supply positive through the load, drain, source and supply return. Source and controller GND share a reference. The gate resistor limits charging current; the gate-source pull-down defines OFF when the GPIO is inactive. The intrinsic body diode is another possible path, not a universal substitute for the load's flyback diode.
-
-### 4. Prediction
-
-For the specified resistive load, a high gate command pulls the drain toward source voltage; a low command lets the load pull the drain toward its supply. Thus drain voltage is inverted relative to gate PWM. For an inductive load, current must instead transfer into a defined flyback path when the channel opens.
-
-### 5. Reality Check
-
-Gate capacitance and the Miller effect slow transitions. OFF still permits leakage and body-diode conduction in its forward direction. IRLZ44N resistance at 5 V or 10 V gate drive does not guarantee the same behaviour at 3.3 V. Respect device, GPIO and load ratings; do not increase current to test an unspecified gate-drive condition.
-
-### 6. Measurement
-
-Predict gate and drain waveforms together, then measure with both probe grounds at circuit GND in the documented low-side build. Compare ON-state drain drop and transition time with expectations. A large drop indicates inadequate enhancement or excess current; the signal-only simulation cannot validate device loss or temperature.
-
----
-
 ## Reading Before the Lab
 
 Read _Fundamentals of Power Electronics_ by Erickson and Maksimovic, Chapter 2, **Basic Concepts**, especially power semiconductor switches, gate drive, conduction loss, switching loss, and device ratings. Search for **device losses** and **gate drive**. Before switching, distinguish threshold voltage from the guaranteed low $R_{DS(on)}$ gate-drive condition and identify the main loss mechanisms.
@@ -376,6 +348,34 @@ ESP32 GPIO18
 A small resistor (220 Ω) in series with the gate limits the current spike when the gate capacitance charges.
 
 This reduces ringing on the gate signal and protects the microcontroller pin.
+
+---
+
+## How To Predict This Circuit
+
+### 1. Component Behaviour
+
+An enhancement N-MOSFET's channel is controlled by $V_{GS}=V_G-V_S$, not gate voltage relative to an arbitrary ground. When adequately enhanced, $V_{DS}\approx I_D R_{DS(on)}$. Threshold specifies the onset of a small current, not a low-resistance power switch. Its insulated gate draws charging current during transitions, approximately $i_G=dQ_G/dt$.
+
+### 2. Physical Meaning
+
+The gate controls energy delivered from the load supply; the GPIO does not supply the load's power. Channel resistance dissipates $I_D^2R_{DS(on)}$. During switching, simultaneous drain voltage and current produce additional loss.
+
+### 3. Topology
+
+For the low-side circuit, trace supply positive through the load, drain, source and supply return. Source and controller GND share a reference. The gate resistor limits charging current; the gate-source pull-down defines OFF when the GPIO is inactive. The intrinsic body diode is another possible path, not a universal substitute for the load's flyback diode.
+
+### 4. Prediction
+
+For the specified resistive load, a high gate command pulls the drain toward source voltage; a low command lets the load pull the drain toward its supply. Thus drain voltage is inverted relative to gate PWM. For an inductive load, current must instead transfer into a defined flyback path when the channel opens.
+
+### 5. Reality Check
+
+Gate capacitance and the Miller effect slow transitions. OFF still permits leakage and body-diode conduction in its forward direction. IRLZ44N resistance at 5 V or 10 V gate drive does not guarantee the same behaviour at 3.3 V. Respect device, GPIO and load ratings; do not increase current to test an unspecified gate-drive condition.
+
+### 6. Measurement
+
+Predict gate and drain waveforms together, then measure with both probe grounds at circuit GND in the documented low-side build. Compare ON-state drain drop and transition time with expectations. A large drop indicates inadequate enhancement or excess current; the signal-only simulation cannot validate device loss or temperature.
 
 ---
 
