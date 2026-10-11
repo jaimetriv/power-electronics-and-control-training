@@ -1388,6 +1388,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#grid-following-versus-grid-forming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grid-Following versus Grid-Forming
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-system-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete System Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-predict-this-circuit" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1467,39 +1500,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Introduction
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#grid-following-versus-grid-forming" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Grid-Following versus Grid-Forming
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#complete-system-architecture" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Complete System Architecture
-      
-    </span>
-  </a>
   
 </li>
       
@@ -2509,6 +2509,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#grid-following-versus-grid-forming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grid-Following versus Grid-Forming
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-system-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete System Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-to-predict-this-circuit" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2588,39 +2621,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Introduction
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#grid-following-versus-grid-forming" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Grid-Following versus Grid-Forming
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#complete-system-architecture" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Complete System Architecture
-      
-    </span>
-  </a>
   
 </li>
       
@@ -3605,20 +3605,6 @@
 </code></pre></div>
 <p>The DRV8833 supply range is 2.7-10.8 V; use 5 V only. With modulation index 0.4, the ideal fundamental is about 2 V peak. Never connect this inverter or its load to mains, a function generator, or another AC source.</p>
 <hr />
-<h2 id="how-to-predict-this-circuit">How To Predict This Circuit<a class="headerlink" href="#how-to-predict-this-circuit" title="Permanent link">&para;</a></h2>
-<h3 id="1-component-behaviour">1. Component Behaviour<a class="headerlink" href="#1-component-behaviour" title="Permanent link">&para;</a></h3>
-<p>The internal oscillator sets the model's phase and frequency; modulation selects bridge voltage states. The LC filter follows inductor voltage/current and capacitor current/voltage laws. In simulated droop, frequency and voltage references vary with measured power according to the stated sign conventions.</p>
-<h3 id="2-physical-meaning">2. Physical Meaning<a class="headerlink" href="#2-physical-meaning" title="Permanent link">&para;</a></h3>
-<p>The converter establishes a voltage waveform using energy from its DC source. Filter energy supplies short transient imbalances. Droop deliberately changes references under load; it is not evidence of an unlimited or perfectly stiff voltage source.</p>
-<h3 id="3-topology">3. Topology<a class="headerlink" href="#3-topology" title="Permanent link">&para;</a></h3>
-<p>Distinguish the simulated voltage-feedback/power-sharing loop from the physical fixed-reference Lab 10 DRV8833 stage driving one separate load. Differential output is measured between bridge legs. No physical ADC voltage-feedback circuit or parallel-converter power-sharing build is supplied here.</p>
-<h3 id="4-prediction">4. Prediction<a class="headerlink" href="#4-prediction" title="Permanent link">&para;</a></h3>
-<p>With a fixed oscillator, no external grid is needed to establish frequency. In the simulated regulated loop, a load increase first draws charge from C, causing a voltage deviation; the controller subsequently adjusts delivery. With droop enabled, the settled voltage/frequency may intentionally differ from no-load references.</p>
-<h3 id="5-reality-check">5. Reality Check<a class="headerlink" href="#5-reality-check" title="Permanent link">&para;</a></h3>
-<p>DC-link limits, LC resonance, losses, sensor filtering and current saturation constrain performance. PI voltage control and droop remain simulation-only. Reuse only the specified 5 V / 0.10 A DRV8833 demonstration with its load; do not build the discrete bridge or connect another AC source.</p>
-<h3 id="6-measurement">6. Measurement<a class="headerlink" href="#6-measurement" title="Permanent link">&para;</a></h3>
-<p>In simulation, compare voltage, frequency, power and limited command before/after a load change. For the physical demonstration, use both scope grounds at GND and CH1-CH2 to measure differential amplitude and frequency. A fixed 50 Hz sine does not demonstrate closed-loop voltage regulation or droop sharing.</p>
-<hr />
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>Project 17 introduced Grid-Following Converters.</p>
 <p>Those converters require an existing grid — they measure voltage and inject current.</p>
@@ -3701,6 +3687,20 @@
 <a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>        │
 <a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>        └──────── Feedback
 </code></pre></div>
+<hr />
+<h2 id="how-to-predict-this-circuit">How To Predict This Circuit<a class="headerlink" href="#how-to-predict-this-circuit" title="Permanent link">&para;</a></h2>
+<h3 id="1-component-behaviour">1. Component Behaviour<a class="headerlink" href="#1-component-behaviour" title="Permanent link">&para;</a></h3>
+<p>The internal oscillator sets the model's phase and frequency; modulation selects bridge voltage states. The LC filter follows inductor voltage/current and capacitor current/voltage laws. In simulated droop, frequency and voltage references vary with measured power according to the stated sign conventions.</p>
+<h3 id="2-physical-meaning">2. Physical Meaning<a class="headerlink" href="#2-physical-meaning" title="Permanent link">&para;</a></h3>
+<p>The converter establishes a voltage waveform using energy from its DC source. Filter energy supplies short transient imbalances. Droop deliberately changes references under load; it is not evidence of an unlimited or perfectly stiff voltage source.</p>
+<h3 id="3-topology">3. Topology<a class="headerlink" href="#3-topology" title="Permanent link">&para;</a></h3>
+<p>Distinguish the simulated voltage-feedback/power-sharing loop from the physical fixed-reference Lab 10 DRV8833 stage driving one separate load. Differential output is measured between bridge legs. No physical ADC voltage-feedback circuit or parallel-converter power-sharing build is supplied here.</p>
+<h3 id="4-prediction">4. Prediction<a class="headerlink" href="#4-prediction" title="Permanent link">&para;</a></h3>
+<p>With a fixed oscillator, no external grid is needed to establish frequency. In the simulated regulated loop, a load increase first draws charge from C, causing a voltage deviation; the controller subsequently adjusts delivery. With droop enabled, the settled voltage/frequency may intentionally differ from no-load references.</p>
+<h3 id="5-reality-check">5. Reality Check<a class="headerlink" href="#5-reality-check" title="Permanent link">&para;</a></h3>
+<p>DC-link limits, LC resonance, losses, sensor filtering and current saturation constrain performance. PI voltage control and droop remain simulation-only. Reuse only the specified 5 V / 0.10 A DRV8833 demonstration with its load; do not build the discrete bridge or connect another AC source.</p>
+<h3 id="6-measurement">6. Measurement<a class="headerlink" href="#6-measurement" title="Permanent link">&para;</a></h3>
+<p>In simulation, compare voltage, frequency, power and limited command before/after a load change. For the physical demonstration, use both scope grounds at GND and CH1-CH2 to measure differential amplitude and frequency. A fixed 50 Hz sine does not demonstrate closed-loop voltage regulation or droop sharing.</p>
 <hr />
 <h2 id="hardware-requirements">Hardware Requirements<a class="headerlink" href="#hardware-requirements" title="Permanent link">&para;</a></h2>
 <h3 id="controller">Controller<a class="headerlink" href="#controller" title="Permanent link">&para;</a></h3>
