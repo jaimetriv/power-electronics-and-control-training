@@ -18,7 +18,7 @@ The task is to explain a plant from its components, predict its response, design
 
 Use basic algebra and differentiation; the transform and complex-frequency essentials are reviewed below. Keep units beside physical quantities and use radians per second for angular frequency. All numerical control exercises are simulations unless explicitly identified otherwise. They do not authorise enabling the course's deferred converter controllers or connecting any circuit to mains.
 
-MATLAB examples using `tf`, `feedback`, `step`, `margin`, `rlocus`, `ss` or `c2d` require **Control System Toolbox**. The physical-model `ode45` example needs MATLAB only. Read the predicted result before running a command; code is a check, not a substitute for explaining the result.
+MATLAB examples using `tf`, `feedback`, `step`, `margin`, `rlocus` or `ss` require **Control System Toolbox**. The physical-model `ode45` example needs MATLAB only. Read the predicted result before running a command; code is a check, not a substitute for explaining the result.
 
 **Reading convention:** the book ISBNs recorded for this course are `9780072977189` (Alexander and Sadiku) and `9789332550162` (Ogata). Topic titles below are index/search locators, not verified edition-specific chapter numbers. Use your copy's contents and index; exact section/page numbering remains unverified.
 
@@ -67,6 +67,8 @@ Reference -> Controller -> Actuator -> Plant -> Output
 **Worked example:** for the RC plant, the input is source voltage $V_S$, the output is capacitor voltage $V_C$, the plant is the R-C circuit, and a voltage probe is the sensor. A changed load would be a disturbance. At this stage we are observing the system; no controller is required.
 
 ## Step 2: Write a Physical Model
+
+For each example in this review, the same six-step reasoning sequence is applied: (1) state component behaviour from physical laws, (2) identify energy sources, stores and losses, (3) describe the topology and write the governing equation, (4) predict initial value, transient shape and final value, (5) note what the model omits, and (6) state what a measurement should show. This sequence is a habit, not a checklist: use it before reaching for a transfer function.
 
 Use circuit laws and component relationships. For the series RC circuit:
 
@@ -194,32 +196,6 @@ plot(time, states(:, 2)); grid on;
 ylabel('Speed (rad/s)'); xlabel('Time (s)');
 ```
 
-## How To Predict This Circuit
-
-### 1. Component Behaviour
-
-Begin with $v_R=Ri$, $i_C=C\,dv_C/dt$ and $v_L=L\,di_L/dt$, with consistent reference directions. A controller computes a command from error; unlike L or C, its mathematical state need not represent stored physical energy.
-
-### 2. Physical Meaning
-
-Identify the energy source, stores and losses before choosing a transfer function. In an RC plant, C stores energy while R dissipates it. Feedback changes source delivery through an actuator; it does not remove the plant's physical limits.
-
-### 3. Topology
-
-Mark plant input, output and return path, then distinguish the electrical circuit from the feedback diagram. Sensor gain and the error sign determine whether a command corrects or reinforces a deviation. Express reference and measurement in matching units.
-
-### 4. Prediction
-
-Predict initial continuity, transient shape and final balance before calculating poles. The uncharged example RC plant has a rising capacitor voltage with a 1 s time constant. Feedback can change the response, but only within the actuator's achievable range.
-
-### 5. Reality Check
-
-Transfer functions assume a stated model and operating condition. Component tolerance, sensor error, sampling delay and saturation can invalidate an ideal prediction. The primer's numerical converter examples are modelling exercises, not replacement settings for the hardware labs.
-
-### 6. Measurement
-
-For each worked example, write an expected initial value, final value and time scale, then compare the complete simulated response. Later, compare safe measured data with those predictions; a single matching final value does not validate transient behaviour.
-
 ---
 
 ## Step 3: Use Laplace Transforms and Transfer Functions
@@ -249,8 +225,6 @@ For partial fractions, $1/[s(s+1)]=1/s-1/(s+1)$, which immediately gives $1-e^{-
 
 The Laplace transform turns differential equations into algebraic equations in $s$. A transfer function is the output-to-input ratio in the Laplace domain, assuming zero initial conditions. For example, $\mathcal{L}\{dx/dt\}=sX(s)-x(0^-)$ and a step of amplitude $A$ has transform $A/s$.
 
-The transform makes it easier to combine system blocks and analyze responses. A transfer function describes the plant's input-output behavior for zero initial conditions; it does not include nonlinear saturation, noise, or component variation.
-
 **Worked example:** with $V_C(0)=0$, transform the RC equation:
 
 $$
@@ -273,7 +247,7 @@ Poles are roots of the transfer-function denominator. For a first-order system t
 
 The response to a step helps interpret a model in the time domain. The time constant $\tau$ is the time to reach 63.2% of the total change; it is the reciprocal of the magnitude of the first-order pole.
 
-**Worked example:** the RC pole is $s=-1/(RC)=-1\ \mathrm{s^{-1}}$, so $\tau=RC=1\ \mathrm{s}$. For a 3.3 V step:
+**Worked example:** the RC pole is $s=-1/(RC)=-1\ \mathrm{s^{-1}}$, so $\tau=RC=1\ \mathrm{s}$. Rise time, overshoot and settling time are defined precisely in Step 9; for now, $\tau$ is the time to reach 63.2% of the total change. For a 3.3 V step:
 
 $$
 V_C(s)=\frac{3.3}{s(s+1)}
