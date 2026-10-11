@@ -4697,7 +4697,7 @@ which is useful for low-power sensing applications.</p>
 <hr />
 <h3 id="why-is-a-resistor-needed">Why Is a Resistor Needed?<a class="headerlink" href="#why-is-a-resistor-needed" title="Permanent link">&para;</a></h3>
 <p>Without a resistor the LED would draw too much current and burn out immediately.</p>
-<p>A 220 Ω resistor limits the current to a safe level (approximately 15 mA from a 3.3 V supply).</p>
+<p>A 220 Ω resistor limits current. For a typical red LED with <span class="arithmatex">\(V_F\approx2.0\)</span> V, the estimate is <span class="arithmatex">\((3.3-2.0)/220\approx5.9\)</span> mA; actual current depends on LED forward voltage and GPIO output drop. Check the LED and pin ratings.</p>
 <p>Resistors are not polarised; they can be connected either way around.</p>
 <hr />
 <h3 id="circuit-diagram">Circuit Diagram<a class="headerlink" href="#circuit-diagram" title="Permanent link">&para;</a></h3>

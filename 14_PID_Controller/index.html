@@ -3506,17 +3506,16 @@ u(t) = K_P e(t) + K_I \int e(t)\,dt + K_D \frac{de(t)}{dt}
 <li>ESP32 DevKit V1</li>
 <li>Breadboard and jumper wires</li>
 <li>Potentiometer (setpoint)</li>
-<li>IRLZ44N MOSFET</li>
-<li>DC Motor</li>
-<li>Flyback diode (1N4001–1N4007)</li>
-<li>220 Ω gate resistor</li>
-<li>External battery pack</li>
+<li>Lab 08 motor stage: AO3400A on a labeled breakout, 3–6 V motor with stall current &lt;=300 mA, 1N5819 flyback diode, 100 Ω gate resistor and 100 kΩ gate-to-source pull-down</li>
+<li>Isolated bench supply set to 5.0 V with current limit no higher than 0.35 A</li>
+<li>Calibrated speed-feedback interface with ADC-safe 0–3.0 V output (not included in the base kits; use simulation if unavailable)</li>
 <li>OWON HDS272S Oscilloscope (recommended)</li>
 <li>DSO Nano Oscilloscope (compatible)</li>
 </ul>
 <blockquote>
 <p>Arduino Uno can be used as a backup controller if an ESP32 is not available.</p>
 </blockquote>
+<p>Reuse the Lab 08 AO3400A motor wiring and optical tachometer. The TCRT5000 supplies pulses only; the PID speed loop needs a calibrated pulse-to-voltage interface. See the hardware inventory options, or use simulation if that interface is unavailable.</p>
 <hr />
 <h2 id="experiment-1-implement-a-pid-motor-controller">Experiment 1 - Implement a PID Motor Controller<a class="headerlink" href="#experiment-1-implement-a-pid-motor-controller" title="Permanent link">&para;</a></h2>
 <h3 id="objective_1">Objective<a class="headerlink" href="#objective_1" title="Permanent link">&para;</a></h3>
@@ -3525,16 +3524,13 @@ u(t) = K_P e(t) + K_I \int e(t)\,dt + K_D \frac{de(t)}{dt}
 <hr />
 <h3 id="circuit">Circuit<a class="headerlink" href="#circuit" title="Permanent link">&para;</a></h3>
 <p>Same as Projects 12 and 13:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Battery (+)
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    │
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  Motor
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    │──── Flyback diode (cathode toward Battery+)
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    │
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    ├──── MOSFET Drain
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>MOSFET Source -&gt; GND; share GND with controller and battery
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>ESP32 GPIO18 -&gt; 220 Ω gate resistor -&gt; MOSFET Gate
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>Potentiometer wiper -&gt; GPIO34 (or Arduino A0 as backup)
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>Calibrated ADC-safe speed sensor output -&gt; GPIO35 (or Arduino A1 as backup)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Motor-supply +5 V -&gt; Motor terminal A and 1N5819 cathode
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Motor terminal B -&gt; AO3400A drain; AO3400A source -&gt; supply negative / circuit GND
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>1N5819 anode -&gt; Motor terminal B; cathode -&gt; motor-supply +5 V
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>ESP32 GPIO18 -&gt; 100 Ω gate resistor -&gt; AO3400A gate; 100 kΩ gate-to-source pull-down
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Potentiometer wiper -&gt; GPIO34 (or Arduino A0 as backup)
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>Lab 08 pulse pickup -&gt; calibrated 0–3.0 V speed interface -&gt; GPIO35 (or Arduino A1 as backup)
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>Motor-supply negative -&gt; ESP32 GND and speed-interface GND
 </code></pre></div>
 <hr />
 <h3 id="wiring-checklist">Wiring Checklist<a class="headerlink" href="#wiring-checklist" title="Permanent link">&para;</a></h3>
@@ -3542,7 +3538,7 @@ u(t) = K_P e(t) + K_I \int e(t)\,dt + K_D \frac{de(t)}{dt}
 <p>✅ Motor circuit wired correctly (same as Projects 12 and 13)</p>
 <p>✅ Calibrated speed-sensor output connected to GPIO35 (ESP32) or A1 (Arduino backup)</p>
 <p>✅ Potentiometer wiper connected to GPIO34 (ESP32) or A0 (Arduino backup)</p>
-<p>✅ Shared GND between controller and battery</p>
+<p>✅ Shared GND between controller, motor-supply negative and speed interface</p>
 <hr />
 <h3 id="esp32-code">ESP32 Code<a class="headerlink" href="#esp32-code" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">float</span><span class="w"> </span><span class="n">Kp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span>
@@ -3874,9 +3870,9 @@ u = K_P e + K_I \int e\,dt + K_D \frac{de}{dt}
 <hr />
 <h3 id="motor-doesnt-respond">Motor Doesn't Respond<a class="headerlink" href="#motor-doesnt-respond" title="Permanent link">&para;</a></h3>
 <p>Check:</p>
-<p>✅ MOSFET wiring correct</p>
-<p>✅ Battery connected</p>
-<p>✅ Shared GND between controller and battery</p>
+<p>✅ AO3400A motor wiring matches Lab 08</p>
+<p>✅ Bench supply enabled at 5.0 V with no more than 0.35 A current limit</p>
+<p>✅ Shared GND between controller, motor supply and speed interface</p>
 <p>✅ Flyback diode installed</p>
 <hr />
 <h3 id="controller-saturation">Controller Saturation<a class="headerlink" href="#controller-saturation" title="Permanent link">&para;</a></h3>
@@ -3891,7 +3887,7 @@ u = K_P e + K_I \int e\,dt + K_D \frac{de}{dt}
 <hr />
 <h3 id="troubleshooting-checklist">Troubleshooting Checklist<a class="headerlink" href="#troubleshooting-checklist" title="Permanent link">&para;</a></h3>
 <p>✅ Motor circuit wired correctly (same as Projects 12 and 13)</p>
-<p>✅ Shared GND between controller and battery</p>
+<p>✅ Shared GND between controller and motor-supply negative</p>
 <p>✅ Serial Monitor shows reference, feedback, error, integral, derivative and PWM</p>
 <p>✅ Feedback reading changes with motor speed</p>
 <p>✅ PWM duty cycle visible on oscilloscope</p>

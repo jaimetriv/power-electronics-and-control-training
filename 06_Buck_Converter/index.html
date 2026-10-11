@@ -3716,12 +3716,12 @@ V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 </tr>
 </tbody>
 </table>
-<p>This gives 20 switching cycles (20 × 2 ms), enough to see the output voltage settle and the inductor current ripple clearly.</p>
+<p>This gives 800 switching cycles at 20 kHz (one period = 50 µs, so 0.04 s ÷ 50 µs = 800 cycles), enough to see the output voltage settle and the inductor current ripple clearly.</p>
 <p>Click <strong>OK</strong>.</p>
 <hr />
 <h3 id="step-13-run-and-observe">Step 13 — Run and Observe<a class="headerlink" href="#step-13-run-and-observe" title="Permanent link">&para;</a></h3>
 <p>Click <strong>Run</strong>. Open the Scope.</p>
-<p>Channel 1 (Vout) should show the output voltage rising from 0 V and settling toward <span class="arithmatex">\(D \times 3.3\)</span> V.</p>
+<p>Channel 1 (Vout) should show the output voltage rising from 0 V and settling toward <span class="arithmatex">\(D \times 5\ \mathrm{V}\)</span>.</p>
 <p>Channel 2 (inductor current) should show a triangular ripple waveform riding on the average DC current.</p>
 <hr />
 <h3 id="step-14-vary-the-duty-cycle">Step 14 — Vary the Duty Cycle<a class="headerlink" href="#step-14-vary-the-duty-cycle" title="Permanent link">&para;</a></h3>
@@ -3738,17 +3738,17 @@ V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 <tr>
 <td>25</td>
 <td>25%</td>
-<td>0.83 V</td>
+<td>1.25 V</td>
 </tr>
 <tr>
 <td>50</td>
 <td>50%</td>
-<td>1.65 V</td>
+<td>2.50 V</td>
 </tr>
 <tr>
 <td>75</td>
 <td>75%</td>
-<td>2.48 V</td>
+<td>3.75 V</td>
 </tr>
 </tbody>
 </table>
@@ -4002,8 +4002,8 @@ V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 </ul>
 <hr />
 <h2 id="matlab-comparison">MATLAB Comparison<a class="headerlink" href="#matlab-comparison" title="Permanent link">&para;</a></h2>
-<p>Overlay the simulated settled output voltages against the ideal CCM theory line. This comparison uses the 100 mH ideal teaching model, not the deferred physical parts list.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">Vin</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">3.3</span><span class="p">;</span>
+<p>Overlay the simulated settled output voltages against the ideal CCM theory line. The Simscape model uses the physical 5 V supply and 47 Ω load.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">Vin</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">5.0</span><span class="p">;</span>
 <a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
 <a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">D_simulated</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="w">  </span><span class="mf">0.50</span><span class="p">,</span><span class="w">  </span><span class="mf">0.75</span><span class="p">];</span>
 <a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">Vout_simulated</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mf">0.00</span><span class="p">,</span><span class="w">  </span><span class="mf">0.00</span><span class="p">,</span><span class="w">  </span><span class="mf">0.00</span><span class="p">];</span><span class="w">   </span><span class="c">% replace with settled Simscape values (V)</span>
@@ -4072,7 +4072,7 @@ V_{OUT} = 0.25 \times 12 = 3\ \text{V}
 <p>What causes output ripple?</p>
 <hr />
 <h3 id="question-6">Question 6<a class="headerlink" href="#question-6" title="Permanent link">&para;</a></h3>
-<p>For <span class="arithmatex">\(V_{IN}=3.3\ \mathrm{V}\)</span> and <span class="arithmatex">\(D=0.5\)</span>, the ideal CCM equation predicts <span class="arithmatex">\(V_{OUT}=1.65\ \mathrm{V}\)</span>. For this lab's <span class="arithmatex">\(L=100\ \mathrm{\mu H}\)</span>, <span class="arithmatex">\(R=100\ \Omega\)</span>, and <span class="arithmatex">\(f_s=500\ \mathrm{Hz}\)</span>, estimate the CCM boundary inductance using <span class="arithmatex">\(L_{crit}=(1-D)R/(2f_s)\)</span>. Is the CCM prediction appropriate? Name two real component effects that would also change the measurement; do not treat a fixed diode drop and MOSFET drop as exact corrections independent of current and duty ratio.</p>
+<p>For <span class="arithmatex">\(V_{IN}=5\ \mathrm{V}\)</span> and <span class="arithmatex">\(D=0.5\)</span>, the ideal CCM equation predicts <span class="arithmatex">\(V_{OUT}=2.5\ \mathrm{V}\)</span>. For this lab's <span class="arithmatex">\(L=1\ \mathrm{mH}\)</span>, <span class="arithmatex">\(R=47\ \Omega\)</span>, and <span class="arithmatex">\(f_s=20\ \mathrm{kHz}\)</span>, estimate the CCM boundary inductance using <span class="arithmatex">\(L_{crit}=(1-D)R/(2f_s)\)</span>. Is the CCM prediction appropriate for the chosen component values? Name two real component effects that would also change the measurement; do not treat a fixed diode drop and MOSFET drop as exact corrections independent of current and duty ratio.</p>
 <hr />
 <div class="result-actions">
   <button class="result-export-btn" data-lab="lab06">⬇ Export Results (JSON)</button>

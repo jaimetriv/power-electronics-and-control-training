@@ -3617,15 +3617,13 @@ e_{ss} = 1 - y_{final}
 <li>ESP32 DevKit V1 (or Arduino Uno as backup)</li>
 <li>Breadboard and jumper wires</li>
 <li>Potentiometer (speed setpoint)</li>
-<li>IRLZ44N MOSFET</li>
-<li>DC Motor</li>
-<li>Flyback diode (1N4001–1N4007)</li>
-<li>220 Ω gate resistor</li>
-<li>Analog motor speed sensor with calibrated output within the selected ADC range (not included in the listed base hardware; use simulation if unavailable)</li>
-<li>External battery pack</li>
+<li>Lab 08 motor stage: AO3400A on a labeled breakout, 3–6 V motor with stall current &lt;=300 mA, 1N5819 flyback diode, 100 Ω gate resistor and 100 kΩ gate-to-source pull-down</li>
+<li>Isolated bench supply set to 5.0 V with current limit no higher than 0.35 A</li>
+<li>Calibrated speed-feedback interface with ADC-safe 0–3.0 V output (not included in the base kits; use simulation if unavailable)</li>
 <li>OWON HDS272S Oscilloscope (recommended)</li>
 <li>DSO Nano Oscilloscope (compatible)</li>
 </ul>
+<p>Reuse the Lab 08 AO3400A motor wiring and optical tachometer. The Lab 08 TCRT5000 provides pulses, not an analogue speed voltage by itself; Labs 12–14 require a calibrated pulse-to-voltage interface, such as the option described in the hardware inventory. Do not treat the raw pulse signal as calibrated analogue speed.</p>
 <hr />
 <h2 id="experiment-1-create-a-reference-signal">Experiment 1 - Create a Reference Signal<a class="headerlink" href="#experiment-1-create-a-reference-signal" title="Permanent link">&para;</a></h2>
 <h3 id="objective_1">Objective<a class="headerlink" href="#objective_1" title="Permanent link">&para;</a></h3>
@@ -3703,12 +3701,13 @@ e_{ss} = 1 - y_{final}
 </blockquote>
 <hr />
 <h3 id="circuit-diagram_1">Circuit Diagram<a class="headerlink" href="#circuit-diagram_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Battery (+) -&gt; Motor -&gt; MOSFET Drain
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Flyback diode across motor (cathode toward Battery+)
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>MOSFET Source -&gt; GND; share GND with controller and battery
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>ESP32 GPIO18 -&gt; 220 Ω gate resistor -&gt; MOSFET Gate
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Motor-supply +5 V -&gt; Motor terminal A and 1N5819 cathode
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Motor terminal B -&gt; AO3400A drain; AO3400A source -&gt; supply negative / circuit GND
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>1N5819 anode -&gt; Motor terminal B; cathode -&gt; motor-supply +5 V
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>ESP32 GPIO18 -&gt; 100 Ω gate resistor -&gt; AO3400A gate; 100 kΩ gate-to-source pull-down
 <a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>Potentiometer wiper -&gt; GPIO34 (reference)
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>Speed sensor output (calibrated and ADC-safe) -&gt; GPIO35 (feedback)
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>Lab 08 pulse pickup -&gt; calibrated 0–3.0 V speed interface -&gt; GPIO35 (feedback)
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>Motor-supply negative -&gt; ESP32 GND and speed-interface GND
 </code></pre></div>
 <p>For the Arduino Uno backup, use A0 for the reference and A1 for the sensor output. Verify that the sensor's output never exceeds the controller ADC range; use signal conditioning if needed.</p>
 <hr />
@@ -3717,7 +3716,7 @@ e_{ss} = 1 - y_{final}
 <p>✅ Motor circuit wired correctly (MOSFET + flyback diode, same as Project 08)</p>
 <p>✅ Speed sensor output represents motor speed and is scaled within the ADC range</p>
 <p>✅ Potentiometer wiper connected to GPIO34</p>
-<p>✅ Shared GND between ESP32, battery, and MOSFET Source</p>
+<p>✅ Shared GND between ESP32, motor-supply negative, and MOSFET Source</p>
 <hr />
 <h3 id="esp32-code_1">ESP32 Code<a class="headerlink" href="#esp32-code_1" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">PWM_PIN</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">18</span><span class="p">;</span>
@@ -3946,9 +3945,9 @@ u = K_P (r - y)
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="motor-doesnt-respond-to-pot">Motor Doesn't Respond to Pot<a class="headerlink" href="#motor-doesnt-respond-to-pot" title="Permanent link">&para;</a></h3>
 <p>Check:</p>
-<p>✅ MOSFET wiring correct</p>
-<p>✅ Battery connected</p>
-<p>✅ Shared GND between controller and motor supply</p>
+<p>✅ AO3400A motor wiring matches Lab 08</p>
+<p>✅ Bench supply enabled at 5.0 V with no more than 0.35 A current limit</p>
+<p>✅ Shared GND between controller, motor supply and speed interface</p>
 <p>✅ Flyback diode installed</p>
 <hr />
 <h3 id="pwm-saturates-immediately">PWM Saturates Immediately<a class="headerlink" href="#pwm-saturates-immediately" title="Permanent link">&para;</a></h3>
@@ -3964,7 +3963,7 @@ u = K_P (r - y)
 <h3 id="troubleshooting-checklist">Troubleshooting Checklist<a class="headerlink" href="#troubleshooting-checklist" title="Permanent link">&para;</a></h3>
 <p>✅ Motor circuit wired correctly (MOSFET + flyback diode)</p>
 <p>✅ Calibrated speed-sensor output connected to feedback ADC input</p>
-<p>✅ Shared GND between controller and battery</p>
+<p>✅ Shared GND between controller and motor-supply negative</p>
 <p>✅ Potentiometer reading changes in Serial Monitor</p>
 <p>✅ Feedback reading changes with motor speed in Serial Monitor</p>
 <p>✅ PWM duty cycle visible on oscilloscope</p>
