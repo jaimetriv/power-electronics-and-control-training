@@ -891,14 +891,12 @@ Observe full-wave rectification using a bridge of four diodes.
 Transformer secondary A ── 250 mA fuse ── 47 Ω / 5 W ── AC(+)
 Transformer secondary B ──────────────── AC(−)
 
-D1 cathode ──┬── D2 cathode ──── DC (+) output
-             │
-           Load (1 kΩ)
-             │
-D2 anode  ──┴── D4 anode  ──── DC (−) / GND
-
-D3 cathode ──── DC (+) output
-D4 cathode ──── DC (−) / GND
+Bridge connections (anode -> cathode):
+D1: AC(+) -> DC(+)
+D2: AC(-) -> DC(+)
+D3: DC(-) -> AC(+)
+D4: DC(-) -> AC(-)
+Load: DC(+) to DC(-)
 ```
 
 The standard bridge arrangement:
@@ -1064,7 +1062,6 @@ Now overlay your measured waveform parameters against the simulated predictions.
 
 ```matlab
 Vpeak = 8.5; f = 50; R = 1000;
-Vpeak = 8.5; f = 50; R = 1000;
 t = 0:0.0001:0.1;
 v_ac = Vpeak * sin(2*pi*f*t);
 v_fw = abs(v_ac);
@@ -1200,7 +1197,7 @@ Why is a smoothing capacitor used?
 
 ### Question 6
 
-A full-wave rectifier with a 100 µF capacitor produces 2 V of ripple at 50 Hz with a 1 kΩ load. Estimate the ripple if the capacitor is replaced with 470 µF, using the approximation $V_{ripple} \approx I_{load} / (f_{ripple} \times C)$. Show your working.
+For a first estimate, assume the 6 V RMS, 50 Hz source charges the reservoir to about $8.5-1.4=7.1$ V through two conducting silicon diodes. With a 1 kΩ load, estimate $I_{load}\approx7.1$ mA. For a full-wave bridge the ripple frequency is 100 Hz. Using $V_{ripple}\approx I_{load}/(f_{ripple}C)$, estimate the peak-to-peak ripple with 100 µF, then repeat with 470 µF. State why source resistance and the short capacitor-charging intervals make this only an approximation.
 
 ---
 

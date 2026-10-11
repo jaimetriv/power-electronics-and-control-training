@@ -593,7 +593,7 @@ Current must flow from the anode to the cathode for the LED to light up.
 
 Without a resistor the LED would draw too much current and burn out immediately.
 
-A 220 Ω resistor limits the current to a safe level (approximately 15 mA from a 3.3 V supply).
+A 220 Ω resistor limits current. For a typical red LED with $V_F\approx2.0$ V, the estimate is $(3.3-2.0)/220\approx5.9$ mA; actual current depends on LED forward voltage and GPIO output drop. Check the LED and pin ratings.
 
 Resistors are not polarised; they can be connected either way around.
 

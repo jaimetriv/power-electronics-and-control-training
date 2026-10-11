@@ -526,7 +526,7 @@ Record your predictions before measuring:
   <tbody>
     <tr><td>47 Ω</td><td><input class="result-input" id="lab03-sim-zeta47" placeholder=""></td><td><input class="result-input" id="lab03-sim-beh47" placeholder="e.g. Strong ringing"></td></tr>
     <tr><td>100 Ω</td><td><input class="result-input" id="lab03-sim-zeta100" placeholder=""></td><td><input class="result-input" id="lab03-sim-beh100" placeholder="e.g. Moderate ringing"></td></tr>
-    <tr><td>470 Ω</td><td>0.235</td><td><input class="result-input" id="lab03-sim-beh470" placeholder="Underdamped, faster decay"></td></tr>
+    <tr><td>470 Ω</td><td><input class="result-input" id="lab03-sim-zeta470" placeholder=""></td><td><input class="result-input" id="lab03-sim-beh470" placeholder="Underdamped, faster decay"></td></tr>
   </tbody>
 </table>
 </div>

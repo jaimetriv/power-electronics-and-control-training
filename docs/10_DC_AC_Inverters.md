@@ -638,7 +638,7 @@ void loop()
 
 ### Objective
 
-Generate a sinusoidal PWM pattern using a sine lookup table, demonstrating how a real inverter modulates its output.
+Generate a coarse sinusoidal duty pattern using a lookup table. This GPIO-only exercise illustrates modulation; it is not a practical inverter waveform.
 
 ---
 
@@ -647,13 +647,13 @@ Generate a sinusoidal PWM pattern using a sine lookup table, demonstrating how a
 ```cpp
 const int N = 10;
 const int sine_table[N] = {
-    128, 203, 243, 255, 243,
-    203, 128,  53,  13,   0
+    128, 203, 249, 249, 203,
+    128,  53,   7,   7,  53
 };
 
 void setup()
 {
-    // Configure LEDC channel 0: 500 Hz carrier, 8-bit resolution.
+    // Configure LEDC channel 0: 500 Hz PWM carrier, 8-bit resolution.
     ledcSetup(0, 500, 8);
     ledcAttachPin(18, 0);
 }
@@ -674,15 +674,15 @@ void loop()
 
 ### What Is Happening?
 
-Each PWM cycle has a different duty cycle following the shape of a sine wave.
+Ten duty updates, each separated by approximately 2 ms, make one nominal 50 Hz reference cycle. The PWM carrier is 500 Hz, so the carrier ratio is only 10; this deliberately coarse pattern is useful for observing the idea, but has few pulses per output cycle. Experiment 5 uses a 20 kHz carrier and 100 reference samples per cycle.
 
-The average voltage at each step approximates:
+For this single GPIO, PWM is unipolar. If $D(t)=[1+m_a\sin(2\pi f_{out}t)]/2$, its average is:
 
 $$
-V_{AVG}(t) = V_{DC} \cdot \sin(2\pi f_{out} t)
+V_{AVG}(t)=V_{GPIO}D(t)=\frac{V_{GPIO}}{2}+\frac{m_aV_{GPIO}}{2}\sin(2\pi f_{out}t)
 $$
 
-After low-pass filtering this produces an approximate sine wave output.
+Thus the average has a DC offset of $V_{GPIO}/2$; one GPIO and a low-pass filter do not produce a zero-centred AC output. A bridge and differential load are needed for bipolar output.
 
 ---
 
@@ -707,7 +707,7 @@ You should observe PWM pulses with varying width:
 
 Narrow pulses at the start and end, wide pulses in the middle.
 
-This is the SPWM pattern.
+This is a coarse PWM pattern with a sinusoidal duty envelope, not a practical SPWM inverter waveform.
 
 ---
 
@@ -845,7 +845,7 @@ fprintf('Frequency error:    %.2f%%\n', 100*abs(f_measured-50)/50);
 N = 10;
 i = 0:N-1;
 D_theory  = 0.5 * (1 + sin(2*pi*i/N));
-D_spwm    = [128, 203, 243, 255, 243, 203, 128, 53, 13, 0] / 255;
+D_spwm    = [128, 203, 249, 249, 203, 128, 53, 7, 7, 53] / 255;
 
 figure; hold on;
 plot(i, D_theory, 'b--o', 'LineWidth', 2, 'DisplayName', 'Ideal sine');

@@ -460,7 +460,7 @@ Under **Solver**:
 | Solver | `ode23t` |
 | Max step size | `1e-6` |
 
-This gives 20 switching cycles (20 × 2 ms), enough to see the output voltage settle and the inductor current ripple clearly.
+This gives 800 switching cycles at 20 kHz (one period = 50 µs, so 0.04 s ÷ 50 µs = 800 cycles), enough to see the output voltage settle and the inductor current ripple clearly.
 
 Click **OK**.
 
@@ -470,7 +470,7 @@ Click **OK**.
 
 Click **Run**. Open the Scope.
 
-Channel 1 (Vout) should show the output voltage rising from 0 V and settling toward $D \times 3.3$ V.
+Channel 1 (Vout) should show the output voltage rising from 0 V and settling toward $D \times 5\ \mathrm{V}$.
 
 Channel 2 (inductor current) should show a triangular ripple waveform riding on the average DC current.
 
@@ -482,9 +482,9 @@ Change the **Pulse Width** in the Pulse Generator and re-run for each experiment
 
 | Pulse Width (%) | Duty Cycle | Expected $V_{OUT}$ |
 |-----------------|------------|--------------------|
-| 25 | 25% | 0.83 V |
-| 50 | 50% | 1.65 V |
-| 75 | 75% | 2.48 V |
+| 25 | 25% | 1.25 V |
+| 50 | 50% | 2.50 V |
+| 75 | 75% | 3.75 V |
 
 ---
 
@@ -751,10 +751,10 @@ Use the oscilloscope with the probe ground at circuit GND and tip at VOUT. Use A
 
 ## MATLAB Comparison
 
-Overlay the simulated settled output voltages against the ideal CCM theory line. This comparison uses the 100 mH ideal teaching model, not the deferred physical parts list.
+Overlay the simulated settled output voltages against the ideal CCM theory line. The Simscape model uses the physical 5 V supply and 47 Ω load.
 
 ```matlab
-Vin = 3.3;
+Vin = 5.0;
 
 D_simulated    = [0.25,  0.50,  0.75];
 Vout_simulated = [0.00,  0.00,  0.00];   % replace with settled Simscape values (V)
@@ -864,7 +864,7 @@ What causes output ripple?
 
 ### Question 6
 
-For $V_{IN}=3.3\ \mathrm{V}$ and $D=0.5$, the ideal CCM equation predicts $V_{OUT}=1.65\ \mathrm{V}$. For this lab's $L=100\ \mathrm{\mu H}$, $R=100\ \Omega$, and $f_s=500\ \mathrm{Hz}$, estimate the CCM boundary inductance using $L_{crit}=(1-D)R/(2f_s)$. Is the CCM prediction appropriate? Name two real component effects that would also change the measurement; do not treat a fixed diode drop and MOSFET drop as exact corrections independent of current and duty ratio.
+For $V_{IN}=5\ \mathrm{V}$ and $D=0.5$, the ideal CCM equation predicts $V_{OUT}=2.5\ \mathrm{V}$. For this lab's $L=1\ \mathrm{mH}$, $R=47\ \Omega$, and $f_s=20\ \mathrm{kHz}$, estimate the CCM boundary inductance using $L_{crit}=(1-D)R/(2f_s)$. Is the CCM prediction appropriate for the chosen component values? Name two real component effects that would also change the measurement; do not treat a fixed diode drop and MOSFET drop as exact corrections independent of current and duty ratio.
 
 ---
 

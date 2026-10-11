@@ -340,16 +340,15 @@ Same circuit as Project 12:
 - ESP32 DevKit V1
 - Breadboard and jumper wires
 - Potentiometer (setpoint)
-- IRLZ44N MOSFET
-- DC Motor
-- Flyback diode (1N4001–1N4007)
-- 220 Ω gate resistor
-- Analog motor speed sensor with calibrated, ADC-safe output (not included in the base hardware list; use simulation if unavailable)
-- External battery pack
+- Lab 08 motor stage: AO3400A on a labeled breakout, 3–6 V motor with stall current <=300 mA, 1N5819 flyback diode, 100 Ω gate resistor and 100 kΩ gate-to-source pull-down
+- Isolated bench supply set to 5.0 V with current limit no higher than 0.35 A
+- Calibrated speed-feedback interface with ADC-safe 0–3.0 V output (not included in the base kits; use simulation if unavailable)
 - OWON HDS272S Oscilloscope (recommended)
 - DSO Nano Oscilloscope (compatible)
 
 > Arduino Uno can be used as a backup controller if an ESP32 is not available.
+
+Reuse the Lab 08 AO3400A motor wiring and optical tachometer. The TCRT5000 supplies pulses only; this PI experiment needs a calibrated pulse-to-voltage speed interface. See the hardware inventory options, or run the controller simulation if that interface is unavailable.
 
 ---
 
@@ -368,25 +367,26 @@ The potentiometer sets the speed reference. A calibrated tachometer or encoder-d
 Same motor driver as Project 12, with a speed sensor added:
 
 ```text
-Battery (+) -> Motor -> MOSFET Drain
-Flyback diode across motor (cathode toward Battery+)
-MOSFET Source -> GND; share GND with controller and battery
-ESP32 GPIO18 -> 220 Ω gate resistor -> MOSFET Gate
+Motor-supply +5 V -> Motor terminal A and 1N5819 cathode
+Motor terminal B -> AO3400A drain; AO3400A source -> supply negative / circuit GND
+1N5819 anode -> Motor terminal B; cathode -> motor-supply +5 V
+ESP32 GPIO18 -> 100 Ω gate resistor -> AO3400A gate; 100 kΩ gate-to-source pull-down
 Potentiometer wiper -> GPIO34 (reference)
-Speed sensor output (calibrated and ADC-safe) -> GPIO35 (feedback)
+Lab 08 pulse pickup -> calibrated 0–3.0 V speed interface -> GPIO35 (feedback)
+Motor-supply negative -> ESP32 GND and speed-interface GND
 ```
 
 ---
 
 ### Step-by-Step Wiring
 
-If building fresh (circuit from Project 12 already in place, skip to the checklist):
+If building fresh, use the AO3400A motor stage from Lab 08 and the current-limited bench supply specified above. Do not substitute the older IRLZ44N/battery wiring.
 
-1. Keep the MOSFET motor driver circuit from Project 12 intact.
+1. Retain the Lab 08 wiring: AO3400A, 100 Ω gate resistor, 100 kΩ gate-to-source pull-down and 1N5819 flyback diode.
 2. Verify the speed sensor is calibrated against RPM and its output remains within the ADC range. Do not connect GPIO35 to a motor terminal through a divider as a substitute for a speed sensor.
 3. Verify the **potentiometer** wiper is connected to **GPIO34**.
-4. Confirm the **220 Ω gate resistor** connects **GPIO18** to the MOSFET gate.
-5. Confirm **shared GND** between the ESP32, battery negative, and MOSFET source.
+4. Confirm **shared GND** between the ESP32, motor-supply negative, speed interface and MOSFET source.
+5. Set the bench supply to 5.0 V, no more than 0.35 A current limit, and output disabled while wiring.
 
 > Tip: If the feedback reading is stuck at 0 or full scale, check the sensor output, common ground, and ADC-safe scaling.
 
@@ -402,7 +402,7 @@ Before uploading:
 
 ✅ Potentiometer wiper connected to GPIO34 (ESP32) or A0 (Arduino backup)
 
-✅ Shared GND between controller and battery
+✅ Shared GND between controller and motor-supply negative
 
 ---
 
@@ -739,11 +739,11 @@ fprintf('PI Overshoot:     %.1f%%\n', info_PI.Overshoot);
 
 Check:
 
-✅ MOSFET wiring correct
+✅ AO3400A motor wiring matches Lab 08
 
-✅ Battery connected
+✅ Bench supply enabled at 5.0 V with no more than 0.35 A current limit
 
-✅ Shared GND between controller and battery
+✅ Shared GND between controller, motor supply and speed interface
 
 ✅ Flyback diode installed
 
@@ -783,7 +783,7 @@ Check:
 
 ✅ Calibrated speed-sensor output connected to feedback ADC input
 
-✅ Shared GND between controller and battery
+✅ Shared GND between controller and motor-supply negative
 
 ✅ Potentiometer reading visible in Serial Monitor
 

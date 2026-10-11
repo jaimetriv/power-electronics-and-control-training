@@ -364,15 +364,15 @@ Same circuit as Projects 12 and 13:
 - ESP32 DevKit V1
 - Breadboard and jumper wires
 - Potentiometer (setpoint)
-- IRLZ44N MOSFET
-- DC Motor
-- Flyback diode (1N4001–1N4007)
-- 220 Ω gate resistor
-- External battery pack
+- Lab 08 motor stage: AO3400A on a labeled breakout, 3–6 V motor with stall current <=300 mA, 1N5819 flyback diode, 100 Ω gate resistor and 100 kΩ gate-to-source pull-down
+- Isolated bench supply set to 5.0 V with current limit no higher than 0.35 A
+- Calibrated speed-feedback interface with ADC-safe 0–3.0 V output (not included in the base kits; use simulation if unavailable)
 - OWON HDS272S Oscilloscope (recommended)
 - DSO Nano Oscilloscope (compatible)
 
 > Arduino Uno can be used as a backup controller if an ESP32 is not available.
+
+Reuse the Lab 08 AO3400A motor wiring and optical tachometer. The TCRT5000 supplies pulses only; the PID speed loop needs a calibrated pulse-to-voltage interface. See the hardware inventory options, or use simulation if that interface is unavailable.
 
 ---
 
@@ -391,16 +391,13 @@ The potentiometer sets the speed reference. Closed-loop speed control requires a
 Same as Projects 12 and 13:
 
 ```text
-Battery (+)
-    │
-  Motor
-    │──── Flyback diode (cathode toward Battery+)
-    │
-    ├──── MOSFET Drain
-MOSFET Source -> GND; share GND with controller and battery
-ESP32 GPIO18 -> 220 Ω gate resistor -> MOSFET Gate
+Motor-supply +5 V -> Motor terminal A and 1N5819 cathode
+Motor terminal B -> AO3400A drain; AO3400A source -> supply negative / circuit GND
+1N5819 anode -> Motor terminal B; cathode -> motor-supply +5 V
+ESP32 GPIO18 -> 100 Ω gate resistor -> AO3400A gate; 100 kΩ gate-to-source pull-down
 Potentiometer wiper -> GPIO34 (or Arduino A0 as backup)
-Calibrated ADC-safe speed sensor output -> GPIO35 (or Arduino A1 as backup)
+Lab 08 pulse pickup -> calibrated 0–3.0 V speed interface -> GPIO35 (or Arduino A1 as backup)
+Motor-supply negative -> ESP32 GND and speed-interface GND
 ```
 
 ---
@@ -415,7 +412,7 @@ Before uploading:
 
 ✅ Potentiometer wiper connected to GPIO34 (ESP32) or A0 (Arduino backup)
 
-✅ Shared GND between controller and battery
+✅ Shared GND between controller, motor-supply negative and speed interface
 
 ---
 
@@ -789,11 +786,11 @@ Increase Kp carefully.
 
 Check:
 
-✅ MOSFET wiring correct
+✅ AO3400A motor wiring matches Lab 08
 
-✅ Battery connected
+✅ Bench supply enabled at 5.0 V with no more than 0.35 A current limit
 
-✅ Shared GND between controller and battery
+✅ Shared GND between controller, motor supply and speed interface
 
 ✅ Flyback diode installed
 
@@ -823,7 +820,7 @@ Reduce Kd or apply derivative on measurement only (advanced topic).
 
 ✅ Motor circuit wired correctly (same as Projects 12 and 13)
 
-✅ Shared GND between controller and battery
+✅ Shared GND between controller and motor-supply negative
 
 ✅ Serial Monitor shows reference, feedback, error, integral, derivative and PWM
 

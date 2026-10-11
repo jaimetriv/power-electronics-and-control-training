@@ -400,14 +400,13 @@ Complete before hardware experiments:
 - ESP32 DevKit V1 (or Arduino Uno as backup)
 - Breadboard and jumper wires
 - Potentiometer (speed setpoint)
-- IRLZ44N MOSFET
-- DC Motor
-- Flyback diode (1N4001–1N4007)
-- 220 Ω gate resistor
-- Analog motor speed sensor with calibrated output within the selected ADC range (not included in the listed base hardware; use simulation if unavailable)
-- External battery pack
+- Lab 08 motor stage: AO3400A on a labeled breakout, 3–6 V motor with stall current <=300 mA, 1N5819 flyback diode, 100 Ω gate resistor and 100 kΩ gate-to-source pull-down
+- Isolated bench supply set to 5.0 V with current limit no higher than 0.35 A
+- Calibrated speed-feedback interface with ADC-safe 0–3.0 V output (not included in the base kits; use simulation if unavailable)
 - OWON HDS272S Oscilloscope (recommended)
 - DSO Nano Oscilloscope (compatible)
+
+Reuse the Lab 08 AO3400A motor wiring and optical tachometer. The Lab 08 TCRT5000 provides pulses, not an analogue speed voltage by itself; Labs 12–14 require a calibrated pulse-to-voltage interface, such as the option described in the hardware inventory. Do not treat the raw pulse signal as calibrated analogue speed.
 
 ---
 
@@ -518,12 +517,13 @@ The feedback signal must come from a tachometer or other speed sensor whose outp
 ### Circuit Diagram
 
 ```text
-Battery (+) -> Motor -> MOSFET Drain
-Flyback diode across motor (cathode toward Battery+)
-MOSFET Source -> GND; share GND with controller and battery
-ESP32 GPIO18 -> 220 Ω gate resistor -> MOSFET Gate
+Motor-supply +5 V -> Motor terminal A and 1N5819 cathode
+Motor terminal B -> AO3400A drain; AO3400A source -> supply negative / circuit GND
+1N5819 anode -> Motor terminal B; cathode -> motor-supply +5 V
+ESP32 GPIO18 -> 100 Ω gate resistor -> AO3400A gate; 100 kΩ gate-to-source pull-down
 Potentiometer wiper -> GPIO34 (reference)
-Speed sensor output (calibrated and ADC-safe) -> GPIO35 (feedback)
+Lab 08 pulse pickup -> calibrated 0–3.0 V speed interface -> GPIO35 (feedback)
+Motor-supply negative -> ESP32 GND and speed-interface GND
 ```
 
 For the Arduino Uno backup, use A0 for the reference and A1 for the sensor output. Verify that the sensor's output never exceeds the controller ADC range; use signal conditioning if needed.
@@ -540,7 +540,7 @@ Before uploading:
 
 ✅ Potentiometer wiper connected to GPIO34
 
-✅ Shared GND between ESP32, battery, and MOSFET Source
+✅ Shared GND between ESP32, motor-supply negative, and MOSFET Source
 
 ---
 
@@ -803,11 +803,11 @@ legend('Location', 'southeast');
 
 Check:
 
-✅ MOSFET wiring correct
+✅ AO3400A motor wiring matches Lab 08
 
-✅ Battery connected
+✅ Bench supply enabled at 5.0 V with no more than 0.35 A current limit
 
-✅ Shared GND between controller and motor supply
+✅ Shared GND between controller, motor supply and speed interface
 
 ✅ Flyback diode installed
 
@@ -839,7 +839,7 @@ Check:
 
 ✅ Calibrated speed-sensor output connected to feedback ADC input
 
-✅ Shared GND between controller and battery
+✅ Shared GND between controller and motor-supply negative
 
 ✅ Potentiometer reading changes in Serial Monitor
 
