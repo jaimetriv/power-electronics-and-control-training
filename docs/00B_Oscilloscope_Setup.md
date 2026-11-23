@@ -873,6 +873,7 @@ Suggested horizontal scale per test:
 | Test Frequency | Horizontal Scale |
 |----------------|-----------------|
 | 100 Hz | 2 ms/div |
+| ~159 Hz (cutoff) | 1 ms/div |
 | 500 Hz | 500 µs/div |
 | 1 kHz | 200 µs/div |
 | 10 kHz | 20 µs/div |
@@ -888,6 +889,14 @@ Suggested horizontal scale per test:
 3. Observe both CH1 and CH2. Use the oscilloscope Vpp auto-measurement or count divisions.
 
 Expected: CH1 ≈ CH2 — little attenuation well below $f_c$.
+
+#### Test A2 — ~159 Hz (cutoff frequency)
+
+1. Change generator frequency to **159 Hz** (the −3 dB cutoff frequency for this RC circuit).
+2. Set horizontal scale to **1 ms/div**.
+3. Record CH1 and CH2 Vpp.
+
+Expected: CH2 ≈ 0.707 × CH1 (−3 dB attenuation). A phase shift of approximately 45° between CH1 and CH2 is also visible at this frequency.
 
 #### Test B — 500 Hz (near cutoff)
 
@@ -920,6 +929,7 @@ Expected: CH2 significantly smaller than CH1.
 | Frequency | Expected observation |
 |-----------|---------------------|
 | 100 Hz | CH1 ≈ CH2 — signal passes with minimal attenuation |
+| ~159 Hz | CH2 ≈ 0.707 × CH1 — cutoff frequency, −3 dB point, ~45° phase shift |
 | 500 Hz | CH2 slightly smaller — near-cutoff region |
 | 1 kHz | CH2 noticeably smaller — above cutoff |
 | 10 kHz | CH2 much smaller — well above cutoff |

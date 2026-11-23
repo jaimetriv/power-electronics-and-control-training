@@ -24,7 +24,7 @@
 | P1 | 100 uF electrolytic capacitors | 5 | 2-3 |
 | P1 | 220 uF electrolytic capacitors | 2 | 1-2 |
 | P1 | 470 uF electrolytic capacitors | 2 | 2-3 |
-| P1 | 100 uH power inductors | 2 | 3-5 |
+| P1 | 1 mH power inductors | 3 | see purchase_plan_rs_uk.md | Labs 06–07 require 1 mH; do not use 100 µH for these labs |
 | P2 | Power resistor set | 1 set | 10-20 |
 
 ### Optional Add-Ons (Projects 17-18 only)

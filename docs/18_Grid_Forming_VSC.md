@@ -316,10 +316,10 @@ This is the denominator `[4.4e-7, 2e-3, 220]` used in the Simulink voltage contr
 The natural frequency of the LC filter is:
 
 $$
-f_n = \frac{1}{2\pi\sqrt{L_{eq}C_f}} = \frac{1}{2\pi\sqrt{2\times10^{-3} \times 10^{-6}}} \approx 3560\ \text{Hz}
+f_n = \frac{1}{2\pi\sqrt{L_{eq}C_f}} = \frac{1}{2\pi\sqrt{2\times10^{-3} \times 10^{-6}}} = \frac{1}{2\pi\sqrt{2\times10^{-9}}} \approx 112.5\ \text{Hz}
 $$
 
-The voltage-controller bandwidth must remain well below $f_n$ to avoid exciting the filter resonance. This ideal LC estimate does not include damping from the real load, component losses, or sensor/control delay.
+The voltage-controller bandwidth must remain well below $f_n \approx 112.5\ \text{Hz}$ to avoid exciting the filter resonance. This ideal LC estimate does not include damping from the real load, component losses, or sensor/control delay.
 
 ---
 

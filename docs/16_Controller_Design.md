@@ -436,7 +436,7 @@ Observe how gain values affect behaviour using the motor circuit from Projects 1
 
 ### Circuit
 
-Same as Projects 12–14 (MOSFET motor driver with back-EMF feedback and potentiometer setpoint).
+Same as Projects 12–14 (MOSFET motor driver with speed feedback from encoder and potentiometer setpoint).
 
 ---
 

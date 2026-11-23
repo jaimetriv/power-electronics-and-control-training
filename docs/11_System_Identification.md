@@ -451,7 +451,7 @@ fprintf('Fitted: K=%.2f  tau=%.2fs\n', K_fit, tau_fit);
 - 22 kΩ resistor
 - 100 µF capacitor
 - 220 µF capacitor
-- DC motor + IRLZ44N MOSFET + flyback diode (from Project 08)
+- DC motor + AO3400A MOSFET + flyback diode (from Project 08)
 - OWON HDS272S Oscilloscope (recommended)
 - DSO Nano Oscilloscope (compatible)
 

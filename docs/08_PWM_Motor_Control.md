@@ -587,7 +587,7 @@ Observe the motor's first-order dynamic response to a step change in PWM, and es
 ```cpp
 const int pwmPin = 18;
 const int tachPin = 27;
-const uint32_t marksPerRevolution = 12;
+const uint32_t marksPerRevolution = 12; // Update this to match your encoder's actual PPR (pulses per revolution) after measuring it.
 
 volatile uint32_t pulseCount = 0;
 uint32_t lastReportMs = 0;

@@ -199,6 +199,9 @@ You will build two models:
 
 ### Model 1 — Open-Loop Buck Converter (Simscape)
 
+!!! note "Illustrative model — values differ from the Lab 06 physical stage"
+    This Simscape model uses L = 100 µH, C = 100 µF, R = 100 Ω, and a 500 Hz switching frequency to produce a clearly visible step response within a short simulation window. The Lab 06 physical build uses L = 1 mH, C = 100 µF, R = 47 Ω, and 20 kHz switching. These values are deliberately different: the model is an illustrative plant for demonstrating PI control concepts, not a replica of the Lab 06 hardware. Do not use the model's component values or gain settings on the physical converter.
+
 This model reuses the Buck Converter from Project 06. If you still have that model, open it and add a Voltage Sensor across the output capacitor. Otherwise build it fresh using the steps below.
 
 #### Step 1 — Create a new Simulink model

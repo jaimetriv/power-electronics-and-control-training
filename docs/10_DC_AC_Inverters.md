@@ -267,7 +267,7 @@ Double-click the `Triangular Carrier` block:
 | Phase (rad) | `pi/2` |
 | Sample time | `0` |
 
-> Setting phase to `pi/2` makes the carrier a triangular-like waveform starting at its peak, which is the standard SPWM carrier shape.
+> Setting phase to `pi/2` makes the carrier a triangular-like waveform starting at its peak, which approximates the standard SPWM carrier shape. This block is a sine wave with a phase offset, not a true triangular wave; a true triangular wave would require a different source block. The approximation is sufficient to demonstrate the SPWM comparison principle in this simulation.
 
 ---
 
@@ -291,7 +291,7 @@ Double-click the `LC Filter` block:
 | Numerator | `[1]` |
 | Denominator | `[1e-8, 0, 1]` |
 
-> This represents an LC low-pass filter with L = 1 mH, C = 10 µF: denominator = `[L*C, 0, 1]` = `[1e-8, 0, 1]`.
+> This represents an ideal lossless LC low-pass filter with L = 1 mH, C = 10 µF: denominator = `[L*C, 0, 1]` = `[1e-8, 0, 1]`. The zero middle coefficient (no damping term) is intentional for this ideal model — it produces infinite Q and a sharp resonance at $f_n = 1/(2\pi\sqrt{LC}) \approx 1592\ \text{Hz}$. A real filter has resistive losses that add a damping term and limit the resonance peak. The zero-damping model is used here only to illustrate the filtering effect on the SPWM waveform; do not interpret the resonance peak as a physical measurement.
 
 ---
 

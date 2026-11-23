@@ -25,8 +25,8 @@ The labs are supported by four reference books. See [docs/Textbook_Resources.md]
 
 ### Test Equipment
 
-- DSO Nano V3
-- OWON HDS272S (optional upgrade)
+- OWON HDS272S
+- DSO Nano V3 (fallback)
 
 ### Power Electronics
 

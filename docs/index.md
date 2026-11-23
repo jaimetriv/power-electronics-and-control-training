@@ -23,8 +23,8 @@ Welcome to the course.
 
 ### Test Equipment
 
-- DSO Nano V3
 - OWON HDS272S
+- DSO Nano V3
 
 ## Start Here
 

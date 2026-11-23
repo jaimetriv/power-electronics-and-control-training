@@ -322,7 +322,7 @@ Drag the following blocks onto the canvas:
 | Block | Library path | Quantity |
 |-------|-------------|----------|
 | Pulse Generator | Simulink → Sources | 1 |
-| Controlled Voltage Source | Simscape → Foundation Library → Electrical → Electrical Sources | 1 |
+| DC Voltage Source | Simscape → Foundation Library → Electrical → Electrical Sources | 1 |
 | Ideal Switch | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
 | Diode | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
 | Inductor | Simscape → Foundation Library → Electrical → Electrical Elements | 1 |
@@ -344,26 +344,24 @@ Double-click the **Pulse Generator** and set:
 
 | Parameter | Value |
 |-----------|-------|
-| Amplitude | `5` |
+| Amplitude | `1` |
 | Period | `50e-6` |
 | Pulse Width | `50` (percent) |
 | Phase delay | `0` |
 
-This produces a 0–5 V switched input at 20 kHz, 50% duty cycle. Change Pulse Width to 25% and 75% for the other cases.
+This produces a 0–1 control signal at 20 kHz, 50% duty cycle. Change Pulse Width to 25% and 75% for the other cases.
 
 ---
 
-### Step 5 — Configure the Controlled Voltage Source
+### Step 5 — Configure the DC Voltage Source
 
-This represents the 5 V bench supply. The Controlled Voltage Source input port expects a physical signal (PS), not a Simulink signal, so the Pulse Generator output must pass through a **Simulink-PS Converter** before reaching it — see Step 9 for wiring. The source switches between 0 V and 5 V with the PWM signal.
-
-> `Constant voltage: 1` means the source outputs exactly the value of its input signal with no scaling. The Pulse Generator amplitude of 5 sets the source voltage.
+This represents the constant 5 V bench supply. Use a **DC Voltage Source** block (Simscape → Foundation Library → Electrical → Electrical Sources) set directly to 5 V — no Constant block or Controlled Voltage Source is needed.
 
 Double-click and set:
 
 | Parameter | Value |
 |-----------|-------|
-| Constant voltage | `1` |
+| Constant voltage | `5` |
 
 ---
 
@@ -406,17 +404,16 @@ This represents the physical 47 Ω, 1 W load. At 75% duty cycle, the ideal outpu
 Connect the blocks in this order:
 
 ```text
-Pulse Generator → Simulink-PS Converter → Controlled Voltage Source (input port)
-Simulink-PS Converter → Ideal Switch (control port)
+Pulse Generator → Simulink-PS Converter → Ideal Switch (control port)
 
-Controlled Voltage Source (+) → Ideal Switch (left port)
+DC Voltage Source (+)         → Ideal Switch (left port)
 Ideal Switch (right port)     → Current Sensor (+ port)
 Current Sensor (− port)       → Inductor (left port)       [switch node]
 Inductor (right port)         → Capacitor (p port)         [Vout node]
 Inductor (right port)         → Resistor (left port)       [Vout node]
 Capacitor (n port)            → Electrical Reference
 Resistor (right port)         → Electrical Reference
-Controlled Voltage Source (−) → Electrical Reference
+DC Voltage Source (−)         → Electrical Reference
 
 Diode (+ port) → Electrical Reference
 Diode (− port) → switch node (junction between Ideal Switch and Inductor)
@@ -425,7 +422,7 @@ Voltage Sensor (+ port) → Vout node (junction of Inductor, Capacitor, Resistor
 Voltage Sensor (− port) → Electrical Reference
 ```
 
-> Branch the Simulink-PS Converter output wire to reach both blocks. The converter is required because both destination ports are physical-signal (PS) inputs, not Simulink signal inputs.
+> The Simulink-PS Converter connects the Pulse Generator output to the **control port** of the Ideal Switch only. The DC Voltage Source is a constant 5 V supply and has no signal input.
 
 > The Diode acts as the freewheel diode. Its `+` port connects to GND (Electrical Reference) and its `−` port connects to the switch node. This allows inductor current to continue flowing when the switch is open.
 
@@ -490,7 +487,9 @@ Change the **Pulse Width** in the Pulse Generator and re-run for each experiment
 
 ### Wiring Checklist
 
-✅ Pulse Generator output → Simulink-PS Converter → Controlled Voltage Source input AND Ideal Switch control port
+✅ Pulse Generator output → Simulink-PS Converter → Ideal Switch control port only
+
+✅ DC Voltage Source set to constant 5 V; no signal input connected
 
 ✅ Series path: Voltage Source (+) → Ideal Switch → Current Sensor → Inductor → Vout node
 

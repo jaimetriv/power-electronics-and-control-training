@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const labId = btn.dataset.lab;
             const data = {};
             document.querySelectorAll('.result-input, .result-textarea').forEach(el => {
-                if (el.id.startsWith(labId)) data[el.id] = el.value;
+                if (el.id.startsWith(labId + '-')) data[el.id] = el.value;
             });
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const a = document.createElement('a');
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!confirm('Clear all saved results for this lab?')) return;
             const labId = btn.dataset.lab;
             document.querySelectorAll('.result-input, .result-textarea').forEach(el => {
-                if (el.id.startsWith(labId)) {
+                if (el.id.startsWith(labId + '-')) {
                     localStorage.removeItem(el.id);
                     el.value = '';
                 }

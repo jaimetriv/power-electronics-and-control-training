@@ -30,14 +30,16 @@ The table below is reduced to a workable minimum so you avoid buying parts alrea
 
 | Priority | Component | Qty | Est. Cost (GBP) | Notes |
 |---|---|---:|---:|---|
-| P1 | IRLZ44N MOSFET | 4 | 4-6 | Logic-level MOSFET for switching, motor, buck and boost labs |
+| P1 | IRLZ44N MOSFET | 4 | 4-6 | Logic-level MOSFET for Lab 04 only — do not use for Labs 06–07 |
+| P1 | AO3401A P-channel MOSFET | 2 | see purchase_plan_rs_uk.md | High-side switch for Lab 06 buck converter |
+| P1 | AO3400A N-channel MOSFET | 2 | see purchase_plan_rs_uk.md | Switch for Lab 07 boost converter and Lab 08 motor drive |
 | P1 | Resistor assortment kit | 1 | 5-10 | Include 47R, 100R, 220R, 1k, 10k, 22k, 47k |
 | P1 | 1N4007 diode | 10 | 1-2 | General-purpose rectifier and flyback use |
 | P1 | 1N5819 Schottky diode | 5 | 2-3 | For Buck and Boost converter labs |
 | P1 | 100 uF electrolytic capacitors | 5 | 2-3 | Top-up beyond the caps already in your kits |
 | P1 | 220 uF electrolytic capacitors | 2 | 1-2 | Smoothing and step-load tests |
 | P1 | 470 uF electrolytic capacitors | 2 | 2-3 | DC-link and rectifier smoothing |
-| P1 | 100 uH power inductors | 2 | 3-5 | Use 100 uH, not 100 mH |
+| P1 | 1 mH power inductors | 3 | see purchase_plan_rs_uk.md | Labs 06–07 require 1 mH; do not substitute 100 µH |
 | P2 | Power resistor set | 1 set | 10-20 | Include 10R, 22R, 47R, 100R in suitable wattage |
 
 ### Optional Add-Ons (Only if you continue to Projects 17-18 hardware)
@@ -67,12 +69,14 @@ The table below is reduced to a workable minimum so you avoid buying parts alrea
 
 ### First Order
 
-- IRLZ44N MOSFETs
+- IRLZ44N MOSFETs (Lab 04 only)
+- AO3401A P-channel MOSFETs (Lab 06)
+- AO3400A N-channel MOSFETs (Labs 07–08)
 - 1N4007 diodes
 - 1N5819 diodes
 - resistor assortment
 - 100 uF, 220 uF, 470 uF capacitors
-- 100 uH inductors
+- 1 mH inductors (Labs 06–07; do not use 100 µH for these labs)
 - power resistor set
 
 ### Second Order
@@ -107,7 +111,9 @@ The table below is reduced to a workable minimum so you avoid buying parts alrea
 
 ## Order Checklist
 
-- [ ] IRLZ44N MOSFETs
+- [ ] IRLZ44N MOSFETs (Lab 04 only)
+- [ ] AO3401A P-channel MOSFETs (Lab 06)
+- [ ] AO3400A N-channel MOSFETs (Labs 07–08)
 - [ ] Resistor assortment
 - [ ] 1N4007 diodes
 - [ ] 1N5819 diodes

@@ -1,4 +1,4 @@
-# Project 00C - ESP32 Wi-Fi Control
+# Project 00C - ESP32 Setup
 
 ---
 

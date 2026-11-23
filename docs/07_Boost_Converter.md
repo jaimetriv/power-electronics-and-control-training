@@ -229,18 +229,18 @@ Where:
 
 ### Example 1
 
-$V_{IN} = 3.3\ \text{V}$, $D = 0.5$:
+$V_{IN} = 5.0\ \text{V}$, $D = 0.5$:
 
 $$
-V_{OUT} = \frac{3.3}{1 - 0.5} = 6.6\ \text{V}
+V_{OUT} = \frac{5.0}{1 - 0.5} = 10.0\ \text{V}
 $$
 
 ### Example 2
 
-$V_{IN} = 3.3\ \text{V}$, $D = 0.75$:
+$V_{IN} = 5.0\ \text{V}$, $D = 0.25$:
 
 $$
-V_{OUT} = \frac{3.3}{1 - 0.75} = 13.2\ \text{V}
+V_{OUT} = \frac{5.0}{1 - 0.25} = 6.67\ \text{V}
 $$
 
 ---
@@ -433,7 +433,7 @@ Click **OK**.
 
 Click **Run**. Open the Scope.
 
-Channel 1 (Vout) should rise above 3.3 V and settle toward $V_{IN}/(1-D)$. At 50% duty cycle expect approximately 6.6 V.
+Channel 1 (Vout) should rise above 5 V and settle toward $V_{IN}/(1-D)$. At 25% duty cycle expect approximately 6.67 V.
 
 Channel 2 (inductor current) should show a triangular ripple waveform — note the slope is steeper during the ON phase (energy storing) than the OFF phase (energy releasing), which is the opposite shape to the Buck converter.
 
@@ -445,9 +445,9 @@ Change the **Pulse Width** in the Pulse Generator and re-run for each experiment
 
 | Pulse Width (%) | Duty Cycle | Expected $V_{OUT}$ |
 |-----------------|------------|--------------------|
-| 25 | 25% | 4.4 V |
-| 50 | 50% | 6.6 V |
-| 75 | 75% | 13.2 V |
+| 10 | 10% | 5.56 V |
+| 20 | 20% | 6.25 V |
+| 25 | 25% | 6.67 V |
 
 ---
 
@@ -826,9 +826,9 @@ Ripple occurs because the capacitor continuously charges and discharges.
 Overlay the simulated settled output voltages against the ideal CCM Boost curve and compare with the Buck simulation from Project 06.
 
 ```matlab
-Vin = 3.3;
+Vin = 5.0;
 
-D_simulated    = [0.25,  0.50,  0.75];
+D_simulated    = [0.10,  0.20,  0.25];
 Vout_simulated = [0.00,  0.00,  0.00];   % replace with settled Simscape values (V)
 
 D_ideal  = 0:0.001:0.95;
@@ -859,7 +859,7 @@ end
 ### Buck vs Boost Comparison
 
 ```matlab
-Vin = 3.3;
+Vin = 5.0;
 D   = 0:0.001:0.95;
 
 Vout_buck  = Vin .* D;
@@ -950,7 +950,7 @@ What happens when duty cycle increases?
 
 ### Question 6
 
-The ideal CCM equation predicts $V_{OUT}=13.2\ \mathrm{V}$ at $D=0.75$ with $V_{IN}=3.3\ \mathrm{V}$. Explain why this is only a simulation prediction in this course and why the ideal gain becomes very sensitive to duty-ratio changes near $D=1$.
+The ideal CCM equation predicts $V_{OUT}=10.0\ \mathrm{V}$ at $D=0.50$ with $V_{IN}=5.0\ \mathrm{V}$. Explain why this is only a simulation prediction in this course and why the ideal gain becomes very sensitive to duty-ratio changes near $D=1$.
 
 ---
 
