@@ -458,6 +458,37 @@ void loop()
 }
 ```
 
+### Alternative Feedback: Digital Pulse Counting (No LM2907 Needed)
+
+As in Project 12, if your speed sensor outputs digital pulses directly, count them with Project 08's interrupt technique and scale the count into the same 0-4095 range `analogRead(FBK_PIN)` would have returned, instead of building a separate analogue frequency-to-voltage stage. The rest of the PI code above is unchanged.
+
+```cpp
+const int TACH_PIN = 27;   // one encoder/tachometer channel, same pin as Project 08
+volatile uint32_t pulseCount = 0;
+// Calibrate: steady-state pulses per 50 ms window at full-speed PWM (see Project 08).
+const uint32_t maxPulsesPerWindow = 40;
+
+void IRAM_ATTR countTachPulse()
+{
+  pulseCount++;
+}
+
+// In setup(), in addition to the LEDC/Serial lines above:
+//   pinMode(TACH_PIN, INPUT_PULLUP);
+//   attachInterrupt(digitalPinToInterrupt(TACH_PIN), countTachPulse, FALLING);
+
+// Replace the "int feedback = analogRead(FBK_PIN);" line in loop() with:
+noInterrupts();
+uint32_t pulses = pulseCount;
+pulseCount = 0;
+interrupts();
+int feedback = constrain((int)(pulses * 4095UL / maxPulsesPerWindow), 0, 4095);
+```
+
+This avoids the digital-to-analogue-to-digital round trip of an LM2907 stage (and its separate 12 V rail) when your sensor is already digital.
+
+---
+
 ### Arduino Equivalent Code (backup)
 
 ```cpp

@@ -12,6 +12,10 @@
 - OWON HDS272S
 - Built-in OWON function generator
 
+### Bench Power Supply
+
+- NANKADF WPS305H, 0-30 V / 0-5 A, 150 W switching bench supply (Amazon B09C8MT4KM), purchased. Confirmed CC/CV automatic switching, OUTPUT on/off button, OCP/OVP/SCP protection, and encoder adjustment with 0.01 V / 0.001 A display resolution, which exceeds the 10 mA current-setting resolution needed for Labs 06-08 and 10. Covers the Priority 2 bench supply requirement for Labs 06, 07, 08, and 10.
+
 ### Existing Kits and Modules
 
 - SparkFun Inventor's Kit
@@ -125,15 +129,14 @@ These are the most important missing items for Buck, Boost, chopper and control 
 
 These items become important once you move into Buck/Boost and regulated converter work:
 
-- Isolated, floating-output DC bench supply: 0-30 V, 0-3 A, constant-voltage and constant-current operation, adjustable current limit with 10 mA or finer resolution, output enable, and over-current/over-voltage protection. Set 5.0 V / 0.20 A for Labs 06-07 and 5.0 V / 0.35 A maximum for Lab 08; do not use these maximum settings without checking each load's rating.
+- ~~Isolated, floating-output DC bench supply~~ Already purchased: NANKADF WPS305H, 0-30 V / 0-5 A. Set 5.0 V / 0.20 A for Labs 06-07 and 5.0 V / 0.35 A maximum for Lab 08; do not use these maximum settings without checking each load's rating.
 - Enclosed, safety-approved plug-in AC adapter for Lab 09: 6 V AC RMS, 50 Hz, at least 250 mA (1.5 VA), isolated SELV output, overload protected, and no-load voltage no higher than 9 V AC RMS. Students must not open it or handle mains wiring.
 - Additional 10 uF electrolytic capacitors
 - Power resistors or a simple load set for converter loading
 - Lab 06: AO3401A P-MOSFET breakout, 2N2222 NPN, 1N5819, 1 mH inductor (≥0.5 A saturation, ≤1 Ω DCR, ≥200 kHz self-resonance), two 100 uF / 10 V capacitors, 100 nF bypass capacitor, 47 Ω / 1 W load, 2.2 kΩ, 1 kΩ, 100 Ω, and 100 kΩ resistors
 - Lab 07: AO3400A N-MOSFET breakout, 1N5819, 1 mH inductor (≥0.5 A saturation, ≤1 Ω DCR, ≥200 kHz self-resonance), two 220 uF / 16 V capacitors, 100 nF bypass capacitor, 100 Ω / 1 W load, 100 Ω gate resistor, and 100 kΩ gate-to-source resistor
-- Lab 08 motor: 3-6 V brushed gearmotor with stall current no greater than 300 mA, 1N5819 flyback diode, and 100 Ω / 100 kΩ gate resistors
-- Lab 08 pulse pickup: TCRT5000 reflective sensor, 12-mark reflective wheel, 150 Ω IR-LED resistor, and 10 kΩ pull-up to 3.3 V. The sensor produces pulses; do not interpret its raw optical voltage as speed.
-- Analog motor-speed sensor for Labs 12-14: either build a frequency-to-voltage stage with an LM2907N-8 (minimum supply 12 V; buy a separate 12 V regulated adapter if no second bench-supply output is available), or buy a calibrated tachometer module powered from 3.3/5 V. It must accept the Lab 08 sensor's 12-pulse/revolution signal (0-600 Hz for 0-3000 RPM) and provide a monotonic 0-3.0 V analog output over the motor's measured speed range. For the LM2907, scale and clamp the output to at most 3.0 V before the ESP32 ADC. Calibrate output voltage against measured RPM before using it as feedback.
+- Lab 08 motor + pulse pickup: a 3-6 V brushed gearmotor with stall current no greater than 300 mA, plus a pulse source. **Chosen option: NULLLAB TT motor with built-in 12 PPR Hall encoder** (see purchase_plan_labs_00_10.md), which combines the motor and pickup in one part and needs no reflective wheel or 150 Ω/10 kΩ sensor wiring. Still needs a 1N5819 flyback diode and 100 Ω / 100 kΩ gate resistors for the drive MOSFET. (A separate TCRT5000 reflective sensor + 12-mark DIY wheel remains a valid alternative if you use a plain gearmotor instead, but is no longer the planned route.) The sensor produces pulses; do not interpret its raw voltage as speed.
+- Analog motor-speed sensor for Labs 12-14: if your motor has a digital pulse/encoder output (such as the NULLLAB TT motor with built-in Hall encoder), no separate sensor purchase is needed — count pulses directly in firmware (see the "Alternative Feedback: Digital Pulse Counting" section in Labs 12-14) and skip the analogue stage and its ADC round-trip entirely. Only build a frequency-to-voltage stage with an LM2907N-8 (minimum supply 12 V; needs a separate 12 V regulated adapter) or buy a calibrated tachometer module if you specifically want that analogue-design exercise, or your sensor has no digital pulse output. Size any such analogue stage's input frequency range from your own Lab 08 measured pulses-per-revolution and top motor speed, not a generic assumption — the course deliberately does not fix a numeric pulse rate or RPM figure, since every lab fits K and tau from measured data. It must provide a monotonic 0-3.0 V analog output over the motor's measured speed range. For the LM2907, scale and clamp the output to at most 3.0 V before the ESP32 ADC. Calibrate output voltage against measured RPM before using it as feedback.
 - Lab 09: 4 × 1N4007 diodes, 100 uF and 470 uF / 25 V capacitors, 1 kΩ / 0.5 W load, 250 mA time-delay secondary fuse and holder, and 47 Ω / 5 W series resistor with the isolated AC adapter.
 - Labs 10/17/18 shared inverter build: one DRV8833 breakout, two matched 1 mH inductors (≥0.5 A, ≤1 Ω DCR, ≥200 kHz SRF), 1 µF / 25 V film capacitor, 100 µF / 10 V DC-link capacitor, 100 nF bypass capacitor, 100 Ω / 0.25 W load, and two oscilloscope channels for CH1−CH2 measurement. The inductors and driver can be reused between lessons.
 - Lab 17 input interface: OWON generator at no more than 1.0 V peak / 50 Hz through a 1 µF series capacitor and 10 kΩ resistor to GPIO34; bias GPIO34 with 100 kΩ to 3.3 V and 100 kΩ to GND. Lower Schottky clamp anode to GND/cathode to GPIO34; upper clamp anode to GPIO34/cathode to 3.3 V. Join generator return, ESP32 GND, and scope ground. Verify GPIO34 stays between 0.3 V and 3.0 V before connection.

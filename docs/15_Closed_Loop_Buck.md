@@ -891,6 +891,27 @@ The voltage divider scales Vout by 0.5 before the ADC. The ESP32 reference is se
 
 ---
 
+## Optional Extension: Attempting Physical Closed-Loop Control
+
+This section is **not part of the validated course design** — the warning at the top of this page stands: the supplied PI sketch intentionally does not drive PWM, and gains have never been validated against the real 20 kHz Lab 06 stage. Attempting this is a legitimate but advanced, go-at-your-own-pace exercise for a reader comfortable debugging a misbehaving control loop live on a scope. The Components Required list above (Lab 06 hardware, 2 × 10 kΩ divider, ESP32, current-limited bench supply) is already everything needed — no extra purchase is required, beyond a modest-value resistor and small capacitor for the anti-aliasing filter below, both likely already in your kit.
+
+### Why the documented design stops short of enabling PWM
+
+- **Aliasing:** the bare resistor-divider feedback in Experiment 1 has no filtering, so the ESP32 ADC sampling at the loop's update rate can alias the 20 kHz switching ripple into what looks like a slow voltage error, feeding noise into the controller.
+- **No duty-saturation protection beyond `constrain()`:** an aggressive gain can push the loop to fight its own ripple and saturate duty cycle instead of settling.
+- **Your only overcurrent protection is the bench supply's current limit.** There is no independent circuit protection if the loop misbehaves.
+
+### A safer approach, if you choose to attempt it
+
+1. **Add a simple RC low-pass before the ADC pin.** Insert a small series resistor (around 1 kΩ) between the divider midpoint and GPIO34, and a small capacitor (around 100 nF) from GPIO34 to GND. This forms a low-pass filter that attenuates the 20 kHz switching ripple before it reaches the ADC, so the controller sees a smoothed voltage estimate rather than raw ripple. Verify the filtered signal on the oscilloscope before trusting it in the loop.
+2. **Keep the bench supply's current limit active at all times** (0.20 A, as specified for the Lab 06 stage) as your hard backstop — it is your only protection if the loop runs away.
+3. **Start far below the simulation's tested gains.** Begin with something like `Kp = 0.5`, `Ki = 0.05` — well under the simulation's slowest-tested row (`Kp=2, Ki=0.2`) — and only enable the controller output briefly, watching the scope continuously.
+4. **Increase gain in small steps**, re-enabling the output each time and watching for: the supply entering current limit, the output voltage oscillating or diverging rather than settling, or visible duty-cycle saturation (PWM stuck at a limit). Revert immediately and investigate if any of these occur.
+5. **Only then** attempt the Experiment 3/4-style disturbance and gain-sweep tests on real hardware, and only with the same caution.
+
+If at any point the behaviour doesn't match your prediction from the "How To Predict This Circuit" reasoning above, stop and re-examine the circuit before increasing gain further — do not treat this as a simple extension of the simulation results.
+
+---
 
 ## Next Project
 

@@ -582,6 +582,39 @@ void loop()
 }
 ```
 
+### Alternative Feedback: Digital Pulse Counting (No LM2907 Needed)
+
+If your speed sensor outputs digital pulses directly (such as a motor with a built-in Hall encoder, or the Lab 08 TCRT5000), you can skip building a separate analogue frequency-to-voltage stage entirely. Count pulses with the same interrupt technique from Project 08, then scale the count into the same 0-4095 range `analogRead(FBK_PIN)` would have returned, so the rest of the control code above is unchanged.
+
+First calibrate `maxPulsesPerWindow`: run the motor at full PWM (255) with this same 50 ms loop timing, print `pulses` each loop, and record its steady-state maximum.
+
+```cpp
+const int TACH_PIN = 27;   // one encoder/tachometer channel, same pin as Project 08
+volatile uint32_t pulseCount = 0;
+// Calibrate: steady-state pulses per 50 ms window at full-speed PWM (see Project 08).
+const uint32_t maxPulsesPerWindow = 40;
+
+void IRAM_ATTR countTachPulse()
+{
+  pulseCount++;
+}
+
+// In setup(), in addition to the LEDC/Serial lines above:
+//   pinMode(TACH_PIN, INPUT_PULLUP);
+//   attachInterrupt(digitalPinToInterrupt(TACH_PIN), countTachPulse, FALLING);
+
+// Replace the "int feedback = analogRead(FBK_PIN);" line in loop() with:
+noInterrupts();
+uint32_t pulses = pulseCount;
+pulseCount = 0;
+interrupts();
+int feedback = constrain((int)(pulses * 4095UL / maxPulsesPerWindow), 0, 4095);
+```
+
+This avoids the digital-to-analogue-to-digital round trip of an LM2907 stage (and its separate 12 V rail) when your sensor is already digital. Re-calibrate `maxPulsesPerWindow` if you change the motor, gearing, or loop timing.
+
+---
+
 ### Arduino Equivalent Code (backup)
 
 ```cpp

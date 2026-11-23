@@ -10,6 +10,7 @@
 - ESP32 DevKit V1 boards
 - 2 x Arduino Uno
 - IRLZ44N MOSFET used in Labs 00-04 (quantity on hand not specified)
+- NANKADF WPS305H, 0-30 V / 0-5 A bench power supply (Amazon B09C8MT4KM)
 
 ---
 
@@ -24,7 +25,6 @@
 | P1 | 220 uF electrolytic capacitors | 2 | 1-2 |
 | P1 | 470 uF electrolytic capacitors | 2 | 2-3 |
 | P1 | 100 uH power inductors | 2 | 3-5 |
-| P2 | Bench power supply | 1 | 120-150 |
 | P2 | Power resistor set | 1 set | 10-20 |
 
 ### Optional Add-Ons (Projects 17-18 only)
@@ -42,9 +42,8 @@
 
 | Level | Estimated Total (GBP) |
 |---|---:|
-| Minimum | 145-199 |
-| Minimum without bench supply | 25-49 |
-| With advanced add-ons | 156-219 |
+| Minimum | 25-49 |
+| With advanced add-ons | 36-69 |
 
 ---
 
@@ -54,4 +53,4 @@
 - Use 100 uH, not 100 mH, for Buck and Boost labs.
 - 100 nF and 10 uF capacitors are already covered by your existing kits, so they are excluded from the minimum buy list.
 - Standalone digital multimeter is optional because the OWON already includes one.
-- Bench power supply is the main cost driver and the most valuable upgrade.
+- Bench power supply is already purchased (NANKADF WPS305H, 0-30 V / 0-5 A) and is no longer a buy-list item.

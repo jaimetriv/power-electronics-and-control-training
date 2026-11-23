@@ -10,7 +10,7 @@ This estimate matches the current 5 V / 20 kHz converter builds, 6 V AC rectifie
 
 | Item | Quantity to use | Price reference (GBP) | Notes |
 |---|---:|---:|---|
-| RS PRO bench supply, 0-30 V / 5 A | 1 | £129.26 | RS stock 175-7367; verify 10 mA or finer current-limit setting before purchase |
+| Bench supply, 0-30 V / 0-5 A | 1 | Already owned | NANKADF WPS305H (Amazon B09C8MT4KM), purchased. CC/CV auto-switching, OUTPUT on/off, OCP/OVP/SCP, 0.001 A display resolution; no further purchase needed |
 | Wurth 1 mH inductor, 750 mA, 0.98 Ω, 1 MHz SRF | 3 needed | £14.40 | RS stock 923-6220; sold as a 10-pack, leaving 7 spares |
 | DRV8833 H-bridge breakout | 1 | £5.95 | Adafruit breakout at Pimoroni; shared by Labs 10, 17, and 18 |
 | 1 µF film capacitor, ≥25 V | 1 needed | £16.50 | RS stock 622-4735P; Panasonic 1 µF / 250 V part, current minimum pack is 25 pieces. The lower-cost Amazon 20-pack is £6.79 if you accept the marketplace-sourcing tradeoff. |
@@ -18,11 +18,11 @@ This estimate matches the current 5 V / 20 kHz converter builds, 6 V AC rectifie
 | 250 mA time-lag 5 x 20 mm fuse | 1 needed | £7.03 | RS stock 630-823; sold as a box of 10 |
 | MOSFETs and SOT-23 breadboard breakouts | 2 builds | £8-15 | AO3401A P-channel and AO3400A N-channel, with labeled breakouts |
 | Diodes, resistors, loads, fuse holder and 47 Ω / 5 W resistor | 1 set | £15-30 | Excludes items listed separately; check kit capacitor voltage ratings before buying top-ups |
-| TCRT5000 sensor and reflective wheel | 1 set | £5-10 | A compatible encoder in the POP-BOT kit may remove this cost |
+| Lab 08 motor + encoder | 1 pack of 2 | £27.25 | NULLLAB TT motor with built-in 12 PPR Hall encoder (Amazon B0GHYFZ2SQ) — chosen over a separate TCRT5000 sensor + DIY reflective wheel, since the built-in encoder needs no wheel fabrication; see purchase_plan_labs_00_10.md |
 
-**Estimated Labs 06-18 total: £222-£252**, before delivery, with the RS Panasonic capacitor pack priced at its current 25-piece minimum. Using the Amazon 20-pack instead lowers this estimate by £9.71 to about £212-£242. Add about £5-£10 only if your existing motor does not meet the Lab 08 stall-current limit. RS prices include VAT as shown; the Adafruit breakout price is Pimoroni's UK retail price and the small-parts bundle is a planning range.
+**Estimated Labs 06-18 total: £116-£138**, before delivery, now that the bench supply is already owned (previously £222-£252 including the £129.26 RS PRO supply). The RS Panasonic capacitor pack is priced at its current 25-piece minimum; using the Amazon 20-pack instead lowers this estimate by £9.71. RS prices include VAT as shown; the Adafruit breakout price is Pimoroni's UK retail price, the small-parts bundle is a planning range, and the NULLLAB motor is an Amazon price.
 
-For Labs 12-14 analog speed feedback, the RS LM2907N-8 is £13.89 inc VAT for a pack of five (RS stock 461-032). It needs a 12 V rail; budget another £10-£20 for a separate regulated 12 V adapter if you choose this DIY route and your supply has only one output. A calibrated 3.3/5 V tachometer module may be a simpler alternative.
+For Labs 12-14 speed feedback: with an encoder-equipped motor (such as the NULLLAB TT motor with built-in Hall encoder), no LM2907 purchase is needed — count the encoder's digital pulses directly in firmware (see the "Alternative Feedback: Digital Pulse Counting" section added to Labs 12-14) and skip the analogue frequency-to-voltage stage and its separate 12 V rail entirely. Only consider the RS LM2907N-8 (£13.89 inc VAT for a pack of five, RS stock 461-032, needs a 12 V rail plus a separate regulated 12 V adapter at £10-£20) if you specifically want the analogue-circuit-design exercise for its own sake, or your sensor has no digital pulse output.
 
 Reference listings: [RS PRO bench supply](https://uk.rs-online.com/web/p/bench-power-supplies/1757367), [Wurth 1 mH inductor](https://uk.rs-online.com/web/p/leaded-inductors/9236220), [Adafruit DRV8833 breakout at Pimoroni](https://shop.pimoroni.com/products/adafruit-drv8833-dc-stepper-motor-driver-breakout-board), [RS 1 µF film capacitor](https://uk.rs-online.com/web/p/film-capacitors/6224735P), [RS PRO 6 V AC adapter](https://uk.rs-online.com/web/p/ac-dc-adapters/2064927), [250 mA time-lag fuse](https://uk.rs-online.com/web/p/cartridge-fuses/0630823), [LM2907N-8 frequency-to-voltage converter](https://uk.rs-online.com/web/p/voltage-to-frequency-frequency-to-voltage-converters/0461032).
 
@@ -40,7 +40,6 @@ The older broad course-wide purchase table below predates the revised physical d
 | P1 | 220 uF Electrolytic Capacitors | 2 | 1-2 | 25 V to 50 V rating |
 | P1 | 470 uF Electrolytic Capacitors | 2 | 2-3 | DC-link and smoothing work |
 | P1 | 100 uH Inductor | 2 | 3-5 | Power inductor for Buck and Boost converters |
-| P2 | Bench Power Supply | 1 | 120-150 | Korad KA3005D or similar lab supply |
 | P2 | Power Resistor Set | 1 set | 10-20 | Include 10R, 22R, 47R, 100R in suitable wattage |
 
 ### Optional Add-Ons (Only if progressing to Projects 17-18 hardware)
@@ -58,6 +57,7 @@ The older broad course-wide purchase table below predates the revised physical d
 
 - Remove OWON HDS272S from the buy list because you already have it.
 - Remove ESP32 DevKit V1 from the active buy list because you already have the boards you need.
+- Remove the bench power supply from the buy list because the NANKADF WPS305H (0-30 V / 0-5 A) is already purchased and meets the CC mode, output-enable, and current-resolution requirements.
 - Replace 100 mH inductors with 100 uH inductors for Buck and Boost work.
 - Move standalone function generator to optional, because the OWON HDS272S already provides one.
 - Reduce IR2104 quantity to 1 unless you specifically want extra spares.
@@ -92,7 +92,6 @@ For the advanced inverter and grid labs, module-based purchasing is often more p
 - 100 nF capacitors
 - 100 uF, 220 uF, 470 uF capacitors
 - 100 uH inductors
-- bench power supply if you do not already have one
 - power resistor set
 
 ### Second Order
@@ -111,6 +110,7 @@ For the advanced inverter and grid labs, module-based purchasing is often more p
 - OWON HDS272S
 - ESP32 DevKit V1 boards
 - Digital multimeter function via OWON HDS272S
+- NANKADF WPS305H, 0-30 V / 0-5 A bench power supply
 
 ---
 
